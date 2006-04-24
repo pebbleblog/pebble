@@ -1,0 +1,108 @@
+@header@
+
+<table width="100%" cellspacing="0" cellpadding="8" class="item">
+  <tr class="itemHeader">
+    <td>
+      Comment and TrackBack Spam
+    </td>
+  </tr>
+  <tr class="itemBody">
+    <td>
+      <p>
+        Unfortunately comment and TrackBack spam is a real problem on the Internet today and during the course of running a public blog, you'll
+        probably come across it at some point. Pebble includes the following features to help you fight comment and TrackBack spam.
+      </p>
+
+      <p>
+      <a name="moderation"></a>
+      <h5>Comment and TrackBack moderation</h5>
+      Comments and TrackBacks in Pebble can have one of three statuses - approved, pending or rejected. By default, all new comments and TrackBacks have
+      a status of approved, which means that they will be immediately published on your blog.
+      To require that all new comments and TrackBacks are manually approved by the blog owner before being published, you can add the
+      <code>net.sourceforge.pebble.event.response.MarkPendingListener</code> to your list of comment and/or TrackBack listeners. This will mark all incoming comments
+      and TrackBacks as pending so that they require approval from a blog contributor.
+      </p>
+
+      <p>
+      Once logged in, you will see links to approve and reject next to each comment
+      or TrackBack that is in the pending state. If used in conjunction with the <code>net.sourceforge.pebble.event.comment.EmailNotificationListener</code>, the recipients
+      specified in the blog properties page
+      will receive an e-mail notification asking that the comment/TrackBack is approved. See below for details on how to ensure that unapproved responses
+      are hidden.
+      </p>
+
+      <p>
+      <a name="bulkManagement"></a>
+      For convenience, Pebble provides a way to manage your responses in bulk. Rather than use the approve and reject links
+      next to each comment, clicking the <b>Responses (x pending, y rejected)</b> links after logging in will take you to a page
+      where you can approve, reject or remove responses in bulk. Links at the top of this page allow you to filter the responses
+      to only show those that are approved, pending or rejected.
+      </p>
+
+      <div align="center">
+      <img src="./images/comment-and-trackback-spam-1.gif" alt="Bulk comment and TrackBack management" />
+      </div>
+
+      <p>
+      Shown for each response is the author, e-mail address (if applicable), IP address, title, truncated content and the date/time
+      at which the response was received. Clicking the title will take you to the full response if you need to review the
+      complete content. To approve, reject or remove in bulk, just select one or more checkboxes next to the responses
+      and click the appropriate <b>Approve</b>, <b>Reject</b> or <b>Remove</b> button.
+      </p>
+
+      <p>
+      <a name="listeners"></a>
+      <h5>Comment and TrackBack spam</h5>
+      Pebble contains some pre-built <a href="comment-listeners.html">comment</a> and
+      <a href="trackback-listeners.html">TrackBack</a> listeners
+      that can help in the fight against spam. The following list shows these and the order in which they are most effective. For comments :
+      <pre class="codeSample">net.sourceforge.pebble.event.response.IpAddressListener
+net.sourceforge.pebble.event.response.LinkSpamListener
+net.sourceforge.pebble.event.response.ContentSpamListener
+net.sourceforge.pebble.event.response.SpamScoreListener
+net.sourceforge.pebble.event.response.DeleteRejectedListener
+net.sourceforge.pebble.event.comment.EmailNotificationListener</pre>
+For TrackBacks :
+      <pre class="codeSample">net.sourceforge.pebble.event.response.IpAddressListener
+net.sourceforge.pebble.event.response.LinkSpamListener
+net.sourceforge.pebble.event.response.ContentSpamListener
+net.sourceforge.pebble.event.response.SpamScoreListener
+net.sourceforge.pebble.event.response.DeleteRejectedListener
+net.sourceforge.pebble.event.trackback.EmailNotificationListener</pre>
+      New responses (comments and TrackBacks) start off with a "spam score" of 0 points before being processed by the listeners that you have configured.
+      If using this recommended list of listeners, the following steps take place each time a response is added.
+      <ol>
+      <li>The IP address for the response is checked against a blacklist and a whitelist. If a match is found on the blacklist, the response is marked as pending and the spam score increased by 1 point. If a match is found on the whitelist, the response remains unaffected. If the IP address is on neither list, the response is marked as pending and the spam score remains unaffected.</li>
+      <li>The number of links is checked and if greater than the threshold, the response is marked as pending and the spam score is increased by 1 point.</li>
+      <li>The content is checked against the list of regular expressions and if the number of occurences exceeds the threshold, the response is marked as pending and the spam score is increased by 1 point. This is repeated for the response title, author and website.</li>
+      <li>The spam score of the response is checked against the threshold and if exceeded, marks the response as rejected.</li>
+      <li>The status of the response is checked and if rejected, the response is deleted.</li>
+      <li>An e-mail notification is sent if the status of the response is approved or pending.</li>
+      </ol>
+      </p>
+
+      <p>
+        Full details of the listeners are their configurable properties can be found in <a href="comment-listeners.html">Comment Listeners</a> and <a href="trackback-listeners.html">TrackBack Listeners</a>, but an example
+        regex list for the content spam listener is as follows. Look away now if you are easily offended!
+      </p>
+
+      <div align="center">
+        <img src="./images/comments-1.gif" />
+      </div>
+
+      <p>
+      <h5>Hiding unapproved comments and TrackBacks</h5>
+      To ensure that unapproved comments and TrackBacks are hidden from view, add the
+      <code>net.sourceforge.pebble.plugin.decorator.HideUnapprovedResponsesDecorator</code> to your list of blog entry
+      decorators. With this decorator, you will see unapproved responses only when logged in as a blog owner or contributor.
+      </p>
+
+      <p>
+      <h5>The nofollow initiative</h5>
+      Pebble supports the nofollow initiative, as detailed <a href="http://www.google.com/googleblog/2005/01/preventing-comment-spam.html">here</a>.
+      </p>
+    </td>
+  </tr>
+</table>
+
+@footer@

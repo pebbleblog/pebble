@@ -1,0 +1,38 @@
+@header@
+
+<table width="100%" cellspacing="0" cellpadding="8" class="item">
+  <tr class="itemHeader">
+    <td>
+      Quick Start with Tomcat
+    </td>
+  </tr>
+  <tr class="itemBody">
+    <td>
+
+      <p>
+      If you want to get started quickly and have a Tomcat installation up and running, Pebble can be deployed in a couple of minutes by following some simple steps.
+      <ol>
+        <li>Download Pebble from <a href="http://sourceforge.net/project/showfiles.php?group_id=79200">here</a>.</li>
+        <li>Copy <code>pebble.war</code> from the <code>pebble-weblog</code> directory into <code>$TOMCAT_HOME/webapps</code>.</li>
+        <li>Add the followng line into the <code>$TOMCAT_HOME/conf/tomcat-users.xml</code> file, before the final closing tag.
+    <pre>&lt;user username="someuser" password="password" roles="blog-owner,blog-contributor"/&gt;</pre></li>
+        <li>Restart Tomcat and (assuming a default local installation) point your browser to <a href="http://localhost:8080/pebble/">http://localhost:8080/pebble/</a>.</li>
+        <li>Pebble should now be running and you can login using the <b>Login</b> link at the bottom of the page.</li>
+      </ol>
+      </p>
+
+      <p>
+      <div align="center">
+      <img src="./images/getting-started-1.gif" />
+      </div>
+      </p>
+
+      <p>
+        You are now ready to customize your blog and start blogging.
+      </p>
+
+    </td>
+  </tr>
+</table>
+
+@footer@

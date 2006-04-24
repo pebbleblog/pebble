@@ -1,0 +1,75 @@
+@header@
+
+<table width="100%" cellspacing="0" cellpadding="8" class="item">
+  <tr class="itemHeader">
+    <td>
+      Multi-user Blogs
+    </td>
+  </tr>
+  <tr class="itemBody">
+    <td>
+
+      <p>
+      By default, a single Pebble instance hosts a single blog meaning that you will need to run an additional instances to host additional blogs. The benefit of this is that blogs are isolated from one another, although having multiple web applications will use more resources.
+      Pebble has the ability to be able to run more than a single blog from a single instance of the Pebble web application. This is Pebble's "multi-user" mode.
+      </p>
+
+      <p>
+      There are several differences to the default installation required to support this.
+      In multi-user mode, the <code>blog.dir</code> represents the directory under which all blogs will be contained and before starting Pebble, a subdirectory for each blog that you would to host should be created. Also, to tell Pebble to run in multi-user mode, you need to set the <code>blog.multiUser</code> parameter to <code>true</code>. As with the single user mode, users will have to be defined with the roles <code>blog-owner</code> and <code>blog-contributor</code> as appropriate. With Pebble configured for multi-user mode and, for example, three blog directories created under <code>blog.dir</code> called <code>blog1</code>, <code>blog2</code> and <code>blog3</code>, you should see the multi-user summary page (like the following example) in your browser when it is pointed at Pebble.
+      <div align="center">
+      <img src="./images/multiuser-blogs-1.jpg" />
+      </div>
+      </p>
+
+      <p>
+      This page shows summary information for all blogs running on Pebble and links to the blogs themselves and the last three blog entries (if applicable). Clicking on any of the blog names will take you to the home page of that blog.
+      Each individual blog works in the same way that blogs do in the single user mode, with the exception that the URLs are slightly different. Instead of <code>http://localhost:8080/blog/</code> (in single user mode), each blog can be accessing through a slightly longer URL such as <code>http://localhost:8080/blog/blog1/</code>.
+      </p>
+
+      <p>
+      <a name="security"><h5>Security</h5></a>
+      An important point to mention about multi-user blogs is security. Defining a number of users with the same roles (i.e. <code>blog-owner</code> and <code>blog-contributor</code>) means that anybody with the appropriate role can access the corresponding functions on any blog. For example, if you create a unique user for each of the blog1, blog2 and blog3 blogs, the blog1 user will be able to access all of the blog owner and blog contributor functionality of blog2 and blog3. Ideally, you probably want the blog1 user to only be able to access the functions of blog1.
+      </p>
+
+      <p>
+      To achieve this, login, navigate to blog1 and click the <b>Blog properties</b> link. Towards the middle of the page is a <b>Security</b> section with two textfields. In the <b>Blog owners</b> textfield, simply enter a comma separated list of usernames for all those users that you would like to access the blog owner features for this blog. Similarly, enter a comma separated list of usernames for blog contributors in the <b>Blog contributors</b> field.
+      In doing this, you restrict the users that can access the protected features of the blog. So, although all three users are members of the same role, only the blog1 user will be able to access the protected features of this blog.
+      </p>
+
+      <p>
+      <h5>Forwarding after login</h5>
+      By default, users will be taken to the multi-user home page after logging in. If you are setting up a multi-user blog
+      where each user has their own blog, Pebble can be configured to automatically take the user to the home page
+      of their own blog after logging in. To do this you need to ensure that the usernames of the users match exactly the ID of their blog. Next,
+      open the <code>/WEB-INF/classes/secure-action.properties</code> file and change the following line from:
+      <pre class="codeSample">login=net.sourceforge.pebble.web.action.LoginAction</pre>
+      to:
+      <pre class="codeSample">login=net.sourceforge.pebble.web.action.LoginAndForwardAction</pre>
+      This will take effect the next time Pebble is restarted.
+      </p>
+
+      <p>
+      <h5>Privacy</h5>
+      In multi-user mode, all blogs will automatically show up on the multi-user front page and their content will appear in the combined news feeds. To stop this from occurring you can mark your blog to be private in the <a href="configuration.html">blog properties</a>. In effect, this hides your blog and readers can still navigate directly to your blog. For a truely private, password protected blog, see <a href="private-blogs.html">Private Blogs</a>.
+      </p>
+
+      <p>
+      <h5>Themes</h5>
+      Themes work in the same way as when Pebble is running in single user mode. To summarise, each blog has it's own private theme that can be customized and only this theme can be edited by blog owners through the web interface. The reason behind this is to prevent changes to themes being reflected in other blogs unknowingly.
+      The only real difference between themes in single and multi-user modes is in the name of the custom, editable theme. In single user mode this is called <code>custom</code>, whereas in multi-user mode, the editable theme is named the same as the blog. For example, if the blog is accessed by the URL <code>.../blog1/</code>, the name of the editable theme is called <code>blog1</code>.
+      </p>
+
+      <p>
+      <h5>Pebble Administration</h5>
+      In addition to the <code>blog-owner</code> and <code>blog-contributor</code> security roles, in multi-user mode, an additional role called <code>pebble-admin</code> can be granted to one or more users. Users in this role will be able to perform some higher level administration tasks as follows.
+      <ul>
+        <li><b>Pebble properties</b> : Edit the some of the details of the blog that appear on the multi-user summary page and in the RSS combined feeds.</li>
+        <li><b>Add blog</b> : Add new blogs at runtime.</li>
+      </ul>
+      </p>
+    </td>
+  </tr>
+</table>
+
+@footer@

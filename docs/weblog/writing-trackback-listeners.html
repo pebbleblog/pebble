@@ -1,0 +1,69 @@
+@header@
+
+<table width="100%" cellspacing="0" cellpadding="8" class="item">
+  <tr class="itemHeader">
+    <td>
+      Writing TrackBack Listeners
+    </td>
+  </tr>
+  <tr class="itemBody">
+    <td>
+      <p>
+      TrackBack listeners are a type of Pebble plugin that allow you to write code that is called
+      whenever a TrackBack is added, removed, approved or rejected. To write your own listener, you need to write a Java class that implements the <a href="../javadoc/pebble/event/TrackBackListener.html">net.sourceforge.pebble.event.trackback.TrackBackListener</a> interface
+      as shown below. To gain access to the associated <a href="../javadoc/pebble/blog/TrackBack.html">TrackBack</a>, use the <code>getTrackBack()</code> method on the <a href="../javadoc/pebble/event/TrackBackEvent.html">net.sourceforge.pebble.event.trackback.TrackBackEvent</a> object
+      that is passed to the callback methods.
+      </p>
+
+      <p>
+        An empty implementation is provided by the <a href="../javadoc/pebble/event/trackback/TrackBackListenerSupport.html">net.sourceforge.pebble.event.trackback.TrackBackListenerSupport</a> class, which
+        you can use as a starting point. If you are writing an implementation that is useful for both comments and TrackBacks, you can
+        use the <a href="../javadoc/pebble/event/response/BlogEntryResponseListenerSupport.html">net.sourceforge.pebble.event.response.BlogEntryResponseListenerSupport</a>
+        as a starting point instead, where there are similar blogEntryResponseX() methods.
+      </p>
+
+      <p>
+<pre class="codeSample">package net.sourceforge.pebble.event;
+
+/**
+ * Implemented by classes wanting to be notified of TrackBack events.
+ *
+ * @author Simon Brown
+ */
+public interface TrackBackListener {
+
+  /**
+   * Called when a TrackBack has been added.
+   *
+   * @param event   a TrackBackEvent instance
+   */
+  public void trackBackAdded(TrackBackEvent event);
+
+  /**
+   * Called when a TrackBack has been removed.
+   *
+   * @param event   a TrackBackEvent instance
+   */
+  public void trackBackRemoved(TrackBackEvent event);
+
+  /**
+   * Called when a TrackBack has been approved.
+   *
+   * @param event   a TrackBackEvent instance
+   */
+  public void trackBackApproved(TrackBackEvent event);
+
+  /**
+   * Called when a TrackBack has been rejected.
+   *
+   * @param event   a TrackBackEvent instance
+   */
+  public void trackBackRejected(TrackBackEvent event);
+
+}</pre>
+      </p>
+    </td>
+  </tr>
+</table>
+
+@footer@

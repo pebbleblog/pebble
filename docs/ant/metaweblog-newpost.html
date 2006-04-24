@@ -1,0 +1,26 @@
+@header@
+
+<table width="100%" cellspacing="0" cellpadding="8" class="item">
+  <tr class="itemHeader">
+    <td colspan="2">
+      blogger.newPost
+    </td>
+  </tr>
+  <tr class="itemBody">
+    <td>
+      Antblog includes a task that can post a new blog entry to any MetaWeblog API compatible blog. The task definition is as follows.
+<pre>    &lt;taskdef name="metaWeblog.newPost" classname="net.sourceforge.pebble.ant.metaweblog.NewPostTask"/&gt;</pre>
+The following example shows how to use it in a target.
+<pre>    &lt;metaWeblog.newPost
+      url="http://localhost:8080/blog/xmlrpc"
+      blogid="test"
+      username="simon"
+      password="password"
+      title="Posting with MetaWeblog API"
+      content="${content}"
+      category="java" /&gt;</pre>
+    </td>
+  </tr>
+</table>
+
+@footer@

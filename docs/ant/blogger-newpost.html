@@ -1,0 +1,27 @@
+@header@
+
+<table width="100%" cellspacing="0" cellpadding="8" class="item">
+  <tr class="itemHeader">
+    <td colspan="2">
+      blogger.newPost
+    </td>
+  </tr>
+  <tr class="itemBody">
+    <td>
+      Antblog includes a task that can post a new blog entry to any Blogger API compatible blog. The task definition is as follows.
+<pre>    &lt;taskdef name="blogger.newPost" classname="net.sourceforge.pebble.ant.blogger.NewPostTask"/&gt;</pre>
+The following example shows how to use it in a target. The Blogger API doesn't explicitly support titles and categories but, if specified,
+they are wrapped up inside <code>&lt;title&gt;</code> and <code>&lt;category&gt;</code> tags respectively and prepended to the content.
+<pre>    &lt;blogger.newPost
+      url="http://localhost:8080/blog/xmlrpc"
+      blogid="test"
+      username="simon"
+      password="password"
+      title="Posting with Blogger API"
+      content="${content}"
+      category="java" /&gt;</pre>
+    </td>
+  </tr>
+</table>
+
+@footer@
