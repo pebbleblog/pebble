@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<blogEntry>
+<title>Blog entry title</title>
+<subtitle>Blog entry subtitle</subtitle>
+<excerpt><![CDATA[<p>Blog entry excerpt.</p>]]></excerpt>
+<body><![CDATA[<p>Blog entry body.</p>]]></body>
+<date>05 Apr 2004 23:15:35 BST</date>
+<state>pending</state>
+<author>simon</author>
+<commentsEnabled>true</commentsEnabled>
+<trackBacksEnabled>true</trackBacksEnabled>
+<category>/category1</category>
+<category>/category2</category>
+<tags>sometag</tags>
+<attachment>
+  <url>./files/java-development-on-mac-os-x.pdf</url>
+  <size>3443670</size>
+  <type>application/pdf</type>
+</attachment>
+<comment>
+<title>Comment title 1</title>
+<body><![CDATA[<p>Comment 1.</p>]]></body>
+<author>Comment author 1</author>
+<email>me@author1.com</email>
+<website>http://www.author1.com</website>
+<ipAddress>127.0.0.1</ipAddress>
+<date>05 Apr 2004 23:27:30 BST</date>
+</comment>
+<comment>
+<body><![CDATA[<p>Comment 2.</p>]]></body>
+<author>Comment author 2</author>
+<email>me@author2.com</email>
+<website>http://www.author2.com</website>
+<ipAddress>192.168.0.1</ipAddress>
+<date>05 Apr 2004 23:31:00 BST</date>
+<state>pending</state>
+</comment>
+<trackback>
+<title>TrackBack title 1</title>
+<excerpt><![CDATA[TrackBack body 1.]]></excerpt>
+<url>http://www.author1.com/entry</url>
+<blogName>Blog name 1</blogName>
+<ipAddress>127.0.0.1</ipAddress>
+<date>06 Apr 2004 07:09:24 BST</date>
+</trackback>
+<trackback>
+<title>TrackBack title 2</title>
+<excerpt><![CDATA[TrackBack body 2.]]></excerpt>
+<url>http://www.author2.com/entry</url>
+<blogName>Blog name 2</blogName>
+<ipAddress>192.168.0.1</ipAddress>
+<date>06 Apr 2004 07:09:24 BST</date>
+<state>pending</state>
+</trackback>
+</blogEntry>
