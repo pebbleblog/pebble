@@ -1,0 +1,31 @@
+<rss version="2.0">
+<channel>
+  <title><c:out value="${blog.name} - Responses" escapeXml="true"/></title>
+  <link>${blog.url}</link>
+  <description><c:out value="${blog.description}" escapeXml="true"/></description>
+  <language>${blog.language}</language>
+  <copyright><c:out value="${blog.author}" escapeXml="true"/></copyright>
+  <lastBuildDate><fmt:formatDate value="${blog.lastModified}" pattern="EEE, dd MMM yyyy HH:mm:ss z" timeZone="GMT"/></lastBuildDate>
+  <generator>Pebble</generator>
+  <docs>http://backend.userland.com/rss</docs>
+  <c:if test="${not empty image}">
+  <image>
+    <url>${blog.image}</url>
+    <title><c:out value="${blog.name}" escapeXml="true"/></title>
+    <link>${blog.url}</link>
+  </image>
+  </c:if>
+  <c:forEach var="aResponse" items="${responses}">
+  <item>
+    <title><c:out value="${aResponse.title}" escapeXml="true"/></title>
+    <link>${aResponse.permalink}</link>
+    <description>
+      <c:out value="${aResponse.content}" escapeXml="true"/>
+    </description>
+    <comments>${aResponse.blogEntry.commentsLink}</comments>
+    <guid isPermaLink="true">${aResponse.permalink}</guid>
+    <pubDate><fmt:formatDate value="${aResponse.date}" pattern="EEE, dd MMM yyyy HH:mm:ss z" timeZone="GMT"/></pubDate>
+  </item>
+  </c:forEach>
+  </channel>
+</rss>

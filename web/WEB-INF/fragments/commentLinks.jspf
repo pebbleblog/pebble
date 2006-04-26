@@ -1,0 +1,8 @@
+<div class="contentItemLinks">
+  <c:if test="${displayMode != 'preview'}">
+    <a href="replyToBlogEntry.action?entry=${blogEntry.id}&comment=${comment.id}"><fmt:message key="comment.reply" /></a>
+    <pebble:isBlogContributor>
+    | <input type="checkbox" name="response" value="${comment.guid}" />
+    </pebble:isBlogContributor>
+  </c:if>
+</div>

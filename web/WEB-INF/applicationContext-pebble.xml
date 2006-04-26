@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+  <bean id="pebbleContext" class="net.sourceforge.pebble.PebbleContext" singleton="true">
+
+    <!-- the location of your blog or blogs -->
+    <property name="blogDirectory" value="${user.home}/blog"/>
+
+    <!-- the URL where your blog is hosted -->
+    <property name="url" value=""/>
+
+    <!-- set this to true if you would like to run Pebble in multi-blog mode -->
+    <property name="multiBlog" value="false"/>
+  </bean>
+
+</beans>

@@ -1,0 +1,17 @@
+<div id="categories">
+<c:if test="${not empty blog.tags}">
+  <a href="./tags/"><fmt:message key="tag.tags" /></a>
+  <c:if test="${not empty blog.rootCategory.subCategories}"> - </c:if>
+</c:if>
+<c:choose>
+  <c:when test="${not empty blog.rootCategory.subCategories}">
+    <fmt:message key="category.categories" /> :
+    <c:forEach var="category" items="${blog.categories}" varStatus="status" begin="1">
+      <span class="category"><a href="<c:out value="${category.permalink}" />"><c:out value="${category.name}" /></a></span>
+    </c:forEach>
+  </c:when>
+  <c:otherwise>
+    &nbsp;
+  </c:otherwise>
+</c:choose>
+</div>

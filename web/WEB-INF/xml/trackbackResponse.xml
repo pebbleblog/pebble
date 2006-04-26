@@ -1,0 +1,4 @@
+<response>
+  <error>${errorCode}</error><c:if test="${not empty message}">
+  <message>${message}</message></c:if>
+</response>

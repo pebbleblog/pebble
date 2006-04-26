@@ -1,0 +1,123 @@
+@header@
+
+<table width="100%" cellspacing="0" cellpadding="8" class="item">
+  <tr class="itemHeader">
+    <td>
+      Comment Listeners
+    </td>
+  </tr>
+  <tr class="itemBody">
+    <td>
+      <p>
+      Comment listeners are a type of Pebble plugin that allows custom code to be called
+      whenever a comment is added or removed. The following comment listeners are included with the Pebble distribution.
+
+      <div class="centeredBlock">
+      <table width="100%" cellspacing="0" cellpadding="8">
+      <tr class="itemBodyOdd">
+      <td valign="top">
+        net.sourceforge.pebble.event.comment.EmailNotificationListener
+      </td>
+      <td>
+        Sends a notification e-mail when a new comment is added.
+        If the status of the comment is pending, an e-mail is sent to the blog owner asking for approval.
+        If the status of the comment is approved, an e-mail is sent to the blog owner and 
+        all comment authors for the blog entry that have left their e-mail addresses.
+      </td>
+      </tr>
+
+      <tr class="itemBodyEven">
+      <td valign="top">
+        net.sourceforge.pebble.event.response.MarkPendingListener
+      </td>
+      <td>
+        Marks all new comments with a status of pending so that they require approval from a blog contributor before being published on the blog.
+      </td>
+      </tr>
+
+      <tr class="itemBodyOdd">
+      <td valign="top">
+        net.sourceforge.pebble.event.response.IpAddressListener
+      </td>
+      <td>
+        Maintains both a blacklist and a whitelist of IP addresses, performing the following when a new comment is added.
+        <ol>
+        <li>If the IP address of the comment is contained within the blacklist, the comment is marked as pending and the comment's spam score is increased by 1 point.</li>
+        <li>Otherwise, if the IP address of the comment is contained within the whitelist, the comment is left as-is.</li>
+        <li>Otherwise, if the IP address of the comment is contained in neither list, the comment is marked as pending and the spam score remains unaffected.</li>
+        </ol>
+        In addition to this, the comment's IP address is removed from the blacklist (if applicable) and added to the whitelist when it is approved. Vice versa for comments that are rejected.
+        <br /><br />
+        The comma separated lists of IP addresses are stored under the <code>IpAddressListener.blacklist</code> and <code>IpAddressListener.whitelist</code> plugin properties.
+      </td>
+      </tr>
+
+      <tr class="itemBodyEven">
+      <td valign="top">
+        net.sourceforge.pebble.event.response.LinkSpamListener
+      </td>
+      <td>
+        Checks the content of new comments for the number of links that they contain. If this is greater than the threshold,
+        the comment is marked as pending and the comment's spam score is increased by 1 point.
+        <br /><br />
+        The default threshold for the number of links is 3, but can be configured by the
+        <code>LinkSpamListener.commentThreshold</code> plugin property.
+      </td>
+      </tr>
+
+      <tr class="itemBodyOdd">
+      <td valign="top">
+        net.sourceforge.pebble.event.response.ContentSpamListener
+      </td>
+      <td>
+        Checks the content of new comments for specific regular expressions. If the number of occurences
+        is greater than the threshold, the comment is marked as pending and the comment's spam score is increased by 1 point. This is repeated
+        for the title, author and website properties too.
+        <br /><br />
+        The default threshold for the number of occurences is 0, but can be configured by the <code>ContentSpamListener.threshold</code> plugin property.
+        <br /><br />
+        The list of
+        regular expressions can be configured using the <code>ContentSpamListener.regexList</code> property.
+      </td>
+      </tr>
+
+      <tr class="itemBodyEven">
+      <td valign="top">
+        net.sourceforge.pebble.event.response.SpamScoreListener
+      </td>
+      <td>
+        Checks the spam score of new comments and if greater than the threshold, the comment is marked as rejected.
+        <br /><br />
+        The default threshold is 1, but can be configured by the
+        <code>SpamScoreListener.commentThreshold</code> plugin property.
+      </td>
+      </tr>
+
+      <tr class="itemBodyOdd">
+      <td valign="top">
+        net.sourceforge.pebble.event.response.DeleteRejectedListener
+      </td>
+      <td>
+        Deletes new comments that have been marked as rejected.
+      </td>
+      </tr>
+
+      <tr class="itemBodyEven">
+      <td valign="top">
+        net.sourceforge.pebble.event.response.DisableResponseListener
+      </td>
+      <td>
+        Deletes new comments, effectively disabling the ability for readers to leave comments.
+      </td>
+      </tr>
+      </table>
+      </div>
+
+      <p>
+      To configure the comment listeners used by your blog, simply modify the list on the <a href="plugins.html">plugins page</a>. By default, no comment listeners are used.
+      </p>
+    </td>
+  </tr>
+</table>
+
+@footer@

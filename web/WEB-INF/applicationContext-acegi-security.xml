@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+   <!-- ======================== FILTER CHAIN ======================= -->
+
+  <bean id="filterChainProxy" class="org.acegisecurity.util.FilterChainProxy">
+    <property name="filterInvocationDefinitionSource">
+      <value>
+        CONVERT_URL_TO_LOWERCASE_BEFORE_COMPARISON
+        PATTERN_TYPE_APACHE_ANT
+        /xmlrpc/**=
+        /**=httpSessionContextIntegrationFilter,authenticationProcessingFilter,rememberMeProcessingFilter,securityEnforcementFilter
+      </value>
+    </property>
+  </bean>
+
+   <!-- ======================== AUTHENTICATION ======================= -->
+
+  <bean id="authenticationManager" class="org.acegisecurity.providers.ProviderManager">
+    <property name="providers">
+      <list>
+        <ref local="daoAuthenticationProvider"/>
+        <ref local="rememberMeAuthenticationProvider"/>
+      </list>
+    </property>
+  </bean>
+
+  <bean id="memoryAuthenticationDao" class="org.acegisecurity.userdetails.memory.InMemoryDaoImpl">
+    <property name="userMap">
+      <value>
+        username=password,ROLE_BLOG_OWNER,ROLE_BLOG_CONTRIBUTOR,ROLE_PEBBLE_ADMIN
+        owner=password,ROLE_BLOG_OWNER
+        contributor=password,ROLE_BLOG_CONTRIBUTOR
+        admin=password,ROLE_PEBBLE_ADMIN
+      </value>
+    </property>
+  </bean>
+
+  <bean id="passwordEncoder" class="org.acegisecurity.providers.encoding.Md5PasswordEncoder"/>
+
+  <bean id="saltSource" class="org.acegisecurity.providers.dao.salt.ReflectionSaltSource">
+    <property name="userPropertyToUse" value="getUsername" />
+  </bean>
+
+  <bean id="daoAuthenticationProvider" class="org.acegisecurity.providers.dao.DaoAuthenticationProvider">
+    <property name="userDetailsService"><ref local="memoryAuthenticationDao"/></property>
+    <!-- uncomment the following block to use password encoding
+    <property name="passwordEncoder"><ref local="passwordEncoder"/></property>
+    <property name="saltSource"><ref bean="saltSource"/></property>
+    -->
+  </bean>
+
+   <!-- Automatically receives AuthenticationEvent messages -->
+   <bean id="loggerListener" class="org.acegisecurity.event.authentication.LoggerListener"/>
+
+  <bean id="httpSessionContextIntegrationFilter" class="org.acegisecurity.context.HttpSessionContextIntegrationFilter" />
+
+  <bean id="rememberMeProcessingFilter" class="org.acegisecurity.ui.rememberme.RememberMeProcessingFilter">
+    <property name="rememberMeServices"><ref local="rememberMeServices"/></property>
+  </bean>
+
+  <bean id="rememberMeServices" class="org.acegisecurity.ui.rememberme.TokenBasedRememberMeServices">
+    <property name="userDetailsService"><ref local="memoryAuthenticationDao"/></property>
+    <property name="key"><value>pebble</value></property>
+  </bean>
+
+  <bean id="rememberMeAuthenticationProvider" class="org.acegisecurity.providers.rememberme.RememberMeAuthenticationProvider">
+    <property name="key"><value>pebble</value></property>
+  </bean>
+
+  <bean id="roleVoter" class="org.acegisecurity.vote.RoleVoter" />
+
+   <!-- ===================== HTTP REQUEST SECURITY ==================== -->
+
+  <bean id="securityEnforcementFilter" class="org.acegisecurity.intercept.web.SecurityEnforcementFilter">
+    <property name="filterSecurityInterceptor"><ref local="filterInvocationInterceptor"/></property>
+    <property name="authenticationEntryPoint"><ref local="authenticationProcessingFilterEntryPoint"/></property>
+  </bean>
+
+  <bean id="authenticationProcessingFilter" class="org.acegisecurity.ui.webapp.AuthenticationProcessingFilter">
+    <property name="authenticationManager"><ref bean="authenticationManager"/></property>
+    <property name="authenticationFailureUrl"><value>/loginPage.action?error=true</value></property>
+    <property name="defaultTargetUrl"><value>/</value></property>
+    <property name="filterProcessesUrl"><value>/j_acegi_security_check</value></property>
+    <property name="rememberMeServices"><ref local="rememberMeServices"/></property>
+  </bean>
+
+  <bean id="authenticationProcessingFilterEntryPoint" class="org.acegisecurity.ui.webapp.AuthenticationProcessingFilterEntryPoint">
+    <property name="loginFormUrl"><value>/loginPage.action</value></property>
+    <property name="forceHttps"><value>false</value></property>
+  </bean>
+
+  <bean id="httpRequestAccessDecisionManager" class="org.acegisecurity.vote.AffirmativeBased">
+    <property name="allowIfAllAbstainDecisions"><value>false</value></property>
+    <property name="decisionVoters">
+      <list>
+        <ref bean="roleVoter"/>
+      </list>
+    </property>
+  </bean>
+
+  <!-- Note the order that entries are placed against the objectDefinitionSource is critical.
+  The FilterSecurityInterceptor will work from the top of the list down to the FIRST pattern that matches the request URL.
+  Accordingly, you should place MOST SPECIFIC (ie a/b/c/d.*) expressions first, with LEAST SPECIFIC (ie a/.*) expressions last -->
+  <bean id="filterInvocationInterceptor" class="org.acegisecurity.intercept.web.FilterSecurityInterceptor">
+    <property name="authenticationManager"><ref bean="authenticationManager"/></property>
+    <property name="accessDecisionManager"><ref local="httpRequestAccessDecisionManager"/></property>
+    <property name="objectDefinitionSource">
+      <value>
+        CONVERT_URL_TO_LOWERCASE_BEFORE_COMPARISON
+        PATTERN_TYPE_APACHE_ANT
+        /**/*.secureaction=ROLE_BLOG_OWNER,ROLE_BLOG_CONTRIBUTOR,ROLE_PEBBLE_ADMIN
+        /**/files/=ROLE_BLOG_CONTRIBUTOR
+        /**/images/=ROLE_BLOG_CONTRIBUTOR
+        /**/theme/**=ROLE_BLOG_OWNER
+      </value>
+    </property>
+  </bean>
+
+</beans>

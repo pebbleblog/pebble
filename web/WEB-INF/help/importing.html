@@ -1,0 +1,70 @@
+@header@
+
+<table width="100%" cellspacing="0" cellpadding="8" class="item">
+  <tr class="itemHeader">
+    <td>
+      Importing
+    </td>
+  </tr>
+  <tr class="itemBody">
+    <td>
+
+      <p>
+      Importing content from another blogging system is a fairly straightforward task, particularly if you are able to
+      export the content or have access to the database in which that content is stored.
+      <p>
+
+      <p>
+      <h5>Movable Type</h5>
+      A short program to import content from a Movable Type text export is included in the Pebble distribution. To run it,
+      open a command prompt, navigate to the root directory of the Pebble web application and use the following command (example arguments shown).
+      <pre class="codeSample">java -classpath WEB-INF/lib/pebble.jar:WEB-INF/lib/commons-logging.jar:WEB-INF/lib/lucene-1.4.1.jar:WEB-INF/classes net.sourceforge.pebble.util.importer.MovableTypeImporter (1) (2) (3)
+
+Arguments :
+(1) the location of the Movable Type export file (e.g. ~/MovableTypeExport.txt)
+(2) the location of the Pebble blog to import into (e.g. ~/blog)
+(3) the timezone (e.g. Europe/London)</pre>
+      </p>
+
+      <p>
+      While the program should work, it's not yet been tested against a very wide range of Movable Type blogs. If you
+      find that it doesn't work for you, please just <a href="http://www.simongbrown.com/jira/">raise an issue</a>.
+      </p>
+
+      <p>
+      <h5>Other systems</h5>
+      By default, Pebble stores all blog content as XML files on disk in a directory structure that follows a year/month/day hierarchy. When migrating content to Pebble, rather than manually create directories and XML files, the best approach is to write some Java code that directly uses the Pebble classes because you then get all of this for free. If you can write a short Java program to extract the existing entries, you can use something like the following to import them into Pebble.
+      <pre class="codeSample">DAOFactory.setConfiguredFactory(new FileDAOFactory());
+Blog blog = new Blog("~/pebble-blog/");
+blog.setProperty(Blog.TIMEZONE_KEY, "Europe/London");
+blog.setProperty(Blog.CHARACTER_ENCODING_KEY, "UTF-8");
+
+foreach (existing blog entry) {
+    // get the title, body, date, etc from the old entry
+    String title, body;
+    Date date;
+
+    // create a new Pebble entry, add and store
+    DailyBlog day = blog.getBlogForDay(date);
+    BlogEntry entry = day.createBlogEntry(title, body, date);
+    entry.set...(); // set any other properties
+    day.addEntry(entry);
+    entry.store();
+}</pre>
+      </p>
+
+      <p>
+      Doing something like this will create the relevant files for you, while setting the <code>Blog.TIMEZONE_KEY</code> property on the <code>Blog</code> instance will ensure that your existing blog entries are stored underneath the correct year/month/day structure for your time zone.
+      </p>
+
+      <p>
+      <h5>General notes</h5>
+      After importing your content and starting up Pebble, it's recommended that you rebuild your search index. You can
+      do this by logging in via your browser and clicking on the <b>Utilities</b> link.
+      </p>
+
+    </td>
+  </tr>
+</table>
+
+@footer@

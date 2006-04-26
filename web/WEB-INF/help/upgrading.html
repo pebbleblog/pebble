@@ -1,0 +1,160 @@
+@header@
+
+<table width="100%" cellspacing="0" cellpadding="8" class="item">
+  <tr class="itemHeader">
+    <td>
+      Upgrade Notes
+    </td>
+  </tr>
+  <tr class="itemBody">
+    <td>
+
+      <p>
+      If upgrading to a newer version of Pebble, please ensure that your application/web server working/temporary
+      directories are empty to prevent the following problems occurring.
+      <ul>
+        <li>Compilation errors from JSPs in the supplied themes.</li>
+        <li>Previous versions of pages displayed.</li>
+      </ul>
+      Also, it is recommended that you set your theme back to <b>default</b> as theme incompatibilities between versions
+      can generate errors that are hard to track down and vary between application servers. You should then only start to
+      upgrade your theme or customize an existing one when Pebble has been upgraded.
+      </p>
+
+      <p>
+      <h5>From 1.8 to 1.9</h5>
+      </p>
+
+      <p>
+      After logging in, you will need to convert flat categories to hierarchical categories by using the link on the <b>Utilities</b> page.
+      Following this, you should rebuild your search index so ensure it is up to date.
+      Pebble 1.8 themes are more or less compatible, albeit there are a few minor non-functional look and feel tweaks. The only major change is in the way that categories are displayed in the header of the page (you may get "All" twice).
+      To fix this, substitute the following block in your <code>template.jsp</code> file<br /><br />
+      <div class="codeSample">&lt;div id="categories"&gt;<br />
+      &nbsp;&nbsp;...<br />
+      &lt;/div&gt;</div>
+      <br />with<br /><br />
+      <div class="codeSample">&lt;%@ include file="/common/jsp/categories.jspf" %&gt;</div><br /><br />
+      </p>
+
+      <p>
+      To add a link to the advanced search feature, you can use the following code: <code>&lt;a href="search.action"&gt;&lt;fmt:message key="search.advancedSearch" /&gt;&lt;/a&gt;</code>
+      </p>
+
+      <p>
+      Copy the following styles from the new <code>default/theme.css</code> into your own theme and customise as necessary : .tags, .tags a:link, .tags a:visited, .tags a:active, .tagCloud, .tagCloud1 to .tagCloud10
+      </p>
+
+      <p>
+      <h5>From 1.7.2 to 1.8</h5>
+      </p>
+
+      <p>
+      If you've customized the default template, you will find that the list of selected categories at the top of the page no longer works. To fix this, copy the &lt;div id="categories"&gt; block from the default template (<code>default/jsp/template.jsp</code>) into your own version.
+      </p>
+
+      <p>
+      <h5>From 1.7.1 to 1.7.2</h5>
+      </p>
+
+      <p>
+      To initialise the IP address blacklist and whitelist used by the new IpAddressListener, use the utility provided by clicking <b>Utilities</b> after logging in.
+      </p>
+
+      <p>
+      <h5>From 1.7 to 1.7.1</h5>
+      </p>
+
+      <p>
+      Copy the approved, pending and rejected styles from the default theme to your own theme, if applicable.
+      </p>
+
+      <p>
+      <h5>From 1.6.1 to 1.7</h5>
+      </p>
+
+      <p>
+      Blog entry e-mail notifications are now handled using plugins. To enable this feature, add <code>net.sourceforge.pebble.event.blogentry.EmailNotificationListener</code> to your list of blog entry listeners.
+      </p>
+
+      <p>
+      Blog entry XML-RPC ping notifications are now handled using plugins. To enable this feature, add <code>net.sourceforge.pebble.event.blogentry.XmlRpcNotificationListener</code> to your list of blog entry listeners.
+      </p>
+
+      <p>
+      Comment and TrackBack e-mail notifications are now handled using plugins. To enable these features, add <code>net.sourceforge.pebble.event.comment.EmailNotificationListener</code> and <code>net.sourceforge.pebble.event.trackback.EmailNotificationListener</code> to your list of comment and TrackBack listeners respectively.
+      </p>
+
+      <p>
+      By default, the list of referers is no longer available unless you are logged in, although this can be changed. To do this, simply uncomment the <code>viewReferers</code> line in the <code>/WEB-INF/classes/action.properties</code> file and restart your server.
+      </p>
+
+      <p>
+      Assuming that your theme includes the default versions of the blogEntry.jsp, staticPage.jsp, comment.jsp and trackback.jsp : copy the item, blogEntry, comment and trackback styles from the default theme, modifying any colours, etc as necessary.
+      </p>
+
+      <p>
+      Change references from ${blog.recentResponses} to ${blog.responseManager.recentResponses} (in sidebar.jsp or rightnav.jsp). This also applies to recentComments and recentTrackBacks.
+      </p>
+
+      <p>
+      <h5>From 1.6 to 1.6.1</h5>
+      A new style has been added to the theme stylesheet (theme.css) and should be added into your own version if you are not using one of the supplied themes.
+      <br /><br />
+      <div class="codeSample"><pre>
+  .help, .help a:link, .help a:visited, .help a:active {
+    color: gray;
+    font-weight: bold;
+    font-size: 11px;
+    text-align: right;
+  }</pre></div>
+      </p>
+
+      <p>
+      <h5>From 1.5 to 1.6</h5>
+      Any JSP pages that are simple JSP includes don't need upgrading. Typically, most Pebble users only change the theme.css, template.jsp and rightnav.jsp files, although here are some details on what needs changing if you've changed some of the others too.
+      </p>
+
+      <p>
+      <b>blogEntry.jsp</b><br />
+      Remove <code>&lt;pebble:inCategory&gt;</code> and <code>&lt;/pebble:inCategory&gt;</code> tags<br />
+      Change <code>previousBlogEntry.permalink</code> to <code>previousBlogEntry.localPermalink</code><br />
+      Change <code>nextBlogEntry.permalink</code> to <code>nextBlogEntry.localPermalink</code><br />
+      Change <br /><br />
+      <pre class="codeSample">&lt;a href="javascript:openWindow('editBlogEntry.secureaction?entry=&lt;c:out value="${blogEntry.id}"/&gt;', 'editBlogEntry&lt;%= session.getId()%&gt;', 640, 640);" title="Edit this entry"&gt;Edit&lt;/a&gt;</pre>
+      <br />To <br /><br />
+      <pre class="codeSample">&lt;a href="editBlogEntry.secureaction?entry=&lt;c:out value="${blogEntry.id}"/&gt;" title="Edit this entry"&gt;Edit&lt;/a&gt;</pre>
+
+      </p>
+
+      <p>
+      <b>rightnav.jsp</b><br />
+      Rename <code>rightnav.jsp</code> to <code>sidebar.jsp</code><br />
+      Change <code>viewDailyStatistics.action</code> to <code>viewReferers.action</code><br />
+      Change
+      <pre class="codeSample">&lt;c:forEach var="recentDailyBlog" items="${blog.recentDailyBlogs}" &gt;
+  &lt;c:forEach var="recentDailyBlogEntry" items="${recentDailyBlog.entries}" &gt;
+    &lt;div class="small"&gt;
+      &lt;a href="&lt;c:out value="${recentDailyBlogEntry.permalink}"/&gt;" title="Link to this entry"&gt;&lt;c:out value="${recentDailyBlogEntry.title}"/&gt;&lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/c:forEach&gt;
+&lt;/c:forEach&gt;</pre>
+      <br />To<br /><br />
+      <pre class="codeSample">&lt;c:forEach var="recentBlogEntry" items="${blog.recentBlogEntries}" &gt;
+  &lt;div class="small"&gt;
+    &lt;a href="&lt;c:out value="${recentBlogEntry.permalink}"/&gt;" title="Link to this entry"&gt;&lt;c:out value="${recentBlogEntry.title}"/&gt;&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/c:forEach&gt;</pre><br />
+      Instead of showing just the recent comments, you can now additionally show recent TrackBacks or a combined list of recent responses. See the <code>/jsp/sidebar.jsp</code> page in the default theme for the code for this.
+      </p>
+
+      <p>
+      <b>template.jsp</b><br />
+      Change <code>&lt;jsp:include page="rightnav.jsp"/&gt;</code> to <code>&lt;jsp:include page="sidebar.jsp"/&gt;</code>
+      </p>
+
+    </td>
+  </tr>
+</table>
+
+@footer@

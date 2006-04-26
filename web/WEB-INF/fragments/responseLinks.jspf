@@ -1,0 +1,8 @@
+<div class="contentItemLinks">
+  <c:if test="${blogEntry.trackBacksEnabled || not empty blogEntry.trackBacks}">
+    <a href="${blogEntry.trackBacksLink}"><fmt:message key="blogentry.trackbacks" />[<fmt:formatNumber value="${blogEntry.numberOfTrackBacks}"/>]</a>
+  </c:if>
+  <c:if test="${blogEntry.commentsEnabled || not empty blogEntry.comments}">
+    <a href="${blogEntry.commentsLink}"><fmt:message key="blogentry.comments" />[<fmt:formatNumber value="${blogEntry.numberOfComments}"/>]</a>
+  </c:if>
+</div>

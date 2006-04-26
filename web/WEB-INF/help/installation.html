@@ -1,0 +1,141 @@
+@header@
+
+<table width="100%" cellspacing="0" cellpadding="8" class="item">
+  <tr class="itemHeader">
+    <td>
+      Specific Server Installation Details
+    </td>
+  </tr>
+  <tr class="itemBody">
+    <td>
+
+      <p>
+      Pebble has been tested on a variety of web/application servers and some of these require additional/alternative installation steps. If you have successfully deployed Pebble on other servers, please <a href="mailto:pebble [at] simongbrown [dot] com">send us an e-mail</a> and we'll update this page.
+      </p>
+
+      <p>
+      <h5>Tomcat 4.1.x/5.0.x/5.5.x</h5>
+      Please see the <a href="getting-started.html">getting started</a> instructions that are written with Tomcat in mind.
+      </p>
+
+      <p>
+      <h5>JBoss 3.x/Tomcat 4.1.x</h5>
+      Here's a summary of the steps required to get Pebble working, based on a default installation and assuming that you are deploying the web application to a web context called <code>/blog</code>.
+      <ul>
+        <li>Copy the expanded WAR file to the <code>$JBOSS_HOME/server/default/deploy directory</code>, in a subdirectory called <code>blog</code>.</li>
+        <li>Edit the <code>$JBOSS_HOME/server/default/conf/login-config.xml</code> file to specify which login-module to use by adding the following section.</li>
+      <pre>
+      &lt;application-policy name="blog"&gt;
+         &lt;authentication&gt;
+           &lt;login-module code="org.jboss.security.auth.spi.UsersRolesLoginModule" flag="required" /&gt;
+         &lt;/authentication&gt;
+      &lt;/application-policy&gt;</pre></li>
+        <li>Create a <code>users.properties</code> file underneath the <code>WEB-INF/classes</code> directory to specify the users for this webapp.</li>
+      <pre>
+      # users.properties file has user=password pairs
+      simon=password</pre></li>
+        <li>Create a <code>roles.properties</code> file underneath the <code>WEB-INF/classes</code> directory to transformer users to roles for this webapp.</li>
+      <pre>
+      # roles.properties has user=role,role2,roleN pairs
+      simon=blog-owner,blog-contributor</pre></li>
+        <li>Create a jboss-web.xml file underneath the <code>WEB-INF</code> directory to specify the security domain.
+      <pre>
+      &lt;jboss-web&gt;
+        &lt;security-domain&gt;java:/jaas/blog&lt;/security-domain&gt;
+      &lt;/jboss-web&gt;</pre></li>
+      </ul>
+      All that these additional steps do is specify which authentication mechanism you want to use so that navigating to a protected page results in an authentication request.
+      </p>
+
+      <p>
+      <h5>Resin 2.1.x</h5>
+      Here's a summary of the steps required to get Pebble working on a default installation of Resin 2.1.x, assuming that you plan to install it to a web context of <code>/blog</code>.
+      <ul>
+        <li>As with Tomcat, you can either extract the Pebble WAR file underneath the <code>$RESIN_HOME/webapps</code> directory, or anywhere on your disk.</li>
+        <li>Assuming that you've extracted Pebble somewhere other than the <code>webapps</code> directory, open up the <code>$RESIN_HOME/conf/resin.conf</code> file and insert the following XML before the closing <code>host</code> tag, changing the <code>id</code> and <code>app-dir</code> attributes as necessary. In addition to this, you can set up the users that you need for your blog. In the example below is a single user that is both a <code>blog-owner</code> and <code>blog-contributor</code>.
+      <pre>
+      &lt;web-app id='blog' app-dir='/Users/simon/pebble'&gt;
+        &lt;authenticator&gt;
+          &lt;class-name&gt;com.caucho.http.security.XmlAuthenticator&lt;/class-name&gt;
+          &lt;init-param user='simon:password:blog-owner,blog-contributor'/&gt;
+        &lt;/authenticator&gt;
+      &lt;/web-app&gt;</pre></li>
+      </ul>
+      </p>
+
+      <p>
+      <h5>Resin 3.0.x</h5>
+      Here's a summary of the steps required to get Pebble working on a default installation of Resin 3.0.x, assuming that you plan to install it to a web context of <code>/blog</code>. Essentially, deploying a webapp on Resin 3.0.x is the same as deploying to Resin 2.1.x although it uses a slightly different syntax.
+      <ul>
+        <li>As with Tomcat, you can either extract the Pebble WAR file underneath the <code>$RESIN_HOME/webapps</code> directory, or anywhere on your disk.</li>
+        <li>Assuming that you've extracted Pebble somewhere other than the webapps directory, open up the <code>$RESIN_HOME/conf/resin.conf</code> file and insert the following XML before the closing <code>host</code> tag, changing the <code>id</code> and <code>document-directory</code> attributes as necessary. In addition to this, you can set up the users that you need for your blog. In the example below is a single user that is both a <code>blog-owner</code> and <code>blog-contributor</code>.
+      <pre>
+      &lt;web-app id='blog' document-directory='/Users/simon/pebble'&gt;
+        &lt;jsp fast-jstl='false'/&gt;
+        &lt;authenticator&gt;
+          &lt;type&gt;com.caucho.server.security.XmlAuthenticator&lt;/type&gt;
+          &lt;init&gt;
+            &lt;user&gt;simon:password:blog-owner,blog-contributor&lt;/user&gt;
+            &lt;password-digest&gt;none&lt;/password-digest&gt;
+          &lt;/init&gt;
+        &lt;/authenticator&gt;
+      &lt;/web-app&gt;</pre>The second line in the above snippet is important, since it disables Resin's JSTL implementation, which works in a slightly different way to the bundled Apache implementation.</li>
+      </ul>
+      </p>
+
+      <p>
+      <h5>Jetty 4.2.x</h5>
+      Here's a summary of the steps required to get Pebble working on a default installation of Jetty 4.2.x.
+      <ul>
+        <li>Extract the WAR file to the <code>$JETTY_HOME/webapps</code> directory.</li>
+        <li>Define the security realm in the <code>$JETTY_HOME/etc/jetty.xml</code> file (the example below uses a simple username/password pair in plain text).
+      <pre>
+      &lt;Call name="addRealm"&gt;
+        &lt;Arg&gt;
+          &lt;New class="org.mortbay.http.HashUserRealm"&gt;
+            &lt;Arg&gt;Pebble Realm&lt;/Arg&gt;
+            &lt;Put name="simon"&gt;password&lt;/Put&gt;
+            &lt;Call name="addUserToRole"&gt;
+              &lt;Arg&gt;simon&lt;/Arg&gt;
+              &lt;Arg&gt;blog-owner&lt;/Arg&gt;
+            &lt;/Call&gt;
+            &lt;Call name="addUserToRole"&gt;
+              &lt;Arg&gt;simon&lt;/Arg&gt;
+              &lt;Arg&gt;blog-contributor&lt;/Arg&gt;
+            &lt;/Call&gt;
+            &lt;Put name="anotheruser"&gt;password&lt;/Put&gt;
+            &lt;Call name="addUserToRole"&gt;
+              &lt;Arg&gt;anotheruser&lt;/Arg&gt;
+              &lt;Arg&gt;blog-contributor&lt;/Arg&gt;
+            &lt;/Call&gt;
+          &lt;/New&gt;
+        &lt;/Arg&gt;
+      &lt;/Call&gt;</pre></li>
+      </ul>
+      If you are deploying Pebble to Jetty, it is important that you do define a security role before starting up the server. If you don't, you'll get the error page (indicating that "something has gone wrong") when you try to access a secure page.
+      </p>
+
+      <p>
+      <h5>Jetty 5.0.x</h5>
+      Follow the steps for Jettey 4.2.x and then, before starting, remove the following files from <code>/WEB-INF/lib</code>.
+      <ul>
+        <li>commons-logging-api.jar</li>
+        <li>commons-logging.jar</li>
+        <li>log4j.jar</li>
+      </ul>
+      </p>
+
+      <p>
+      <h5>BEA WebLogic 8.1</h5>
+      The normal installation instructions should be followed, with the exception that all security role names shouldn't contain the hyphen character. The easiest way to do this is open the <code>web.xml</code> file and search/replace <code>blog-owner</code> for <code>blog_owner</code> and <code>blog-contributor</code> for <code>blog_contributor</code>. These new role names should then be used when setting up users in the security realm.
+      </p>
+
+      <p>
+      <h5>Orion 1.x and 2.x</h5>
+      Unfortunately, at the time of writing, deployment to Orion is not supported due to a number of bugs in their implementation of the Servlet specification.
+      </p>
+    </td>
+  </tr>
+</table>
+
+@footer@

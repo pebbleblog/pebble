@@ -1,0 +1,104 @@
+@header@
+
+<table width="100%" cellspacing="0" cellpadding="8" class="item">
+  <tr class="itemHeader">
+    <td>
+      Configuring your Blog
+    </td>
+  </tr>
+  <tr class="itemBody">
+    <td>
+      <p>
+      With your blog up and running, the next thing to do is configure and customize its properties, categories and so on. This is performed through your web browser, but before doing this you will need to login. To do this, click the <b>Login</b> link at the bottom of the page and you will be presented with a login form.
+      Enter the username and password you defined earlier in your server security realm. If successful, new <b>Blog administration</b> links will appear towards the top of the page.
+      <div align="center">
+      <img src="./images/configuration-1.png" />
+      </div>
+      </p>
+
+      <p>
+      There are various properties and characteristics that can be customized for your blog. These include the name of your blog, setting your time zone, etc. To edit these properties, click the <b>Blog properties</b> link. This will open a new page in which the blog properties can be edited.
+      <div align="center">
+      <img src="./images/configuration-2.png" />
+      </div>
+      </p>
+
+      <p>
+      To edit the properties, just change the values and click the <b>Save Properties</b> button when done. The following table describes each of the properties.
+      </p>
+
+      <p>
+      <h5>General blog properties</h5>
+      <table border="1">
+      <tr><td><b>Name</b></td><td><b>Description</b></td><td><b>Default Value</b></td></tr>
+      <tr><td>Name</td><td>The name of your blog.</td><td>My blog</td></tr>
+      <tr><td>Description</td><td>The description of your blog.</td><td>My blog description</td></tr>
+      <tr><td>Image</td><td>A URL pointing to an image for your blog, typically used by news readers and aggregators.</td><td>http://pebble.sourceforge.net/common/images/powered-by-pebble.gif</td></tr>
+      <tr><td>Author</td><td>Your name.</td><td>Blog Owner</td></tr>
+      <tr><td>Theme</td><td>The name of the theme to be used.</td><td>default</td></tr>
+      <tr><td>Recent blog entries</td><td>The number of recent blog entries to show on the home page.</td><td>3</td></tr>
+      <tr><td>Recent comments/TrackBacks</td><td>The number of recent comments/TrackBacks to show on all pages.</td><td>0</td></tr>
+      </table>
+      </p>
+
+      <p>
+      <h5>Internationalization and localization</h5>
+      <table border="1">
+      <tr><td><b>Name</b></td><td><b>Description</b></td><td><b>Default Value</b></td></tr>
+      <tr><td>Country</td><td>The country in which you reside, as a two letter ISO code.</td><td>GB</td></tr>
+      <tr><td>Language</td><td>The language of your blog, as a two letter ISO code.</td><td>en</td></tr>
+      <tr><td>Time zone</td><td>The time zone in which you reside.</td><td>Europe/London</td></tr>
+      <tr><td>Character encoding</td><td>The character encoding that your pages are displayed in.</td><td>UTF-8</td></tr>
+      <tr><td>Lucene Analyzer</td><td>The name of the class used for indexing and searching your blog. If your blog content is written with non-latin character sets, you may get better search results by editing this property. See <a href="http://jakarta.apache.org/lucene/">the Lucene website</a> for more information about analyzers.</td><td>org.apache.lucene.analysis.standard.StandardAnalyzer</td></tr>
+      </table>
+      </p>
+
+      <p>
+      <h5>Security</h5>
+      <table border="1">
+      <tr><td><b>Name</b></td><td><b>Description</b></td><td><b>Default Value</b></td></tr>
+      <tr><td>Blog owners</td><td>A comma separated list of usernames for those users that are blog owners for this blog. This is used when Pebble runs in multi-user mode.</td><td></td></tr>
+      <tr><td>Blog contributors</td><td>A comma separated list of usernames for those users that are blog contributors for this blog. This is used when Pebble runs in multi-user mode.</td><td></td></tr>
+      </table>
+      </p>
+
+      <p>
+      <a name="emailNotifications"><h5>E-mail notifications</h5></a>
+      <table border="1">
+      <tr><td><b>Name</b></td><td><b>Description</b></td><td><b>Default Value</b></td></tr>
+      <tr><td>E-mail address</td><td>A comma separated list of e-mail addresses that will receive notifications when new blog entries/comments/TrackBacks are posted.</td><td>blog@yourdomain.com</td></tr>
+      <tr><td>SMTP host</td><td>The name/IP address of the server through which e-mail is sent, or a JNDI name starting java:/comp/env pointing to a preconfigured javax.mail.Session instance.</td><td></td></tr>
+      </table>
+      </p>
+
+      <p>
+      <a name="xmlrpcNotifications"><h5>XML-RPC update notification pings</h5></a>
+      <table border="1">
+      <tr><td><b>Name</b></td><td><b>Description</b></td><td><b>Default Value</b></td></tr>
+      <tr><td>Websites to ping</td><td>A whitespace (i.e. space or carriage return) separated list of those websites that should be pinged if notifications are enabled.</td><td></td></tr>
+      </table>
+      </p>
+
+      <p>
+      <h5>Blogger and MetaWeblog APIs</h5>
+      <table border="1">
+      <tr><td><b>Name</b></td><td><b>Description</b></td><td><b>Default Value</b></td></tr>
+      <tr><td>Posting to blog via XML-RPC API</td><td>Enables or disables posting of blog entries via the Blogger API.</td><td>Disabled</td></tr>
+      <tr><td>Username</td><td>The username that should be used for authentication of XML-RPC requests.</td><td></td></tr>
+      <tr><td>Password</td><td>The password that should be used for authentication of XML-RPC requests.</td><td></td></tr>
+      </table>
+      </p>
+
+      <p>
+      <h5>Multi-user properties (available in multi-user mode only)</h5>
+      <table border="1">
+      <tr><td><b>Name</b></td><td><b>Description</b></td><td><b>Default Value</b></td></tr>
+      <tr><td>Public/Private blog</td><td>Enables or disables aggregation of this blog in both the multi-user home page and feeds.</td><td>Public</td></tr>
+      </table>
+      </p>
+
+    </td>
+  </tr>
+</table>
+
+@footer@

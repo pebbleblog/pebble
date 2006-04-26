@@ -1,0 +1,21 @@
+<c:choose>
+
+  <c:when test="${displayMode == 'detail' && blogEntry.type == 0}">
+  <div id="linearNavigationLinks">
+    <c:if test="${not empty blogEntry.previousBlogEntry}">
+      &lt;&lt; <a href="${blogEntry.previousBlogEntry.localPermalink}">${blogEntry.previousBlogEntry.title}</a> |
+    </c:if>
+    <a href="${blog.url}"><fmt:message key="common.home" /></a>
+    <c:if test="${not empty blogEntry.nextBlogEntry}">
+      | <a href="${blogEntry.nextBlogEntry.localPermalink}">${blogEntry.nextBlogEntry.title}</a> &gt;&gt;
+    </c:if>
+  </div>
+  </c:when>
+
+  <c:otherwise>
+  <div id="linearNavigationLinks">
+    <a href="${blog.url}"><fmt:message key="common.home" /></a>
+  </div>
+  </c:otherwise>
+
+</c:choose>

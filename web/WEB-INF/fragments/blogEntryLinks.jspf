@@ -1,0 +1,39 @@
+<div class="contentItemLinks">
+  <c:if test="${displayMode != 'preview'}">
+
+    <pebble:isBlogOwnerOrContributor>
+    <form name="blogEntryForm" action="manageBlogEntry.secureaction" method="post">
+      <input type="hidden" name="entry" value="${blogEntry.id}" />
+    </pebble:isBlogOwnerOrContributor>
+
+    <pebble:isBlogContributor>
+      <input type="submit" name="submit" value="Edit" />
+    </pebble:isBlogContributor>
+
+    <pebble:isBlogOwnerOrContributor>
+      <input type="checkbox" name="confirm" value="true" />
+    </pebble:isBlogOwnerOrContributor>
+
+    <pebble:isBlogOwner>
+    <c:if test="${blogEntry.pending}">
+      <input type="submit" name="submit" value="Approve" />
+      <input type="submit" name="submit" value="Reject" />
+    </c:if>
+    <c:if test="${blogEntry.rejected}">
+      <input type="submit" name="submit" value="Approve" />
+    </c:if>
+    <c:if test="${blogEntry.approved}">
+      <input type="submit" name="submit" value="Reject" />
+    </c:if>
+    </pebble:isBlogOwner>
+
+    <pebble:isBlogContributor>
+      <input type="submit" name="submit" value="Remove" />
+    </pebble:isBlogContributor>
+
+    <pebble:isBlogOwnerOrContributor>
+    </form>
+    </pebble:isBlogOwnerOrContributor>
+
+  </c:if>
+</div>

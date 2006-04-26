@@ -1,0 +1,65 @@
+@header@
+
+<table width="100%" cellspacing="0" cellpadding="8" class="item">
+  <tr class="itemHeader">
+    <td>
+      Blog Entry Listeners
+    </td>
+  </tr>
+  <tr class="itemBody">
+    <td>
+      <p>
+      Blog entry listeners are a type of Pebble plugin that allow custom code to be called
+      whenever a blog entry is added or removed. The following blog entry listeners are included with the Pebble distribution.
+      </p>
+
+      <div class="centeredBlock">
+      <table width="100%" cellspacing="0" cellpadding="8">
+
+      <tr class="itemBodyOdd">
+      <td valign="top">
+        net.sourceforge.pebble.event.blogentry.EmailNotificationListener
+      </td>
+      <td>
+        Sends a notification e-mail when a new blog entry is added or changed.<br /><br />The list of recipients can be specified in the <a href="configuration.html#emailNotifications">E-mail notifications</a> section of the blog properties page.
+      </td>
+      </tr>
+
+      <tr class="itemBodyEven">
+      <td valign="top">
+        net.sourceforge.pebble.event.blogentry.XmlRpcNotificationListener
+      </td>
+      <td>
+        Sends an <a href="update-pings.html">XML-RPC update notification ping</a> when a blog entry is added.<br /><br />The list of websites can be specified in the <a href="configuration.html#xmlrpcNotifications">XML-RPC update notifications</a> section of the blog properties page.
+      </td>
+      </tr>
+
+      <tr class="itemBodyOdd">
+      <td valign="top">
+        net.sourceforge.pebble.event.blogentry.MarkPendingListener
+      </td>
+      <td>
+        Marks all new and changed blog entries with a status of pending so that they require approval from the blog owner before being published on the blog. Only the following subset of
+        properties, when changed, will cause a blog entry to be marked as pending.
+        <ul>
+        <li>Title</li>
+        <li>Excerpt</li>
+        <li>Body</li>
+        <li>Categories</li>
+        <li>Original permalink</li>
+        <li>Attachment</li>
+        </ul>
+      </td>
+      </tr>
+
+      </table>
+      </div>
+
+      <p>
+      To configure the blog entry listeners used by your blog, simply modify the list on the <a href="plugins.html">plugins page</a>. By default, no blog entry listeners are used.
+      </p>
+    </td>
+  </tr>
+</table>
+
+@footer@

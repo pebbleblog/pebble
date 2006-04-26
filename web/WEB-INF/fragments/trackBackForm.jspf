@@ -1,0 +1,33 @@
+<c:if test="${blogEntry.trackBacksEnabled}" >
+  <pebble:isBlogContributor>
+
+    <div>
+    <b>Send a TrackBack</b> (<span class="help"><a href="${pageContext.request.contextPath}/docs/trackbacks.html" target="_blank">Help</a></span>)
+    <br /><br />
+
+    <form name="sendTrackBack" action="sendTrackBack.secureaction" method="post" accept-charset="<c:out value="${blog.characterEncoding}" />">
+    <input type="hidden" name="entry" value="<c:out value="${blogEntry.id}"/>" />
+    <table width="99%">
+      <tr>
+        <td valign="top"><b>TrackBack URL</b></td>
+        <td><input type="text" name="url" size="50" /></td>
+      </tr>
+
+      <tr>
+        <td valign="top"><b>Excerpt</b></td>
+        <td>
+          <textarea name="excerpt" rows="8" cols="40"><c:out value="${blogEntry.truncatedContent}"/></textarea>
+        </td>
+      </tr>
+
+      <tr>
+        <td colspan="2" align="right">
+          <input name="submit" type="submit" Value="Send TrackBack" />
+        </td>
+      </tr>
+    </table>
+    </form>
+    </div>
+
+  </pebble:isBlogContributor>
+</c:if>

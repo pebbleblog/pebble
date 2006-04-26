@@ -1,0 +1,111 @@
+<div class="contentItem">
+
+  <div class="contentItemLinks">
+    <a href="${pageContext.request.contextPath}/docs/comment-and-trackback-spam.html" target="_blank">Help</a>
+  </div>
+
+  <div class="title">
+  <c:choose>
+    <c:when test="${param.type == 'pending'}">Pending responses</c:when>
+    <c:when test="${param.type == 'rejected'}">Rejected responses</c:when>
+    <c:otherwise>Approved responses</c:otherwise>
+  </c:choose>
+  </div>
+  <div class="subtitle">&nbsp;</div>
+
+  <div class="contentItemBody">
+    <div align="center">
+    <a href="viewResponses.secureaction?type=approved">Approved (<fmt:formatNumber value="${numberOfApprovedResponses}" />)</a> |
+    <a href="viewResponses.secureaction?type=pending">Pending (<fmt:formatNumber value="${numberOfPendingResponses}" />)</a> |
+    <a href="viewResponses.secureaction?type=rejected">Rejected (<fmt:formatNumber value="${numberOfRejectedResponses}" />)</a>
+    </div>
+    <br />
+
+    <c:set var="pageableUrl" value="viewResponses.secureaction?type=${type}" scope="request" />
+    <jsp:include page="/WEB-INF/fragments/pageable.jsp">
+      <jsp:param name="url" value="${pageableUrl}" />
+    </jsp:include>
+    <br />
+
+    <form name="manageResponsesForm" action="manageResponses.secureaction" method="post">
+    <input type="hidden" name="type" value="${param.type}" />
+    <input type="hidden" name="page" value="${page}" />
+
+    <table width="99%" cellspacing="0" cellpadding="4">
+      <c:forEach var="response" items="${pageable.listForPage}" varStatus="status">
+        <c:choose>
+          <c:when test="${status.count % 2 == 0}">
+            <tr class="even">
+          </c:when>
+          <c:otherwise>
+              <tr class="odd">
+          </c:otherwise>
+        </c:choose>
+        <td valign="top" class="small">
+          <input type="checkbox" name="response" value="${response.guid}" />
+        </td>
+        <td valign="top" class="small">
+          <c:if test="${!empty response.sourceLink}">
+            <a href="<c:out value="${response.sourceLink}" escapeXml="true"/>" target="_blank" rel="nofollow"><c:out value="${response.sourceName}" escapeXml="true"/></a>
+          </c:if>
+          <c:if test="${empty response.sourceLink}">
+            <c:out value="${response.sourceName}" escapeXml="true"/>
+          </c:if>
+          <br />
+          <c:if test="${response.class.name == 'pebble.blog.Comment'}">
+          <c:out value="${response.email}" escapeXml="true" default="-" />
+          <br />
+          </c:if>
+          <c:out value="${response.ipAddress}" default="-" />
+        </td>
+        <td valign="top" class="small">
+          <a href="<c:out value="${response.permalink}"/>" title="Go to this response"><c:out value="${response.title}"/></a>
+          <br />
+          <c:out value="${response.truncatedContent}" escapeXml="true" />
+        </td>
+        <td align="right" valign="top" class="small">
+          <fmt:formatDate value="${response.date}" type="date" dateStyle="short"/>
+          <br />
+          <fmt:formatDate value="${response.date}" type="time" timeStyle="short"/>
+        </td>
+      </tr>
+      </c:forEach>
+    </table>
+
+    <br />
+
+    <table width="99%" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="left">
+          <input type="button" value="Check All" onclick="checkAll(document.manageResponsesForm.response)" />
+          <input type="button" value="Uncheck All" onclick="uncheckAll(document.manageResponsesForm.response)" />
+        </td>
+        <td align="right">
+          <c:choose>
+            <c:when test="${param.type == 'pending'}">
+              <input type="submit" name="submit" value="Approve" />
+              <input type="submit" name="submit" value="Reject" />
+              <input type="submit" name="submit" value="Remove" />
+            </c:when>
+            <c:when test="${param.type == 'rejected'}">
+              <input type="submit" name="submit" value="Approve" />
+              <input type="submit" name="submit" value="Remove" />
+            </c:when>
+            <c:otherwise>
+              <input type="submit" name="submit" value="Reject" />
+              <input type="submit" name="submit" value="Remove" />
+            </c:otherwise>
+          </c:choose>
+        </td>
+      </tr>
+    </table>
+
+    </form>
+
+    <c:set var="pageableUrl" value="viewResponses.secureaction?type=${type}" scope="request" />
+    <jsp:include page="/WEB-INF/fragments/pageable.jsp">
+      <jsp:param name="url" value="${pageableUrl}" />
+    </jsp:include>
+  </div>
+
+</div>

@@ -1,0 +1,52 @@
+@header@
+
+<table width="100%" cellspacing="0" cellpadding="8" class="item">
+  <tr class="itemHeader">
+    <td>
+      Private Blogs
+    </td>
+  </tr>
+  <tr class="itemBody">
+    <td>
+
+      <p>
+      Although weblogs are generally a public way of sharing ideas and opinions, there may be times when you want to set up a private blog - perhaps a dedicated project blog or a blog that only family members can access. Since Pebble uses the standard Java Servlet security model, setting up a private blog is straightforward.
+      </p>
+
+      <p>
+      The <code>web.xml</code> file inside the Pebble WAR file contains a block of text like the following that can serve as a starting point.
+      <pre>
+        &lt;!--
+          this is an example of how to setup a private blog
+          (1) set the url-pattern to include the blog(s) you wish to make private
+          (2) set the role-name (this can be anything)
+          (3) configure users in your security realm (app server specific)
+          (4) add the role to the auth-constraint section in the above security constraint
+        --&gt;
+        &lt;security-constraint&gt;
+          &lt;web-resource-collection&gt;
+            &lt;web-resource-name&gt;Private Blog Realm&lt;/web-resource-name&gt;
+            &lt;url-pattern&gt;/privateblog/*&lt;/url-pattern&gt;
+            &lt;http-method&gt;GET&lt;/http-method&gt;
+            &lt;http-method&gt;HEAD&lt;/http-method&gt;
+            &lt;http-method&gt;POST&lt;/http-method&gt;
+          &lt;/web-resource-collection&gt;
+          &lt;auth-constraint&gt;
+            &lt;role-name&gt;privateblog-user&lt;/role-name&gt;
+          &lt;/auth-constraint&gt;
+        &lt;/security-constraint&gt;</pre>
+      </p>
+
+      <p>
+      To define a private blog, you need to modify the <code>url-pattern</code> element. Examples for the value of this element are <code>/*</code> to secure an entire blog in single user mode or all blogs in multi-user mode, or <code>/someblog/*</code> to secure a single blog in multi-user mode. Next, set the value of the <code>role-name</code> element to specify which group of users can access the secured resource and this can be any value. Finally you'll need to define the appropriate users in your application/web server security realm. For Tomcat, users are added to the <code>$TOMCAT_HOME/conf/tomcat-users.xml</code> file. After restarting the server, any attempt to access the URL specified in the <code>url-pattern</code> element will require authentication. If you need to have more than one secure blog, copy this <code>security-constraint</code> section and edit the <code>url-pattern</code> and <code>role-name</code> as appropriate.
+      </p>
+
+      <p>
+      <blockquote><b>Note</b> : In multi-user mode, all blogs will automatically show up on the multi-user front page and their content will appear in the combined news feeds. To stop this from occurring you can mark your blog to be private in the <a href="configuration.html">blog properties</a>.</blockquote>
+      </p>
+
+    </td>
+  </tr>
+</table>
+
+@footer@

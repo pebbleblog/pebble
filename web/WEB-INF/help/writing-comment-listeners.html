@@ -1,0 +1,70 @@
+@header@
+
+<table width="100%" cellspacing="0" cellpadding="8" class="item">
+  <tr class="itemHeader">
+    <td>
+      Writing Comment Listeners
+    </td>
+  </tr>
+  <tr class="itemBody">
+    <td>
+      <p>
+      Comment listeners are a type of Pebble plugin that allow you to write code that is called
+      whenever a comment is added, removed, approved or rejected. To write your own listener, you need to write a Java class that implements the <a href="../javadoc/pebble/event/CommentListener.html">net.sourceforge.pebble.event.comment.CommentListener</a> interface
+      as shown below. To gain access to the associated
+      <a href="../javadoc/pebble/blog/Comment.html">comment</a>, use the <code>getComment()</code> method on the <a href="../javadoc/pebble/event/CommentEvent.html">net.sourceforge.pebble.event.comment.CommentEvent</a> object
+      that is passed to the callback methods.
+      </p>
+
+      <p>
+        An empty implementation is provided by the <a href="../javadoc/pebble/event/comment/CommentListenerSupport.html">net.sourceforge.pebble.event.comment.CommentListenerSupport</a> class, which
+        you can use as a starting point. If you are writing an implementation that is useful for both comments and TrackBacks, you can
+        use the <a href="../javadoc/pebble/event/response/BlogEntryResponseListenerSupport.html">net.sourceforge.pebble.event.response.BlogEntryResponseListenerSupport</a>
+        as a starting point instead, where there are similar blogEntryResponseX() methods.
+      </p>
+
+      <p>
+<pre class="codeSample">package net.sourceforge.pebble.event;
+
+/**
+ * Implemented by classes wanting to be notified of comment events.
+ *
+ * @author Simon Brown
+ */
+public interface CommentListener {
+
+  /**
+   * Called when a comment has been added.
+   *
+   * @param event   a CommentEvent instance
+   */
+  public void commentAdded(CommentEvent event);
+
+  /**
+   * Called when a comment has been removed.
+   *
+   * @param event   a CommentEvent instance
+   */
+  public void commentRemoved(CommentEvent event);
+
+  /**
+   * Called when a comment has been approved.
+   *
+   * @param event   a CommentEvent instance
+   */
+  public void commentApproved(CommentEvent event);
+
+  /**
+   * Called when a comment has been rejected.
+   *
+   * @param event   a CommentEvent instance
+   */
+  public void commentRejected(CommentEvent event);
+
+}</pre>
+      </p>
+    </td>
+  </tr>
+</table>
+
+@footer@
