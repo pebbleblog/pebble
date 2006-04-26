@@ -1,0 +1,454 @@
+Version 2.0 - In Progress
+-------------------------
+Upgrade to Java 5.0, JSP 2.0 and Servlet 2.4 specifications.
+Integrated Acegi security.
+Tags are now space separated instead of comma separated.
+
+Version 1.9 - 8th August 2005
+-----------------------------
+PEB-220 : Would like to be able to override default text from CategoryFilter tag
+PEB-241 : Cannot remove post from all categories
+PEB-251 : too many servlet includes error (Pebble 1.8/Resin 3.0.12)
+PEB-252 : System Error when adding a comment with chinese name
+PEB-254 : Image URL in RSS XML does not exist (404)
+PEB-257 : Referer List and Spam - Add Checkboxes
+PEB-259 : Upgrade Atom syndication to version 1.0.
+Japanese translation, provided by Okura (Pebble JP project).
+Hierarchical category support.
+Tag support.
+Advanced search capability.
+Minor theme tweaks and fixes to build theme.
+Simpler category-based newsfeed URLs.
+Added subtitles to blog entries.
+Added "blog this" bookmarklet.
+Fixed CSS rendering problems in IE with default theme.
+Added a mechanism for linking to static pages using the Radeox decorator.
+HTML encoded entities now permitted in comments and TrackBacks.
+
+Version 1.8 - 21st May 2005
+---------------------------
+PEB-118 : Internationalization (i18n)
+PEB-146 : Should be option for Calendar starting on Sun/Mon
+PEB-236 : Comment preview allow more HTML tags than actual comment
+PEB-237 : Category sticks when moving to other blog
+Simplified Chinese translation, provided by Weiqi Gao.
+Traditional Chinese translation, provided by Kene Lin.
+Danish translation, provided by Laust. Ladefoged.
+Dutch translation, provided by Ron Smits.
+Finnish translation, provided by Lasse Koskela.
+French translation, provided by Valentin Crettaz.
+German translation, provided by Sascha Kohlmann and Gabi Lohmann.
+Hindi translation, provided by Debashish Chakrabarty.
+Italian translation, provided by remagio.
+Norwegian translation, provided by Tor Helland.
+Portuguese translation, provided by Daniel Farinha.
+Spanish translation, provided by Jorge Juan Gómez Basanta.
+Swedish translation, provided by Per von Dolwitz.
+Inclusion of build blog theme.
+
+Version 1.7.2 - 5th April 2005
+------------------------------
+Added IpAddressListener comment/TrackBack plugin for IP address blacklisting and whitelisting.
+Logger is now configurable through the plugins page.
+Added the net.sourceforge.pebble.logging.NullLogger implementation for no-op logging.
+Dates in newsfeeds now use English symbols, as per RFC-822.
+Added a utilities page containing tools useful when upgrading Pebble.
+PEB-221 : Make Comment Administration Pageable and Show All Comments/Trackbacks
+PEB-226 : Provide documentation for pebble tag library
+PEB-227 : Need a Configuration option to turn off loging from pebble.
+PEB-228 : Blog Posts unviewable - Sorry, but there has been a problem
+PEB-230 : Problems in i18n
+PEB-231 : Yearly Log Summary Has Two Marches And No February
+
+Version 1.7.1 - 8th March 2005
+------------------------------
+Added blogEntryChanged, blogEntryApproved and blogEntryRejected to the BlogEntryListener interface.
+Blog entry approval.
+Added headers to /common/jsp/header.jspf to prevent browsers caching pages.
+TrackBacks are now included in the search index.
+Unapproved blog entries, comments and TrackBacks are not included in the search index.
+Quick search now does a client redirect, fixing the bug where a single static page is found and the user received a "page not found".
+Added additional security-role elements to the web.xml file, to prevent warnings being output from some web servers.
+Added a missing span tag in /jsp/blogEntry.jsp.
+Fixed typo in CSS files (.trackBack changed to .trackback).
+PEB-160 : Problems with private single-user blog.
+PEB-171 : "FileBlogEntryDAOTest" unittest failed in non-English environment
+PEB-218 : Pebble crashing after editing properties for a blog in a multi-blog setup
+PEB-222 : Pending entries should be stylized for easier management.
+
+Version 1.7 - 14th February 2005
+--------------------------------
+PEB-217 : Invalid tag value syntax per JSP spec
+Tidied up JSPs in default theme.
+Modified static page JSP to be consistent with the blogEntry JSP.
+Like blog entries, static pages can now have attachments.
+Modified RadeoxDecorator to only render content between <wiki>...</wiki> tags.
+Better localized page titles for day and month summary views.
+Started i18n effort by externalizing "Today" from calendar component.
+Added LoginAndForwardAction.
+Added bulk comment and TrackBack management.
+Fixed bug stopping comment listeners from being fired on nested (threaded) comments.
+Fixed Lucene index lock timeouts.
+
+Version 1.7-beta1 - 2nd February 2005
+-------------------------------------
+PEB-4 : Approvals for comments and TrackBacks
+PEB-129 : Change JSP Table's to Div's
+PEB-192 : Missing instructions regarding upgrading from 1.5 to 1.6 when 1.5 used a custom theme
+PEB-201 : Should be way to break long links/text in comments on main page
+PEB-203 : Honour pubDate element in metaWeblog.newPost
+PEB-204 : Permalinks for static pages not prefixed with blog URL
+PEB-206 : Saw Pebble, fell in love w/it, tried compiling with Tiger, this patch is result to allow that
+PEB-207 : Allow users to select url for xmlrpc ping
+PEB-209 : Referrer "spam" elimination fails to match URLencoded characters
+PEB-211 : Discourage comment spam with attribute (rel="nofollow") in links
+PEB-212 : better parsing of <a href="blah:blah"> in comments
+PEB-213 : Ability to aggregate RSS feeds into Pebble
+PEB-214 : Show referrer spamm when logged in
+Updated documentation and further integrated it with Pebble weblog.
+Blog listener API.
+Blog entry listener API.
+Comment listener API.
+TrackBack listener API.
+Fixed invalid RDF.
+
+Version 1.6.1 - 2nd January 2005
+--------------------------------
+PEB-179 : Support for RSS 2.0 enclosures
+PEB-180 : Friendly javablogs referers
+PEB-184 : HTML looks a mess in trackbacks
+PEB-195 : Improve documentation how to set multiple users/contributors for Jetty
+Added permalink provider plugin API.
+Integrated existing documentation into Pebble weblog.
+
+Version 1.6 - 24th November 2004
+--------------------------------
+PEB-173 : Documentation update
+
+Permalinkable "today" page.
+Multi-blog day/month summary pages and navigation.
+Static pages are now re-indexed when "Rebuild search index" is selected.
+Fixed category page (HTML) titles.
+
+Version 1.6-beta3 - 14th November 2004
+--------------------------------------
+PEB-172 : Pebble not working with j2sdk1.4.2_06 and jdk1.5.0
+PEB-176 : Close blog entry so no additional comments can be made
+Added quick search.
+Disallow addition of TrackBacks if they are enabled.
+
+Version 1.6-beta2 - 25th October 2004
+------------------------------------
+PEB-169 : Pebble should generate link tags for feed formats it supports
+
+Fixed compatibility problem with Resin.
+Fixed compatibility problem with Jetty.
+Websites to ping and blog entry decorators are now whitespace separated.
+Blog entry decorators now more like Servlet Filters with a BlogEntryDecoratorChain.
+Fixed problem where static pages do not save under Tomcat.
+Renamed rightnav.jsp to sidebar.jsp in themes.
+
+Version 1.6-beta1 - 4th October 2004
+------------------------------------
+PEB-77 : Combined referrer stats
+PEB-139 : Referer URL Tracking from RSS Links
+PEB-141 : More significant statistics.
+PEB-143 : Problems with atom:id in atom feed
+PEB-144 : Write log files in a standard format
+PEB-145 : Recent comments should optionally include trackbacks
+PEB-147 : Metadata layout a little convoluted; permalink can get lost in categories
+PEB-150 : For linear browsing, link is wrong for aggregated items
+PEB-152 : export blog to zip could have a better filename
+PEB-154 : Naive attempt to create a template deletes an entry
+PEB-155 : Pebble allows a template with no name
+PEB-156 : Clicking "edit" on a freshly created template screws up
+PEB-157 : Admin panel links do not work when viewing a static page
+PEB-162 : configuration for number of entries on front page rather than number of days
+PEB-165 : Ignore blog owner/contributors hits while posting/managing content
+
+Added WebSphere 5.1.x compatibility.
+Improved performance and memory usage.
+IP address recorded for comments and TrackBacks.
+Reinstated feature where theme is backed upon shutdown.
+Enhanced look and feel.
+Moved action.properties and secure-action.properties to /WEB-INF/classes.
+Added javadoc to distribution.
+Removed <pebble:inCategory> tag.
+First version of blog entry decorators (plugin mechanism for blog entry rendering).
+Fixed compatibility of metaWeblog.getCategories() with specification (and therefore, MarsEdit).
+
+Upgrade note : viewDailyStatistics.action -> viewReferers.action
+Upgrade note : recentTrackBacks
+Upgrade note : recentResponses
+Upgrade note : localPermalink in blogEntry.jsp
+Upgrade note : simplified blogEntry.jsp
+Upgrade note : no more popups for editing blog entries and static pages
+
+Version 1.5.1 - 16th August 2004
+--------------------------------
+PEB-34 : Add support for the XML-RPC MetaWeblog API
+PEB-55 : Resin 3.0.7 throws exception when adding blog entry in multi-user mode
+PEB-98 : Unable to search utf-8 chinese character
+PEB-119 : Max. Upload Filesize
+PEB-131 : getUserInfo() fails with ecto blogging client
+PEB-132 : ChangeCategory.action does not show up in referers
+PEB-133 : Search for russian words fails.
+PEB-137 : Add image element to RSS feeds and allow configuration via blog properties
+PEB-138 : Option to include full blog entry or excerpt in RSS feed
+PEB-140 : Admin panel doesn't appear with classic theme
+PEB-142 : Custom theme info doesn't survive server crashes/abnormal shutdown.
+Upgraded to Jakarta Lucene 1.4.1.
+Moved blog.dir, blog.url and blog.multiUser into /WEB-INF/classes/pebble.properties file.
+
+Version 1.5 - 27th July 2004
+----------------------------
+Added back "Other Blogs" links when running in multi-user mode
+
+Version 1.5-beta3 - 22nd July 2004
+----------------------------------
+PEB-81 : more flexible/configurable and informative multi-user index
+PEB-101 : Leave the "save as field" blank
+PEB-121 : Multi-user search
+PEB-122 : Tidy up previewing of blog entries and comments
+PEB-123 : Tidy up admin panel
+PEB-125 : Export of blog via RSS/RDF/Atom
+PEB-126 : Update documentation
+PEB-127 : Add ability to edit multi-user blog properties via web interface
+
+Version 1.5-beta2 - 8th July 2004
+---------------------------------
+PEB-114 : Edit and remove links don't work on static pages
+PEB-115 : Login to Pebble failed
+PEB-116 : File manager pages don't work on Resin
+Switched majority of logging info() statements to debug().
+Added pebble.log file in log4j.properties configuration file.
+
+Version 1.5-beta1 - 7th July 2004
+---------------------------------
+PEB-56 : Calendar next month not a link
+PEB-72 : Static page support (was Story support)
+PEB-76 : more fine-grained CSS in tag-generated HTML
+PEB-78 : index of comments
+PEB-79 : linear post navigation
+PEB-83 : configurable default category settings
+PEB-85 : version number on the multi-user index page, please
+PEB-89 : Store "draft" posts for later publishing
+PEB-91 : Hits and referers logged for opted out blogs when requesting multi-user feeds
+PEB-95 : Allow multiple e-mail addresses for comment/TrackBack/blog entry notifications
+PEB-99 : Add role mapping for pebble-admin in PebbleContextListener & web.xml
+PEB-102 : Reloading blog restores old version of theme
+PEB-103 : Blog entry email not sent with XML-RPC API
+PEB-104 : Comment permalinks
+PEB-105 : RSS 2.0 feed that includes comments
+PEB-106 : Threaded comments
+PEB-107 : Support for posting to a category in XML-RPC Blogger API
+PEB-109 : Printable blog entries and static pages
+PEB-110 : Friendly Google referers
+PEB-111 : Extra cr hex(od) added to blog entries whenever Pebble is restarted.
+PEB-112 : Days in calendar should be localized
+PEB-113 : Blog entry excerpts
+
+Version 1.4.2_01 - 2nd May 2004
+-------------------------------
+PEB-74 : XML Feeds are not working
+
+Version 1.4.2 - 30th April 2004
+-------------------------------
+PEB-42 : Export of blog via the web interface
+PEB-43 : Export of theme via the web interface
+PEB-44 : Add ability to upload files as well as images
+PEB-46 : Support for adding and uploading new files to the theme
+PEB-48 : special <escape> text to display HTML/JSP source in blog entry
+PEB-58 : Support for storing/downloading arbitary files
+PEB-60 : "Last modified" field on multi-user index page should be blank if no entries have been made
+PEB-61 : Add "back to index" link to multi-user blogs
+PEB-62 : Allow blogs to opt out of aggregation
+PEB-64 : Ant error in CVS
+PEB-65 : Add user security
+PEB-66 : Feeds containing international characters don't validate
+PEB-67 : TrackBacks don't send international characters properly
+PEB-68 : Remember me
+PEB-71 : Shorter feed URLs
+Changed comment previewing slightly.
+
+Version 1.4.1_01 - 12th April 2004
+----------------------------------
+Patched a security hole.
+
+Version 1.4.1 - 6th April 2004
+------------------------------
+PEB-3 : Add Atom syndication support
+PEB-19 : Allow entry of SMTP Auth Settings
+PEB-27 : Move RSS generation from Java class to JSP
+PEB-28 : Relative links get transformed with double slashes in the RSS feed
+PEB-29 : Pebble doesn't support UTF-8 / international text
+PEB-30 : Add RDF Site Summary (RSS) 1.0 syndication support
+PEB-32 : multi-user aggregate html/atom/rss feed
+PEB-33 : Add support for the XML-RPC Blogger API
+PEB-38 : Pebble cannot find the default jsp template with Resin 3.0.6 os OS X
+PEB-39 : Documentation section 13.2 should include "Resin 3.0.x" in title also
+PEB-40 : Template support
+PEB-41 : Session timeout while composing a blog entry causes an error
+PEB-45 : Custom themes should be stored under the blog.dir directory
+PEB-49 : send email upon creation of new blog entry
+PEB-53 : Error page displayed instead of 404 when requesting non-existent blog entry
+PEB-54 : Move log4j.properties into WEB-INF/classes
+RSS 2.0 feed available via /rss.xml or /feed.xml?flavor=rss20
+Atom feed available via /feed.xml?flavor=atom
+RDF feed available via /feed.xml?flavor=rdf
+Upgraded JSTL to version 1.0.5.
+Changed references from rootBlog to blog in all JSP pages.
+Added session timeout of 60 minutes in the web.xml file.
+Added "simple" theme.
+
+Version 1.4 - 22nd February 2004
+--------------------------------
+Minor changes to the look and feel of common pages (such as login, error, etc).
+PEB-1 : Application server specific installation details
+PEB-26 : Blog entry confirmation says websites have been pinged
+
+Version 1.4-beta3 - 15th February 2004
+--------------------------------------
+Removed <pebble:getProperty> tag - use <c:out value="${pebbleProperties.version}"/> instead.
+Modified look and feel slightly, particularly on the admin interface.
+PEB-10 : Create/Edit blog entry window opens too small
+PEB-11 : URL lacking ending slash causes exception
+PEB-21 : Use a textarea for specifying websites to ping via XML-RPC
+PEB-22 : Build error from CVS
+PEB-23 : All instances of ./ in a blog entry are replaced in the RSS feed
+PEB-24 : template.jsp
+
+Version 1.4-beta2 - 6th February 2004
+-------------------------------------
+Added useful links to the admin panel.
+PEB-2 : Remove Comment and TrackBack links from RSS feed
+PEB-5 : Invalid day of 31 specified
+PEB-7 : Blog entry (started before midnight, posted after midnight) cannot be viewed or edited
+PEB-8 : Timezones should be sorted alphabetically in Edit Properties
+PEB-12 : Add message to indicate when no comments have been added to a blog entry
+PEB-13 : Add message to indicate when no TrackBacks have been added to a blog entry
+PEB-14 : Comments/trackbacks dialog boxes for different Pebble based weblogs share target name
+PEB-15 : Edit Theme uses username, not theme name
+PEB-16 : Choosing the "Simon" theme breaks user's blog
+PEB-18 : Some referer filters can't be removed
+
+Version 1.4-beta1 - 11th January 2004
+-------------------------------------
+Usability enhancements over entire application (e.g. editing blog entries, properties, categories, etc).
+Made Pebble easier to install by removing the need to define a blog.properties file upfront.
+Added a PDF user guide.
+Added support for MovableType TrackBacks.
+Added full multi-user support (hosting multiple blogs from a single webapp instance).
+Added logout feature.
+Added ability to capture e-mail addresses for user leaving comments.
+Notification of new comments are sent to all those that leave their e-mail address.
+Comments can be enabled or disabled on an individual blog entry basis.
+TrackBacks can be enabled or disabled on an individual blog entry basis.
+Added some buttons to easily add simple HTML tags - bold, italic, link, image, etc.
+Main window refreshes on addition of new comments.
+Main window refreshes when a blog entry is added/edited.
+Major internal refactoring of the object and persistence models.
+Referer and visited page counts on the referers page now reflect the filtered totals.
+Added ability to remove an e-mail address to stop notifications being sent when new comments are added to a particular blog entry.
+For privacy, comment notification e-mails now BCC all recipients (except blog owner).
+Upgraded to Jakarta Commons FileUpload 1.0 final release.
+Added blog entry dates into the search indexes.
+Editing categories is now a blog contributor rather than blog owner feature.
+Added a work-around for inconsistencies in the implementation of Servlet 2.3 security between vendors.
+Fixed content types for RSS and image actions.
+Navigating to /images directly now returns a 403 - Forbidden response instead of throwing an exception.
+Added conditional GET to RSS feed (i.e. HTTP 304 returned if blog not changed since last request).
+Added TrackBack and Comment links to blog entry descriptions in RSS feeds.
+Added ability to send update notification pings via XML-RPC to any weblogs.com compatible website.
+Bug fix : Correct JSP is saved when a theme is edited (only affected Caucho Resin)
+Bug fix : Current category is reset when a blog entry is requested via a permalink.
+
+Version 1.3 - 21st September 2003
+---------------------------------
+Added referer filtering mechanism based upon regular expressions.
+Added ability to modify the CSS/JSP/HTML used in the current theme.
+Added some useful notes/instructions on the pages to edit properties, categories, etc.
+Changed permalink format from /yyyy/mm/dd.html#blogId to /yyyy/mm/dd/blogId.html - old permalinks will still work in the same way.
+Added a division between the blog owner and contributors by an additional security role and constraints.
+
+Version 1.2 - 1st September 2003
+--------------------------------
+Added partial (XML-RPC) Blogger API support.
+Fixed bug where previewing edits of blog entries actually modified the live entry.
+Added support for category filtering.
+Added support for aggregated blog entries.
+
+Version 1.1 - 16th July 2003
+----------------------------
+Blog entries can now be organised into zero or more categories.
+RSS feeds can be requested for a single category.
+Blog entries now have authors (i.e. the logged-in user).
+Images within the blog can now be in subdirectories (of the images directory).
+Fixed bug where HTML characters were sometimes being escaped when continuously previewing entries prior to posting.
+
+Version 1.0.0 - 3rd June 2003
+-----------------------------
+No changes.
+
+Version 1.0.0-b8 - 2nd June 2003
+--------------------------------
+RSS feed now outputs more than just todays blog entries. Instead it outputs all entries on the home page.
+
+Version 1.0.0-b7 - 1st June 2003
+--------------------------------
+Fixed problem of adding a new entry to an unindexed blog - the index is now created if it didn't already exist.
+
+Version 1.0.0-b6 - 31st May 2003
+--------------------------------
+Fixed RSS timezone compliance problem.
+
+Version 1.0.0-b5 - 31st May 2003
+--------------------------------
+Fixed casing problems with attributes for JSTL <fmt:formatDate> tag (this affected Resin).
+Fixed missed reference to error page.
+
+Version 1.0.0-b4 - 30th May 2003
+--------------------------------
+Fixed error and 404 pages.
+
+Version 1.0.0-b3 - 30th May 2003
+--------------------------------
+Fixed bug where RSS not showing blog timezone (was showing timezone of server, not blog).
+
+Version 1.0.0-b2 - 30th May 2003
+--------------------------------
+Minor fixes with themes.
+
+Version 1.0.0-b1 - 29th May 2003
+--------------------------------
+Additional sorting on referers and visited pages - now alphabetical if counts are the same.
+Added blog searching with Lucene.
+Added support for themes.
+
+Version 0.9.6 - 26th May 2003
+-----------------------------
+Added ability to send an XML-RPC ping to weblogs.com to indicate that the blog has been updated (enabled by setting the blog property pingWeblogs to true, false by default).
+Referers and visited pages are now persistent (stored in a file called referers.txt and visited-pages.txt under the appropriate directory in the blog).
+
+Version 0.9.5 - 25th May 2003
+-----------------------------
+Fixes bug where invalid RSS containing relative links was being generated.
+
+Version 0.9.4 - 24th May 2003
+-----------------------------
+Now uses Jakarta Commons Logging for logging info, errors, etc.
+Added changes.txt file to the distribution.
+
+Version 0.9.3 - 23rd May 2003
+-----------------------------
+Changed default timezone from GMT to Europe/London.
+Added an author property to the blog.
+
+Version 0.9.2 - 22nd May 2003
+-----------------------------
+Added country and language properties for the blog.
+Dates and times are now localised according to the blog properties.
+
+Version 0.9.1 - 21st May 2003
+-----------------------------
+Moved blog images from web application into blog.dir/images.
