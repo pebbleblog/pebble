@@ -1,0 +1,109 @@
+body {
+  font-family: Lucida Grande, Verdana, Tahoma, Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  background : white;
+  color : black;
+  text-align: left;
+  border-top: solid silver 1px;
+  border-right: solid silver 1px;
+  border-bottom: solid silver 1px;
+  border-left: solid silver 1px;
+  margin: 16px;
+}
+h5 {
+  font-size: 12px;
+  font-weight: bold;
+}
+blockquote {
+  font-style: italic;
+}
+.small {
+  font-size: 11px;
+}
+a:link, a:visited, a:active {
+  color: gray;
+  font-weight: bold;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+.header {
+  background : white;
+  color: black;
+  background-position: center;
+  background-repeat: no-repeat;
+  font-weight: bold;
+}
+.header a:link, .header a:visited, .header a:active {
+  color : white;
+}
+.bodyContent {
+  background : white;
+}
+.bodyContentEven {
+  background: lightgrey;
+}
+.bodyContentOdd {
+  background: white;
+}
+.footer, .footer a:link, .footer a:visited, .footer a:active {
+  background: white;
+  color: gray;
+  font-size: 11px;
+  font-weight: bold;
+}
+.item {
+  text-align: left;
+  background: white;
+  border-top: dotted silver 1px;
+}
+.itemHeader, .itemHeader a:link, .itemHeader a:visited, .itemHeader a:active {
+  background: white;
+  color: black;
+  font-size: 16px;
+  font-weight: bold;
+  text-decoration: none;
+}
+.itemBody {
+  background: white;
+}
+.even {
+  background: lightgrey;
+}
+.odd {
+  background: white;
+}
+.itemMetadata, .itemMetadata a:link, .itemMetadata a:visited, .itemMetadata a:active {
+  color: gray;
+  font-weight: bold;
+  font-size: 11px;
+}
+.screenshot {
+  border-top: solid gray 1px;
+  border-right: solid gray 1px;
+  border-bottom: solid gray 1px;
+  border-left: solid gray 1px;
+  text-align: left;
+}
+.codeSample {
+  font-family: Courier, sans-serif;
+  border-top: solid #F0F0F0 1px;
+  border-right: solid #F0F0F0 1px;
+  border-bottom: solid #F0F0F0 1px;
+  border-left: solid #F0F0F0 1px;
+  text-align: left;
+  background: #F8F8F8;
+  margin-left: 32px;
+  margin-right: 32px;
+  padding: 16px;
+  overflow: auto;
+}
+.centeredBlock {
+  border-top: solid gray 1px;
+  border-right: solid gray 1px;
+  border-bottom: solid gray 1px;
+  border-left: solid gray 1px;
+  margin-left: 32px;
+  margin-right: 32px;
+}
