@@ -79,7 +79,7 @@
   </pebble:isPebbleAdmin>
   </c:if>
 
-  <li><a href="${pageContext.request.contextPath}/help/" title="Help">Help</a> | <a href="${pageContext.request.contextPath}/logout.action?redirectUrl=${blog.url}"><fmt:message key="common.logout" /></a></li>
+  <li><a href="${pageContext.request.contextPath}/help/index.html" title="Help">Help</a> | <a href="${pageContext.request.contextPath}/logout.action?redirectUrl=${blog.url}"><fmt:message key="common.logout" /></a></li>
 
   </ul>
 </pebble:isAuthenticated>

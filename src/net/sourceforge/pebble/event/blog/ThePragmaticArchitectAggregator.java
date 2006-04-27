@@ -71,8 +71,8 @@ public class ThePragmaticArchitectAggregator extends PebbleAPIBlogEntryAggregato
    */
   protected void postAggregate(BlogEntry blogEntry) {
     String tags = blogEntry.getTags();
-    log.info("Tags are '" + tags + "'");
     blogEntry.setTags(tags + " thepragmaticarchitect");
+    blogEntry.setAuthor("simon");
   }
 
 }

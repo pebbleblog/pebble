@@ -94,7 +94,8 @@ public class PreProcessingFilter implements Filter {
 
     if (BlogManager.getInstance().getBaseUrl() == null ||
         BlogManager.getInstance().getBaseUrl().length() == 0) {
-      String url = "http://" + httpRequest.getServerName() + ":" + httpRequest.getServerPort() + httpRequest.getContextPath();
+      String scheme = httpRequest.getScheme();
+      String url = scheme + "://" + httpRequest.getServerName() + ":" + httpRequest.getServerPort() + httpRequest.getContextPath();
       log.info("Setting base URL to " + url);
       BlogManager.getInstance().setBaseUrl(url);
     }

@@ -13,6 +13,10 @@
         </jsp:include>
         <br />
 
+        <pebble:isBlogContributor>
+        <form name="blogEntriesForm" action="manageBlogEntries.secureaction" method="post">
+        </pebble:isBlogContributor>
+
         <table width="99%" cellspacing="0" cellpadding="4">
           <c:forEach var="hit" items="${pageable.listForPage}" varStatus="status">
             <c:choose>
@@ -25,6 +29,10 @@
             </c:choose>
             <td width="2%" valign="top">
               <fmt:formatNumber value="${hit.number}"/>
+              <br />
+              <pebble:isBlogContributor>
+              <input type="checkbox" name="entry" value="${hit.id}" />
+              </pebble:isBlogContributor>
             </td>
             <td valign="top">
               <a href="${hit.permalink}" title="${hit.score}">${hit.title}</a>
@@ -37,6 +45,22 @@
           </tr>
           </c:forEach>
         </table>
+
+        <pebble:isBlogContributor>
+          <br />
+          <table width="99%" cellspacing="0" cellpadding="0">
+            <tr>
+              <td align="left">
+                <input type="button" value="Check All" onclick="checkAll(document.blogEntriesForm.entry)" />
+                <input type="button" value="Uncheck All" onclick="uncheckAll(document.blogEntriesForm.entry)" />
+              </td>
+              <td align="right">
+                <input type="submit" name="submit" value="Remove" />
+              </td>
+            </tr>
+          </table>
+        </form>
+        </pebble:isBlogContributor>
 
         <br />
         <c:set var="pageableUrl" value="search.action?query=${query}&amp;sort=${param.sort}" scope="request" />

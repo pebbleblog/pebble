@@ -73,7 +73,9 @@ public class IndexBlogEntryListener implements BlogEntryListener {
     removeBlogEntryFromCategories(blogEntry.getCategories(), blogEntry);
     removeBlogEntryFromTags(blogEntry.getTagsAsList(), blogEntry);
     blog.recalculateTagRankings();
-    updateSearchIndex(blogEntry);
+
+    BlogIndexer indexer = new BlogIndexer();
+    indexer.removeIndex(blogEntry);
   }
 
   /**

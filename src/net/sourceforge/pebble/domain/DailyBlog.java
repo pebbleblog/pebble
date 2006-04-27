@@ -281,7 +281,7 @@ public class DailyBlog extends TimePeriod implements Permalinkable {
    */
   public synchronized void removeEntry(BlogEntry entry) {
     if (entry != null) {
-      ((Blog)getBlog()).getEventDispatcher().fireBlogEntryEvent(new BlogEntryEvent(entry, BlogEntryEvent.BLOG_ENTRY_REMOVED));
+      getBlog().getEventDispatcher().fireBlogEntryEvent(new BlogEntryEvent(entry, BlogEntryEvent.BLOG_ENTRY_REMOVED));
       entries.remove(entry);
       entry.setDailyBlog(null);
     }
