@@ -9,10 +9,10 @@
           <p>
             <b>Using Pebble</b>
             <ol>
-              <li><a href="configuration.html">Configuring your Blog</a></li>
+              <li><a href="help/configuration.html">Configuring your Blog</a></li>
               <li><a href="help/blogEntries.html">Blog Entries</a></li>
               <li><a href="categories.html">Categories</a></li>
-              <li><a href="tags.html">Tags</a></li>
+              <li><a href="help/tags.html">Tags</a></li>
               <li><a href="images.html">Images</a></li>
               <li><a href="files.html">Files</a></li>
               <li><a href="comments.html">Comments</a></li>
