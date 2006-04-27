@@ -28,6 +28,7 @@
     <pebble:calendar/>
   </div>
 
+  <c:if test="${not empty blog.tags}">
   <div class="sidebarItem">
     <div class="sidebarItemTitle"><span><fmt:message key="tag.tags" /></span></div>
     <div class="sidebarTagCloud">
@@ -38,7 +39,9 @@
     </ul>
     </div>
   </div>
+  </c:if>
 
+  <c:if test="${not empty blog.recentBlogEntries}">
   <div class="sidebarItem">
     <div class="sidebarItemTitle"><span><fmt:message key="sidebar.recentBlogEntries" /></span></div>
     <ul>
@@ -47,8 +50,9 @@
     </c:forEach>
     </ul>
   </div>
+  </c:if>
 
-  <c:if test="${blog.recentCommentsOnHomePage > 0}">
+  <c:if test="${blog.recentCommentsOnHomePage > 0 and not empty blog.responseManager.recentResponses}">
   <div class="sidebarItem">
     <div class="sidebarItemTitle"><span><fmt:message key="sidebar.recentResponses" /></span></div>
     <ul>

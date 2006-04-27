@@ -1,5 +1,4 @@
-#export JAVA_HOME=/Library/Java/Home
-export JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Versions/1.5.0/Home
+export JAVA_HOME=/Library/Java/Home
 export ANT_HOME=~/apache-ant
 
 # WEBTEST_HOME is only for functional tests
