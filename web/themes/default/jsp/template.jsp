@@ -8,8 +8,8 @@
   <div id="blogDescription"><span>${blog.description}</span></div>
 </div>
 
-<%@ include file="sidebar.jsp" %>
 <%@ include file="/WEB-INF/fragments/navigation.jspf" %>
+<%@ include file="sidebar.jsp" %>
 
 <div id="content">
   <jsp:include page="${content}"/>

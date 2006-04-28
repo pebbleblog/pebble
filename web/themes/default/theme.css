@@ -17,8 +17,7 @@ body {
   text-align: left;
   margin-left: auto;
   margin-right: auto;
-  border-bottom: solid #E0E0E0 4px;
-  margin-bottom: 8px;
+  margin-bottom: 0px;
 }
 #content {
   padding-top: 8px;
@@ -35,6 +34,7 @@ body {
   padding-top: 0px;
   padding-right: 0px;
   padding-bottom: 32px;
+  margin-top: 8px;
   font-size: 10px;
 }
 #footer {
@@ -45,9 +45,10 @@ body {
   border-top: solid #E0E0E0 1px;
 }
 #linearNavigationLinks {
+  background: #E0E0E0;
   text-align: center;
-  padding-bottom: 0px;
   font-size: 10px;
+  padding: 8px;
 }
 .sidebarItem {
   background: #E0E0E0;
