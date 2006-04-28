@@ -300,9 +300,9 @@ public class BlogManager {
    * Gets all blogs that are currently being managed and are
    * to be included in aggregated pages and feeds.
    *
-   * @return  a Collection of Blog instances
+   * @return  a List of Blog instances
    */
-  public Collection getPublicBlogs() {
+  public List getPublicBlogs() {
     Collection coll = blogs.values();
     List list = new ArrayList();
     Iterator it = coll.iterator();

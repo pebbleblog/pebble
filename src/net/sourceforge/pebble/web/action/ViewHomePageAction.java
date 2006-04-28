@@ -32,17 +32,20 @@
 package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
-import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.domain.AbstractBlog;
+import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.domain.BlogManager;
 import net.sourceforge.pebble.domain.MultiBlog;
 import net.sourceforge.pebble.util.SecurityUtils;
+import net.sourceforge.pebble.web.view.RedirectView;
 import net.sourceforge.pebble.web.view.View;
-import net.sourceforge.pebble.web.view.impl.SingleBlogHomePageView;
 import net.sourceforge.pebble.web.view.impl.MultiBlogHomePageView;
+import net.sourceforge.pebble.web.view.impl.SingleBlogHomePageView;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * Finds all blog entries that are to be displayed on the home page. By default
@@ -60,15 +63,22 @@ public class ViewHomePageAction extends Action {
    * @return            the next View
    */
   public View process(HttpServletRequest request,
-                        HttpServletResponse response)
+                      HttpServletResponse response)
       throws ServletException {
 
     AbstractBlog abstractBlog = (AbstractBlog)getModel().get(Constants.BLOG_KEY);
 
     if (abstractBlog instanceof MultiBlog) {
-      getModel().put(Constants.BLOG_ENTRIES, abstractBlog.getRecentBlogEntries());
+      MultiBlog multiBlog = (MultiBlog)abstractBlog;
+      List publicBlogs = BlogManager.getInstance().getPublicBlogs();
+      if (publicBlogs.size() == 1) {
+        Blog blog = (Blog)publicBlogs.get(0);
+        return new RedirectView(blog.getUrl());
+      } else {
+        getModel().put(Constants.BLOG_ENTRIES, abstractBlog.getRecentBlogEntries());
 
-      return new MultiBlogHomePageView();
+        return new MultiBlogHomePageView();
+      }
     } else {
       Blog blog = (Blog)abstractBlog;
       boolean approvedOnly = true;
