@@ -37,7 +37,6 @@
     <mkdir dir="${classes.dir}/META-INF"/>
     <mkdir dir="${javadoc.dir}"/>
     <mkdir dir="web/WEB-INF/classes"/>
-    <mkdir dir="web/docs"/>
   </target>
 
   <target name="compile" depends="init">
