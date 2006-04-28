@@ -9,7 +9,7 @@ body {
 #container {
 }
 #header {
-  background : #acc5d2;
+  background: #acc5d2 url('images/header.png') repeat-x bottom left;
   color: black;
   font-weight: bold;
   padding: 8px;
@@ -17,15 +17,14 @@ body {
   text-align: left;
   margin-left: auto;
   margin-right: auto;
-  border-bottom: solid #E0E0E0 4px;
-  margin-bottom: 8px;
+  margin-bottom: 0px;
 }
 #content {
   padding-top: 8px;
   padding-right: 8px;
   padding-bottom: 8px;
-  padding-left: 8px;
-  margin-right: 220px;
+  padding-left: 0px;
+  margin-right: 200px;
 }
 #sidebar {
   text-align: center;
@@ -35,6 +34,7 @@ body {
   padding-top: 0px;
   padding-right: 0px;
   padding-bottom: 32px;
+  margin-top: 8px;
   font-size: 10px;
 }
 #footer {
@@ -45,19 +45,20 @@ body {
   border-top: solid #E0E0E0 1px;
 }
 #linearNavigationLinks {
+  background: #E0E0E0 url('images/linearnavigation.png') repeat-x top left;
   text-align: center;
-  padding-bottom: 0px;
   font-size: 10px;
+  padding: 8px;
 }
 .sidebarItem {
-  background: #E0E0E0;
+  background: #E0E0E0 url('images/greygradient.png') repeat-x top left;
   border-bottom: white solid 8px;
 }
 .sidebarItemTitle {
   text-align: left;
   font-size: 12px;
   font-weight: normal;
-  background : #acc5d2;
+  background: #acc5d2 url('images/sidebartitle.png') repeat-x top left;
   color: white;
   padding: 4px;
 }
@@ -106,11 +107,12 @@ a:visited {
   padding-top: 4px;
 }
 .contentItem {
-  border-top: solid #E0E0E0 1px;
+  border: solid #E0E0E0 1px;
   padding-left: 8px;
   padding-right: 8px;
   padding-top: 8px;
   padding-bottom: 8px;
+  margin-bottom: 8px;
 }
 .contentItemBody {
   line-height: 1.5;
@@ -150,18 +152,15 @@ a:visited {
 .metadata, .metadata a {
   font-size: 10px;
   color: gray;
+  line-height: 1.5em;
 }
 .approved {
-  border-left: solid white 1px;
-  border-right: solid white 1px;
 }
 .pending {
-  border-left: solid #FF9900 1px;
-  border-right: solid #FF9900 1px;
+  border: solid #FF9900 1px;
 }
 .rejected {
-  border-left: solid red 1px;
-  border-right: solid red 1px;
+  border: solid red 1px;
 }
 blockquote {
   border-left: solid gray 4px;
