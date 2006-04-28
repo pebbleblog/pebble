@@ -60,9 +60,15 @@
     </c:choose>
   </div>
 
-  <%@ include file="/WEB-INF/fragments/responseLinks.jspf" %>
-
   <div class="metadata">
+    <c:if test="${not empty blogEntry.allTags}">
+    <fmt:message key="tag.tags"/> :
+    <c:forEach var="tag" items="${blogEntry.allTags}">
+      <a href="${blog.url}tags/${tag.name}" rel="tag">${tag.name}</a>
+    </c:forEach>
+    </c:if>
+    <br />
+    <%@ include file="/WEB-INF/fragments/responseLinks.jspf" %>
     <fmt:formatDate var="blogEntryDate" scope="page" value="${blogEntry.date}" type="both" dateStyle="long" timeStyle="long"/>
     <fmt:message key="blogentry.from">
       <fmt:param value="${blogEntry.author}"/>
