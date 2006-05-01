@@ -42,13 +42,18 @@ body {
   text-align: center;
   font-size: 10px;
   padding: 8px;
-  border-top: solid #E0E0E0 1px;
 }
 #linearNavigationLinks {
   background: #E0E0E0 url('images/linearnavigation.png') repeat-x top left;
   text-align: center;
   font-size: 10px;
-  padding: 8px;
+  padding: 6px;
+  color: gray;
+  font-weight: bold;
+}
+#linearNavigationLinks a {
+  color: gray;
+  font-weight: bold;
 }
 .sidebarItem {
   background: #E0E0E0 url('images/greygradient.png') repeat-x top left;
@@ -57,7 +62,7 @@ body {
 .sidebarItemTitle {
   text-align: left;
   font-size: 12px;
-  font-weight: normal;
+  font-weight: bold;
   background: #acc5d2 url('images/sidebartitle.png') repeat-x top left;
   color: white;
   padding: 4px;
@@ -105,9 +110,10 @@ a:visited {
   font-size: 12px;
   font-weight: bold;
   padding-top: 4px;
+  color : black;
 }
 .contentItem {
-  border: solid #E0E0E0 1px;
+  border: solid #F0F0F0 1px;
   padding-left: 8px;
   padding-right: 8px;
   padding-top: 8px;
@@ -163,7 +169,7 @@ a:visited {
   border: solid red 1px;
 }
 blockquote {
-  border-left: solid gray 4px;
+  border-left: solid #E0E0E0 4px;
   padding-left: 8px;
   color: gray;
 }
