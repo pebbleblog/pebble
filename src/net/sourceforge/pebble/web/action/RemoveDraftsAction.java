@@ -73,7 +73,7 @@ public class RemoveDraftsAction extends SecureAction {
       }
     }
 
-    return new ForwardView("/viewDraftBlogEntries.secureaction");
+    return new ForwardView("/viewDrafts.secureaction");
   }
 
   /**
