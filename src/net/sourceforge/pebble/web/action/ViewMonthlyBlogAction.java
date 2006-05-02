@@ -69,8 +69,22 @@ public class ViewMonthlyBlogAction extends Action {
       monthly = blog.getBlogForThisMonth();
     }
 
-    getModel().put(Constants.MONTHLY_BLOG, monthly);
     getModel().put(Constants.BLOG_ENTRIES, monthly.getBlogEntries());
+    getModel().put("displayMode", "month");
+    getModel().put(Constants.MONTHLY_BLOG, monthly);
+
+    // put the previous and next months in the model for navigation purposes
+    MonthlyBlog firstMonth = blog.getBlogForFirstMonth();
+    MonthlyBlog previousMonth = monthly.getPreviousMonth();
+    MonthlyBlog nextMonth = monthly.getNextMonth();
+
+    if (!previousMonth.before(firstMonth)) {
+      getModel().put("previousMonth", previousMonth);
+    }
+
+    if (!nextMonth.getDate().after(blog.getCalendar().getTime()) || nextMonth.before(firstMonth)) {
+      getModel().put("nextMonth", nextMonth);
+    }
 
     return new BlogMonthlyView();
   }

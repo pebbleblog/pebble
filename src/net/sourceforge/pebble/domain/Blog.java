@@ -555,7 +555,7 @@ public class Blog extends AbstractBlog {
    */
   public YearlyBlog getBlogForYear(int year) {
     Iterator it = yearlyBlogs.iterator();
-    YearlyBlog yearlyBlog;
+    YearlyBlog yearlyBlog = null;
     while (it.hasNext()) {
       yearlyBlog = (YearlyBlog)it.next();
       if (yearlyBlog.getYear() == year) {
@@ -564,8 +564,10 @@ public class Blog extends AbstractBlog {
     }
 
     yearlyBlog = new YearlyBlog(this, year);
-    yearlyBlogs.add(yearlyBlog);
-    Collections.sort(yearlyBlogs);
+    if (year > getBlogForToday().getMonthlyBlog().getYearlyBlog().getYear()) {
+      yearlyBlogs.add(yearlyBlog);
+      Collections.sort(yearlyBlogs);
+    }
 
     return yearlyBlog;
   }

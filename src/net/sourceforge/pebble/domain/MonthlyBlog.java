@@ -276,7 +276,7 @@ public class MonthlyBlog extends TimePeriod implements Permalinkable {
    * Determines if the this MonthlyBlog is before (in the calendar) the
    * specified MonthlyBlog.
    *
-   * @return  true if this instance represents an earlier month that the
+   * @return  true if this instance represents an earlier month than the
    *          specified MonthlyBlog instance, false otherwise
    */
   public boolean before(MonthlyBlog monthlyBlog) {

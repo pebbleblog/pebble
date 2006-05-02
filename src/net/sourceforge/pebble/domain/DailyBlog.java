@@ -463,4 +463,15 @@ public class DailyBlog extends TimePeriod implements Permalinkable {
     return cal.getTime();
   }
 
+  /**
+   * Determines if the this DailyBlog is before (in the calendar) the
+   * specified DailyBlog.
+   *
+   * @return  true if this instance represents an earlier month than the
+   *          specified DailyBlog instance, false otherwise
+   */
+  public boolean before(DailyBlog dailyBlog) {
+    return getDate().before(dailyBlog.getDate());
+  }
+
 }

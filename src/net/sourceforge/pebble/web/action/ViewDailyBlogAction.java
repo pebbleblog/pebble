@@ -34,6 +34,7 @@ package net.sourceforge.pebble.web.action;
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.domain.DailyBlog;
 import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.domain.MonthlyBlog;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.impl.BlogDailyView;
 
@@ -73,6 +74,20 @@ public class ViewDailyBlogAction extends Action {
     getModel().put(Constants.MONTHLY_BLOG, daily.getMonthlyBlog());
     getModel().put(Constants.DAILY_BLOG, daily);
     getModel().put(Constants.BLOG_ENTRIES, daily.getEntries());
+    getModel().put("displayMode", "day");
+
+    // put the previous and next days in the model for navigation purposes
+    DailyBlog firstDay = blog.getBlogForFirstMonth().getBlogForFirstDay();
+    DailyBlog previousDay = daily.getPreviousDay();
+    DailyBlog nextDay = daily.getNextDay();
+
+    if (!previousDay.before(firstDay)) {
+      getModel().put("previousDay", previousDay);
+    }
+
+    if (!nextDay.getDate().after(blog.getCalendar().getTime()) || nextDay.before(firstDay)) {
+      getModel().put("nextDay", nextDay);
+    }
 
     return new BlogDailyView();
   }
