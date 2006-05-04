@@ -69,7 +69,6 @@ public class ViewHomePageAction extends Action {
     AbstractBlog abstractBlog = (AbstractBlog)getModel().get(Constants.BLOG_KEY);
 
     if (abstractBlog instanceof MultiBlog) {
-      MultiBlog multiBlog = (MultiBlog)abstractBlog;
       List publicBlogs = BlogManager.getInstance().getPublicBlogs();
       if (publicBlogs.size() == 1) {
         Blog blog = (Blog)publicBlogs.get(0);
