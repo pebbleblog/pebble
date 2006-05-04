@@ -10,8 +10,8 @@
       <value>
         CONVERT_URL_TO_LOWERCASE_BEFORE_COMPARISON
         PATTERN_TYPE_APACHE_ANT
-        /xmlrpc/**=
-        /**=httpSessionContextIntegrationFilter,authenticationProcessingFilter,rememberMeProcessingFilter,securityEnforcementFilter
+        /xmlrpc/**=,
+        /**=httpSessionContextIntegrationFilter,authenticationProcessingFilter,rememberMeProcessingFilter,exceptionTranslationFilter
       </value>
     </property>
   </bean>
@@ -59,6 +59,7 @@
 
   <bean id="rememberMeProcessingFilter" class="org.acegisecurity.ui.rememberme.RememberMeProcessingFilter">
     <property name="rememberMeServices"><ref local="rememberMeServices"/></property>
+    <property name="authenticationManager"><ref local="authenticationManager"/></property>
   </bean>
 
   <bean id="rememberMeServices" class="org.acegisecurity.ui.rememberme.TokenBasedRememberMeServices">
@@ -74,8 +75,7 @@
 
    <!-- ===================== HTTP REQUEST SECURITY ==================== -->
 
-  <bean id="securityEnforcementFilter" class="org.acegisecurity.intercept.web.SecurityEnforcementFilter">
-    <property name="filterSecurityInterceptor"><ref local="filterInvocationInterceptor"/></property>
+  <bean id="exceptionTranslationFilter" class="org.acegisecurity.ui.ExceptionTranslationFilter">
     <property name="authenticationEntryPoint"><ref local="authenticationProcessingFilterEntryPoint"/></property>
   </bean>
 
