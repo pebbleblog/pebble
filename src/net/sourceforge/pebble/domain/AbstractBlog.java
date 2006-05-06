@@ -40,6 +40,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.*;
 
+import net.sourceforge.pebble.PebbleContext;
+
 public abstract class AbstractBlog extends TimePeriod {
 
   /** the name of the file containing blog properties */
@@ -241,10 +243,11 @@ public abstract class AbstractBlog extends TimePeriod {
    */
   public String getUrl() {
     BlogManager blogManager = BlogManager.getInstance();
+    PebbleContext pebbleContext = blogManager.getPebbleContext();
     if (blogManager.isMultiUser()) {
-      return blogManager.getBaseUrl() + getId() + "/";
+      return pebbleContext.getUrl() + getId() + "/";
     } else {
-      return blogManager.getBaseUrl();
+      return pebbleContext.getUrl();
     }
   }
 

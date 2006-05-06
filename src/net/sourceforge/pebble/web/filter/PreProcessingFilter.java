@@ -84,20 +84,20 @@ public class PreProcessingFilter implements Filter {
     HttpServletRequest httpRequest = (HttpServletRequest)request;
     HttpServletResponse httpResponse = (HttpServletResponse)response;
 
+    PebbleContext pebbleContext = null;
     if (filterConfig.getServletContext() != null) {
       ApplicationContext applicationContext = WebApplicationContextUtils.getRequiredWebApplicationContext(filterConfig.getServletContext());
-      PebbleContext pebbleContext = (PebbleContext)applicationContext.getBean("pebbleContext");
+      pebbleContext = (PebbleContext)applicationContext.getBean("pebbleContext");
       request.setAttribute("pebbleContext", pebbleContext);
     }
 
-    AbstractBlog blog = null;
+    AbstractBlog blog;
 
-    if (BlogManager.getInstance().getBaseUrl() == null ||
-        BlogManager.getInstance().getBaseUrl().length() == 0) {
+    if (pebbleContext != null && (pebbleContext.getUrl() == null || pebbleContext.getUrl().length() == 0)) {
       String scheme = httpRequest.getScheme();
       String url = scheme + "://" + httpRequest.getServerName() + ":" + httpRequest.getServerPort() + httpRequest.getContextPath();
-      log.info("Setting base URL to " + url);
-      BlogManager.getInstance().setBaseUrl(url);
+      log.info("Setting Pebble URL to " + url);
+      pebbleContext.setUrl(url);
     }
 
     // get URI and strip off the context (e.g. /blog)

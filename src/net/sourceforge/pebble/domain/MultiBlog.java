@@ -92,7 +92,7 @@ public class MultiBlog extends AbstractBlog {
    * @return a URL as a String
    */
   public String getUrl() {
-    return BlogManager.getInstance().getBaseUrl();
+    return BlogManager.getInstance().getPebbleContext().getUrl();
   }
 
   /**

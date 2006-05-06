@@ -80,7 +80,7 @@ public class Blog extends AbstractBlog {
   public static final String PERMALINK_PROVIDER_KEY = "permalinkProviderName";
 
   /** the ID of this blog */
-  private String id = "blog";
+  private String id = "default";
 
   /** the collection of YearlyBlog instance that this root blog is managing */
   private List yearlyBlogs;

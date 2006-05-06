@@ -65,9 +65,7 @@ public class PebbleContextListener implements ServletContextListener {
     PebbleContext pebbleContext = (PebbleContext)applicationContext.getBean("pebbleContext");
 
     DAOFactory.setConfiguredFactory(pebbleContext.getDaoFactory());
-    BlogManager.getInstance().setMultiUser(pebbleContext.isMultiBlog());
-    BlogManager.getInstance().setBlogDir(pebbleContext.getBlogDirectory());
-    BlogManager.getInstance().setBaseUrl(pebbleContext.getUrl());
+    BlogManager.getInstance().setPebbleContext(pebbleContext);
     BlogManager.getInstance().setWebappRoot(event.getServletContext().getRealPath("/"));
     BlogManager.getInstance().setFileUploadSize(pebbleContext.getFileUploadSize());
     BlogManager.getInstance().setFileUploadQuota(pebbleContext.getFileUploadQuota());

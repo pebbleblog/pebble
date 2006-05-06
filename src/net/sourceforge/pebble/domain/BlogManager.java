@@ -38,6 +38,7 @@ import java.io.File;
 import java.util.*;
 
 import net.sourceforge.pebble.comparator.BlogByLastModifiedDateComparator;
+import net.sourceforge.pebble.PebbleContext;
 
 /**
  * A singleton to manage the active blog.
@@ -53,16 +54,13 @@ public class BlogManager {
   private static BlogManager instance = new BlogManager();
 
   private static final String THEMES_PATH = "themes";
-  private static final String DEFAULT_BLOG = "blog";
+  private static final String DEFAULT_BLOG = "default";
 
   /** a flag to indicate whether Pebble is running in multi-user mode */
   private boolean multiUser = false;
 
-  /** the directory containing the blog(s) */
-  private String blogDir;
-
-  /** the base URL of the Pebble installation */
-  private String baseUrl = "";
+  /** the current PebbleContext instance */
+  private PebbleContext pebbleContext;
 
   /** the directory where themes are located */
   private String webappRoot;
@@ -107,29 +105,36 @@ public class BlogManager {
    * @return  a Blog instance
    */
   public Blog getBlog(String id) {
-    if (multiUser) {
-      return (Blog)blogs.get(id);
-    } else {
-      return (Blog)blogs.get(DEFAULT_BLOG);
-    }
+    return (Blog)blogs.get(id);
   }
 
   /**
    * Configures this instance to manage the blog(s) in the specified directory.
    */
   public void startBlogs() {
-    if (isMultiUser()) {
-      // find all directories and set them up as blogs
-      File files[] = new File(blogDir).listFiles();
-      if (files != null) {
-        for (File file : files) {
-          if (file.isDirectory()) {
-            startBlog(file.getAbsolutePath(), file.getName());
-          }
+    File dataDirectory = new File(pebbleContext.getDataDirectory());
+    if (!dataDirectory.exists()) {
+      log.info("Pebble data directory does not exist - creating");
+      dataDirectory.mkdirs();
+
+      File authenticationDirectory = new File(dataDirectory, "authentication");
+      authenticationDirectory.mkdir();
+
+      File blogsDirectory = getBlogsDirectory();
+      blogsDirectory.mkdir();
+
+      File defaultBlog = new File(blogsDirectory, DEFAULT_BLOG);
+      defaultBlog.mkdir();
+    }
+
+    // find all directories and set them up as blogs
+    File files[] = getBlogsDirectory().listFiles();
+    if (files != null) {
+      for (File file : files) {
+        if (file.isDirectory()) {
+          startBlog(file.getAbsolutePath(), file.getName());
         }
       }
-    } else {
-      startBlog(blogDir, DEFAULT_BLOG);
     }
   }
 
@@ -149,12 +154,8 @@ public class BlogManager {
   public void reloadBlog(Blog blog) {
     stopBlog(blog);
 
-    if (isMultiUser()) {
-      File f = new File(blogDir, blog.getId());
-      startBlog(f.getAbsolutePath(), blog.getId());
-    } else {
-      startBlog(blogDir, DEFAULT_BLOG);
-    }
+    File f = new File(getBlogsDirectory(), blog.getId());
+    startBlog(f.getAbsolutePath(), blog.getId());
   }
 
   /**
@@ -177,86 +178,10 @@ public class BlogManager {
 
   public void addBlog(String blogId) {
     if (isMultiUser()) {
-      File file = new File(blogDir, blogId);
+      File file = new File(getBlogsDirectory(), blogId);
       file.mkdirs();
       startBlog(file.getAbsolutePath(), blogId);
     }
-  }
-
-  /**
-   * Gets the directory containing the blog(s).
-   *
-   * @return  an absolute path as a String
-   */
-  public String getBlogDir() {
-    return this.blogDir;
-  }
-
-  /**
-   * Sets the directory containing the blog(s).
-   *
-   * @param s   an absolute path on the filing system
-   */
-  public void setBlogDir(String s) {
-    this.blogDir = evaluateBlogDir(s);
-
-    File file = new File(blogDir);
-    if (!file.exists()) {
-      log.info("blog.dir does not exist - creating");
-      file.mkdirs();
-    }
-  }
-
-  /**
-   * Replaces ${some.property} at the start of the string with the value
-   * from System.getProperty(some.property).
-   *
-   * @param s   the String to transform
-   * @return  a new String, or the same String if it doesn't start with a
-   *          property name delimited by ${...}
-   */
-  private String evaluateBlogDir(String s) {
-    log.debug("Raw blog.dir is " + s);
-    if (s.startsWith("${")) {
-      int index = s.indexOf("}");
-      String propertyName = s.substring(2, index);
-      String propertyValue = System.getProperty(propertyName);
-      log.debug(propertyName + " = " + propertyValue);
-      return propertyValue + s.substring(index+1);
-    } else {
-      return s;
-    }
-  }
-
-  /**
-   * Sets the base URL from which Pebble is running.
-   *
-   * @param url   a URL as a String
-   */
-  public void setBaseUrl(String url) {
-    this.baseUrl = url;
-
-    if (baseUrl != null && !(baseUrl.length() == 0) && !baseUrl.endsWith("/")) {
-      baseUrl += "/";
-    }
-  }
-
-  /**
-   * Gets the base URL from which Pebble is running.
-   *
-   * @return    a URL as a String
-   */
-  public String getBaseUrl() {
-    return this.baseUrl;
-  }
-
-  /**
-   * Sets whether this blog manager supports multiple blogs.
-   *
-   * @param b   true if multiple blogs should be supported, false otherwise
-   */
-  public void setMultiUser(boolean b) {
-    this.multiUser = b;
   }
 
   /**
@@ -265,7 +190,7 @@ public class BlogManager {
    * @return  true if multiple blogs are supported, false otherwise
    */
   public boolean isMultiUser() {
-    return this.multiUser;
+    return blogs.size() > 1;
   }
 
   /**
@@ -327,7 +252,7 @@ public class BlogManager {
   }
 
   public MultiBlog getMultiBlog() {
-    return new MultiBlog(blogDir);
+    return new MultiBlog(pebbleContext.getDataDirectory());
   }
 
   public long getFileUploadSize() {
@@ -345,5 +270,17 @@ public class BlogManager {
   public void setFileUploadQuota(long fileUploadQuota) {
     this.fileUploadQuota = fileUploadQuota;
   }
-  
+
+  private File getBlogsDirectory() {
+    return new File(pebbleContext.getDataDirectory(), "blogs");
+  }
+
+  public PebbleContext getPebbleContext() {
+    return pebbleContext;
+  }
+
+  public void setPebbleContext(PebbleContext pebbleContext) {
+    this.pebbleContext = pebbleContext;
+  }
+
 }

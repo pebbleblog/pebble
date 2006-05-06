@@ -31,9 +31,9 @@
  */
 package net.sourceforge.pebble;
 
-import net.sourceforge.pebble.util.RelativeDate;
 import net.sourceforge.pebble.dao.DAOFactory;
 import net.sourceforge.pebble.dao.file.FileDAOFactory;
+import net.sourceforge.pebble.util.RelativeDate;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -55,9 +55,8 @@ public class PebbleContext {
   private String buildVersion;
   private String buildDate;
 
-  private String blogDirectory = "${user.home}/blog";
+  private String dataDirectory = "${user.home}/pebble";
   private String url;
-  private boolean multiBlog = false;
   private long fileUploadSize = 2048;
   private long fileUploadQuota = -1;
   private DAOFactory daoFactory = new FileDAOFactory();
@@ -126,16 +125,12 @@ public class PebbleContext {
     return url;
   }
 
-  public void setUrl(String url) {
-    this.url = url;
-  }
+  public void setUrl(String s) {
+    this.url = s;
 
-  public boolean isMultiBlog() {
-    return multiBlog;
-  }
-
-  public void setMultiBlog(boolean multiBlog) {
-    this.multiBlog = multiBlog;
+    if (url != null && !(url.length() == 0) && !url.endsWith("/")) {
+      url += "/";
+    }
   }
 
   public long getFileUploadSize() {
@@ -162,12 +157,35 @@ public class PebbleContext {
     this.daoFactory = daoFactory;
   }
 
-  public String getBlogDirectory() {
-    return blogDirectory;
+  public String getDataDirectory() {
+    return dataDirectory;
   }
 
-  public void setBlogDirectory(String blogDirectory) {
-    this.blogDirectory = blogDirectory;
+  public void setDataDirectory(String dataDirectory) {
+    this.dataDirectory = evaluateDirectory(dataDirectory);
   }
+
+  /**
+   * Replaces ${some.property} at the start of the string with the value
+   * from System.getProperty(some.property).
+   *
+   * @param s   the String to transform
+   * @return  a new String, or the same String if it doesn't start with a
+   *          property name delimited by ${...}
+   */
+  private String evaluateDirectory(String s) {
+    log.debug("Raw string is " + s);
+    if (s.startsWith("${")) {
+      int index = s.indexOf("}");
+      String propertyName = s.substring(2, index);
+      String propertyValue = System.getProperty(propertyName);
+      log.debug(propertyName + " = " + propertyValue);
+      return propertyValue + s.substring(index+1);
+    } else {
+      return s;
+    }
+  }
+
+
 
 }
