@@ -5,14 +5,12 @@
 
   <bean id="pebbleContext" class="net.sourceforge.pebble.PebbleContext" singleton="true">
 
-    <!-- the location of your blog or blogs -->
-    <property name="blogDirectory" value="${user.home}/blog"/>
+    <!-- the location where your Pebble data is stored, default is ${user.home}/pebble -->
+    <property name="dataDirectory" value="${user.home}/pebble"/>
 
-    <!-- the URL where your blog is hosted -->
+    <!-- the URL where your blog is hosted, default is auto-discover at runtime -->
     <property name="url" value=""/>
 
-    <!-- set this to true if you would like to run Pebble in multi-blog mode -->
-    <property name="multiBlog" value="false"/>
   </bean>
 
 </beans>
