@@ -27,15 +27,8 @@
     </property>
   </bean>
 
-  <bean id="memoryAuthenticationDao" class="org.acegisecurity.userdetails.memory.InMemoryDaoImpl">
-    <property name="userMap">
-      <value>
-        username=password,ROLE_BLOG_OWNER,ROLE_BLOG_CONTRIBUTOR,ROLE_PEBBLE_ADMIN
-        owner=password,ROLE_BLOG_OWNER
-        contributor=password,ROLE_BLOG_CONTRIBUTOR
-        admin=password,ROLE_PEBBLE_ADMIN
-      </value>
-    </property>
+  <bean id="pebbleUserDetailsService" class="net.sourceforge.pebble.security.PebbleUserDetailsService">
+    <property name="pebbleContext"><ref bean="pebbleContext"/></property>
   </bean>
 
   <bean id="passwordEncoder" class="org.acegisecurity.providers.encoding.Md5PasswordEncoder"/>
@@ -45,7 +38,7 @@
   </bean>
 
   <bean id="daoAuthenticationProvider" class="org.acegisecurity.providers.dao.DaoAuthenticationProvider">
-    <property name="userDetailsService"><ref local="memoryAuthenticationDao"/></property>
+    <property name="userDetailsService"><ref local="pebbleUserDetailsService"/></property>
     <!-- uncomment the following block to use password encoding
     <property name="passwordEncoder"><ref local="passwordEncoder"/></property>
     <property name="saltSource"><ref bean="saltSource"/></property>
@@ -63,7 +56,7 @@
   </bean>
 
   <bean id="rememberMeServices" class="org.acegisecurity.ui.rememberme.TokenBasedRememberMeServices">
-    <property name="userDetailsService"><ref local="memoryAuthenticationDao"/></property>
+    <property name="userDetailsService"><ref local="pebbleUserDetailsService"/></property>
     <property name="key"><value>pebble</value></property>
   </bean>
 

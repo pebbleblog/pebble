@@ -151,7 +151,7 @@
   </target>
 
   <target name="test" depends="build">
-    <junit printsummary="withOutAndErr" haltonfailure="yes" fork="no">
+    <junit printsummary="withOutAndErr" haltonfailure="yes" fork="yes">
       <classpath>
         <pathelement location="${classes.dir}"/>
         <pathelement path="${project.classpath}"/>

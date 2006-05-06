@@ -31,14 +31,15 @@
  */
 package net.sourceforge.pebble.domain;
 
+import net.sourceforge.pebble.Constants;
+import net.sourceforge.pebble.PebbleContext;
+import net.sourceforge.pebble.comparator.BlogByLastModifiedDateComparator;
+import net.sourceforge.pebble.security.PebbleUserDetailsService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import java.io.File;
 import java.util.*;
-
-import net.sourceforge.pebble.comparator.BlogByLastModifiedDateComparator;
-import net.sourceforge.pebble.PebbleContext;
 
 /**
  * A singleton to manage the active blog.
@@ -55,9 +56,6 @@ public class BlogManager {
 
   private static final String THEMES_PATH = "themes";
   private static final String DEFAULT_BLOG = "default";
-
-  /** a flag to indicate whether Pebble is running in multi-user mode */
-  private boolean multiUser = false;
 
   /** the current PebbleContext instance */
   private PebbleContext pebbleContext;
@@ -117,8 +115,10 @@ public class BlogManager {
       log.info("Pebble data directory does not exist - creating");
       dataDirectory.mkdirs();
 
-      File authenticationDirectory = new File(dataDirectory, "authentication");
-      authenticationDirectory.mkdir();
+      PebbleUserDetailsService puds = new PebbleUserDetailsService();
+      puds.setPebbleContext(pebbleContext);
+      puds.createRealm();
+      puds.createUser("username", "password", "", Constants.BLOG_OWNER_ROLE + "," + Constants.BLOG_CONTRIBUTOR_ROLE + "," + Constants.PEBBLE_ADMIN_ROLE);
 
       File blogsDirectory = getBlogsDirectory();
       blogsDirectory.mkdir();
@@ -169,7 +169,7 @@ public class BlogManager {
     blog.setId(blogId);
 
     File pathToLiveThemes = new File(webappRoot, THEMES_PATH);
-    Theme theme = new Theme(blog, blogId, pathToLiveThemes.getAbsolutePath());
+    Theme theme = new Theme(blog, "user-" + blogId, pathToLiveThemes.getAbsolutePath());
     blog.setEditableTheme(theme);
 
     blog.start();
