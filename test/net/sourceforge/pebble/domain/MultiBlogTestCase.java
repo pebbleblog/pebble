@@ -50,8 +50,8 @@ public abstract class MultiBlogTestCase extends PebbleTestCase {
   public void setUp() {
     DAOFactory.setConfiguredFactory(new MockDAOFactory());
 
-    BlogManager.getInstance().setBaseUrl("http://www.yourdomain.com/blog/");
-    BlogManager.getInstance().setMultiUser(true);
+    pebbleContext.setUrl("http://www.yourdomain.com/blog/");
+    BlogManager.getInstance().setPebbleContext(pebbleContext);
     BlogManager.getInstance().removeAllBlogs();
 
     // and set up some simple blogs

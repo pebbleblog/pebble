@@ -68,35 +68,35 @@ public class SingleBlogBloggerAPIHandlerTest extends SingleBlogTestCase {
       fail();
     }
     try {
-      handler.deletePost("", "123", "username", "password", true);
+      handler.deletePost("", "default/123", "username", "password", true);
       fail();
     } catch (XmlRpcAuthenticationException xmlrpcae) {
     } catch (XmlRpcException xmlrpce) {
       fail();
     }
     try {
-      handler.editPost("", "123", "username", "password", "content", true);
+      handler.editPost("", "default/123", "username", "password", "content", true);
       fail();
     } catch (XmlRpcAuthenticationException xmlrpcae) {
     } catch (XmlRpcException xmlrpce) {
       fail();
     }
     try {
-      handler.getPost("", "123", "username", "password");
+      handler.getPost("", "default/123", "username", "password");
       fail();
     } catch (XmlRpcAuthenticationException xmlrpcae) {
     } catch (XmlRpcException xmlrpce) {
       fail();
     }
     try {
-      handler.getRecentPosts("", "", "username", "password", 10);
+      handler.getRecentPosts("", "default", "username", "password", 10);
       fail();
     } catch (XmlRpcAuthenticationException xmlrpcae) {
     } catch (XmlRpcException xmlrpce) {
       fail();
     }
     try {
-      handler.newPost("", "", "username", "password", "content", true);
+      handler.newPost("", "default", "username", "password", "content", true);
       fail();
     } catch (XmlRpcAuthenticationException xmlrpcae) {
     } catch (XmlRpcException xmlrpce) {
@@ -145,7 +145,7 @@ public class SingleBlogBloggerAPIHandlerTest extends SingleBlogTestCase {
 
   public void testGetRecentPostsFromEmptyBlog() {
     try {
-      Vector posts = handler.getRecentPosts("appkey", "", "username", "password", 3);
+      Vector posts = handler.getRecentPosts("appkey", "default", "username", "password", 3);
       assertTrue(posts.isEmpty());
     } catch (Exception e) {
       fail();
@@ -172,18 +172,18 @@ public class SingleBlogBloggerAPIHandlerTest extends SingleBlogTestCase {
       today.addEntry(entry3);
       BlogEntry entry4 = today.createBlogEntry("title4", "body4", cal4.getTime());
       today.addEntry(entry4);
-      Vector posts = handler.getRecentPosts("appkey", "", "username", "password", 3);
+      Vector posts = handler.getRecentPosts("appkey", "default", "username", "password", 3);
 
       assertFalse(posts.isEmpty());
       assertEquals(3, posts.size());
       Hashtable ht = (Hashtable)posts.get(0);
-      assertEquals("blog/" + entry4.getId(), ht.get(BloggerAPIHandler.POST_ID));
+      assertEquals("default/" + entry4.getId(), ht.get(BloggerAPIHandler.POST_ID));
       assertEquals("<title>title4</title><category></category>body4", ht.get(BloggerAPIHandler.CONTENT));
       ht = (Hashtable)posts.get(1);
-      assertEquals("blog/" + entry3.getId(), ht.get(BloggerAPIHandler.POST_ID));
+      assertEquals("default/" + entry3.getId(), ht.get(BloggerAPIHandler.POST_ID));
       assertEquals("<title>title3</title><category></category>body3", ht.get(BloggerAPIHandler.CONTENT));
       ht = (Hashtable)posts.get(2);
-      assertEquals("blog/" + entry2.getId(), ht.get(BloggerAPIHandler.POST_ID));
+      assertEquals("default/" + entry2.getId(), ht.get(BloggerAPIHandler.POST_ID));
       assertEquals("<title>title2</title><category></category>body2", ht.get(BloggerAPIHandler.CONTENT));
     } catch (Exception e) {
       e.printStackTrace();
@@ -200,11 +200,11 @@ public class SingleBlogBloggerAPIHandlerTest extends SingleBlogTestCase {
       entry.setAuthor("simon");
       today.addEntry(entry);
 
-      Hashtable post = handler.getPost("appkey", "blog/" + entry.getId(), "username", "password");
+      Hashtable post = handler.getPost("appkey", "default/" + entry.getId(), "username", "password");
       assertEquals("<title>title</title><category></category>body", post.get(BloggerAPIHandler.CONTENT));
       assertEquals(entry.getAuthor(), post.get(BloggerAPIHandler.USER_ID));
       assertEquals(entry.getDate(), post.get(BloggerAPIHandler.DATE_CREATED));
-      assertEquals("blog/" + entry.getId(), post.get(BloggerAPIHandler.POST_ID));
+      assertEquals("default/" + entry.getId(), post.get(BloggerAPIHandler.POST_ID));
     } catch (Exception e) {
       e.printStackTrace();
       fail();
@@ -221,11 +221,11 @@ public class SingleBlogBloggerAPIHandlerTest extends SingleBlogTestCase {
       entry.addCategory(new Category("java", "Java"));
       today.addEntry(entry);
 
-      Hashtable post = handler.getPost("appkey", "blog/" + entry.getId(), "username", "password");
+      Hashtable post = handler.getPost("appkey", "default/" + entry.getId(), "username", "password");
       assertEquals("<title>title</title><category>/java</category>body", post.get(BloggerAPIHandler.CONTENT));
       assertEquals(entry.getAuthor(), post.get(BloggerAPIHandler.USER_ID));
       assertEquals(entry.getDate(), post.get(BloggerAPIHandler.DATE_CREATED));
-      assertEquals("blog/" + entry.getId(), post.get(BloggerAPIHandler.POST_ID));
+      assertEquals("default/" + entry.getId(), post.get(BloggerAPIHandler.POST_ID));
     } catch (Exception e) {
       e.printStackTrace();
       fail();
@@ -235,7 +235,7 @@ public class SingleBlogBloggerAPIHandlerTest extends SingleBlogTestCase {
   public void testGetPostWithIdThatDoesntExist() {
     String postid = "1234567890123";
     try {
-      handler.getPost("appkey", "blog/" + postid, "username", "password");
+      handler.getPost("appkey", "default/" + postid, "username", "password");
       fail();
     } catch (XmlRpcException xmlrpce) {
       assertEquals("Blog entry with ID of " + postid + " was not found.", xmlrpce.getMessage());
@@ -257,10 +257,10 @@ public class SingleBlogBloggerAPIHandlerTest extends SingleBlogTestCase {
       Category category = new Category("/aCategory", "A Category");
       blog.addCategory(category);
 
-      String postid = handler.newPost("appkey", "blog", "username", "password", "<title>Title</title><category>/aCategory</category><p>Content</p>", true);
+      String postid = handler.newPost("appkey", "default", "username", "password", "<title>Title</title><category>/aCategory</category><p>Content</p>", true);
 
       BlogEntry entry = (BlogEntry)blog.getRecentBlogEntries(1).get(0);
-      assertEquals("blog/" + entry.getId(), postid);
+      assertEquals("default/" + entry.getId(), postid);
       assertEquals("Title", entry.getTitle());
       assertTrue(entry.inCategory(category));
       assertEquals("<p>Content</p>", entry.getBody());
@@ -279,10 +279,10 @@ public class SingleBlogBloggerAPIHandlerTest extends SingleBlogTestCase {
       Category category2 = new Category("/category2", "Category 2");
       blog.addCategory(category2);
 
-      String postid = handler.newPost("appkey", "blog", "username", "password", "<title>Title</title><category>/category1, /category2</category><p>Content</p>", true);
+      String postid = handler.newPost("appkey", "default", "username", "password", "<title>Title</title><category>/category1, /category2</category><p>Content</p>", true);
 
       BlogEntry entry = (BlogEntry)blog.getRecentBlogEntries(1).get(0);
-      assertEquals("blog/" + entry.getId(), postid);
+      assertEquals("default/" + entry.getId(), postid);
       assertEquals("Title", entry.getTitle());
       assertTrue(entry.inCategory(category1));
       assertTrue(entry.inCategory(category2));
@@ -297,10 +297,10 @@ public class SingleBlogBloggerAPIHandlerTest extends SingleBlogTestCase {
 
   public void testNewPostWithoutTitle() {
     try {
-      String postid = handler.newPost("appkey", "blog", "username", "password", "<p>Content</p>", true);
+      String postid = handler.newPost("appkey", "default", "username", "password", "<p>Content</p>", true);
 
       BlogEntry entry = (BlogEntry)blog.getRecentBlogEntries(1).get(0);
-      assertEquals("blog/" + entry.getId(), postid);
+      assertEquals("default/" + entry.getId(), postid);
       assertEquals("", entry.getTitle());
       assertEquals("<p>Content</p>", entry.getBody());
       assertEquals("username", entry.getAuthor());
@@ -318,7 +318,7 @@ public class SingleBlogBloggerAPIHandlerTest extends SingleBlogTestCase {
       entry.setTitle("title");
       entry.setBody("body");
       today.addEntry(entry);
-      boolean result = handler.editPost("appkey", "blog/" + entry.getId(), "username", "password", "<title>Title</title><p>Content</p>", true);
+      boolean result = handler.editPost("appkey", "default/" + entry.getId(), "username", "password", "<title>Title</title><p>Content</p>", true);
 
       assertTrue(result);
       assertEquals("Title", entry.getTitle());
@@ -344,7 +344,7 @@ public class SingleBlogBloggerAPIHandlerTest extends SingleBlogTestCase {
   public void testEditPostWithIdThatDoesntExist() {
     String postid = "1234567890123";
     try {
-      handler.editPost("appkey", "blog/" + postid, "username", "password", "<title>Title</title><p>Content</p>", true);
+      handler.editPost("appkey", "default/" + postid, "username", "password", "<title>Title</title><p>Content</p>", true);
       fail();
     } catch (XmlRpcException xmlrpce) {
       assertEquals("Blog entry with ID of " + postid + " was not found.", xmlrpce.getMessage());
@@ -361,7 +361,7 @@ public class SingleBlogBloggerAPIHandlerTest extends SingleBlogTestCase {
       today.addEntry(entry);
 
       assertTrue(today.hasEntries());
-      boolean result = handler.deletePost("appkey", "blog/" + entry.getId(), "username", "password", true);
+      boolean result = handler.deletePost("appkey", "default/" + entry.getId(), "username", "password", true);
       assertTrue("deletePost() returned false instead of true", result);
       assertFalse(today.hasEntries());
     } catch (Exception e) {
@@ -373,7 +373,7 @@ public class SingleBlogBloggerAPIHandlerTest extends SingleBlogTestCase {
   public void testDeletePostWithIdThatDoesntExist() {
     String postid = "1234567890123";
     try {
-      handler.deletePost("appkey", "blog/" + postid, "username", "password", true);
+      handler.deletePost("appkey", "default/" + postid, "username", "password", true);
       fail();
     } catch (XmlRpcException xmlrpce) {
       assertEquals("Blog entry with ID of " + postid + " was not found.", xmlrpce.getMessage());
@@ -407,7 +407,7 @@ public class SingleBlogBloggerAPIHandlerTest extends SingleBlogTestCase {
 
       Hashtable blog = (Hashtable)blogs.get(0);
       assertEquals("http://www.yourdomain.com/blog/", blog.get("url"));
-      assertEquals("blog", blog.get("blogid"));
+      assertEquals("default", blog.get("blogid"));
       assertEquals("My blog", blog.get("blogName"));
     } catch (Exception e) {
       e.printStackTrace();
@@ -440,11 +440,11 @@ public class SingleBlogBloggerAPIHandlerTest extends SingleBlogTestCase {
       today.addEntry(entry);
       blog.addCategory(new Category("/aCategory", "A Category"));
 
-      boolean result = handler.addCategory("appkey", "blog/" + entry.getId(), "username", "password", "/aCategory");
+      boolean result = handler.addCategory("appkey", "default/" + entry.getId(), "username", "password", "/aCategory");
       assertTrue("Category wasn't added", result);
       assertTrue(entry.inCategory(blog.getCategory("aCategory")));
 
-      result = handler.addCategory("appkey", "blog/" + entry.getId(), "username", "password", "/aNonExistentCategory");
+      result = handler.addCategory("appkey", "default/" + entry.getId(), "username", "password", "/aNonExistentCategory");
       assertFalse("Category was added", result);
 
     } catch (Exception e) {
@@ -456,7 +456,7 @@ public class SingleBlogBloggerAPIHandlerTest extends SingleBlogTestCase {
   public void testAddCategoryWithIdThatDoesntExist() {
     String postid = "1234567890123";
     try {
-      handler.addCategory("appkey", "blog/" + postid, "username", "password", "aCategory");
+      handler.addCategory("appkey", "default/" + postid, "username", "password", "aCategory");
       fail();
     } catch (XmlRpcException xmlrpce) {
       assertEquals("Blog entry with ID of " + postid + " was not found.", xmlrpce.getMessage());

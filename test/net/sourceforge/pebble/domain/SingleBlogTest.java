@@ -531,7 +531,7 @@ public class SingleBlogTest extends SingleBlogTestCase {
   public void testDomain() {
     assertEquals("www.yourdomain.com", blog.getDomainName());
 
-    BlogManager.getInstance().setBaseUrl("http://www.yourdomain.com:8080/blog");
+    pebbleContext.setUrl("http://www.yourdomain.com:8080/blog");
     assertEquals("www.yourdomain.com", blog.getDomainName());
   }
 

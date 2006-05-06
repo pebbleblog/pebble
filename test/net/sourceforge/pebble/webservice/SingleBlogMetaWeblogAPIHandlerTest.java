@@ -64,34 +64,35 @@ public class SingleBlogMetaWeblogAPIHandlerTest extends SingleBlogTestCase {
   public void testAuthenticationFailure() {
     handler.setAuthenticationManager(new MockAuthenticationManager(false));
     try {
-      handler.getCategories("blog", "username", "password");
+      handler.getCategories("default", "username", "password");
       fail();
     } catch (XmlRpcAuthenticationException xmlrpcae) {
     } catch (XmlRpcException xmlrpce) {
     }
     try {
-      handler.editPost("123", "username", "password", new Hashtable(), true);
+      handler.editPost("default/123", "username", "password", new Hashtable(), true);
       fail();
     } catch (XmlRpcAuthenticationException xmlrpcae) {
     } catch (XmlRpcException xmlrpce) {
+      xmlrpce.printStackTrace();
       fail();
     }
     try {
-      handler.getPost("123", "username", "password");
-      fail();
-    } catch (XmlRpcAuthenticationException xmlrpcae) {
-    } catch (XmlRpcException xmlrpce) {
-      fail();
-    }
-    try {
-      handler.getRecentPosts("", "username", "password", 10);
+      handler.getPost("default/123", "username", "password");
       fail();
     } catch (XmlRpcAuthenticationException xmlrpcae) {
     } catch (XmlRpcException xmlrpce) {
       fail();
     }
     try {
-      handler.newPost("", "username", "password", new Hashtable(), true);
+      handler.getRecentPosts("default", "username", "password", 10);
+      fail();
+    } catch (XmlRpcAuthenticationException xmlrpcae) {
+    } catch (XmlRpcException xmlrpce) {
+      fail();
+    }
+    try {
+      handler.newPost("default", "username", "password", new Hashtable(), true);
       fail();
     } catch (XmlRpcAuthenticationException xmlrpcae) {
     } catch (XmlRpcException xmlrpce) {
@@ -122,13 +123,13 @@ public class SingleBlogMetaWeblogAPIHandlerTest extends SingleBlogTestCase {
     } catch (XmlRpcException xmlrpce) {
     }
     try {
-      handler.getRecentPosts("", "username", "password", 10);
+      handler.getRecentPosts("default", "username", "password", 10);
     } catch (XmlRpcAuthenticationException xmlrpcae) {
       fail();
     } catch (XmlRpcException xmlrpce) {
     }
     try {
-      handler.newPost("", "username", "password", new Hashtable(), true);
+      handler.newPost("default", "username", "password", new Hashtable(), true);
     } catch (XmlRpcAuthenticationException xmlrpcae) {
       fail();
     } catch (XmlRpcException xmlrpce) {
@@ -137,7 +138,7 @@ public class SingleBlogMetaWeblogAPIHandlerTest extends SingleBlogTestCase {
 
   public void testGetRecentPostsFromEmptyBlog() {
     try {
-      Vector posts = handler.getRecentPosts("", "username", "password", 3);
+      Vector posts = handler.getRecentPosts("default", "username", "password", 3);
       assertTrue(posts.isEmpty());
     } catch (Exception e) {
       fail();
@@ -164,20 +165,20 @@ public class SingleBlogMetaWeblogAPIHandlerTest extends SingleBlogTestCase {
       today.addEntry(entry3);
       BlogEntry entry4 = today.createBlogEntry("title4", "body4", cal4.getTime());
       today.addEntry(entry4);
-      Vector posts = handler.getRecentPosts("", "username", "password", 3);
+      Vector posts = handler.getRecentPosts("default", "username", "password", 3);
 
       assertFalse(posts.isEmpty());
       assertEquals(3, posts.size());
       Hashtable ht = (Hashtable)posts.get(0);
-      assertEquals("blog/" + entry4.getId(), ht.get(MetaWeblogAPIHandler.POST_ID));
+      assertEquals("default/" + entry4.getId(), ht.get(MetaWeblogAPIHandler.POST_ID));
       assertEquals("body4", ht.get(MetaWeblogAPIHandler.DESCRIPTION));
       assertEquals("title4", ht.get(MetaWeblogAPIHandler.TITLE));
       ht = (Hashtable)posts.get(1);
-      assertEquals("blog/" + entry3.getId(), ht.get(MetaWeblogAPIHandler.POST_ID));
+      assertEquals("default/" + entry3.getId(), ht.get(MetaWeblogAPIHandler.POST_ID));
       assertEquals("body3", ht.get(MetaWeblogAPIHandler.DESCRIPTION));
       assertEquals("title3", ht.get(MetaWeblogAPIHandler.TITLE));
       ht = (Hashtable)posts.get(2);
-      assertEquals("blog/" + entry2.getId(), ht.get(MetaWeblogAPIHandler.POST_ID));
+      assertEquals("default/" + entry2.getId(), ht.get(MetaWeblogAPIHandler.POST_ID));
       assertEquals("body2", ht.get(MetaWeblogAPIHandler.DESCRIPTION));
       assertEquals("title2", ht.get(MetaWeblogAPIHandler.TITLE));
     } catch (Exception e) {
@@ -198,7 +199,7 @@ public class SingleBlogMetaWeblogAPIHandlerTest extends SingleBlogTestCase {
       entry.addCategory(category);
       today.addEntry(entry);
 
-      Hashtable post = handler.getPost("blog/" + entry.getId(), "username", "password");
+      Hashtable post = handler.getPost("default/" + entry.getId(), "username", "password");
       assertEquals("title", post.get(MetaWeblogAPIHandler.TITLE));
       assertEquals("body", post.get(MetaWeblogAPIHandler.DESCRIPTION));
       Vector categories = (Vector)post.get(MetaWeblogAPIHandler.CATEGORIES);
@@ -206,7 +207,7 @@ public class SingleBlogMetaWeblogAPIHandlerTest extends SingleBlogTestCase {
       assertEquals("/acategory", categories.get(0));
       assertEquals(entry.getAuthor(), post.get(MetaWeblogAPIHandler.USER_ID));
       assertEquals(entry.getDate(), post.get(MetaWeblogAPIHandler.DATE_CREATED));
-      assertEquals("blog/" + entry.getId(), post.get(MetaWeblogAPIHandler.POST_ID));
+      assertEquals("default/" + entry.getId(), post.get(MetaWeblogAPIHandler.POST_ID));
     } catch (Exception e) {
       e.printStackTrace();
       fail();
@@ -216,7 +217,7 @@ public class SingleBlogMetaWeblogAPIHandlerTest extends SingleBlogTestCase {
   public void testGetPostWithIdThatDoesntExist() {
     String postid = "1234567890123";
     try {
-      handler.getPost("blog/" + postid, "username", "password");
+      handler.getPost("default/" + postid, "username", "password");
       fail();
     } catch (XmlRpcException xmlrpce) {
       assertEquals("Blog entry with ID of " + postid + " was not found.", xmlrpce.getMessage());
@@ -244,10 +245,10 @@ public class SingleBlogMetaWeblogAPIHandlerTest extends SingleBlogTestCase {
       categories.add(category.getId());
       struct.put(MetaWeblogAPIHandler.CATEGORIES, categories);
 
-      String postid = handler.newPost("blog", "username", "password", struct, true);
+      String postid = handler.newPost("default", "username", "password", struct, true);
 
       BlogEntry entry = (BlogEntry)blog.getRecentBlogEntries(1).get(0);
-      assertEquals("blog/" + entry.getId(), postid);
+      assertEquals("default/" + entry.getId(), postid);
       assertEquals("Title", entry.getTitle());
       assertTrue(entry.inCategory(category));
       assertEquals("<p>Content</p>", entry.getBody());
@@ -271,10 +272,10 @@ public class SingleBlogMetaWeblogAPIHandlerTest extends SingleBlogTestCase {
       categories.add("/someUnknownCategory");
       struct.put(MetaWeblogAPIHandler.CATEGORIES, categories);
 
-      String postid = handler.newPost("blog", "username", "password", struct, true);
+      String postid = handler.newPost("default", "username", "password", struct, true);
 
       BlogEntry entry = (BlogEntry)blog.getRecentBlogEntries(1).get(0);
-      assertEquals("blog/" + entry.getId(), postid);
+      assertEquals("default/" + entry.getId(), postid);
       assertEquals("Title", entry.getTitle());
       assertEquals(0, entry.getCategories().size());
       assertEquals("<p>Content</p>", entry.getBody());
@@ -295,7 +296,7 @@ public class SingleBlogMetaWeblogAPIHandlerTest extends SingleBlogTestCase {
       Hashtable struct = new Hashtable();
       struct.put(MetaWeblogAPIHandler.TITLE, "Title");
       struct.put(MetaWeblogAPIHandler.DESCRIPTION, "<p>Content</p>");
-      boolean result = handler.editPost("blog/" + entry.getId(), "username", "password", struct, true);
+      boolean result = handler.editPost("default/" + entry.getId(), "username", "password", struct, true);
 
       assertTrue(result);
       assertEquals("Title", entry.getTitle());
@@ -321,7 +322,7 @@ public class SingleBlogMetaWeblogAPIHandlerTest extends SingleBlogTestCase {
   public void testEditPostWithIdThatDoesntExist() {
     String postid = "1234567890123";
     try {
-      handler.editPost("blog/" + postid, "username", "password", new Hashtable(), true);
+      handler.editPost("default/" + postid, "username", "password", new Hashtable(), true);
       fail();
     } catch (XmlRpcException xmlrpce) {
       assertEquals("Blog entry with ID of " + postid + " was not found.", xmlrpce.getMessage());
@@ -329,12 +330,12 @@ public class SingleBlogMetaWeblogAPIHandlerTest extends SingleBlogTestCase {
   }
 
   public void testGetCategories() throws Exception {
-    Hashtable categories = handler.getCategories("blog", "username", "password");
+    Hashtable categories = handler.getCategories("default", "username", "password");
     assertEquals(0, categories.size());
 
     blog.addCategory(new Category("/category1", "Category 1"));
     blog.addCategory(new Category("/category2", "Category 2"));
-    categories = handler.getCategories("blog", "username", "password");
+    categories = handler.getCategories("default", "username", "password");
     assertTrue(categories.size() == 2);
     Hashtable struct = (Hashtable)categories.get("/category1");
     assertEquals("/category1", struct.get(MetaWeblogAPIHandler.DESCRIPTION));
@@ -362,9 +363,9 @@ public class SingleBlogMetaWeblogAPIHandlerTest extends SingleBlogTestCase {
       categories.add(category.getId());
       struct.put(MetaWeblogAPIHandler.CATEGORIES, categories);
 
-      String postid = handler.newPost("blog", "username", "password", struct, true);
+      String postid = handler.newPost("default", "username", "password", struct, true);
 
-      BlogEntry entry = blog.getBlogEntry(postid.substring(5));
+      BlogEntry entry = blog.getBlogEntry(postid.substring("default".length()+1));
       assertNotNull(entry);
       assertEquals(14, entry.getDailyBlog().getDay());
       assertEquals(7, entry.getDailyBlog().getMonthlyBlog().getMonth());

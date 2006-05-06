@@ -51,8 +51,8 @@ public abstract class SingleBlogTestCase extends PebbleTestCase {
     Theme theme = new Theme(blog, "custom", new File(System.getProperty("java.io.tmpdir"), "pebble").getAbsolutePath());
     blog.setEditableTheme(theme);
 
-    BlogManager.getInstance().setBaseUrl("http://www.yourdomain.com/blog/");
-    BlogManager.getInstance().setMultiUser(false);
+    pebbleContext.setUrl("http://www.yourdomain.com/blog/");
+    BlogManager.getInstance().setPebbleContext(pebbleContext);
     BlogManager.getInstance().removeAllBlogs();
     BlogManager.getInstance().addBlog(blog);
   }
