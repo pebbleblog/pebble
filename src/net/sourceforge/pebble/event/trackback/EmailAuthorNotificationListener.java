@@ -31,25 +31,19 @@
  */
 package net.sourceforge.pebble.event.trackback;
 
-import net.sourceforge.pebble.domain.TrackBack;
 import net.sourceforge.pebble.domain.BlogEntry;
-import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.domain.TrackBack;
 
 import java.util.Collection;
 import java.util.HashSet;
 
 /**
  * Sends an e-mail notification to the blog entry author when new
- * TrackBacks are added. This plugin assumes that the author of the
- * blog entry will be used as the e-mail address, with the domain
- * being specified by a plugin property called
- * "EmailAuthorNotificationListener.domain".
+ * TrackBacks are added.
  *
  * @author Simon Brown
  */
 public class EmailAuthorNotificationListener extends AbstractEmailNotificationListener {
-
-  private static final String DOMAIN_KEY = "EmailAuthorNotificationListener.domain";
 
   /**
    * Returns the collection of recipients.
@@ -59,11 +53,8 @@ public class EmailAuthorNotificationListener extends AbstractEmailNotificationLi
    */
   protected Collection getEmailAddresses(TrackBack trackBack) {
     BlogEntry blogEntry = trackBack.getBlogEntry();
-    Blog blog = blogEntry.getBlog();
-
     Collection<String> to = new HashSet<String>();
-    String domain = blog.getPluginProperties().getProperty(DOMAIN_KEY);
-    to.add(blogEntry.getAuthor() + "@" + domain);
+    to.add(blogEntry.getUser().getEmailAddress());
 
     return to;
   }

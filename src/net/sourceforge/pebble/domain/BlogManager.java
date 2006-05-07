@@ -115,11 +115,6 @@ public class BlogManager {
       log.info("Pebble data directory does not exist - creating");
       dataDirectory.mkdirs();
 
-      PebbleUserDetailsService puds = new PebbleUserDetailsService();
-      puds.setPebbleContext(pebbleContext);
-      puds.createRealm();
-      puds.createUser("username", "password", "", Constants.BLOG_OWNER_ROLE + "," + Constants.BLOG_CONTRIBUTOR_ROLE + "," + Constants.PEBBLE_ADMIN_ROLE);
-
       File blogsDirectory = getBlogsDirectory();
       blogsDirectory.mkdir();
 

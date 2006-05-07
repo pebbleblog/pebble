@@ -40,8 +40,12 @@ import net.sourceforge.pebble.event.trackback.TrackBackEvent;
 import net.sourceforge.pebble.search.BlogIndexer;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.acegisecurity.userdetails.UsernameNotFoundException;
+import org.springframework.dao.DataAccessException;
 import net.sourceforge.pebble.web.validation.ValidationContext;
 import net.sourceforge.pebble.comparator.BlogEntryResponseByDateComparator;
+import net.sourceforge.pebble.security.PebbleUserDetailsService;
+import net.sourceforge.pebble.security.PebbleUserDetails;
 
 import java.util.*;
 
@@ -121,6 +125,9 @@ public class BlogEntry extends Content {
    * the author of the blog entry
    */
   private String author = "";
+
+  /** the enricher user details */
+  private PebbleUserDetails user;
 
   /**
    * a flag to indicate whether comments are enabled for this entry
@@ -541,6 +548,25 @@ public class BlogEntry extends Content {
    */
   public String getAuthor() {
     return author;
+  }
+
+  /**
+   * Gets full user details about the author including name, email-address, etc.
+   *
+   * @return  a PebbleUserDetails instance
+   */
+  public PebbleUserDetails getUser() {
+    if (this.user == null) {
+      PebbleUserDetailsService puds = new PebbleUserDetailsService();
+      puds.setPebbleContext(BlogManager.getInstance().getPebbleContext());
+      try {
+        this.user = (PebbleUserDetails)puds.loadUserByUsername(getAuthor());
+      } catch (Exception e) {
+        log.warn("Could not get user details for blog entry", e);
+      }
+    }
+
+    return this.user;
   }
 
   /**

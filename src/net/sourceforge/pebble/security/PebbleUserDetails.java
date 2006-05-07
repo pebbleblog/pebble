@@ -11,12 +11,38 @@ import org.acegisecurity.userdetails.User;
  */
 public class PebbleUserDetails extends User {
 
+  /** the name */
+  private String name;
+
   /** the e-mail address */
   private String emailAddress;
 
-  public PebbleUserDetails(String username, String password, String emailAddress, GrantedAuthority[] authorities) {
+  /** the website */
+  private String website;
+
+  public PebbleUserDetails(String username, String password, String name, String emailAddress, String website, GrantedAuthority[] authorities) {
     super(username, password, true, true, true, true, authorities);
+    this.name = name;
     this.emailAddress = emailAddress;
+    this.website = website;
+  }
+
+  /**
+   * Gets the name.
+   *
+   * @return  a String
+   */
+  public String getName() {
+    return name;
+  }
+
+  /**
+   * Sets the name.
+   *
+   * @param name  a String
+   */
+  public void setName(String name) {
+    this.name = name;
   }
 
   /**
@@ -37,5 +63,22 @@ public class PebbleUserDetails extends User {
     this.emailAddress = emailAddress;
   }
 
+  /**
+   * Gets the website.
+   *
+   * @return  a String
+   */
+  public String getWebsite() {
+    return website;
+  }
+
+  /**
+   * Sets the name.
+   *
+   * @param website  a String
+   */
+  public void setWebsite(String website) {
+    this.website = website;
+  }
 
 }
