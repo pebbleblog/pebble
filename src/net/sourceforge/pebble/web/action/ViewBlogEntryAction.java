@@ -35,6 +35,7 @@ import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.util.SecurityUtils;
 import net.sourceforge.pebble.domain.BlogEntry;
 import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.domain.BlogService;
 import net.sourceforge.pebble.web.view.NotFoundView;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.impl.BlogEntryView;
@@ -63,7 +64,8 @@ public class ViewBlogEntryAction extends Action {
 
     BlogEntry blogEntry = null;
     if (entryId != null) {
-      blogEntry = blog.getBlogEntry(entryId);
+      BlogService service = new BlogService();
+      blogEntry = service.getBlogEntry(blog, entryId);
     }
 
     if (blogEntry == null) {
@@ -77,7 +79,7 @@ public class ViewBlogEntryAction extends Action {
       return new NotFoundView();
     } else {
       getModel().put(Constants.BLOG_ENTRY_KEY, blogEntry);
-      getModel().put("monthlyBlog", blogEntry.getDailyBlog().getMonthlyBlog());
+      getModel().put("monthlyBlog", blog.getBlogForDay(blogEntry.getDate()).getMonthlyBlog());
       getModel().put("displayMode", "detail");
 
       return new BlogEntryView();

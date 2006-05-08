@@ -57,7 +57,7 @@ public class MarkPendingListenerTest extends SingleBlogTestCase {
     super.setUp();
 
     listener = new MarkPendingListener();
-    blogEntry = blog.getBlogForToday().createBlogEntry();
+    blogEntry = new BlogEntry(blog);
     SecurityUtils.runAsBlogContributor();
   }
 

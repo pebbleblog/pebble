@@ -31,10 +31,13 @@
  */
 package net.sourceforge.pebble.plugin.permalink;
 
-import net.sourceforge.pebble.domain.BlogEntry;
 import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.domain.BlogEntry;
+import net.sourceforge.pebble.domain.BlogService;
 
-import java.text.DecimalFormat;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Generates permalinks using the pattern /YYYY/MM/DD/<time-in-millis>.
@@ -52,15 +55,29 @@ public class DefaultPermalinkProvider extends PermalinkProviderSupport {
    * @return  a URI as a String
    */
   public String getPermalink(BlogEntry blogEntry) {
-    DecimalFormat format = new DecimalFormat("00");
-    int year = blogEntry.getDailyBlog().getMonthlyBlog().getYearlyBlog().getYear();
-    int month = blogEntry.getDailyBlog().getMonthlyBlog().getMonth();
-    int day = blogEntry.getDailyBlog().getDay();
+    Blog blog = blogEntry.getBlog();
+    Date date = blogEntry.getDate();
+    DateFormat year = new SimpleDateFormat("yyyy");
+    year.setTimeZone(blog.getTimeZone());
+    DateFormat month = new SimpleDateFormat("MM");
+    month.setTimeZone(blog.getTimeZone());
+    DateFormat day = new SimpleDateFormat("dd");
+    day.setTimeZone(blog.getTimeZone());
 
-    return "/" + year + "/" + format.format(month) + "/" +
-        format.format(day) + "/" + blogEntry.getId() + ".html";
+    StringBuffer buf = new StringBuffer();
+    buf.append("/");
+    buf.append(year.format(date));
+    buf.append("/");
+    buf.append(month.format(date));
+    buf.append("/");
+    buf.append(day.format(date));
+    buf.append("/");
+    buf.append(blogEntry.getId());
+    buf.append(".html");
+
+    return buf.toString();
   }
-  
+
   /**
    * Determines whether the specified URI is a blog entry permalink.
    *
@@ -84,7 +101,8 @@ public class DefaultPermalinkProvider extends PermalinkProviderSupport {
    */
   public BlogEntry getBlogEntry(String uri) {
     Blog blog = getBlog();
-    return blog.getBlogEntry(uri.substring(12, 25));
+    BlogService service = new BlogService();
+    return service.getBlogEntry(blog, uri.substring(12, 25));
   }
 
 }

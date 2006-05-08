@@ -60,13 +60,14 @@ public class Utilities {
   private static final Log log = LogFactory.getLog(Utilities.class);
 
   /**
-   * Builds the search index for the given blog.
+   * Builds the indexes for the given blog.
    *
    * @param blog    a Blog instance
    */
-  public static void buildSearchIndex(Blog blog) {
-    BlogIndexer indexer = new BlogIndexer();
-    indexer.index(blog);
+  public static void buildIndexes(Blog blog) {
+    blog.reindex();
+//    BlogIndexer indexer = new BlogIndexer();
+//    indexer.index(blog);
   }
 
   /**
@@ -229,8 +230,8 @@ public class Utilities {
       buildIpAddressLists(blog);
     } else if (action.equalsIgnoreCase("fixHtmlInResponses")) {
       fixHtmlInResponses(blog);
-    } else if (action.equalsIgnoreCase("buildSearchIndex")) {
-      buildSearchIndex(blog);
+    } else if (action.equalsIgnoreCase("buildIndexes")) {
+      buildIndexes(blog);
     } else if (action.equalsIgnoreCase("convertCategories")) {
       convertCategories(blog);
     }

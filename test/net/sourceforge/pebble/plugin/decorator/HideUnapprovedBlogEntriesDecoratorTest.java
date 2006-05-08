@@ -50,7 +50,7 @@ public class HideUnapprovedBlogEntriesDecoratorTest extends SingleBlogTestCase {
     super.setUp();
 
     decorator = new HideUnapprovedBlogEntriesDecorator();
-    blogEntry = blog.getBlogForToday().createBlogEntry();
+    blogEntry = new BlogEntry(blog);
   }
 
   /**

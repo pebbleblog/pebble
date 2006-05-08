@@ -146,24 +146,28 @@ public class MultiBlogMetaWeblogAPIHandlerTest extends MultiBlogTestCase {
 
   public void testGetRecentPosts() {
     try {
-      Calendar cal1 = blog1.getCalendar();
-      cal1.set(Calendar.HOUR_OF_DAY, 2);
-      Calendar cal2 = blog1.getCalendar();
-      cal2.set(Calendar.HOUR_OF_DAY, 3);
-      Calendar cal3 = blog1.getCalendar();
-      cal3.set(Calendar.HOUR_OF_DAY, 4);
-      Calendar cal4 = blog1.getCalendar();
-      cal4.set(Calendar.HOUR_OF_DAY, 5);
+      BlogService service = new BlogService();
 
-      DailyBlog today = blog1.getBlogForToday();
-      BlogEntry entry1 = today.createBlogEntry("title1", "body1", cal1.getTime());
-      today.addEntry(entry1);
-      BlogEntry entry2 = today.createBlogEntry("title2", "body2", cal2.getTime());
-      today.addEntry(entry2);
-      BlogEntry entry3 = today.createBlogEntry("title3", "body3", cal3.getTime());
-      today.addEntry(entry3);
-      BlogEntry entry4 = today.createBlogEntry("title4", "body4", cal4.getTime());
-      today.addEntry(entry4);
+      BlogEntry entry1 = new BlogEntry(blog1);
+      entry1.setTitle("title1");
+      entry1.setBody("body1");
+      service.putBlogEntry(entry1);
+
+      BlogEntry entry2 = new BlogEntry(blog1);
+      entry2.setTitle("title2");
+      entry2.setBody("body2");
+      service.putBlogEntry(entry2);
+
+      BlogEntry entry3 = new BlogEntry(blog1);
+      entry3.setTitle("title3");
+      entry3.setBody("body3");
+      service.putBlogEntry(entry3);
+
+      BlogEntry entry4 = new BlogEntry(blog1);
+      entry4.setTitle("title4");
+      entry4.setBody("body4");
+      service.putBlogEntry(entry4);
+
       Vector posts = handler.getRecentPosts("blog1", "username", "password", 3);
 
       assertFalse(posts.isEmpty());
@@ -190,13 +194,14 @@ public class MultiBlogMetaWeblogAPIHandlerTest extends MultiBlogTestCase {
     try {
       Category category = new Category("/aCategory", "A Category");
       blog1.addCategory(category);
-      DailyBlog today = blog1.getBlogForToday();
-      BlogEntry entry = today.createBlogEntry();
+
+      BlogService service = new BlogService();
+      BlogEntry entry = new BlogEntry(blog1);
       entry.setTitle("title");
       entry.setBody("body");
       entry.setAuthor("simon");
       entry.addCategory(category);
-      today.addEntry(entry);
+      service.putBlogEntry(entry);
 
       Hashtable post = handler.getPost("blog1/" + entry.getId(), "username", "password");
       assertEquals("title", post.get(MetaWeblogAPIHandler.TITLE));
@@ -245,7 +250,9 @@ public class MultiBlogMetaWeblogAPIHandlerTest extends MultiBlogTestCase {
 
       String postid = handler.newPost("blog1", "username", "password", struct, true);
 
-      BlogEntry entry = (BlogEntry)blog1.getRecentBlogEntries(1).get(0);
+      BlogService service = new BlogService();
+      BlogEntry entry = service.getBlogEntry(blog1, postid.substring("blog1".length()+1));
+
       assertEquals("blog1/" + entry.getId(), postid);
       assertEquals("Title", entry.getTitle());
       assertTrue(entry.inCategory(category));
@@ -272,7 +279,9 @@ public class MultiBlogMetaWeblogAPIHandlerTest extends MultiBlogTestCase {
 
       String postid = handler.newPost("blog1", "username", "password", struct, true);
 
-      BlogEntry entry = (BlogEntry)blog1.getRecentBlogEntries(1).get(0);
+      BlogService service = new BlogService();
+      BlogEntry entry = service.getBlogEntry(blog1, postid.substring("blog1".length()+1));
+
       assertEquals("blog1/" + entry.getId(), postid);
       assertEquals("Title", entry.getTitle());
       assertEquals(0, entry.getCategories().size());
@@ -286,11 +295,12 @@ public class MultiBlogMetaWeblogAPIHandlerTest extends MultiBlogTestCase {
 
   public void testEditPost() {
     try {
-      DailyBlog today = blog1.getBlogForToday();
-      BlogEntry entry = today.createBlogEntry();
+      BlogService service = new BlogService();
+      BlogEntry entry = new BlogEntry(blog1);
       entry.setTitle("title");
       entry.setBody("body");
-      today.addEntry(entry);
+      service.putBlogEntry(entry);
+
       Hashtable struct = new Hashtable();
       struct.put(MetaWeblogAPIHandler.TITLE, "Title");
       struct.put(MetaWeblogAPIHandler.DESCRIPTION, "<p>Content</p>");

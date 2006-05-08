@@ -53,8 +53,10 @@ public class BlogEntryComparatorTest extends SingleBlogTestCase {
     Calendar cal2 = blog.getCalendar();
     cal2.set(Calendar.HOUR_OF_DAY, 10);
 
-    BlogEntry b1 = dailyBlog.createBlogEntry("Title 1", "Body 1", cal1.getTime());
-    BlogEntry b2 = dailyBlog.createBlogEntry("Title 2", "Body 2", cal2.getTime());
+    BlogEntry b1 = new BlogEntry(blog);
+    b1.setDate(cal1.getTime());
+    BlogEntry b2 = new BlogEntry(blog);
+    b2.setDate(cal2.getTime());
 
     assertTrue(comp.compare(b1, b1) == 0);
     assertTrue(comp.compare(b1, b2) != 0);

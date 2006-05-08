@@ -51,7 +51,7 @@ public class NoFollowDecoratorTest extends SingleBlogTestCase {
     super.setUp();
 
     decorator = new NoFollowDecorator();
-    blogEntry = blog.getBlogForToday().createBlogEntry();
+    blogEntry = new BlogEntry(blog);
 
     chain = new BlogEntryDecoratorChain(null);
   }

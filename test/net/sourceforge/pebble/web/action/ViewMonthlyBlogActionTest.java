@@ -54,6 +54,8 @@ public class ViewMonthlyBlogActionTest extends SingleBlogActionTestCase {
    * @throws Exception
    */
   public void testViewMonthylBlog() throws Exception {
+    request.setParameter("year", "2006");
+    request.setParameter("month", "05");
     View view = action.process(request, response);
 
     Model model = action.getModel();

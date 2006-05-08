@@ -50,7 +50,7 @@ public class EscapeMarkupDecoratorTest extends SingleBlogTestCase {
     super.setUp();
 
     decorator = new EscapeMarkupDecorator();
-    blogEntry = blog.getBlogForToday().createBlogEntry();
+    blogEntry = new BlogEntry(blog);
     chain = new BlogEntryDecoratorChain(null);
     context = new BlogEntryDecoratorContext();
     context.setBlogEntry(blogEntry);

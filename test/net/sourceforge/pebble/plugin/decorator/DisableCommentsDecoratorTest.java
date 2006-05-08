@@ -48,7 +48,7 @@ public class DisableCommentsDecoratorTest extends SingleBlogTestCase {
     super.setUp();
 
     decorator = new DisableCommentsDecorator();
-    blogEntry = blog.getBlogForToday().createBlogEntry();
+    blogEntry = new BlogEntry(blog);
   }
 
   /**

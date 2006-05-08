@@ -51,7 +51,7 @@ public class EditTemplateActionTest extends SecureActionTestCase {
 
   public void testProcess() throws Exception {
     // first of all add a blog entry to be edited
-    BlogEntry newTemplate = blog.getBlogForToday().createBlogEntry();
+    BlogEntry newTemplate = new BlogEntry(blog);
     newTemplate.setType(BlogEntry.TEMPLATE);
     newTemplate.store();
 

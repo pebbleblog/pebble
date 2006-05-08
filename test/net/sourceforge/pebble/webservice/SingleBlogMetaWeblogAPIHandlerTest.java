@@ -41,6 +41,8 @@ import org.apache.xmlrpc.XmlRpcException;
 import java.util.Calendar;
 import java.util.Hashtable;
 import java.util.Vector;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 /**
  * Tests for the MetaWeblogAPIHandler class, when using a simple blog.
@@ -147,24 +149,28 @@ public class SingleBlogMetaWeblogAPIHandlerTest extends SingleBlogTestCase {
 
   public void testGetRecentPosts() {
     try {
-      Calendar cal1 = blog.getCalendar();
-      cal1.set(Calendar.HOUR_OF_DAY, 2);
-      Calendar cal2 = blog.getCalendar();
-      cal2.set(Calendar.HOUR_OF_DAY, 3);
-      Calendar cal3 = blog.getCalendar();
-      cal3.set(Calendar.HOUR_OF_DAY, 4);
-      Calendar cal4 = blog.getCalendar();
-      cal4.set(Calendar.HOUR_OF_DAY, 5);
+      BlogService service = new BlogService();
 
-      DailyBlog today = blog.getBlogForToday();
-      BlogEntry entry1 = today.createBlogEntry("title1", "body1", cal1.getTime());
-      today.addEntry(entry1);
-      BlogEntry entry2 = today.createBlogEntry("title2", "body2", cal2.getTime());
-      today.addEntry(entry2);
-      BlogEntry entry3 = today.createBlogEntry("title3", "body3", cal3.getTime());
-      today.addEntry(entry3);
-      BlogEntry entry4 = today.createBlogEntry("title4", "body4", cal4.getTime());
-      today.addEntry(entry4);
+      BlogEntry entry1 = new BlogEntry(blog);
+      entry1.setTitle("title1");
+      entry1.setBody("body1");
+      service.putBlogEntry(entry1);
+
+      BlogEntry entry2 = new BlogEntry(blog);
+      entry2.setTitle("title2");
+      entry2.setBody("body2");
+      service.putBlogEntry(entry2);
+
+      BlogEntry entry3 = new BlogEntry(blog);
+      entry3.setTitle("title3");
+      entry3.setBody("body3");
+      service.putBlogEntry(entry3);
+
+      BlogEntry entry4 = new BlogEntry(blog);
+      entry4.setTitle("title4");
+      entry4.setBody("body4");
+      service.putBlogEntry(entry4);
+
       Vector posts = handler.getRecentPosts("default", "username", "password", 3);
 
       assertFalse(posts.isEmpty());
@@ -191,13 +197,14 @@ public class SingleBlogMetaWeblogAPIHandlerTest extends SingleBlogTestCase {
     try {
       Category category = new Category("/acategory", "A category");
       blog.addCategory(category);
-      DailyBlog today = blog.getBlogForToday();
-      BlogEntry entry = today.createBlogEntry();
+
+      BlogService service = new BlogService();
+      BlogEntry entry = new BlogEntry(blog);
       entry.setTitle("title");
       entry.setBody("body");
       entry.setAuthor("simon");
       entry.addCategory(category);
-      today.addEntry(entry);
+      service.putBlogEntry(entry);
 
       Hashtable post = handler.getPost("default/" + entry.getId(), "username", "password");
       assertEquals("title", post.get(MetaWeblogAPIHandler.TITLE));
@@ -247,7 +254,9 @@ public class SingleBlogMetaWeblogAPIHandlerTest extends SingleBlogTestCase {
 
       String postid = handler.newPost("default", "username", "password", struct, true);
 
-      BlogEntry entry = (BlogEntry)blog.getRecentBlogEntries(1).get(0);
+      BlogService service = new BlogService();
+      BlogEntry entry = service.getBlogEntry(blog, postid.substring("default".length()+1));
+
       assertEquals("default/" + entry.getId(), postid);
       assertEquals("Title", entry.getTitle());
       assertTrue(entry.inCategory(category));
@@ -274,7 +283,9 @@ public class SingleBlogMetaWeblogAPIHandlerTest extends SingleBlogTestCase {
 
       String postid = handler.newPost("default", "username", "password", struct, true);
 
-      BlogEntry entry = (BlogEntry)blog.getRecentBlogEntries(1).get(0);
+      BlogService service = new BlogService();
+      BlogEntry entry = service.getBlogEntry(blog, postid.substring("default".length()+1));
+
       assertEquals("default/" + entry.getId(), postid);
       assertEquals("Title", entry.getTitle());
       assertEquals(0, entry.getCategories().size());
@@ -288,11 +299,12 @@ public class SingleBlogMetaWeblogAPIHandlerTest extends SingleBlogTestCase {
 
   public void testEditPost() {
     try {
-      DailyBlog today = blog.getBlogForToday();
-      BlogEntry entry = today.createBlogEntry();
+      BlogService service = new BlogService();
+      BlogEntry entry = new BlogEntry(blog);
       entry.setTitle("title");
       entry.setBody("body");
-      today.addEntry(entry);
+      service.putBlogEntry(entry);
+
       Hashtable struct = new Hashtable();
       struct.put(MetaWeblogAPIHandler.TITLE, "Title");
       struct.put(MetaWeblogAPIHandler.DESCRIPTION, "<p>Content</p>");
@@ -365,11 +377,11 @@ public class SingleBlogMetaWeblogAPIHandlerTest extends SingleBlogTestCase {
 
       String postid = handler.newPost("default", "username", "password", struct, true);
 
-      BlogEntry entry = blog.getBlogEntry(postid.substring("default".length()+1));
-      assertNotNull(entry);
-      assertEquals(14, entry.getDailyBlog().getDay());
-      assertEquals(7, entry.getDailyBlog().getMonthlyBlog().getMonth());
-      assertEquals(2004, entry.getDailyBlog().getMonthlyBlog().getYearlyBlog().getYear());
+      BlogService service = new BlogService();
+      BlogEntry entry = service.getBlogEntry(blog, postid.substring("default".length()+1));
+
+      DateFormat format = new SimpleDateFormat("dd/MMMM/yyyy");
+      assertEquals("14/July/2004", format.format(entry.getDate()));
     } catch (Exception e) {
       e.printStackTrace();
       fail();

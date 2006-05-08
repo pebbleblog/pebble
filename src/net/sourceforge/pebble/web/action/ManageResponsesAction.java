@@ -70,6 +70,7 @@ public class ManageResponsesAction extends SecureAction {
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
     String ids[] = request.getParameterValues("response");
     String submit = request.getParameter("submit");
+    BlogService service = new BlogService();
 
     if (ids != null && submit != null) {
       for (String id : ids) {
@@ -82,21 +83,21 @@ public class ManageResponsesAction extends SecureAction {
         if (submit.equalsIgnoreCase("Approve")) {
           try {
             ber.setState(State.APPROVED);
-            ber.getBlogEntry().store();
+            service.putBlogEntry(ber.getBlogEntry());
           } catch (BlogException be) {
             log.error("Error updating state for response", be);
           }
         } else if (submit.equalsIgnoreCase("Reject")) {
           try {
             ber.setState(State.REJECTED);
-            ber.getBlogEntry().store();
+            service.putBlogEntry(ber.getBlogEntry());
           } catch (BlogException be) {
             log.error("Error updating state for response", be);
           }
         } else if (submit.equalsIgnoreCase("Remove")) {
           try {
             ber.getBlogEntry().removeResponse(ber);
-            ber.getBlogEntry().store();
+            service.putBlogEntry(ber.getBlogEntry());
           } catch (BlogException be) {
             log.error("Error updating state for response", be);
           }
@@ -129,7 +130,8 @@ public class ManageResponsesAction extends SecureAction {
     String blogEntryId = guid.substring(2, guid.indexOf("/", 2));
     String responseId = guid.substring(guid.lastIndexOf("/")+1);
 
-    BlogEntry blogEntry = blog.getBlogEntry(blogEntryId);
+    BlogService service = new BlogService();
+    BlogEntry blogEntry = service.getBlogEntry(blog, blogEntryId);
     if (blogEntry == null) {
       return null;
     }

@@ -33,6 +33,7 @@ package net.sourceforge.pebble.plugin.permalink;
 
 import net.sourceforge.pebble.domain.BlogEntry;
 import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.domain.BlogService;
 
 
 /**
@@ -53,7 +54,7 @@ public class ShortPermalinkProvider extends PermalinkProviderSupport {
   public String getPermalink(BlogEntry blogEntry) {
     return "/" + blogEntry.getId() + ".html";
   }
-  
+
   /**
    * Determines whether the specified URI is a blog entry permalink.
    *
@@ -79,7 +80,8 @@ public class ShortPermalinkProvider extends PermalinkProviderSupport {
     // uri is of the form /1234567890123.html, so extract the 13-digit ID
     // and use it to find the correct blog entry
     Blog blog = getBlog();
-    return blog.getBlogEntry(uri.substring(1, 14));
+    BlogService service = new BlogService();
+    return service.getBlogEntry(blog, uri.substring(1, 14));
   }
 
 }

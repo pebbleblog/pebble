@@ -34,7 +34,9 @@ package net.sourceforge.pebble.web.action;
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.domain.MonthlyBlog;
 import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.domain.BlogService;
 import net.sourceforge.pebble.web.view.View;
+import net.sourceforge.pebble.web.view.NotFoundView;
 import net.sourceforge.pebble.web.view.impl.BlogMonthlyView;
 
 import javax.servlet.ServletException;
@@ -61,15 +63,17 @@ public class ViewMonthlyBlogAction extends Action {
     String month = request.getParameter("month");
 
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
-    MonthlyBlog monthly = null;
+    MonthlyBlog monthly;
     if (year != null && year.length() > 0 &&
         month != null && month.length() > 0) {
       monthly = blog.getBlogForMonth(Integer.parseInt(year), Integer.parseInt(month));
     } else {
-      monthly = blog.getBlogForThisMonth();
+      return new NotFoundView();
     }
 
-    getModel().put(Constants.BLOG_ENTRIES, monthly.getBlogEntries());
+    BlogService service = new BlogService();
+
+    getModel().put(Constants.BLOG_ENTRIES, service.getBlogEntries(blog, Integer.parseInt(year), Integer.parseInt(month)));
     getModel().put("displayMode", "month");
     getModel().put(Constants.MONTHLY_BLOG, monthly);
 

@@ -51,7 +51,7 @@ public class TechnoratiTagsDecoratorTest extends SingleBlogTestCase {
   public void setUp() {
     super.setUp();
 
-    blogEntry = blog.getBlogForToday().createBlogEntry();
+    blogEntry = new BlogEntry(blog);
     decorator = new TechnoratiTagsDecorator();
     chain = new BlogEntryDecoratorChain(null);
     context = new BlogEntryDecoratorContext();

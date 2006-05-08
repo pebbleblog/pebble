@@ -171,8 +171,10 @@ public class MovableTypeImporter {
 //    System.out.println("Keywords:" + keywords);
 
     // create a new Pebble entry, add and store
-    DailyBlog day = blog.getBlogForDay(date);
-    BlogEntry entry = day.createBlogEntry(title, body.toString(), date);
+    BlogEntry entry = new BlogEntry(blog);
+    entry.setTitle(title);
+    entry.setBody(body.toString());
+    entry.setDate(date);
     entry.setExcerpt(excerpt.toString());
     entry.setAuthor(author);
     entry.setCommentsEnabled(allowComments.equals("1"));
@@ -196,7 +198,8 @@ public class MovableTypeImporter {
       entry.addCategory(category);
     }
 
-    day.addEntry(entry);
+    BlogService service = new BlogService();
+    service.putBlogEntry(entry);
 
     line = reader.readLine();
     while (!line.equals("--------")) {
@@ -242,7 +245,7 @@ public class MovableTypeImporter {
       line = reader.readLine();
     }
 
-    entry.store();
+    service.putBlogEntry(entry);
 
 //    System.out.println("--------------------------------------------------");
     System.out.print(".");

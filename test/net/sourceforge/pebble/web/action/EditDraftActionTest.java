@@ -51,7 +51,7 @@ public class EditDraftActionTest extends SecureActionTestCase {
 
   public void testProcess() throws Exception {
     // first of all add a blog entry to be edited
-    BlogEntry newDraftBlogEntry = blog.getBlogForToday().createBlogEntry();
+    BlogEntry newDraftBlogEntry = new BlogEntry(blog);
     newDraftBlogEntry.setType(BlogEntry.DRAFT);
     newDraftBlogEntry.store();
 

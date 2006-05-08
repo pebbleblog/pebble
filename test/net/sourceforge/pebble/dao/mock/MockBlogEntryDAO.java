@@ -16,9 +16,38 @@ import java.util.*;
  */
 public class MockBlogEntryDAO implements BlogEntryDAO {
 
+  private Map blogEntries = new HashMap();
   private Map draftBlogEntries = new HashMap();
   private Map blogEntryTemplates = new HashMap();
   private Map staticPages = new HashMap();
+
+  /**
+   * Loads a specific blog entry.
+   *
+   * @param blogEntryId   the blog entry ID
+   * @return a BlogEntry instance
+   * @throws net.sourceforge.pebble.dao.PersistenceException
+   *          if the specified blog entry cannot be loaded
+   */
+  public BlogEntry loadBlogEntry(Blog blog, String blogEntryId) throws PersistenceException {
+    return (BlogEntry)blogEntries.get(blogEntryId);
+  }
+
+  /**
+   * Loads all blog entries.
+   *
+   * @param blog the Blog to load all entries for
+   * @return a List of BlogEntry objects
+   * @throws net.sourceforge.pebble.dao.PersistenceException
+   *          if the blog entries cannot be loaded
+   */
+  public List<BlogEntry> loadBlogEntries(Blog blog) throws PersistenceException {
+    List<BlogEntry> list = new ArrayList<BlogEntry>();
+    for (Object o : blogEntries.values()) {
+      list.add((BlogEntry)o);
+    }
+    return list;
+  }
 
   /**
    * Stores the specified blog entry.
@@ -26,7 +55,7 @@ public class MockBlogEntryDAO implements BlogEntryDAO {
    * @param blogEntry   the blog entry to store
    * @throws PersistenceException   if something goes wrong storing the entry
    */
-  public void store(BlogEntry blogEntry) throws PersistenceException {
+  public void storeBlogEntry(BlogEntry blogEntry) throws PersistenceException {
     switch (blogEntry.getType()) {
       case BlogEntry.DRAFT :
         draftBlogEntries.put(blogEntry.getId(), blogEntry);
@@ -37,6 +66,8 @@ public class MockBlogEntryDAO implements BlogEntryDAO {
       case BlogEntry.STATIC_PAGE :
         staticPages.put(blogEntry.getId(), blogEntry);
         break;
+      default :
+        blogEntries.put(blogEntry.getId(), blogEntry);
     }
   }
 
@@ -46,7 +77,7 @@ public class MockBlogEntryDAO implements BlogEntryDAO {
    * @param blogEntry   the blog entry to remove
    * @throws PersistenceException   if something goes wrong removing the entry
    */
-  public void remove(BlogEntry blogEntry) throws PersistenceException {
+  public void removeBlogEntry(BlogEntry blogEntry) throws PersistenceException {
     switch (blogEntry.getType()) {
       case BlogEntry.DRAFT :
         draftBlogEntries.remove(blogEntry.getId());
@@ -57,6 +88,8 @@ public class MockBlogEntryDAO implements BlogEntryDAO {
       case BlogEntry.STATIC_PAGE :
         staticPages.remove(blogEntry.getId());
         break;
+      default :
+        blogEntries.remove(blogEntry.getId());
     }
   }
 
@@ -67,17 +100,6 @@ public class MockBlogEntryDAO implements BlogEntryDAO {
    * @throws  PersistenceException    if the yearly blogs cannot be loaded
    */
   public List getYearlyBlogs(Blog rootBlog) throws PersistenceException {
-    return new ArrayList();
-  }
-
-  /**
-   * Loads the blog entries for a given daily blog.
-   *
-   * @param dailyBlog   the DailyBlog instance
-   * @return  a List of BlogEntry instances
-   * @throws  PersistenceException    if blog entries cannot be loaded
-   */
-  public List getBlogEntries(DailyBlog dailyBlog) throws PersistenceException {
     return new ArrayList();
   }
 

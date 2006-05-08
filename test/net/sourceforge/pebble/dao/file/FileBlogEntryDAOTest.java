@@ -77,12 +77,8 @@ public class FileBlogEntryDAOTest extends SingleBlogTestCase {
     blog.addCategory(category1);
     Category category2 = new Category("/category2", "Category 2");
     blog.addCategory(category2);
-    Collection blogEntries = dao.getBlogEntries(dailyBlog);
+    BlogEntry blogEntry = dao.loadBlogEntry(blog, "1081203335000");
     SimpleDateFormat sdf = new SimpleDateFormat(FileBlogEntryDAO.NEW_PERSISTENT_DATETIME_FORMAT);
-
-    assertEquals(1, blogEntries.size());
-
-    BlogEntry blogEntry = (BlogEntry)blogEntries.iterator().next();
 
     // test that the blog entry properties were loaded okay
     assertEquals("Blog entry title", blogEntry.getTitle());

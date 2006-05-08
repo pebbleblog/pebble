@@ -66,7 +66,7 @@ public class BlogSearcher {
       Searcher searcher = null;
 
       try {
-        searcher = new IndexSearcher(blog.getIndexDirectory());
+        searcher = new IndexSearcher(blog.getSearchIndexDirectory());
         Query query = QueryParser.parse(queryString, "blogEntry", getAnalyzer(blog));
         Hits hits = searcher.search(query);
 

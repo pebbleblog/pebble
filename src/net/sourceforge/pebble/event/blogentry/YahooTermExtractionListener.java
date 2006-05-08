@@ -33,6 +33,7 @@ package net.sourceforge.pebble.event.blogentry;
 
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.domain.BlogEntry;
+import net.sourceforge.pebble.domain.BlogService;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.httpclient.methods.PostMethod;
@@ -134,7 +135,8 @@ public class YahooTermExtractionListener extends BlogEntryListenerSupport {
       }
 
       blogEntry.setTags(tags.toString());
-      blogEntry.store();
+      BlogService service = new BlogService();
+      service.putBlogEntry(blogEntry);
     } catch (Exception e) {
       log.error(e.getMessage(), e);
     }

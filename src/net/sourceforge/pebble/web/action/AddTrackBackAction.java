@@ -35,6 +35,7 @@ import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.domain.BlogEntry;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.domain.TrackBack;
+import net.sourceforge.pebble.domain.BlogService;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.impl.TrackBackResponseView;
 import org.apache.commons.logging.Log;
@@ -78,13 +79,14 @@ public class AddTrackBackAction extends Action {
         getModel().put("message", "The URL (permalink) must be specified for TrackBacks");
         return new TrackBackResponseView();
       } else {
-        blogEntry = blog.getBlogEntry(entry);
+        BlogService service = new BlogService();
+        blogEntry = service.getBlogEntry(blog, entry);
 
         // only add the TrackBack if they are enabled for the entry
         if (blogEntry.isTrackBacksEnabled()) {
           TrackBack trackBack = blogEntry.createTrackBack(title, excerpt, url, blogName, ipAddress);
           blogEntry.addTrackBack(trackBack);
-          blogEntry.store();
+          service.putBlogEntry(blogEntry);
 
           getModel().put("errorCode", new Integer(0));
           return new TrackBackResponseView();

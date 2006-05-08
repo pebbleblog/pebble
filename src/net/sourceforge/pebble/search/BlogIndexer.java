@@ -43,6 +43,7 @@ import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.Term;
 
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * Wraps up the functionality to index blog entries. This is really just
@@ -59,27 +60,28 @@ public class BlogIndexer {
    * Allows an entire root blog to be indexed. In other words, this indexes
    * all of the blog entries within the specified root blog.
    *
-   * @param rootBlog    the Blog instance to index
+   * @param blog    the Blog instance to index
    */
-  public void index(Blog rootBlog) {
-    synchronized (rootBlog) {
+  public void index(Blog blog, List blogEntries) {
+    synchronized (blog) {
       try {
-        log.debug("Creating index for all blog entries in " + rootBlog.getName());
-        Analyzer analyzer = getAnalyzer(rootBlog);
-        IndexWriter writer = new IndexWriter(rootBlog.getIndexDirectory(), analyzer, true);
+        log.debug("Creating index for all blog entries in " + blog.getName());
+        Analyzer analyzer = getAnalyzer(blog);
+        IndexWriter writer = new IndexWriter(blog.getSearchIndexDirectory(), analyzer, true);
 
-        Iterator it = rootBlog.getBlogEntries().iterator();
+        Iterator it = blogEntries.iterator();
         while (it.hasNext()) {
           BlogEntry blogEntry = (BlogEntry)it.next();
           index(blogEntry, writer);
         }
 
-        log.debug("Creating index for all static pages in " + rootBlog.getName());
-        it = rootBlog.getStaticPages().iterator();
-        while (it.hasNext()) {
-          BlogEntry blogEntry = (BlogEntry)it.next();
-          index(blogEntry, writer);
-        }
+//        todo
+//        log.debug("Creating index for all static pages in " + rootBlog.getName());
+//        it = rootBlog.getStaticPages().iterator();
+//        while (it.hasNext()) {
+//          BlogEntry blogEntry = (BlogEntry)it.next();
+//          index(blogEntry, writer);
+//        }
 
         writer.close();
       } catch (Exception e) {
@@ -104,7 +106,7 @@ public class BlogIndexer {
         // first delete the blog entry from the index (if it was there)
         removeIndex(blogEntry);
 
-        IndexWriter writer = new IndexWriter(rootBlog.getIndexDirectory(), analyzer, false);
+        IndexWriter writer = new IndexWriter(rootBlog.getSearchIndexDirectory(), analyzer, false);
         index(blogEntry, writer);
         writer.close();
       }
@@ -134,7 +136,7 @@ public class BlogIndexer {
       Blog rootBlog = blogEntry.getBlog();
       synchronized (blogEntry) {
         log.debug("Attempting to delete index for " + blogEntry.getTitle());
-        IndexReader reader = IndexReader.open(rootBlog.getIndexDirectory());
+        IndexReader reader = IndexReader.open(rootBlog.getSearchIndexDirectory());
         Term term = new Term("id", blogEntry.getId());
         log.debug("Deleted " + reader.delete(term) + " document(s) from the index");
         reader.close();

@@ -41,12 +41,32 @@ import java.util.List;
 public interface BlogEntryDAO {
 
   /**
+   * Loads a specific blog entry.
+   *
+   * @param blogEntryId   the blog entry ID
+   * @return a BlogEntry instance
+   * @throws net.sourceforge.pebble.dao.PersistenceException
+   *          if the specified blog entry cannot be loaded
+   */
+  public BlogEntry loadBlogEntry(Blog blog, String blogEntryId) throws PersistenceException;
+
+  /**
+   * Loads all blog entries.
+   *
+   * @param blog    the Blog to load all entries for
+   * @return a List of BlogEntry objects
+   * @throws net.sourceforge.pebble.dao.PersistenceException
+   *          if the blog entries cannot be loaded
+   */
+  public List<BlogEntry> loadBlogEntries(Blog blog) throws PersistenceException;
+
+  /**
    * Stores the specified blog entry.
    *
    * @param blogEntry   the blog entry to store
    * @throws PersistenceException   if something goes wrong storing the entry
    */
-  public void store(BlogEntry blogEntry) throws PersistenceException;
+  public void storeBlogEntry(BlogEntry blogEntry) throws PersistenceException;
 
   /**
    * Removes the specified blog entry.
@@ -54,7 +74,7 @@ public interface BlogEntryDAO {
    * @param blogEntry   the blog entry to remove
    * @throws PersistenceException   if something goes wrong removing the entry
    */
-  public void remove(BlogEntry blogEntry) throws PersistenceException;
+  public void removeBlogEntry(BlogEntry blogEntry) throws PersistenceException;
 
   /**
    * Gets the YearlyBlogs that the specified root blog is managing.
@@ -64,14 +84,14 @@ public interface BlogEntryDAO {
    */
   public List getYearlyBlogs(Blog rootBlog) throws PersistenceException;
 
-  /**
-   * Loads the blog entries for a given daily blog.
-   *
-   * @param dailyBlog   the DailyBlog instance
-   * @return  a List of BlogEntry instances
-   * @throws  net.sourceforge.pebble.dao.PersistenceException    if blog entries cannot be loaded
-   */
-  public List getBlogEntries(DailyBlog dailyBlog) throws PersistenceException;
+//  /**
+//   * Loads the blog entries for a given daily blog.
+//   *
+//   * @param dailyBlog   the DailyBlog instance
+//   * @return  a List of BlogEntry instances
+//   * @throws  net.sourceforge.pebble.dao.PersistenceException    if blog entries cannot be loaded
+//   */
+//  public List getBlogEntries(DailyBlog dailyBlog) throws PersistenceException;
 
   /**
    * Loads the draft blog entries for a given blog.

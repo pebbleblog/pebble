@@ -31,10 +31,7 @@
  */
 package net.sourceforge.pebble.event.response;
 
-import net.sourceforge.pebble.domain.Comment;
-import net.sourceforge.pebble.domain.SingleBlogTestCase;
-import net.sourceforge.pebble.domain.State;
-import net.sourceforge.pebble.domain.TrackBack;
+import net.sourceforge.pebble.domain.*;
 import net.sourceforge.pebble.event.comment.CommentEvent;
 import net.sourceforge.pebble.event.trackback.TrackBackEvent;
 
@@ -58,7 +55,7 @@ public class LinkSpamListenerTest extends SingleBlogTestCase {
     super.setUp();
 
     listener = new LinkSpamListener();
-    comment = blog.getBlogForToday().createBlogEntry().createComment("Title", "Body", "Author", "me@somedomain.com", "http://www.google.com", "127.0.0.1");
+    comment = new BlogEntry(blog).createComment("Title", "Body", "Author", "me@somedomain.com", "http://www.google.com", "127.0.0.1");
     commentEvent = new CommentEvent(comment, CommentEvent.COMMENT_ADDED);
   }
 

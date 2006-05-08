@@ -32,10 +32,7 @@
 package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
-import net.sourceforge.pebble.domain.BlogEntry;
-import net.sourceforge.pebble.domain.BlogException;
-import net.sourceforge.pebble.domain.Comment;
-import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.domain.*;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.NotFoundView;
 import net.sourceforge.pebble.web.view.impl.RemoveEmailAddressConfirmationView;
@@ -73,7 +70,8 @@ public class RemoveEmailAddressAction extends Action {
     String entry = request.getParameter("entry");
     String email = request.getParameter("email");
 
-    blogEntry = blog.getBlogEntry(entry);
+    BlogService service = new BlogService();
+    blogEntry = service.getBlogEntry(blog, entry);
     if (blogEntry == null) {
       return new NotFoundView();
     }
@@ -92,7 +90,7 @@ public class RemoveEmailAddressAction extends Action {
       }
 
       try {
-        blogEntry.store();
+        service.putBlogEntry(blogEntry);
       } catch (BlogException be) {
         log.error(be.getMessage(), be);
         throw new ServletException(be);

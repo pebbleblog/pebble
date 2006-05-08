@@ -69,8 +69,8 @@ public class UtilitiesAction extends SecureAction {
     } else if (action.equalsIgnoreCase("fixHtmlInResponses")) {
       Utilities.fixHtmlInResponses(blog);
       return new ForwardView("/reloadBlog.secureaction");
-    } else if (action.equalsIgnoreCase("buildSearchIndex")) {
-      Utilities.buildSearchIndex(blog);
+    } else if (action.equalsIgnoreCase("buildIndexes")) {
+      Utilities.buildIndexes(blog);
       return new ForwardView("/reloadBlog.secureaction");
     } else if (action.equalsIgnoreCase("convertCategories")) {
       Utilities.convertCategories(blog);

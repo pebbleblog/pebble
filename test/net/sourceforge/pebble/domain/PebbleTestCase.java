@@ -54,6 +54,11 @@ public abstract class PebbleTestCase extends TestCase {
     TEST_BLOG_LOCATION = new File(System.getProperty("java.io.tmpdir"), "pebble");
     TEST_BLOG_LOCATION.mkdir();
 
+    File index = new File(TEST_BLOG_LOCATION, "index");
+    index.mkdir();
+    File segments = new File(index, "segments");
+    segments.mkdir();
+
     pebbleContext.setDataDirectory(TEST_BLOG_LOCATION.getAbsolutePath());
 
     // and now register the shutdown hook for tear down logic

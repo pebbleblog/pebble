@@ -52,7 +52,7 @@ public class AddBlogEntryAction extends AbstractAddBlogEntryAction {
    * @return a BlogEntry instance
    */
   protected BlogEntry createBlogEntry(Blog blog, HttpServletRequest request) {
-    BlogEntry entry = blog.getBlogForToday().createBlogEntry();
+    BlogEntry entry = new BlogEntry(blog);
     entry.setTitle("Title");
     entry.setBody("<p>\n\n</p>");
 

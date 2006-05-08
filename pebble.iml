@@ -220,7 +220,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/acegi-security-1.0.0-RC1.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/acegi-security-1.0.0-RC2.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -240,8 +240,8 @@
   <component name="WebModuleProperties">
     <containerElement type="library" level="module">
       <attribute name="method" value="1" />
-      <attribute name="URI" value="/WEB-INF/lib/acegi-security-1.0.0-RC1.jar" />
-      <url>jar://$MODULE_DIR$/lib/acegi-security-1.0.0-RC1.jar!/</url>
+      <attribute name="URI" value="/WEB-INF/lib/acegi-security-1.0.0-RC2.jar" />
+      <url>jar://$MODULE_DIR$/lib/acegi-security-1.0.0-RC2.jar!/</url>
     </containerElement>
     <containerElement type="library" level="module">
       <attribute name="method" value="1" />
@@ -258,7 +258,7 @@
       <attribute name="URI" value="/WEB-INF/lib/spring-1.2.6.jar" />
       <url>jar://$MODULE_DIR$/lib/spring-1.2.6.jar!/</url>
     </containerElement>
-    <deploymentDescriptor name="web.xml" url="file://$MODULE_DIR$/web/WEB-INF/web.xml" optional="false" version="2.4" />
+    <deploymentDescriptor name="web.xml" url="file://$MODULE_DIR$/web/WEB-INF/web.xml" version="2.4" />
     <webroots>
       <root url="file://$MODULE_DIR$/web" relative="/" />
     </webroots>

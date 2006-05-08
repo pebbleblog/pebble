@@ -32,10 +32,7 @@
 package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
-import net.sourceforge.pebble.domain.BlogEntry;
-import net.sourceforge.pebble.domain.BlogException;
-import net.sourceforge.pebble.domain.Comment;
-import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.domain.*;
 import net.sourceforge.pebble.plugin.decorator.BlogEntryDecoratorContext;
 import net.sourceforge.pebble.plugin.decorator.BlogEntryDecoratorManager;
 import net.sourceforge.pebble.util.CookieUtils;
@@ -92,7 +89,8 @@ public class SaveCommentAction extends Action {
     String rememberMe = request.getParameter("rememberMe");
     String submitType = request.getParameter("submit");
 
-    blogEntry = blog.getBlogEntry(entry);
+    BlogService service = new BlogService();
+    blogEntry = service.getBlogEntry(blog, entry);
     if (blogEntry == null) {
       // just send back a 404 - this is probably somebody looking for a way
       // to send comment spam ;-)

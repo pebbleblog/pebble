@@ -79,24 +79,28 @@ public class MultiBlogBloggerAPIHandlerTest extends MultiBlogTestCase {
 
   public void testGetRecentPosts() {
     try {
-      Calendar cal1 = blog1.getCalendar();
-      cal1.set(Calendar.HOUR_OF_DAY, 2);
-      Calendar cal2 = blog1.getCalendar();
-      cal2.set(Calendar.HOUR_OF_DAY, 3);
-      Calendar cal3 = blog1.getCalendar();
-      cal3.set(Calendar.HOUR_OF_DAY, 4);
-      Calendar cal4 = blog1.getCalendar();
-      cal4.set(Calendar.HOUR_OF_DAY, 5);
+      BlogService service = new BlogService();
 
-      DailyBlog today = blog1.getBlogForToday();
-      BlogEntry entry1 = today.createBlogEntry("title1", "body1", cal1.getTime());
-      today.addEntry(entry1);
-      BlogEntry entry2 = today.createBlogEntry("title2", "body2", cal2.getTime());
-      today.addEntry(entry2);
-      BlogEntry entry3 = today.createBlogEntry("title3", "body3", cal3.getTime());
-      today.addEntry(entry3);
-      BlogEntry entry4 = today.createBlogEntry("title4", "body4", cal4.getTime());
-      today.addEntry(entry4);
+      BlogEntry entry1 = new BlogEntry(blog1);
+      entry1.setTitle("title1");
+      entry1.setBody("body1");
+      service.putBlogEntry(entry1);
+
+      BlogEntry entry2 = new BlogEntry(blog1);
+      entry2.setTitle("title2");
+      entry2.setBody("body2");
+      service.putBlogEntry(entry2);      
+
+      BlogEntry entry3 = new BlogEntry(blog1);
+      entry3.setTitle("title3");
+      entry3.setBody("body3");
+      service.putBlogEntry(entry3);
+
+      BlogEntry entry4 = new BlogEntry(blog1);
+      entry4.setTitle("title4");
+      entry4.setBody("body4");
+      service.putBlogEntry(entry4);
+
       Vector posts = handler.getRecentPosts("appkey", "blog1", "username", "password", 3);
 
       assertFalse(posts.isEmpty());
@@ -118,12 +122,12 @@ public class MultiBlogBloggerAPIHandlerTest extends MultiBlogTestCase {
 
   public void testGetPost() {
     try {
-      DailyBlog today = blog1.getBlogForToday();
-      BlogEntry entry = today.createBlogEntry();
+      BlogService service = new BlogService();
+      BlogEntry entry = new BlogEntry(blog1);
       entry.setTitle("title");
       entry.setBody("body");
       entry.setAuthor("simon");
-      today.addEntry(entry);
+      service.putBlogEntry(entry);
 
       Hashtable post = handler.getPost("appkey", "blog1/" + entry.getId(), "username", "password");
       assertEquals("<title>title</title><category></category>body", post.get(BloggerAPIHandler.CONTENT));
@@ -138,13 +142,13 @@ public class MultiBlogBloggerAPIHandlerTest extends MultiBlogTestCase {
 
   public void testGetPostWithCategory() {
     try {
-      DailyBlog today = blog1.getBlogForToday();
-      BlogEntry entry = today.createBlogEntry();
+      BlogService service = new BlogService();
+      BlogEntry entry = new BlogEntry(blog1);
       entry.setTitle("title");
       entry.setBody("body");
       entry.setAuthor("simon");
       entry.addCategory(new Category("java", "Java"));
-      today.addEntry(entry);
+      service.putBlogEntry(entry);
 
       Hashtable post = handler.getPost("appkey", "blog1/" + entry.getId(), "username", "password");
       assertEquals("<title>title</title><category>/java</category>body", post.get(BloggerAPIHandler.CONTENT));
@@ -179,17 +183,16 @@ public class MultiBlogBloggerAPIHandlerTest extends MultiBlogTestCase {
 
   public void testDeletePost() {
     try {
-      DailyBlog today = blog1.getBlogForToday();
-      BlogEntry entry = today.createBlogEntry();
+      BlogService service = new BlogService();
+      BlogEntry entry = new BlogEntry(blog1);
       entry.setTitle("title");
       entry.setBody("body");
       entry.setAuthor("simon");
-      today.addEntry(entry);
+      service.putBlogEntry(entry);
 
-      assertTrue(today.hasEntries());
       boolean result = handler.deletePost("appkey", "blog1/" + entry.getId(), "username", "password", true);
       assertTrue("deletePost() returned false instead of true", result);
-      assertFalse(today.hasEntries());
+      assertNull(service.getBlogEntry(blog1, entry.getId()));
     } catch (Exception e) {
       e.printStackTrace();
       fail();
@@ -243,9 +246,9 @@ public class MultiBlogBloggerAPIHandlerTest extends MultiBlogTestCase {
 
   public void testAddCategory() {
     try {
-      DailyBlog today = blog1.getBlogForToday();
-      BlogEntry entry = today.createBlogEntry();
-      today.addEntry(entry);
+      BlogService service = new BlogService();
+      BlogEntry entry = new BlogEntry(blog1);
+      service.putBlogEntry(entry);
       blog1.addCategory(new Category("/aCategory", "A Category"));
 
       boolean result = handler.addCategory("appkey", "blog1/" + entry.getId(), "username", "password", "/aCategory");

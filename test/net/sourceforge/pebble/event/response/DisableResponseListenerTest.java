@@ -59,7 +59,7 @@ public class DisableResponseListenerTest extends SingleBlogTestCase {
     super.setUp();
 
     listener = new DisableResponseListener();
-    blogEntry = blog.getBlogForToday().createBlogEntry();
+    blogEntry = new BlogEntry(blog);
     comment = blogEntry.createComment("Title", "Body", "Author", "me@somedomain.com", "http://www.google.com", "127.0.0.1");
     commentEvent = new CommentEvent(comment, CommentEvent.COMMENT_ADDED);
     trackBack = blogEntry.createTrackBack("Title", "Excerpt", "url", "blogName", "127.0.0.1");

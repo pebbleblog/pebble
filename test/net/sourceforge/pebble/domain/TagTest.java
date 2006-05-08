@@ -72,8 +72,7 @@ public class TagTest extends SingleBlogTestCase {
   public void testAddBlogEntry() {
     assertTrue(tag.getBlogEntries().isEmpty());
     assertEquals(0, tag.getNumberOfBlogEntries());
-    DailyBlog today = blog.getBlogForToday();
-    BlogEntry blogEntry = today.createBlogEntry();
+    BlogEntry blogEntry = new BlogEntry(blog);
 
     tag.addBlogEntry(blogEntry);
     assertTrue(tag.getBlogEntries().contains(blogEntry));
@@ -81,8 +80,7 @@ public class TagTest extends SingleBlogTestCase {
   }
 
   public void testRemoveBlogEntry() {
-    DailyBlog today = blog.getBlogForToday();
-    BlogEntry blogEntry = today.createBlogEntry();
+    BlogEntry blogEntry = new BlogEntry(blog);
     tag.addBlogEntry(blogEntry);
     assertTrue(tag.getBlogEntries().contains(blogEntry));
     assertEquals(1, tag.getNumberOfBlogEntries());

@@ -54,7 +54,7 @@ public class StaticPageIndex {
    */
   StaticPageIndex(Blog blog) {
     this.blog = blog;
-    reindex();
+    //reindex();
   }
 
   /**

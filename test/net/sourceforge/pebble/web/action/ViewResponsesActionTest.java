@@ -34,6 +34,7 @@ package net.sourceforge.pebble.web.action;
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.domain.BlogEntry;
 import net.sourceforge.pebble.domain.Comment;
+import net.sourceforge.pebble.domain.BlogService;
 import net.sourceforge.pebble.util.Pageable;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.impl.ResponsesView;
@@ -79,8 +80,10 @@ public class ViewResponsesActionTest extends SecureActionTestCase {
 
   public void testActionCalledWithDefaultParametersAndLessThanAPageOfResponses() throws Exception {
     int numberOfComments = ViewResponsesAction.PAGE_SIZE - 1;
-    BlogEntry blogEntry = blog.getBlogForToday().createBlogEntry();
-    blog.getBlogForToday().addEntry(blogEntry);
+    BlogService service = new BlogService();
+    BlogEntry blogEntry = new BlogEntry(blog);
+    service.putBlogEntry(blogEntry);
+
     for (int i = 0; i < numberOfComments; i++) {
       Comment comment = blogEntry.createComment("title", "body"+i, "author", "email", "website", "127.0.0.1");
       blogEntry.addComment(comment);

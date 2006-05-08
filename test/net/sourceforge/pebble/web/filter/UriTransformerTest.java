@@ -31,10 +31,7 @@
  */
 package net.sourceforge.pebble.web.filter;
 
-import net.sourceforge.pebble.domain.BlogEntry;
-import net.sourceforge.pebble.domain.DailyBlog;
-import net.sourceforge.pebble.domain.FileMetaData;
-import net.sourceforge.pebble.domain.SingleBlogTestCase;
+import net.sourceforge.pebble.domain.*;
 import net.sourceforge.pebble.plugin.permalink.DefaultPermalinkProvider;
 import net.sourceforge.pebble.plugin.permalink.TitlePermalinkProvider;
 
@@ -104,9 +101,9 @@ public class UriTransformerTest extends SingleBlogTestCase {
   }
 
   public void testPermalinkUrlsForSingleUserBlog() throws Exception {
-    DailyBlog today = blog.getBlogForToday();
-    BlogEntry blogEntry = today.createBlogEntry();
-    today.addEntry(blogEntry);
+    BlogService service = new BlogService();
+    BlogEntry blogEntry = new BlogEntry(blog);
+    service.putBlogEntry(blogEntry);
 
     // test a url to request a single blog entry
     String url = blogEntry.getLocalPermalink();
@@ -178,18 +175,20 @@ public class UriTransformerTest extends SingleBlogTestCase {
   }
 
   public void testBlogEntryWithDefaultPermalinkProvider() throws Exception {
-    DailyBlog today = blog.getBlogForToday();
-    BlogEntry blogEntry = today.createBlogEntry();
-    today.addEntry(blogEntry);
+    BlogService service = new BlogService();
+    BlogEntry blogEntry = new BlogEntry(blog);
+    service.putBlogEntry(blogEntry);
     assertEquals("/viewBlogEntry.action?entry=" + blogEntry.getId(), transformer.getUri(blog.getPermalinkProvider().getPermalink(blogEntry), blog));
   }
 
   public void testBlogEntryWithTitlePermalinkProvider() throws Exception {
     blog.setPermalinkProvider(new TitlePermalinkProvider());
-    DailyBlog today = blog.getBlogForToday();
-    BlogEntry blogEntry = today.createBlogEntry();
+
+    BlogService service = new BlogService();
+    BlogEntry blogEntry = new BlogEntry(blog);
     blogEntry.setTitle("Some title");
-    today.addEntry(blogEntry);
+    service.putBlogEntry(blogEntry);
+
     assertEquals("/viewBlogEntry.action?entry=" + blogEntry.getId(), transformer.getUri(blog.getPermalinkProvider().getPermalink(blogEntry), blog));
   }
 
@@ -197,10 +196,12 @@ public class UriTransformerTest extends SingleBlogTestCase {
     DefaultPermalinkProvider defaultProvider = new DefaultPermalinkProvider();
     defaultProvider.setBlog(blog);
     blog.setPermalinkProvider(new TitlePermalinkProvider());
-    DailyBlog today = blog.getBlogForToday();
-    BlogEntry blogEntry = today.createBlogEntry();
+
+    BlogService service = new BlogService();
+    BlogEntry blogEntry = new BlogEntry(blog);
     blogEntry.setTitle("Some title");
-    today.addEntry(blogEntry);
+    service.putBlogEntry(blogEntry);
+
     assertEquals("/viewBlogEntry.action?entry=" + blogEntry.getId(), transformer.getUri(defaultProvider.getPermalink(blogEntry), blog));
   }
 

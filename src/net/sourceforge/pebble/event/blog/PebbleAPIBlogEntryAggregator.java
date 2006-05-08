@@ -31,10 +31,7 @@
  */
 package net.sourceforge.pebble.event.blog;
 
-import net.sourceforge.pebble.domain.Blog;
-import net.sourceforge.pebble.domain.BlogEntry;
-import net.sourceforge.pebble.domain.DailyBlog;
-import net.sourceforge.pebble.domain.Attachment;
+import net.sourceforge.pebble.domain.*;
 import net.sourceforge.pebble.webservice.PebbleAPIHandler;
 import net.sourceforge.pebble.PluginProperties;
 import org.apache.commons.logging.Log;
@@ -125,12 +122,13 @@ public abstract class PebbleAPIBlogEntryAggregator extends TimerTask implements 
 
         log.info("Aggregating " + title + " [ " + id + " | " + permalink + " ]");
 
-        BlogEntry blogEntry = blog.getBlogEntry(id);
+        BlogService service = new BlogService();
+        BlogEntry blogEntry = service.getBlogEntry(blog, id);
         if (blogEntry == null) {
           // create a new blog entry if one doesn't exist
-          DailyBlog day = blog.getBlogForDay(date);
-          blogEntry = day.createBlogEntry(new Date(Long.parseLong(id)));
-          day.addEntry(blogEntry);
+          blogEntry = new BlogEntry(blog);
+          blogEntry.setDate(new Date(Long.parseLong(id)));
+          service.putBlogEntry(blogEntry);
         }
 
         // now ensure the local blog entry is in sync
@@ -160,7 +158,7 @@ public abstract class PebbleAPIBlogEntryAggregator extends TimerTask implements 
 
         postAggregate(blogEntry);
 
-        blogEntry.store();
+        service.putBlogEntry(blogEntry);
       }
     } catch (Exception e) {
       log.error(e);

@@ -53,7 +53,7 @@ public class HideUnapprovedResponsesDecoratorTest extends SingleBlogTestCase {
    * Tests that unapproved comments and TrackBacks are removed.
    */
   public void testUnapprovedResponsesRemovedWhenNotLoggedIn() throws Exception {
-    BlogEntry blogEntry = blog.getBlogForToday().createBlogEntry();
+    BlogEntry blogEntry = new BlogEntry(blog);
     Comment comment = blogEntry.createComment("title", "body", "author", "email", "website", "127.0.0.1");
     comment.setState(State.PENDING);
     blogEntry.addComment(comment);
@@ -77,7 +77,7 @@ public class HideUnapprovedResponsesDecoratorTest extends SingleBlogTestCase {
    * but not a blog contributor.
    */
   public void testUnapprovedResponsesRemovedWhenLoggedIn() throws Exception {
-    BlogEntry blogEntry = blog.getBlogForToday().createBlogEntry();
+    BlogEntry blogEntry = new BlogEntry(blog);
     Comment comment = blogEntry.createComment("title", "body", "author", "email", "website", "127.0.0.1");
     comment.setState(State.PENDING);
     blogEntry.addComment(comment);
@@ -101,7 +101,7 @@ public class HideUnapprovedResponsesDecoratorTest extends SingleBlogTestCase {
    * Tests that unapproved comments and TrackBacks are not removed.
    */
   public void testUnapprovedResponsesNotRemovedWhenLoggedIn() throws Exception {
-    BlogEntry blogEntry = blog.getBlogForToday().createBlogEntry();
+    BlogEntry blogEntry = new BlogEntry(blog);
     Comment comment = blogEntry.createComment("title", "body", "author", "email", "website", "127.0.0.1");
     comment.setState(State.PENDING);
     blogEntry.addComment(comment);

@@ -44,8 +44,7 @@ public class BlogEntryResponseByDateComparatorTest extends SingleBlogTestCase {
 
   public void testCompare() {
     BlogEntryResponseByDateComparator comp = new BlogEntryResponseByDateComparator();
-    DailyBlog dailyBlog = blog.getBlogForToday();
-    BlogEntry b1 = dailyBlog.createBlogEntry();
+    BlogEntry b1 = new BlogEntry(blog);
 
     Comment c1 = b1.createComment("", "", "", "", "", "", new Date(1000), State.APPROVED);
     Comment c2 = b1.createComment("", "", "", "", "", "", new Date(2000), State.APPROVED);

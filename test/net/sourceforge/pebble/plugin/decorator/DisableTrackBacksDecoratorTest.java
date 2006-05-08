@@ -48,7 +48,7 @@ public class DisableTrackBacksDecoratorTest extends SingleBlogTestCase {
     super.setUp();
 
     decorator = new DisableTrackBacksDecorator();
-    blogEntry = blog.getBlogForToday().createBlogEntry();
+    blogEntry = new BlogEntry(blog);
   }
 
   /**

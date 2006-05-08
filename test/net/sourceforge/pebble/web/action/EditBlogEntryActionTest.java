@@ -33,6 +33,7 @@ package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.domain.BlogEntry;
+import net.sourceforge.pebble.domain.BlogService;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.impl.BlogEntryFormView;
 
@@ -51,8 +52,9 @@ public class EditBlogEntryActionTest extends SecureActionTestCase {
 
   public void testProcess() throws Exception {
     // first of all add a blog entry to be edited
-    BlogEntry newBlogEntry = blog.getBlogForToday().createBlogEntry();
-    blog.getBlogForToday().addEntry(newBlogEntry);
+    BlogService service = new BlogService();
+    BlogEntry newBlogEntry = new BlogEntry(blog);
+    service.putBlogEntry(newBlogEntry);
 
     // now execute the action
     request.setParameter("entry", newBlogEntry.getId());

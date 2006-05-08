@@ -35,6 +35,7 @@ import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.domain.BlogEntry;
 import net.sourceforge.pebble.domain.Comment;
 import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.domain.BlogService;
 import net.sourceforge.pebble.util.CookieUtils;
 import net.sourceforge.pebble.web.view.NotFoundView;
 import net.sourceforge.pebble.web.view.View;
@@ -71,9 +72,10 @@ public class ReplyToBlogEntryAction extends Action {
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
     String entryId = request.getParameter("entry");
 
+    BlogService service = new BlogService();
     BlogEntry blogEntry = null;
     if (entryId != null) {
-      blogEntry = blog.getBlogEntry(entryId);
+      blogEntry = service.getBlogEntry(blog, entryId);
     }
 
     if (blogEntry == null) {

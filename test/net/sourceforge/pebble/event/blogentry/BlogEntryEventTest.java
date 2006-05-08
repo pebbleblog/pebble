@@ -47,7 +47,7 @@ public class BlogEntryEventTest extends SingleBlogTestCase {
    * Tests that a BlogEntryEvent instance is correctly constructed.
    */
   public void testConstruction() {
-    BlogEntry blogEntry = blog.getBlogForToday().createBlogEntry();
+    BlogEntry blogEntry = new BlogEntry(blog);
     event = new BlogEntryEvent(blogEntry, BlogEntryEvent.BLOG_ENTRY_ADDED);
 
     assertEquals(blogEntry, event.getSource());

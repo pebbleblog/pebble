@@ -33,10 +33,15 @@ package net.sourceforge.pebble.plugin.permalink;
 
 import net.sourceforge.pebble.domain.BlogEntry;
 import net.sourceforge.pebble.domain.DailyBlog;
+import net.sourceforge.pebble.domain.Blog;
 
 import java.text.DecimalFormat;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Date;
+import java.util.ArrayList;
 
 /**
  * Generates permalinks based upon the blog entry title. This implementation
@@ -66,8 +71,9 @@ public class TitlePermalinkProvider extends PermalinkProviderSupport {
     if (blogEntry.getTitle() == null || blogEntry.getTitle().length() == 0) {
       return buildPermalink(blogEntry) + ".html";
     } else {
-      DailyBlog dailyBlog = blogEntry.getDailyBlog();
-      List entries = dailyBlog.getEntries();
+      // todo
+      // DailyBlog dailyBlog = blogEntry.getDailyBlog();
+      List entries = new ArrayList(); //dailyBlog.getEntries();
       int count = 0;
       for (int i = entries.size()-1; i > entries.indexOf(blogEntry); i--) {
         BlogEntry entry = (BlogEntry)entries.get(i);
@@ -102,13 +108,26 @@ public class TitlePermalinkProvider extends PermalinkProviderSupport {
       title = "" + blogEntry.getId();
     }
 
-    DecimalFormat format = new DecimalFormat("00");
-    int year = blogEntry.getDailyBlog().getMonthlyBlog().getYearlyBlog().getYear();
-    int month = blogEntry.getDailyBlog().getMonthlyBlog().getMonth();
-    int day = blogEntry.getDailyBlog().getDay();
+    Blog blog = blogEntry.getBlog();
+    Date date = blogEntry.getDate();
+    DateFormat year = new SimpleDateFormat("yyyy");
+    year.setTimeZone(blog.getTimeZone());
+    DateFormat month = new SimpleDateFormat("MM");
+    month.setTimeZone(blog.getTimeZone());
+    DateFormat day = new SimpleDateFormat("dd");
+    day.setTimeZone(blog.getTimeZone());
 
-    return "/" + year + "/" + format.format(month) + "/" +
-        format.format(day) + "/" + title;
+    StringBuffer buf = new StringBuffer();
+    buf.append("/");
+    buf.append(year.format(date));
+    buf.append("/");
+    buf.append(month.format(date));
+    buf.append("/");
+    buf.append(day.format(date));
+    buf.append("/");
+    buf.append(title);
+
+    return buf.toString();
   }
 
   /**
@@ -133,19 +152,22 @@ public class TitlePermalinkProvider extends PermalinkProviderSupport {
    * @return  a BlogEntry instance, or null if one can't be found
    */
   public BlogEntry getBlogEntry(String uri) {
-    DailyBlog dailyBlog = getDailyBlog(uri);
-
-    Iterator it = dailyBlog.getEntries().iterator();
-    while (it.hasNext()) {
-      BlogEntry blogEntry = (BlogEntry)it.next();
-      // use the local permalink, just in case the entry has been aggregated
-      // and an original permalink assigned
-      if (blogEntry.getLocalPermalink().endsWith(uri)) {
-        return blogEntry;
-      }
-    }
-
     return null;
+
+//    todo
+//    DailyBlog dailyBlog = getDailyBlog(uri);
+//
+//    Iterator it = dailyBlog.getEntries().iterator();
+//    while (it.hasNext()) {
+//      BlogEntry blogEntry = (BlogEntry)it.next();
+//      // use the local permalink, just in case the entry has been aggregated
+//      // and an original permalink assigned
+//      if (blogEntry.getLocalPermalink().endsWith(uri)) {
+//        return blogEntry;
+//      }
+//    }
+//
+//    return null;
   }
 
 }

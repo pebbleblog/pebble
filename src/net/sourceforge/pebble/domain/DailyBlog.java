@@ -31,12 +31,6 @@
  */
 package net.sourceforge.pebble.domain;
 
-import net.sourceforge.pebble.comparator.BlogEntryComparator;
-import net.sourceforge.pebble.dao.BlogEntryDAO;
-import net.sourceforge.pebble.dao.DAOFactory;
-import net.sourceforge.pebble.dao.PersistenceException;
-import net.sourceforge.pebble.event.blogentry.BlogEntryEvent;
-
 import java.util.*;
 
 /**
@@ -52,8 +46,8 @@ public class DailyBlog extends TimePeriod implements Permalinkable {
   /** an integer representing the day that this DailyBlog is for */
   private int day;
 
-  /** the collection of BlogEntry instances */
-  private List entries = new ArrayList();
+  /** the collection of blog entry keys */
+  private List<String> blogEntries = new ArrayList<String>();
 
   /**
    * Creates a new DailyBlog for the specified month and day.
@@ -68,54 +62,54 @@ public class DailyBlog extends TimePeriod implements Permalinkable {
     this.day = day;
     setDate(getCalendar().getTime());
 
-    if (getBlog() instanceof Blog) {
-      try {
-        Blog blog = getBlog();
-
-        DAOFactory factory = DAOFactory.getConfiguredFactory();
-        BlogEntryDAO dao = factory.getBlogEntryDAO();
-        entries = dao.getBlogEntries(this);
-        Collections.sort(entries, new BlogEntryComparator());
-
-        Iterator it = entries.iterator();
-        while (it.hasNext()) {
-          BlogEntry blogEntry = (BlogEntry)it.next();
-
-          if (blogEntry.isApproved()) {
-            Iterator categories = blogEntry.getCategories().iterator();
-            while (categories.hasNext()) {
-              Category category = (Category)categories.next();
-              category.addBlogEntry(blogEntry);
-            }
-            blog.getRootCategory().addBlogEntry(blogEntry);
-
-            // and the blog entry specific tags
-            Iterator tags = blogEntry.getTagsAsList().iterator();
-            while (tags.hasNext()) {
-              Tag tag = (Tag)tags.next();
-              tag.addBlogEntry(blogEntry);
-            }
-          }
-
-          // tell the owning blog that we might have some more recent
-          // comments and TrackBacks
-          Iterator comments = blogEntry.getComments().iterator();
-          while (comments.hasNext()) {
-            blog.getResponseManager().addRecentComment((Comment)comments.next());
-          }
-          Iterator trackBacks = blogEntry.getTrackBacks().iterator();
-          while (trackBacks.hasNext()) {
-            blog.getResponseManager().addRecentTrackBack((TrackBack)trackBacks.next());
-          }
-
-          // now that the entries have been loaded, enable events
-          // so that listeners get notified when they change
-          blogEntry.setEventsEnabled(true);
-        }
-      } catch (PersistenceException e) {
-        e.printStackTrace();
-      }
-    }
+//    if (getBlog() instanceof Blog) {
+//      try {
+//        Blog blog = getBlog();
+//
+//        DAOFactory factory = DAOFactory.getConfiguredFactory();
+//        BlogEntryDAO dao = factory.getBlogEntryDAO();
+//        entries = dao.getBlogEntries(this);
+//        Collections.sort(entries, new BlogEntryComparator());
+//
+//        Iterator it = entries.iterator();
+//        while (it.hasNext()) {
+//          BlogEntry blogEntry = (BlogEntry)it.next();
+//
+//          if (blogEntry.isApproved()) {
+//            Iterator categories = blogEntry.getCategories().iterator();
+//            while (categories.hasNext()) {
+//              Category category = (Category)categories.next();
+//              category.addBlogEntry(blogEntry);
+//            }
+//            blog.getRootCategory().addBlogEntry(blogEntry);
+//
+//            // and the blog entry specific tags
+//            Iterator tags = blogEntry.getTagsAsList().iterator();
+//            while (tags.hasNext()) {
+//              Tag tag = (Tag)tags.next();
+//              tag.addBlogEntry(blogEntry);
+//            }
+//          }
+//
+//          // tell the owning blog that we might have some more recent
+//          // comments and TrackBacks
+//          Iterator comments = blogEntry.getComments().iterator();
+//          while (comments.hasNext()) {
+//            blog.getResponseManager().addRecentComment((Comment)comments.next());
+//          }
+//          Iterator trackBacks = blogEntry.getTrackBacks().iterator();
+//          while (trackBacks.hasNext()) {
+//            blog.getResponseManager().addRecentTrackBack((TrackBack)trackBacks.next());
+//          }
+//
+//          // now that the entries have been loaded, enable events
+//          // so that listeners get notified when they change
+//          blogEntry.setEventsEnabled(true);
+//        }
+//      } catch (PersistenceException e) {
+//        e.printStackTrace();
+//      }
+//    }
   }
 
   /**
@@ -175,188 +169,154 @@ public class DailyBlog extends TimePeriod implements Permalinkable {
    *
    * @return    an ordered List of BlogEntry instances
    */
-  public List getEntries() {
-    return Collections.unmodifiableList(entries);
+  public List<String> getBlogEntries() {
+    return Collections.unmodifiableList(blogEntries);
   }
 
-  /**
-   * Gets a Collection containing all the blog entries for this day and the
-   * specified category.
-   *
-   * @param   category    a Category instance, or null
-   * @return    an ordered List of BlogEntry instances
-   */
-  public List getEntries(Category category) {
-    if (category == null) {
-      return this.getEntries();
-    } else {
-      List blogEntries = new ArrayList();
-      Iterator it = getEntries().iterator();
-      while (it.hasNext()) {
-        BlogEntry blogEntry = (BlogEntry)it.next();
-        if (blogEntry.inCategory(category)) {
-          blogEntries.add(blogEntry);
-        }
-      }
-      return blogEntries;
-    }
+  public void addBlogEntry(String blogEntryId) {
+    blogEntries.add(blogEntryId);
   }
 
-  /**
-   * Gets a Collection containing all the blog entries for this day and the
-   * specified tag.
-   *
-   * @param     tag    a Strng
-   * @return    an ordered List of BlogEntry instances
-   */
-  public List getEntries(String tag) {
-    if (tag == null) {
-      return this.getEntries();
-    } else {
-      List blogEntries = new ArrayList();
-      Iterator it = getEntries().iterator();
-      while (it.hasNext()) {
-        BlogEntry blogEntry = (BlogEntry)it.next();
-        if (blogEntry.hasTag(tag)) {
-          blogEntries.add(blogEntry);
-        }
-      }
-      return blogEntries;
-    }
-  }
+//  /**
+//   * Gets a Collection containing all the blog entries for this day and the
+//   * specified category.
+//   *
+//   * @param   category    a Category instance, or null
+//   * @return    an ordered List of BlogEntry instances
+//   */
+//  public List getEntries(Category category) {
+//    if (category == null) {
+//      return this.getEntries();
+//    } else {
+//      List blogEntries = new ArrayList();
+//      Iterator it = getEntries().iterator();
+//      while (it.hasNext()) {
+//        BlogEntry blogEntry = (BlogEntry)it.next();
+//        if (blogEntry.inCategory(category)) {
+//          blogEntries.add(blogEntry);
+//        }
+//      }
+//      return blogEntries;
+//    }
+//  }
 
-  /**
-   * Gets a specific blog entry.
-   *
-   * @param entryId   the blog entry id
-   * @return  the corresponding BlogEntry instance, or null if a BlogEntry
-   *          with the specified id doesn't exist
-   */
-  public BlogEntry getEntry(String entryId) {
-    Iterator it = entries.iterator();
-    BlogEntry blogEntry;
-    while (it.hasNext()) {
-      blogEntry = (BlogEntry)it.next();
-      if (blogEntry.getId().equals(entryId)) {
-        return blogEntry;
-      }
-    }
-    return null;
-  }
+//  /**
+//   * Gets a Collection containing all the blog entries for this day and the
+//   * specified tag.
+//   *
+//   * @param     tag    a Strng
+//   * @return    an ordered List of BlogEntry instances
+//   */
+//  public List getEntries(String tag) {
+//    if (tag == null) {
+//      return this.getEntries();
+//    } else {
+//      List blogEntries = new ArrayList();
+//      Iterator it = getEntries().iterator();
+//      while (it.hasNext()) {
+//        BlogEntry blogEntry = (BlogEntry)it.next();
+//        if (blogEntry.hasTag(tag)) {
+//          blogEntries.add(blogEntry);
+//        }
+//      }
+//      return blogEntries;
+//    }
+//  }
 
-  /**
-   * Adds a given blog entry.
-   *
-   * @param entry   the BlogEntry instance to add
-   */
-  public synchronized void addEntry(BlogEntry entry) {
-    if (entry == null) {
-      return;
-    }
+//  /**
+//   * Gets a specific blog entry.
+//   *
+//   * @param entryId   the blog entry id
+//   * @return  the corresponding BlogEntry instance, or null if a BlogEntry
+//   *          with the specified id doesn't exist
+//   */
+//  public BlogEntry getEntry(String entryId) {
+//    Iterator it = entries.iterator();
+//    BlogEntry blogEntry;
+//    while (it.hasNext()) {
+//      blogEntry = (BlogEntry)it.next();
+//      if (blogEntry.getId().equals(entryId)) {
+//        return blogEntry;
+//      }
+//    }
+//    return null;
+//  }
 
-    BlogEntry existing = getEntry(entry.getId());
-    if (existing != null && existing != entry) {
-      // there is already an entry with the same ID, so increment and try again
-      entry.setDate(new Date(entry.getDate().getTime() + 1));
-      addEntry(entry);
-    } else if (!entries.contains(entry)) {
-      entries.add(entry);
-      Collections.sort(entries, new BlogEntryComparator());
-      entry.setDailyBlog(this);
-      entry.setType(BlogEntry.PUBLISHED);
+//  /**
+//   * Adds a given blog entry.
+//   *
+//   * @param entry   the BlogEntry instance to add
+//   */
+//  public synchronized void addEntry(BlogEntry entry) {
+//    if (entry == null) {
+//      return;
+//    }
+//
+//    BlogEntry existing = getEntry(entry.getId());
+//    if (existing != null && existing != entry) {
+//      // there is already an entry with the same ID, so increment and try again
+//      entry.setDate(new Date(entry.getDate().getTime() + 1));
+//      addEntry(entry);
+//    } else if (!entries.contains(entry)) {
+//      entries.add(entry);
+//      Collections.sort(entries, new BlogEntryComparator());
+//      entry.setDailyBlog(this);
+//      entry.setType(BlogEntry.PUBLISHED);
+//
+//      // now that the entries have been loaded, enable events
+//      // so that listeners get notified when they change
+//      entry.setEventsEnabled(true);
+//
+//      // and notify listeners
+//      ((Blog)getBlog()).getEventDispatcher().fireBlogEntryEvent(new BlogEntryEvent(entry, BlogEntryEvent.BLOG_ENTRY_ADDED));
+//    }
+//  }
 
-      // now that the entries have been loaded, enable events
-      // so that listeners get notified when they change
-      entry.setEventsEnabled(true);
-
-      // and notify listeners
-      ((Blog)getBlog()).getEventDispatcher().fireBlogEntryEvent(new BlogEntryEvent(entry, BlogEntryEvent.BLOG_ENTRY_ADDED));
-    }
-  }
-
-  /**
-   * Removes a given blog entry.
-   *
-   * @param entry   the BlogEntry instance to remove
-   */
-  public synchronized void removeEntry(BlogEntry entry) {
-    if (entry != null) {
-      getBlog().getEventDispatcher().fireBlogEntryEvent(new BlogEntryEvent(entry, BlogEntryEvent.BLOG_ENTRY_REMOVED));
-      entries.remove(entry);
-      entry.setDailyBlog(null);
-    }
-  }
+//  /**
+//   * Removes a given blog entry.
+//   *
+//   * @param entry   the BlogEntry instance to remove
+//   */
+//  public synchronized void removeEntry(BlogEntry entry) {
+//    if (entry != null) {
+//      getBlog().getEventDispatcher().fireBlogEntryEvent(new BlogEntryEvent(entry, BlogEntryEvent.BLOG_ENTRY_REMOVED));
+//      entries.remove(entry);
+//      entry.setDailyBlog(null);
+//    }
+//  }
 
   /**
    * Determines whether this daily blog has entries.
    *
    * @return    true if this blog contains entries, false otherwise
    */
-  public boolean hasEntries() {
-    return !entries.isEmpty();
+  public boolean hasBlogEntries() {
+    return !blogEntries.isEmpty();
   }
 
-  /**
-   * Determines whether this daily blog has entries for a particular category.
-   *
-   * @param category    the category to test for
-   * @return    true if this blog contains entries, false otherwise
-   */
-  public boolean hasEntries(Category category) {
-    if (category == null) {
-      return hasEntries();
-    } else {
-      Iterator it = entries.iterator();
-      while (it.hasNext()) {
-        BlogEntry entry = (BlogEntry)it.next();
-        if (entry.inCategory(category)) {
-          return true;
-        }
-      }
-      return false;
-    }
-  }
-
-  /**
-   * Creates a new BlogEntry instance with the specified values.
-   *
-   * @param title   the title of the entry
-   * @param body    the body of the entry
-   * @param date    the date of the entry
-   * @return    a new BlogEntry instance
-   */
-  public BlogEntry createBlogEntry(String title, String body, Date date) {
-    BlogEntry blogEntry = new BlogEntry(this);
-    blogEntry.setTitle(title);
-    blogEntry.setBody(body);
-    blogEntry.setDate(date);
-
-    return blogEntry;
-  }
-
-  /**
-   * Creates a new BlogEntry instance with the specified values.
-   *
-   * @param date    the date of the entry
-   * @return    a new BlogEntry instance
-   */
-  public BlogEntry createBlogEntry(Date date) {
-    BlogEntry blogEntry = new BlogEntry(this);
-    blogEntry.setDate(date);
-    blogEntry.setType(BlogEntry.NEW);
-
-    return blogEntry;
-  }
-
-  /**
-   * Creates a new empty BlogEntry instance.
-   *
-   * @return    a new BlogEntry instance
-   */
-  public BlogEntry createBlogEntry() {
-    Calendar cal = getBlog().getCalendar();
-    return createBlogEntry(cal.getTime());
-  }
+//  /**
+//   * Determines whether this daily blog has entries for a particular category.
+//   *
+//   * @param category    the category to test for
+//   * @return    true if this blog contains entries, false otherwise
+//   */
+//  public boolean hasEntries(Category category) {
+//    return true;
+//
+//    todo
+//    if (category == null) {
+//      return hasBlogEntries();
+//    } else {
+//      Iterator it = entries.iterator();
+//      while (it.hasNext()) {
+//        BlogEntry entry = (BlogEntry)it.next();
+//        if (entry.inCategory(category)) {
+//          return true;
+//        }
+//      }
+//      return false;
+//    }
+//  }
 
   /**
    * Creates a new empty BlogEntry instance representing a static page.
@@ -364,7 +324,7 @@ public class DailyBlog extends TimePeriod implements Permalinkable {
    * @return    a new BlogEntry instance
    */
   public BlogEntry createStaticPage() {
-    BlogEntry blogEntry = createBlogEntry();
+    BlogEntry blogEntry = new BlogEntry(getBlog());
     blogEntry.setType(BlogEntry.STATIC_PAGE);
     return blogEntry;
   }
@@ -387,61 +347,61 @@ public class DailyBlog extends TimePeriod implements Permalinkable {
     return month.getBlogForNextDay(this);
   }
 
-  /**
-   * Gets the blog entry posted previous (before) to the one specified.
-   *
-   * @param   blogEntry   a BlogEntry
-   * @return  the previous BlogEntry, or null if one doesn't exist
-   */
-  public BlogEntry getPreviousBlogEntry(BlogEntry blogEntry) {
-    int index = entries.indexOf(blogEntry);
-    if (index >= 0 && index < (entries.size()-1)) {
-      return (BlogEntry)entries.get(index+1);
-    } else {
-      return null;
-    }
-  }
+//  /**
+//   * Gets the blog entry posted previous (before) to the one specified.
+//   *
+//   * @param   blogEntry   a BlogEntry
+//   * @return  the previous BlogEntry, or null if one doesn't exist
+//   */
+//  public BlogEntry getPreviousBlogEntry(BlogEntry blogEntry) {
+//    int index = blogEntries.indexOf(blogEntry);
+//    if (index >= 0 && index < (blogEntries.size()-1)) {
+//      return (String)blogEntries.get(index+1);
+//    } else {
+//      return null;
+//    }
+//  }
 
-  /**
-   * Gets the first entry that was posted on this day.
-   *
-   * @return    a BlogEntry instance, or null is no entries have been posted
-   */
-  public BlogEntry getFirstBlogEntry() {
-    if (!entries.isEmpty()) {
-      return (BlogEntry)entries.get(entries.size()-1);
-    } else {
-      return null;
-    }
-  }
+//  /**
+//   * Gets the first entry that was posted on this day.
+//   *
+//   * @return    a BlogEntry instance, or null is no entries have been posted
+//   */
+//  public BlogEntry getFirstBlogEntry() {
+//    if (!entries.isEmpty()) {
+//      return (BlogEntry)entries.get(entries.size()-1);
+//    } else {
+//      return null;
+//    }
+//  }
 
-  /**
-   * Gets the last entry that was posted on this day.
-   *
-   * @return    a BlogEntry instance, or null is no entries have been posted
-   */
-  public BlogEntry getLastBlogEntry() {
-    if (!entries.isEmpty()) {
-      return (BlogEntry)entries.get(0);
-    } else {
-      return null;
-    }
-  }
+//  /**
+//   * Gets the last entry that was posted on this day.
+//   *
+//   * @return    a BlogEntry instance, or null is no entries have been posted
+//   */
+//  public BlogEntry getLastBlogEntry() {
+//    if (!entries.isEmpty()) {
+//      return (BlogEntry)entries.get(0);
+//    } else {
+//      return null;
+//    }
+//  }
 
-  /**
-   * Gets the blog entry posted next (afterwards) to the one specified.
-   *
-   * @param blogEntry   a BlogEntry
-   * @return  the next BlogEntry, or null if one doesn't exist
-   */
-  public BlogEntry getNextBlogEntry(BlogEntry blogEntry) {
-    int index = entries.lastIndexOf(blogEntry);
-    if (index > 0 && index <= entries.size()) {
-      return (BlogEntry)entries.get(index-1);
-    } else {
-      return null;
-    }
-  }
+//  /**
+//   * Gets the blog entry posted next (afterwards) to the one specified.
+//   *
+//   * @param blogEntry   a BlogEntry
+//   * @return  the next BlogEntry, or null if one doesn't exist
+//   */
+//  public BlogEntry getNextBlogEntry(BlogEntry blogEntry) {
+//    int index = entries.lastIndexOf(blogEntry);
+//    if (index > 0 && index <= entries.size()) {
+//      return (BlogEntry)entries.get(index-1);
+//    } else {
+//      return null;
+//    }
+//  }
 
   public Date getStartOfDay() {
     Calendar cal = getCalendar();

@@ -378,8 +378,17 @@ public abstract class AbstractBlog extends TimePeriod {
    *
    * @return    an absolute, local path on the filing system
    */
-  public String getIndexDirectory() {
-    return getRoot() + File.separator + "index";
+  public String getIndexesDirectory() {
+    return getRoot() + File.separator + "indexes";
+  }
+
+  /**
+   * Gets the location where the blog search indexes are stored.
+   *
+   * @return    an absolute, local path on the filing system
+   */
+  public String getSearchIndexDirectory() {
+    return getIndexesDirectory() + File.separator + "search";
   }
 
   /**

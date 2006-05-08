@@ -49,7 +49,7 @@ public class CommentTest extends SingleBlogTestCase {
   public void setUp() {
     super.setUp();
 
-    comment = blog.getBlogForToday().createBlogEntry().createComment("Title", "Body", "Author", "me@somedomain.com", "http://www.google.com", "127.0.0.1");
+    comment = new BlogEntry(blog).createComment("Title", "Body", "Author", "me@somedomain.com", "http://www.google.com", "127.0.0.1");
     comment.setEventsEnabled(true);
   }
 
@@ -166,7 +166,7 @@ public class CommentTest extends SingleBlogTestCase {
    * Tests that the title is set when an owning blog entry is present.
    */
   public void testTitleTakenFromOwningBlogEntryWhenNotSpecified() {
-    BlogEntry entry = blog.getBlogForToday().createBlogEntry();
+    BlogEntry entry = new BlogEntry(blog);
     entry.setTitle("My blog entry title");
     comment = entry.createComment(null, "", "", "", "", "");
     assertEquals("Re: My blog entry title", comment.getTitle());
@@ -185,7 +185,7 @@ public class CommentTest extends SingleBlogTestCase {
    * Tests that the number of parents is correct when comments are nested.
    */
   public void testNumberOfParentsIsCorrectWhenNested() {
-    comment.setParent(blog.getBlogForToday().createBlogEntry().createComment("", "", "", "", "", ""));
+    comment.setParent(new BlogEntry(blog).createComment("", "", "", "", "", ""));
     assertEquals(1, comment.getNumberOfParents());
   }
 
@@ -259,7 +259,7 @@ public class CommentTest extends SingleBlogTestCase {
 
     Calendar cal = blog.getCalendar();
     cal.set(Calendar.YEAR, cal.get(Calendar.YEAR)-1);
-    Comment comment2 = blog.getBlogForToday().createBlogEntry().createComment("Title", "Body", "Author", "me@somedomain.com", "http://www.google.com", "127.0.0.1", cal.getTime(), State.APPROVED);
+    Comment comment2 = new BlogEntry(blog).createComment("Title", "Body", "Author", "me@somedomain.com", "http://www.google.com", "127.0.0.1", cal.getTime(), State.APPROVED);
     assertFalse(comment.equals(comment2));
 
   }

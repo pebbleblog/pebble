@@ -48,7 +48,7 @@ public class DisableResponseDecoratorTest extends SingleBlogTestCase {
     super.setUp();
 
     decorator = new DisableResponseDecorator();
-    blogEntry = blog.getBlogForToday().createBlogEntry();
+    blogEntry = new BlogEntry(blog);
   }
 
   /**

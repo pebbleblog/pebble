@@ -33,6 +33,7 @@ package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.domain.BlogEntry;
 import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.domain.BlogService;
 
 /**
  * Edits an existing blog entry. This is called to populate a HTML
@@ -49,7 +50,8 @@ public class EditBlogEntryAction extends AbstractEditBlogEntryAction {
    * @return a BlogEntry instance
    */
   protected BlogEntry getBlogEntry(Blog blog, String entryId) {
-    return blog.getBlogEntry(entryId);
+    BlogService service = new BlogService();
+    return service.getBlogEntry(blog, entryId);
   }
 
 }

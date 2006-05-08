@@ -47,7 +47,7 @@ public class TrackBackTest extends SingleBlogTestCase {
   public void setUp() {
     super.setUp();
 
-    trackback = blog.getBlogForToday().createBlogEntry().createTrackBack("Title", "Excerpt", "http://www.somedomain.com", "Some blog", "127.0.0.1");
+    trackback = new BlogEntry(blog).createTrackBack("Title", "Excerpt", "http://www.somedomain.com", "Some blog", "127.0.0.1");
     trackback.setEventsEnabled(true);
   }
 

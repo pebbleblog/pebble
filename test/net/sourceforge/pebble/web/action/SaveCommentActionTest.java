@@ -33,6 +33,7 @@ package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.domain.BlogEntry;
 import net.sourceforge.pebble.domain.Comment;
+import net.sourceforge.pebble.domain.BlogService;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.impl.CommentConfirmationView;
 
@@ -50,8 +51,9 @@ public class SaveCommentActionTest extends SingleBlogActionTestCase {
   }
 
   public void testProcess() throws Exception {
-    BlogEntry blogEntry = blog.getBlogForToday().createBlogEntry();
-    blog.getBlogForToday().addEntry(blogEntry);
+    BlogService service = new BlogService();
+    BlogEntry blogEntry = new BlogEntry(blog);
+    service.putBlogEntry(blogEntry);
 
     request.setParameter("entry", "" + blogEntry.getId());
     request.setParameter("parent", "");
@@ -75,9 +77,10 @@ public class SaveCommentActionTest extends SingleBlogActionTestCase {
   }
 
   public void testProcessWhenCommentsDisabled() throws Exception {
-    BlogEntry blogEntry = blog.getBlogForToday().createBlogEntry();
-    blog.getBlogForToday().addEntry(blogEntry);
+    BlogService service = new BlogService();
+    BlogEntry blogEntry = new BlogEntry(blog);
     blogEntry.setCommentsEnabled(false);
+    service.putBlogEntry(blogEntry);
 
     request.setParameter("entry", "" + blogEntry.getId());
     request.setParameter("parent", "");

@@ -67,7 +67,8 @@ public class ManageBlogEntryAction extends SecureAction {
     String confirm = request.getParameter("confirm");
     String submit = request.getParameter("submit");
 
-    BlogEntry blogEntry = blog.getBlogEntry(id);
+    BlogService service = new BlogService();
+    BlogEntry blogEntry = service.getBlogEntry(blog, id);
 
     if (blogEntry == null) {
       return new NotFoundView();
@@ -79,7 +80,7 @@ public class ManageBlogEntryAction extends SecureAction {
       if (submit.equalsIgnoreCase("Approve")) {
         blogEntry.setState(State.APPROVED);
         try {
-          blogEntry.store();
+          service.putBlogEntry(blogEntry);
         } catch (BlogException be) {
           log.error(be.getMessage(), be);
           throw new ServletException(be);
@@ -87,25 +88,20 @@ public class ManageBlogEntryAction extends SecureAction {
       } else if (submit.equalsIgnoreCase("Reject")) {
         blogEntry.setState(State.REJECTED);
         try {
-          blogEntry.store();
+          service.putBlogEntry(blogEntry);
         } catch (BlogException be) {
           log.error(be.getMessage(), be);
           throw new ServletException(be);
         }
       } else if (submit.equalsIgnoreCase("Remove")) {
-        DailyBlog dailyBlog = blogEntry.getDailyBlog();
         try {
-          blogEntry.remove();
-          dailyBlog.removeEntry(blogEntry);
+          service.removeBlogEntry(blogEntry);
         } catch (BlogException be) {
           throw new ServletException(be);
         }
 
         String uri;
-        uri = "/viewDailyBlog.action";
-        uri += "?year=" + dailyBlog.getMonthlyBlog().getYearlyBlog().getYear();
-        uri += "&month=" + dailyBlog.getMonthlyBlog().getMonth();
-        uri += "&day=" + dailyBlog.getDay();
+        uri = "/viewHomePage.action";
 
         return new ForwardView(uri);
       }

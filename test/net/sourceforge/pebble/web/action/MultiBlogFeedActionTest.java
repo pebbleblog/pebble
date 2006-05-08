@@ -32,10 +32,7 @@
 package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
-import net.sourceforge.pebble.domain.BlogEntry;
-import net.sourceforge.pebble.domain.Category;
-import net.sourceforge.pebble.domain.MultiBlogTestCase;
-import net.sourceforge.pebble.domain.DailyBlog;
+import net.sourceforge.pebble.domain.*;
 import net.sourceforge.pebble.mock.MockHttpServletRequest;
 import net.sourceforge.pebble.mock.MockHttpServletResponse;
 import net.sourceforge.pebble.web.action.FeedAction;
@@ -71,17 +68,16 @@ public class MultiBlogFeedActionTest extends MultiBlogTestCase {
     Category cat2 = new Category("/cat2", "Category 2");
     blog1.addCategory(cat1);
     blog1.addCategory(cat2);
-    DailyBlog today = blog1.getBlogForToday();
-    Calendar cal1 = blog1.getCalendar();
-    cal1.set(Calendar.HOUR_OF_DAY, 2);
-    Calendar cal2 = blog1.getCalendar();
-    cal2.set(Calendar.HOUR_OF_DAY, 3);
-    BlogEntry entry1 = today.createBlogEntry("title", "body", cal1.getTime());
+
+    BlogService service = new BlogService();
+
+    BlogEntry entry1 = new BlogEntry(blog1);
     entry1.addCategory(cat1);
-    today.addEntry(entry1);
-    BlogEntry entry2 = today.createBlogEntry("title", "body", cal2.getTime());
+    service.putBlogEntry(entry1);
+
+    BlogEntry entry2 = new BlogEntry(blog1);
     entry2.addCategory(cat2);
-    today.addEntry(entry2);
+    service.putBlogEntry(entry2);
 
     request.setParameter("category", "/cat2");
     action.process(request, response);

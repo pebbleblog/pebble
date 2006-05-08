@@ -31,8 +31,6 @@
  */
 package net.sourceforge.pebble.domain;
 
-import net.sourceforge.pebble.comparator.DailyBlogComparator;
-
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -128,35 +126,13 @@ public class MonthlyBlog extends TimePeriod implements Permalinkable {
   }
 
   /**
-   * Gets a collection containing daily blogs that contain blog entries.
-   *
-   * @return  a Collection of DailyBlog instances for all those daily blogs
-   *          that have entries (this can return an empty collection)
-   */
-  public Collection getDailyBlogs() {
-    List blogs = new ArrayList();
-
-    DailyBlog daily;
-    for (int i = 1; i <= lastDayInMonth; i++) {
-      daily = getBlogForDay(i);
-
-      if (daily.hasEntries()) {
-        blogs.add(daily);
-      }
-    }
-
-    Collections.sort(blogs, new DailyBlogComparator());
-    return blogs;
-  }
-
-  /**
    * Determines whether this monthly blog has entries.
    *
    * @return    true if this blog contains entries, false otherwise
    */
   public boolean hasBlogEntries() {
     for (int i = 1; i <= lastDayInMonth; i++) {
-      if (getBlogForDay(i).hasEntries()) {
+      if (getBlogForDay(i).hasBlogEntries()) {
         return true;
       }
     }
@@ -169,14 +145,12 @@ public class MonthlyBlog extends TimePeriod implements Permalinkable {
    *
    * @return  a List of BlogEntry instances, reverse ordered by date
    */
-  public List getBlogEntries() {
-    Iterator it = getDailyBlogs().iterator();
+  public List<String> getBlogEntries() {
+    DailyBlog days[] = getAllDailyBlogs();
     List blogEntries = new ArrayList();
-    while (it.hasNext()) {
-      DailyBlog dailyBlog = (DailyBlog)it.next();
-      blogEntries.addAll(dailyBlog.getEntries());
+    for (DailyBlog day : days) {
+      blogEntries.addAll(day.getBlogEntries());
     }
-
     return blogEntries;
   }
 
@@ -187,17 +161,17 @@ public class MonthlyBlog extends TimePeriod implements Permalinkable {
    */
   public int getNumberOfBlogEntries() {
     int count = 0;
-    Iterator it = getDailyBlogs().iterator();
-    while (it.hasNext()) {
-      DailyBlog dailyBlog = (DailyBlog)it.next();
-      count += dailyBlog.getEntries().size();
+    DailyBlog days[] = getAllDailyBlogs();
+    List blogEntries = new ArrayList();
+    for (DailyBlog day : days) {
+      count += day.getBlogEntries().size();
     }
 
     return count;
   }
 
   /**
-   * Gets a collection containing daily blogs that contain blog entries.
+   * Gets an array of all DailyBlogs.
    *
    * @return  a Collection of DailyBlog instances for all those daily blogs
    *          that have entries (this can return an empty collection)
@@ -207,7 +181,7 @@ public class MonthlyBlog extends TimePeriod implements Permalinkable {
     for (int day = 0; day < dailyBlogs.length; day++) {
       blogs[day] = getBlogForDay(day + 1);
     }
-    //System.arraycopy(dailyBlogs, 0, blogs, 0, dailyBlogs.length);
+
     return blogs;
   }
 

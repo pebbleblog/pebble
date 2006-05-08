@@ -33,10 +33,7 @@ package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.search.BlogIndexer;
-import net.sourceforge.pebble.domain.Attachment;
-import net.sourceforge.pebble.domain.BlogEntry;
-import net.sourceforge.pebble.domain.BlogException;
-import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.domain.*;
 import net.sourceforge.pebble.util.SecurityUtils;
 import net.sourceforge.pebble.util.StringUtils;
 import net.sourceforge.pebble.web.view.ForwardView;
@@ -143,28 +140,26 @@ public class SaveBlogEntryAction extends SecureAction {
     if (context.hasErrors())  {
       return new BlogEntryFormView();
     } else {
+      BlogService service = new BlogService();
       try {
         switch (blogEntry.getType()) {
           case BlogEntry.NEW :
-            blog.getBlogForToday().addEntry(blogEntry);
-            blogEntry.store();
+            service.putBlogEntry(blogEntry);
             break;
           case BlogEntry.TEMPLATE :
-            blogEntry = blog.getBlogForToday().createBlogEntry();
+            blogEntry = new BlogEntry(blog);
             populateBlogEntry(blogEntry, request);
-            blog.getBlogForToday().addEntry(blogEntry);
-            blogEntry.store();
+            service.putBlogEntry(blogEntry);
             break;
           case BlogEntry.DRAFT :
             BlogEntry draftBlogEntry = blogEntry;
-            blogEntry = blog.getBlogForToday().createBlogEntry();
+            blogEntry = new BlogEntry(blog);
             populateBlogEntry(blogEntry, request);
-            blog.getBlogForToday().addEntry(blogEntry);
-            blogEntry.store();
+            service.putBlogEntry(blogEntry);
             draftBlogEntry.remove();
             break;
           default :
-            blogEntry.store();
+            service.putBlogEntry(blogEntry);
             break;
         }
 
@@ -260,7 +255,8 @@ public class SaveBlogEntryAction extends SecureAction {
 
     switch (type) {
       case BlogEntry.PUBLISHED :
-        return blog.getBlogEntry(id);
+        BlogService service = new BlogService();
+        return service.getBlogEntry(blog, id);
       case BlogEntry.TEMPLATE :
         return blog.getBlogEntryTemplate(id);
       case BlogEntry.DRAFT :
@@ -273,7 +269,7 @@ public class SaveBlogEntryAction extends SecureAction {
         return blogEntry;
       default :
         // we're creating a new blog entry
-        return blog.getBlogForToday().createBlogEntry();
+        return blogEntry = new BlogEntry(blog);
     }
   }
 

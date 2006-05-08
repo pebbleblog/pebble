@@ -32,6 +32,7 @@
 package net.sourceforge.pebble.web.view.impl;
 
 import net.sourceforge.pebble.Constants;
+import net.sourceforge.pebble.comparator.BlogEntryComparator;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.domain.MonthlyBlog;
 import net.sourceforge.pebble.plugin.decorator.BlogEntryDecoratorContext;
@@ -40,6 +41,7 @@ import net.sourceforge.pebble.web.view.HtmlView;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Collections;
 
 /**
  * Represents the home page view of a blog.
@@ -54,7 +56,9 @@ public class BlogMonthlyView extends HtmlView {
     decoratorContext.setMedia(BlogEntryDecoratorContext.HTML_PAGE);
 
     List blogEntries = (List)getModel().get(Constants.BLOG_ENTRIES);
-    getModel().put(Constants.BLOG_ENTRIES, BlogEntryDecoratorManager.applyDecorators(blogEntries, decoratorContext));
+    blogEntries = BlogEntryDecoratorManager.applyDecorators(blogEntries, decoratorContext);
+    Collections.sort(blogEntries, new BlogEntryComparator());
+    getModel().put(Constants.BLOG_ENTRIES, blogEntries);
   }
 
   /**

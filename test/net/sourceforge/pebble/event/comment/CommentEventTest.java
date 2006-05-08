@@ -33,6 +33,7 @@ package net.sourceforge.pebble.event.comment;
 
 import net.sourceforge.pebble.domain.Comment;
 import net.sourceforge.pebble.domain.SingleBlogTestCase;
+import net.sourceforge.pebble.domain.BlogEntry;
 
 /**
  * Tests for the CommentEvent class.
@@ -47,7 +48,7 @@ public class CommentEventTest extends SingleBlogTestCase {
    * Tests that a CommentEvent instance is correctly constructed.
    */
   public void testConstruction() {
-    Comment comment = blog.getBlogForToday().createBlogEntry().createComment("Title", "Body", "Author", "me@somedomain.com", "http://www.google.com", "127.0.0.1");
+    Comment comment = new BlogEntry(blog).createComment("Title", "Body", "Author", "me@somedomain.com", "http://www.google.com", "127.0.0.1");
     event = new CommentEvent(comment, CommentEvent.COMMENT_ADDED);
 
     assertEquals(comment, event.getSource());

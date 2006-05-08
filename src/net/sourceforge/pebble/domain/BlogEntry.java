@@ -157,10 +157,8 @@ public class BlogEntry extends Content {
   /** the attachment for this blog entry, if applicable */
   private Attachment attachment;
 
-  /**
-   * the owning DailyBlog
-   */
-  private DailyBlog dailyBlog;
+  /** the owning blog */
+  private Blog blog;
 
   public static final int PUBLISHED = 0;
   public static final int NEW = 1;
@@ -170,12 +168,14 @@ public class BlogEntry extends Content {
   private int type = PUBLISHED;
 
   /**
-   * Creates a new blog entry with the specified attributes.
+   * Creates a new blog entry.
    *
-   * @param dailyBlog the owning DailyBlog
+   * @param blog    the owning Blog
    */
-  public BlogEntry(DailyBlog dailyBlog) {
-    this.dailyBlog = dailyBlog;
+  public BlogEntry(Blog blog) {
+    this.blog = blog;
+    setDate(new Date());
+    this.type = NEW;
   }
 
   /**
@@ -741,25 +741,7 @@ public class BlogEntry extends Content {
    * @return the overall owning Blog instance
    */
   public Blog getBlog() {
-    return dailyBlog.getBlog();
-  }
-
-  /**
-   * Gets the owning daily blog instance.
-   *
-   * @return a DailyBlog instance
-   */
-  public DailyBlog getDailyBlog() {
-    return dailyBlog;
-  }
-
-  /**
-   * Sets the owning daily blog.
-   *
-   * @param blog a DailyBlog instance
-   */
-  void setDailyBlog(DailyBlog blog) {
-    this.dailyBlog = blog;
+    return this.blog;
   }
 
   /**
@@ -1053,7 +1035,7 @@ public class BlogEntry extends Content {
       log.debug("Storing " + getTitle() + " (" + getId() + ")");
       DAOFactory factory = DAOFactory.getConfiguredFactory();
       BlogEntryDAO dao = factory.getBlogEntryDAO();
-      dao.store(this);
+      dao.storeBlogEntry(this);
 
       if (areEventsEnabled() && isDirty()) {
         BlogEntryEvent event = new BlogEntryEvent(this, getPropertyChangeEvents());
@@ -1076,7 +1058,7 @@ public class BlogEntry extends Content {
       log.debug("Removing " + getTitle() + " (" + getId() + ")");
       DAOFactory factory = DAOFactory.getConfiguredFactory();
       BlogEntryDAO dao = factory.getBlogEntryDAO();
-      dao.remove(this);
+      dao.removeBlogEntry(this);
 
       if (type == PUBLISHED || isStaticPage()) {
         // and finally un-index the published entry
@@ -1113,7 +1095,7 @@ public class BlogEntry extends Content {
    * @return  a BlogEntry instance, or null if this is the first entry
    */
   public BlogEntry getPreviousBlogEntry() {
-    return getBlog().getPreviousBlogEntry(this);
+    return null; // todo getBlog().getPreviousBlogEntry(this);
   }
 
   /**
@@ -1122,7 +1104,7 @@ public class BlogEntry extends Content {
    * @return  a BlogEntry instance, or null is this is the last entry
    */
   public BlogEntry getNextBlogEntry() {
-    return getBlog().getNextBlogEntry(this);
+    return null; // todo getBlog().getNextBlogEntry(this);
   }
 
   /**
@@ -1176,7 +1158,7 @@ public class BlogEntry extends Content {
    * @see Cloneable
    */
   public Object clone() {
-    BlogEntry entry = new BlogEntry(dailyBlog);
+    BlogEntry entry = new BlogEntry(blog);
     entry.setTitle(title);
     entry.setSubtitle(subtitle);
     entry.setExcerpt(excerpt);

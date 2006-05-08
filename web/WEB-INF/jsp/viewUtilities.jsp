@@ -18,11 +18,11 @@
     </p>
 
     <p>
-      <b>2. Build search index</b>
+      <b>2. Build indexes</b>
       <br />
       When upgrading Pebble or moving your blog from one URL to another, the information contained within
-      the search index can become out of date. Click <a href="utilities.secureaction?action=buildSearchIndex">here</a>
-      to rebuild your search index.
+      the indexes can become out of date. Click <a href="utilities.secureaction?action=buildIndexes">here</a>
+      to rebuild your blog's indexes.
     </p>
 
     <p>

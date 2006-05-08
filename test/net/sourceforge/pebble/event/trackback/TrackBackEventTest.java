@@ -33,6 +33,7 @@ package net.sourceforge.pebble.event.trackback;
 
 import net.sourceforge.pebble.domain.SingleBlogTestCase;
 import net.sourceforge.pebble.domain.TrackBack;
+import net.sourceforge.pebble.domain.BlogEntry;
 
 /**
  * Tests for the TrackBackEvent class.
@@ -47,12 +48,12 @@ public class TrackBackEventTest extends SingleBlogTestCase {
    * Tests that a TrackBackEvent instance is correctly constructed.
    */
   public void testConstruction() {
-    TrackBack trackback = blog.getBlogForToday().createBlogEntry().createTrackBack("Title", "Excerpt", "http://www.somedomain.com", "Some blog", "127.0.0.1");
+    TrackBack trackback = new BlogEntry(blog).createTrackBack("Title", "Excerpt", "http://www.somedomain.com", "Some blog", "127.0.0.1");
     event = new TrackBackEvent(trackback, TrackBackEvent.TRACKBACK_ADDED);
 
     assertEquals(trackback, event.getSource());
     assertEquals(trackback, event.getTrackBack());
     assertEquals(TrackBackEvent.TRACKBACK_ADDED, event.getType());
   }
-  
+
 }

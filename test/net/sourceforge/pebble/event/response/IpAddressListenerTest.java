@@ -34,6 +34,7 @@ package net.sourceforge.pebble.event.response;
 import net.sourceforge.pebble.domain.Comment;
 import net.sourceforge.pebble.domain.SingleBlogTestCase;
 import net.sourceforge.pebble.domain.TrackBack;
+import net.sourceforge.pebble.domain.BlogEntry;
 import net.sourceforge.pebble.event.comment.CommentEvent;
 import net.sourceforge.pebble.event.trackback.TrackBackEvent;
 
@@ -57,9 +58,10 @@ public class IpAddressListenerTest extends SingleBlogTestCase {
     super.setUp();
 
     listener = new IpAddressListener();
-    comment = blog.getBlogForToday().createBlogEntry().createComment("Title", "Body", "Author", "me@somedomain.com", "http://www.google.com", "127.0.0.1");
+    BlogEntry blogEntry = new BlogEntry(blog);
+    comment = blogEntry.createComment("Title", "Body", "Author", "me@somedomain.com", "http://www.google.com", "127.0.0.1");
     commentEvent = new CommentEvent(comment, CommentEvent.COMMENT_ADDED);
-    trackBack = blog.getBlogForToday().createBlogEntry().createTrackBack("Title", "Excerpt", "url", "blogName", "127.0.0.1");
+    trackBack = blogEntry.createTrackBack("Title", "Excerpt", "url", "blogName", "127.0.0.1");
     trackBackEvent = new TrackBackEvent(trackBack, TrackBackEvent.TRACKBACK_ADDED);
   }
 

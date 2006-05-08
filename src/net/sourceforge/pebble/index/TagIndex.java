@@ -29,31 +29,38 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package net.sourceforge.pebble.comparator;
+package net.sourceforge.pebble.index;
 
+import net.sourceforge.pebble.event.blogentry.BlogEntryEvent;
+import net.sourceforge.pebble.event.blogentry.BlogEntryListener;
+import net.sourceforge.pebble.search.BlogIndexer;
 import net.sourceforge.pebble.domain.BlogEntry;
-import net.sourceforge.pebble.domain.DailyBlog;
-import net.sourceforge.pebble.domain.SingleBlogTestCase;
+import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.domain.Tag;
+import net.sourceforge.pebble.domain.Category;
+
+import java.beans.PropertyChangeEvent;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
 
 /**
- * Tests for the BlogEntryByTitleComparator class.
+ * Represents the tag index for a blog.
  *
  * @author    Simon Brown
  */
-public class BlogEntryByTitleComparatorTest extends SingleBlogTestCase {
+public class TagIndex {
 
-  public void testCompare() {
-    BlogEntryByTitleComparator comp = new BlogEntryByTitleComparator();
+  public void rebuildIndex() {
 
-    BlogEntry b1 = new BlogEntry(blog);
-    b1.setTitle("A title");
-    BlogEntry b2 = new BlogEntry(blog);
-    b2.setTitle("B title");
+  }
 
-    assertTrue(comp.compare(b1, b1) == 0);
-    assertTrue(comp.compare(b1, b2) != 0);
-    assertTrue(comp.compare(b1, b2) < 0);
-    assertTrue(comp.compare(b2, b1) > 0);
+  public void addBlogEntry(BlogEntry blogEntry) {
+
+  }
+
+  public void removeBlogEntry(BlogEntry blogEntry) {
+
   }
 
 }

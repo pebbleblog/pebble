@@ -207,7 +207,8 @@ public class MetaWeblogAPIHandler extends AbstractAPIHandler {
     Blog blog = getBlogWithPostId(postid);
     postid = getPostId(postid);
     authenticate(blog, username, password);
-    BlogEntry entry = blog.getBlogEntry(postid);
+    BlogService service = new BlogService();
+    BlogEntry entry = service.getBlogEntry(blog, postid);
 
     if (entry != null) {
       return adaptBlogEntry(entry);
@@ -240,21 +241,19 @@ public class MetaWeblogAPIHandler extends AbstractAPIHandler {
       Blog blog = getBlogWithBlogId(blogid);
       authenticate(blog, username, password);
 
-      DailyBlog dailyBlog = null;
       BlogEntry entry = null;
       if (struct.containsKey(PUB_DATE)) {
         Date date = (Date)struct.get(PUB_DATE);
-        dailyBlog = blog.getBlogForDay(date);
-        entry = dailyBlog.createBlogEntry(date);
+        entry = new BlogEntry(blog);
+        entry.setDate(date);
       } else {
-        dailyBlog = blog.getBlogForToday();
-        entry = dailyBlog.createBlogEntry();
+        entry = new BlogEntry(blog);
       }
 
       populateEntry(entry, struct, username);
 
-      dailyBlog.addEntry(entry);
-      entry.store();
+      BlogService service = new BlogService();
+      service.putBlogEntry(entry);
 
       return formatPostId(blogid, entry.getId());
     } catch (BlogException be) {
@@ -286,11 +285,12 @@ public class MetaWeblogAPIHandler extends AbstractAPIHandler {
       Blog blog = getBlogWithPostId(postid);
       postid = getPostId(postid);
       authenticate(blog, username, password);
-      BlogEntry entry = blog.getBlogEntry(postid);
+      BlogService service = new BlogService();
+      BlogEntry entry = service.getBlogEntry(blog, postid);
 
       if (entry != null) {
         populateEntry(entry, struct, username);
-        entry.store();
+        service.putBlogEntry(entry);
       } else {
         throw new XmlRpcException(0, "Blog entry with ID of " + postid + " was not found.");
       }

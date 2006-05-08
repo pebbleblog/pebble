@@ -32,10 +32,7 @@
 package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
-import net.sourceforge.pebble.domain.Blog;
-import net.sourceforge.pebble.domain.BlogEntry;
-import net.sourceforge.pebble.domain.BlogException;
-import net.sourceforge.pebble.domain.DailyBlog;
+import net.sourceforge.pebble.domain.*;
 import net.sourceforge.pebble.web.view.RedirectView;
 import net.sourceforge.pebble.web.view.View;
 import org.apache.commons.logging.Log;
@@ -69,14 +66,13 @@ public class ManageBlogEntriesAction extends SecureAction {
 
     if (ids != null) {
       for (String id : ids) {
-        BlogEntry blogEntry = blog.getBlogEntry(id);
+        BlogService service = new BlogService();
+        BlogEntry blogEntry = service.getBlogEntry(blog, id);
 
         if (blogEntry != null) {
           if (submit.equalsIgnoreCase("Remove")) {
-            DailyBlog dailyBlog = blogEntry.getDailyBlog();
             try {
-              blogEntry.remove();
-              dailyBlog.removeEntry(blogEntry);
+              service.removeBlogEntry(blogEntry);
             } catch (BlogException be) {
               throw new ServletException(be);
             }

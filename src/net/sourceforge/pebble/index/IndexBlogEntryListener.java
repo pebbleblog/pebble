@@ -29,11 +29,15 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package net.sourceforge.pebble.domain;
+package net.sourceforge.pebble.index;
 
 import net.sourceforge.pebble.event.blogentry.BlogEntryEvent;
 import net.sourceforge.pebble.event.blogentry.BlogEntryListener;
 import net.sourceforge.pebble.search.BlogIndexer;
+import net.sourceforge.pebble.domain.BlogEntry;
+import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.domain.Tag;
+import net.sourceforge.pebble.domain.Category;
 
 import java.beans.PropertyChangeEvent;
 import java.util.Collection;
@@ -48,17 +52,17 @@ public class IndexBlogEntryListener implements BlogEntryListener {
    * @param event a BlogEntryEvent instance
    */
   public void blogEntryAdded(BlogEntryEvent event) {
-    if (!event.getBlogEntry().isApproved()) {
-      return;
-    }
-
-    BlogEntry blogEntry = event.getBlogEntry();
-    Blog blog = blogEntry.getBlog();
-
-    addBlogEntryToCategories(blogEntry.getCategories(), blogEntry);
-    addBlogEntryToTags(blogEntry.getTagsAsList(), blogEntry);
-    blog.recalculateTagRankings();
-    updateSearchIndex(blogEntry);
+//    if (!event.getBlogEntry().isApproved()) {
+//      return;
+//    }
+//
+//    BlogEntry blogEntry = event.getBlogEntry();
+//    Blog blog = blogEntry.getBlog();
+//
+//    addBlogEntryToCategories(blogEntry.getCategories(), blogEntry);
+//    addBlogEntryToTags(blogEntry.getTagsAsList(), blogEntry);
+//    blog.recalculateTagRankings();
+//    updateSearchIndex(blogEntry);
   }
 
   /**
@@ -67,15 +71,15 @@ public class IndexBlogEntryListener implements BlogEntryListener {
    * @param event a BlogEntryEvent instance
    */
   public void blogEntryRemoved(BlogEntryEvent event) {
-    BlogEntry blogEntry = event.getBlogEntry();
-    Blog blog = blogEntry.getBlog();
-
-    removeBlogEntryFromCategories(blogEntry.getCategories(), blogEntry);
-    removeBlogEntryFromTags(blogEntry.getTagsAsList(), blogEntry);
-    blog.recalculateTagRankings();
-
-    BlogIndexer indexer = new BlogIndexer();
-    indexer.removeIndex(blogEntry);
+//    BlogEntry blogEntry = event.getBlogEntry();
+//    Blog blog = blogEntry.getBlog();
+//
+//    removeBlogEntryFromCategories(blogEntry.getCategories(), blogEntry);
+//    removeBlogEntryFromTags(blogEntry.getTagsAsList(), blogEntry);
+//    blog.recalculateTagRankings();
+//
+//    BlogIndexer indexer = new BlogIndexer();
+//    indexer.removeIndex(blogEntry);
   }
 
   /**
@@ -84,28 +88,28 @@ public class IndexBlogEntryListener implements BlogEntryListener {
    * @param event a BlogEntryEvent instance
    */
   public void blogEntryChanged(BlogEntryEvent event) {
-    BlogEntry blogEntry = event.getBlogEntry();
-    Blog blog = blogEntry.getBlog();
-
-    if (!blogEntry.isApproved()) {
-      return;
-    }
-
-    List propertyChangeEvents = event.getPropertyChangeEvents();
-    Iterator it = propertyChangeEvents.iterator();
-    while (it.hasNext()) {
-      PropertyChangeEvent pce = (PropertyChangeEvent)it.next();
-      String property = pce.getPropertyName();
-      if (property.equals(BlogEntry.CATEGORIES_PROPERTY)) {
-        removeBlogEntryFromCategories((Collection)pce.getOldValue(), blogEntry);
-        addBlogEntryToCategories((Collection)pce.getNewValue(), blogEntry);
-      } else if (property.equals(BlogEntry.TAGS_PROPERTY)) {
-        removeBlogEntryFromTags(Tag.parse(blog, (String)pce.getOldValue()), blogEntry);
-        addBlogEntryToTags(Tag.parse(blog, (String)pce.getNewValue()), blogEntry);
-      }
-    }
-    blog.recalculateTagRankings();
-    updateSearchIndex(blogEntry);
+//    BlogEntry blogEntry = event.getBlogEntry();
+//    Blog blog = blogEntry.getBlog();
+//
+//    if (!blogEntry.isApproved()) {
+//      return;
+//    }
+//
+//    List propertyChangeEvents = event.getPropertyChangeEvents();
+//    Iterator it = propertyChangeEvents.iterator();
+//    while (it.hasNext()) {
+//      PropertyChangeEvent pce = (PropertyChangeEvent)it.next();
+//      String property = pce.getPropertyName();
+//      if (property.equals(BlogEntry.CATEGORIES_PROPERTY)) {
+//        removeBlogEntryFromCategories((Collection)pce.getOldValue(), blogEntry);
+//        addBlogEntryToCategories((Collection)pce.getNewValue(), blogEntry);
+//      } else if (property.equals(BlogEntry.TAGS_PROPERTY)) {
+//        removeBlogEntryFromTags(Tag.parse(blog, (String)pce.getOldValue()), blogEntry);
+//        addBlogEntryToTags(Tag.parse(blog, (String)pce.getNewValue()), blogEntry);
+//      }
+//    }
+//    blog.recalculateTagRankings();
+//    updateSearchIndex(blogEntry);
   }
 
   /**
@@ -114,13 +118,13 @@ public class IndexBlogEntryListener implements BlogEntryListener {
    * @param event a BlogEntryEvent inistance
    */
   public void blogEntryApproved(BlogEntryEvent event) {
-    BlogEntry blogEntry = event.getBlogEntry();
-    Blog blog = blogEntry.getBlog();
-
-    addBlogEntryToCategories(blogEntry.getCategories(), blogEntry);
-    addBlogEntryToTags(blogEntry.getTagsAsList(), blogEntry);
-    blog.recalculateTagRankings();
-    updateSearchIndex(blogEntry);
+//    BlogEntry blogEntry = event.getBlogEntry();
+//    Blog blog = blogEntry.getBlog();
+//
+//    addBlogEntryToCategories(blogEntry.getCategories(), blogEntry);
+//    addBlogEntryToTags(blogEntry.getTagsAsList(), blogEntry);
+//    blog.recalculateTagRankings();
+//    updateSearchIndex(blogEntry);
   }
 
   /**
@@ -129,13 +133,13 @@ public class IndexBlogEntryListener implements BlogEntryListener {
    * @param event a BlogEntryEvent instance
    */
   public void blogEntryRejected(BlogEntryEvent event) {
-    BlogEntry blogEntry = event.getBlogEntry();
-    Blog blog = blogEntry.getBlog();
-
-    removeBlogEntryFromCategories(blogEntry.getCategories(), blogEntry);
-    removeBlogEntryFromTags(blogEntry.getTagsAsList(), blogEntry);
-    blog.recalculateTagRankings();
-    updateSearchIndex(blogEntry);
+//    BlogEntry blogEntry = event.getBlogEntry();
+//    Blog blog = blogEntry.getBlog();
+//
+//    removeBlogEntryFromCategories(blogEntry.getCategories(), blogEntry);
+//    removeBlogEntryFromTags(blogEntry.getTagsAsList(), blogEntry);
+//    blog.recalculateTagRankings();
+//    updateSearchIndex(blogEntry);
   }
 
   /**

@@ -222,7 +222,7 @@ public class Tag implements Permalinkable, Comparable {
     if (tags != null && tags.trim().length() > 0) {
       String s[] = tags.trim().split(" ");
       for (int i = 0; i < s.length; i++) {
-        Tag tag = blog.getTag(s[i].trim());
+        Tag tag = tag = new Tag(s[i].trim(), blog);
         if (!list.contains(tag)) {
           list.add(tag);
         }

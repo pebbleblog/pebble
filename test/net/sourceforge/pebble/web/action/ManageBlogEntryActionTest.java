@@ -36,6 +36,7 @@ import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.RedirectView;
 import net.sourceforge.pebble.domain.BlogEntry;
 import net.sourceforge.pebble.domain.State;
+import net.sourceforge.pebble.domain.BlogService;
 
 /**
  * Tests for the ManageBlogEntryAction class.
@@ -51,9 +52,10 @@ public class ManageBlogEntryActionTest extends SecureActionTestCase {
   }
 
   public void testApproveBlogEntry() throws Exception {
-    BlogEntry blogEntry = blog.getBlogForToday().createBlogEntry();
-    blog.getBlogForToday().addEntry(blogEntry);
+    BlogService service = new BlogService();
+    BlogEntry blogEntry = new BlogEntry(blog);
     blogEntry.setState(State.PENDING);
+    service.putBlogEntry(blogEntry);
 
     // now execute the action
     request.setParameter("entry", blogEntry.getId());
@@ -66,9 +68,10 @@ public class ManageBlogEntryActionTest extends SecureActionTestCase {
   }
 
   public void testRejectBlogEntry() throws Exception {
-    BlogEntry blogEntry = blog.getBlogForToday().createBlogEntry();
-    blog.getBlogForToday().addEntry(blogEntry);
+    BlogService service = new BlogService();
+    BlogEntry blogEntry = new BlogEntry(blog);
     blogEntry.setState(State.PENDING);
+    service.putBlogEntry(blogEntry);
 
     // now execute the action
     request.setParameter("entry", blogEntry.getId());

@@ -51,7 +51,7 @@ public class RelativeUriDecoratorTest extends SingleBlogTestCase {
   public void setUp() {
     super.setUp();
 
-    blogEntry = blog.getBlogForToday().createBlogEntry();
+    blogEntry = new BlogEntry(blog);
     decorator = new RelativeUriDecorator();
     chain = new BlogEntryDecoratorChain(null);
     context = new BlogEntryDecoratorContext();

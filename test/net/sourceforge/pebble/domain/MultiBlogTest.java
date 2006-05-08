@@ -51,24 +51,27 @@ public class MultiBlogTest extends MultiBlogTestCase {
   /**
    * Tests that the date of the most recent blog entry can be calculated.
    */
-  public void testLastModified() {
+  public void testLastModified() throws Exception {
     assertEquals(new Date(0), blog.getLastModified());
 
-    BlogEntry blogEntry = blog1.getBlogForToday().createBlogEntry();
-    blog1.getBlogForToday().addEntry(blogEntry);
+    BlogService service = new BlogService();
+    BlogEntry blogEntry = new BlogEntry(blog1);
+    service.putBlogEntry(blogEntry);
+
     assertEquals(blogEntry.getDate(), blog.getLastModified());
   }
 
   /**
    * Tests that the recent blog entries can be accessed.
    */
-  public void testRecentBlogEntries() {
+  public void testRecentBlogEntries() throws BlogException {
     // should be no daily blogs to start with
     assertTrue(blog.getRecentBlogEntries(0, true).isEmpty());
 
     // now add an entry
-    BlogEntry blogEntry = blog1.getBlogForToday().createBlogEntry();
-    blog1.getBlogForToday().addEntry(blogEntry);
+    BlogService service = new BlogService();
+    BlogEntry blogEntry = new BlogEntry(blog1);
+    service.putBlogEntry(blogEntry);
 
     // ask for zero entries
     assertTrue(blog.getRecentBlogEntries(0, true).isEmpty());

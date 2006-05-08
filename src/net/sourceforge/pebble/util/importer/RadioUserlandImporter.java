@@ -36,6 +36,7 @@ import net.sourceforge.pebble.dao.file.FileDAOFactory;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.domain.BlogEntry;
 import net.sourceforge.pebble.domain.DailyBlog;
+import net.sourceforge.pebble.domain.BlogService;
 import net.sourceforge.pebble.search.BlogIndexer;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -130,10 +131,13 @@ public class RadioUserlandImporter {
       }
     }
 
-    DailyBlog daily = blog.getBlogForDay(date);
-    BlogEntry entry = daily.createBlogEntry(title, body, date);
-    daily.addEntry(entry);
-    entry.store();
+    BlogEntry entry = new BlogEntry(blog);
+    entry.setTitle(title);
+    entry.setBody(body);
+    entry.setDate(date);
+
+    BlogService service = new BlogService();
+    service.putBlogEntry(entry);
   }
 
 }

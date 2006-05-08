@@ -33,6 +33,7 @@ package net.sourceforge.pebble.plugin.permalink;
 
 import net.sourceforge.pebble.domain.BlogEntry;
 import net.sourceforge.pebble.domain.DailyBlog;
+import net.sourceforge.pebble.domain.BlogService;
 
 import java.text.SimpleDateFormat;
 
@@ -55,10 +56,10 @@ public class DefaultPermalinkProviderTest extends PermalinkProviderSupportTestCa
   /**
    * Tests that a permalink can be generated for a blog entry.
    */
-  public void testBlogEntryPermalink() {
-    DailyBlog today = blog.getBlogForToday();
-    BlogEntry blogEntry = today.createBlogEntry();
-    today.addEntry(blogEntry);
+  public void testBlogEntryPermalink() throws Exception {
+    BlogService service = new BlogService();
+    BlogEntry blogEntry = new BlogEntry(blog);
+    service.putBlogEntry(blogEntry);
 
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy'/'MM'/'dd'/'");
     StringBuffer buf = new StringBuffer();
@@ -83,12 +84,12 @@ public class DefaultPermalinkProviderTest extends PermalinkProviderSupportTestCa
   /**
    * Tests that the correct blog entry can be found from a permalink.
    */
-  public void testGetBlogEntry() {
-    DailyBlog today = blog.getBlogForToday();
-    BlogEntry blogEntry1 = today.createBlogEntry();
-    today.addEntry(blogEntry1);
-    BlogEntry blogEntry2 = today.createBlogEntry();
-    today.addEntry(blogEntry2);
+  public void testGetBlogEntry() throws Exception {
+    BlogService service = new BlogService();
+    BlogEntry blogEntry1 = new BlogEntry(blog);
+    BlogEntry blogEntry2 = new BlogEntry(blog);
+    service.putBlogEntry(blogEntry1);
+    service.putBlogEntry(blogEntry2);
 
     String uri = permalinkProvider.getPermalink(blogEntry1);
     assertEquals(blogEntry1, permalinkProvider.getBlogEntry(uri));

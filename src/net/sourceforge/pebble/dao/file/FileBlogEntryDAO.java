@@ -23,6 +23,7 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.*;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.text.DateFormat;
 import java.util.*;
 
 public class FileBlogEntryDAO implements BlogEntryDAO {
@@ -69,47 +70,75 @@ public class FileBlogEntryDAO implements BlogEntryDAO {
   static final String NEW_PERSISTENT_DATETIME_FORMAT = "dd MMM yyyy HH:mm:ss:S Z";
   static final String REGEX_FOR_YEAR = "\\d\\d\\d\\d";
 
-  private String getPath(DailyBlog dailyBlog) {
-    DecimalFormat format = new DecimalFormat("00");
-    StringBuffer path = new StringBuffer();
-    path.append(dailyBlog.getBlog().getRoot());
-    path.append(File.separator);
-    path.append(dailyBlog.getMonthlyBlog().getYearlyBlog().getYear());
-    path.append(File.separator);
-    path.append(format.format(dailyBlog.getMonthlyBlog().getMonth()));
-    path.append(File.separator);
-    path.append(format.format(dailyBlog.getDay()));
-    path.append(File.separator);
-
-    return path.toString();
+  /**
+   * Loads a specific blog entry.
+   *
+   * @param blogEntryId   the blog entry ID
+   * @return a BlogEntry instance
+   * @throws net.sourceforge.pebble.dao.PersistenceException
+   *          if the specified blog entry cannot be loaded
+   */
+  public BlogEntry loadBlogEntry(Blog blog, String blogEntryId) throws PersistenceException {
+    File path = new File(getPath(blog, blogEntryId));
+    File file = new File(path, blogEntryId + ".xml");
+    return loadBlogEntry(blog, file);
   }
 
   /**
-   * Loads the blog entries for a given daily blog.
+   * Loads a blog entry from the specified file.
    *
-   * @param dailyBlog the DailyBlog instance
-   * @return a List of BlogEntry instances
+   * @param source    the File pointing to the source
    * @throws net.sourceforge.pebble.dao.PersistenceException
-   *          if blog entries cannot be loaded
+   *          if the blog entry can't be loaded
    */
-  public List getBlogEntries(DailyBlog dailyBlog) throws PersistenceException {
-    String pathToBlogEntries = getPath(dailyBlog);
-    log.debug("Loading blog entries from " + pathToBlogEntries);
+  private BlogEntry loadBlogEntry(Blog blog, File source) throws PersistenceException {
+      log.debug("Loading " + source.getAbsolutePath());
+      BlogEntry blogEntry = new BlogEntry(blog);
 
-    File dir = new File(pathToBlogEntries);
-    File files[] = dir.listFiles(new BlogEntryFilenameFilter());
+      try {
+        DefaultHandler handler = new BlogEntryHandler(blogEntry);
+        SAXParserFactory saxFactory = SAXParserFactory.newInstance();
+        saxFactory.setValidating(false);
+        saxFactory.setNamespaceAware(true);
+        SAXParser parser = saxFactory.newSAXParser();
+        parser.parse(source, handler);
 
-    List entries = new ArrayList();
-    if (files != null) {
-      for (int i = 0; i < files.length; i++) {
-        BlogEntry entry;
-        entry = loadBlogEntry(dailyBlog, files[i]);
-        entry.setType(BlogEntry.PUBLISHED);
-        entries.add(entry);
+      } catch (Exception e) {
+        log.error(e.getMessage(), e);
+        e.printStackTrace();
+        throw new PersistenceException(e.getMessage());
+      }
+
+      return blogEntry;
+  }
+
+  /**
+   * Loads all blog entries.
+   *
+   * @param blog the Blog to load all entries for
+   * @return a List of BlogEntry objects
+   * @throws net.sourceforge.pebble.dao.PersistenceException
+   *          if the blog entries cannot be loaded
+   */
+  public List<BlogEntry> loadBlogEntries(Blog blog) throws PersistenceException {
+    List<BlogEntry> list = new ArrayList<BlogEntry>();
+
+    File root = new File(blog.getRoot());
+    File years[] = root.listFiles(new FourDigitFilenameFilter());
+    for (File year : years) {
+      File months[] = year.listFiles(new TwoDigitFilenameFilter());
+      for (File month : months) {
+        File days[] = month.listFiles(new TwoDigitFilenameFilter());
+        for (File day : days) {
+          File blogEntryFiles[] = day.listFiles(new BlogEntryFilenameFilter());
+          for (File blogEntryFile : blogEntryFiles) {
+            list.add(loadBlogEntry(blog, blogEntryFile));
+          }
+        }
       }
     }
 
-    return entries;
+    return list;
   }
 
   /**
@@ -197,7 +226,7 @@ public class FileBlogEntryDAO implements BlogEntryDAO {
    */
   private BlogEntry loadBlogEntry(DailyBlog dailyBlog, File source) throws PersistenceException {
       log.debug("Loading " + source.getAbsolutePath());
-      BlogEntry blogEntry = new BlogEntry(dailyBlog);
+      BlogEntry blogEntry = new BlogEntry(dailyBlog.getBlog());
 
       try {
         DefaultHandler handler = new BlogEntryHandler(blogEntry);
@@ -231,7 +260,7 @@ public class FileBlogEntryDAO implements BlogEntryDAO {
    * @param blogEntry the blog entry to store
    * @throws PersistenceException if something goes wrong storing the entry
    */
-  public void store(BlogEntry blogEntry) throws PersistenceException {
+  public void storeBlogEntry(BlogEntry blogEntry) throws PersistenceException {
     File outputDir = null;
 
     switch (blogEntry.getType()) {
@@ -245,7 +274,7 @@ public class FileBlogEntryDAO implements BlogEntryDAO {
         outputDir = new File(blogEntry.getBlog().getRoot(), "pages");
         break;
       default :
-        outputDir = new File(getPath(blogEntry.getDailyBlog()));
+        outputDir = new File(getPath(blogEntry.getBlog(), blogEntry.getId()));
         break;
     }
 
@@ -254,7 +283,7 @@ public class FileBlogEntryDAO implements BlogEntryDAO {
     }
 
     File outputFile = new File(outputDir, blogEntry.getId() + ".xml");
-    store(blogEntry, outputFile);
+    storeBlogEntry(blogEntry, outputFile);
   }
 
 
@@ -265,7 +294,7 @@ public class FileBlogEntryDAO implements BlogEntryDAO {
    * @param destination the File pointing to the destination
    * @throws PersistenceException if something goes wrong storing the entry
    */
-  private void store(BlogEntry blogEntry, File destination) throws PersistenceException {
+  private void storeBlogEntry(BlogEntry blogEntry, File destination) throws PersistenceException {
     File backupFile = new File(destination.getParentFile(), destination.getName() + ".bak");
     try {
       DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -519,7 +548,7 @@ public class FileBlogEntryDAO implements BlogEntryDAO {
    * @param blogEntry the blog entry to remove
    * @throws PersistenceException if something goes wrong removing the entry
    */
-  public void remove(BlogEntry blogEntry) throws PersistenceException {
+  public void removeBlogEntry(BlogEntry blogEntry) throws PersistenceException {
     File path = null;
 
     switch (blogEntry.getType()) {
@@ -533,7 +562,7 @@ public class FileBlogEntryDAO implements BlogEntryDAO {
         path = new File(blogEntry.getBlog().getRoot(), "pages");
         break;
       default :
-        path = new File(getPath(blogEntry.getDailyBlog()));
+        path = new File(getPath(blogEntry.getBlog(), blogEntry.getId()));
         break;
     }
 
@@ -570,69 +599,35 @@ public class FileBlogEntryDAO implements BlogEntryDAO {
     return yearlyBlogs;
   }
 
-/*
-  public static void main(String[] args) throws Exception {
-    DAOFactory.setConfiguredFactory(new FileDAOFactory());
-    FileBlogEntryDAO dao = new FileBlogEntryDAO();
-    Blog blog = new Blog(args[0]);
-    Collection yearlyBlogs = blog.getYearlyBlogs();
-    Iterator it = yearlyBlogs.iterator();
-    while (it.hasNext()) {
-      YearlyBlog yearly = (YearlyBlog) it.next();
-      Collection monthlyBlogs = yearly.getMonthlyBlogs();
-      Iterator jt = monthlyBlogs.iterator();
-      while (jt.hasNext()) {
-        MonthlyBlog monthly = (MonthlyBlog) jt.next();
-        Collection dailyBlogs = monthly.getDailyBlogs();
-        Iterator kt = dailyBlogs.iterator();
-        while (kt.hasNext()) {
-          DailyBlog daily = (DailyBlog) kt.next();
-
-          String pathToBlogEntries = dao.getPath(daily);
-
-          File dir = new File(pathToBlogEntries);
-          File files[] = dir.listFiles(new BlogEntryFilenameFilter());
-
-          if (files != null) {
-            for (int i = 0; i < files.length; i++) {
-              BlogEntry entry;
-              entry = dao.loadBlogEntry(daily, files[i]);
-
-              // quick check that the name of the file isn't messed up
-              String filename = files[i].getName();
-              long timeByFilename = Long.parseLong(filename.substring(0, filename.length() - 4));
-              if (entry.getDate().getTime() != timeByFilename) {
-                if (files[i].delete()) {
-                  log.info("Removed " + files[i].getName());
-                  entry.store();
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-    */
-
-}
-
-/**
- * Filters out any files that aren't blog entries.
- *
- * @author Simon Brown
- */
-class BlogEntryFilenameFilter implements FilenameFilter {
-
   /**
-   * Tests if a specified file should be included in a file list.
+   * Given a blog and blog entry ID, this method determines the path where
+   * that blog entry is stored.
    *
-   * @param dir  the directory in which the file was found.
-   * @param name the name of the file.
-   * @return <code>true</code> if and only if the name should be
-   *         included in the file list; <code>false</code> otherwise.
+   * @param blog    the owning Blog
+   * @param blogEntryId   the ID of the blog entry
+   * @return  a String of the form blogroot/yyyy/MM/dd
    */
-  public boolean accept(File dir, String name) {
-    return name.matches("\\d+.xml\\z");
+  private String getPath(Blog blog, String blogEntryId) {
+    DateFormat year = new SimpleDateFormat("yyyy");
+    year.setTimeZone(blog.getTimeZone());
+    DateFormat month = new SimpleDateFormat("MM");
+    month.setTimeZone(blog.getTimeZone());
+    DateFormat day = new SimpleDateFormat("dd");
+    day.setTimeZone(blog.getTimeZone());
+
+    long dateInMillis = Long.parseLong(blogEntryId);
+    Date date = new Date(dateInMillis);
+
+    StringBuffer buf = new StringBuffer();
+    buf.append(blog.getRoot());
+    buf.append(File.separator);
+    buf.append(year.format(date));
+    buf.append(File.separator);
+    buf.append(month.format(date));
+    buf.append(File.separator);
+    buf.append(day.format(date));
+
+    return buf.toString();
   }
 
 }

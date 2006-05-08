@@ -86,7 +86,8 @@ public class ResponseFeedAction extends Action {
 
       String entryId = request.getParameter("entry");
       if (entryId != null) {
-        BlogEntry blogEntry = blog.getBlogEntry(entryId);
+        BlogService service = new BlogService();
+        BlogEntry blogEntry = service.getBlogEntry(blog, entryId);
         if (blogEntry != null) {
           responses = blogEntry.getResponses();
         }

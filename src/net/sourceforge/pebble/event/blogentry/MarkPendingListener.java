@@ -34,6 +34,7 @@ package net.sourceforge.pebble.event.blogentry;
 import net.sourceforge.pebble.domain.BlogEntry;
 import net.sourceforge.pebble.domain.BlogException;
 import net.sourceforge.pebble.domain.State;
+import net.sourceforge.pebble.domain.BlogService;
 import net.sourceforge.pebble.util.SecurityUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -104,7 +105,8 @@ public class MarkPendingListener extends BlogEntryListenerSupport {
   private void markPending(BlogEntry blogEntry) {
     blogEntry.setState(State.PENDING);
     try {
-      blogEntry.store();
+      BlogService service = new BlogService();
+      service.putBlogEntry(blogEntry);
     } catch (BlogException be) {
       log.error("Could not store blog entry to update state", be);
     }

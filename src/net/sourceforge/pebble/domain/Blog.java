@@ -33,6 +33,8 @@ package net.sourceforge.pebble.domain;
 
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.PluginProperties;
+import net.sourceforge.pebble.index.IndexBlogEntryListener;
+import net.sourceforge.pebble.index.BlogEntryIndex;
 import net.sourceforge.pebble.comparator.BlogEntryByTitleComparator;
 import net.sourceforge.pebble.dao.BlogEntryDAO;
 import net.sourceforge.pebble.dao.CategoryDAO;
@@ -43,7 +45,6 @@ import net.sourceforge.pebble.event.EventDispatcher;
 import net.sourceforge.pebble.event.EventListenerList;
 import net.sourceforge.pebble.event.blog.BlogEvent;
 import net.sourceforge.pebble.event.blog.BlogListener;
-import net.sourceforge.pebble.event.blogentry.BlogEntryEvent;
 import net.sourceforge.pebble.event.blogentry.BlogEntryListener;
 import net.sourceforge.pebble.event.comment.CommentListener;
 import net.sourceforge.pebble.event.trackback.TrackBackListener;
@@ -56,7 +57,6 @@ import net.sourceforge.pebble.search.BlogIndexer;
 import org.apache.lucene.index.IndexReader;
 
 import javax.servlet.http.HttpServletRequest;
-import java.beans.PropertyChangeEvent;
 import java.io.File;
 import java.lang.reflect.Constructor;
 import java.util.*;
@@ -83,7 +83,7 @@ public class Blog extends AbstractBlog {
   private String id = "default";
 
   /** the collection of YearlyBlog instance that this root blog is managing */
-  private List yearlyBlogs;
+  private List yearlyBlogs = new ArrayList();
 
   /** the response manager associated with this blog */
   private ResponseManager responseManager;
@@ -96,9 +96,6 @@ public class Blog extends AbstractBlog {
 
   /** the referer filter associated with this blog */
   private RefererFilterManager refererFilterManager;
-
-  /** the story index associated with this blog */
-  private StaticPageIndex staticPageIndex;
 
   /** the editable theme belonging to this blog */
   private Theme editableTheme;
@@ -120,6 +117,11 @@ public class Blog extends AbstractBlog {
 
   /** the plugin properties */
   private PluginProperties pluginProperties;
+
+  private BlogEntryIndex blogEntryIndex;
+
+  /** the story index associated with this blog */
+  private StaticPageIndex staticPageIndex;
 
   /**
    * Creates a new Blog instance, based at the specified location.
@@ -155,14 +157,7 @@ public class Blog extends AbstractBlog {
     pluginProperties = new PluginProperties(this);
     blogEntryDecoratorManager = new BlogEntryDecoratorManager(this, getBlogEntryDecorators());
 
-    try {
-      DAOFactory factory = DAOFactory.getConfiguredFactory();
-      BlogEntryDAO dao = factory.getBlogEntryDAO();
-      yearlyBlogs = dao.getYearlyBlogs(this);
-    } catch (PersistenceException pe) {
-      pe.printStackTrace();
-    }
-
+    blogEntryIndex = new BlogEntryIndex(this);
     staticPageIndex = new StaticPageIndex(this);
 
     File imagesDirectory = new File(getImagesDirectory());
@@ -324,29 +319,29 @@ public class Blog extends AbstractBlog {
     eventListenerList.addTrackBackListener(responseManager);
   }
 
-  /**
-   * Utility method to load all blog entries. This is called so that recent
-   * comments and TrackBacks can be registered and displayed on the home page.
-   */
-  private void loadAllBlogEntries() {
-    Thread t = new Thread("pebble/" + getId() + "/preload") {
-      public void run() {
-        for (int year = yearlyBlogs.size()-1; year >= 0; year--) {
-          YearlyBlog yearlyBlog = (YearlyBlog)yearlyBlogs.get(year);
-          MonthlyBlog[] months = yearlyBlog.getMonthlyBlogs();
-          for (int month = 11; month >= 0; month--) {
-            months[month].getAllDailyBlogs();
-          }
-        }
-
-        recalculateTagRankings();
-      }
-    };
-
-    t.setPriority(Thread.MIN_PRIORITY);
-    t.start();
-  }
-
+//  /**
+//   * Utility method to load all blog entries. This is called so that recent
+//   * comments and TrackBacks can be registered and displayed on the home page.
+//   */
+//  private void loadAllBlogEntries() {
+//    Thread t = new Thread("pebble/" + getId() + "/preload") {
+//      public void run() {
+//        for (int year = yearlyBlogs.size()-1; year >= 0; year--) {
+//          YearlyBlog yearlyBlog = (YearlyBlog)yearlyBlogs.get(year);
+//          MonthlyBlog[] months = yearlyBlog.getMonthlyBlogs();
+//          for (int month = 11; month >= 0; month--) {
+//            months[month].getAllDailyBlogs();
+//          }
+//        }
+//
+//        recalculateTagRankings();
+//      }
+//    };
+//
+//    t.setPriority(Thread.MIN_PRIORITY);
+//    t.start();
+//  }
+//
   /**
    * Gets the default properties for a Blog.
    *
@@ -555,7 +550,7 @@ public class Blog extends AbstractBlog {
    */
   public YearlyBlog getBlogForYear(int year) {
     Iterator it = yearlyBlogs.iterator();
-    YearlyBlog yearlyBlog = null;
+    YearlyBlog yearlyBlog;
     while (it.hasNext()) {
       yearlyBlog = (YearlyBlog)it.next();
       if (yearlyBlog.getYear() == year) {
@@ -564,10 +559,10 @@ public class Blog extends AbstractBlog {
     }
 
     yearlyBlog = new YearlyBlog(this, year);
-    if (year > getBlogForToday().getMonthlyBlog().getYearlyBlog().getYear()) {
+    //if (year > getBlogForToday().getMonthlyBlog().getYearlyBlog().getYear()) {
       yearlyBlogs.add(yearlyBlog);
       Collections.sort(yearlyBlogs);
-    }
+    //}
 
     return yearlyBlog;
   }
@@ -704,11 +699,13 @@ public class Blog extends AbstractBlog {
    */
   public List getBlogEntries() {
     List blogEntries = new ArrayList();
+    BlogService service = new BlogService();
+
     for (int year = yearlyBlogs.size()-1; year >= 0; year--) {
       YearlyBlog yearlyBlog = (YearlyBlog)yearlyBlogs.get(year);
       MonthlyBlog[] months = yearlyBlog.getMonthlyBlogs();
       for (int month = 11; month >= 0; month--) {
-        blogEntries.addAll(months[month].getBlogEntries());
+        blogEntries.addAll(service.getBlogEntries(this, yearlyBlog.getYear(), months[month].getMonth()));
       }
     }
 
@@ -721,16 +718,19 @@ public class Blog extends AbstractBlog {
    * @return  an int
    */
   public int getNumberOfBlogEntries() {
-    int count = 0;
-    for (int year = yearlyBlogs.size()-1; year >= 0; year--) {
-      YearlyBlog yearlyBlog = (YearlyBlog)yearlyBlogs.get(year);
-      MonthlyBlog[] months = yearlyBlog.getMonthlyBlogs();
-      for (int month = 11; month >= 0; month--) {
-        count += months[month].getNumberOfBlogEntries();
-      }
-    }
+    return 0;
 
-    return count;
+//    todo : get this from the index
+//    int count = 0;
+//    for (int year = yearlyBlogs.size()-1; year >= 0; year--) {
+//      YearlyBlog yearlyBlog = (YearlyBlog)yearlyBlogs.get(year);
+//      MonthlyBlog[] months = yearlyBlog.getMonthlyBlogs();
+//      for (int month = 11; month >= 0; month--) {
+//        count += months[month].getNumberOfBlogEntries();
+//      }
+//    }
+//
+//    return count;
   }
 
   /**
@@ -740,7 +740,7 @@ public class Blog extends AbstractBlog {
    * @return  true if there are entries, false otherwise
    */
   public boolean hasEntries(DailyBlog day) {
-    return day.hasEntries();
+    return day.hasBlogEntries();
   }
 
   /**
@@ -765,31 +765,32 @@ public class Blog extends AbstractBlog {
    * @return  a List containing the most recent blog entries
    */
   public List getRecentBlogEntries(Category category, int numberOfEntries, boolean approvedOnly) {
-    DailyBlog firstDayOfBlog = getBlogForFirstMonth().getBlogForDay(1);
-    Calendar cal = getCalendar();
-    List entries = new ArrayList();
-
-    while (entries.size() < numberOfEntries) {
-      DailyBlog day = getBlogForDay(cal.getTime());
-
-      if (day.hasEntries()) {
-        Iterator it = new ArrayList(day.getEntries(category)).iterator();
-        while ((entries.size() < numberOfEntries) && it.hasNext()) {
-          BlogEntry blogEntry = (BlogEntry)it.next();
-          if (!approvedOnly || (approvedOnly && blogEntry.isApproved())) {
-            entries.add(blogEntry);
-          }
-        }
-      }
-
-      if (day == firstDayOfBlog) {
-        break;
-      } else {
-        cal.add(Calendar.DAY_OF_YEAR, -1);
-      }
-    }
-
-    return entries;
+//    DailyBlog firstDayOfBlog = getBlogForFirstMonth().getBlogForDay(1);
+//    Calendar cal = getCalendar();
+//    List entries = new ArrayList();
+//
+//    while (entries.size() < numberOfEntries) {
+//      DailyBlog day = getBlogForDay(cal.getTime());
+//
+//      if (day.hasBlogEntries()) {
+//        Iterator it = new ArrayList(day.getEntries(category)).iterator();
+//        while ((entries.size() < numberOfEntries) && it.hasNext()) {
+//          BlogEntry blogEntry = (BlogEntry)it.next();
+//          if (!approvedOnly || (approvedOnly && blogEntry.isApproved())) {
+//            entries.add(blogEntry);
+//          }
+//        }
+//      }
+//
+//      if (day == firstDayOfBlog) {
+//        break;
+//      } else {
+//        cal.add(Calendar.DAY_OF_YEAR, -1);
+//      }
+//    }
+//
+//    return entries;
+    return new ArrayList();
   }
 
   /**
@@ -802,30 +803,31 @@ public class Blog extends AbstractBlog {
    * @return a List containing the most recent blog entries
    */
   public List getRecentBlogEntries(String tag, int numberOfEntries, boolean approvedOnly) {
-    DailyBlog firstDayOfBlog = getBlogForFirstMonth().getBlogForDay(1);
-    Calendar cal = getCalendar();
-
-    List entries = new ArrayList();
-    while ((entries.size() < numberOfEntries)) {
-      DailyBlog day = getBlogForDay(cal.getTime());
-      if (day.hasEntries()) {
-        Iterator it = new ArrayList(day.getEntries(tag)).iterator();
-        while ((entries.size() < numberOfEntries) && it.hasNext()) {
-          BlogEntry blogEntry = (BlogEntry)it.next();
-          if (!approvedOnly || (approvedOnly && blogEntry.isApproved())) {
-            entries.add(blogEntry);
-          }
-        }
-      }
-
-      if (day == firstDayOfBlog) {
-        break;
-      } else {
-        cal.add(Calendar.DAY_OF_YEAR, -1);
-      }
-    }
-
-    return entries;
+//    DailyBlog firstDayOfBlog = getBlogForFirstMonth().getBlogForDay(1);
+//    Calendar cal = getCalendar();
+//
+//    List entries = new ArrayList();
+//    while ((entries.size() < numberOfEntries)) {
+//      DailyBlog day = getBlogForDay(cal.getTime());
+//      if (day.hasBlogEntries()) {
+//        Iterator it = new ArrayList(day.getEntries(tag)).iterator();
+//        while ((entries.size() < numberOfEntries) && it.hasNext()) {
+//          BlogEntry blogEntry = (BlogEntry)it.next();
+//          if (!approvedOnly || (approvedOnly && blogEntry.isApproved())) {
+//            entries.add(blogEntry);
+//          }
+//        }
+//      }
+//
+//      if (day == firstDayOfBlog) {
+//        break;
+//      } else {
+//        cal.add(Calendar.DAY_OF_YEAR, -1);
+//      }
+//    }
+//
+//    return entries;
+    return new ArrayList();
   }
 
   /**
@@ -847,58 +849,65 @@ public class Blog extends AbstractBlog {
     return date;
   }
 
-  /**
-   * Gets the blog entry with the specified id.
-   *
-   * @param entryId   the id of the blog entry
-   * @return  a BlogEntry instance, or null if the entry couldn't be found
-   */
-  public BlogEntry getBlogEntry(String entryId) {
-    if (entryId == null || entryId.length() == 0) {
-      return null;
-    }
-
-    Calendar cal = getCalendar();
-    cal.setTime(new Date(Long.parseLong(entryId)));
-
-    int year = cal.get(Calendar.YEAR);
-    int month = (cal.get(Calendar.MONTH) + 1);
-    int day = cal.get(Calendar.DAY_OF_MONTH);
-
-    DailyBlog blog = getBlogForDay(year, month, day);
-    return blog.getEntry(entryId);
-  }
+//  /**
+//   * Gets the blog entry with the specified id.
+//   *
+//   * @param entryId   the id of the blog entry
+//   * @return  a BlogEntry instance, or null if the entry couldn't be found
+//   * @deprecated  this will be removed before Pebble 2.0.0 final
+//   */
+//  public BlogEntry getBlogEntry(String entryId) {
+//    if (entryId == null || entryId.length() == 0) {
+//      return null;
+//    }
+//
+//    Calendar cal = getCalendar();
+//    cal.setTime(new Date(Long.parseLong(entryId)));
+//
+//    int year = cal.get(Calendar.YEAR);
+//    int month = (cal.get(Calendar.MONTH) + 1);
+//    int day = cal.get(Calendar.DAY_OF_MONTH);
+//
+//    DailyBlog blog = getBlogForDay(year, month, day);
+//    return blog.getEntry(entryId);
+//  }
 
   public BlogEntry getPreviousBlogEntry(BlogEntry blogEntry) {
-    BlogEntry previous = blogEntry.getDailyBlog().getPreviousBlogEntry(blogEntry);
-    if (previous != null) {
-      return previous;
-    }
+    return null;
 
-    DailyBlog dailyBlog = blogEntry.getDailyBlog();
-    DailyBlog firstDailyBlog = getBlogForFirstMonth().getBlogForFirstDay();
-    while (dailyBlog != firstDailyBlog && previous == null) {
-      dailyBlog = dailyBlog.getPreviousDay();
-      previous = dailyBlog.getLastBlogEntry();
-    }
-
-    return previous;
+//    todo
+//    BlogEntry previous = blogEntry.getDailyBlog().getPreviousBlogEntry(blogEntry);
+//    if (previous != null) {
+//      return previous;
+//    }
+//
+//    DailyBlog dailyBlog = blogEntry.getDailyBlog();
+//    DailyBlog firstDailyBlog = getBlogForFirstMonth().getBlogForFirstDay();
+//    while (dailyBlog != firstDailyBlog && previous == null) {
+//      dailyBlog = dailyBlog.getPreviousDay();
+//      previous = dailyBlog.getLastBlogEntry();
+//    }
+//
+//    return previous;
   }
 
   public BlogEntry getNextBlogEntry(BlogEntry blogEntry) {
-    BlogEntry next = blogEntry.getDailyBlog().getNextBlogEntry(blogEntry);
-    if (next != null) {
-      return next;
-    }
+    return null;
 
-    DailyBlog dailyBlog = blogEntry.getDailyBlog();
-    DailyBlog lastDailyBlog = getBlogForToday();
-    while (dailyBlog != lastDailyBlog && next == null) {
-      dailyBlog = dailyBlog.getNextDay();
-      next = dailyBlog.getFirstBlogEntry();
-    }
-
-    return next;
+//    todo
+//    BlogEntry next = blogEntry.getDailyBlog().getNextBlogEntry(blogEntry);
+//    if (next != null) {
+//      return next;
+//    }
+//
+//    DailyBlog dailyBlog = blogEntry.getDailyBlog();
+//    DailyBlog lastDailyBlog = getBlogForToday();
+//    while (dailyBlog != lastDailyBlog && next == null) {
+//      dailyBlog = dailyBlog.getNextDay();
+//      next = dailyBlog.getFirstBlogEntry();
+//    }
+//
+//    return next;
   }
 
   /**
@@ -1051,6 +1060,15 @@ public class Blog extends AbstractBlog {
    */
   public RefererFilterManager getRefererFilterManager() {
     return this.refererFilterManager;
+  }
+
+  /**
+   * Gets the blog entry index.
+   *
+   * @return  a BlogEntryIndex instance
+   */
+  public BlogEntryIndex getBlogEntryIndex() {
+    return this.blogEntryIndex;
   }
 
   /**
@@ -1267,14 +1285,13 @@ public class Blog extends AbstractBlog {
    */
   void start() {
     // create an index if one doesn't already exist
-    if (!IndexReader.indexExists(getIndexDirectory())) {
-      BlogIndexer indexer = new BlogIndexer();
-      indexer.index(this);
-    }
+//    if (!IndexReader.indexExists(getSearchIndexDirectory())) {
+//      BlogIndexer indexer = new BlogIndexer();
+//      indexer.index(this);
+//    }
 
     logger.start();
     editableTheme.restore();
-    loadAllBlogEntries();
 
     // call blog listeners
     eventDispatcher.fireBlogEvent(new BlogEvent(this, BlogEvent.BLOG_STARTED));
@@ -1410,6 +1427,13 @@ public class Blog extends AbstractBlog {
   public void setPermalinkProvider(PermalinkProvider provider) {
     this.permalinkProvider = provider;
     this.permalinkProvider.setBlog(this);
+  }
+
+  public void reindex() {
+    BlogService service = new BlogService();
+    List<BlogEntry> blogEntries = service.getBlogEntries(this);
+    blogEntryIndex.clear();
+    blogEntryIndex.index(blogEntries);
   }
 
 }

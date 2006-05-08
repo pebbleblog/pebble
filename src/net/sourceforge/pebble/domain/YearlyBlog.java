@@ -66,9 +66,9 @@ public class YearlyBlog extends TimePeriod implements Comparable {
     setDate(getCalendar().getTime());
     this.monthlyBlogs = new MonthlyBlog[12];
 
-//    for (int i = 1; i <= 12; i++) {
-//      monthlyBlogs[i-1] = new MonthlyBlog(this, i);
-//    }
+    for (int i = 1; i <= 12; i++) {
+      monthlyBlogs[i-1] = new MonthlyBlog(this, i);
+    }
   }
 
   private Calendar getCalendar() {
@@ -108,20 +108,6 @@ public class YearlyBlog extends TimePeriod implements Comparable {
       throw new IllegalArgumentException("Invalid month of " + month + " specified, should be between 1 and 12");
     }
 
-/*
-    SoftReference ref = (SoftReference)monthlyBlogs[month-1];
-    if (ref.get() == null) {
-      MonthlyBlog mb = new MonthlyBlog(this, month);
-      ref = new SoftReference(mb);
-      monthlyBlogs[month-1] = ref;
-    }
-
-    return (MonthlyBlog)ref.get();
-*/
-    if (monthlyBlogs[month-1] == null) {
-      monthlyBlogs[month-1] = new MonthlyBlog(this, month);
-
-    }
     return monthlyBlogs[month-1];
   }
 
@@ -161,8 +147,6 @@ public class YearlyBlog extends TimePeriod implements Comparable {
    * @return  a MonthlyBlog instance
    */
   public MonthlyBlog getBlogForFirstMonth() {
-    // hardcoded to be January for the moment
-    // todo   put in the logic to check for blog entries
     return getBlogForMonth(1);
   }
 
@@ -175,22 +159,6 @@ public class YearlyBlog extends TimePeriod implements Comparable {
     MonthlyBlog[] months = new MonthlyBlog[12];
     for (int i = 1; i <= 12; i++) {
       months[i-1] = getBlogForMonth(i);
-    }
-
-    return months;
-  }
-
-  /**
-   * Gets a collection of all MonthlyBlogs managed by this blog, in reverse order.
-   *
-   * @return  a Collection of MonthlyBlog instances
-   */
-  public MonthlyBlog[] getMonthlyBlogsInReverse() {
-    MonthlyBlog[] months = new MonthlyBlog[12];
-    int i = 0;
-    for (int month = 12; month >= 1; month--) {
-      months[i] = getBlogForMonth(month);
-      i++;
     }
 
     return months;

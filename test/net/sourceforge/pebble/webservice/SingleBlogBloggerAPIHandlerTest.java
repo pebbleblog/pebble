@@ -154,24 +154,28 @@ public class SingleBlogBloggerAPIHandlerTest extends SingleBlogTestCase {
 
   public void testGetRecentPosts() {
     try {
-      Calendar cal1 = blog.getCalendar();
-      cal1.set(Calendar.HOUR_OF_DAY, 2);
-      Calendar cal2 = blog.getCalendar();
-      cal2.set(Calendar.HOUR_OF_DAY, 3);
-      Calendar cal3 = blog.getCalendar();
-      cal3.set(Calendar.HOUR_OF_DAY, 4);
-      Calendar cal4 = blog.getCalendar();
-      cal4.set(Calendar.HOUR_OF_DAY, 5);
+      BlogService service = new BlogService();
 
-      DailyBlog today = blog.getBlogForToday();
-      BlogEntry entry1 = today.createBlogEntry("title1", "body1", cal1.getTime());
-      today.addEntry(entry1);
-      BlogEntry entry2 = today.createBlogEntry("title2", "body2", cal2.getTime());
-      today.addEntry(entry2);
-      BlogEntry entry3 = today.createBlogEntry("title3", "body3", cal3.getTime());
-      today.addEntry(entry3);
-      BlogEntry entry4 = today.createBlogEntry("title4", "body4", cal4.getTime());
-      today.addEntry(entry4);
+      BlogEntry entry1 = new BlogEntry(blog);
+      entry1.setTitle("title1");
+      entry1.setBody("body1");
+      service.putBlogEntry(entry1);
+
+      BlogEntry entry2 = new BlogEntry(blog);
+      entry2.setTitle("title2");
+      entry2.setBody("body2");
+      service.putBlogEntry(entry2);
+
+      BlogEntry entry3 = new BlogEntry(blog);
+      entry3.setTitle("title3");
+      entry3.setBody("body3");
+      service.putBlogEntry(entry3);
+
+      BlogEntry entry4 = new BlogEntry(blog);
+      entry4.setTitle("title4");
+      entry4.setBody("body4");
+      service.putBlogEntry(entry4);
+
       Vector posts = handler.getRecentPosts("appkey", "default", "username", "password", 3);
 
       assertFalse(posts.isEmpty());
@@ -193,12 +197,12 @@ public class SingleBlogBloggerAPIHandlerTest extends SingleBlogTestCase {
 
   public void testGetPost() {
     try {
-      DailyBlog today = blog.getBlogForToday();
-      BlogEntry entry = today.createBlogEntry();
+      BlogService service = new BlogService();
+      BlogEntry entry = new BlogEntry(blog);
       entry.setTitle("title");
       entry.setBody("body");
       entry.setAuthor("simon");
-      today.addEntry(entry);
+      service.putBlogEntry(entry);
 
       Hashtable post = handler.getPost("appkey", "default/" + entry.getId(), "username", "password");
       assertEquals("<title>title</title><category></category>body", post.get(BloggerAPIHandler.CONTENT));
@@ -213,13 +217,13 @@ public class SingleBlogBloggerAPIHandlerTest extends SingleBlogTestCase {
 
   public void testGetPostWithCategory() {
     try {
-      DailyBlog today = blog.getBlogForToday();
-      BlogEntry entry = today.createBlogEntry();
+      BlogService service = new BlogService();
+      BlogEntry entry = new BlogEntry(blog);
       entry.setTitle("title");
       entry.setBody("body");
       entry.setAuthor("simon");
       entry.addCategory(new Category("java", "Java"));
-      today.addEntry(entry);
+      service.putBlogEntry(entry);
 
       Hashtable post = handler.getPost("appkey", "default/" + entry.getId(), "username", "password");
       assertEquals("<title>title</title><category>/java</category>body", post.get(BloggerAPIHandler.CONTENT));
@@ -259,7 +263,9 @@ public class SingleBlogBloggerAPIHandlerTest extends SingleBlogTestCase {
 
       String postid = handler.newPost("appkey", "default", "username", "password", "<title>Title</title><category>/aCategory</category><p>Content</p>", true);
 
-      BlogEntry entry = (BlogEntry)blog.getRecentBlogEntries(1).get(0);
+      BlogService service = new BlogService();
+      BlogEntry entry = service.getBlogEntry(blog, postid.substring("default".length()+1));
+
       assertEquals("default/" + entry.getId(), postid);
       assertEquals("Title", entry.getTitle());
       assertTrue(entry.inCategory(category));
@@ -281,7 +287,9 @@ public class SingleBlogBloggerAPIHandlerTest extends SingleBlogTestCase {
 
       String postid = handler.newPost("appkey", "default", "username", "password", "<title>Title</title><category>/category1, /category2</category><p>Content</p>", true);
 
-      BlogEntry entry = (BlogEntry)blog.getRecentBlogEntries(1).get(0);
+      BlogService service = new BlogService();
+      BlogEntry entry = service.getBlogEntry(blog, postid.substring("default".length()+1));
+
       assertEquals("default/" + entry.getId(), postid);
       assertEquals("Title", entry.getTitle());
       assertTrue(entry.inCategory(category1));
@@ -299,7 +307,8 @@ public class SingleBlogBloggerAPIHandlerTest extends SingleBlogTestCase {
     try {
       String postid = handler.newPost("appkey", "default", "username", "password", "<p>Content</p>", true);
 
-      BlogEntry entry = (BlogEntry)blog.getRecentBlogEntries(1).get(0);
+      BlogService service = new BlogService();
+      BlogEntry entry = service.getBlogEntry(blog, postid.substring("default".length()+1));
       assertEquals("default/" + entry.getId(), postid);
       assertEquals("", entry.getTitle());
       assertEquals("<p>Content</p>", entry.getBody());
@@ -313,11 +322,12 @@ public class SingleBlogBloggerAPIHandlerTest extends SingleBlogTestCase {
 
   public void testEditPost() {
     try {
-      DailyBlog today = blog.getBlogForToday();
-      BlogEntry entry = today.createBlogEntry();
+      BlogService service = new BlogService();
+      BlogEntry entry = new BlogEntry(blog);
       entry.setTitle("title");
       entry.setBody("body");
-      today.addEntry(entry);
+      service.putBlogEntry(entry);
+
       boolean result = handler.editPost("appkey", "default/" + entry.getId(), "username", "password", "<title>Title</title><p>Content</p>", true);
 
       assertTrue(result);
@@ -353,17 +363,16 @@ public class SingleBlogBloggerAPIHandlerTest extends SingleBlogTestCase {
 
   public void testDeletePost() {
     try {
-      DailyBlog today = blog.getBlogForToday();
-      BlogEntry entry = today.createBlogEntry();
+      BlogService service = new BlogService();
+      BlogEntry entry = new BlogEntry(blog);
       entry.setTitle("title");
       entry.setBody("body");
       entry.setAuthor("simon");
-      today.addEntry(entry);
+      service.putBlogEntry(entry);
 
-      assertTrue(today.hasEntries());
       boolean result = handler.deletePost("appkey", "default/" + entry.getId(), "username", "password", true);
       assertTrue("deletePost() returned false instead of true", result);
-      assertFalse(today.hasEntries());
+      assertNull(service.getBlogEntry(blog, entry.getId()));
     } catch (Exception e) {
       e.printStackTrace();
       fail();
@@ -435,9 +444,9 @@ public class SingleBlogBloggerAPIHandlerTest extends SingleBlogTestCase {
 
   public void testAddCategory() {
     try {
-      DailyBlog today = blog.getBlogForToday();
-      BlogEntry entry = today.createBlogEntry();
-      today.addEntry(entry);
+      BlogService service = new BlogService();
+      BlogEntry entry = new BlogEntry(blog);
+      service.putBlogEntry(entry);
       blog.addCategory(new Category("/aCategory", "A Category"));
 
       boolean result = handler.addCategory("appkey", "default/" + entry.getId(), "username", "password", "/aCategory");
