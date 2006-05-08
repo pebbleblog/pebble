@@ -38,8 +38,7 @@ import net.sourceforge.pebble.mock.MockHttpServletResponse;
 import net.sourceforge.pebble.web.model.Model;
 
 /**
- * Extends BlogTestCase, adding setup logic to easily test secure
- * actions.
+ * Extends BlogTestCase, adding setup logic to easily test secure actions.
  *
  * @author    Simon Brown
  */

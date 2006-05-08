@@ -50,7 +50,7 @@ public class FourZeroFourActionTest extends SingleBlogActionTestCase {
   /**
    * Tests that the resulting view is of the correct type.
    */
-  public void testViewFeeds() throws Exception {
+  public void testViewType() throws Exception {
     View view = action.process(request, response);
     assertTrue(view instanceof FourZeroFourView);
   }

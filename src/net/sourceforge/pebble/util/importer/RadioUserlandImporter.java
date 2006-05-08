@@ -35,9 +35,7 @@ import net.sourceforge.pebble.dao.DAOFactory;
 import net.sourceforge.pebble.dao.file.FileDAOFactory;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.domain.BlogEntry;
-import net.sourceforge.pebble.domain.DailyBlog;
 import net.sourceforge.pebble.domain.BlogService;
-import net.sourceforge.pebble.search.BlogIndexer;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -67,8 +65,9 @@ public class RadioUserlandImporter {
     DAOFactory.setConfiguredFactory(new FileDAOFactory());
     Blog blog = new Blog(args[1]);
     blog.setProperty(Blog.TIMEZONE_KEY, args[2]);
-    BlogIndexer indexer = new BlogIndexer();
-    indexer.index(blog);
+    // todo
+    //SearchIndex indexer = new SearchIndex();
+    //indexer.index(blog);
 
     for (int i = 0; i < sources.length; i++) {
       importFile(blog, sources[i]);

@@ -6,8 +6,7 @@ import net.sourceforge.pebble.domain.DailyBlog;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import java.io.File;
-import java.io.FilenameFilter;
+import java.io.*;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -27,6 +26,8 @@ public class BlogEntryIndex {
 
   private Blog blog;
 
+  private List<String> indexEntries = new ArrayList<String>();
+
   public BlogEntryIndex(Blog blog) {
     this.blog = blog;
 
@@ -34,78 +35,87 @@ public class BlogEntryIndex {
   }
 
   public void clear() {
+    indexEntries = new ArrayList<String>();
+    writeIndex();
   }
 
-  public void index(List<BlogEntry> blogEntries) {
+  public synchronized void index(List<BlogEntry> blogEntries) {
     DateFormat format = new SimpleDateFormat("yyyy/MM/dd");
     for (BlogEntry blogEntry : blogEntries) {
-      log.info("Indexing " + format.format(blogEntry.getDate()) + "/" + blogEntry.getId());
-
-      DailyBlog day = blog.getBlogForDay(blogEntry.getDate());
-      day.addBlogEntry(blogEntry.getId());
+      String indexEntry = format.format(blogEntry.getDate()) + "/" + blogEntry.getId();
+      indexEntries.add(indexEntry);
     }
+
+    writeIndex();
   }
 
-  public List<String> getBlogEntries(int year, int month, int day) {
-    DecimalFormat doubleZero = new DecimalFormat("00");
+  public synchronized void index(BlogEntry blogEntry) {
+    DateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+    String indexEntry = format.format(blogEntry.getDate()) + "/" + blogEntry.getId();
+    indexEntries.add(indexEntry);
 
-    StringBuffer buf = new StringBuffer();
-    buf.append(blog.getRoot());
-    buf.append(File.separator);
-    buf.append(year);
-    buf.append(File.separator);
-    buf.append(doubleZero.format(month));
-    buf.append(File.separator);
-    buf.append(doubleZero.format(day));
+    DailyBlog dailyBlog = blog.getBlogForDay(blogEntry.getDate());
+    dailyBlog.addBlogEntry(blogEntry.getId());
 
-    File dayDirectory = new File(buf.toString());
-    String blogEntryFiles[] = dayDirectory.list(new BlogEntryFilenameFilter());
-
-    List<String> blogEntryIds = new ArrayList<String>();
-    if (blogEntryFiles != null) {
-      for (String blogEntryFile : blogEntryFiles) {
-        blogEntryIds.add(blogEntryFile.substring(0, blogEntryFile.length()-4));
-      }
-    }
-
-    return blogEntryIds;
+    writeIndex();
   }
 
-  public List<String> getBlogEntries(int year, int month) {
-    List<String> blogEntryIds = new ArrayList<String>();
+  public synchronized void unindex(BlogEntry blogEntry) {
+    DailyBlog dailyBlog = blog.getBlogForDay(blogEntry.getDate());
+    dailyBlog.removeBlogEntry(blogEntry.getId());
 
-    // this is a hack, but hey :-)
-    for (int day = 1; day <= 31; day++) {
-      blogEntryIds.addAll(getBlogEntries(year, month, day));
-    }
+    DateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+    String indexEntry = format.format(blogEntry.getDate()) + "/" + blogEntry.getId();
+    indexEntries.remove(indexEntry);
 
-    return blogEntryIds;
+    writeIndex();
   }
 
   private void loadIndex() {
     File index = new File(blog.getIndexesDirectory(), "blogentries.index");
     if (index.exists()) {
+      try {
+        File indexFile = new File(blog.getIndexesDirectory(), "blogentries.index");
+        BufferedReader reader = new BufferedReader(new FileReader(indexFile));
+        String indexEntry = reader.readLine();
+        while (indexEntry != null) {
+          indexEntries.add(indexEntry);
 
+          // split up the yyyy/MM/dd/blogentryid into it's parts
+          String parts[] = indexEntry.split("/");
+          int year = Integer.parseInt(parts[0]);
+          int month = Integer.parseInt(parts[1]);
+          int day = Integer.parseInt(parts[2]);
+          String blogEntryId = parts[3];
+
+          // and add it to the internal memory structures
+          DailyBlog dailyBlog = blog.getBlogForDay(year, month, day);
+          dailyBlog.addBlogEntry(blogEntryId);
+
+          indexEntry = reader.readLine();
+        }
+
+        reader.close();
+      } catch (Exception e) {
+        log.error("Error while reading index", e);
+      }
     }
   }
 
-  /**
-   * Filters out any files that aren't blog entries.
-   *
-   * @author Simon Brown
-   */
-  class BlogEntryFilenameFilter implements FilenameFilter {
+  private void writeIndex() {
+    try {
+      File indexFile = new File(blog.getIndexesDirectory(), "blogentries.index");
+      BufferedWriter writer = new BufferedWriter(new FileWriter(indexFile));
 
-    /**
-     * Tests if a specified file should be included in a file list.
-     *
-     * @param dir  the directory in which the file was found.
-     * @param name the name of the file.
-     * @return <code>true</code> if and only if the name should be
-     *         included in the file list; <code>false</code> otherwise.
-     */
-    public boolean accept(File dir, String name) {
-      return name.matches("\\d+.xml\\z");
+      for (String indexEntry : indexEntries) {
+        writer.write(indexEntry);
+        writer.newLine();
+      }
+
+      writer.flush();
+      writer.close();
+    } catch (Exception e) {
+      log.error("Error while writing index", e);
     }
   }
 

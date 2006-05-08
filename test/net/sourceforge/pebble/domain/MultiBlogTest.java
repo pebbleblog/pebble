@@ -66,7 +66,7 @@ public class MultiBlogTest extends MultiBlogTestCase {
    */
   public void testRecentBlogEntries() throws BlogException {
     // should be no daily blogs to start with
-    assertTrue(blog.getRecentBlogEntries(0, true).isEmpty());
+    assertTrue(blog.getRecentBlogEntries(0).isEmpty());
 
     // now add an entry
     BlogService service = new BlogService();
@@ -74,10 +74,10 @@ public class MultiBlogTest extends MultiBlogTestCase {
     service.putBlogEntry(blogEntry);
 
     // ask for zero entries
-    assertTrue(blog.getRecentBlogEntries(0, true).isEmpty());
+    assertTrue(blog.getRecentBlogEntries(0).isEmpty());
 
     // ask for 1 entry
-    assertTrue(blog.getRecentBlogEntries(1, true).contains(blogEntry));
+    assertTrue(blog.getRecentBlogEntries(1).contains(blogEntry));
   }
 
 }

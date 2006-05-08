@@ -35,7 +35,6 @@ import net.sourceforge.pebble.dao.CategoryDAO;
 import net.sourceforge.pebble.dao.DAOFactory;
 import net.sourceforge.pebble.dao.file.FileDAOFactory;
 import net.sourceforge.pebble.domain.*;
-import net.sourceforge.pebble.search.BlogIndexer;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -67,8 +66,9 @@ public class MovableTypeImporter {
     DAOFactory.setConfiguredFactory(new FileDAOFactory());
     Blog blog = new Blog(args[1]);
     blog.setProperty(Blog.TIMEZONE_KEY, args[2]);
-    BlogIndexer indexer = new BlogIndexer();
-    indexer.index(blog);
+//    todo
+//    SearchIndex indexer = new SearchIndex();
+//    indexer.index(blog);
 
     importBlog(blog, file);
   }

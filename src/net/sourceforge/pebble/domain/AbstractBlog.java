@@ -405,10 +405,9 @@ public abstract class AbstractBlog extends TimePeriod {
    * of which is specified.
    *
    * @param   numberOfEntries   the number of entries to get
-   * @param   approvedOnly      true if only approved should be included, false otherwise
    * @return  a List containing the most recent blog entries
    */
-  public abstract List getRecentBlogEntries(int numberOfEntries, boolean approvedOnly);
+  public abstract List getRecentBlogEntries(int numberOfEntries);
 
   /**
    * Gets the most recent blog entries for a given category, the number
@@ -416,10 +415,9 @@ public abstract class AbstractBlog extends TimePeriod {
    *
    * @param   category          a Category instance, or null
    * @param   numberOfEntries   the number of entries to get
-   * @param   approvedOnly      true if only approved should be included, false otherwise
    * @return  a List containing the most recent blog entries
    */
-  public abstract List getRecentBlogEntries(Category category, int numberOfEntries, boolean approvedOnly);
+  public abstract List getRecentBlogEntries(Category category, int numberOfEntries);
 
   /**
    * Gets the most recent blog entries for a given tag, the number
@@ -427,30 +425,9 @@ public abstract class AbstractBlog extends TimePeriod {
    *
    * @param   tag               a String
    * @param   numberOfEntries   the number of entries to get
-   * @param   approvedOnly      true if only approved should be included, false otherwise
    * @return  a List containing the most recent blog entries
    */
-  public abstract List getRecentBlogEntries(String tag, int numberOfEntries, boolean approvedOnly);
-
-  /**
-   * Gets the most recent blog entries, the number of which is specified.
-   *
-   * @param   approvedOnly      true if only approved should be included, false otherwise
-   * @return  a List containing the most recent blog entries
-   */
-  public List getRecentBlogEntries(boolean approvedOnly) {
-    return getRecentBlogEntries(getRecentBlogEntriesOnHomePage(), approvedOnly);
-  }
-
-  /**
-   * Gets the most recent blog entries, the number of which is specified.
-   *
-   * @param   numberOfEntries   the number of entries to get
-   * @return  a List containing the most recent blog entries
-   */
-  public List getRecentBlogEntries(int numberOfEntries) {
-    return getRecentBlogEntries(numberOfEntries, true);
-  }
+  public abstract List getRecentBlogEntries(String tag, int numberOfEntries);
 
   /**
    * Gets the most recent blog entries, the number of which is taken from
@@ -479,7 +456,7 @@ public abstract class AbstractBlog extends TimePeriod {
    * @return  a List containing the most recent blog entries
    */
   public List getRecentBlogEntries(Category category) {
-    return getRecentBlogEntries(category, getRecentBlogEntriesOnHomePage(), true);
+    return getRecentBlogEntries(category, getRecentBlogEntriesOnHomePage());
   }
 
   /**
@@ -489,7 +466,7 @@ public abstract class AbstractBlog extends TimePeriod {
    * @return  a List containing the most recent blog entries
    */
   public List getRecentBlogEntries(String tag) {
-    return getRecentBlogEntries(tag, getRecentBlogEntriesOnHomePage(), true);
+    return getRecentBlogEntries(tag, getRecentBlogEntriesOnHomePage());
   }
 
   /**

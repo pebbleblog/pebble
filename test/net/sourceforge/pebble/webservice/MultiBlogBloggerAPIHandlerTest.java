@@ -103,7 +103,6 @@ public class MultiBlogBloggerAPIHandlerTest extends MultiBlogTestCase {
 
       Vector posts = handler.getRecentPosts("appkey", "blog1", "username", "password", 3);
 
-      assertFalse(posts.isEmpty());
       assertEquals(3, posts.size());
       Hashtable ht = (Hashtable)posts.get(0);
       assertEquals("blog1/" + entry4.getId(), ht.get(BloggerAPIHandler.POST_ID));

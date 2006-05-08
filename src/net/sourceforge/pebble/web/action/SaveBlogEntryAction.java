@@ -32,7 +32,7 @@
 package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
-import net.sourceforge.pebble.search.BlogIndexer;
+import net.sourceforge.pebble.index.SearchIndex;
 import net.sourceforge.pebble.domain.*;
 import net.sourceforge.pebble.util.SecurityUtils;
 import net.sourceforge.pebble.util.StringUtils;
@@ -228,8 +228,7 @@ public class SaveBlogEntryAction extends SecureAction {
       try {
         blogEntry.store();
 
-        BlogIndexer indexer = new BlogIndexer();
-        indexer.index(blogEntry);
+        blogEntry.getBlog().getSearchIndex().index(blogEntry);
         blogEntry.getBlog().getStaticPageIndex().reindex();
       } catch (BlogException be) {
         log.error(be.getMessage(), be);

@@ -38,7 +38,6 @@ import net.sourceforge.pebble.domain.*;
 import net.sourceforge.pebble.event.comment.CommentEvent;
 import net.sourceforge.pebble.event.response.IpAddressListener;
 import net.sourceforge.pebble.event.trackback.TrackBackEvent;
-import net.sourceforge.pebble.search.BlogIndexer;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -66,8 +65,6 @@ public class Utilities {
    */
   public static void buildIndexes(Blog blog) {
     blog.reindex();
-//    BlogIndexer indexer = new BlogIndexer();
-//    indexer.index(blog);
   }
 
   /**

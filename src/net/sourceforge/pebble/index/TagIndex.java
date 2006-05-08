@@ -31,18 +31,7 @@
  */
 package net.sourceforge.pebble.index;
 
-import net.sourceforge.pebble.event.blogentry.BlogEntryEvent;
-import net.sourceforge.pebble.event.blogentry.BlogEntryListener;
-import net.sourceforge.pebble.search.BlogIndexer;
 import net.sourceforge.pebble.domain.BlogEntry;
-import net.sourceforge.pebble.domain.Blog;
-import net.sourceforge.pebble.domain.Tag;
-import net.sourceforge.pebble.domain.Category;
-
-import java.beans.PropertyChangeEvent;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * Represents the tag index for a blog.

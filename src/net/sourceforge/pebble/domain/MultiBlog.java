@@ -120,17 +120,16 @@ public class MultiBlog extends AbstractBlog {
    * of which is specified.
    *
    * @param numberOfEntries the number of entries to get
-   * @param approvedOnly    true if only approved should be included, false otherwise
    * @return a List containing the most recent blog entries
    */
-  public List getRecentBlogEntries(int numberOfEntries, boolean approvedOnly) {
+  public List getRecentBlogEntries(int numberOfEntries) {
     List blogEntries = new ArrayList();
 
     Iterator it = BlogManager.getInstance().getPublicBlogs().iterator();
     Blog blog;
     while (it.hasNext()) {
       blog = (Blog)it.next();
-      blogEntries.addAll(blog.getRecentBlogEntries(numberOfEntries, approvedOnly));
+      blogEntries.addAll(blog.getRecentBlogEntries(numberOfEntries));
     }
 
     return blogEntries;
@@ -142,17 +141,16 @@ public class MultiBlog extends AbstractBlog {
    *
    * @param   category          a Category instance, or null
    * @param   numberOfEntries   the number of entries to get
-   * @param   approvedOnly      true if only approved should be included, false otherwise
    * @return  a List containing the most recent blog entries
    */
-  public List getRecentBlogEntries(Category category, int numberOfEntries, boolean approvedOnly) {
+  public List getRecentBlogEntries(Category category, int numberOfEntries) {
     List blogEntries = new ArrayList();
 
     Iterator it = BlogManager.getInstance().getPublicBlogs().iterator();
     Blog blog;
     while (it.hasNext()) {
       blog = (Blog)it.next();
-      blogEntries.addAll(blog.getRecentBlogEntries(category, numberOfEntries, approvedOnly));
+      blogEntries.addAll(blog.getRecentBlogEntries(category, numberOfEntries));
     }
 
     return blogEntries;
@@ -164,17 +162,16 @@ public class MultiBlog extends AbstractBlog {
    *
    * @param tag             a String
    * @param numberOfEntries the number of entries to get
-   * @param approvedOnly    true if only approved should be included, false otherwise
    * @return a List containing the most recent blog entries
    */
-  public List getRecentBlogEntries(String tag, int numberOfEntries, boolean approvedOnly) {
+  public List getRecentBlogEntries(String tag, int numberOfEntries) {
     List blogEntries = new ArrayList();
 
     Iterator it = BlogManager.getInstance().getPublicBlogs().iterator();
     Blog blog;
     while (it.hasNext()) {
       blog = (Blog)it.next();
-      blogEntries.addAll(blog.getRecentBlogEntries(tag, numberOfEntries, approvedOnly));
+      blogEntries.addAll(blog.getRecentBlogEntries(tag, numberOfEntries));
     }
 
     return blogEntries;

@@ -52,7 +52,7 @@ import java.util.*;
  *
  * @author    Simon Brown
  */
-public class CalendarTag extends TagSupport {
+public class  CalendarTag extends TagSupport {
 
   /**
    * Implementation from the Tag interface - this is called when the opening tag

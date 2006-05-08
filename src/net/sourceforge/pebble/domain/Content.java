@@ -187,7 +187,7 @@ public abstract class Content implements Permalinkable, Cloneable {
   /**
    * Clears existing property change events.
    */
-  protected void clearPropertyChangeEvents() {
+  public void clearPropertyChangeEvents() {
     this.propertyChangeEvents = new ArrayList();
   }
 
@@ -206,7 +206,7 @@ public abstract class Content implements Permalinkable, Cloneable {
    *
    * @return  a List of PropertyChangeEvent instances
    */
-  protected List getPropertyChangeEvents() {
+  public List getPropertyChangeEvents() {
     return (List)propertyChangeEvents.clone();
   }
 

@@ -48,8 +48,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
- * Finds all blog entries that are to be displayed on the home page. By default
- * this is just the previous 3 days worth of entries.
+ * Finds all blog entries that are to be displayed on the home page.
  *
  * @author    Simon Brown
  */
@@ -87,7 +86,7 @@ public class ViewHomePageAction extends Action {
       }
 
       getModel().put(Constants.MONTHLY_BLOG, blog.getBlogForThisMonth());
-      getModel().put(Constants.BLOG_ENTRIES, blog.getRecentBlogEntries(approvedOnly));
+      getModel().put(Constants.BLOG_ENTRIES, blog.getRecentBlogEntries());
 
       return new SingleBlogHomePageView();
     }

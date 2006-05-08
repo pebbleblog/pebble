@@ -33,8 +33,6 @@ package net.sourceforge.pebble.domain;
 
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.PluginProperties;
-import net.sourceforge.pebble.index.IndexBlogEntryListener;
-import net.sourceforge.pebble.index.BlogEntryIndex;
 import net.sourceforge.pebble.comparator.BlogEntryByTitleComparator;
 import net.sourceforge.pebble.dao.BlogEntryDAO;
 import net.sourceforge.pebble.dao.CategoryDAO;
@@ -48,13 +46,15 @@ import net.sourceforge.pebble.event.blog.BlogListener;
 import net.sourceforge.pebble.event.blogentry.BlogEntryListener;
 import net.sourceforge.pebble.event.comment.CommentListener;
 import net.sourceforge.pebble.event.trackback.TrackBackListener;
+import net.sourceforge.pebble.index.BlogEntryIndex;
+import net.sourceforge.pebble.index.BlogEntryIndexListener;
+import net.sourceforge.pebble.index.SearchIndex;
+import net.sourceforge.pebble.index.SearchIndexListener;
 import net.sourceforge.pebble.logging.AbstractLogger;
 import net.sourceforge.pebble.logging.CombinedLogFormatLogger;
 import net.sourceforge.pebble.plugin.decorator.BlogEntryDecoratorManager;
-import net.sourceforge.pebble.plugin.permalink.PermalinkProvider;
 import net.sourceforge.pebble.plugin.permalink.DefaultPermalinkProvider;
-import net.sourceforge.pebble.search.BlogIndexer;
-import org.apache.lucene.index.IndexReader;
+import net.sourceforge.pebble.plugin.permalink.PermalinkProvider;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
@@ -83,7 +83,7 @@ public class Blog extends AbstractBlog {
   private String id = "default";
 
   /** the collection of YearlyBlog instance that this root blog is managing */
-  private List yearlyBlogs = new ArrayList();
+  private List yearlyBlogs;
 
   /** the response manager associated with this blog */
   private ResponseManager responseManager;
@@ -118,6 +118,7 @@ public class Blog extends AbstractBlog {
   /** the plugin properties */
   private PluginProperties pluginProperties;
 
+  private SearchIndex searchIndex;
   private BlogEntryIndex blogEntryIndex;
 
   /** the story index associated with this blog */
@@ -157,6 +158,8 @@ public class Blog extends AbstractBlog {
     pluginProperties = new PluginProperties(this);
     blogEntryDecoratorManager = new BlogEntryDecoratorManager(this, getBlogEntryDecorators());
 
+    yearlyBlogs = new ArrayList();
+    searchIndex = new SearchIndex(this);
     blogEntryIndex = new BlogEntryIndex(this);
     staticPageIndex = new StaticPageIndex(this);
 
@@ -262,7 +265,9 @@ public class Blog extends AbstractBlog {
       }
     }
 
-    eventListenerList.addBlogEntryListener(new IndexBlogEntryListener());
+    // these are required to keep the various indexes up to date
+    eventListenerList.addBlogEntryListener(new BlogEntryIndexListener());
+    eventListenerList.addBlogEntryListener(new SearchIndexListener());
   }
 
   /**
@@ -319,29 +324,6 @@ public class Blog extends AbstractBlog {
     eventListenerList.addTrackBackListener(responseManager);
   }
 
-//  /**
-//   * Utility method to load all blog entries. This is called so that recent
-//   * comments and TrackBacks can be registered and displayed on the home page.
-//   */
-//  private void loadAllBlogEntries() {
-//    Thread t = new Thread("pebble/" + getId() + "/preload") {
-//      public void run() {
-//        for (int year = yearlyBlogs.size()-1; year >= 0; year--) {
-//          YearlyBlog yearlyBlog = (YearlyBlog)yearlyBlogs.get(year);
-//          MonthlyBlog[] months = yearlyBlog.getMonthlyBlogs();
-//          for (int month = 11; month >= 0; month--) {
-//            months[month].getAllDailyBlogs();
-//          }
-//        }
-//
-//        recalculateTagRankings();
-//      }
-//    };
-//
-//    t.setPriority(Thread.MIN_PRIORITY);
-//    t.start();
-//  }
-//
   /**
    * Gets the default properties for a Blog.
    *
@@ -364,7 +346,7 @@ public class Blog extends AbstractBlog {
     defaultProperties.setProperty(THEME_KEY, "default");
     defaultProperties.setProperty(PRIVATE_KEY, FALSE);
     defaultProperties.setProperty(LUCENE_ANALYZER_KEY, "org.apache.lucene.analysis.standard.StandardAnalyzer");
-    defaultProperties.setProperty(BLOG_ENTRY_DECORATORS_KEY, "net.sourceforge.pebble.plugin.decorator.HideUnapprovedBlogEntriesDecorator\r\nnet.sourceforge.pebble.plugin.decorator.HideUnapprovedResponsesDecorator\r\nnet.sourceforge.pebble.plugin.decorator.HtmlDecorator\r\nnet.sourceforge.pebble.plugin.decorator.EscapeMarkupDecorator\r\nnet.sourceforge.pebble.plugin.decorator.RelativeUriDecorator\r\nnet.sourceforge.pebble.plugin.decorator.BlogTagsDecorator");
+    defaultProperties.setProperty(BLOG_ENTRY_DECORATORS_KEY, "net.sourceforge.pebble.plugin.decorator.HideUnapprovedBlogEntriesDecorator\r\nnet.sourceforge.pebble.plugin.decorator.HideUnapprovedResponsesDecorator\r\nnet.sourceforge.pebble.plugin.decorator.HtmlDecorator\r\nnet.sourceforge.pebble.plugin.decorator.EscapeMarkupDecorator\r\nnet.sourceforge.pebble.plugin.decorator.RelativeUriDecorator");
     defaultProperties.setProperty(PERMALINK_PROVIDER_KEY, "net.sourceforge.pebble.plugin.permalink.DefaultPermalinkProvider");
     defaultProperties.setProperty(EVENT_DISPATCHER_KEY, "net.sourceforge.pebble.event.DefaultEventDispatcher");
     defaultProperties.setProperty(LOGGER_KEY, "net.sourceforge.pebble.logging.CombinedLogFormatLogger");
@@ -748,11 +730,37 @@ public class Blog extends AbstractBlog {
    * of which is specified.
    *
    * @param numberOfEntries the number of entries to get
-   * @param approvedOnly    true if only approved should be included, false otherwise
    * @return a List containing the most recent blog entries
    */
-  public List getRecentBlogEntries(int numberOfEntries, boolean approvedOnly) {
-    return getRecentBlogEntries((Category)null, numberOfEntries, approvedOnly);
+  public List getRecentBlogEntries(int numberOfEntries) {
+    // todo - optimize this
+    DailyBlog firstDayOfBlog = getBlogForFirstMonth().getBlogForDay(1);
+    Calendar cal = getCalendar();
+    List entries = new ArrayList();
+    BlogService service = new BlogService();
+
+    while (entries.size() < numberOfEntries) {
+      DailyBlog day = getBlogForDay(cal.getTime());
+
+      if (day.hasBlogEntries()) {
+        Iterator it = day.getBlogEntries().iterator();
+        while ((entries.size() < numberOfEntries) && it.hasNext()) {
+          String blogEntryId = (String)it.next();
+          BlogEntry blogEntry = service.getBlogEntry(this, blogEntryId);
+          if (blogEntry.isApproved()) {
+            entries.add(blogEntry);
+          }
+        }
+      }
+
+      if (day == firstDayOfBlog) {
+        break;
+      } else {
+        cal.add(Calendar.DAY_OF_YEAR, -1);
+      }
+    }
+
+    return entries;
   }
 
   /**
@@ -761,10 +769,9 @@ public class Blog extends AbstractBlog {
    *
    * @param   category          a Category instance, or null
    * @param   numberOfEntries   the number of entries to get
-   * @param   approvedOnly      true if only approved should be included, false otherwise
    * @return  a List containing the most recent blog entries
    */
-  public List getRecentBlogEntries(Category category, int numberOfEntries, boolean approvedOnly) {
+  public List getRecentBlogEntries(Category category, int numberOfEntries) {
 //    DailyBlog firstDayOfBlog = getBlogForFirstMonth().getBlogForDay(1);
 //    Calendar cal = getCalendar();
 //    List entries = new ArrayList();
@@ -773,7 +780,7 @@ public class Blog extends AbstractBlog {
 //      DailyBlog day = getBlogForDay(cal.getTime());
 //
 //      if (day.hasBlogEntries()) {
-//        Iterator it = new ArrayList(day.getEntries(category)).iterator();
+//        Iterator it = new ArrayList(day.getBlogEntries(category)).iterator();
 //        while ((entries.size() < numberOfEntries) && it.hasNext()) {
 //          BlogEntry blogEntry = (BlogEntry)it.next();
 //          if (!approvedOnly || (approvedOnly && blogEntry.isApproved())) {
@@ -799,10 +806,9 @@ public class Blog extends AbstractBlog {
    *
    * @param tag             a String
    * @param numberOfEntries the number of entries to get
-   * @param approvedOnly    true if only approved should be included, false otherwise
    * @return a List containing the most recent blog entries
    */
-  public List getRecentBlogEntries(String tag, int numberOfEntries, boolean approvedOnly) {
+  public List getRecentBlogEntries(String tag, int numberOfEntries) {
 //    DailyBlog firstDayOfBlog = getBlogForFirstMonth().getBlogForDay(1);
 //    Calendar cal = getCalendar();
 //
@@ -849,65 +855,40 @@ public class Blog extends AbstractBlog {
     return date;
   }
 
-//  /**
-//   * Gets the blog entry with the specified id.
-//   *
-//   * @param entryId   the id of the blog entry
-//   * @return  a BlogEntry instance, or null if the entry couldn't be found
-//   * @deprecated  this will be removed before Pebble 2.0.0 final
-//   */
-//  public BlogEntry getBlogEntry(String entryId) {
-//    if (entryId == null || entryId.length() == 0) {
-//      return null;
-//    }
-//
-//    Calendar cal = getCalendar();
-//    cal.setTime(new Date(Long.parseLong(entryId)));
-//
-//    int year = cal.get(Calendar.YEAR);
-//    int month = (cal.get(Calendar.MONTH) + 1);
-//    int day = cal.get(Calendar.DAY_OF_MONTH);
-//
-//    DailyBlog blog = getBlogForDay(year, month, day);
-//    return blog.getEntry(entryId);
-//  }
-
   public BlogEntry getPreviousBlogEntry(BlogEntry blogEntry) {
-    return null;
+    DailyBlog firstDailyBlog = getBlogForFirstMonth().getBlogForFirstDay();
+    DailyBlog dailyBlog = getBlogForDay(blogEntry.getDate());
 
-//    todo
-//    BlogEntry previous = blogEntry.getDailyBlog().getPreviousBlogEntry(blogEntry);
-//    if (previous != null) {
-//      return previous;
-//    }
-//
-//    DailyBlog dailyBlog = blogEntry.getDailyBlog();
-//    DailyBlog firstDailyBlog = getBlogForFirstMonth().getBlogForFirstDay();
-//    while (dailyBlog != firstDailyBlog && previous == null) {
-//      dailyBlog = dailyBlog.getPreviousDay();
-//      previous = dailyBlog.getLastBlogEntry();
-//    }
-//
-//    return previous;
+    String blogEntryId = dailyBlog.getPreviousBlogEntry(blogEntry.getId());
+    while (dailyBlog != firstDailyBlog && blogEntryId == null) {
+      dailyBlog = dailyBlog.getPreviousDay();
+      blogEntryId = dailyBlog.getLastBlogEntry();
+    }
+
+    if (blogEntryId != null) {
+      BlogService service = new BlogService();
+      return service.getBlogEntry(this, blogEntryId);
+    } else {
+      return null;
+    }
   }
 
   public BlogEntry getNextBlogEntry(BlogEntry blogEntry) {
-    return null;
+    DailyBlog lastDailyBlog = getBlogForToday();
+    DailyBlog dailyBlog = getBlogForDay(blogEntry.getDate());
 
-//    todo
-//    BlogEntry next = blogEntry.getDailyBlog().getNextBlogEntry(blogEntry);
-//    if (next != null) {
-//      return next;
-//    }
-//
-//    DailyBlog dailyBlog = blogEntry.getDailyBlog();
-//    DailyBlog lastDailyBlog = getBlogForToday();
-//    while (dailyBlog != lastDailyBlog && next == null) {
-//      dailyBlog = dailyBlog.getNextDay();
-//      next = dailyBlog.getFirstBlogEntry();
-//    }
-//
-//    return next;
+    String blogEntryId = dailyBlog.getNextBlogEntry(blogEntry.getId());
+    while (dailyBlog != lastDailyBlog && blogEntryId == null) {
+      dailyBlog = dailyBlog.getNextDay();
+      blogEntryId = dailyBlog.getFirstBlogEntry();
+    }
+
+    if (blogEntryId != null) {
+      BlogService service = new BlogService();
+      return service.getBlogEntry(this, blogEntryId);
+    } else {
+      return null;
+    }
   }
 
   /**
@@ -1060,6 +1041,15 @@ public class Blog extends AbstractBlog {
    */
   public RefererFilterManager getRefererFilterManager() {
     return this.refererFilterManager;
+  }
+
+  /**
+   * Gets the search index.
+   *
+   * @return  a BlogEntryIndex instance
+   */
+  public SearchIndex getSearchIndex() {
+    return this.searchIndex;
   }
 
   /**
@@ -1285,8 +1275,13 @@ public class Blog extends AbstractBlog {
    */
   void start() {
     // create an index if one doesn't already exist
+    File indexesDirectory = new File(getIndexesDirectory());
+    if (!indexesDirectory.exists()) {
+        indexesDirectory.mkdir();
+    }
+
 //    if (!IndexReader.indexExists(getSearchIndexDirectory())) {
-//      BlogIndexer indexer = new BlogIndexer();
+//      SearchIndex indexer = new SearchIndex();
 //      indexer.index(this);
 //    }
 
@@ -1432,8 +1427,11 @@ public class Blog extends AbstractBlog {
   public void reindex() {
     BlogService service = new BlogService();
     List<BlogEntry> blogEntries = service.getBlogEntries(this);
+
     blogEntryIndex.clear();
     blogEntryIndex.index(blogEntries);
+
+    searchIndex.index(blogEntries);
   }
 
 }

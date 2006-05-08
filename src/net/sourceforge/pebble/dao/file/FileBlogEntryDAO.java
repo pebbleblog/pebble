@@ -92,6 +92,7 @@ public class FileBlogEntryDAO implements BlogEntryDAO {
    *          if the blog entry can't be loaded
    */
   private BlogEntry loadBlogEntry(Blog blog, File source) throws PersistenceException {
+    if (source.exists()) {
       log.debug("Loading " + source.getAbsolutePath());
       BlogEntry blogEntry = new BlogEntry(blog);
 
@@ -110,6 +111,9 @@ public class FileBlogEntryDAO implements BlogEntryDAO {
       }
 
       return blogEntry;
+    } else {
+      return null;
+    }
   }
 
   /**

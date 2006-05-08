@@ -257,14 +257,22 @@ blockquote {
   padding: 2px;
 }
 .calendarDayWithEntries {
+  background: #C0C0C0;
   text-align: right;
   padding: 2px;
 }
+.calendarDayWithEntries a {
+  font-weight: bold;
+  color: white;
+}
 .calendarToday {
   background : #acc5d2;
-  color: white;
-  font-weight: bold;
   text-align: right;
+  padding: 2px;
+}
+.calendarToday a {
+  font-weight: bold;
+  color: white;
 }
 .photo {
   padding-top: 0px;

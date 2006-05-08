@@ -29,9 +29,12 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package net.sourceforge.pebble.search;
+package net.sourceforge.pebble.index;
 
 import net.sourceforge.pebble.domain.*;
+import net.sourceforge.pebble.search.SearchResults;
+import net.sourceforge.pebble.search.SearchException;
+import net.sourceforge.pebble.search.SearchHit;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.lucene.analysis.Analyzer;
@@ -41,9 +44,16 @@ import org.apache.lucene.document.Field;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.Term;
+import org.apache.lucene.search.Searcher;
+import org.apache.lucene.search.IndexSearcher;
+import org.apache.lucene.search.Query;
+import org.apache.lucene.search.Hits;
+import org.apache.lucene.queryParser.QueryParser;
+import org.apache.lucene.queryParser.ParseException;
 
 import java.util.Iterator;
 import java.util.List;
+import java.io.IOException;
 
 /**
  * Wraps up the functionality to index blog entries. This is really just
@@ -51,22 +61,26 @@ import java.util.List;
  *
  * @author    Simon Brown
  */
-public class BlogIndexer {
+public class SearchIndex {
 
   /** the log used by this class */
-  private static final Log log = LogFactory.getLog(BlogIndexer.class);
+  private static final Log log = LogFactory.getLog(SearchIndex.class);
+
+  private Blog blog;
+
+  public SearchIndex(Blog blog) {
+    this.blog = blog;
+  }
 
   /**
    * Allows an entire root blog to be indexed. In other words, this indexes
    * all of the blog entries within the specified root blog.
-   *
-   * @param blog    the Blog instance to index
    */
-  public void index(Blog blog, List blogEntries) {
+  public void index(List blogEntries) {
     synchronized (blog) {
       try {
         log.debug("Creating index for all blog entries in " + blog.getName());
-        Analyzer analyzer = getAnalyzer(blog);
+        Analyzer analyzer = getAnalyzer();
         IndexWriter writer = new IndexWriter(blog.getSearchIndexDirectory(), analyzer, true);
 
         Iterator it = blogEntries.iterator();
@@ -99,14 +113,13 @@ public class BlogIndexer {
    */
   public void index(BlogEntry blogEntry) {
     try {
-      Blog rootBlog = blogEntry.getBlog();
       synchronized (blogEntry) {
-        Analyzer analyzer = getAnalyzer(rootBlog);
+        Analyzer analyzer = getAnalyzer();
 
         // first delete the blog entry from the index (if it was there)
         removeIndex(blogEntry);
 
-        IndexWriter writer = new IndexWriter(rootBlog.getSearchIndexDirectory(), analyzer, false);
+        IndexWriter writer = new IndexWriter(blog.getSearchIndexDirectory(), analyzer, false);
         index(blogEntry, writer);
         writer.close();
       }
@@ -121,7 +134,7 @@ public class BlogIndexer {
    * @return  an Analyzer instance
    * @throws Exception
    */
-  private Analyzer getAnalyzer(Blog blog) throws Exception {
+  private Analyzer getAnalyzer() throws Exception {
     Class c = Class.forName(blog.getLuceneAnalyzer());
     return (Analyzer)c.newInstance();
   }
@@ -230,6 +243,53 @@ public class BlogIndexer {
     } catch (Exception e) {
       log.error(e.getMessage(), e);
     }
+  }
+
+  public SearchResults search(String queryString) throws SearchException {
+
+    log.debug("Performing search : " + queryString);
+
+    SearchResults searchResults = new SearchResults();
+    searchResults.setQuery(queryString);
+
+    if (queryString != null && queryString.length() > 0) {
+      Searcher searcher = null;
+
+      try {
+        searcher = new IndexSearcher(blog.getSearchIndexDirectory());
+        Query query = QueryParser.parse(queryString, "blogEntry", getAnalyzer());
+        Hits hits = searcher.search(query);
+
+        for (int i = 0; i < hits.length(); i++) {
+          Document doc = hits.doc(i);
+          SearchHit result = new SearchHit(
+              blog,
+              doc.get("id"),
+              doc.get("permalink"),
+              doc.get("title"),
+              doc.get("truncatedBody"),
+              DateField.stringToDate(doc.get("date")),
+              hits.score(i));
+          searchResults.add(result);
+        }
+      } catch (ParseException pe) {
+        pe.printStackTrace();
+        searchResults.setMessage("Sorry, but there was an error. Please try another search");
+      } catch (Exception e) {
+        e.printStackTrace();
+        throw new SearchException(e.getMessage());
+      } finally {
+        if (searcher != null) {
+          try {
+            searcher.close();
+          } catch (IOException e) {
+            // can't do much now! ;-)
+          }
+        }
+      }
+    }
+
+    return searchResults;
   }
 
 }

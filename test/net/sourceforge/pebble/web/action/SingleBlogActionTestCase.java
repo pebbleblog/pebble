@@ -47,6 +47,7 @@ public abstract class SingleBlogActionTestCase extends SingleBlogTestCase {
   protected Action action;
   protected MockHttpServletRequest request;
   protected MockHttpServletResponse response;
+  protected Model model;
 
   public void setUp() {
     super.setUp();
@@ -54,7 +55,7 @@ public abstract class SingleBlogActionTestCase extends SingleBlogTestCase {
     request = new MockHttpServletRequest();
     response = new MockHttpServletResponse();
 
-    Model model = new Model();
+    model = new Model();
     model.put(Constants.BLOG_KEY, blog);
     action.setModel(model);
   }

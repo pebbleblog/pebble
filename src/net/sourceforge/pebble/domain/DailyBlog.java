@@ -31,6 +31,8 @@
  */
 package net.sourceforge.pebble.domain;
 
+import net.sourceforge.pebble.comparator.ReverseBlogEntryIdComparator;
+
 import java.util.*;
 
 /**
@@ -173,8 +175,13 @@ public class DailyBlog extends TimePeriod implements Permalinkable {
     return Collections.unmodifiableList(blogEntries);
   }
 
-  public void addBlogEntry(String blogEntryId) {
+  public synchronized void addBlogEntry(String blogEntryId) {
     blogEntries.add(blogEntryId);
+    Collections.sort(blogEntries, new ReverseBlogEntryIdComparator());
+  }
+
+  public synchronized void removeBlogEntry(String blogEntryId) {
+    blogEntries.remove(blogEntryId);
   }
 
 //  /**
@@ -347,61 +354,61 @@ public class DailyBlog extends TimePeriod implements Permalinkable {
     return month.getBlogForNextDay(this);
   }
 
-//  /**
-//   * Gets the blog entry posted previous (before) to the one specified.
-//   *
-//   * @param   blogEntry   a BlogEntry
-//   * @return  the previous BlogEntry, or null if one doesn't exist
-//   */
-//  public BlogEntry getPreviousBlogEntry(BlogEntry blogEntry) {
-//    int index = blogEntries.indexOf(blogEntry);
-//    if (index >= 0 && index < (blogEntries.size()-1)) {
-//      return (String)blogEntries.get(index+1);
-//    } else {
-//      return null;
-//    }
-//  }
+  /**
+   * Gets the blog entry posted previous (before) to the one specified.
+   *
+   * @param   blogEntry   a BlogEntry
+   * @return  the previous BlogEntry, or null if one doesn't exist
+   */
+  public String getPreviousBlogEntry(String blogEntry) {
+    int index = blogEntries.indexOf(blogEntry);
+    if (index >= 0 && index < (blogEntries.size()-1)) {
+      return blogEntries.get(index+1);
+    } else {
+      return null;
+    }
+  }
 
-//  /**
-//   * Gets the first entry that was posted on this day.
-//   *
-//   * @return    a BlogEntry instance, or null is no entries have been posted
-//   */
-//  public BlogEntry getFirstBlogEntry() {
-//    if (!entries.isEmpty()) {
-//      return (BlogEntry)entries.get(entries.size()-1);
-//    } else {
-//      return null;
-//    }
-//  }
+  /**
+   * Gets the first entry that was posted on this day.
+   *
+   * @return    a BlogEntry instance, or null is no entries have been posted
+   */
+  public String getFirstBlogEntry() {
+    if (!blogEntries.isEmpty()) {
+      return blogEntries.get(blogEntries.size()-1);
+    } else {
+      return null;
+    }
+  }
 
-//  /**
-//   * Gets the last entry that was posted on this day.
-//   *
-//   * @return    a BlogEntry instance, or null is no entries have been posted
-//   */
-//  public BlogEntry getLastBlogEntry() {
-//    if (!entries.isEmpty()) {
-//      return (BlogEntry)entries.get(0);
-//    } else {
-//      return null;
-//    }
-//  }
+  /**
+   * Gets the last entry that was posted on this day.
+   *
+   * @return    a BlogEntry instance, or null is no entries have been posted
+   */
+  public String getLastBlogEntry() {
+    if (!blogEntries.isEmpty()) {
+      return (String)blogEntries.get(0);
+    } else {
+      return null;
+    }
+  }
 
-//  /**
-//   * Gets the blog entry posted next (afterwards) to the one specified.
-//   *
-//   * @param blogEntry   a BlogEntry
-//   * @return  the next BlogEntry, or null if one doesn't exist
-//   */
-//  public BlogEntry getNextBlogEntry(BlogEntry blogEntry) {
-//    int index = entries.lastIndexOf(blogEntry);
-//    if (index > 0 && index <= entries.size()) {
-//      return (BlogEntry)entries.get(index-1);
-//    } else {
-//      return null;
-//    }
-//  }
+  /**
+   * Gets the blog entry posted next (afterwards) to the one specified.
+   *
+   * @param blogEntry   a BlogEntry
+   * @return  the next BlogEntry, or null if one doesn't exist
+   */
+  public String getNextBlogEntry(String blogEntry) {
+    int index = blogEntries.lastIndexOf(blogEntry);
+    if (index > 0 && index <= blogEntries.size()) {
+      return blogEntries.get(index-1);
+    } else {
+      return null;
+    }
+  }
 
   public Date getStartOfDay() {
     Calendar cal = getCalendar();

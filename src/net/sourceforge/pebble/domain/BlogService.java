@@ -34,9 +34,8 @@ package net.sourceforge.pebble.domain;
 import net.sourceforge.pebble.dao.BlogEntryDAO;
 import net.sourceforge.pebble.dao.DAOFactory;
 import net.sourceforge.pebble.dao.PersistenceException;
-import net.sourceforge.pebble.search.BlogIndexer;
+import net.sourceforge.pebble.index.SearchIndex;
 import net.sourceforge.pebble.event.blogentry.BlogEntryEvent;
-import net.sourceforge.pebble.index.BlogEntryIndex;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -55,7 +54,6 @@ public class BlogService {
    * @return  a BlogEntry instance, or null if the entry couldn't be found
    */
   public BlogEntry getBlogEntry(Blog blog, String blogEntryId) {
-    log.info("Loading blog entry with ID " + blogEntryId);
     BlogEntryDAO dao = DAOFactory.getConfiguredFactory().getBlogEntryDAO();
     BlogEntry blogEntry = null;
     try {
@@ -72,14 +70,14 @@ public class BlogService {
   }
 
   public List<BlogEntry> getBlogEntries(Blog blog, int year, int month, int day) {
-    BlogEntryIndex index = new BlogEntryIndex(blog);
-    List<String> blogEntryIds = index.getBlogEntries(year, month, day);
+    DailyBlog dailyBlog = blog.getBlogForDay(year, month, day);
+    List<String> blogEntryIds = dailyBlog.getBlogEntries();
     return getBlogEntries(blog, blogEntryIds);
   }
 
   public List<BlogEntry> getBlogEntries(Blog blog, int year, int month) {
-    BlogEntryIndex index = new BlogEntryIndex(blog);
-    List<String> blogEntryIds = index.getBlogEntries(year, month);
+    MonthlyBlog monthlyBlog = blog.getBlogForMonth(year, month);
+    List<String> blogEntryIds = monthlyBlog.getBlogEntries();
     return getBlogEntries(blog, blogEntryIds);
   }
 
@@ -115,8 +113,6 @@ public class BlogService {
   public void putBlogEntry(BlogEntry blogEntry) throws BlogException {
     synchronized (blogEntry.getBlog()) {
       try {
-        log.info("Saving blog entry with ID " + blogEntry.getId());
-
         BlogEntry be = getBlogEntry(blogEntry.getBlog(), blogEntry.getId());
         if (blogEntry.getType() == BlogEntry.NEW && be != null) {
           // the blog entry is new but one exists with the same ID already
@@ -130,19 +126,20 @@ public class BlogService {
           blogEntry.setType(BlogEntry.PUBLISHED);
         }
 
+        if (blogEntry.getType() == BlogEntry.NEW) {
+          blogEntry.getBlog().getEventDispatcher().fireBlogEntryEvent(new BlogEntryEvent(blogEntry, BlogEntryEvent.BLOG_ENTRY_ADDED));
+        } else {
+          if (blogEntry.isDirty()) {
+            BlogEntryEvent event = new BlogEntryEvent(blogEntry, blogEntry.getPropertyChangeEvents());
+            blogEntry.clearPropertyChangeEvents();
+            blogEntry.getBlog().getEventDispatcher().fireBlogEntryEvent(event);
+          }
+        }
 
-  //      if (areEventsEnabled() && isDirty()) {
-  //        BlogEntryEvent event = new BlogEntryEvent(this, getPropertyChangeEvents());
-  //        clearPropertyChangeEvents();
-  //        getBlog().getEventDispatcher().fireBlogEntryEvent(event);
-  //      }
+//        // now that the entries have been saved, enable events
+//        // so that listeners get notified when they change
+//        blogEntry.setEventsEnabled(true);
 
-        // now that the entries have been saved, enable events
-        // so that listeners get notified when they change
-        blogEntry.setEventsEnabled(true);
-
-        // and notify listeners
-        blogEntry.getBlog().getEventDispatcher().fireBlogEntryEvent(new BlogEntryEvent(blogEntry, BlogEntryEvent.BLOG_ENTRY_ADDED));
       } catch (PersistenceException pe) {
       }
     }
@@ -153,22 +150,20 @@ public class BlogService {
    */
   public void removeBlogEntry(BlogEntry blogEntry) throws BlogException {
     try {
-      log.info("Removing blog entry with ID " + blogEntry.getId());
       DAOFactory factory = DAOFactory.getConfiguredFactory();
       BlogEntryDAO dao = factory.getBlogEntryDAO();
       dao.removeBlogEntry(blogEntry);
 
       if (blogEntry.getType() == BlogEntry.PUBLISHED) {
         // and finally un-index the published entry
-        BlogIndexer indexer = new BlogIndexer();
-        indexer.removeIndex(blogEntry);
+        blogEntry.getBlog().getSearchIndex().removeIndex(blogEntry);
       }
 
       blogEntry.getBlog().getEventDispatcher().fireBlogEntryEvent(new BlogEntryEvent(blogEntry, BlogEntryEvent.BLOG_ENTRY_REMOVED));
 
 //      todo
 //      if (isStaticPage()) {
-//        BlogIndexer indexer = new BlogIndexer();
+//        SearchIndex indexer = new SearchIndex();
 //        indexer.removeIndex(blogEntry);
 //        getBlog().getStaticPageIndex().reindex();
 //      }

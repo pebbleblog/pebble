@@ -37,11 +37,9 @@ import net.sourceforge.pebble.dao.PersistenceException;
 import net.sourceforge.pebble.event.blogentry.BlogEntryEvent;
 import net.sourceforge.pebble.event.comment.CommentEvent;
 import net.sourceforge.pebble.event.trackback.TrackBackEvent;
-import net.sourceforge.pebble.search.BlogIndexer;
+import net.sourceforge.pebble.index.SearchIndex;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.acegisecurity.userdetails.UsernameNotFoundException;
-import org.springframework.dao.DataAccessException;
 import net.sourceforge.pebble.web.validation.ValidationContext;
 import net.sourceforge.pebble.comparator.BlogEntryResponseByDateComparator;
 import net.sourceforge.pebble.security.PebbleUserDetailsService;
@@ -562,7 +560,7 @@ public class BlogEntry extends Content {
       try {
         this.user = (PebbleUserDetails)puds.loadUserByUsername(getAuthor());
       } catch (Exception e) {
-        log.warn("Could not get user details for blog entry", e);
+        // do nothing
       }
     }
 
@@ -1062,8 +1060,7 @@ public class BlogEntry extends Content {
 
       if (type == PUBLISHED || isStaticPage()) {
         // and finally un-index the published entry
-        BlogIndexer indexer = new BlogIndexer();
-        indexer.removeIndex(this);
+        blog.getSearchIndex().removeIndex(this);
       }
 
       if (isStaticPage()) {
@@ -1095,7 +1092,7 @@ public class BlogEntry extends Content {
    * @return  a BlogEntry instance, or null if this is the first entry
    */
   public BlogEntry getPreviousBlogEntry() {
-    return null; // todo getBlog().getPreviousBlogEntry(this);
+    return getBlog().getPreviousBlogEntry(this);
   }
 
   /**
@@ -1104,7 +1101,7 @@ public class BlogEntry extends Content {
    * @return  a BlogEntry instance, or null is this is the last entry
    */
   public BlogEntry getNextBlogEntry() {
-    return null; // todo getBlog().getNextBlogEntry(this);
+    return getBlog().getNextBlogEntry(this);
   }
 
   /**

@@ -33,7 +33,6 @@ package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.domain.Blog;
-import net.sourceforge.pebble.search.BlogSearcher;
 import net.sourceforge.pebble.search.SearchException;
 import net.sourceforge.pebble.search.SearchHit;
 import net.sourceforge.pebble.search.SearchResults;
@@ -94,8 +93,7 @@ public class SearchAction extends Action {
     }
 
     try {
-      BlogSearcher searcher = new BlogSearcher();
-      SearchResults results = searcher.search(blog, query);
+      SearchResults results = blog.getSearchIndex().search(query);
 
       if (results.getNumberOfHits() == 1) {
         // if there is only one hit, redirect the user to it without the
