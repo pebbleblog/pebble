@@ -53,8 +53,13 @@ public abstract class SingleBlogTestCase extends PebbleTestCase {
 
     pebbleContext.setUrl("http://www.yourdomain.com/blog/");
     BlogManager.getInstance().setPebbleContext(pebbleContext);
-    BlogManager.getInstance().removeAllBlogs();
     BlogManager.getInstance().addBlog(blog);
+  }
+
+  protected void tearDown() throws Exception {
+    blog.getBlogEntryIndex().clear();
+    BlogManager.getInstance().removeAllBlogs();
+    super.tearDown();
   }
 
 }

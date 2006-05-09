@@ -143,7 +143,8 @@ public class Blog extends AbstractBlog {
       e.printStackTrace();
       setPermalinkProvider(new DefaultPermalinkProvider());
     }
-    // initialise tags and categories
+
+    // load categories
     tags = new TreeMap();
     try {
       DAOFactory factory = DAOFactory.getConfiguredFactory();
@@ -700,19 +701,7 @@ public class Blog extends AbstractBlog {
    * @return  an int
    */
   public int getNumberOfBlogEntries() {
-    return 0;
-
-//    todo : get this from the index
-//    int count = 0;
-//    for (int year = yearlyBlogs.size()-1; year >= 0; year--) {
-//      YearlyBlog yearlyBlog = (YearlyBlog)yearlyBlogs.get(year);
-//      MonthlyBlog[] months = yearlyBlog.getMonthlyBlogs();
-//      for (int month = 11; month >= 0; month--) {
-//        count += months[month].getNumberOfBlogEntries();
-//      }
-//    }
-//
-//    return count;
+    return blogEntryIndex.getNumberOfBlogEntries();
   }
 
   /**
@@ -843,13 +832,9 @@ public class Blog extends AbstractBlog {
    */
   public Date getLastModified() {
     Date date = new Date(0);
-    List blogEntries = getRecentBlogEntries();
-    Iterator it = blogEntries.iterator();
-    while (it.hasNext()) {
-      BlogEntry blogEntry = (BlogEntry)it.next();
-      if (blogEntry.getDate().after(date)) {
-        date = blogEntry.getDate();
-      }
+    List blogEntries = getRecentBlogEntries(1);
+    if (blogEntries.size() == 1) {
+      date = ((BlogEntry)blogEntries.get(0)).getDate();
     }
 
     return date;
@@ -1280,11 +1265,6 @@ public class Blog extends AbstractBlog {
         indexesDirectory.mkdir();
     }
 
-//    if (!IndexReader.indexExists(getSearchIndexDirectory())) {
-//      SearchIndex indexer = new SearchIndex();
-//      indexer.index(this);
-//    }
-
     logger.start();
     editableTheme.restore();
 
@@ -1432,6 +1412,28 @@ public class Blog extends AbstractBlog {
     blogEntryIndex.index(blogEntries);
 
     searchIndex.index(blogEntries);
+  }
+
+  /**
+   * Indicates whether some other object is "equal to" this one.
+   *
+   * @param o   the reference object with which to compare.
+   * @return <code>true</code> if this object is the same as the obj
+   *         argument; <code>false</code> otherwise.
+   * @see #hashCode()
+   * @see java.util.Hashtable
+   */
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+
+    if (!(o instanceof Blog)) {
+      return false;
+    }
+
+    Blog blog = (Blog)o;
+    return getId().equals(blog.getId());
   }
 
 }

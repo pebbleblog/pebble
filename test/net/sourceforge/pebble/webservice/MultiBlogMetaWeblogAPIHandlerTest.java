@@ -140,6 +140,7 @@ public class MultiBlogMetaWeblogAPIHandlerTest extends MultiBlogTestCase {
       Vector posts = handler.getRecentPosts("blog1", "username", "password", 3);
       assertTrue(posts.isEmpty());
     } catch (Exception e) {
+      e.printStackTrace();
       fail();
     }
   }

@@ -31,17 +31,16 @@
  */
 package net.sourceforge.pebble.plugin.permalink;
 
-import net.sourceforge.pebble.domain.BlogEntry;
-import net.sourceforge.pebble.domain.DailyBlog;
 import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.domain.BlogEntry;
+import net.sourceforge.pebble.domain.BlogService;
+import net.sourceforge.pebble.domain.DailyBlog;
 
-import java.text.DecimalFormat;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Date;
-import java.util.ArrayList;
 
 /**
  * Generates permalinks based upon the blog entry title. This implementation
@@ -71,12 +70,12 @@ public class TitlePermalinkProvider extends PermalinkProviderSupport {
     if (blogEntry.getTitle() == null || blogEntry.getTitle().length() == 0) {
       return buildPermalink(blogEntry) + ".html";
     } else {
-      // todo
-      // DailyBlog dailyBlog = blogEntry.getDailyBlog();
-      List entries = new ArrayList(); //dailyBlog.getEntries();
+      BlogService service = new BlogService();
+      DailyBlog dailyBlog = getBlog().getBlogForDay(blogEntry.getDate());
+      List entries = dailyBlog.getBlogEntries();
       int count = 0;
-      for (int i = entries.size()-1; i > entries.indexOf(blogEntry); i--) {
-        BlogEntry entry = (BlogEntry)entries.get(i);
+      for (int i = entries.size()-1; i > entries.indexOf(blogEntry.getId()); i--) {
+        BlogEntry entry = service.getBlogEntry(getBlog(), (String)entries.get(i));
         if (entry.getTitle().equals(blogEntry.getTitle())) {
           count++;
         }
@@ -152,22 +151,20 @@ public class TitlePermalinkProvider extends PermalinkProviderSupport {
    * @return  a BlogEntry instance, or null if one can't be found
    */
   public BlogEntry getBlogEntry(String uri) {
-    return null;
+    BlogService service = new BlogService();
+    DailyBlog dailyBlog = getDailyBlog(uri);
 
-//    todo
-//    DailyBlog dailyBlog = getDailyBlog(uri);
-//
-//    Iterator it = dailyBlog.getEntries().iterator();
-//    while (it.hasNext()) {
-//      BlogEntry blogEntry = (BlogEntry)it.next();
-//      // use the local permalink, just in case the entry has been aggregated
-//      // and an original permalink assigned
-//      if (blogEntry.getLocalPermalink().endsWith(uri)) {
-//        return blogEntry;
-//      }
-//    }
-//
-//    return null;
+    Iterator it = dailyBlog.getBlogEntries().iterator();
+    while (it.hasNext()) {
+      BlogEntry blogEntry = service.getBlogEntry(getBlog(), (String)it.next());
+      // use the local permalink, just in case the entry has been aggregated
+      // and an original permalink assigned
+      if (blogEntry.getLocalPermalink().endsWith(uri)) {
+        return blogEntry;
+      }
+    }
+
+    return null;
   }
 
 }

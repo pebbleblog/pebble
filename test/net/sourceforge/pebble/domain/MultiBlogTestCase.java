@@ -52,7 +52,6 @@ public abstract class MultiBlogTestCase extends PebbleTestCase {
 
     pebbleContext.setUrl("http://www.yourdomain.com/blog/");
     BlogManager.getInstance().setPebbleContext(pebbleContext);
-    BlogManager.getInstance().removeAllBlogs();
 
     // and set up some simple blogs
     blog1 = new Blog(TEST_BLOG_LOCATION.getAbsolutePath());
@@ -61,6 +60,13 @@ public abstract class MultiBlogTestCase extends PebbleTestCase {
     blog2 = new Blog(TEST_BLOG_LOCATION.getAbsolutePath());
     blog2.setId("blog2");
     BlogManager.getInstance().addBlog(blog2);
+  }
+
+  protected void tearDown() throws Exception {
+    blog1.getBlogEntryIndex().clear();
+    blog2.getBlogEntryIndex().clear();
+    BlogManager.getInstance().removeAllBlogs();
+    super.tearDown();
   }
 
 }

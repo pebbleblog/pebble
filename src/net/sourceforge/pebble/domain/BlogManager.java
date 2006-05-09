@@ -222,9 +222,9 @@ public class BlogManager {
    *
    * @return  a List of Blog instances
    */
-  public List getPublicBlogs() {
+  public List<Blog> getPublicBlogs() {
     Collection coll = blogs.values();
-    List list = new ArrayList();
+    List<Blog> list = new ArrayList<Blog>();
     Iterator it = coll.iterator();
     while (it.hasNext()) {
       Blog blog = (Blog)it.next();

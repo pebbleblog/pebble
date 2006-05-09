@@ -123,11 +123,11 @@ public class BlogService {
           DAOFactory factory = DAOFactory.getConfiguredFactory();
           BlogEntryDAO dao = factory.getBlogEntryDAO();
           dao.storeBlogEntry(blogEntry);
-          blogEntry.setType(BlogEntry.PUBLISHED);
         }
 
         if (blogEntry.getType() == BlogEntry.NEW) {
           blogEntry.getBlog().getEventDispatcher().fireBlogEntryEvent(new BlogEntryEvent(blogEntry, BlogEntryEvent.BLOG_ENTRY_ADDED));
+          blogEntry.setType(BlogEntry.PUBLISHED);
         } else {
           if (blogEntry.isDirty()) {
             BlogEntryEvent event = new BlogEntryEvent(blogEntry, blogEntry.getPropertyChangeEvents());

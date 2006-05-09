@@ -563,44 +563,59 @@ public class BlogEntryTest extends SingleBlogTestCase {
     assertTrue("Name shouldn't contain punctuation", context.hasErrors());
   }
 
-//  todo
-//  /**
-//   * Tests that the next blog entry can be accessed.
-//   */
-//  public void testGetNextBlogEntry() {
-//    DailyBlog today = blog.getBlogForToday();
-//    DailyBlog oneDayAgo = today.getPreviousDay();
-//    DailyBlog twoDaysAgo = today.getPreviousDay().getPreviousDay();
-//    BlogEntry b1 = twoDaysAgo.createBlogEntry();
-//    twoDaysAgo.addEntry(b1);
-//    BlogEntry b2 = oneDayAgo.createBlogEntry();
-//    oneDayAgo.addEntry(b2);
-//    BlogEntry b3 = today.createBlogEntry();
-//    today.addEntry(b3);
-//
-//    assertNull(b3.getNextBlogEntry());
-//    assertEquals(b3, b2.getNextBlogEntry());
-//    assertEquals(b2, b1.getNextBlogEntry());
-//  }
-//
-//  /**
-//   * Tests that the previous blog entry can be accessed.
-//   */
-//  public void testGetPreviousBlogEntry() {
-//    DailyBlog today = blog.getBlogForToday();
-//    DailyBlog oneDayAgo = today.getPreviousDay();
-//    DailyBlog twoDaysAgo = today.getPreviousDay().getPreviousDay();
-//    BlogEntry b1 = twoDaysAgo.createBlogEntry();
-//    twoDaysAgo.addEntry(b1);
-//    BlogEntry b2 = oneDayAgo.createBlogEntry();
-//    oneDayAgo.addEntry(b2);
-//    BlogEntry b3 = today.createBlogEntry();
-//    today.addEntry(b3);
-//
-//    assertNull(b1.getPreviousBlogEntry());
-//    assertEquals(b1, b2.getPreviousBlogEntry());
-//    assertEquals(b2, b3.getPreviousBlogEntry());
-//  }
+  /**
+   * Tests that the next blog entry can be accessed.
+   */
+  public void testGetNextBlogEntry() throws Exception {
+    BlogService service = new BlogService();
+    DailyBlog today = blog.getBlogForToday();
+    DailyBlog oneDayAgo = today.getPreviousDay();
+    DailyBlog twoDaysAgo = today.getPreviousDay().getPreviousDay();
+
+    BlogEntry b1 = new BlogEntry(blog);
+    b1.setDate(twoDaysAgo.getDate());
+
+    BlogEntry b2 = new BlogEntry(blog);
+    b2.setDate(oneDayAgo.getDate());
+
+    BlogEntry b3 = new BlogEntry(blog);
+    b3.setDate(today.getDate());
+
+    service.putBlogEntry(b1);
+    service.putBlogEntry(b2);
+    service.putBlogEntry(b3);
+
+    assertNull(b3.getNextBlogEntry());
+    assertEquals(b3, b2.getNextBlogEntry());
+    assertEquals(b2, b1.getNextBlogEntry());
+  }
+
+  /**
+   * Tests that the previous blog entry can be accessed.
+   */
+  public void testGetPreviousBlogEntry() throws Exception {
+    BlogService service = new BlogService();
+    DailyBlog today = blog.getBlogForToday();
+    DailyBlog oneDayAgo = today.getPreviousDay();
+    DailyBlog twoDaysAgo = today.getPreviousDay().getPreviousDay();
+
+    BlogEntry b1 = new BlogEntry(blog);
+    b1.setDate(twoDaysAgo.getDate());
+
+    BlogEntry b2 = new BlogEntry(blog);
+    b2.setDate(oneDayAgo.getDate());
+
+    BlogEntry b3 = new BlogEntry(blog);
+    b3.setDate(today.getDate());
+
+    service.putBlogEntry(b1);
+    service.putBlogEntry(b2);
+    service.putBlogEntry(b3);
+
+    assertNull(b1.getPreviousBlogEntry());
+    assertEquals(b1, b2.getPreviousBlogEntry());
+    assertEquals(b2, b3.getPreviousBlogEntry());
+  }
 
   /**
    * Tests that for the timezone property.
@@ -1098,6 +1113,9 @@ public class BlogEntryTest extends SingleBlogTestCase {
    * Tests that listeners are fired when a blog entry is changed.
    */
   public void testListenersFiredWhenBlogEntryChanged() throws Exception {
+    BlogService service = new BlogService();
+    service.putBlogEntry(blogEntry);
+
     final StringBuffer buf = new StringBuffer("123");
 
     BlogEntryListener listener = new BlogEntryListener() {
@@ -1126,8 +1144,6 @@ public class BlogEntryTest extends SingleBlogTestCase {
 
     blog.getEventListenerList().addBlogEntryListener(listener);
     blogEntry.setTitle("A new title");
-
-    BlogService service = new BlogService();
     service.putBlogEntry(blogEntry);
     assertEquals("321", buf.toString());
   }

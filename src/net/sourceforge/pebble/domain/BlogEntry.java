@@ -1132,11 +1132,17 @@ public class BlogEntry extends Content {
     }
 
     BlogEntry blogEntry = (BlogEntry)o;
-    return id.equals(blogEntry.getId());
+    return
+        id.equals(blogEntry.getId()) &&
+        getBlog().equals(blogEntry.getBlog());
+  }
+
+  public String getGuid() {
+    return getBlog().getId() + "/" + getId();
   }
 
   public int hashCode() {
-    return id.hashCode();
+    return getGuid().hashCode();
   }
 
   /**
@@ -1145,7 +1151,7 @@ public class BlogEntry extends Content {
    * @return  a String
    */
   public String toString() {
-    return this.title;
+    return getBlog().getId() + "/" + getTitle();
   }
 
   /**

@@ -69,7 +69,7 @@ public class SingleBlogTest extends SingleBlogTestCase {
     assertTrue(blog.getUpdateNotificationPingsAsCollection().isEmpty());
     assertTrue(blog.isPublic());
     assertFalse(blog.isPrivate());
-    assertEquals("net.sourceforge.pebble.plugin.decorator.HideUnapprovedBlogEntriesDecorator\r\nnet.sourceforge.pebble.plugin.decorator.HideUnapprovedResponsesDecorator\r\nnet.sourceforge.pebble.plugin.decorator.HtmlDecorator\r\nnet.sourceforge.pebble.plugin.decorator.EscapeMarkupDecorator\r\nnet.sourceforge.pebble.plugin.decorator.RelativeUriDecorator\r\nnet.sourceforge.pebble.plugin.decorator.BlogTagsDecorator", blog.getBlogEntryDecorators());
+    assertEquals("net.sourceforge.pebble.plugin.decorator.HideUnapprovedBlogEntriesDecorator\r\nnet.sourceforge.pebble.plugin.decorator.HideUnapprovedResponsesDecorator\r\nnet.sourceforge.pebble.plugin.decorator.HtmlDecorator\r\nnet.sourceforge.pebble.plugin.decorator.EscapeMarkupDecorator\r\nnet.sourceforge.pebble.plugin.decorator.RelativeUriDecorator", blog.getBlogEntryDecorators());
     assertEquals("net.sourceforge.pebble.plugin.permalink.DefaultPermalinkProvider", blog.getPermalinkProviderName());
     assertTrue(blog.getPermalinkProvider() instanceof DefaultPermalinkProvider);
     assertEquals("net.sourceforge.pebble.event.DefaultEventDispatcher", blog.getEventDispatcherName());
@@ -411,7 +411,6 @@ public class SingleBlogTest extends SingleBlogTestCase {
 
     List entries = blog.getRecentBlogEntries(3);
 
-    assertFalse(entries.isEmpty());
     assertEquals(3, entries.size());
     assertEquals(entry4, entries.get(0));
   }

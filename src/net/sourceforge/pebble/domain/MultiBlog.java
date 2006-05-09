@@ -31,6 +31,8 @@
  */
 package net.sourceforge.pebble.domain;
 
+import net.sourceforge.pebble.comparator.BlogEntryComparator;
+
 import java.util.*;
 
 /**
@@ -103,7 +105,7 @@ public class MultiBlog extends AbstractBlog {
   public Date getLastModified() {
     Date date = new Date(0);
 
-    Iterator it = BlogManager.getInstance().getBlogs().iterator();
+    Iterator it = BlogManager.getInstance().getPublicBlogs().iterator();
     Blog blog;
     while (it.hasNext()) {
       blog = (Blog)it.next();
@@ -125,14 +127,12 @@ public class MultiBlog extends AbstractBlog {
   public List getRecentBlogEntries(int numberOfEntries) {
     List blogEntries = new ArrayList();
 
-    Iterator it = BlogManager.getInstance().getPublicBlogs().iterator();
-    Blog blog;
-    while (it.hasNext()) {
-      blog = (Blog)it.next();
+    for (Blog blog : BlogManager.getInstance().getPublicBlogs()) {
       blogEntries.addAll(blog.getRecentBlogEntries(numberOfEntries));
     }
 
-    return blogEntries;
+    Collections.sort(blogEntries, new BlogEntryComparator());
+    return new ArrayList(blogEntries).subList(0, numberOfEntries);
   }
 
   /**
