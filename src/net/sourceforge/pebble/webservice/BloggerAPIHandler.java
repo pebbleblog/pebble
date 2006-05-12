@@ -253,7 +253,7 @@ public class BloggerAPIHandler extends AbstractAPIHandler {
 
       if (entry != null) {
         populateEntry(entry, content, username);
-        entry.store();
+        service.putBlogEntry(entry);
       } else {
         throw new XmlRpcException(0, "Blog entry with ID of " + postid + " was not found.");
       }

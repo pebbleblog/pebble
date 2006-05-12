@@ -103,12 +103,12 @@ public class Utilities {
           ipAddressListener.trackBackRejected(event);
         }
       }
-
-      try {
-        blogEntry.store();
-      } catch (BlogException e) {
-        log.error("Error storing " + blogEntry.getTitle() + " (" + blogEntry.getDate() + ")");
-      }
+//
+//      try {
+//        blogEntry.store();
+//      } catch (BlogException e) {
+//        log.error("Error storing " + blogEntry.getTitle() + " (" + blogEntry.getDate() + ")");
+//      }
     }
   }
 
@@ -141,7 +141,8 @@ public class Utilities {
         }
       }
       try {
-        blogEntry.store();
+        BlogService service = new BlogService();
+        service.putBlogEntry(blogEntry);
       } catch (BlogException e) {
         log.error("Error storing " + blogEntry.getTitle() + " (" + blogEntry.getDate() + ")");
       }
@@ -200,7 +201,8 @@ public class Utilities {
         blogEntry.setCategories(categories);
 
         try {
-          blogEntry.store();
+          BlogService service = new BlogService();
+          service.putBlogEntry(blogEntry);
         } catch (BlogException e) {
           log.info("Error storing " + blogEntry.getTitle() + " (" + blogEntry.getDate() + ")");
         }

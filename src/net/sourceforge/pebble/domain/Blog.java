@@ -46,10 +46,7 @@ import net.sourceforge.pebble.event.blog.BlogListener;
 import net.sourceforge.pebble.event.blogentry.BlogEntryListener;
 import net.sourceforge.pebble.event.comment.CommentListener;
 import net.sourceforge.pebble.event.trackback.TrackBackListener;
-import net.sourceforge.pebble.index.BlogEntryIndex;
-import net.sourceforge.pebble.index.BlogEntryIndexListener;
-import net.sourceforge.pebble.index.SearchIndex;
-import net.sourceforge.pebble.index.SearchIndexListener;
+import net.sourceforge.pebble.index.*;
 import net.sourceforge.pebble.logging.AbstractLogger;
 import net.sourceforge.pebble.logging.CombinedLogFormatLogger;
 import net.sourceforge.pebble.plugin.decorator.BlogEntryDecoratorManager;
@@ -91,9 +88,6 @@ public class Blog extends AbstractBlog {
   /** the root category associated with this blog */
   private Category rootCategory;
 
-  /** the collection of tags associated with this blog */
-  private Map tags;
-
   /** the referer filter associated with this blog */
   private RefererFilterManager refererFilterManager;
 
@@ -120,6 +114,8 @@ public class Blog extends AbstractBlog {
 
   private SearchIndex searchIndex;
   private BlogEntryIndex blogEntryIndex;
+  private TagIndex tagIndex;
+  private CategoryIndex categoryIndex;
 
   /** the story index associated with this blog */
   private StaticPageIndex staticPageIndex;
@@ -145,7 +141,6 @@ public class Blog extends AbstractBlog {
     }
 
     // load categories
-    tags = new TreeMap();
     try {
       DAOFactory factory = DAOFactory.getConfiguredFactory();
       CategoryDAO dao = factory.getCategoryDAO();
@@ -162,6 +157,8 @@ public class Blog extends AbstractBlog {
     yearlyBlogs = new ArrayList();
     searchIndex = new SearchIndex(this);
     blogEntryIndex = new BlogEntryIndex(this);
+    tagIndex = new TagIndex(this);
+    categoryIndex = new CategoryIndex(this);
     staticPageIndex = new StaticPageIndex(this);
 
     File imagesDirectory = new File(getImagesDirectory());
@@ -191,7 +188,7 @@ public class Blog extends AbstractBlog {
    * Initialises the logger for this blog.
    */
   private void initLogger() {
-    log.info("Initializing logger");
+    log.debug("Initializing logger");
 
     try {
       Class c = Class.forName(getLoggerName());
@@ -207,7 +204,7 @@ public class Blog extends AbstractBlog {
    * Initialises the event dispatcher for this blog.
    */
   private void initEventDispatcher() {
-    log.info("Initializing event dispatcher");
+    log.debug("Initializing event dispatcher");
     eventListenerList = new EventListenerList();
 
     try {
@@ -225,7 +222,7 @@ public class Blog extends AbstractBlog {
    * Initialises any blog listeners configured for this blog.
    */
   private void initBlogListeners() {
-    log.info("Registering blog listeners");
+    log.debug("Registering blog listeners");
 
     String classNames = getBlogListeners();
     if (classNames != null && classNames.length() > 0) {
@@ -248,7 +245,7 @@ public class Blog extends AbstractBlog {
    * Initialises any blog entry listeners configured for this blog.
    */
   private void initBlogEntryListeners() {
-    log.info("Registering blog entry listeners");
+    log.debug("Registering blog entry listeners");
 
     String classNames = getBlogEntryListeners();
     if (classNames != null && classNames.length() > 0) {
@@ -268,6 +265,7 @@ public class Blog extends AbstractBlog {
 
     // these are required to keep the various indexes up to date
     eventListenerList.addBlogEntryListener(new BlogEntryIndexListener());
+    eventListenerList.addBlogEntryListener(new TagIndexListener());
     eventListenerList.addBlogEntryListener(new SearchIndexListener());
   }
 
@@ -275,7 +273,7 @@ public class Blog extends AbstractBlog {
    * Initialises any comment listeners configured for this blog.
    */
   private void initCommentListeners() {
-    log.info("Registering comment listeners");
+    log.debug("Registering comment listeners");
 
     String classNames = getCommentListeners();
     if (classNames != null && classNames.length() > 0) {
@@ -302,7 +300,7 @@ public class Blog extends AbstractBlog {
    * Initialises any TrackBack listeners configured for this blog.
    */
   private void initTrackBackListeners() {
-    log.info("Registering TrackBack listeners");
+    log.debug("Registering TrackBack listeners");
 
     String classNames = getTrackBackListeners();
     if (classNames != null && classNames.length() > 0) {
@@ -722,107 +720,51 @@ public class Blog extends AbstractBlog {
    * @return a List containing the most recent blog entries
    */
   public List getRecentBlogEntries(int numberOfEntries) {
-    // todo - optimize this
-    DailyBlog firstDayOfBlog = getBlogForFirstMonth().getBlogForDay(1);
-    Calendar cal = getCalendar();
-    List entries = new ArrayList();
     BlogService service = new BlogService();
-
-    while (entries.size() < numberOfEntries) {
-      DailyBlog day = getBlogForDay(cal.getTime());
-
-      if (day.hasBlogEntries()) {
-        Iterator it = day.getBlogEntries().iterator();
-        while ((entries.size() < numberOfEntries) && it.hasNext()) {
-          String blogEntryId = (String)it.next();
-          BlogEntry blogEntry = service.getBlogEntry(this, blogEntryId);
-          if (blogEntry.isApproved()) {
-            entries.add(blogEntry);
-          }
-        }
-      }
-
-      if (day == firstDayOfBlog) {
-        break;
-      } else {
-        cal.add(Calendar.DAY_OF_YEAR, -1);
-      }
+    List<String> blogEntryIds = blogEntryIndex.getRecentBlogEntries(numberOfEntries);
+    List blogEntries = new ArrayList();
+    for (String blogEntryId : blogEntryIds) {
+      blogEntries.add(service.getBlogEntry(this, blogEntryId));
     }
 
-    return entries;
+    return blogEntries;
   }
 
+
   /**
-   * Gets the most recent blog entries for a given category, the number
-   * of which is specified.
+   * Gets the most recent blog entries, the number of which is taken from
+   * the recentBlogEntriesOnHomePage property.
    *
-   * @param   category          a Category instance, or null
-   * @param   numberOfEntries   the number of entries to get
+   * @param   category          a category
    * @return  a List containing the most recent blog entries
    */
-  public List getRecentBlogEntries(Category category, int numberOfEntries) {
-//    DailyBlog firstDayOfBlog = getBlogForFirstMonth().getBlogForDay(1);
-//    Calendar cal = getCalendar();
-//    List entries = new ArrayList();
-//
-//    while (entries.size() < numberOfEntries) {
-//      DailyBlog day = getBlogForDay(cal.getTime());
-//
-//      if (day.hasBlogEntries()) {
-//        Iterator it = new ArrayList(day.getBlogEntries(category)).iterator();
-//        while ((entries.size() < numberOfEntries) && it.hasNext()) {
-//          BlogEntry blogEntry = (BlogEntry)it.next();
-//          if (!approvedOnly || (approvedOnly && blogEntry.isApproved())) {
-//            entries.add(blogEntry);
-//          }
-//        }
-//      }
-//
-//      if (day == firstDayOfBlog) {
-//        break;
-//      } else {
-//        cal.add(Calendar.DAY_OF_YEAR, -1);
-//      }
-//    }
-//
-//    return entries;
-    return new ArrayList();
+  public List getRecentBlogEntries(Category category) {
+    BlogService service = new BlogService();
+    List<String> blogEntryIds = categoryIndex.getRecentBlogEntries(category, getRecentBlogEntriesOnHomePage());
+    List blogEntries = new ArrayList();
+    for (String blogEntryId : blogEntryIds) {
+      blogEntries.add(service.getBlogEntry(this, blogEntryId));
+    }
+
+    return blogEntries;
   }
 
   /**
-   * Gets the most recent blog entries for a given tag, the number
-   * of which is specified.
+   * Gets the most recent blog entries, the number of which is taken from
+   * the recentBlogEntriesOnHomePage property.
    *
-   * @param tag             a String
-   * @param numberOfEntries the number of entries to get
+   * @param tag             a tag
    * @return a List containing the most recent blog entries
    */
-  public List getRecentBlogEntries(String tag, int numberOfEntries) {
-//    DailyBlog firstDayOfBlog = getBlogForFirstMonth().getBlogForDay(1);
-//    Calendar cal = getCalendar();
-//
-//    List entries = new ArrayList();
-//    while ((entries.size() < numberOfEntries)) {
-//      DailyBlog day = getBlogForDay(cal.getTime());
-//      if (day.hasBlogEntries()) {
-//        Iterator it = new ArrayList(day.getEntries(tag)).iterator();
-//        while ((entries.size() < numberOfEntries) && it.hasNext()) {
-//          BlogEntry blogEntry = (BlogEntry)it.next();
-//          if (!approvedOnly || (approvedOnly && blogEntry.isApproved())) {
-//            entries.add(blogEntry);
-//          }
-//        }
-//      }
-//
-//      if (day == firstDayOfBlog) {
-//        break;
-//      } else {
-//        cal.add(Calendar.DAY_OF_YEAR, -1);
-//      }
-//    }
-//
-//    return entries;
-    return new ArrayList();
+  public List getRecentBlogEntries(Tag tag) {
+    BlogService service = new BlogService();
+    List<String> blogEntryIds = tagIndex.getRecentBlogEntries(tag, getRecentBlogEntriesOnHomePage());
+    List blogEntries = new ArrayList();
+    for (String blogEntryId : blogEntryIds) {
+      blogEntries.add(service.getBlogEntry(this, blogEntryId));
+    }
+
+    return blogEntries;
   }
 
   /**
@@ -890,7 +832,7 @@ public class Blog extends AbstractBlog {
    *
    * @return  a List of Category instances
    */
-  public List getCategories() {
+  public List<Category> getCategories() {
     CategoryBuilder builder = new CategoryBuilder(this, rootCategory);
     return builder.getCategories();
   }
@@ -951,18 +893,8 @@ public class Blog extends AbstractBlog {
    * Gets the list of tags associated with this blog.
    */
   public List getTags() {
-    List<Tag> list = new ArrayList<Tag>(tags.values());
-    Iterator it = list.iterator();
-    while (it.hasNext()) {
-      Tag tag = (Tag)it.next();
-      if (tag.getNumberOfBlogEntries() == 0) {
-        it.remove();
-      }
-    }
-
-    return list;
+    return tagIndex.getTags();
   }
-
 
   /**
    * Gets the tag with the specified name.
@@ -971,52 +903,7 @@ public class Blog extends AbstractBlog {
    * @return  a Tag instance
    */
   public Tag getTag(String name) {
-    name = Tag.encode(name);
-    Tag tag = (Tag)tags.get(name);
-    if (tag == null) {
-      tag = new Tag(name, this);
-      tags.put(name, tag);
-    }
-
-    return tag;
-  }
-
-  synchronized void recalculateTagRankings() {
-    if (tags.size() > 0) {
-      // find the maximum
-      int maxBlogEntries = 0;
-      int total = 0;
-      Iterator it = tags.values().iterator();
-      while (it.hasNext()) {
-        Tag tag = (Tag)it.next();
-        total += tag.getNumberOfBlogEntries();
-        if (tag.getNumberOfBlogEntries() > maxBlogEntries) {
-          maxBlogEntries = tag.getNumberOfBlogEntries();
-        }
-      }
-
-      // calculate the mean (to nearest int)
-      float mean = total / tags.size();
-
-      int[] thresholds = new int[10];
-      thresholds[0] = (int)((1.0/6.0) * mean);
-      thresholds[1] = (int)((2.0/6.0) * mean);
-      thresholds[2] = (int)((3.0/6.0) * mean);
-      thresholds[3] = (int)((4.0/6.0) * mean);
-      thresholds[4] = (int)((5.0/6.0) * mean);
-      thresholds[5] = (int)mean;
-      thresholds[6] = (int)(mean + (1.0 * ((maxBlogEntries-mean)/4.0)));
-      thresholds[7] = (int)(mean + (2.0 * ((maxBlogEntries-mean)/4.0)));
-      thresholds[8] = (int)(mean + (3.0 * ((maxBlogEntries-mean)/4.0)));
-      thresholds[9] = maxBlogEntries;
-
-      // now rank the tags
-      it = tags.values().iterator();
-      while (it.hasNext()) {
-        Tag tag = (Tag)it.next();
-        tag.calculateRank(thresholds);
-      }
-    }
+    return new Tag(name, this);
   }
 
   /**
@@ -1044,6 +931,24 @@ public class Blog extends AbstractBlog {
    */
   public BlogEntryIndex getBlogEntryIndex() {
     return this.blogEntryIndex;
+  }
+
+  /**
+   * Gets the tag index.
+   *
+   * @return  a TagIndex instance
+   */
+  public TagIndex getTagIndex() {
+    return this.tagIndex;
+  }
+
+  /**
+   * Gets the category index.
+   *
+   * @return  a CategoryIndex instance
+   */
+  public CategoryIndex getCategoryIndex() {
+    return this.categoryIndex;
   }
 
   /**
@@ -1259,6 +1164,8 @@ public class Blog extends AbstractBlog {
    * blog.
    */
   void start() {
+    log.debug("Starting blog with ID " + getId());
+
     // create an index if one doesn't already exist
     File indexesDirectory = new File(getIndexesDirectory());
     if (!indexesDirectory.exists()) {
@@ -1270,18 +1177,22 @@ public class Blog extends AbstractBlog {
 
     // call blog listeners
     eventDispatcher.fireBlogEvent(new BlogEvent(this, BlogEvent.BLOG_STARTED));
+    log.info("Started blog with ID " + getId());
   }
 
   /**
    * Called to shutdown this blog.
    */
   void stop() {
+    log.debug("Stopping blog with ID " + getId());
+
     logger.stop();
     logger = null;
     editableTheme.backup();
 
     // call blog listeners
     eventDispatcher.fireBlogEvent(new BlogEvent(this, BlogEvent.BLOG_STOPPED));
+    log.info("Stopped blog with ID " + getId());
   }
 
   /**
@@ -1410,6 +1321,12 @@ public class Blog extends AbstractBlog {
 
     blogEntryIndex.clear();
     blogEntryIndex.index(blogEntries);
+
+    tagIndex.clear();
+    tagIndex.index(blogEntries);
+
+    categoryIndex.clear();
+    categoryIndex.index(blogEntries);
 
     searchIndex.index(blogEntries);
   }

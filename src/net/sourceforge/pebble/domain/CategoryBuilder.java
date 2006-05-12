@@ -206,16 +206,16 @@ public class CategoryBuilder {
    *
    * @return  a sorted List of Category instances
    */
-  public List getCategories() {
-    List allCategories = new ArrayList();
+  public List<Category> getCategories() {
+    List<Category> allCategories = new ArrayList<Category>();
     allCategories.addAll(getCategories(getRootCategory()));
     Collections.sort(allCategories);
 
     return allCategories;
   }
 
-  public List getCategories(Category category) {
-    List allCategories = new ArrayList();
+  public List<Category> getCategories(Category category) {
+    List<Category> allCategories = new ArrayList<Category>();
     allCategories.add(category);
     Iterator it = category.getSubCategories().iterator();
     while (it.hasNext()) {

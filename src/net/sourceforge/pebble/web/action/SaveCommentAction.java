@@ -136,7 +136,7 @@ public class SaveCommentAction extends Action {
       blogEntry.addComment(comment);
 
       try {
-        blogEntry.store();
+        service.putBlogEntry(blogEntry);
 
         // remember me functionality
         if (rememberMe != null && rememberMe.equals("true")) {

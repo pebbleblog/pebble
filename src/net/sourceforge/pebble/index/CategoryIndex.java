@@ -33,41 +33,34 @@ package net.sourceforge.pebble.index;
 
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.domain.BlogEntry;
-import net.sourceforge.pebble.domain.Tag;
+import net.sourceforge.pebble.domain.Category;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.io.*;
-import java.util.*;
 
 /**
- * Represents the tag index for a blog.
+ * Represents the category index for a blog.
  *
  * @author    Simon Brown
  */
-public class TagIndex {
+public class CategoryIndex {
 
-  private static final Log log = LogFactory.getLog(TagIndex.class);
+  private static final Log log = LogFactory.getLog(CategoryIndex.class);
 
   private Blog blog;
 
-  /** the map containing the tags */
-  private Map<String,IndexedTag> tags = new HashMap<String,IndexedTag>();
-
-  /** a view onto the map, ordered by tag name */
-  private List<Tag> orderedTags = new ArrayList<Tag>();
-
-  public TagIndex(Blog blog) {
+  public CategoryIndex(Blog blog) {
     this.blog = blog;
     readIndex();
-    recalculateTagRankings();
   }
 
   /**
    * Clears the index.
    */
   public void clear() {
-    tags = new HashMap<String,IndexedTag>();
     writeIndex();
   }
 
@@ -78,14 +71,12 @@ public class TagIndex {
    */
   public synchronized void index(List<BlogEntry> blogEntries) {
     for (BlogEntry blogEntry : blogEntries) {
-      for (Tag tag : blogEntry.getAllTags()) {
-        IndexedTag t = getTag(tag.getName());
-        t.addBlogEntry(blogEntry.getId());
+      for (Category category: blogEntry.getCategories()) {
+        category.addBlogEntry(blogEntry.getId());
       }
     }
 
     writeIndex();
-    recalculateTagRankings();
   }
 
   /**
@@ -94,13 +85,11 @@ public class TagIndex {
    * @param blogEntry   a BlogEntry instance
    */
   public synchronized void index(BlogEntry blogEntry) {
-    for (Tag tag : blogEntry.getAllTags()) {
-      IndexedTag t = getTag(tag.getName());
-      t.addBlogEntry(blogEntry.getId());
+    for (Category category : blogEntry.getCategories()) {
+      category.addBlogEntry(blogEntry.getId());
     }
 
     writeIndex();
-    recalculateTagRankings();
   }
 
   /**
@@ -109,32 +98,30 @@ public class TagIndex {
    * @param blogEntry   a BlogEntry instance
    */
   public synchronized void unindex(BlogEntry blogEntry) {
-    for (Tag tag : tags.values()) {
-      IndexedTag t = getTag(tag.getName());
-      t.removeBlogEntry(blogEntry.getId());
+    for (Category category : blogEntry.getCategories()) {
+      category.removeBlogEntry(blogEntry.getId());
     }
 
     writeIndex();
-    recalculateTagRankings();
   }
 
   /**
    * Helper method to load the index.
    */
   private void readIndex() {
-    File indexFile = new File(blog.getIndexesDirectory(), "tags.index");
+    File indexFile = new File(blog.getIndexesDirectory(), "categories.index");
     if (indexFile.exists()) {
       try {
         BufferedReader reader = new BufferedReader(new FileReader(indexFile));
         String indexEntry = reader.readLine();
         while (indexEntry != null) {
           String[] tuple = indexEntry.split("=");
-          IndexedTag tag = getTag(tuple[0]);
+          Category category = blog.getCategory(tuple[0]);
 
           if (tuple.length > 1 && tuple[1] != null) {
             String[] blogEntries = tuple[1].split(",");
             for (String blogEntry : blogEntries) {
-              tag.addBlogEntry(blogEntry);
+              category.addBlogEntry(blogEntry);
             }
           }
 
@@ -157,13 +144,13 @@ public class TagIndex {
       if (!indexes.exists()) {
         indexes.mkdir();
       }
-      File indexFile = new File(blog.getIndexesDirectory(), "tags.index");
+      File indexFile = new File(blog.getIndexesDirectory(), "categories.index");
       BufferedWriter writer = new BufferedWriter(new FileWriter(indexFile));
 
-      for (IndexedTag tag : tags.values()) {
-        writer.write(tag.getName());
+      for (Category category : blog.getCategories()) {
+        writer.write(category.getId());
         writer.write("=");
-        for (String blogEntry : tag.getBlogEntries()) {
+        for (String blogEntry : category.getBlogEntries()) {
           writer.write(blogEntry);
           writer.write(",");
         }
@@ -178,79 +165,13 @@ public class TagIndex {
   }
 
   /**
-   * Gets a tag from the index, creating it if necessary.
+   * Gets the most recent N blog entries for a given category.
    *
-   * @param name    the tag as a String
-   * @return    a Tag instance
-   */
-  synchronized IndexedTag getTag(String name) {
-    String encodedName = Tag.encode(name);
-    IndexedTag tag = tags.get(encodedName);
-    if (tag == null) {
-      tag = new IndexedTag(name, blog);
-      tags.put(encodedName, tag);
-    }
-    return tag;
-  }
-
-  private synchronized void recalculateTagRankings() {
-    if (tags.size() > 0) {
-      // find the maximum
-      int maxBlogEntries = 0;
-      int total = 0;
-      for (IndexedTag tag : tags.values()) {
-        total += tag.getNumberOfBlogEntries();
-        if (tag.getNumberOfBlogEntries() > maxBlogEntries) {
-          maxBlogEntries = tag.getNumberOfBlogEntries();
-        }
-      }
-
-      // calculate the mean (to nearest int)
-      float mean = total / tags.size();
-
-      int[] thresholds = new int[10];
-      thresholds[0] = (int)((1.0/6.0) * mean);
-      thresholds[1] = (int)((2.0/6.0) * mean);
-      thresholds[2] = (int)((3.0/6.0) * mean);
-      thresholds[3] = (int)((4.0/6.0) * mean);
-      thresholds[4] = (int)((5.0/6.0) * mean);
-      thresholds[5] = (int)mean;
-      thresholds[6] = (int)(mean + (1.0 * ((maxBlogEntries-mean)/4.0)));
-      thresholds[7] = (int)(mean + (2.0 * ((maxBlogEntries-mean)/4.0)));
-      thresholds[8] = (int)(mean + (3.0 * ((maxBlogEntries-mean)/4.0)));
-      thresholds[9] = maxBlogEntries;
-
-      orderedTags = new ArrayList<Tag>();
-
-      // now rank the tags
-      for (IndexedTag tag : tags.values()) {
-        tag.calculateRank(thresholds);
-
-        if (tag.getNumberOfBlogEntries() > 0) {
-          orderedTags.add(tag);
-        }
-      }
-
-      Collections.sort(orderedTags);
-    }
-
-  }
-
-  /**
-   * Gets the list of tags associated with this blog.
-   */
-  public List getTags() {
-    return new ArrayList<Tag>(orderedTags);
-  }
-
-  /**
-   * Gets the most recent N blog entries for a given tag.
-   *
-   * @param tag   a tag
+   * @param category    a category
    * @return  a List of blog entry IDs
    */
-  public List<String> getRecentBlogEntries(Tag tag, int number) {
-    List<String> blogEntries = getTag(tag.getName()).getBlogEntries();
+  public List<String> getRecentBlogEntries(Category category, int number) {
+    List<String> blogEntries = category.getBlogEntries();
 
     if (blogEntries.size() >= number) {
       return blogEntries.subList(0, number);

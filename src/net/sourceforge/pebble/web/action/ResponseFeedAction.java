@@ -134,7 +134,7 @@ public class ResponseFeedAction extends Action {
 
       String tag = request.getParameter("tag");
       if (tag != null) {
-        return blog.getTag(tag);
+        return new Tag(tag, blog);
       } else {
         return null;
       }

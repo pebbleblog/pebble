@@ -3,6 +3,7 @@ package net.sourceforge.pebble.index;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.domain.BlogEntry;
 import net.sourceforge.pebble.domain.DailyBlog;
+import net.sourceforge.pebble.comparator.ReverseBlogEntryIdComparator;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -12,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Collections;
+import java.util.Date;
 
 /**
  * Keeps an index of all blog entries, allowing efficient access at runtime.
@@ -47,12 +49,11 @@ public class BlogEntryIndex {
    * @param blogEntries   a List of BlogEntry instances
    */
   public synchronized void index(List<BlogEntry> blogEntries) {
-    DateFormat format = new SimpleDateFormat(INDEX_FORMAT);
     for (BlogEntry blogEntry : blogEntries) {
-      String indexEntry = format.format(blogEntry.getDate()) + "/" + blogEntry.getId();
-      indexEntries.add(indexEntry);
+      indexEntries.add(blogEntry.getId());
     }
 
+    Collections.sort(indexEntries, new ReverseBlogEntryIdComparator());
     writeIndex();
   }
 
@@ -62,13 +63,12 @@ public class BlogEntryIndex {
    * @param blogEntry   a BlogEntry instance
    */
   public synchronized void index(BlogEntry blogEntry) {
-    DateFormat format = new SimpleDateFormat(INDEX_FORMAT);
-    String indexEntry = format.format(blogEntry.getDate()) + "/" + blogEntry.getId();
-    indexEntries.add(indexEntry);
+    indexEntries.add(blogEntry.getId());
 
     DailyBlog dailyBlog = blog.getBlogForDay(blogEntry.getDate());
     dailyBlog.addBlogEntry(blogEntry.getId());
 
+    Collections.sort(indexEntries, new ReverseBlogEntryIdComparator());
     writeIndex();
   }
 
@@ -81,9 +81,7 @@ public class BlogEntryIndex {
     DailyBlog dailyBlog = blog.getBlogForDay(blogEntry.getDate());
     dailyBlog.removeBlogEntry(blogEntry.getId());
 
-    DateFormat format = new SimpleDateFormat(INDEX_FORMAT);
-    String indexEntry = format.format(blogEntry.getDate()) + "/" + blogEntry.getId();
-    indexEntries.remove(indexEntry);
+    indexEntries.remove(blogEntry.getId());
 
     writeIndex();
   }
@@ -100,16 +98,11 @@ public class BlogEntryIndex {
         while (indexEntry != null) {
           indexEntries.add(indexEntry);
 
-          // split up the yyyy/MM/dd/blogentryid into it's parts
-          String parts[] = indexEntry.split("/");
-          int year = Integer.parseInt(parts[0]);
-          int month = Integer.parseInt(parts[1]);
-          int day = Integer.parseInt(parts[2]);
-          String blogEntryId = parts[3];
 
           // and add it to the internal memory structures
-          DailyBlog dailyBlog = blog.getBlogForDay(year, month, day);
-          dailyBlog.addBlogEntry(blogEntryId);
+          Date date = new Date(Long.parseLong(indexEntry));
+          DailyBlog dailyBlog = blog.getBlogForDay(date);
+          dailyBlog.addBlogEntry(indexEntry);
 
           indexEntry = reader.readLine();
         }
@@ -120,8 +113,7 @@ public class BlogEntryIndex {
       }
     }
 
-    // sort in alphabetical order, and therefore in date order
-    Collections.sort(indexEntries);
+    Collections.sort(indexEntries, new ReverseBlogEntryIdComparator());
   }
 
   /**
@@ -151,6 +143,19 @@ public class BlogEntryIndex {
    */
   public int getNumberOfBlogEntries() {
     return indexEntries.size();
+  }
+
+  /**
+   * Gets the most recent N blog entries.
+   *
+   * @return  a List of blog entry IDs
+   */
+  public List<String> getRecentBlogEntries(int number) {
+    if (indexEntries.size() >= number) {
+      return indexEntries.subList(0, number);
+    } else {
+      return indexEntries;
+    }
   }
 
 }

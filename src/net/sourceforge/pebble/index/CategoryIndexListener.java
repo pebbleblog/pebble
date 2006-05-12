@@ -12,7 +12,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.beans.PropertyChangeEvent;
 
-public class TagIndexListener implements BlogEntryListener {
+public class CategoryIndexListener implements BlogEntryListener {
 
   /**
    * Called when a blog entry has been added.
@@ -22,7 +22,7 @@ public class TagIndexListener implements BlogEntryListener {
   public void blogEntryAdded(BlogEntryEvent event) {
     BlogEntry blogEntry = event.getBlogEntry();
     if (blogEntry.isApproved()) {
-      blogEntry.getBlog().getTagIndex().index(blogEntry);
+      blogEntry.getBlog().getCategoryIndex().index(blogEntry);
     }
   }
 
@@ -34,7 +34,7 @@ public class TagIndexListener implements BlogEntryListener {
   public void blogEntryRemoved(BlogEntryEvent event) {
     BlogEntry blogEntry = event.getBlogEntry();
     if (blogEntry.isApproved()) {
-      blogEntry.getBlog().getTagIndex().unindex(blogEntry);
+      blogEntry.getBlog().getCategoryIndex().unindex(blogEntry);
     }
   }
 
@@ -54,9 +54,9 @@ public class TagIndexListener implements BlogEntryListener {
         String property = pce.getPropertyName();
 
         // only if the tags or categories change do we need to reindex the tags
-        if (property.equals(BlogEntry.TAGS_PROPERTY) || property.equals(BlogEntry.CATEGORIES_PROPERTY)) {
-          blogEntry.getBlog().getTagIndex().unindex(blogEntry);
-          blogEntry.getBlog().getTagIndex().index(blogEntry);
+        if (property.equals(BlogEntry.CATEGORIES_PROPERTY)) {
+          blogEntry.getBlog().getCategoryIndex().unindex(blogEntry);
+          blogEntry.getBlog().getCategoryIndex().index(blogEntry);
         }
       }
     }
@@ -69,7 +69,7 @@ public class TagIndexListener implements BlogEntryListener {
    */
   public void blogEntryApproved(BlogEntryEvent event) {
     BlogEntry blogEntry = event.getBlogEntry();
-    blogEntry.getBlog().getTagIndex().index(blogEntry);
+    blogEntry.getBlog().getCategoryIndex().index(blogEntry);
   }
 
   /**
@@ -79,7 +79,7 @@ public class TagIndexListener implements BlogEntryListener {
    */
   public void blogEntryRejected(BlogEntryEvent event) {
     BlogEntry blogEntry = event.getBlogEntry();
-    blogEntry.getBlog().getTagIndex().unindex(blogEntry);
+    blogEntry.getBlog().getCategoryIndex().unindex(blogEntry);
   }
 
 }

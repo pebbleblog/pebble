@@ -132,49 +132,12 @@ public class MultiBlog extends AbstractBlog {
     }
 
     Collections.sort(blogEntries, new BlogEntryComparator());
-    return new ArrayList(blogEntries).subList(0, numberOfEntries);
-  }
 
-  /**
-   * Gets the most recent blog entries for a given category, the number
-   * of which is specified.
-   *
-   * @param   category          a Category instance, or null
-   * @param   numberOfEntries   the number of entries to get
-   * @return  a List containing the most recent blog entries
-   */
-  public List getRecentBlogEntries(Category category, int numberOfEntries) {
-    List blogEntries = new ArrayList();
-
-    Iterator it = BlogManager.getInstance().getPublicBlogs().iterator();
-    Blog blog;
-    while (it.hasNext()) {
-      blog = (Blog)it.next();
-      blogEntries.addAll(blog.getRecentBlogEntries(category, numberOfEntries));
+    if (blogEntries.size() >= numberOfEntries) {
+      return new ArrayList(blogEntries).subList(0, numberOfEntries);
+    } else {
+      return new ArrayList(blogEntries);
     }
-
-    return blogEntries;
-  }
-
-  /**
-   * Gets the most recent blog entries for a given tag, the number
-   * of which is specified.
-   *
-   * @param tag             a String
-   * @param numberOfEntries the number of entries to get
-   * @return a List containing the most recent blog entries
-   */
-  public List getRecentBlogEntries(String tag, int numberOfEntries) {
-    List blogEntries = new ArrayList();
-
-    Iterator it = BlogManager.getInstance().getPublicBlogs().iterator();
-    Blog blog;
-    while (it.hasNext()) {
-      blog = (Blog)it.next();
-      blogEntries.addAll(blog.getRecentBlogEntries(tag, numberOfEntries));
-    }
-
-    return blogEntries;
   }
 
 }

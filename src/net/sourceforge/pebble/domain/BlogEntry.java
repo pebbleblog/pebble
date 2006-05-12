@@ -99,7 +99,7 @@ public class BlogEntry extends Content {
   private String tags = "";
 
   /** the List of tags for this blog entry */
-  private List tagsAsList = new ArrayList();
+  private List<Tag> tagsAsList = new ArrayList<Tag>();
 
   /**
    * the excerpt of the blog entry
@@ -233,8 +233,8 @@ public class BlogEntry extends Content {
    *
    * @return the category as a String
    */
-  public Set getCategories() {
-    return new HashSet(categories);
+  public Set<Category> getCategories() {
+    return new HashSet<Category>(categories);
   }
 
   /**
@@ -242,8 +242,8 @@ public class BlogEntry extends Content {
    *
    * @return  a List of tags
    */
-  public List getAllTags() {
-    List list = new ArrayList();
+  public List<Tag> getAllTags() {
+    List<Tag> list = new ArrayList<Tag>();
 
     if (getCategories().size() > 0) {
       Iterator it = getCategories().iterator();
@@ -353,8 +353,7 @@ public class BlogEntry extends Content {
    */
   public boolean hasTag(String s) {
     if (s != null) {
-      Tag tag = getBlog().getTag(s);
-      return getAllTags().contains(tag);
+      return getAllTags().contains(new Tag(s, blog));
     } else {
       return false;
     }
@@ -374,7 +373,7 @@ public class BlogEntry extends Content {
    *
    * @return  a List of tags
    */
-  public List getTagsAsList() {
+  public List<Tag> getTagsAsList() {
     return this.tagsAsList;
   }
 

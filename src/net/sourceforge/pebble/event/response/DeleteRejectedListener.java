@@ -33,6 +33,7 @@ package net.sourceforge.pebble.event.response;
 
 import net.sourceforge.pebble.domain.BlogEntryResponse;
 import net.sourceforge.pebble.domain.BlogException;
+import net.sourceforge.pebble.domain.BlogService;
 import net.sourceforge.pebble.event.comment.CommentEvent;
 import net.sourceforge.pebble.event.trackback.TrackBackEvent;
 import org.apache.commons.logging.Log;
@@ -125,7 +126,8 @@ public class DeleteRejectedListener extends BlogEntryResponseListenerSupport {
       log.info(response.getSourceLink());
       log.info(response.getIpAddress());
       response.getBlogEntry().removeResponse(response);
-      response.getBlogEntry().store();
+      BlogService service = new BlogService();
+      service.putBlogEntry(response.getBlogEntry());
     } catch (BlogException be) {
       log.error("Could not store blog entry to delete rejected response", be);
     }

@@ -85,21 +85,27 @@ public class FeedAction extends Action {
     } else if (ifNoneMatch != null && ifNoneMatch.equals("\"" + httpFormat.format(lastModified) + "\"")) {
       return new NotModifiedView();
     } else {
-      Tag tag = getTag(blog, request);
-      Category category = getCategory(blog, request);
+      List blogEntries;
       String s = request.getParameter("includeAggregatedContent");
       boolean includeAggregatedContent = (s == null || s.equalsIgnoreCase("true"));
 
-      List blogEntries;
-      if (tag != null) {
-        blogEntries = blog.getRecentBlogEntries(tag.getName());
-        getModel().put("tag", tag);
-      } else if (category != null) {
-        blogEntries = blog.getRecentBlogEntries(category);
-        getModel().put("category", category);
+      if (blog instanceof Blog) {
+        Tag tag = getTag((Blog)blog, request);
+        Category category = getCategory((Blog)blog, request);
+
+        if (tag != null) {
+          blogEntries = ((Blog)blog).getRecentBlogEntries(tag);
+          getModel().put("tag", tag);
+        } else if (category != null) {
+          blogEntries = ((Blog)blog).getRecentBlogEntries(category);
+          getModel().put("category", category);
+        } else {
+          blogEntries = blog.getRecentBlogEntries();
+        }
       } else {
         blogEntries = blog.getRecentBlogEntries();
       }
+
       List blogEntriesForFeed = new ArrayList();
       Iterator it = blogEntries.iterator();
       while (it.hasNext()) {
@@ -135,48 +141,34 @@ public class FeedAction extends Action {
   /**
    * Helper method to find a named tag from a request parameter.
    *
-   * @param abstractBlog      the blog for which the feed is for
+   * @param blog      the blog for which the feed is for
    * @param request   the HTTP request containing the tag parameter
    * @return  a Tag instance, or null if the tag isn't
    *          specified or can't be found
    */
-  private Tag getTag(AbstractBlog abstractBlog, HttpServletRequest request) {
-    if (abstractBlog instanceof MultiBlog) {
-      // getting tag based, aggregated feed isn't supported
-      return null;
+  private Tag getTag(Blog blog, HttpServletRequest request) {
+    String tag = request.getParameter("tag");
+    if (tag != null) {
+      return new Tag(tag, blog);
     } else {
-      Blog blog = (Blog)abstractBlog;
-
-      String tag = request.getParameter("tag");
-      if (tag != null) {
-        return blog.getTag(tag);
-      } else {
-        return null;
-      }
+      return null;
     }
   }
 
   /**
    * Helper method to find a named category from a request parameter.
    *
-   * @param abstractBlog      the blog for which the feed is for
+   * @param blog      the blog for which the feed is for
    * @param request   the HTTP request containing the category parameter
    * @return  a Category instance, or null if the category isn't
    *          specified or can't be found
    */
-  private Category getCategory(AbstractBlog abstractBlog, HttpServletRequest request) {
-    if (abstractBlog instanceof MultiBlog) {
-      // getting Category based, aggregated feed isn't supported
-      return null;
+  private Category getCategory(Blog blog, HttpServletRequest request) {
+    String categoryId = request.getParameter("category");
+    if (categoryId != null) {
+      return blog.getCategory(categoryId);
     } else {
-      Blog blog = (Blog)abstractBlog;
-
-      String categoryId = request.getParameter("category");
-      if (categoryId != null) {
-        return blog.getCategory(categoryId);
-      } else {
-        return null;
-      }
+      return null;
     }
   }
 

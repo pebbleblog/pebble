@@ -52,11 +52,8 @@ public class Tag implements Permalinkable, Comparable {
   /** the name of the tag */
   private String name = "";
 
-  /** the blog entries associated with this tag */
-  private Set blogEntries = new HashSet();
-
   /** the rank for this tag */
-  private int rank;
+  protected int rank;
 
   /**
    * Creates a new tag with the specified properties.
@@ -64,7 +61,7 @@ public class Tag implements Permalinkable, Comparable {
    * @param name    the name
    * @param blog    a Blog instance
    */
-  Tag(String name, Blog blog) {
+  public Tag(String name, Blog blog) {
     setName(name);
     this.blog = blog;
   }
@@ -147,46 +144,6 @@ public class Tag implements Permalinkable, Comparable {
   }
 
   /**
-   * Gets the blog entries associated with this tag.
-   *
-   * @return  a Collection of BlogEntry instances
-   */
-  public Collection getBlogEntries() {
-    return new HashSet(blogEntries);
-  }
-
-  /**
-   * Adds a blog entry to this tag.
-   *
-   * @param blogEntry   a BlogEntry instance
-   */
-  public synchronized void addBlogEntry(BlogEntry blogEntry) {
-    if (blogEntry != null) {
-      this.blogEntries.add(blogEntry);
-    }
-  }
-
-  /**
-   * Removes a blog entry to this tag.
-   *
-   * @param blogEntry   a BlogEntry instance
-   */
-  public synchronized void removeBlogEntry(BlogEntry blogEntry) {
-    if (blogEntry != null) {
-      this.blogEntries.remove(blogEntry);
-    }
-  }
-
-  /**
-   * Gets the number of blog entries associated with this tag.
-   *
-   * @return  an int
-   */
-  public int getNumberOfBlogEntries() {
-    return this.blogEntries.size();
-  }
-
-  /**
    * Gets the rank for this tag.
    *
    * @return  an int between 1 and 10;
@@ -196,33 +153,19 @@ public class Tag implements Permalinkable, Comparable {
   }
 
   /**
-   * Sets the rank for this tag.
-   *
-   */
-  public void calculateRank(int[] thresholds) {
-    for (int i = 0; i < thresholds.length; i++) {
-      int numberOfBlogEntries = getNumberOfBlogEntries();
-      if (thresholds[i] >= numberOfBlogEntries) {
-        this.rank = i+1;
-        return;
-      }
-    }
-  }
-
-  /**
    * Given a string containing whitespace separated tags, this method returns a
    * List containing the tags.
    *
    * @param tags    a whitespace separated list of tags
    * @return        a List of Tag instances
    */
-  public static List parse(Blog blog, String tags) {
+  public static List<Tag> parse(Blog blog, String tags) {
     List list = new ArrayList();
 
     if (tags != null && tags.trim().length() > 0) {
       String s[] = tags.trim().split(" ");
       for (int i = 0; i < s.length; i++) {
-        Tag tag = tag = new Tag(s[i].trim(), blog);
+        Tag tag = new Tag(s[i].trim(), blog);
         if (!list.contains(tag)) {
           list.add(tag);
         }

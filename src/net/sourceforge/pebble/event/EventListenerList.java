@@ -90,7 +90,7 @@ public class EventListenerList {
   public void addBlogListener(BlogListener listener) {
     if (!blogListeners.contains(listener)) {
       blogListeners.add(listener);
-      log.info(listener.getClass().getName() + " registered");
+      log.debug(listener.getClass().getName() + " registered");
     }
   }
 
@@ -120,7 +120,7 @@ public class EventListenerList {
   public void addBlogEntryListener(BlogEntryListener listener) {
     if (!blogEntryListeners.contains(listener)) {
       blogEntryListeners.add(listener);
-      log.info(listener.getClass().getName() + " registered");
+      log.debug(listener.getClass().getName() + " registered");
     }
   }
 
@@ -141,7 +141,7 @@ public class EventListenerList {
   public void addCommentListener(CommentListener listener) {
     if (!commentListeners.contains(listener)) {
       commentListeners.add(listener);
-      log.info(listener.getClass().getName() + " registered");
+      log.debug(listener.getClass().getName() + " registered");
     }
   }
 
@@ -162,7 +162,7 @@ public class EventListenerList {
   public void addTrackBackListener(TrackBackListener listener) {
     if (!trackBackListeners.contains(listener)) {
       trackBackListeners.add(listener);
-      log.info(listener.getClass().getName() + " registered");
+      log.debug(listener.getClass().getName() + " registered");
     }
   }
 

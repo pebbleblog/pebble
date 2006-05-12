@@ -32,10 +32,7 @@
 package net.sourceforge.pebble.event.response;
 
 import net.sourceforge.pebble.PluginProperties;
-import net.sourceforge.pebble.domain.BlogEntryResponse;
-import net.sourceforge.pebble.domain.BlogException;
-import net.sourceforge.pebble.domain.Comment;
-import net.sourceforge.pebble.domain.State;
+import net.sourceforge.pebble.domain.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -86,7 +83,8 @@ public class SpamScoreListener extends BlogEntryResponseListenerSupport {
       log.info(response.getTitle() + " rejected : spam score is " + response.getSpamScore() + ", threshold is " + threshold);
       response.setState(State.REJECTED);
       try {
-        response.getBlogEntry().store();
+        BlogService service = new BlogService();
+        service.putBlogEntry(response.getBlogEntry());
       } catch (BlogException be) {
         log.error("Could not store blog entry to update state of response", be);
       }

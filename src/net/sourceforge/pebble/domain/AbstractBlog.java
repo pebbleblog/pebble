@@ -410,26 +410,6 @@ public abstract class AbstractBlog extends TimePeriod {
   public abstract List getRecentBlogEntries(int numberOfEntries);
 
   /**
-   * Gets the most recent blog entries for a given category, the number
-   * of which is specified.
-   *
-   * @param   category          a Category instance, or null
-   * @param   numberOfEntries   the number of entries to get
-   * @return  a List containing the most recent blog entries
-   */
-  public abstract List getRecentBlogEntries(Category category, int numberOfEntries);
-
-  /**
-   * Gets the most recent blog entries for a given tag, the number
-   * of which is specified.
-   *
-   * @param   tag               a String
-   * @param   numberOfEntries   the number of entries to get
-   * @return  a List containing the most recent blog entries
-   */
-  public abstract List getRecentBlogEntries(String tag, int numberOfEntries);
-
-  /**
    * Gets the most recent blog entries, the number of which is taken from
    * the recentBlogEntriesOnHomePage property.
    *
@@ -447,26 +427,6 @@ public abstract class AbstractBlog extends TimePeriod {
    */
   public void setRecentBlogEntries(List entries) {
     // do nothing
-  }
-
-  /**
-   * Gets the most recent blog entries, the number of which is taken from
-   * the recentBlogEntriesOnHomePage property.
-   *
-   * @return  a List containing the most recent blog entries
-   */
-  public List getRecentBlogEntries(Category category) {
-    return getRecentBlogEntries(category, getRecentBlogEntriesOnHomePage());
-  }
-
-  /**
-   * Gets the most recent blog entries, the number of which is taken from
-   * the recentBlogEntriesOnHomePage property.
-   *
-   * @return  a List containing the most recent blog entries
-   */
-  public List getRecentBlogEntries(String tag) {
-    return getRecentBlogEntries(tag, getRecentBlogEntriesOnHomePage());
   }
 
   /**

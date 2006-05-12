@@ -37,6 +37,8 @@ import org.apache.commons.logging.LogFactory;
 import java.io.Serializable;
 import java.util.*;
 
+import net.sourceforge.pebble.comparator.ReverseBlogEntryIdComparator;
+
 /**
  * Represents a blog category.
  *
@@ -72,7 +74,7 @@ public class Category implements Permalinkable, Comparable, Serializable {
   private List subCategories = new ArrayList();
 
   /** the blog entries associated with this category */
-  private transient Set blogEntries = new HashSet();
+  private List<String> blogEntries = new ArrayList<String>();
 
   /**
    * Default, no args constructor.
@@ -358,24 +360,19 @@ public class Category implements Permalinkable, Comparable, Serializable {
    *
    * @return  a Collection of BlogEntry instances
    */
-  public Collection getBlogEntries() {
-    return new HashSet(blogEntries);
+  public List<String> getBlogEntries() {
+    return new ArrayList<String>(blogEntries);
   }
 
   /**
    * Adds a blog entry to this category.
    *
-   * @param blogEntry   a BlogEntry instance
+   * @param blogEntry   a blog entry id
    */
-  public synchronized void addBlogEntry(BlogEntry blogEntry) {
-    if (blogEntry != null) {
-      this.blogEntries.add(blogEntry);
-
-      Iterator it = getTagsAsList().iterator();
-      while (it.hasNext()) {
-        Tag tag = (Tag)it.next();
-        tag.addBlogEntry(blogEntry);
-      }
+  public synchronized void addBlogEntry(String blogEntry) {
+    if (blogEntry != null && !blogEntries.contains(blogEntry)) {
+      blogEntries.add(blogEntry);
+      Collections.sort(blogEntries, new ReverseBlogEntryIdComparator());
 
       if (getParent() != null) {
         getParent().addBlogEntry(blogEntry);
@@ -386,17 +383,11 @@ public class Category implements Permalinkable, Comparable, Serializable {
   /**
    * Removes a blog entry to this category.
    *
-   * @param blogEntry   a BlogEntry instance
+   * @param blogEntry   a blog entry id
    */
-  public synchronized void removeBlogEntry(BlogEntry blogEntry) {
+  public synchronized void removeBlogEntry(String blogEntry) {
     if (blogEntry != null) {
-      this.blogEntries.remove(blogEntry);
-
-      Iterator it = getTagsAsList().iterator();
-      while (it.hasNext()) {
-        Tag tag = (Tag)it.next();
-        tag.removeBlogEntry(blogEntry);
-      }
+      blogEntries.remove(blogEntry);
 
       if (getParent() != null) {
         getParent().removeBlogEntry(blogEntry);
