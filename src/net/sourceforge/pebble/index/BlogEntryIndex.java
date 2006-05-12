@@ -121,6 +121,10 @@ public class BlogEntryIndex {
    */
   private void writeIndex() {
     try {
+      File indexes = new File(blog.getIndexesDirectory());
+      if (!indexes.exists()) {
+        indexes.mkdir();
+      }
       File indexFile = new File(blog.getIndexesDirectory(), "blogentries.index");
       BufferedWriter writer = new BufferedWriter(new FileWriter(indexFile));
 

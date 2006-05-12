@@ -53,6 +53,7 @@ import org.apache.lucene.queryParser.ParseException;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.ArrayList;
 import java.io.IOException;
 
 /**
@@ -70,6 +71,13 @@ public class SearchIndex {
 
   public SearchIndex(Blog blog) {
     this.blog = blog;
+  }
+
+  /**
+   * Clears the index.
+   */
+  public void clear() {
+    index(new ArrayList());
   }
 
   /**
@@ -209,7 +217,7 @@ public class SearchIndex {
         Category category;
         while (it.hasNext()) {
           category = (Category)it.next();
-          document.add(Field.Text("category", category.getName()));
+          document.add(Field.Text("category", category.getId()));
         }
 
         Iterator tags = blogEntry.getAllTags().iterator();
