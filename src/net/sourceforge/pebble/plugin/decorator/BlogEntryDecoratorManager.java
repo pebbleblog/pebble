@@ -127,10 +127,10 @@ public class BlogEntryDecoratorManager {
    */
   private BlogEntry execute(BlogEntry blogEntry, BlogEntryDecoratorContext context) {
     // clone so that we don't actually change the real entry
-    BlogEntry clone = (BlogEntry)blogEntry.clone();
+    //BlogEntry clone = (BlogEntry)blogEntry.clone();
 
     BlogEntryDecoratorChain chain = new BlogEntryDecoratorChain(decorators);
-    context.setBlogEntry(clone);
+    context.setBlogEntry(blogEntry);
     try {
       chain.decorate(context);
     } catch (BlogEntryDecoratorException e) {

@@ -54,7 +54,6 @@ public class CategoryIndexTest extends SingleBlogTestCase {
     Category root = builder.getRootCategory();
     root.setTags("myblog");
     blog.setRootCategory(root);
-    DailyBlog today = blog.getBlogForToday();
     BlogEntry blogEntry = new BlogEntry(blog);
     blogEntry.addCategory(java);
     blogEntry.setTags("junit");

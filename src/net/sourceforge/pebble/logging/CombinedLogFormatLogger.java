@@ -62,17 +62,13 @@ public class CombinedLogFormatLogger extends AbstractLogger {
 
   private List entries = new ArrayList();
 
-  private LoggingThread loggingThread;
-
-  private boolean dirty = false;
-
   /** a cached copy of the log for today */
-  private Log logForToday;
+//  private Log logForToday;
 
   public CombinedLogFormatLogger(Blog blog) {
     super(blog);
     filenameFormat.setTimeZone(blog.getTimeZone());
-    logForToday = super.getLog();
+//    logForToday = super.getLog();
   }
 
   /**
@@ -96,32 +92,43 @@ public class CombinedLogFormatLogger extends AbstractLogger {
     entry.setReferer(request.getHeader(REFERER_HEADER));
     entry.setAgent(request.getHeader(USER_AGENT_HEADER));
     entries.add(entry);
-    dirty = true;
+
+    if (entries.size() > 100) {
+      flush();
+    }
+  }
+
+  private void flush() {
+    try {
+      write(entries);
+      entries.clear();
+//      logForToday = super.getLog();
+    } catch (IOException ioe) {
+      ioe.printStackTrace();
+    }
   }
 
   /**
    * Called to start this logger.
    */
   public void start() {
-    loggingThread = new LoggingThread();
-    loggingThread.start();
   }
 
   /**
    * Called to stop this logger.
    */
-  public void stop() {
-    loggingThread.setActive(false);
+  public synchronized void stop() {
+    flush();
   }
 
-  /**
-   * Gets the log for today - overridden to use the cache copy of todays log.
-   *
-   * @return a Log object
-   */
-  public Log getLog() {
-    return logForToday;
-  }
+//  /**
+//   * Gets the log for today - overridden to use the cached copy of todays log.
+//   *
+//   * @return a Log object
+//   */
+//  public Log getLog() {
+//    return logForToday;
+//  }
 
   /**
    * Gets a copy of the log file for a given year, month and day.
@@ -213,9 +220,9 @@ public class CombinedLogFormatLogger extends AbstractLogger {
       }
     } catch (Exception e) {
       e.printStackTrace();
-    } finally {
-      return new LogSummaryItem(blog, cal.getTime(), totalRequests);
     }
+
+    return new LogSummaryItem(blog, cal.getTime(), totalRequests);
   }
 
   /**
@@ -272,129 +279,6 @@ public class CombinedLogFormatLogger extends AbstractLogger {
       writer.flush();
       writer.close();
     }
-  }
-
-  /**
-   * This is a thread that logs referers and visited pages to the enclosing
-   * Blog instance.
-   */
-  class LoggingThread extends Thread {
-
-    private boolean active = true;
-
-    public LoggingThread() {
-      super("pebble/" + blog.getId() + "/log");
-    }
-
-    public void setActive(boolean active) {
-      this.active = active;
-    }
-
-    public void run() {
-      while (active) {
-        try {
-          Thread.sleep(1000 * 60); // 1 minute
-        } catch (InterruptedException e) {
-        }
-
-        synchronized (CombinedLogFormatLogger.this) {
-          if (dirty) {
-            try {
-              write(entries);
-              //logForToday.addLogEntries(entries);
-              entries.clear();
-              logForToday = CombinedLogFormatLogger.super.getLog();
-            } catch (IOException ioe) {
-              ioe.printStackTrace();
-            }
-            dirty = false;
-          }
-        }
-      }
-    }
-
-  }
-
-  /**
-   * Standalone program to convert logs from previous versions of Pebble
-   * to the new combined format.
-   *
-   * @param args    the command line arguments
-   * @throws Exception    if something goes wrong
-   */
-  public static void main(String[] args) throws Exception {
-    DAOFactory.setConfiguredFactory(new FileDAOFactory());
-    Blog blog = new Blog(args[0]);
-    CombinedLogFormatLogger logger = new CombinedLogFormatLogger(blog);
-    for (int year = 0; year < blog.getYearlyBlogs().size(); year++) {
-      YearlyBlog yearlyBlog = (YearlyBlog)blog.getYearlyBlogs().get(year);
-      MonthlyBlog[] months = yearlyBlog.getMonthlyBlogs();
-      for (int month = 0; month < 12; month++) {
-        DailyBlog days[] = months[month].getAllDailyBlogs();
-        for (int day = 0; day < days.length; day++) {
-          try {
-            String pathToDay = getPath(days[day]);
-            File visitedPagesFile = new File(pathToDay, "visited-pages.txt");
-            File referersFile = new File(pathToDay, "referers.txt");
-            BufferedReader reader = new BufferedReader(new FileReader(visitedPagesFile));
-            ArrayList entries = new ArrayList();
-            LogEntry entry;
-
-            String line = reader.readLine();
-            while (line != null) {
-              entry = new LogEntry();
-              entry.setDate(days[day].getDate());
-              entry.setRequest("GET ");
-              String uri = line;
-              int index = uri.indexOf("/");
-              index = uri.indexOf("/", index+1);
-              index = uri.indexOf("/", index+1);
-              uri = uri.substring(index);
-              entry.setRequest("GET " + uri);
-              entries.add(entry);
-              line = reader.readLine();
-            }
-            reader.close();
-
-            reader = new BufferedReader(new FileReader(referersFile));
-
-            line = reader.readLine();
-            int count = 0;
-            while (line != null) {
-              entry = (LogEntry)entries.get(count);
-              if (line.length() > 0) {
-                entry.setReferer(line);
-              }
-              count++;
-              line = reader.readLine();
-            }
-            reader.close();
-
-            logger.write(entries);
-
-            referersFile.delete();
-            visitedPagesFile.delete();
-          } catch (Exception e) {
-            System.out.println(e.getMessage());
-          }
-        }
-      }
-    }
-  }
-
-  private static String getPath(DailyBlog dailyBlog) {
-    DecimalFormat format = new DecimalFormat("00");
-    StringBuffer path = new StringBuffer();
-    path.append(dailyBlog.getBlog().getRoot());
-    path.append(File.separator);
-    path.append(dailyBlog.getMonthlyBlog().getYearlyBlog().getYear());
-    path.append(File.separator);
-    path.append(format.format(dailyBlog.getMonthlyBlog().getMonth()));
-    path.append(File.separator);
-    path.append(format.format(dailyBlog.getDay()));
-    path.append(File.separator);
-
-    return path.toString();
   }
 
 }

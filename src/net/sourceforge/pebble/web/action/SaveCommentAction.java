@@ -74,7 +74,7 @@ public class SaveCommentAction extends Action {
   public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
 
     String referer = request.getHeader(REFERER_HEADER);
-    log.info("Referer is " + referer);
+    log.debug("Referer is " + referer);
 
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
     BlogEntry blogEntry = null;

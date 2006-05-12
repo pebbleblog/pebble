@@ -46,6 +46,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.jstl.core.Config;
 import java.io.IOException;
 import java.util.Locale;
+import java.net.URLDecoder;
 
 /**
  * A filter respsonsible for setting up common objects.
@@ -114,6 +115,7 @@ public class PreProcessingFilter implements Filter {
         index = uri.length();
       }
       String blogName = uri.substring(1, index);
+      blogName = URLDecoder.decode(blogName, "UTF-8");
       if (BlogManager.getInstance().hasBlog(blogName)) {
         blog = BlogManager.getInstance().getBlog(blogName);
         uri = uri.substring(index, uri.length());
