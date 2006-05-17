@@ -40,129 +40,167 @@ import net.sourceforge.pebble.domain.*;
  */
 public class CategoryIndexTest extends SingleBlogTestCase {
 
-  /**
-   * Tests that category/tag statistics are updated.
-   */
-  public void testCategoryAndTagStatisticsUpdated() throws Exception {
-    CategoryBuilder builder = new CategoryBuilder(blog);
-    Category java = new Category("/java", "Java");
-    builder.addCategory(java);
-    java.setTags("java");
-    Category apple = new Category("/apple", "Apple");
-    builder.addCategory(apple);
-    apple.setTags("apple");
-    Category root = builder.getRootCategory();
-    root.setTags("myblog");
-    blog.setRootCategory(root);
-    BlogEntry blogEntry = new BlogEntry(blog);
-    blogEntry.addCategory(java);
-    blogEntry.setTags("junit");
+  private CategoryIndex index;
+  private Category java;
 
-    assertEquals(0, root.getNumberOfBlogEntries());
-    assertEquals(0, java.getNumberOfBlogEntries());
-    assertEquals(0, apple.getNumberOfBlogEntries());
-    assertEquals(0, blog.getTagIndex().getTag("myblog").getNumberOfBlogEntries());
-    assertEquals(0, blog.getTagIndex().getTag("java").getNumberOfBlogEntries());
-    assertEquals(0, blog.getTagIndex().getTag("apple").getNumberOfBlogEntries());
-    assertEquals(0, blog.getTagIndex().getTag("junit").getNumberOfBlogEntries());
-    assertTrue(blog.getTagIndex().getTags().isEmpty());
+  public void setUp() {
+    super.setUp();
 
-    // blog entry added
-    BlogService service = new BlogService();
-    service.putBlogEntry(blogEntry);
-
-    assertEquals(1, root.getNumberOfBlogEntries());
-    assertEquals(1, java.getNumberOfBlogEntries());
-    assertEquals(0, apple.getNumberOfBlogEntries());
-    assertEquals(1, blog.getTagIndex().getTag("myblog").getNumberOfBlogEntries());
-    assertEquals(1, blog.getTagIndex().getTag("java").getNumberOfBlogEntries());
-    assertEquals(0, blog.getTagIndex().getTag("apple").getNumberOfBlogEntries());
-    assertEquals(1, blog.getTagIndex().getTag("junit").getNumberOfBlogEntries());
-    assertFalse(blog.getTagIndex().getTags().contains(blog.getTagIndex().getTag("apple")));
-
-    // blog entry changed - category added
-    blogEntry.addCategory(apple);
-    service.putBlogEntry(blogEntry);
-    assertEquals(1, root.getNumberOfBlogEntries());
-    assertEquals(1, java.getNumberOfBlogEntries());
-    assertEquals(1, apple.getNumberOfBlogEntries());
-    assertEquals(1, blog.getTagIndex().getTag("myblog").getNumberOfBlogEntries());
-    assertEquals(1, blog.getTagIndex().getTag("java").getNumberOfBlogEntries());
-    assertEquals(1, blog.getTagIndex().getTag("apple").getNumberOfBlogEntries());
-    assertEquals(1, blog.getTagIndex().getTag("junit").getNumberOfBlogEntries());
-
-    // blog entry changed - category changed
-    blogEntry.removeAllCategories();
-    blogEntry.addCategory(apple);
-    service.putBlogEntry(blogEntry);
-    assertEquals(1, root.getNumberOfBlogEntries());
-    assertEquals(0, java.getNumberOfBlogEntries());
-    assertEquals(1, apple.getNumberOfBlogEntries());
-    assertEquals(1, blog.getTagIndex().getTag("myblog").getNumberOfBlogEntries());
-    assertEquals(0, blog.getTagIndex().getTag("java").getNumberOfBlogEntries());
-    assertEquals(1, blog.getTagIndex().getTag("apple").getNumberOfBlogEntries());
-    assertEquals(1, blog.getTagIndex().getTag("junit").getNumberOfBlogEntries());
-    assertFalse(blog.getTagIndex().getTags().contains(blog.getTagIndex().getTag("java")));
-
-    // blog entry changed - tag removed
-    blogEntry.setTags("");
-    service.putBlogEntry(blogEntry);
-    assertEquals(1, root.getNumberOfBlogEntries());
-    assertEquals(0, java.getNumberOfBlogEntries());
-    assertEquals(1, apple.getNumberOfBlogEntries());
-    assertEquals(1, blog.getTagIndex().getTag("myblog").getNumberOfBlogEntries());
-    assertEquals(0, blog.getTagIndex().getTag("java").getNumberOfBlogEntries());
-    assertEquals(1, blog.getTagIndex().getTag("apple").getNumberOfBlogEntries());
-    assertEquals(0, blog.getTagIndex().getTag("junit").getNumberOfBlogEntries());
-    assertFalse(blog.getTagIndex().getTags().contains(blog.getTagIndex().getTag("java")));
-    assertFalse(blog.getTagIndex().getTags().contains(blog.getTagIndex().getTag("junit")));
-
-    // blog entry changed - tag added
-    blogEntry.setTags("junit");
-    service.putBlogEntry(blogEntry);
-    assertEquals(1, root.getNumberOfBlogEntries());
-    assertEquals(0, java.getNumberOfBlogEntries());
-    assertEquals(1, apple.getNumberOfBlogEntries());
-    assertEquals(1, blog.getTagIndex().getTag("myblog").getNumberOfBlogEntries());
-    assertEquals(0, blog.getTagIndex().getTag("java").getNumberOfBlogEntries());
-    assertEquals(1, blog.getTagIndex().getTag("apple").getNumberOfBlogEntries());
-    assertEquals(1, blog.getTagIndex().getTag("junit").getNumberOfBlogEntries());
-    assertFalse(blog.getTagIndex().getTags().contains(blog.getTagIndex().getTag("java")));
-
-    // blog entry rejected
-    blogEntry.setState(State.REJECTED);
-    service.putBlogEntry(blogEntry);
-    assertEquals(0, root.getNumberOfBlogEntries());
-    assertEquals(0, java.getNumberOfBlogEntries());
-    assertEquals(0, apple.getNumberOfBlogEntries());
-    assertEquals(0, blog.getTagIndex().getTag("myblog").getNumberOfBlogEntries());
-    assertEquals(0, blog.getTagIndex().getTag("java").getNumberOfBlogEntries());
-    assertEquals(0, blog.getTagIndex().getTag("apple").getNumberOfBlogEntries());
-    assertEquals(0, blog.getTagIndex().getTag("junit").getNumberOfBlogEntries());
-    assertTrue(blog.getTagIndex().getTags().isEmpty());
-
-    // blog entry approved
-    blogEntry.setState(State.APPROVED);
-    service.putBlogEntry(blogEntry);
-    assertEquals(1, root.getNumberOfBlogEntries());
-    assertEquals(0, java.getNumberOfBlogEntries());
-    assertEquals(1, apple.getNumberOfBlogEntries());
-    assertEquals(1, blog.getTagIndex().getTag("myblog").getNumberOfBlogEntries());
-    assertEquals(0, blog.getTagIndex().getTag("java").getNumberOfBlogEntries());
-    assertEquals(1, blog.getTagIndex().getTag("apple").getNumberOfBlogEntries());
-    assertEquals(1, blog.getTagIndex().getTag("junit").getNumberOfBlogEntries());
-    assertFalse(blog.getTagIndex().getTags().contains(blog.getTagIndex().getTag("java")));
-
-    // blog entry removed
-    service.removeBlogEntry(blogEntry);
-    assertEquals(0, root.getNumberOfBlogEntries());
-    assertEquals(0, java.getNumberOfBlogEntries());
-    assertEquals(0, apple.getNumberOfBlogEntries());
-    assertEquals(0, blog.getTagIndex().getTag("myblog").getNumberOfBlogEntries());
-    assertEquals(0, blog.getTagIndex().getTag("java").getNumberOfBlogEntries());
-    assertEquals(0, blog.getTagIndex().getTag("apple").getNumberOfBlogEntries());
-    assertEquals(0, blog.getTagIndex().getTag("junit").getNumberOfBlogEntries());
-    assertTrue(blog.getTagIndex().getTags().isEmpty());
+    this.index = new CategoryIndex(blog);
+    java = new Category("/java", "Java");
+    blog.addCategory(java);
   }
 
+  /**
+   * Tests that a single blog entry can be indexed.
+   */
+  public void testIndexBlogEntry() throws Exception {
+    BlogEntry blogEntry = new BlogEntry(blog);
+    blogEntry.addCategory(java);
+    index.index(blogEntry);
+
+    assertEquals(1, java.getNumberOfBlogEntries());
+    assertTrue(index.getRecentBlogEntries(java, 10).contains(blogEntry.getId()));
+  }
+
+  /**
+   * Tests that a single blog entry can be unindexed.
+   */
+  public void testUnindexBlogEntry() throws Exception {
+    BlogEntry blogEntry = new BlogEntry(blog);
+    blogEntry.addCategory(java);
+    index.index(blogEntry);
+
+    blogEntry.removeAllCategories();
+    index.unindex(blogEntry);
+
+    assertEquals(0, java.getNumberOfBlogEntries());
+    assertFalse(index.getRecentBlogEntries(java, 10).contains(blogEntry.getId()));
+  }
+
+//  /**
+//   * Tests that category/tag statistics are updated.
+//   */
+//  public void testCategoryAndTagStatisticsUpdated() throws Exception {
+//    CategoryBuilder builder = new CategoryBuilder(blog);
+//    Category java = new Category("/java", "Java");
+//    builder.addCategory(java);
+//    java.setTags("java");
+//    Category apple = new Category("/apple", "Apple");
+//    builder.addCategory(apple);
+//    apple.setTags("apple");
+//    Category root = builder.getRootCategory();
+//    root.setTags("myblog");
+//    blog.setRootCategory(root);
+//    BlogEntry blogEntry = new BlogEntry(blog);
+//    blogEntry.addCategory(java);
+//    blogEntry.setTags("junit");
+//
+//    assertEquals(0, root.getNumberOfBlogEntries());
+//    assertEquals(0, java.getNumberOfBlogEntries());
+//    assertEquals(0, apple.getNumberOfBlogEntries());
+//    assertEquals(0, blog.getTagIndex().getTag("myblog").getNumberOfBlogEntries());
+//    assertEquals(0, blog.getTagIndex().getTag("java").getNumberOfBlogEntries());
+//    assertEquals(0, blog.getTagIndex().getTag("apple").getNumberOfBlogEntries());
+//    assertEquals(0, blog.getTagIndex().getTag("junit").getNumberOfBlogEntries());
+//    assertTrue(blog.getTagIndex().getTags().isEmpty());
+//
+//    // blog entry added
+//    BlogService service = new BlogService();
+//    service.putBlogEntry(blogEntry);
+//
+//    assertEquals(1, root.getNumberOfBlogEntries());
+//    assertEquals(1, java.getNumberOfBlogEntries());
+//    assertEquals(0, apple.getNumberOfBlogEntries());
+//    assertEquals(1, blog.getTagIndex().getTag("myblog").getNumberOfBlogEntries());
+//    assertEquals(1, blog.getTagIndex().getTag("java").getNumberOfBlogEntries());
+//    assertEquals(0, blog.getTagIndex().getTag("apple").getNumberOfBlogEntries());
+//    assertEquals(1, blog.getTagIndex().getTag("junit").getNumberOfBlogEntries());
+//    assertFalse(blog.getTagIndex().getTags().contains(blog.getTagIndex().getTag("apple")));
+//
+//    // blog entry changed - category added
+//    blogEntry.addCategory(apple);
+//    service.putBlogEntry(blogEntry);
+//    assertEquals(1, root.getNumberOfBlogEntries());
+//    assertEquals(1, java.getNumberOfBlogEntries());
+//    assertEquals(1, apple.getNumberOfBlogEntries());
+//    assertEquals(1, blog.getTagIndex().getTag("myblog").getNumberOfBlogEntries());
+//    assertEquals(1, blog.getTagIndex().getTag("java").getNumberOfBlogEntries());
+//    assertEquals(1, blog.getTagIndex().getTag("apple").getNumberOfBlogEntries());
+//    assertEquals(1, blog.getTagIndex().getTag("junit").getNumberOfBlogEntries());
+//
+//    // blog entry changed - category changed
+//    blogEntry.removeAllCategories();
+//    blogEntry.addCategory(apple);
+//    service.putBlogEntry(blogEntry);
+//    assertEquals(1, root.getNumberOfBlogEntries());
+//    assertEquals(0, java.getNumberOfBlogEntries());
+//    assertEquals(1, apple.getNumberOfBlogEntries());
+//    assertEquals(1, blog.getTagIndex().getTag("myblog").getNumberOfBlogEntries());
+//    assertEquals(0, blog.getTagIndex().getTag("java").getNumberOfBlogEntries());
+//    assertEquals(1, blog.getTagIndex().getTag("apple").getNumberOfBlogEntries());
+//    assertEquals(1, blog.getTagIndex().getTag("junit").getNumberOfBlogEntries());
+//    assertFalse(blog.getTagIndex().getTags().contains(blog.getTagIndex().getTag("java")));
+//
+//    // blog entry changed - tag removed
+//    blogEntry.setTags("");
+//    service.putBlogEntry(blogEntry);
+//    assertEquals(1, root.getNumberOfBlogEntries());
+//    assertEquals(0, java.getNumberOfBlogEntries());
+//    assertEquals(1, apple.getNumberOfBlogEntries());
+//    assertEquals(1, blog.getTagIndex().getTag("myblog").getNumberOfBlogEntries());
+//    assertEquals(0, blog.getTagIndex().getTag("java").getNumberOfBlogEntries());
+//    assertEquals(1, blog.getTagIndex().getTag("apple").getNumberOfBlogEntries());
+//    assertEquals(0, blog.getTagIndex().getTag("junit").getNumberOfBlogEntries());
+//    assertFalse(blog.getTagIndex().getTags().contains(blog.getTagIndex().getTag("java")));
+//    assertFalse(blog.getTagIndex().getTags().contains(blog.getTagIndex().getTag("junit")));
+//
+//    // blog entry changed - tag added
+//    blogEntry.setTags("junit");
+//    service.putBlogEntry(blogEntry);
+//    assertEquals(1, root.getNumberOfBlogEntries());
+//    assertEquals(0, java.getNumberOfBlogEntries());
+//    assertEquals(1, apple.getNumberOfBlogEntries());
+//    assertEquals(1, blog.getTagIndex().getTag("myblog").getNumberOfBlogEntries());
+//    assertEquals(0, blog.getTagIndex().getTag("java").getNumberOfBlogEntries());
+//    assertEquals(1, blog.getTagIndex().getTag("apple").getNumberOfBlogEntries());
+//    assertEquals(1, blog.getTagIndex().getTag("junit").getNumberOfBlogEntries());
+//    assertFalse(blog.getTagIndex().getTags().contains(blog.getTagIndex().getTag("java")));
+//
+//    // blog entry rejected
+//    blogEntry.setState(State.REJECTED);
+//    service.putBlogEntry(blogEntry);
+//    assertEquals(0, root.getNumberOfBlogEntries());
+//    assertEquals(0, java.getNumberOfBlogEntries());
+//    assertEquals(0, apple.getNumberOfBlogEntries());
+//    assertEquals(0, blog.getTagIndex().getTag("myblog").getNumberOfBlogEntries());
+//    assertEquals(0, blog.getTagIndex().getTag("java").getNumberOfBlogEntries());
+//    assertEquals(0, blog.getTagIndex().getTag("apple").getNumberOfBlogEntries());
+//    assertEquals(0, blog.getTagIndex().getTag("junit").getNumberOfBlogEntries());
+//    assertTrue(blog.getTagIndex().getTags().isEmpty());
+//
+//    // blog entry approved
+//    blogEntry.setState(State.APPROVED);
+//    service.putBlogEntry(blogEntry);
+//    assertEquals(1, root.getNumberOfBlogEntries());
+//    assertEquals(0, java.getNumberOfBlogEntries());
+//    assertEquals(1, apple.getNumberOfBlogEntries());
+//    assertEquals(1, blog.getTagIndex().getTag("myblog").getNumberOfBlogEntries());
+//    assertEquals(0, blog.getTagIndex().getTag("java").getNumberOfBlogEntries());
+//    assertEquals(1, blog.getTagIndex().getTag("apple").getNumberOfBlogEntries());
+//    assertEquals(1, blog.getTagIndex().getTag("junit").getNumberOfBlogEntries());
+//    assertFalse(blog.getTagIndex().getTags().contains(blog.getTagIndex().getTag("java")));
+//
+//    // blog entry removed
+//    service.removeBlogEntry(blogEntry);
+//    assertEquals(0, root.getNumberOfBlogEntries());
+//    assertEquals(0, java.getNumberOfBlogEntries());
+//    assertEquals(0, apple.getNumberOfBlogEntries());
+//    assertEquals(0, blog.getTagIndex().getTag("myblog").getNumberOfBlogEntries());
+//    assertEquals(0, blog.getTagIndex().getTag("java").getNumberOfBlogEntries());
+//    assertEquals(0, blog.getTagIndex().getTag("apple").getNumberOfBlogEntries());
+//    assertEquals(0, blog.getTagIndex().getTag("junit").getNumberOfBlogEntries());
+//    assertTrue(blog.getTagIndex().getTags().isEmpty());
+//  }
+//
 }

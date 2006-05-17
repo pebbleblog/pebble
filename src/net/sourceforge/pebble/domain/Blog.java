@@ -266,6 +266,7 @@ public class Blog extends AbstractBlog {
     // these are required to keep the various indexes up to date
     eventListenerList.addBlogEntryListener(new BlogEntryIndexListener());
     eventListenerList.addBlogEntryListener(new TagIndexListener());
+    eventListenerList.addBlogEntryListener(new CategoryIndexListener());
     eventListenerList.addBlogEntryListener(new SearchIndexListener());
   }
 

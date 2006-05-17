@@ -73,9 +73,9 @@ public class ViewResponsesActionTest extends SecureActionTestCase {
     assertEquals(0, pageable.getMaxPages());
     assertEquals(0, pageable.getPreviousPage());
     assertEquals(0, pageable.getNextPage());
-    assertEquals(new Integer(0), model.get("numberOfApprovedResponses"));
-    assertEquals(new Integer(0), model.get("numberOfPendingResponses"));
-    assertEquals(new Integer(0), model.get("numberOfRejectedResponses"));
+    assertEquals(0, model.get("numberOfApprovedResponses"));
+    assertEquals(0, model.get("numberOfPendingResponses"));
+    assertEquals(0, model.get("numberOfRejectedResponses"));
   }
 
   public void testActionCalledWithDefaultParametersAndLessThanAPageOfResponses() throws Exception {
@@ -88,6 +88,8 @@ public class ViewResponsesActionTest extends SecureActionTestCase {
       Comment comment = blogEntry.createComment("title", "body"+i, "author", "email", "website", "127.0.0.1");
       blogEntry.addComment(comment);
     }
+    service.putBlogEntry(blogEntry);
+
     View view = action.process(request, response);
     assertTrue(view instanceof ResponsesView);
 
@@ -99,9 +101,9 @@ public class ViewResponsesActionTest extends SecureActionTestCase {
     assertEquals(1, pageable.getMaxPages());
     assertEquals(0, pageable.getPreviousPage());
     assertEquals(0, pageable.getNextPage());
-    assertEquals(new Integer(numberOfComments), model.get("numberOfApprovedResponses"));
-    assertEquals(new Integer(0), model.get("numberOfPendingResponses"));
-    assertEquals(new Integer(0), model.get("numberOfRejectedResponses"));
+    assertEquals(numberOfComments, model.get("numberOfApprovedResponses"));
+    assertEquals(0, model.get("numberOfPendingResponses"));
+    assertEquals(0, model.get("numberOfRejectedResponses"));
   }
 
 }

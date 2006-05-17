@@ -98,7 +98,7 @@ public class CategoryIndex {
    * @param blogEntry   a BlogEntry instance
    */
   public synchronized void unindex(BlogEntry blogEntry) {
-    for (Category category : blogEntry.getCategories()) {
+    for (Category category : blog.getCategories()) {
       category.removeBlogEntry(blogEntry.getId());
     }
 
