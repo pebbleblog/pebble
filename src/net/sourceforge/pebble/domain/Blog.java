@@ -82,9 +82,6 @@ public class Blog extends AbstractBlog {
   /** the collection of YearlyBlog instance that this root blog is managing */
   private List yearlyBlogs;
 
-  /** the response manager associated with this blog */
-  private ResponseManager responseManager;
-
   /** the root category associated with this blog */
   private Category rootCategory;
 
@@ -114,6 +111,7 @@ public class Blog extends AbstractBlog {
 
   private SearchIndex searchIndex;
   private BlogEntryIndex blogEntryIndex;
+  private ResponseIndex responseIndex;
   private TagIndex tagIndex;
   private CategoryIndex categoryIndex;
 
@@ -149,14 +147,23 @@ public class Blog extends AbstractBlog {
       pe.printStackTrace();
     }
 
-    responseManager = new ResponseManager(this);
     refererFilterManager = new RefererFilterManager(this);
     pluginProperties = new PluginProperties(this);
     blogEntryDecoratorManager = new BlogEntryDecoratorManager(this, getBlogEntryDecorators());
 
     yearlyBlogs = new ArrayList();
+
+//    // reindex the blog if the indexes don't exist
+//    File indexes = new File(getIndexesDirectory());
+//    if (!indexes.exists()) {
+//      indexes.mkdir();
+//      reindex();
+//    }
+
+    // create the various indexes for this blog
     searchIndex = new SearchIndex(this);
     blogEntryIndex = new BlogEntryIndex(this);
+    responseIndex = new ResponseIndex(this);
     tagIndex = new TagIndex(this);
     categoryIndex = new CategoryIndex(this);
     staticPageIndex = new StaticPageIndex(this);
@@ -292,9 +299,8 @@ public class Blog extends AbstractBlog {
       }
     }
 
-    // register the response manager so that the recent list of comments
-    // can be maintained
-    eventListenerList.addCommentListener(responseManager);
+    // this is required to keep the response index up to date
+    eventListenerList.addCommentListener(new ResponseIndexListener());
   }
 
   /**
@@ -319,9 +325,8 @@ public class Blog extends AbstractBlog {
       }
     }
 
-    // register the response manager so that the recent list of TrackBacks
-    // can be maintained
-    eventListenerList.addTrackBackListener(responseManager);
+    // this is required to keep the response index up to date
+    eventListenerList.addTrackBackListener(new ResponseIndexListener());
   }
 
   /**
@@ -731,7 +736,6 @@ public class Blog extends AbstractBlog {
     return blogEntries;
   }
 
-
   /**
    * Gets the most recent blog entries, the number of which is taken from
    * the recentBlogEntriesOnHomePage property.
@@ -766,6 +770,86 @@ public class Blog extends AbstractBlog {
     }
 
     return blogEntries;
+  }
+
+  /**
+   * Gets the most recent responses.
+   *
+   * @return a List containing the most recent blog entries
+   */
+  public List getRecentResponses() {
+    int number = getRecentCommentsOnHomePage();
+    BlogService service = new BlogService();
+    List<String> responseIds = responseIndex.getRecentResponses(number);
+    List responses = new ArrayList();
+    for (String responseId : responseIds) {
+      responses.add(service.getResponse(this, responseId));
+    }
+
+    return responses;
+  }
+
+  /**
+   * Gets the list of approved responses.
+   *
+   * @return  a List of response IDs
+   */
+  public List<String> getApprovedResponses() {
+    return responseIndex.getApprovedResponses();
+  }
+
+  /**
+   * Gets the list of pending responses.
+   *
+   * @return  a List of response IDs
+   */
+  public List<String> getPendingResponses() {
+    return responseIndex.getPendingResponses();
+  }
+
+  /**
+   * Gets the list of rejected responses.
+   *
+   * @return  a List of response IDs
+   */
+  public List<String> getRejectedResponses() {
+    return responseIndex.getRejectedResponses();
+  }
+
+  /**
+   * Gets the number of responses.
+   *
+   * @return the number of responses
+   */
+  public int getNumberOfResponses() {
+    return responseIndex.getNumberOfResponses();
+  }
+
+  /**
+   * Gets the number of approved responses.
+   *
+   * @return the number of approved responses
+   */
+  public int getNumberOfApprovedResponses() {
+    return responseIndex.getNumberOfApprovedResponses();
+  }
+
+  /**
+   * Gets the number of pending responses.
+   *
+   * @return the number of pending responses
+   */
+  public int getNumberOfPendingResponses() {
+    return responseIndex.getNumberOfPendingResponses();
+  }
+
+  /**
+   * Gets the number of rejected responses.
+   *
+   * @return the number of rejected responses
+   */
+  public int getNumberOfRejectedResponses() {
+    return responseIndex.getNumberOfRejectedResponses();
   }
 
   /**
@@ -817,15 +901,6 @@ public class Blog extends AbstractBlog {
     } else {
       return null;
     }
-  }
-
-  /**
-   * Gets the object managing responses.
-   *
-   * @return  a ResponseManager instance
-   */
-  public ResponseManager getResponseManager() {
-    return this.responseManager;
   }
 
   /**
@@ -932,6 +1007,15 @@ public class Blog extends AbstractBlog {
    */
   public BlogEntryIndex getBlogEntryIndex() {
     return this.blogEntryIndex;
+  }
+
+  /**
+   * Gets the response index.
+   *
+   * @return  a ResponseIndex instance
+   */
+  public ResponseIndex getResponseIndex() {
+    return this.responseIndex;
   }
 
   /**
@@ -1322,6 +1406,9 @@ public class Blog extends AbstractBlog {
 
     blogEntryIndex.clear();
     blogEntryIndex.index(blogEntries);
+
+    responseIndex.clear();
+    responseIndex.index(blogEntries);
 
     tagIndex.clear();
     tagIndex.index(blogEntries);

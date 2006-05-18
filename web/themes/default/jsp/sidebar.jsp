@@ -52,11 +52,11 @@
   </div>
   </c:if>
 
-  <c:if test="${blog.recentCommentsOnHomePage > 0 and not empty blog.responseManager.recentResponses}">
+  <c:if test="${blog.recentCommentsOnHomePage > 0 and blog.numberOfApprovedResponses > 0}">
   <div class="sidebarItem">
     <div class="sidebarItemTitle"><span><fmt:message key="sidebar.recentResponses" /></span></div>
     <ul>
-    <c:forEach var="aResponse" items="${blog.responseManager.recentResponses}" varStatus="status" end="${blog.recentCommentsOnHomePage-1}">
+    <c:forEach var="aResponse" items="${blog.recentResponses}" varStatus="status" end="${blog.recentCommentsOnHomePage-1}">
       <li><a href="${aResponse.permalink}" title="${aResponse.permalink}">${aResponse.title}</a><br />${aResponse.truncatedContent}</li>
     </c:forEach>
     </ul>

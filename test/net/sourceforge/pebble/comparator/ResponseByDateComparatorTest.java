@@ -36,14 +36,14 @@ import net.sourceforge.pebble.domain.*;
 import java.util.Date;
 
 /**
- * Tests for the BlogEntryResponseByDateComparator class.
+ * Tests for the ResponseByDateComparator class.
  *
  * @author    Simon Brown
  */
-public class BlogEntryResponseByDateComparatorTest extends SingleBlogTestCase {
+public class ResponseByDateComparatorTest extends SingleBlogTestCase {
 
   public void testCompare() {
-    BlogEntryResponseByDateComparator comp = new BlogEntryResponseByDateComparator();
+    ResponseByDateComparator comp = new ResponseByDateComparator();
     BlogEntry b1 = new BlogEntry(blog);
 
     Comment c1 = b1.createComment("", "", "", "", "", "", new Date(1000), State.APPROVED);

@@ -32,7 +32,7 @@
 package net.sourceforge.pebble.event.response;
 
 import net.sourceforge.pebble.PluginProperties;
-import net.sourceforge.pebble.domain.BlogEntryResponse;
+import net.sourceforge.pebble.domain.Response;
 import net.sourceforge.pebble.domain.BlogException;
 import net.sourceforge.pebble.domain.State;
 import net.sourceforge.pebble.domain.BlogService;
@@ -63,9 +63,9 @@ public class IpAddressListener extends BlogEntryResponseListenerSupport {
   /**
    * Called when a comment or TrackBack has been added.
    *
-   * @param response a BlogEntryResponse
+   * @param response a Response
    */
-  protected void blogEntryResponseAdded(BlogEntryResponse response) {
+  protected void blogEntryResponseAdded(Response response) {
     PluginProperties props = response.getBlogEntry().getBlog().getPluginProperties();
 
     if (isListed(response, props.getProperty(BLACKLIST_KEY))) {
@@ -90,9 +90,9 @@ public class IpAddressListener extends BlogEntryResponseListenerSupport {
   /**
    * Called when a comment or TrackBack has been approved.
    *
-   * @param response a BlogEntryResponse
+   * @param response a Response
    */
-  protected void blogEntryResponseApproved(BlogEntryResponse response) {
+  protected void blogEntryResponseApproved(Response response) {
     PluginProperties props = response.getBlogEntry().getBlog().getPluginProperties();
 
     if (response.getIpAddress() == null || response.getIpAddress().trim().length() == 0) {
@@ -113,9 +113,9 @@ public class IpAddressListener extends BlogEntryResponseListenerSupport {
   /**
    * Called when a comment or TrackBack has been rejected.
    *
-   * @param response a BlogEntryResponse
+   * @param response a Response
    */
-  protected void blogEntryResponseRejected(BlogEntryResponse response) {
+  protected void blogEntryResponseRejected(Response response) {
     PluginProperties props = response.getBlogEntry().getBlog().getPluginProperties();
 
     if (response.getIpAddress() == null || response.getIpAddress().trim().length() == 0) {
@@ -137,12 +137,12 @@ public class IpAddressListener extends BlogEntryResponseListenerSupport {
    * Determines whether the IP address of the specified response is contained
    * within a given list of IP addresses.
    *
-   * @param response    a BlogEntryResponse instance
+   * @param response    a Response instance
    * @param list        a list of IP addresses, comma separated
    * @return    true if the IP address is contained within the list,
    *            false otherwise
    */
-  private boolean isListed(BlogEntryResponse response, String list) {
+  private boolean isListed(Response response, String list) {
     if (response.getIpAddress() == null) {
       return false;
     }
@@ -166,11 +166,11 @@ public class IpAddressListener extends BlogEntryResponseListenerSupport {
   /**
    * Adds the IP address of the specified response to the given list.
    *
-   * @param response    a BlogEntryResponse instance
+   * @param response    a Response instance
    * @param list        a list of IP addresses, comma separated
    * @return  an updated list of IP addresses
    */
-  private String addIpAddress(BlogEntryResponse response, String list) {
+  private String addIpAddress(Response response, String list) {
     if (list == null || list.trim().length() == 0) {
       return response.getIpAddress();
     } else if (!isListed(response, list)) {
@@ -183,11 +183,11 @@ public class IpAddressListener extends BlogEntryResponseListenerSupport {
   /**
    * Removes the IP address of the specified response to the given list.
    *
-   * @param response    a BlogEntryResponse instance
+   * @param response    a Response instance
    * @param list        a list of IP addresses, comma separated
    * @return  an updated list of IP addresses
    */
-  private String removeIpAddress(BlogEntryResponse response, String list) {
+  private String removeIpAddress(Response response, String list) {
     if (response.getIpAddress() == null) {
       return list;
     }

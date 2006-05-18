@@ -32,7 +32,7 @@
 package net.sourceforge.pebble.event.response;
 
 import net.sourceforge.pebble.PluginProperties;
-import net.sourceforge.pebble.domain.BlogEntryResponse;
+import net.sourceforge.pebble.domain.Response;
 import net.sourceforge.pebble.domain.BlogException;
 import net.sourceforge.pebble.domain.State;
 import net.sourceforge.pebble.domain.BlogService;
@@ -67,9 +67,9 @@ public class ContentSpamListener extends BlogEntryResponseListenerSupport {
   /**
    * Called when a comment or TrackBack has been added.
    *
-   * @param response a BlogEntryResponse
+   * @param response a Response
    */
-  protected void blogEntryResponseAdded(BlogEntryResponse response) {
+  protected void blogEntryResponseAdded(Response response) {
     PluginProperties props = response.getBlogEntry().getBlog().getPluginProperties();
     String regexList = props.getProperty(REGEX_LIST_KEY);
     String regexes[] = null;

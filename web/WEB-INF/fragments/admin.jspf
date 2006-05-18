@@ -38,10 +38,10 @@
 
   <li><b>Responses</b>
   <br />
-  <a href="viewResponses.secureaction" title="Manage approved responses">Approved (<fmt:formatNumber value="${blog.responseManager.numberOfApprovedResponses}"/>)</a>
+  <a href="viewResponses.secureaction" title="Manage approved responses">Approved (<fmt:formatNumber value="${blog.numberOfApprovedResponses}"/>)</a>
   <br />
-  <a href="viewResponses.secureaction?type=pending" title="Manage pending responses">Pending (<fmt:formatNumber value="${blog.responseManager.numberOfPendingResponses}"/>)</a> |
-  <a href="viewResponses.secureaction?type=rejected" title="Manage rejected responses">Rejected (<fmt:formatNumber value="${blog.responseManager.numberOfRejectedResponses}"/>)</a>
+  <a href="viewResponses.secureaction?type=pending" title="Manage pending responses">Pending (<fmt:formatNumber value="${blog.numberOfPendingResponses}"/>)</a> |
+  <a href="viewResponses.secureaction?type=rejected" title="Manage rejected responses">Rejected (<fmt:formatNumber value="${blog.numberOfRejectedResponses}"/>)</a>
   </li>
   </pebble:isBlogContributor>
 

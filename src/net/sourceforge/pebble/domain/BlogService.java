@@ -171,4 +171,20 @@ public class BlogService {
     }
   }
 
+  /**
+   * Gets the blog entry with the specified id.
+   *
+   * @param responseId    the id of the response
+   * @return  a response instance, or null if the entry couldn't be found
+   */
+  public Response getResponse(Blog blog, String responseId) {
+    String blogEntryId = responseId.substring(responseId.indexOf("/")+1, responseId.lastIndexOf("/"));
+    BlogEntry blogEntry = getBlogEntry(blog, blogEntryId);
+    if (blogEntry != null) {
+      return blogEntry.getResponse(responseId);
+    } else {
+      return null;
+    }
+  }
+
 }

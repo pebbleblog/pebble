@@ -74,7 +74,7 @@ public class ManageResponsesAction extends SecureAction {
 
     if (ids != null && submit != null) {
       for (String id : ids) {
-        BlogEntryResponse ber = getBlogEntryResponse(blog, id);
+        Response ber = getBlogEntryResponse(blog, id);
 
         if (ber == null) {
           continue;
@@ -124,7 +124,7 @@ public class ManageResponsesAction extends SecureAction {
     return new String[]{Constants.BLOG_CONTRIBUTOR_ROLE};
   }
 
-  private BlogEntryResponse getBlogEntryResponse(Blog blog, String guid) {
+  private Response getBlogEntryResponse(Blog blog, String guid) {
     // response key is of the form type/blogEntryId/responseId
     String type = guid.substring(0, 1);
     String blogEntryId = guid.substring(2, guid.indexOf("/", 2));

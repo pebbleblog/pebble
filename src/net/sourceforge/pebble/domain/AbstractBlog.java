@@ -416,7 +416,7 @@ public abstract class AbstractBlog extends TimePeriod {
    * @return  a List containing the most recent blog entries
    */
   public List getRecentBlogEntries() {
-    return this.getRecentBlogEntries(getRecentBlogEntriesOnHomePage());
+    return getRecentBlogEntries(getRecentBlogEntriesOnHomePage());
   }
 
   /**

@@ -58,6 +58,7 @@ public abstract class SingleBlogTestCase extends PebbleTestCase {
 
   protected void tearDown() throws Exception {
     blog.getBlogEntryIndex().clear();
+    blog.getResponseIndex().clear();
     blog.getTagIndex().clear();
     BlogManager.getInstance().removeAllBlogs();
     super.tearDown();

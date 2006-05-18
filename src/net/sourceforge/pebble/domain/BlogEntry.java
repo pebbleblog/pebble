@@ -37,11 +37,10 @@ import net.sourceforge.pebble.dao.PersistenceException;
 import net.sourceforge.pebble.event.blogentry.BlogEntryEvent;
 import net.sourceforge.pebble.event.comment.CommentEvent;
 import net.sourceforge.pebble.event.trackback.TrackBackEvent;
-import net.sourceforge.pebble.index.SearchIndex;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import net.sourceforge.pebble.web.validation.ValidationContext;
-import net.sourceforge.pebble.comparator.BlogEntryResponseByDateComparator;
+import net.sourceforge.pebble.comparator.ResponseByDateComparator;
 import net.sourceforge.pebble.security.PebbleUserDetailsService;
 import net.sourceforge.pebble.security.PebbleUserDetails;
 
@@ -744,13 +743,13 @@ public class BlogEntry extends Content {
   /**
    * Gets a list of all comments and TrackBacks.
    *
-   * @return  a List of all BlogEntryResponse instances
+   * @return  a List of all Response instances
    */
-  public List getResponses() {
-    List responses = new ArrayList();
+  public List<Response> getResponses() {
+    List<Response> responses = new ArrayList();
     responses.addAll(getComments());
     responses.addAll(getTrackBacks());
-    Collections.sort(responses, new BlogEntryResponseByDateComparator());
+    Collections.sort(responses, new ResponseByDateComparator());
     return responses;
   }
 
@@ -759,8 +758,8 @@ public class BlogEntry extends Content {
    *
    * @return a List of Comment instances
    */
-  public List getComments() {
-    List allComments = new ArrayList();
+  public List<Comment> getComments() {
+    List<Comment> allComments = new ArrayList();
     Iterator it = comments.iterator();
     while (it.hasNext()) {
       allComments.addAll(getComments((Comment)it.next()));
@@ -769,8 +768,8 @@ public class BlogEntry extends Content {
     return allComments;
   }
 
-  private List getComments(Comment comment) {
-    List allComments = new ArrayList();
+  private List<Comment> getComments(Comment comment) {
+    List<Comment> allComments = new ArrayList();
     allComments.add(comment);
     Iterator it = comment.getComments().iterator();
     while (it.hasNext()) {
@@ -794,8 +793,8 @@ public class BlogEntry extends Content {
    *
    * @return a List of TrackBack instances
    */
-  public List getTrackBacks() {
-    return Collections.unmodifiableList(trackBacks);
+  public List<TrackBack> getTrackBacks() {
+    return new ArrayList<TrackBack>(trackBacks);
   }
 
   /**
@@ -983,8 +982,23 @@ public class BlogEntry extends Content {
   }
 
   /**
-   * Removes the specified TrackBack.
+   * Gets the response specified by the guid.
    *
+   * @param guid    the response guid
+   * @return  a Response object, or null if no response exists
+   */
+  public Response getResponse(String guid) {
+    long id = Long.parseLong(guid.substring(guid.lastIndexOf("/")+1));
+    if (guid.startsWith("c")) {
+      return getComment(id);
+    } else {
+      return getTrackBack(id);
+    }
+  }
+
+  /**
+   * Removes the specified TrackBack.
+   *                   
    * @param id    the id of the TrackBack to be removed
    */
   public synchronized void removeTrackBack(long id) {
@@ -1004,9 +1018,9 @@ public class BlogEntry extends Content {
   /**
    * Removes the specified comment or TrackBack.
    *
-   * @param response    the BlogEntryResponse to be removed
+   * @param response    the Response to be removed
    */
-  public void removeResponse(BlogEntryResponse response) {
+  public void removeResponse(Response response) {
     if (response instanceof Comment) {
       removeComment(response.getId());
     } else if (response instanceof TrackBack) {

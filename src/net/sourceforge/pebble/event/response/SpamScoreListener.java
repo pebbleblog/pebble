@@ -59,9 +59,9 @@ public class SpamScoreListener extends BlogEntryResponseListenerSupport {
   /**
    * Called when a comment or TrackBack has been added.
    *
-   * @param response a BlogEntryResponse
+   * @param response a Response
    */
-  protected void blogEntryResponseAdded(BlogEntryResponse response) {
+  protected void blogEntryResponseAdded(Response response) {
     PluginProperties props = response.getBlogEntry().getBlog().getPluginProperties();
     String propertyName = "";
     if (response instanceof Comment) {

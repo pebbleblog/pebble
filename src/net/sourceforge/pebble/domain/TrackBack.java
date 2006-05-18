@@ -41,7 +41,7 @@ import java.util.Date;
  *
  * @author    Simon Brown
  */
-public class TrackBack extends BlogEntryResponse {
+public class TrackBack extends Response {
 
   /** the excerpt */
   private String excerpt;

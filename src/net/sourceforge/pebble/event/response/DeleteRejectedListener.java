@@ -31,7 +31,7 @@
  */
 package net.sourceforge.pebble.event.response;
 
-import net.sourceforge.pebble.domain.BlogEntryResponse;
+import net.sourceforge.pebble.domain.Response;
 import net.sourceforge.pebble.domain.BlogException;
 import net.sourceforge.pebble.domain.BlogService;
 import net.sourceforge.pebble.event.comment.CommentEvent;
@@ -97,9 +97,9 @@ public class DeleteRejectedListener extends BlogEntryResponseListenerSupport {
   /**
    * Called when a comment or TrackBack has been added.
    *
-   * @param response a BlogEntryResponse
+   * @param response a Response
    */
-  protected void blogEntryResponseAdded(BlogEntryResponse response) {
+  protected void blogEntryResponseAdded(Response response) {
     if (response.isRejected()) {
       deleteRejectedResponse(response);
     }
@@ -108,16 +108,16 @@ public class DeleteRejectedListener extends BlogEntryResponseListenerSupport {
   /**
    * Called when a comment or TrackBack has been rejected.
    *
-   * @param response a BlogEntryResponse
+   * @param response a Response
    */
-  protected void blogEntryResponseRejected(BlogEntryResponse response) {
+  protected void blogEntryResponseRejected(Response response) {
     deleteRejectedResponse(response);
   }
 
   /**
    * Helper method to delete rejected response.
    */
-  private void deleteRejectedResponse(BlogEntryResponse response) {
+  private void deleteRejectedResponse(Response response) {
     try {
       log.info("Deleting rejected response for " + response.getBlogEntry().getTitle());
       log.info(response.getTitle());

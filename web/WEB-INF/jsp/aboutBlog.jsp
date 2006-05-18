@@ -21,7 +21,7 @@
     <tr class="odd">
       <td valign="top"><b>Responses</b></td>
       <td>
-          <fmt:formatNumber value="${blog.responseManager.numberOfResponses}"/>
+          <fmt:formatNumber value="${blog.numberOfResponses}"/>
       </td>
     </tr>
 

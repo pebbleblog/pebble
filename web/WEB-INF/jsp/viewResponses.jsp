@@ -15,9 +15,9 @@
 
   <div class="contentItemBody">
     <div align="center">
-    <a href="viewResponses.secureaction?type=approved">Approved (<fmt:formatNumber value="${numberOfApprovedResponses}" />)</a> |
-    <a href="viewResponses.secureaction?type=pending">Pending (<fmt:formatNumber value="${numberOfPendingResponses}" />)</a> |
-    <a href="viewResponses.secureaction?type=rejected">Rejected (<fmt:formatNumber value="${numberOfRejectedResponses}" />)</a>
+    <a href="viewResponses.secureaction?type=approved">Approved (<fmt:formatNumber value="${blog.numberOfApprovedResponses}" />)</a> |
+    <a href="viewResponses.secureaction?type=pending">Pending (<fmt:formatNumber value="${blog.numberOfPendingResponses}" />)</a> |
+    <a href="viewResponses.secureaction?type=rejected">Rejected (<fmt:formatNumber value="${blog.numberOfRejectedResponses}" />)</a>
     </div>
     <br />
 

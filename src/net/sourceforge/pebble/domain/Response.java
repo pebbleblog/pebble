@@ -39,7 +39,7 @@ import java.util.Date;
  *
  * @author    Simon Brown
  */
-public abstract class BlogEntryResponse extends Content {
+public abstract class Response extends Content {
 
   /** the title */
   protected String title;
@@ -65,7 +65,7 @@ public abstract class BlogEntryResponse extends Content {
    * @param state       the state of the comment
    * @param blogEntry   the owning blog entry
    */
-  BlogEntryResponse(String title, String ipAddress, Date date, State state, BlogEntry blogEntry) {
+  Response(String title, String ipAddress, Date date, State state, BlogEntry blogEntry) {
     this.blogEntry = blogEntry;
 
     setTitle(title);
@@ -86,7 +86,7 @@ public abstract class BlogEntryResponse extends Content {
   /**
    * Gets the globally unique id of this response.
    *
-   * @return  a String of the form blogEntryId/responseId/type
+   * @return  a String of the form type/blogEntryId/responseId
    */
   public String getGuid() {
     String s = "";

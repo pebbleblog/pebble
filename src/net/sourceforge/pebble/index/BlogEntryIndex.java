@@ -1,19 +1,17 @@
 package net.sourceforge.pebble.index;
 
+import net.sourceforge.pebble.comparator.ReverseBlogEntryIdComparator;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.domain.BlogEntry;
 import net.sourceforge.pebble.domain.DailyBlog;
-import net.sourceforge.pebble.comparator.ReverseBlogEntryIdComparator;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import java.io.*;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Keeps an index of all blog entries, allowing efficient access at runtime.
@@ -23,8 +21,6 @@ import java.util.Date;
 public class BlogEntryIndex {
 
   private static final Log log = LogFactory.getLog(BlogEntryIndex.class);
-
-  private static final String INDEX_FORMAT = "yyyy/MM/dd";
 
   private Blog blog;
 

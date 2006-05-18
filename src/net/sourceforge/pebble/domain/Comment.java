@@ -41,7 +41,7 @@ import java.util.*;
  *
  * @author    Simon Brown
  */
-public class Comment extends BlogEntryResponse {
+public class Comment extends Response {
 
   /** the body of the comment */
   private String body;

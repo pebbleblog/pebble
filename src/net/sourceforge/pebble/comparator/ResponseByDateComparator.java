@@ -31,17 +31,17 @@
  */
 package net.sourceforge.pebble.comparator;
 
-import net.sourceforge.pebble.domain.BlogEntryResponse;
+import net.sourceforge.pebble.domain.Response;
 
 import java.util.Comparator;
 
 /**
- * A comparator used to order BlogEntryResponse instances, in reverse order
+ * A comparator used to order Response instances, in reverse order
  * of their date.
  *
  * @author    Simon Brown
  */
-public class BlogEntryResponseByDateComparator implements Comparator {
+public class ResponseByDateComparator implements Comparator {
 
   /**
    * Compares two objects.
@@ -52,8 +52,8 @@ public class BlogEntryResponseByDateComparator implements Comparator {
    *          the same as or greater than the first, respectively
    */
   public int compare(Object o1, Object o2) {
-    BlogEntryResponse r1 = (BlogEntryResponse)o1;
-    BlogEntryResponse r2 = (BlogEntryResponse)o2;
+    Response r1 = (Response)o1;
+    Response r2 = (Response)o2;
 
     return r2.getDate().compareTo(r1.getDate());
   }

@@ -31,7 +31,7 @@
  */
 package net.sourceforge.pebble.domain;
 
-import net.sourceforge.pebble.comparator.BlogEntryResponseByDateComparator;
+import net.sourceforge.pebble.comparator.ResponseByDateComparator;
 import net.sourceforge.pebble.event.comment.CommentEvent;
 import net.sourceforge.pebble.event.comment.CommentListener;
 import net.sourceforge.pebble.event.trackback.TrackBackEvent;
@@ -73,11 +73,11 @@ public class ResponseManager implements CommentListener, TrackBackListener {
   public ResponseManager(Blog blog) {
     this.blog = blog;
 
-    recentComments = new TreeSet(new BlogEntryResponseByDateComparator());
-    recentTrackBacks = new TreeSet(new BlogEntryResponseByDateComparator());
-    approvedResponses = new TreeSet(new BlogEntryResponseByDateComparator());
-    pendingResponses = new TreeSet(new BlogEntryResponseByDateComparator());
-    rejectedResponses = new TreeSet(new BlogEntryResponseByDateComparator());
+    recentComments = new TreeSet(new ResponseByDateComparator());
+    recentTrackBacks = new TreeSet(new ResponseByDateComparator());
+    approvedResponses = new TreeSet(new ResponseByDateComparator());
+    pendingResponses = new TreeSet(new ResponseByDateComparator());
+    rejectedResponses = new TreeSet(new ResponseByDateComparator());
   }
 
   /**

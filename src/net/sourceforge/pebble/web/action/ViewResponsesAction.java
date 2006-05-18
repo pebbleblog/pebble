@@ -33,6 +33,7 @@ package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.domain.BlogService;
 import net.sourceforge.pebble.util.Pageable;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.impl.ResponsesView;
@@ -42,6 +43,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Iterator;
 
 /**
  * Allows the user to view all recently added responses.
@@ -51,7 +53,7 @@ import java.util.List;
 public class ViewResponsesAction extends SecureAction {
 
   /** the number of responses to show per page */
-  static final int PAGE_SIZE = 50;
+  static final int PAGE_SIZE = 20;
 
   /**
    * Peforms the processing associated with this action.
@@ -61,7 +63,7 @@ public class ViewResponsesAction extends SecureAction {
    * @return the name of the next view
    */
   public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
-    Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
+    final Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
 
     String type = request.getParameter("type");
     if (type == null) {
@@ -81,22 +83,29 @@ public class ViewResponsesAction extends SecureAction {
 
     List responses = null;
     if (type.equalsIgnoreCase("pending")) {
-      responses = new ArrayList(blog.getResponseManager().getPendingResponses());
+      responses = new ArrayList(blog.getPendingResponses());
     } else if (type.equalsIgnoreCase("rejected")) {
-      responses = new ArrayList(blog.getResponseManager().getRejectedResponses());
+      responses = new ArrayList(blog.getRejectedResponses());
     } else {
-      responses = new ArrayList(blog.getResponseManager().getRecentResponses());
+      responses = new ArrayList(blog.getApprovedResponses());
     }
 
-    Pageable pageable = new Pageable(responses);
+    Pageable pageable = new Pageable(responses) {
+      public List getListForPage() {
+        List responses = new ArrayList();
+        BlogService service = new BlogService();
+        Iterator it = super.getListForPage().iterator();
+        while (it.hasNext()) {
+          responses.add(service.getResponse(blog, (String)it.next()));
+        }
+        return responses;
+      }
+    };
     pageable.setPageSize(PAGE_SIZE);
     pageable.setPage(page);
     getModel().put("pageable", pageable);
 
     getModel().put("type", type);
-    getModel().put("numberOfApprovedResponses", new Integer(blog.getResponseManager().getRecentResponses().size()));
-    getModel().put("numberOfPendingResponses", new Integer(blog.getResponseManager().getPendingResponses().size()));
-    getModel().put("numberOfRejectedResponses", new Integer(blog.getResponseManager().getRejectedResponses().size()));
 
     return new ResponsesView();
   }

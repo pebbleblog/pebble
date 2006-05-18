@@ -226,6 +226,8 @@ public class SaveBlogEntryAction extends SecureAction {
       return new BlogEntryFormView();
     } else {
       try {
+        BlogService service = new BlogService();
+        service.putBlogEntry(blogEntry);
         blogEntry.store();
 
         blogEntry.getBlog().getSearchIndex().index(blogEntry);

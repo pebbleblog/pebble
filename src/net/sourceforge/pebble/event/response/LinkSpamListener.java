@@ -65,9 +65,9 @@ public class LinkSpamListener extends BlogEntryResponseListenerSupport {
   /**
    * Called when a comment or TrackBack has been added.
    *
-   * @param response a BlogEntryResponse
+   * @param response a Response
    */
-  protected void blogEntryResponseAdded(BlogEntryResponse response) {
+  protected void blogEntryResponseAdded(Response response) {
     String content = response.getContent();
     if (content != null) {
       Matcher m = HTML_LINK_PATTERN.matcher(content);

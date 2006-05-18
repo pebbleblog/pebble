@@ -31,7 +31,7 @@
  */
 package net.sourceforge.pebble.event.response;
 
-import net.sourceforge.pebble.domain.BlogEntryResponse;
+import net.sourceforge.pebble.domain.Response;
 import net.sourceforge.pebble.event.comment.CommentEvent;
 import net.sourceforge.pebble.event.comment.CommentListener;
 import net.sourceforge.pebble.event.trackback.TrackBackEvent;
@@ -120,33 +120,33 @@ public abstract class BlogEntryResponseListenerSupport implements CommentListene
   /**
    * Called when a comment or TrackBack has been added.
    *
-   * @param response    a BlogEntryResponse
+   * @param response    a Response
    */
-  protected void blogEntryResponseAdded(BlogEntryResponse response) {
+  protected void blogEntryResponseAdded(Response response) {
   }
 
   /**
    * Called when a comment or TrackBack has been removed.
    *
-   * @param response    a BlogEntryResponse
+   * @param response    a Response
    */
-  protected void blogEntryResponseRemoved(BlogEntryResponse response) {
+  protected void blogEntryResponseRemoved(Response response) {
   }
 
   /**
    * Called when a comment or TrackBack has been approved.
    *
-   * @param response    a BlogEntryResponse
+   * @param response    a Response
    */
-  protected void blogEntryResponseApproved(BlogEntryResponse response) {
+  protected void blogEntryResponseApproved(Response response) {
   }
 
   /**
    * Called when a comment or TrackBack has been rejected.
    *
-   * @param response    a BlogEntryResponse
+   * @param response    a Response
    */
-  protected void blogEntryResponseRejected(BlogEntryResponse response) {
+  protected void blogEntryResponseRejected(Response response) {
   }
 
 }
