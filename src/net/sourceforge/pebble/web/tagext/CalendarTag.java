@@ -129,6 +129,9 @@ public class  CalendarTag extends TagSupport {
         DailyBlog daily = blog.getBlogForDay(cal.getTime());
 
         String formattedNumber = numberFormatter.format(cal.get(Calendar.DAY_OF_MONTH));
+        if (formattedNumber.length() == 1) {
+          formattedNumber = "&nbsp;" + formattedNumber;
+        }
 
         if (count % 7 == 0) {
           out.write("<tr>");

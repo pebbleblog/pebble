@@ -85,6 +85,10 @@ public abstract class HtmlView extends JspView {
     String uri = "/themes/" + blog.getTheme() + "/jsp/template.jsp";
     log.debug("Dispatching to " + uri);
 
+    response.setHeader("Cache-Control","no-cache, no-store");
+    response.setDateHeader("Expires", 0);
+    response.setHeader("Pragma","no-cache");
+
     try {
       RequestDispatcher dispatcher = context.getRequestDispatcher(uri);
       dispatcher.forward(request, response);

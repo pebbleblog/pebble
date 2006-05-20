@@ -807,6 +807,15 @@ public class BlogEntry extends Content {
   }
 
   /**
+   * Gets the number of responses that have been left for this blog entry.
+   *
+   * @return the number of responses as a int
+   */
+  public int getNumberOfResponses() {
+    return getResponses().size();
+  }
+
+  /**
    * Creates a new comment for this blog entry. This method doesn't actually
    * <b>add</b> the comment too.
    *
@@ -998,7 +1007,7 @@ public class BlogEntry extends Content {
 
   /**
    * Removes the specified TrackBack.
-   *                   
+   *
    * @param id    the id of the TrackBack to be removed
    */
   public synchronized void removeTrackBack(long id) {

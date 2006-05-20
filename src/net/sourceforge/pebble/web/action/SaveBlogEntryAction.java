@@ -53,6 +53,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.ParseException;
 
 /**
  * Saves a blog entry.
@@ -84,14 +87,6 @@ public class SaveBlogEntryAction extends SecureAction {
       type = Integer.parseInt(request.getParameter("type"));
     } catch (NumberFormatException nfe) {
       // do nothing, type will default to NEW
-    }
-    switch (type) {
-      case BlogEntry.STATIC_PAGE :
-        getModel().put(Constants.TITLE_KEY, "Edit static page");
-        break;
-      default :
-        getModel().put(Constants.TITLE_KEY, "Edit blog entry");
-        break;
     }
 
     if (submitType != null && submitType.equalsIgnoreCase(PREVIEW)) {
@@ -270,12 +265,13 @@ public class SaveBlogEntryAction extends SecureAction {
         return blogEntry;
       default :
         // we're creating a new blog entry
-        return blogEntry = new BlogEntry(blog);
+        return new BlogEntry(blog);
     }
   }
 
   private void populateBlogEntry(BlogEntry blogEntry, HttpServletRequest request) {
     Blog blog = (Blog)request.getAttribute(Constants.BLOG_KEY);
+    String type = request.getParameter("type");
     String title = request.getParameter("title");
     String subtitle = request.getParameter("subtitle");
     String body = StringUtils.filterNewlines(request.getParameter("body"));
@@ -287,6 +283,20 @@ public class SaveBlogEntryAction extends SecureAction {
     String trackBacksEnabled = request.getParameter("trackBacksEnabled");
     String category[] = request.getParameterValues("category");
     String author = SecurityUtils.getUsername();
+
+    // the date can only set on new entries
+    if (type != null && type.equals("1")) {
+      DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM, blog.getLocale());
+      log.info("Formatting using " + dateFormat.format(new Date()));
+      Date date = null;
+      try {
+        date = dateFormat.parse(request.getParameter("date"));
+        blogEntry.setDate(date);
+      } catch (ParseException pe) {
+        // do nothing, just log
+        log.warn(pe);
+      }
+    }
 
     blogEntry.setTitle(title);
     blogEntry.setSubtitle(subtitle);

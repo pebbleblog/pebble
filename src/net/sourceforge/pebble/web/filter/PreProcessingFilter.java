@@ -145,10 +145,6 @@ public class PreProcessingFilter implements Filter {
     Config.set(request, Config.FMT_LOCALE, blog.getLocale());
     Config.set(request, Config.FMT_FALLBACK_LOCALE, Locale.ENGLISH);
 
-    httpResponse.setHeader("Cache-Control","no-cache, no-store");
-    httpResponse.setDateHeader("Expires", 0);
-    httpResponse.setHeader("Pragma","no-cache");
-
     chain.doFilter(request, response);
   }
 }

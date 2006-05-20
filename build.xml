@@ -107,6 +107,8 @@
     </copy>
     <copy todir="web/themes/_pebble/images">
       <fileset dir="web/themes/default/images">
+        <include name="*.gif"/>
+        <include name="*.jpg"/>
         <include name="*.png"/>
       </fileset>
     </copy>
@@ -151,7 +153,7 @@
   </target>
 
   <target name="test" depends="build">
-    <junit printsummary="withOutAndErr" haltonfailure="yes" fork="no">
+    <junit printsummary="withOutAndErr" haltonfailure="yes" fork="yes">
       <classpath>
         <pathelement location="${classes.dir}"/>
         <pathelement path="${project.classpath}"/>

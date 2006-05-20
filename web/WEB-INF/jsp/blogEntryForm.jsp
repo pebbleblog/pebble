@@ -172,6 +172,16 @@ window.onload = function()
             <input type="text" name="tags" size="60" value="${blogEntry.tags}">
           </td>
         </tr>
+
+        <c:if test="${blogEntry.type == 1}">
+        <tr>
+          <td valign="top"><b>Date/time</b></td>
+          <td>
+            <input type="text" name="date" size="60" value="<fmt:formatDate value="${blogEntry.date}" type="both" dateStyle="medium" timeStyle="medium" />">
+          </td>
+        </tr>
+        </c:if>
+
       </c:if>
 
       <tr>

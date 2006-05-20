@@ -1,5 +1,4 @@
 <form name="searchForm" method="post" action="search.action" accept-charset="<c:out value="${blog.characterEncoding}"/>">
   <input type="text" name="query" />
-  <br />
   <input type="submit" value="<fmt:message key="common.search" />" />
 </form>

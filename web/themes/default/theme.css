@@ -1,71 +1,72 @@
 body {
   font-family: Lucida Grande, Tahoma, Verdana, Arial, sans-serif;
-  font-size: 0.75em;
-  background : white;
+  font-size: 13px;
+  background: gray url('images/background.jpg') repeat-x top left;
   color : black;
   text-align: left;
-  margin: 0px 16px 0px 16px;
+  margin: 48px 32px 32px 32px;
 }
 #container {
+  width: 800px;
+  margin: auto;
+  background: white;
 }
 #header {
-  background: #acc5d2 url('images/header.png') repeat-x bottom left;
+  background: white url('images/header.jpg') repeat-x bottom left;
   color: black;
-  font-weight: bold;
-  padding: 8px;
-  height: 100px;
+  font-weight: normal;
+  height: 200px;
   text-align: left;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 0px;
+  position: relative;
+}
+#mainBody {
+  background: white;
 }
 #content {
   padding-top: 8px;
   padding-right: 8px;
   padding-bottom: 8px;
   padding-left: 0px;
-  margin-right: 200px;
+  margin-right: 220px;
 }
 #sidebar {
   text-align: center;
   float: right;
-  width: 200px;
+  width: 220px;
   padding-left: 8px;
   padding-top: 0px;
   padding-right: 0px;
   padding-bottom: 32px;
   margin-top: 8px;
-  font-size: 10px;
+  font-size: 11px;
 }
 #footer {
+  background: gray url('images/footer.jpg') no-repeat bottom left;
   clear: both;
   text-align: center;
-  font-size: 10px;
+  font-size: 11px;
   padding: 8px;
-}
-#linearNavigationLinks {
-  background: #E0E0E0 url('images/linearnavigation.png') repeat-x top left;
-  text-align: center;
-  font-size: 10px;
-  padding: 6px;
   color: gray;
-  font-weight: bold;
 }
-#linearNavigationLinks a {
+#footer a {
   color: gray;
-  font-weight: bold;
 }
 .sidebarItem {
-  background: #E0E0E0 url('images/greygradient.png') repeat-x top left;
+  background: white;
   border-bottom: white solid 8px;
 }
 .sidebarItemTitle {
   text-align: left;
   font-size: 12px;
-  font-weight: bold;
-  background: #acc5d2 url('images/sidebartitle.png') repeat-x top left;
+  font-weight: normal;
+  background: white url('images/sidebartitle.jpg') no-repeat left;
   color: white;
-  padding: 4px;
+  padding-left: 12px;
+  padding-top: 8px;
+  height: 24px;
 }
 .sidebarItem ul {
   margin: 0px;
@@ -89,31 +90,49 @@ a:visited {
 }
 
 #blogName {
-  font-size: 3em;
+  font-size: 44px;
   text-align: center;
   color: white;
   padding-top: 8px;
+  position: absolute;
+  top: 90px;
+  left: 20px;
 }
 #blogDescription {
-  font-size: 1.0em;
+  font-size: 16px;
   text-align: center;
   color: white;
   padding-top: 8px;
   padding-bottom: 8px;
+  font-weight: normal;
+  position: absolute;
+  bottom: 20px;
+  left: 24px;
 }
-.title, .title a {
-  font-size: 16px;
-  font-weight: bold;
-  color : black;
+.title {
+  font-size: 24px;
+  font-weight: normal;
+  color : #6e7d8e;
+  background: white url('images/bullet.jpg') no-repeat center left;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-right: 4px;
+  padding-left: 30px;
+}
+.title a {
+  color : #6e7d8e;
+  text-decoration: none;
+}
+.title a:hover {
+  text-decoration: underline;
 }
 .subtitle {
   font-size: 12px;
-  font-weight: bold;
+  font-weight: normal;
   padding-top: 4px;
-  color : black;
+  color: #6e7d8e;
 }
 .contentItem {
-  border: solid #F0F0F0 1px;
   padding-left: 8px;
   padding-right: 8px;
   padding-top: 8px;
@@ -124,11 +143,15 @@ a:visited {
   line-height: 1.5;
   padding-top: 8px;
   padding-bottom: 8px;
+  background: white;
+  padding-left: 16px;
+  padding-right: 16px;
+  text-align: justify;
 }
 .contentItemLinks {
   float: right;
   text-align: right;
-  font-size: 10px;
+  font-size: 11px;
   color: gray;
 }
 .contentItemLinks a {
@@ -141,14 +164,16 @@ a:visited {
   background: white;
 }
 .small {
-  font-size: 10px;
+  font-size: 11px;
 }
 .response {
   padding: 8px;
 }
 .response .title {
   font-size: 12px;
-  font-weight: bold;
+  font-weight: normal;
+  background: transparent;
+  padding-left: 0px;
 }
 .responseBody {
   line-height: 1.5;
@@ -156,7 +181,7 @@ a:visited {
   padding-bottom: 8px;
 }
 .metadata, .metadata a {
-  font-size: 10px;
+  font-size: 11px;
   color: gray;
   line-height: 1.5em;
 }
@@ -179,7 +204,7 @@ blockquote {
   padding: 4px;
   background: #F8F8F8;
   font-weight: normal;
-  font-size: 10px;
+  font-size: 11px;
 }
 .tags a, .categories a {
   color : gray;
@@ -192,7 +217,7 @@ blockquote {
 }
 .sidebarTagCloud {
   font-size: 18px;
-  line-height: 0.9em;
+  line-height: 0.8em;
   text-align: justify;
 }
 .tagCloud1 {
@@ -244,6 +269,13 @@ blockquote {
   padding: 0px;
   white-space: nowrap;
 }
+.tagCloud a, .sidebarTagCloud a {
+  text-decoration: none;
+}
+.tagCloud a:hover, .sidebarTagCloud a:hover {
+  color: white;
+  background: #6e7d8e;
+}
 
 .calendar {
   padding: 8px;
@@ -264,11 +296,18 @@ blockquote {
 .calendarDayWithEntries a {
   font-weight: bold;
   color: white;
+  text-decoration: none;
+}
+.calendarDayWithEntries:hover {
+  color: white;
+  background: #6e7d8e;
 }
 .calendarToday {
-  background : #acc5d2;
+  background : #6e7d8e;
+  color: white;
   text-align: right;
   padding: 2px;
+  font-weight: bold;
 }
 .calendarToday a {
   font-weight: bold;
@@ -291,4 +330,36 @@ blockquote {
   margin-right: 32px;
   padding: 16px;
   overflow: auto;
+}
+#linearNavigationLinks {
+  background: black;
+  padding: 6px;
+  color: white;
+  text-align: center;
+}
+#linearNavigationLinks a {
+  color: white;
+  text-decoration: none;
+}
+#linearNavigationLinks a:hover {
+  text-decoration: underline;
+}
+#search {
+  position: absolute;
+  top: 11px;
+  right: 10px;
+  color: white;
+}
+#subscriptions {
+  position: absolute;
+  top: 11px;
+  left: 10px;
+  color: white;
+}
+#subscriptions a {
+  color: white;
+  text-decoration: none;
+}
+#subscriptions a:hover {
+  text-decoration: underline;
 }
