@@ -133,68 +133,6 @@ public class TrackBackTest extends SingleBlogTestCase {
   }
 
   /**
-   * Tests that listeners are fired when a TrackBack is approved.
-   */
-  public void testListenersFiredWhenTrackBackApproved() {
-    final StringBuffer buf = new StringBuffer("123");
-    trackback.setState(State.PENDING);
-
-    TrackBackListener listener = new TrackBackListener() {
-      public void trackBackAdded(TrackBackEvent event) {
-        fail();
-      }
-
-      public void trackBackRemoved(TrackBackEvent event) {
-        fail();
-      }
-
-      public void trackBackApproved(TrackBackEvent event) {
-        assertEquals(trackback, event.getSource());
-        buf.reverse();
-      }
-
-      public void trackBackRejected(TrackBackEvent event) {
-        fail();
-      }
-    };
-
-    blog.getEventListenerList().addTrackBackListener(listener);
-    trackback.setState(State.APPROVED);
-    assertEquals("321", buf.toString());
-  }
-
-  /**
-   * Tests that listeners are fired when a TrackBack is rejected.
-   */
-  public void testListenersFiredWhenTrackBackRejected() {
-    final StringBuffer buf = new StringBuffer("123");
-    trackback.setState(State.PENDING);
-
-    TrackBackListener listener = new TrackBackListener() {
-      public void trackBackAdded(TrackBackEvent event) {
-        fail();
-      }
-
-      public void trackBackRemoved(TrackBackEvent event) {
-        fail();
-      }
-
-      public void trackBackApproved(TrackBackEvent event) {
-        fail();
-      }
-
-      public void trackBackRejected(TrackBackEvent event) {
-        assertEquals(trackback, event.getSource());
-        buf.reverse();
-      }
-    };
-
-    blog.getEventListenerList().addTrackBackListener(listener);
-    trackback.setState(State.REJECTED);
-    assertEquals("321", buf.toString());
-  }
-
-  /**
    * Tests that listeners are not fired when a TrackBack is marked as pending.
    */
   public void testListenersFiredWhenTrackBackMarkedAsPending() {

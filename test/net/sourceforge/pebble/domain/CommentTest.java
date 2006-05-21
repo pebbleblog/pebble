@@ -288,68 +288,6 @@ public class CommentTest extends SingleBlogTestCase {
   }
 
   /**
-   * Tests that listeners are fired when a comment is approved.
-   */
-  public void testListenersFiredWhenCommentApproved() {
-    final StringBuffer buf = new StringBuffer("123");
-    comment.setState(State.PENDING);
-
-    CommentListener listener = new CommentListener() {
-      public void commentAdded(CommentEvent event) {
-        fail();
-      }
-
-      public void commentRemoved(CommentEvent event) {
-        fail();
-      }
-
-      public void commentApproved(CommentEvent event) {
-        assertEquals(comment, event.getSource());
-        buf.reverse();
-      }
-
-      public void commentRejected(CommentEvent event) {
-        fail();
-      }
-    };
-
-    blog.getEventListenerList().addCommentListener(listener);
-    comment.setState(State.APPROVED);
-    assertEquals("321", buf.toString());
-  }
-
-  /**
-   * Tests that listeners are fired when a comment is rejected.
-   */
-  public void testListenersFiredWhenCommentRejected() {
-    final StringBuffer buf = new StringBuffer("123");
-    comment.setState(State.PENDING);
-
-    CommentListener listener = new CommentListener() {
-      public void commentAdded(CommentEvent event) {
-        fail();
-      }
-
-      public void commentRemoved(CommentEvent event) {
-        fail();
-      }
-
-      public void commentApproved(CommentEvent event) {
-        fail();
-      }
-
-      public void commentRejected(CommentEvent event) {
-        assertEquals(comment, event.getSource());
-        buf.reverse();
-      }
-    };
-
-    blog.getEventListenerList().addCommentListener(listener);
-    comment.setState(State.REJECTED);
-    assertEquals("321", buf.toString());
-  }
-
-  /**
    * Tests that listeners are not fired when a comment is marked as pending.
    */
   public void testListenersFiredWhenCommentMarkedAsPending() {

@@ -36,6 +36,9 @@ import net.sourceforge.pebble.dao.DAOFactory;
 import net.sourceforge.pebble.dao.PersistenceException;
 import net.sourceforge.pebble.index.SearchIndex;
 import net.sourceforge.pebble.event.blogentry.BlogEntryEvent;
+import net.sourceforge.pebble.event.PebbleEvent;
+import net.sourceforge.pebble.event.trackback.TrackBackEvent;
+import net.sourceforge.pebble.event.comment.CommentEvent;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -111,9 +114,12 @@ public class BlogService {
    * Gets the blog entry with the specified id.
    */
   public void putBlogEntry(BlogEntry blogEntry) throws BlogException {
-    synchronized (blogEntry.getBlog()) {
+    Blog blog = blogEntry.getBlog();
+    blogEntry.setEventsEnabled(false);
+
+    synchronized (blog) {
       try {
-        BlogEntry be = getBlogEntry(blogEntry.getBlog(), blogEntry.getId());
+        BlogEntry be = getBlogEntry(blog, blogEntry.getId());
         if (blogEntry.getType() == BlogEntry.NEW && be != null) {
           // the blog entry is new but one exists with the same ID already
           // - increment the ID and try again
@@ -126,13 +132,23 @@ public class BlogService {
         }
 
         if (blogEntry.getType() == BlogEntry.NEW) {
-          blogEntry.getBlog().getEventDispatcher().fireBlogEntryEvent(new BlogEntryEvent(blogEntry, BlogEntryEvent.BLOG_ENTRY_ADDED));
+          blog.getEventDispatcher().fireBlogEntryEvent(new BlogEntryEvent(blogEntry, BlogEntryEvent.BLOG_ENTRY_ADDED));
           blogEntry.setType(BlogEntry.PUBLISHED);
         } else {
           if (blogEntry.isDirty()) {
             BlogEntryEvent event = new BlogEntryEvent(blogEntry, blogEntry.getPropertyChangeEvents());
-            blogEntry.clearPropertyChangeEvents();
-            blogEntry.getBlog().getEventDispatcher().fireBlogEntryEvent(event);
+            blog.getEventDispatcher().fireBlogEntryEvent(event);
+          }
+        }
+
+        // and also fire any other events that have been stored up
+        for (PebbleEvent event : blogEntry.getEvents()) {
+          if (event instanceof BlogEntryEvent) {
+            blog.getEventDispatcher().fireBlogEntryEvent((BlogEntryEvent)event);
+          } else if (event instanceof CommentEvent) {
+            blog.getEventDispatcher().fireCommentEvent((CommentEvent)event);
+          } else if (event instanceof TrackBackEvent) {
+            blog.getEventDispatcher().fireTrackBackEvent((TrackBackEvent)event);
           }
         }
 
@@ -141,6 +157,10 @@ public class BlogService {
 //        blogEntry.setEventsEnabled(true);
 
       } catch (PersistenceException pe) {
+      } finally {
+        blogEntry.clearPropertyChangeEvents();
+        blogEntry.clearEvents();
+        blogEntry.setEventsEnabled(true);
       }
     }
   }

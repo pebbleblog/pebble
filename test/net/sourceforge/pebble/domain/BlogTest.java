@@ -49,9 +49,9 @@ import org.apache.commons.logging.LogFactory;
  *
  * @author    Simon Brown
  */
-public class SingleBlogTest extends SingleBlogTestCase {
+public class BlogTest extends SingleBlogTestCase {
 
-  private static final Log log = LogFactory.getLog(SingleBlogTest.class);
+  private static final Log log = LogFactory.getLog(BlogTest.class);
 
   public void testConstructionOfDefaultInstance() {
     assertEquals(TEST_BLOG_LOCATION.getAbsolutePath(), blog.getRoot());
@@ -65,11 +65,11 @@ public class SingleBlogTest extends SingleBlogTestCase {
     assertEquals("GB", blog.getCountry());
     assertEquals("UTF-8", blog.getCharacterEncoding());
     assertEquals(3, blog.getRecentBlogEntriesOnHomePage());
-    assertEquals(3, blog.getRecentCommentsOnHomePage());
+    assertEquals(3, blog.getRecentResponsesOnHomePage());
     assertTrue(blog.getUpdateNotificationPingsAsCollection().isEmpty());
     assertTrue(blog.isPublic());
     assertFalse(blog.isPrivate());
-    assertEquals("net.sourceforge.pebble.plugin.decorator.HideUnapprovedBlogEntriesDecorator\r\nnet.sourceforge.pebble.plugin.decorator.HideUnapprovedResponsesDecorator\r\nnet.sourceforge.pebble.plugin.decorator.HtmlDecorator\r\nnet.sourceforge.pebble.plugin.decorator.EscapeMarkupDecorator\r\nnet.sourceforge.pebble.plugin.decorator.RelativeUriDecorator", blog.getBlogEntryDecorators());
+    assertEquals("net.sourceforge.pebble.plugin.decorator.HideUnapprovedBlogEntriesDecorator\r\nnet.sourceforge.pebble.plugin.decorator.HideUnapprovedResponsesDecorator\r\nnet.sourceforge.pebble.plugin.decorator.HtmlDecorator\r\nnet.sourceforge.pebble.plugin.decorator.EscapeMarkupDecorator\r\nnet.sourceforge.pebble.plugin.decorator.RelativeUriDecorator\r\nnet.sourceforge.pebble.plugin.decorator.ReadMoreDecorator\r\nnet.sourceforge.pebble.plugin.decorator.BlogTagsDecorator", blog.getBlogEntryDecorators());
     assertEquals("net.sourceforge.pebble.plugin.permalink.DefaultPermalinkProvider", blog.getPermalinkProviderName());
     assertTrue(blog.getPermalinkProvider() instanceof DefaultPermalinkProvider);
     assertEquals("net.sourceforge.pebble.event.DefaultEventDispatcher", blog.getEventDispatcherName());

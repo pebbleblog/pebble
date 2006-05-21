@@ -70,7 +70,6 @@ public class MultiBlog extends AbstractBlog {
     defaultProperties.setProperty(AUTHOR_KEY, "Various");
     defaultProperties.setProperty(TIMEZONE_KEY, "Europe/London");
     defaultProperties.setProperty(RECENT_BLOG_ENTRIES_ON_HOME_PAGE_KEY, "3");
-    defaultProperties.setProperty(RECENT_COMMENTS_ON_HOME_PAGE_KEY, "0");
     defaultProperties.setProperty(LANGUAGE_KEY, "en");
     defaultProperties.setProperty(COUNTRY_KEY, "GB");
     defaultProperties.setProperty(CHARACTER_ENCODING_KEY, "UTF-8");

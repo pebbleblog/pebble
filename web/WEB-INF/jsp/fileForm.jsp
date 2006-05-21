@@ -14,7 +14,7 @@
     <input type="hidden" name="path" value="${file.path}" />
     <input type="hidden" name="type" value="${type}" />
 
-    <textarea name="fileContent" cols="80" rows="40"><c:out value="${fileContent}" escapeXml="true"/></textarea>
+    <textarea name="fileContent" cols="60" rows="40"><c:out value="${fileContent}" escapeXml="true"/></textarea>
     <br /><br />
 
     <table width="99%" cellspacing="0" cellpadding="0">

@@ -72,10 +72,10 @@
 
       <tr>
         <td>
-          Recent comments/TrackBacks
+          Recent responses
         </td>
         <td>
-          <pebble:select name="recentCommentsOnHomePage" items="${numbers}" selected="${blog.recentCommentsOnHomePage}" />
+          <pebble:select name="recentResponsesOnHomePage" items="${numbers}" selected="${blog.recentResponsesOnHomePage}" />
         </td>
       </tr>
 

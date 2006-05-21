@@ -38,18 +38,16 @@
   </div>
   </c:if>
 
-  <%--
-  <c:if test="${blog.numberOfApprovedResponses > 0}">
+  <c:if test="${blog.numberOfApprovedResponses > 0 && blog.recentResponsesOnHomePage > 0}">
   <div class="sidebarItem">
     <div class="sidebarItemTitle"><span><fmt:message key="sidebar.recentResponses" /></span></div>
     <ul>
-    <c:forEach var="aResponse" items="${blog.recentResponses}" varStatus="status" end="${blog.recentCommentsOnHomePage-1}">
+    <c:forEach var="aResponse" items="${blog.recentResponses}" varStatus="status" end="${blog.recentResponsesOnHomePage-1}">
       <li><a href="${aResponse.permalink}" title="${aResponse.permalink}">${aResponse.title}</a><br />${aResponse.truncatedContent}</li>
     </c:forEach>
     </ul>
   </div>
   </c:if>
-  --%>
 
   <%--
   <c:set var="deliciousUsername" value='${blog.pluginProperties.properties["delicious.username"]}' />

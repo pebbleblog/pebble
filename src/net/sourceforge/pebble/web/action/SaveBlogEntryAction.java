@@ -287,7 +287,7 @@ public class SaveBlogEntryAction extends SecureAction {
     // the date can only set on new entries
     if (type != null && type.equals("1")) {
       DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM, blog.getLocale());
-      log.info("Formatting using " + dateFormat.format(new Date()));
+      dateFormat.setTimeZone(blog.getTimeZone());
       Date date = null;
       try {
         date = dateFormat.parse(request.getParameter("date"));

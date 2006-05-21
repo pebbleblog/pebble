@@ -17,7 +17,7 @@
     <c:choose>
       <c:when test="${type == 'blogImage'}">Images</c:when>
       <c:when test="${type == 'blogFile'}">Files</c:when>
-      <c:when test="${type == 'themeFile'}">Theme</c:when>
+      <c:when test="${type == 'themeFile'}">Theme (${blog.editableTheme.name})</c:when>
       <c:when test="${type == 'blogData'}">Files</c:when>
     </c:choose>
   </div>

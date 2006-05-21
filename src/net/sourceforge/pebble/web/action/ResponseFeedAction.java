@@ -95,7 +95,7 @@ public class ResponseFeedAction extends Action {
         responses = new ArrayList(blog.getRecentResponses());
       }
 
-      int numberOfResponses = blog.getRecentCommentsOnHomePage();
+      int numberOfResponses = blog.getRecentResponsesOnHomePage();
 
       if (responses.size() > numberOfResponses) {
         responses = responses.subList(0, numberOfResponses);

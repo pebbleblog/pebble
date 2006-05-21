@@ -22,10 +22,8 @@ body {
   margin-bottom: 0px;
   position: relative;
 }
-#mainBody {
-  background: white;
-}
 #content {
+  background: white;
   padding-top: 8px;
   padding-right: 8px;
   padding-bottom: 8px;
@@ -34,6 +32,7 @@ body {
 }
 #sidebar {
   text-align: center;
+  background: white;
   float: right;
   width: 220px;
   padding-left: 8px;

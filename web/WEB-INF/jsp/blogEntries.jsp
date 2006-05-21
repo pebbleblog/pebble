@@ -3,9 +3,13 @@
 --%>
 <c:choose>
   <c:when test="${empty blogEntries}">
-    <p>
-      <fmt:message key="blogentry.noBlogEntries" />
-    </p>
+    <div class="contentItem">
+
+      <div class="contentItemBody">
+        <fmt:message key="blogentry.noBlogEntries" />
+      </div>
+
+    </div>
   </c:when>
 
   <c:otherwise>

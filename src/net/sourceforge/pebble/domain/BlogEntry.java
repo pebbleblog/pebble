@@ -37,6 +37,7 @@ import net.sourceforge.pebble.dao.PersistenceException;
 import net.sourceforge.pebble.event.blogentry.BlogEntryEvent;
 import net.sourceforge.pebble.event.comment.CommentEvent;
 import net.sourceforge.pebble.event.trackback.TrackBackEvent;
+import net.sourceforge.pebble.event.PebbleEvent;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import net.sourceforge.pebble.web.validation.ValidationContext;
@@ -876,7 +877,7 @@ public class BlogEntry extends Content {
       }
 
       if (areEventsEnabled()) {
-        getBlog().getEventDispatcher().fireCommentEvent(new CommentEvent(comment, CommentEvent.COMMENT_ADDED));
+        addEvent(new CommentEvent(comment, CommentEvent.COMMENT_ADDED));
         comment.setEventsEnabled(true);
       }
     }
@@ -927,7 +928,7 @@ public class BlogEntry extends Content {
     trackBacks.add(trackBack);
 
     if (areEventsEnabled()) {
-      getBlog().getEventDispatcher().fireTrackBackEvent(new TrackBackEvent(trackBack, TrackBackEvent.TRACKBACK_ADDED));
+      addEvent(new TrackBackEvent(trackBack, TrackBackEvent.TRACKBACK_ADDED));
       trackBack.setEventsEnabled(true);
     }
   }
@@ -948,7 +949,7 @@ public class BlogEntry extends Content {
       }
 
       if (areEventsEnabled()) {
-        getBlog().getEventDispatcher().fireCommentEvent(new CommentEvent(comment, CommentEvent.COMMENT_REMOVED));
+        addEvent(new CommentEvent(comment, CommentEvent.COMMENT_REMOVED));
       }
     } else {
       log.warn("A comment with id=" + id + " could not be found - " +
@@ -1016,7 +1017,7 @@ public class BlogEntry extends Content {
       trackBacks.remove(trackBack);
 
       if (areEventsEnabled()) {
-        getBlog().getEventDispatcher().fireTrackBackEvent(new TrackBackEvent(trackBack, TrackBackEvent.TRACKBACK_REMOVED));
+        addEvent(new TrackBackEvent(trackBack, TrackBackEvent.TRACKBACK_REMOVED));
       }
     } else {
       log.warn("A TrackBack with id=" + id + " could not be found - " +
@@ -1184,6 +1185,7 @@ public class BlogEntry extends Content {
    */
   public Object clone() {
     BlogEntry entry = new BlogEntry(blog);
+    entry.setEventsEnabled(false);
     entry.setTitle(title);
     entry.setSubtitle(subtitle);
     entry.setExcerpt(excerpt);
@@ -1254,10 +1256,27 @@ public class BlogEntry extends Content {
 
     if (areEventsEnabled()) {
       if (state == State.APPROVED) {
-        getBlog().getEventDispatcher().fireBlogEntryEvent(new BlogEntryEvent(this, BlogEntryEvent.BLOG_ENTRY_APPROVED));
+        addEvent(new BlogEntryEvent(this, BlogEntryEvent.BLOG_ENTRY_APPROVED));
       } else if (state == State.REJECTED) {
-        getBlog().getEventDispatcher().fireBlogEntryEvent(new BlogEntryEvent(this, BlogEntryEvent.BLOG_ENTRY_REJECTED));
+        addEvent(new BlogEntryEvent(this, BlogEntryEvent.BLOG_ENTRY_REJECTED));
       }
+    }
+  }
+
+  public List<PebbleEvent> getEvents() {
+    List<PebbleEvent> events = super.getEvents();
+    for (Response response : getResponses()) {
+      events.addAll(response.getEvents());
+    }
+
+    return events;
+  }
+
+  public void clearEvents() {
+    super.clearEvents();
+
+    for (Response response : getResponses()) {
+      response.clearEvents();
     }
   }
 

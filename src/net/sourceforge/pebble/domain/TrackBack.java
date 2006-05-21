@@ -206,9 +206,9 @@ public class TrackBack extends Response {
 
     if (areEventsEnabled()) {
       if (state == State.APPROVED) {
-        getBlogEntry().getBlog().getEventDispatcher().fireTrackBackEvent(new TrackBackEvent(this, TrackBackEvent.TRACKBACK_APPROVED));
+        addEvent(new TrackBackEvent(this, TrackBackEvent.TRACKBACK_APPROVED));
       } else if (state == State.REJECTED) {
-        getBlogEntry().getBlog().getEventDispatcher().fireTrackBackEvent(new TrackBackEvent(this, TrackBackEvent.TRACKBACK_REJECTED));
+        addEvent(new TrackBackEvent(this, TrackBackEvent.TRACKBACK_REJECTED));
       }
     }
   }

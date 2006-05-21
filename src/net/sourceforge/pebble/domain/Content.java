@@ -32,6 +32,7 @@
 package net.sourceforge.pebble.domain;
 
 import net.sourceforge.pebble.util.StringUtils;
+import net.sourceforge.pebble.event.PebbleEvent;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -60,6 +61,9 @@ public abstract class Content implements Permalinkable, Cloneable {
 
   /** the collection of properties that have changed since the last store */
   private ArrayList propertyChangeEvents;
+
+  /** the collection of PebbleEvent instances that have been initiated */
+  private List<PebbleEvent> events = new ArrayList<PebbleEvent>();
 
   /**
    * Default, no args constructor.
@@ -208,6 +212,23 @@ public abstract class Content implements Permalinkable, Cloneable {
    */
   public List getPropertyChangeEvents() {
     return (List)propertyChangeEvents.clone();
+  }
+
+  /**
+   * Adds an event to the list.
+   *
+   * @param event   a PebbleEvent instance
+   */
+  void addEvent(PebbleEvent event) {
+    events.add(event);
+  }
+
+  void clearEvents() {
+    events = new ArrayList<PebbleEvent>();
+  }
+
+  public List<PebbleEvent> getEvents() {
+    return new ArrayList<PebbleEvent>(events);
   }
 
 }

@@ -62,7 +62,6 @@ public class SaveBlogPropertiesAction extends SecureAction {
     String submit = request.getParameter("submit");
     if (submit != null && submit.length() > 0) {
       String currentTimeZone = blog.getProperty(Blog.TIMEZONE_KEY);
-      int currentRecentCommentsOnHomePage = blog.getRecentCommentsOnHomePage();
 
       Enumeration params = request.getParameterNames();
       while (params.hasMoreElements()) {
@@ -88,13 +87,10 @@ public class SaveBlogPropertiesAction extends SecureAction {
       }
 
       // if the following properties have changed, reload the blog
-      //  - recent comments/TrackBacks on home page
       //  - timezone
       String newTimeZone = blog.getProperty(Blog.TIMEZONE_KEY);
-      int newRecentCommentsOnHomePage = blog.getRecentCommentsOnHomePage();
 
-      if (!currentTimeZone.equals(newTimeZone) ||
-          currentRecentCommentsOnHomePage != newRecentCommentsOnHomePage) {
+      if (!currentTimeZone.equals(newTimeZone)) {
         return new ForwardView("/reloadBlog.secureaction");
       }
 

@@ -349,14 +349,14 @@ public class Comment extends Response {
   /**
    * Sets the state of this comment.
    */
-  public void setState(State state) {
-    super.setState(state);
+  public void setState(State s) {
+    super.setState(s);
 
     if (areEventsEnabled()) {
-      if (state == State.APPROVED) {
-        getBlogEntry().getBlog().getEventDispatcher().fireCommentEvent(new CommentEvent(this, CommentEvent.COMMENT_APPROVED));
-      } else if (state == State.REJECTED) {
-        getBlogEntry().getBlog().getEventDispatcher().fireCommentEvent(new CommentEvent(this, CommentEvent.COMMENT_REJECTED));
+      if (s == State.APPROVED) {
+        addEvent(new CommentEvent(this, CommentEvent.COMMENT_APPROVED));
+      } else if (s == State.REJECTED) {
+        addEvent(new CommentEvent(this, CommentEvent.COMMENT_REJECTED));
       }
     }
   }

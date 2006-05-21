@@ -24,9 +24,6 @@
       <c:when test="${displayMode == 'detail'}">
         <%-- here the blog entry is being shown on its own page --%>
         <c:out value="${blogEntry.body}" escapeXml="false" />
-        <c:if test="${blogEntry.aggregated}">
-          <p><a href="${blogEntry.permalink}"><fmt:message key="common.readMore" /></a></p>
-        </c:if>
       </c:when>
       <c:when test="${displayMode == 'preview'}">
         <%-- this is the blog entry preview, where both excerpt and body need to be shown --%>
@@ -42,18 +39,10 @@
           <c:when test="${empty blogEntry.excerpt}">
             <%-- there is no excerpt, so show the body --%>
             <c:out value="${blogEntry.body}" escapeXml="false" />
-            <c:if test="${blogEntry.aggregated}">
-              <p>
-                <a href="${blogEntry.permalink}"><fmt:message key="common.readMore" /></a>
-              </p>
-            </c:if>
           </c:when>
           <c:otherwise>
             <%-- an excerpt is present, so show this --%>
             <c:out value="${blogEntry.excerpt}" escapeXml="false" />
-            <p>
-              <a href="${blogEntry.permalink}"><fmt:message key="common.readMore" /></a>
-            </p>
           </c:otherwise>
         </c:choose>
       </c:otherwise>
@@ -79,8 +68,10 @@
 
   <c:if test="${displayMode == 'detail'}">
     <pebble:isBlogContributor>
+    <c:if test="${blogEntry.numberOfResponses > 0}">
     <form name="responsesForm" method="post" action="manageResponses.secureaction">
     <input type="hidden" name="redirectUrl" value="${blogEntry.localPermalink}" />
+    </c:if>
     </pebble:isBlogContributor>
 
     <br /><br />
@@ -88,6 +79,7 @@
     <jsp:include page="/WEB-INF/jsp/trackbacks.jsp"/>
 
     <pebble:isBlogContributor>
+    <c:if test="${blogEntry.numberOfResponses > 0}">
     <br />
     <table width="99%" cellspacing="0" cellpadding="0">
       <tr>
@@ -103,6 +95,7 @@
       </tr>
     </table>
     </form>
+    </c:if>
     </pebble:isBlogContributor>
 
 <div align="center">

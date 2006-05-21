@@ -346,12 +346,12 @@ public class Blog extends AbstractBlog {
     defaultProperties.setProperty(COUNTRY_KEY, "GB");
     defaultProperties.setProperty(CHARACTER_ENCODING_KEY, "UTF-8");
     defaultProperties.setProperty(RECENT_BLOG_ENTRIES_ON_HOME_PAGE_KEY, "3");
-    defaultProperties.setProperty(RECENT_COMMENTS_ON_HOME_PAGE_KEY, "3");
+    defaultProperties.setProperty(RECENT_RESPONSES_ON_HOME_PAGE_KEY, "3");
     defaultProperties.setProperty(UPDATE_NOTIFICATION_PINGS_KEY, "");
     defaultProperties.setProperty(THEME_KEY, "default");
     defaultProperties.setProperty(PRIVATE_KEY, FALSE);
     defaultProperties.setProperty(LUCENE_ANALYZER_KEY, "org.apache.lucene.analysis.standard.StandardAnalyzer");
-    defaultProperties.setProperty(BLOG_ENTRY_DECORATORS_KEY, "net.sourceforge.pebble.plugin.decorator.HideUnapprovedBlogEntriesDecorator\r\nnet.sourceforge.pebble.plugin.decorator.HideUnapprovedResponsesDecorator\r\nnet.sourceforge.pebble.plugin.decorator.HtmlDecorator\r\nnet.sourceforge.pebble.plugin.decorator.EscapeMarkupDecorator\r\nnet.sourceforge.pebble.plugin.decorator.RelativeUriDecorator");
+    defaultProperties.setProperty(BLOG_ENTRY_DECORATORS_KEY, "net.sourceforge.pebble.plugin.decorator.HideUnapprovedBlogEntriesDecorator\r\nnet.sourceforge.pebble.plugin.decorator.HideUnapprovedResponsesDecorator\r\nnet.sourceforge.pebble.plugin.decorator.HtmlDecorator\r\nnet.sourceforge.pebble.plugin.decorator.EscapeMarkupDecorator\r\nnet.sourceforge.pebble.plugin.decorator.RelativeUriDecorator\r\nnet.sourceforge.pebble.plugin.decorator.ReadMoreDecorator\r\nnet.sourceforge.pebble.plugin.decorator.BlogTagsDecorator");
     defaultProperties.setProperty(PERMALINK_PROVIDER_KEY, "net.sourceforge.pebble.plugin.permalink.DefaultPermalinkProvider");
     defaultProperties.setProperty(EVENT_DISPATCHER_KEY, "net.sourceforge.pebble.event.DefaultEventDispatcher");
     defaultProperties.setProperty(LOGGER_KEY, "net.sourceforge.pebble.logging.CombinedLogFormatLogger");
@@ -778,7 +778,7 @@ public class Blog extends AbstractBlog {
    * @return a List containing the most recent blog entries
    */
   public List getRecentResponses() {
-    int number = getRecentCommentsOnHomePage();
+    int number = getRecentResponsesOnHomePage();
     BlogService service = new BlogService();
     List<String> responseIds = responseIndex.getRecentResponses(number);
     List responses = new ArrayList();

@@ -62,7 +62,7 @@ public abstract class AbstractBlog extends TimePeriod {
   public static final String IMAGE_KEY = "image";
   public static final String TIMEZONE_KEY = "timeZone";
   public static final String RECENT_BLOG_ENTRIES_ON_HOME_PAGE_KEY = "recentBlogEntriesOnHomePage";
-  public static final String RECENT_COMMENTS_ON_HOME_PAGE_KEY = "recentCommentsOnHomePage";
+  public static final String RECENT_RESPONSES_ON_HOME_PAGE_KEY = "recentResponsesOnHomePage";
   public static final String LANGUAGE_KEY = "language";
   public static final String COUNTRY_KEY = "country";
   public static final String CHARACTER_ENCODING_KEY = "characterEncoding";
@@ -315,8 +315,8 @@ public abstract class AbstractBlog extends TimePeriod {
    *
    * @return  an int (0 by default)
    */
-  public int getRecentCommentsOnHomePage() {
-    return Integer.parseInt(properties.getProperty(RECENT_COMMENTS_ON_HOME_PAGE_KEY));
+  public int getRecentResponsesOnHomePage() {
+    return Integer.parseInt(properties.getProperty(RECENT_RESPONSES_ON_HOME_PAGE_KEY));
   }
 
   /**
