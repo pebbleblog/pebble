@@ -503,18 +503,6 @@ public class BlogTest extends SingleBlogTestCase {
   }
 
   /**
-   * Tests that a static page can be accessed.
-   */
-  public void testStaticPageAccessible() throws Exception {
-    assertEquals(0, blog.getStaticPages().size());
-    BlogEntry draft = new BlogEntry(blog);
-    draft.setType(BlogEntry.STATIC_PAGE);
-    draft.store();
-    assertEquals(1, blog.getStaticPages().size());
-    assertEquals(draft, blog.getStaticPage(draft.getId()));
-  }
-
-  /**
    * Tests the domain.
    */
   public void testDomain() {

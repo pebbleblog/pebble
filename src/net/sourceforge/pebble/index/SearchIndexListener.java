@@ -63,7 +63,7 @@ public class SearchIndexListener implements BlogEntryListener {
   public void blogEntryRemoved(BlogEntryEvent event) {
     BlogEntry blogEntry = event.getBlogEntry();
 
-    blogEntry.getBlog().getSearchIndex().removeIndex(blogEntry);
+    blogEntry.getBlog().getSearchIndex().unindex(blogEntry);
   }
 
   /**

@@ -3,8 +3,9 @@
 
   <pebble:isBlogContributor>
   <form name="blogEntryForm" action="manageStaticPage.secureaction" method="post">
-    <input type="checkbox" name="entry" value="${blogEntry.id}" />
+    <input type="hidden" name="entry" value="${blogEntry.id}" />
     <input type="submit" name="submit" value="Edit" />
+    <input type="checkbox" name="confirm" value="true" />
     <input type="submit" name="submit" value="Remove" />
   </form>
   </pebble:isBlogContributor>

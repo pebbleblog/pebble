@@ -1155,27 +1155,6 @@ public class Blog extends AbstractBlog {
   }
 
   /**
-   * Gets the list of static pages for this blog.
-   *
-   * @return  a list of BlogEntry instances
-   */
-  public List getStaticPages() {
-    List blogEntries = new ArrayList();
-
-    try {
-      DAOFactory factory = DAOFactory.getConfiguredFactory();
-      BlogEntryDAO dao = factory.getBlogEntryDAO();
-      blogEntries.addAll(dao.getStaticPages(this));
-    } catch (PersistenceException e) {
-      e.printStackTrace();
-    }
-
-    Collections.sort(blogEntries, new BlogEntryByTitleComparator());
-
-    return blogEntries;
-  }
-
-  /**
    * Gets the draft blog entry with the specified id.
    *
    * @param entryId   the id of the blog entry
@@ -1210,29 +1189,6 @@ public class Blog extends AbstractBlog {
     }
 
     List blogEntries = getBlogEntryTemplates();
-    Iterator it = blogEntries.iterator();
-    while (it.hasNext()) {
-      BlogEntry blogEntry = (BlogEntry)it.next();
-      if (blogEntry.getId().equals(entryId)) {
-        return blogEntry;
-      }
-    }
-
-    return null;
-  }
-
-  /**
-   * Gets the static page with the specified id.
-   *
-   * @param entryId   the id of the blog entry
-   * @return  a BlogEntry instance, or null if the entry couldn't be found
-   */
-  public BlogEntry getStaticPage(String entryId) {
-    if (entryId == null) {
-      return null;
-    }
-
-    List blogEntries = getStaticPages();
     Iterator it = blogEntries.iterator();
     while (it.hasNext()) {
       BlogEntry blogEntry = (BlogEntry)it.next();
@@ -1403,6 +1359,7 @@ public class Blog extends AbstractBlog {
   public void reindex() {
     BlogService service = new BlogService();
     List<BlogEntry> blogEntries = service.getBlogEntries(this);
+    List<BlogEntry> staticPages = service.getStaticPages(this);
 
     blogEntryIndex.clear();
     blogEntryIndex.index(blogEntries);
@@ -1416,7 +1373,9 @@ public class Blog extends AbstractBlog {
     categoryIndex.clear();
     categoryIndex.index(blogEntries);
 
+    searchIndex.clear();
     searchIndex.index(blogEntries);
+    searchIndex.index(staticPages);
   }
 
   /**

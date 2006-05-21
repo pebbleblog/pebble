@@ -173,7 +173,7 @@ public class SearchIndexTest extends SingleBlogTestCase {
 
        // and now remove the blog entry, checking that the search no longer
        // returns that hit
-       index.removeIndex(blogEntry);
+       index.unindex(blogEntry);
        results = index.search("jsp");
        assertEquals(0, results.getNumberOfHits());
      } catch (Exception e) {

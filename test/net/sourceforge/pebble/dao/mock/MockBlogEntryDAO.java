@@ -3,7 +3,6 @@ package net.sourceforge.pebble.dao.mock;
 import net.sourceforge.pebble.dao.BlogEntryDAO;
 import net.sourceforge.pebble.dao.PersistenceException;
 import net.sourceforge.pebble.domain.BlogEntry;
-import net.sourceforge.pebble.domain.DailyBlog;
 import net.sourceforge.pebble.domain.Blog;
 
 import java.util.*;
@@ -132,8 +131,21 @@ public class MockBlogEntryDAO implements BlogEntryDAO {
    * @return  a List of BlogEntry instances
    * @throws  net.sourceforge.pebble.dao.PersistenceException    if blog entries cannot be loaded
    */
-  public Collection getStaticPages(Blog blog) throws PersistenceException {
-    return staticPages.values();
+  public List<BlogEntry> loadStaticPages(Blog blog) throws PersistenceException {
+    return new ArrayList<BlogEntry>(staticPages.values());
+  }
+
+  /**
+   * Loads a specific static page.
+   *
+   * @param blog    the owning Blog
+   * @param pageId   the page ID
+   * @return a BlogEntry instance
+   * @throws net.sourceforge.pebble.dao.PersistenceException
+   *          if the specified blog entry cannot be loaded
+   */
+  public BlogEntry loadStaticPage(Blog blog, String pageId) throws PersistenceException {
+    return (BlogEntry)staticPages.get(pageId);
   }
 
 }

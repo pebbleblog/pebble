@@ -32,15 +32,14 @@
 package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
-import net.sourceforge.pebble.index.SearchIndex;
 import net.sourceforge.pebble.domain.*;
 import net.sourceforge.pebble.util.SecurityUtils;
 import net.sourceforge.pebble.util.StringUtils;
+import net.sourceforge.pebble.web.validation.ValidationContext;
 import net.sourceforge.pebble.web.view.ForwardView;
 import net.sourceforge.pebble.web.view.RedirectView;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.impl.BlogEntryFormView;
-import net.sourceforge.pebble.web.validation.ValidationContext;
 import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.HeadMethod;
@@ -51,11 +50,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.Date;
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Saves a blog entry.
@@ -222,11 +221,7 @@ public class SaveBlogEntryAction extends SecureAction {
     } else {
       try {
         BlogService service = new BlogService();
-        service.putBlogEntry(blogEntry);
-        blogEntry.store();
-
-        blogEntry.getBlog().getSearchIndex().index(blogEntry);
-        blogEntry.getBlog().getStaticPageIndex().reindex();
+        service.putStaticPage(blogEntry);
       } catch (BlogException be) {
         log.error(be.getMessage(), be);
         be.printStackTrace();
@@ -249,16 +244,16 @@ public class SaveBlogEntryAction extends SecureAction {
       // do nothing, type will default to NEW
     }
 
+    BlogService service = new BlogService();
     switch (type) {
       case BlogEntry.PUBLISHED :
-        BlogService service = new BlogService();
         return service.getBlogEntry(blog, id);
       case BlogEntry.TEMPLATE :
         return blog.getBlogEntryTemplate(id);
       case BlogEntry.DRAFT :
         return blog.getDraftBlogEntry(id);
       case BlogEntry.STATIC_PAGE :
-        BlogEntry blogEntry = blog.getStaticPage(id);
+        BlogEntry blogEntry = service.getStaticPage(blog, id);
         if (blogEntry == null) {
           blogEntry = blog.getBlogForToday().createStaticPage();
         }

@@ -56,4 +56,18 @@ public class BlogEntryByTitleComparatorTest extends SingleBlogTestCase {
     assertTrue(comp.compare(b2, b1) > 0);
   }
 
+  public void testCompareIgnoreCase() {
+    BlogEntryByTitleComparator comp = new BlogEntryByTitleComparator();
+
+    BlogEntry b1 = new BlogEntry(blog);
+    b1.setTitle("a title");
+    BlogEntry b2 = new BlogEntry(blog);
+    b2.setTitle("B title");
+
+    assertTrue(comp.compare(b1, b1) == 0);
+    assertTrue(comp.compare(b1, b2) != 0);
+    assertTrue(comp.compare(b1, b2) < 0);
+    assertTrue(comp.compare(b2, b1) > 0);
+  }
+
 }

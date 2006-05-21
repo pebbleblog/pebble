@@ -35,6 +35,7 @@ import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.domain.BlogEntry;
 import net.sourceforge.pebble.domain.BlogException;
+import net.sourceforge.pebble.domain.BlogService;
 import net.sourceforge.pebble.web.view.ForwardView;
 import net.sourceforge.pebble.web.view.NotFoundView;
 import net.sourceforge.pebble.web.view.View;
@@ -65,9 +66,11 @@ public class ManageStaticPageAction extends SecureAction {
   public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
     String id = request.getParameter("entry");
+    String confirm = request.getParameter("confirm");
     String submit = request.getParameter("submit");
 
-    BlogEntry blogEntry = blog.getStaticPage(id);
+    BlogService service = new BlogService();
+    BlogEntry blogEntry = service.getStaticPage(blog, id);
 
     if (blogEntry == null) {
       return new NotFoundView();
@@ -75,7 +78,7 @@ public class ManageStaticPageAction extends SecureAction {
 
     if (submit.equals("Edit")) {
       return new ForwardView("/editStaticPage.secureaction?entry=" + id);
-    } else if (submit.equalsIgnoreCase("Remove")) {
+    } else if (submit.equalsIgnoreCase("Remove") && confirm != null && confirm.equals("true")) {
       try {
         blogEntry.remove();
       } catch (BlogException be) {

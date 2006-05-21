@@ -32,11 +32,9 @@
   <br />
   <a href="addCategory.secureaction" title="Add a new category">New category</a> |
   <a href="viewCategories.secureaction" title="Edit the categories associated with your blog">Categories</a>
-<%--
   <br />
   <a href="addStaticPage.secureaction#form" title="Add a new static page ">New static page</a> |
   <a href="viewStaticPages.secureaction" title="Manage your static pages">Static pages</a>
---%>
   </li>
 
   <li><b>Responses</b>

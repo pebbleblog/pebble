@@ -1083,7 +1083,7 @@ public class BlogEntry extends Content {
 
       if (type == PUBLISHED || isStaticPage()) {
         // and finally un-index the published entry
-        blog.getSearchIndex().removeIndex(this);
+        blog.getSearchIndex().unindex(this);
       }
 
       if (isStaticPage()) {

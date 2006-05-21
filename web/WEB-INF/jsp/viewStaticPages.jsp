@@ -10,7 +10,7 @@
   <div class="contentItemBody">
     <form name="staticPagesForm" method="post" action="removeStaticPages.secureaction">
     <table width="99%" cellspacing="0" cellpadding="4">
-      <c:forEach var="blogEntry" items="${blogEntries}" varStatus="status">
+      <c:forEach var="staticPage" items="${staticPages}" varStatus="status">
         <c:choose>
           <c:when test="${status.count % 2 == 0}">
             <tr class="even small">
@@ -20,10 +20,10 @@
           </c:otherwise>
         </c:choose>
         <td width="2%">
-          <input type="checkbox" name="entry" value="${blogEntry.id}" />
+          <input type="checkbox" name="entry" value="${staticPage.id}" />
         </td>
         <td>
-          <a href="editStaticPage.secureaction?entry=${blogEntry.id}#form">${blogEntry.title}</a>
+          <a href="editStaticPage.secureaction?entry=${staticPage.id}#form">${staticPage.title}</a>
         </td>
         <td align="right">
         </td>

@@ -55,7 +55,7 @@ public class BlogEntryByTitleComparator implements Comparator {
     BlogEntry b1 = (BlogEntry)o1;
     BlogEntry b2 = (BlogEntry)o2;
 
-    return b1.getTitle().compareTo(b2.getTitle());
+    return b1.getTitle().compareToIgnoreCase(b2.getTitle());
   }
 
 }

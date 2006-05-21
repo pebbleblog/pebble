@@ -33,6 +33,7 @@ package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.domain.BlogEntry;
+import net.sourceforge.pebble.domain.BlogService;
 
 /**
  * Tests for the RemoveStaticPagesAction class.
@@ -48,16 +49,18 @@ public class RemoveStaticPagesActionTest extends SecureActionTestCase {
   }
 
   public void testProcess() throws Exception {
-
     BlogEntry page = blog.getBlogForToday().createStaticPage();
     page.setTitle("");
     page.setBody("");
-    page.store();
-    assertNotNull(blog.getStaticPage(page.getId()));
+
+    BlogService service = new BlogService();
+    service.putStaticPage(page);
+
+    assertEquals(page, service.getStaticPage(blog, page.getId()));
 
     request.setParameter("entry", page.getId());
     action.process(request, response);
-    assertNull(blog.getStaticPage(page.getId()));
+    assertNull(service.getStaticPage(blog, page.getId()));
   }
 
   /**

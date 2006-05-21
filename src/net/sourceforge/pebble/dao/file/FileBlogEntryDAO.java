@@ -21,9 +21,8 @@ import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.*;
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class FileBlogEntryDAO implements BlogEntryDAO {
@@ -203,21 +202,36 @@ public class FileBlogEntryDAO implements BlogEntryDAO {
    * @throws net.sourceforge.pebble.dao.PersistenceException
    *          if blog entries cannot be loaded
    */
-  public Collection getStaticPages(Blog blog) throws PersistenceException {
+  public List<BlogEntry> loadStaticPages(Blog blog) throws PersistenceException {
     File dir = new File(blog.getRoot(), "pages");
     File files[] = dir.listFiles(new BlogEntryFilenameFilter());
 
-    List entries = new ArrayList();
+    List<BlogEntry> entries = new ArrayList<BlogEntry>();
     if (files != null) {
-      for (int i = 0; i < files.length; i++) {
+      for (File file : files) {
         BlogEntry entry;
-        entry = loadBlogEntry(blog.getBlogForToday(), files[i]);
+        entry = loadBlogEntry(blog.getBlogForToday(), file);
         entry.setType(BlogEntry.STATIC_PAGE);
         entries.add(entry);
       }
     }
 
     return entries;
+  }
+
+  /**
+   * Loads a specific static page.
+   *
+   * @param blog    the owning Blog
+   * @param pageId   the page ID
+   * @return a BlogEntry instance
+   * @throws net.sourceforge.pebble.dao.PersistenceException
+   *          if the specified blog entry cannot be loaded
+   */
+  public BlogEntry loadStaticPage(Blog blog, String pageId) throws PersistenceException {
+    File path = new File(blog.getRoot(), "pages");
+    File file = new File(path, pageId + ".xml");
+    return loadBlogEntry(blog, file);
   }
 
   /**

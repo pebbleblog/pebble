@@ -87,13 +87,13 @@ window.onload = function()
       <c:if test="${!blogEntry.staticPage}">
       <tr>
         <td valign="top"><b>Excerpt</b></td>
-        <td><textarea name="excerpt" rows="10" cols="60"><c:out value="${blogEntry.excerpt}" escapeXml="true"/></textarea></td>
+        <td><textarea name="excerpt" rows="20" cols="60"><c:out value="${blogEntry.excerpt}" escapeXml="true"/></textarea></td>
       </tr>
       </c:if>
 
       <tr>
         <td valign="top"><b>Body</b></td>
-        <td><textarea name="body" rows="20" cols="60"><c:out value="${blogEntry.body}" escapeXml="true"/></textarea></td>
+        <td><textarea name="body" rows="40" cols="60"><c:out value="${blogEntry.body}" escapeXml="true"/></textarea></td>
       </tr>
 
       <tr>
@@ -182,24 +182,24 @@ window.onload = function()
         </tr>
         </c:if>
 
-      </c:if>
+        <tr>
+          <td valign="top"><br /><b>Attachment</b> (<span class="help"><a href="${pageContext.request.contextPath}/docs/blog-entries.html#attachments" target="_blank">Help</a></span>)</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td valign="top"><b>URL</b></td>
+          <td><input type="text" name="attachmentUrl" size="60" value="${blogEntry.attachment.url}"></td>
+        </tr>
+        <tr>
+          <td valign="top"><b>Size</b></td>
+          <td><input type="text" name="attachmentSize" size="20" value="${blogEntry.attachment.size}"></td>
+        </tr>
+        <tr>
+          <td valign="top"><b>Type</b></td>
+          <td><input type="text" name="attachmentType" size="20" value="${blogEntry.attachment.type}"></td>
+        </tr>
 
-      <tr>
-        <td valign="top"><br /><b>Attachment</b> (<span class="help"><a href="${pageContext.request.contextPath}/docs/blog-entries.html#attachments" target="_blank">Help</a></span>)</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td valign="top"><b>URL</b></td>
-        <td><input type="text" name="attachmentUrl" size="60" value="${blogEntry.attachment.url}"></td>
-      </tr>
-      <tr>
-        <td valign="top"><b>Size</b></td>
-        <td><input type="text" name="attachmentSize" size="20" value="${blogEntry.attachment.size}"></td>
-      </tr>
-      <tr>
-        <td valign="top"><b>Type</b></td>
-        <td><input type="text" name="attachmentType" size="20" value="${blogEntry.attachment.type}"></td>
-      </tr>
+      </c:if>
 
       <tr>
         <td colspan="2" align="right">

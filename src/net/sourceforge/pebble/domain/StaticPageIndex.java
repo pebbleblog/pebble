@@ -61,7 +61,8 @@ public class StaticPageIndex {
    * Initializes the categories.
    */
   public synchronized void reindex() {
-    Collection coll = blog.getStaticPages();
+    BlogService service = new BlogService();
+    Collection coll = service.getStaticPages(blog);
     staticPages = new HashMap();
     Iterator it = coll.iterator();
     while (it.hasNext()) {

@@ -31,18 +31,19 @@
  */
 package net.sourceforge.pebble.domain;
 
+import net.sourceforge.pebble.comparator.BlogEntryByTitleComparator;
 import net.sourceforge.pebble.dao.BlogEntryDAO;
 import net.sourceforge.pebble.dao.DAOFactory;
 import net.sourceforge.pebble.dao.PersistenceException;
-import net.sourceforge.pebble.index.SearchIndex;
-import net.sourceforge.pebble.event.blogentry.BlogEntryEvent;
 import net.sourceforge.pebble.event.PebbleEvent;
-import net.sourceforge.pebble.event.trackback.TrackBackEvent;
+import net.sourceforge.pebble.event.blogentry.BlogEntryEvent;
 import net.sourceforge.pebble.event.comment.CommentEvent;
+import net.sourceforge.pebble.event.trackback.TrackBackEvent;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -111,7 +112,7 @@ public class BlogService {
   }
 
   /**
-   * Gets the blog entry with the specified id.
+   * Puts the blog entry with the specified id.
    */
   public void putBlogEntry(BlogEntry blogEntry) throws BlogException {
     Blog blog = blogEntry.getBlog();
@@ -151,11 +152,6 @@ public class BlogService {
             blog.getEventDispatcher().fireTrackBackEvent((TrackBackEvent)event);
           }
         }
-
-//        // now that the entries have been saved, enable events
-//        // so that listeners get notified when they change
-//        blogEntry.setEventsEnabled(true);
-
       } catch (PersistenceException pe) {
       } finally {
         blogEntry.clearPropertyChangeEvents();
@@ -176,7 +172,7 @@ public class BlogService {
 
       if (blogEntry.getType() == BlogEntry.PUBLISHED) {
         // and finally un-index the published entry
-        blogEntry.getBlog().getSearchIndex().removeIndex(blogEntry);
+        blogEntry.getBlog().getSearchIndex().unindex(blogEntry);
       }
 
       blogEntry.getBlog().getEventDispatcher().fireBlogEntryEvent(new BlogEntryEvent(blogEntry, BlogEntryEvent.BLOG_ENTRY_REMOVED));
@@ -184,7 +180,7 @@ public class BlogService {
 //      todo
 //      if (isStaticPage()) {
 //        SearchIndex indexer = new SearchIndex();
-//        indexer.removeIndex(blogEntry);
+//        indexer.unindex(blogEntry);
 //        getBlog().getStaticPageIndex().reindex();
 //      }
     } catch (PersistenceException pe) {
@@ -204,6 +200,95 @@ public class BlogService {
       return blogEntry.getResponse(responseId);
     } else {
       return null;
+    }
+  }
+
+  /**
+   * Gets the list of static pages for the given blog.
+   *
+   * @param blog    the Blog
+   * @return  a list of BlogEntry instances
+   */
+  public List<BlogEntry> getStaticPages(Blog blog) {
+    List<BlogEntry> blogEntries = new ArrayList<BlogEntry>();
+
+    try {
+      DAOFactory factory = DAOFactory.getConfiguredFactory();
+      BlogEntryDAO dao = factory.getBlogEntryDAO();
+      blogEntries.addAll(dao.loadStaticPages(blog));
+    } catch (PersistenceException e) {
+      e.printStackTrace();
+    }
+
+    Collections.sort(blogEntries, new BlogEntryByTitleComparator());
+
+    return blogEntries;
+  }
+
+  /**
+   * Gets the static page with the specified id.
+   *
+   * @param pageId   the id of the blog entry
+   * @param blog    the Blog
+   * @return  a BlogEntry instance, or null if the entry couldn't be found
+   */
+  public BlogEntry getStaticPage(Blog blog, String pageId) {
+    try {
+      DAOFactory factory = DAOFactory.getConfiguredFactory();
+      BlogEntryDAO dao = factory.getBlogEntryDAO();
+      BlogEntry page = dao.loadStaticPage(blog, pageId);
+      if (page != null) {
+        page.setType(BlogEntry.STATIC_PAGE);
+      }
+      return page;
+    } catch (PersistenceException e) {
+      e.printStackTrace();
+    }
+
+    return null;
+  }
+
+  /**
+   * Puts the static page.
+   */
+  public void putStaticPage(BlogEntry blogEntry) throws BlogException {
+    Blog blog = blogEntry.getBlog();
+
+    synchronized (blog) {
+      try {
+        BlogEntry be = getStaticPage(blog, blogEntry.getId());
+        if (blogEntry.getType() == BlogEntry.NEW && be != null) {
+          // the blog entry is new but one exists with the same ID already
+          // - increment the ID and try again
+          blogEntry.setDate(new Date(blogEntry.getDate().getTime() + 1));
+          putStaticPage(blogEntry);
+        } else {
+          DAOFactory factory = DAOFactory.getConfiguredFactory();
+          BlogEntryDAO dao = factory.getBlogEntryDAO();
+          dao.storeBlogEntry(blogEntry);
+
+          blogEntry.getBlog().getSearchIndex().index(blogEntry);
+        }
+      } catch (PersistenceException pe) {
+      }
+    }
+  }
+
+  /**
+   * Removes a static page.
+   */
+  public void removeStaticPage(BlogEntry blogEntry) throws BlogException {
+    try {
+      DAOFactory factory = DAOFactory.getConfiguredFactory();
+      BlogEntryDAO dao = factory.getBlogEntryDAO();
+      dao.removeBlogEntry(blogEntry);
+
+      // un-index the published entry
+//      todo
+//      blogEntry.getBlog().getStaticPageIndex().unindex(blogEntry);
+      blogEntry.getBlog().getSearchIndex().unindex(blogEntry);
+
+    } catch (PersistenceException pe) {
     }
   }
 

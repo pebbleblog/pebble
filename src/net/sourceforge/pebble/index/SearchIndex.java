@@ -55,6 +55,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ArrayList;
 import java.io.IOException;
+import java.io.File;
 
 /**
  * Wraps up the functionality to index blog entries. This is really just
@@ -77,7 +78,20 @@ public class SearchIndex {
    * Clears the index.
    */
   public void clear() {
-    index(new ArrayList());
+    File searchDirectory = new File(blog.getSearchIndexDirectory());
+    if (!searchDirectory.exists()) {
+      searchDirectory.mkdirs();
+    }
+
+    synchronized (blog) {
+      try {
+        Analyzer analyzer = getAnalyzer();
+        IndexWriter writer = new IndexWriter(searchDirectory, analyzer, true);
+        writer.close();
+      } catch (Exception e) {
+        log.error(e.getMessage(), e);
+      }
+    }
   }
 
   /**
@@ -89,21 +103,13 @@ public class SearchIndex {
       try {
         log.debug("Creating index for all blog entries in " + blog.getName());
         Analyzer analyzer = getAnalyzer();
-        IndexWriter writer = new IndexWriter(blog.getSearchIndexDirectory(), analyzer, true);
+        IndexWriter writer = new IndexWriter(blog.getSearchIndexDirectory(), analyzer, false);
 
         Iterator it = blogEntries.iterator();
         while (it.hasNext()) {
           BlogEntry blogEntry = (BlogEntry)it.next();
           index(blogEntry, writer);
         }
-
-//        todo
-//        log.debug("Creating index for all static pages in " + rootBlog.getName());
-//        it = rootBlog.getStaticPages().iterator();
-//        while (it.hasNext()) {
-//          BlogEntry blogEntry = (BlogEntry)it.next();
-//          index(blogEntry, writer);
-//        }
 
         writer.close();
       } catch (Exception e) {
@@ -125,7 +131,7 @@ public class SearchIndex {
         Analyzer analyzer = getAnalyzer();
 
         // first delete the blog entry from the index (if it was there)
-        removeIndex(blogEntry);
+        unindex(blogEntry);
 
         IndexWriter writer = new IndexWriter(blog.getSearchIndexDirectory(), analyzer, false);
         index(blogEntry, writer);
@@ -152,7 +158,7 @@ public class SearchIndex {
    *
    * @param blogEntry   the BlogEntry instance to be removed
    */
-  public void removeIndex(BlogEntry blogEntry) {
+  public void unindex(BlogEntry blogEntry) {
     try {
       Blog rootBlog = blogEntry.getBlog();
       synchronized (blogEntry) {

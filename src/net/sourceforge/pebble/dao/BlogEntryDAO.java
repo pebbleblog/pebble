@@ -118,6 +118,17 @@ public interface BlogEntryDAO {
    * @return  a List of BlogEntry instances
    * @throws  net.sourceforge.pebble.dao.PersistenceException    if blog entries cannot be loaded
    */
-  public Collection getStaticPages(Blog blog) throws PersistenceException;
+  public List<BlogEntry> loadStaticPages(Blog blog) throws PersistenceException;
+
+  /**
+   * Loads a specific static page.
+   *
+   * @param blog    the owning Blog
+   * @param pageId   the page ID
+   * @return a BlogEntry instance
+   * @throws net.sourceforge.pebble.dao.PersistenceException
+   *          if the specified blog entry cannot be loaded
+   */
+  public BlogEntry loadStaticPage(Blog blog, String pageId) throws PersistenceException;
 
 }

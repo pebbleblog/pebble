@@ -33,6 +33,7 @@ package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.domain.BlogEntry;
 import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.domain.BlogService;
 
 /**
  * Edits an existing static page. This is called to populate a HTML
@@ -49,7 +50,8 @@ public class EditStaticPageAction extends AbstractEditBlogEntryAction {
    * @return a BlogEntry instance
    */
   protected BlogEntry getBlogEntry(Blog blog, String entryId) {
-    return blog.getStaticPage(entryId);
+    BlogService service = new BlogService();
+    return service.getStaticPage(blog, entryId);
   }
 
 }
