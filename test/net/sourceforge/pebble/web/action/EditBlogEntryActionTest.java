@@ -62,7 +62,6 @@ public class EditBlogEntryActionTest extends SecureActionTestCase {
 
     BlogEntry blogEntry = (BlogEntry)action.getModel().get(Constants.BLOG_ENTRY_KEY);
     assertEquals(newBlogEntry, blogEntry);
-    assertEquals(BlogEntry.PUBLISHED, blogEntry.getType());
 
     assertTrue(view instanceof BlogEntryFormView);
   }

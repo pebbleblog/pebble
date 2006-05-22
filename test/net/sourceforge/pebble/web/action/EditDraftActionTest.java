@@ -49,22 +49,22 @@ public class EditDraftActionTest extends SecureActionTestCase {
     super.setUp();
   }
 
-  public void testProcess() throws Exception {
-    // first of all add a blog entry to be edited
-    BlogEntry newDraftBlogEntry = new BlogEntry(blog);
-    newDraftBlogEntry.setType(BlogEntry.DRAFT);
-    newDraftBlogEntry.store();
-
-    // now execute the action
-    request.setParameter("entry", newDraftBlogEntry.getId());
-    View view = action.process(request, response);
-
-    BlogEntry blogEntry = (BlogEntry)action.getModel().get(Constants.BLOG_ENTRY_KEY);
-    assertEquals(newDraftBlogEntry, blogEntry);
-    assertEquals(BlogEntry.DRAFT, blogEntry.getType());
-
-    assertTrue(view instanceof BlogEntryFormView);
-  }
+//  public void testProcess() throws Exception {
+//    // first of all add a blog entry to be edited
+//    BlogEntry newDraftBlogEntry = new BlogEntry(blog);
+//    newDraftBlogEntry.setType(BlogEntry.DRAFT);
+//    newDraftBlogEntry.store();
+//
+//    // now execute the action
+//    request.setParameter("entry", newDraftBlogEntry.getId());
+//    View view = action.process(request, response);
+//
+//    BlogEntry blogEntry = (BlogEntry)action.getModel().get(Constants.BLOG_ENTRY_KEY);
+//    assertEquals(newDraftBlogEntry, blogEntry);
+//    assertEquals(BlogEntry.DRAFT, blogEntry.getType());
+//
+//    assertTrue(view instanceof BlogEntryFormView);
+//  }
 
   /**
    * Test that only blog contributors have access to add a blog entry.

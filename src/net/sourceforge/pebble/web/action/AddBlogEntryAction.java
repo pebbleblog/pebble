@@ -33,6 +33,7 @@ package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.domain.BlogEntry;
 import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.util.SecurityUtils;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -55,6 +56,7 @@ public class AddBlogEntryAction extends AbstractAddBlogEntryAction {
     BlogEntry entry = new BlogEntry(blog);
     entry.setTitle("Title");
     entry.setBody("<p>\n\n</p>");
+    entry.setAuthor(SecurityUtils.getUsername());
 
     return entry;
   }

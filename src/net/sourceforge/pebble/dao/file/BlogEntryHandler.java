@@ -194,9 +194,9 @@ public class BlogEntryHandler extends DefaultHandler {
         case ORIGINAL_PERMALINK :
           blogEntry.setOriginalPermalink(elementContent.toString());
           break;
-        case STATIC_NAME :
-          blogEntry.setStaticName(elementContent.toString());
-          break;
+//        case STATIC_NAME :
+//          blogEntry.setStaticName(elementContent.toString());
+//          break;
         case CATEGORY :
           blogEntry.addCategory(blogEntry.getBlog().getCategory(elementContent.toString()));
           break;

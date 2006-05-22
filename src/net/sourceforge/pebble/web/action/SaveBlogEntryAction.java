@@ -36,7 +36,6 @@ import net.sourceforge.pebble.domain.*;
 import net.sourceforge.pebble.util.SecurityUtils;
 import net.sourceforge.pebble.util.StringUtils;
 import net.sourceforge.pebble.web.validation.ValidationContext;
-import net.sourceforge.pebble.web.view.ForwardView;
 import net.sourceforge.pebble.web.view.RedirectView;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.impl.BlogEntryFormView;
@@ -68,7 +67,7 @@ public class SaveBlogEntryAction extends SecureAction {
 
   /** the value used if the blog entry is being previewed rather than added */
   private static final String PREVIEW = "Preview";
-  private static final String SAVE_AS_DRAFT = "Save as Draft";
+//  private static final String SAVE_AS_DRAFT = "Save as Draft";
 
   /**
    * Peforms the processing associated with this action.
@@ -82,18 +81,18 @@ public class SaveBlogEntryAction extends SecureAction {
 
     if (submitType != null && submitType.equalsIgnoreCase(PREVIEW)) {
       return previewBlogEntry(request);
-    } else if (submitType != null && submitType.equalsIgnoreCase(SAVE_AS_DRAFT)) {
-      return saveBlogEntryAsDraft(request);
+//    } else if (submitType != null && submitType.equalsIgnoreCase(SAVE_AS_DRAFT)) {
+//      return saveBlogEntryAsDraft(request);
     } else {
-      return postBlogEntry(request);
+      return saveBlogEntry(request);
     }
   }
 
   private View previewBlogEntry(HttpServletRequest request) {
     BlogEntry blogEntry = getBlogEntry(request);
 
-    // we don't want to actually edit the original whilst previewing
-    blogEntry = (BlogEntry)blogEntry.clone();
+//    // we don't want to actually edit the original whilst previewing
+//    blogEntry = (BlogEntry)blogEntry.clone();
     populateBlogEntry(blogEntry, request);
 
     ValidationContext validationContext = new ValidationContext();
@@ -104,8 +103,7 @@ public class SaveBlogEntryAction extends SecureAction {
     return new BlogEntryFormView();
   }
 
-  private View postBlogEntry(HttpServletRequest request) {
-    Blog blog = (Blog)request.getAttribute(Constants.BLOG_KEY);
+  private View saveBlogEntry(HttpServletRequest request) {
     BlogEntry blogEntry = getBlogEntry(request);
 
     populateBlogEntry(blogEntry, request);
@@ -121,18 +119,18 @@ public class SaveBlogEntryAction extends SecureAction {
     } else {
       BlogService service = new BlogService();
       try {
-        switch (blogEntry.getType()) {
-          case BlogEntry.DRAFT :
-            BlogEntry draftBlogEntry = blogEntry;
-            blogEntry = new BlogEntry(blog);
-            populateBlogEntry(blogEntry, request);
+//        switch (blogEntry.getType()) {
+//          case BlogEntry.DRAFT :
+//            BlogEntry draftBlogEntry = blogEntry;
+//            blogEntry = new BlogEntry(blog);
+//            populateBlogEntry(blogEntry, request);
+//            service.putBlogEntry(blogEntry);
+//            draftBlogEntry.remove();
+//            break;
+//          default :
             service.putBlogEntry(blogEntry);
-            draftBlogEntry.remove();
-            break;
-          default :
-            service.putBlogEntry(blogEntry);
-            break;
-        }
+//            break;
+//        }
 
         getModel().put(Constants.BLOG_ENTRY_KEY, blogEntry);
         return new RedirectView(blogEntry.getLocalPermalink());
@@ -144,68 +142,62 @@ public class SaveBlogEntryAction extends SecureAction {
     }
   }
 
-  private View saveBlogEntryAsDraft(HttpServletRequest request) {
-    BlogEntry blogEntry = getBlogEntry(request);
-    blogEntry = (BlogEntry)blogEntry.clone();
-    blogEntry.setType(BlogEntry.DRAFT);
-    populateBlogEntry(blogEntry, request);
-
-
-    try {
-      blogEntry.store();
-    } catch (BlogException be) {
-      log.error(be.getMessage(), be);
-      be.printStackTrace();
-
-      getModel().put(Constants.BLOG_ENTRY_KEY, blogEntry);
-      return new BlogEntryFormView();
-    }
-
-    return new ForwardView("/viewDrafts.secureaction");
-  }
+//  private View saveBlogEntryAsDraft(HttpServletRequest request) {
+//    BlogEntry blogEntry = getBlogEntry(request);
+//    blogEntry = (BlogEntry)blogEntry.clone();
+//    blogEntry.setType(BlogEntry.DRAFT);
+//    populateBlogEntry(blogEntry, request);
+//
+//
+//    try {
+//      blogEntry.store();
+//    } catch (BlogException be) {
+//      log.error(be.getMessage(), be);
+//      be.printStackTrace();
+//
+//      getModel().put(Constants.BLOG_ENTRY_KEY, blogEntry);
+//      return new BlogEntryFormView();
+//    }
+//
+//    return new ForwardView("/viewDrafts.secureaction");
+//  }
 
   private BlogEntry getBlogEntry(HttpServletRequest request) {
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
     String id = request.getParameter("entry");
-    int type = -1;
-    try {
-      type = Integer.parseInt(request.getParameter("type"));
-    } catch (NumberFormatException nfe) {
-      // do nothing
-    }
+    String persistent = request.getParameter("persistent");
 
-    BlogService service = new BlogService();
-    switch (type) {
-      case BlogEntry.PUBLISHED :
-        return service.getBlogEntry(blog, id);
-      case BlogEntry.DRAFT :
-        return blog.getDraftBlogEntry(id);
-      default :
-        // we're creating a new blog entry
-        return new BlogEntry(blog);
+    if (persistent != null && persistent.equalsIgnoreCase("true")) {
+      BlogService service = new BlogService();
+      return service.getBlogEntry(blog, id);
+    } else {
+      return new BlogEntry(blog);
     }
+//      case BlogEntry.DRAFT :
+//        return blog.getDraftBlogEntry(id);
+//      default :
+//        // we're creating a new blog entry
+//        return new BlogEntry(blog);
   }
 
   private void populateBlogEntry(BlogEntry blogEntry, HttpServletRequest request) {
     Blog blog = (Blog)request.getAttribute(Constants.BLOG_KEY);
-    String type = request.getParameter("type");
     String title = request.getParameter("title");
     String subtitle = request.getParameter("subtitle");
     String body = StringUtils.filterNewlines(request.getParameter("body"));
     String excerpt = StringUtils.filterNewlines(request.getParameter("excerpt"));
     String originalPermalink = request.getParameter("originalPermalink");
     String tags = request.getParameter("tags");
-    String staticName = request.getParameter("staticName");
     String commentsEnabled = request.getParameter("commentsEnabled");
     String trackBacksEnabled = request.getParameter("trackBacksEnabled");
     String category[] = request.getParameterValues("category");
     String author = SecurityUtils.getUsername();
 
-    // the date can only set on new entries
-    if (type != null && type.equals("1")) {
+    // the date can only set on those entries that have not yet been persisted
+    if (!blogEntry.isPersistent()) {
       DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM, blog.getLocale());
       dateFormat.setTimeZone(blog.getTimeZone());
-      Date date = null;
+      Date date;
       try {
         date = dateFormat.parse(request.getParameter("date"));
         blogEntry.setDate(date);

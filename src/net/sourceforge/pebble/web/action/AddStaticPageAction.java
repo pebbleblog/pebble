@@ -52,10 +52,11 @@ public class AddStaticPageAction extends AbstractAddBlogEntryAction {
    * @return a BlogEntry instance
    */
   protected BlogEntry createBlogEntry(Blog blog, HttpServletRequest request) {
-    BlogEntry staticPage = blog.getBlogForToday().createStaticPage();
-    staticPage.setStaticName(request.getParameter("staticName"));
-    staticPage.setTitle("Title");
-    return staticPage;
+//    BlogEntry staticPage = blog.getBlogForToday().createStaticPage();
+//    staticPage.setStaticName(request.getParameter("staticName"));
+//    staticPage.setTitle("Title");
+//    return staticPage;
+    return null;
   }
 
 }

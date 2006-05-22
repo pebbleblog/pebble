@@ -478,8 +478,7 @@ public class BlogEntryTest extends SingleBlogTestCase {
     blogEntry.setSubtitle("An old subtitle");
     blogEntry.setBody("An old body");
     blogEntry.setAuthor("An old author");
-    blogEntry.setType(BlogEntry.DRAFT);
-    blogEntry.setTimeZone(TimeZone.getTimeZone("CET"));
+    blogEntry.setPersistent(true);
     blogEntry.setCommentsEnabled(false);
     blogEntry.setTrackBacksEnabled(false);
 
@@ -501,8 +500,7 @@ public class BlogEntryTest extends SingleBlogTestCase {
     assertEquals(blogEntry.inCategory(category2), clonedBlogEntry.inCategory(category2));
     assertEquals(blogEntry.inCategory(category3), clonedBlogEntry.inCategory(category3));
     assertEquals("some+tag", clonedBlogEntry.getTags());
-    assertEquals(blogEntry.getType(), clonedBlogEntry.getType());
-    assertEquals(blogEntry.getTimeZone(), clonedBlogEntry.getTimeZone());
+    assertEquals(blogEntry.isPersistent(), clonedBlogEntry.isPersistent());
     assertFalse(clonedBlogEntry.isCommentsEnabled());
     assertFalse(clonedBlogEntry.isTrackBacksEnabled());
     assertNull(clonedBlogEntry.getAttachment());
@@ -535,33 +533,34 @@ public class BlogEntryTest extends SingleBlogTestCase {
     assertNull(clonedBlogEntry.getAttachment());
   }
 
-  public void testValidationForStaticPage() {
-    blogEntry.setType(BlogEntry.STATIC_PAGE);
-
-    ValidationContext context = new ValidationContext();
-    blogEntry.validate(context);
-    assertTrue("Name shouldn't be empty", context.hasErrors());
-
-    context = new ValidationContext();
-    blogEntry.setStaticName("someStoryName");
-    blogEntry.validate(context);
-    assertFalse(context.hasErrors());
-
-    context = new ValidationContext();
-    blogEntry.setStaticName("2004/someStoryName");
-    blogEntry.validate(context);
-    assertFalse(context.hasErrors());
-
-    context = new ValidationContext();
-    blogEntry.setStaticName("some-story-name");
-    blogEntry.validate(context);
-    assertFalse(context.hasErrors());
-
-    context = new ValidationContext();
-    blogEntry.setStaticName("someStoryName.html");
-    blogEntry.validate(context);
-    assertTrue("Name shouldn't contain punctuation", context.hasErrors());
-  }
+// todo
+//  public void testValidationForStaticPage() {
+//    blogEntry.setType(BlogEntry.STATIC_PAGE);
+//
+//    ValidationContext context = new ValidationContext();
+//    blogEntry.validate(context);
+//    assertTrue("Name shouldn't be empty", context.hasErrors());
+//
+//    context = new ValidationContext();
+//    blogEntry.setStaticName("someStoryName");
+//    blogEntry.validate(context);
+//    assertFalse(context.hasErrors());
+//
+//    context = new ValidationContext();
+//    blogEntry.setStaticName("2004/someStoryName");
+//    blogEntry.validate(context);
+//    assertFalse(context.hasErrors());
+//
+//    context = new ValidationContext();
+//    blogEntry.setStaticName("some-story-name");
+//    blogEntry.validate(context);
+//    assertFalse(context.hasErrors());
+//
+//    context = new ValidationContext();
+//    blogEntry.setStaticName("someStoryName.html");
+//    blogEntry.validate(context);
+//    assertTrue("Name shouldn't contain punctuation", context.hasErrors());
+//  }
 
   /**
    * Tests that the next blog entry can be accessed.
@@ -618,18 +617,6 @@ public class BlogEntryTest extends SingleBlogTestCase {
   }
 
   /**
-   * Tests that for the timezone property.
-   */
-  public void testTimeZone() {
-    // by default we should have the same timezone as the owning blog
-    assertEquals(blog.getTimeZone(), blogEntry.getTimeZone());
-
-    // but it can also be overridden
-    blogEntry.setTimeZone(TimeZone.getTimeZone("CET"));
-    assertEquals(TimeZone.getTimeZone("CET"), blogEntry.getTimeZone());
-  }
-
-  /**
    * Tests for a blog entry attachment.
    */
   public void testAttachment() {
@@ -641,11 +628,12 @@ public class BlogEntryTest extends SingleBlogTestCase {
     assertEquals(a, clonedBlogEntry.getAttachment());
   }
 
-  public void testPermalinkForStaticPage() {
-    blogEntry.setType(BlogEntry.STATIC_PAGE);
-    blogEntry.setStaticName("SomePage");
-    assertEquals("http://www.yourdomain.com/blog/pages/SomePage.html", blogEntry.getPermalink());
-  }
+// todo
+//  public void testPermalinkForStaticPage() {
+//    blogEntry.setType(BlogEntry.STATIC_PAGE);
+//    blogEntry.setStaticName("SomePage");
+//    assertEquals("http://www.yourdomain.com/blog/pages/SomePage.html", blogEntry.getPermalink());
+//  }
 
   /**
    * Tests that listeners are not fired when a comment is added/removed on a clone.

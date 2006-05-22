@@ -101,13 +101,13 @@
 <div align="center">
   <br />
   <c:if test="${blogEntry.commentsEnabled}">
-    <a href="replyToBlogEntry.action?entry=${blogEntry.id}">Reply</a>
+    [<a href="replyToBlogEntry.action?entry=${blogEntry.id}">Reply</a>]
   </c:if>
   <c:if test="${blogEntry.trackBacksEnabled}">
-    <a href="${blog.url}addTrackBack.action?entry=${blogEntry.id}">TrackBack</a>
+    [<a href="${blog.url}addTrackBack.action?entry=${blogEntry.id}">TrackBack</a>]
   </c:if>
   <pebble:isBlogContributor>
-  <a href="sendTrackBack.secureaction?entry=${blogEntry.id}">Send TrackBack</a>
+  [<a href="sendTrackBack.secureaction?entry=${blogEntry.id}">Send TrackBack</a>]
   </pebble:isBlogContributor>
 </div>
 

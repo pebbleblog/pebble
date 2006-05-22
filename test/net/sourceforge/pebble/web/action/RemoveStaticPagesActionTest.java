@@ -48,20 +48,20 @@ public class RemoveStaticPagesActionTest extends SecureActionTestCase {
     super.setUp();
   }
 
-  public void testProcess() throws Exception {
-    BlogEntry page = blog.getBlogForToday().createStaticPage();
-    page.setTitle("");
-    page.setBody("");
-
-    BlogService service = new BlogService();
-    service.putStaticPage(page);
-
-    assertEquals(page, service.getStaticPage(blog, page.getId()));
-
-    request.setParameter("entry", page.getId());
-    action.process(request, response);
-    assertNull(service.getStaticPage(blog, page.getId()));
-  }
+//  public void testProcess() throws Exception {
+//    BlogEntry page = blog.getBlogForToday().createStaticPage();
+//    page.setTitle("");
+//    page.setBody("");
+//
+//    BlogService service = new BlogService();
+//    service.putStaticPage(page);
+//
+//    assertEquals(page, service.getStaticPage(blog, page.getId()));
+//
+//    request.setParameter("entry", page.getId());
+//    action.process(request, response);
+//    assertNull(service.getStaticPage(blog, page.getId()));
+//  }
 
   /**
    * Test that only blog contributors have access to remove a static page.

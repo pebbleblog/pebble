@@ -54,16 +54,16 @@ public class MockBlogEntryDAO implements BlogEntryDAO {
    * @throws PersistenceException   if something goes wrong storing the entry
    */
   public void storeBlogEntry(BlogEntry blogEntry) throws PersistenceException {
-    switch (blogEntry.getType()) {
-      case BlogEntry.DRAFT :
-        draftBlogEntries.put(blogEntry.getId(), blogEntry);
-        break;
-      case BlogEntry.STATIC_PAGE :
-        staticPages.put(blogEntry.getId(), blogEntry);
-        break;
-      default :
+//    switch (blogEntry.getType()) {
+//      case BlogEntry.DRAFT :
+//        draftBlogEntries.put(blogEntry.getId(), blogEntry);
+//        break;
+//      case BlogEntry.STATIC_PAGE :
+//        staticPages.put(blogEntry.getId(), blogEntry);
+//        break;
+//      default :
         blogEntries.put(blogEntry.getId(), blogEntry);
-    }
+//    }
   }
 
   /**
@@ -73,16 +73,16 @@ public class MockBlogEntryDAO implements BlogEntryDAO {
    * @throws PersistenceException   if something goes wrong removing the entry
    */
   public void removeBlogEntry(BlogEntry blogEntry) throws PersistenceException {
-    switch (blogEntry.getType()) {
-      case BlogEntry.DRAFT :
-        draftBlogEntries.remove(blogEntry.getId());
-        break;
-      case BlogEntry.STATIC_PAGE :
-        staticPages.remove(blogEntry.getId());
-        break;
-      default :
+//    switch (blogEntry.getType()) {
+//      case BlogEntry.DRAFT :
+//        draftBlogEntries.remove(blogEntry.getId());
+//        break;
+//      case BlogEntry.STATIC_PAGE :
+//        staticPages.remove(blogEntry.getId());
+//        break;
+//      default :
         blogEntries.remove(blogEntry.getId());
-    }
+//    }
   }
 
   /**

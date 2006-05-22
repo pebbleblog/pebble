@@ -31,19 +31,14 @@
  */
 package net.sourceforge.pebble.domain;
 
-import net.sourceforge.pebble.dao.BlogEntryDAO;
-import net.sourceforge.pebble.dao.DAOFactory;
-import net.sourceforge.pebble.dao.PersistenceException;
+import net.sourceforge.pebble.comparator.ResponseByDateComparator;
+import net.sourceforge.pebble.event.PebbleEvent;
 import net.sourceforge.pebble.event.blogentry.BlogEntryEvent;
 import net.sourceforge.pebble.event.comment.CommentEvent;
 import net.sourceforge.pebble.event.trackback.TrackBackEvent;
-import net.sourceforge.pebble.event.PebbleEvent;
+import net.sourceforge.pebble.web.validation.ValidationContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import net.sourceforge.pebble.web.validation.ValidationContext;
-import net.sourceforge.pebble.comparator.ResponseByDateComparator;
-import net.sourceforge.pebble.security.PebbleUserDetailsService;
-import net.sourceforge.pebble.security.PebbleUserDetails;
 
 import java.util.*;
 
@@ -52,43 +47,22 @@ import java.util.*;
  *
  * @author Simon Brown
  */
-public class BlogEntry extends Content {
+public class BlogEntry extends PageBasedContent {
 
   /**
    * the log used by this class
    */
   private static Log log = LogFactory.getLog(BlogEntry.class);
 
-  public static final String TITLE_PROPERTY = "title";
-  public static final String SUBTITLE_PROPERTY = "subtitle";
-  public static final String BODY_PROPERTY = "body";
   public static final String EXCERPT_PROPERTY = "excerpt";
-  public static final String AUTHOR_PROPERTY = "author";
   public static final String COMMENTS_ENABLED_PROPERTY = "commentsEnabed";
   public static final String TRACKBACKS_ENABLED_PROPERTY = "trackBacksEnabled";
   public static final String ATTACHMENT_PROPERTY = "attachment";
-  public static final String DATE_PROPERTY = "date";
-  public static final String ORIGINAL_PERMALINK_PROPERTY = "originalPermalink";
   public static final String CATEGORIES_PROPERTY = "categories";
   public static final String TAGS_PROPERTY = "tags";
 
-  /**
-   * the id of the blog entry
-   */
-  private String id;
-
   /** the permalink */
   private String permalink;
-
-  /**
-   * the title of the blog entry
-   */
-  private String title = "";
-
-  /**
-   * the subtitle of the blog entry
-   */
-  private String subtitle = "";
 
   /**
    * the category that the blog entry falls into
@@ -105,27 +79,6 @@ public class BlogEntry extends Content {
    * the excerpt of the blog entry
    */
   private String excerpt = "";
-
-  /**
-   * the body/content of the blog entry
-   */
-  private String body = "";
-
-  /**
-   * the date that the entry was created
-   */
-  private Date date;
-
-  /** the timezone where the entry was posted */
-  private TimeZone timeZone;
-
-  /**
-   * the author of the blog entry
-   */
-  private String author = "";
-
-  /** the enricher user details */
-  private PebbleUserDetails user;
 
   /**
    * a flag to indicate whether comments are enabled for this entry
@@ -147,24 +100,8 @@ public class BlogEntry extends Content {
    */
   private List trackBacks = new ArrayList();
 
-  /**
-   * the alternative permalink for this blog entry
-   */
-  private String originalPermalink;
-
   /** the attachment for this blog entry, if applicable */
   private Attachment attachment;
-
-  /** the owning blog */
-  private Blog blog;
-
-  public static final int PUBLISHED = 0;
-  public static final int NEW = 1;
-  public static final int DRAFT = 2;
-
-  private int type = PUBLISHED;
-
-  private boolean persistent = false;
 
   /**
    * Creates a new blog entry.
@@ -172,27 +109,7 @@ public class BlogEntry extends Content {
    * @param blog    the owning Blog
    */
   public BlogEntry(Blog blog) {
-    this.blog = blog;
-    setDate(new Date());
-    this.type = NEW;
-  }
-
-  /**
-   * Gets the unique id of this blog entry.
-   *
-   * @return the id as a String
-   */
-  public String getId() {
-    return id;
-  }
-
-  /**
-   * Gets the title of this blog entry.
-   *
-   * @return the title as a String
-   */
-  public String getTitle() {
-    return title;
+    super(blog);
   }
 
   /**
@@ -201,32 +118,10 @@ public class BlogEntry extends Content {
    * @param newTitle  the title as a String
    */
   public void setTitle(String newTitle) {
-    propertyChangeSupport.firePropertyChange(TITLE_PROPERTY, title, newTitle);
-
-    this.title = newTitle;
+    super.setTitle(newTitle);
 
     // and cause the permalink to be re-generated
     this.permalink = null;
-  }
-
-  /**
-   * Gets the subtitle of this blog entry.
-   *
-   * @return the subtitle as a String
-   */
-  public String getSubtitle() {
-    return subtitle;
-  }
-
-  /**
-   * Sets the subtitle of this blog entry.
-   *
-   * @param newSubtitle  the subtitle as a String
-   */
-  public void setSubtitle(String newSubtitle) {
-    propertyChangeSupport.firePropertyChange(SUBTITLE_PROPERTY, subtitle, newSubtitle);
-
-    this.subtitle = newSubtitle;
   }
 
   /**
@@ -354,7 +249,7 @@ public class BlogEntry extends Content {
    */
   public boolean hasTag(String s) {
     if (s != null) {
-      return getAllTags().contains(new Tag(s, blog));
+      return getAllTags().contains(new Tag(s, getBlog()));
     } else {
       return false;
     }
@@ -398,15 +293,6 @@ public class BlogEntry extends Content {
 
 
   /**
-   * Gets the body of this blog entry.
-   *
-   * @return the body as a String
-   */
-  public String getBody() {
-    return body;
-  }
-
-  /**
    * Gets the content of this response.
    *
    * @return a String
@@ -415,7 +301,7 @@ public class BlogEntry extends Content {
     if (excerpt != null && excerpt.length() > 0) {
       return excerpt;
     } else {
-      return body;
+      return getBody();
     }
   }
 
@@ -429,18 +315,6 @@ public class BlogEntry extends Content {
   }
 
   /**
-   * Gets an excerpt of this blog entry, by truncating the body to a maximum
-   * of 255 characters.
-   *
-   * @deprecated
-   * @return the first 255 characters of the body, chopped to 252 + ...
-   *         if the length of the body is greater then 255
-   */
-  public String getExcerptFromBody() {
-    return getTruncatedContent();
-  }
-
-  /**
    * Sets the excerpt of this blog entry.
    *
    * @param newExcerpt    the excerpt as a String
@@ -451,25 +325,6 @@ public class BlogEntry extends Content {
     }
     propertyChangeSupport.firePropertyChange(EXCERPT_PROPERTY, excerpt, newExcerpt);
     this.excerpt = newExcerpt;
-  }
-
-  /**
-   * Sets the body of this blog entry.
-   *
-   * @param newBody the body as a String
-   */
-  public void setBody(String newBody) {
-    propertyChangeSupport.firePropertyChange(BODY_PROPERTY, body, newBody);
-    this.body = newBody;
-  }
-
-  /**
-   * Gets the date that this blog entry was created.
-   *
-   * @return a java.util.Date instance
-   */
-  public Date getDate() {
-    return date;
   }
 
   /**
@@ -505,120 +360,10 @@ public class BlogEntry extends Content {
    * @param newDate a java.util.Date instance
    */
   public void setDate(Date newDate) {
-    propertyChangeSupport.firePropertyChange(DATE_PROPERTY, date, newDate);
-    this.date = newDate;
-    this.id = "" + this.date.getTime();
+    super.setDate(newDate);
 
     // and cause the permalink to be re-generated
     this.permalink = null;
-  }
-
-  /**
-   * Gets the timezone of this blog entry.
-   *
-   * @return  a TimeZone instance of this entry, or the timezone instance
-   *          of the owning blog as a default
-   */
-  public TimeZone getTimeZone() {
-    if (this.timeZone != null) {
-      return this.timeZone;
-    } else {
-      return getBlog().getTimeZone();
-    }
-  }
-
-  /**
-   * Sets the timezone of this blog entry.
-   *
-   * @param timeZone    a TimeZone instance
-   */
-  public void setTimeZone(TimeZone timeZone) {
-    this.timeZone = timeZone;
-  }
-
-  /**
-   * Gets the author of this blog entry.
-   *
-   * @return the author as a String
-   */
-  public String getAuthor() {
-    return author;
-  }
-
-  /**
-   * Gets full user details about the author including name, email-address, etc.
-   *
-   * @return  a PebbleUserDetails instance
-   */
-  public PebbleUserDetails getUser() {
-    if (this.user == null) {
-      PebbleUserDetailsService puds = new PebbleUserDetailsService();
-      puds.setPebbleContext(BlogManager.getInstance().getPebbleContext());
-      try {
-        this.user = (PebbleUserDetails)puds.loadUserByUsername(getAuthor());
-      } catch (Exception e) {
-        // do nothing
-      }
-    }
-
-    return this.user;
-  }
-
-  /**
-   * Sets the author of this blog entry.
-   *
-   * @param newAuthor the author as a String
-   */
-  public void setAuthor(String newAuthor) {
-    //propertyChangeSupport.firePropertyChange(AUTHOR_PROPERTY, author, newAuthor);
-    this.author = newAuthor;
-  }
-
-  /**
-   * Determines whether this blog entry has been aggregated from another
-   * source. An aggregated blog entry will have a specified permalink.
-   *
-   * @return true if this blog entry has been aggegrated, false otherwise
-   */
-  public boolean isAggregated() {
-    return (originalPermalink != null);
-  }
-
-  /**
-   * Gets the alternative permalink for this blog entry.
-   *
-   * @return an absolute URL as a String
-   */
-  public String getOriginalPermalink() {
-    return this.originalPermalink;
-  }
-
-  /**
-   * Sets the alternative permalink for this blog entry.
-   *
-   * @param newPermalink an absolute URL as a String
-   */
-  public void setOriginalPermalink(String newPermalink) {
-    if (newPermalink == null || newPermalink.length() == 0) {
-      propertyChangeSupport.firePropertyChange(ORIGINAL_PERMALINK_PROPERTY, originalPermalink, null);
-      this.originalPermalink = null;
-    } else {
-      propertyChangeSupport.firePropertyChange(ORIGINAL_PERMALINK_PROPERTY, originalPermalink, newPermalink);
-      this.originalPermalink = newPermalink;
-    }
-  }
-
-  /**
-   * Gets a permalink for this blog entry.
-   *
-   * @return an absolute URL as a String
-   */
-  public String getPermalink() {
-    if (isAggregated()) {
-      return getOriginalPermalink();
-    } else {
-      return getLocalPermalink();
-    }
   }
 
   /**
@@ -629,18 +374,14 @@ public class BlogEntry extends Content {
    * @return an absolute URL as a String
    */
   public String getLocalPermalink() {
-    if (type == BlogEntry.STATIC_PAGE) {
-      return getBlog().getUrl() + "pages/" + staticName + ".html";
-    } else {
-      if (this.permalink == null) {
-        String s = getBlog().getPermalinkProvider().getPermalink(this);
-        if (s != null && s.length() > 0) {
-          this.permalink = getBlog().getUrl() + s.substring(1);
-        }
+    if (this.permalink == null) {
+      String s = getBlog().getPermalinkProvider().getPermalink(this);
+      if (s != null && s.length() > 0) {
+        this.permalink = getBlog().getUrl() + s.substring(1);
       }
-
-      return permalink;
     }
+
+    return permalink;
   }
 
   /**
@@ -660,16 +401,6 @@ public class BlogEntry extends Content {
   public void setAttachment(Attachment newAttachment) {
     propertyChangeSupport.firePropertyChange(ATTACHMENT_PROPERTY, attachment, newAttachment);
     this.attachment = newAttachment;
-  }
-
-  private String staticName;
-
-  public void setStaticName(String staticName) {
-    this.staticName = staticName;
-  }
-
-  public String getStaticName() {
-    return this.staticName;
   }
 
   /**
@@ -728,15 +459,6 @@ public class BlogEntry extends Content {
    */
   public String getTrackBacksLink() {
     return getLocalPermalink() + "#trackbacks";
-  }
-
-  /**
-   * Helper method to get the owning Blog instance.
-   *
-   * @return the overall owning Blog instance
-   */
-  public Blog getBlog() {
-    return this.blog;
   }
 
   /**
@@ -1036,67 +758,44 @@ public class BlogEntry extends Content {
     }
   }
 
-  public int getType() {
-    return this.type;
-  }
+//  /**
+//   * Stores this BlogEntry.
+//   *
+//   * @throws BlogException if the blog entry cannot be stored
+//   */
+//  public synchronized void store() throws BlogException {
+//    try {
+//      log.debug("Storing " + getTitle() + " (" + getId() + ")");
+//      DAOFactory factory = DAOFactory.getConfiguredFactory();
+//      BlogEntryDAO dao = factory.getBlogEntryDAO();
+//      dao.storeBlogEntry(this);
+//
+//      if (areEventsEnabled() && isDirty()) {
+//        BlogEntryEvent event = new BlogEntryEvent(this, getPropertyChangeEvents());
+//        clearPropertyChangeEvents();
+//        getBlog().getEventDispatcher().fireBlogEntryEvent(event);
+//      }
+//    } catch (PersistenceException pe) {
+//      throw new BlogException(pe.getMessage());
+//    }
+//  }
 
-  public void setType(int type) {
-    this.type = type;
-  }
-
-  /**
-   * Stores this BlogEntry.
-   *
-   * @throws BlogException if the blog entry cannot be stored
-   */
-  public synchronized void store() throws BlogException {
-    try {
-      log.debug("Storing " + getTitle() + " (" + getId() + ")");
-      DAOFactory factory = DAOFactory.getConfiguredFactory();
-      BlogEntryDAO dao = factory.getBlogEntryDAO();
-      dao.storeBlogEntry(this);
-
-      if (areEventsEnabled() && isDirty()) {
-        BlogEntryEvent event = new BlogEntryEvent(this, getPropertyChangeEvents());
-        clearPropertyChangeEvents();
-        getBlog().getEventDispatcher().fireBlogEntryEvent(event);
-      }
-    } catch (PersistenceException pe) {
-      throw new BlogException(pe.getMessage());
-    }
-  }
-
-  /**
-   * Removes this blog entry from the filing system.
-   *
-   * @throws BlogException if the file backing this blog entry
-   *                       cannot be deleted
-   */
-  public synchronized void remove() throws BlogException {
-    try {
-      log.debug("Removing " + getTitle() + " (" + getId() + ")");
-      DAOFactory factory = DAOFactory.getConfiguredFactory();
-      BlogEntryDAO dao = factory.getBlogEntryDAO();
-      dao.removeBlogEntry(this);
-    } catch (PersistenceException pe) {
-      throw new BlogException(pe.getMessage());
-    }
-  }
-
-  public void validate(ValidationContext context) {
-    if (isStaticPage()) {
-      if (staticName == null || staticName.length() == 0) {
-        context.addError("Name cannot be empty");
-      } else if (!staticName.matches("[\\w_/-]+")) {
-        context.addError("Name \"" + staticName + "\" must contain only A-Za-z0-9_-/");
-      }
-
-      String id = getBlog().getStaticPageIndex().getStaticPage(staticName);
-      if (id != null && !id.equals(getId())) {
-        context.addError("A page with the name \"" + staticName + "\" already exists");
-      }
-    }
-  }
+//  /**
+//   * Removes this blog entry from the filing system.
+//   *
+//   * @throws BlogException if the file backing this blog entry
+//   *                       cannot be deleted
+//   */
+//  public synchronized void remove() throws BlogException {
+//    try {
+//      log.debug("Removing " + getTitle() + " (" + getId() + ")");
+//      DAOFactory factory = DAOFactory.getConfiguredFactory();
+//      BlogEntryDAO dao = factory.getBlogEntryDAO();
+//      dao.removeBlogEntry(this);
+//    } catch (PersistenceException pe) {
+//      throw new BlogException(pe.getMessage());
+//    }
+//  }
 
   /**
    * Returns the blog entry that was posted before this one.
@@ -1116,13 +815,7 @@ public class BlogEntry extends Content {
     return getBlog().getNextBlogEntry(this);
   }
 
-  /**
-   * Determines whether this blog entry in fact represents a static page.
-   *
-   * @return  true if the type is STATIC_PAGE, false otherwise
-   */
-  public boolean isStaticPage() {
-      return type == STATIC_PAGE;
+  public void validate(ValidationContext context) {
   }
 
   /**
@@ -1144,26 +837,15 @@ public class BlogEntry extends Content {
     }
 
     BlogEntry blogEntry = (BlogEntry)o;
-    return
-        id.equals(blogEntry.getId()) &&
-        getBlog().equals(blogEntry.getBlog());
+    return getGuid().equals(blogEntry.getGuid());
   }
 
   public String getGuid() {
-    return getBlog().getId() + "/" + getId();
+    return "blogEntry/" + getBlog().getId() + "/" + getId();
   }
 
   public int hashCode() {
     return getGuid().hashCode();
-  }
-
-  /**
-   * Gets a string representation of this object.
-   *
-   * @return  a String
-   */
-  public String toString() {
-    return getBlog().getId() + "/" + getTitle();
   }
 
   /**
@@ -1173,19 +855,17 @@ public class BlogEntry extends Content {
    * @see Cloneable
    */
   public Object clone() {
-    BlogEntry entry = new BlogEntry(blog);
+    BlogEntry entry = new BlogEntry(getBlog());
     entry.setEventsEnabled(false);
-    entry.setTitle(title);
-    entry.setSubtitle(subtitle);
+    entry.setPersistent(isPersistent());
+    entry.setTitle(getTitle());
+    entry.setSubtitle(getSubtitle());
     entry.setExcerpt(excerpt);
-    entry.setBody(body);
-    entry.setDate(date);
+    entry.setBody(getBody());
+    entry.setDate(getDate());
     entry.setState(getState());
-    entry.setAuthor(author);
-    entry.setOriginalPermalink(originalPermalink);
-    entry.setStaticName(staticName);
-    entry.setType(type);
-    entry.setTimeZone(timeZone);
+    entry.setAuthor(getAuthor());
+    entry.setOriginalPermalink(getOriginalPermalink());
     entry.setCommentsEnabled(commentsEnabled);
     entry.setTrackBacksEnabled(trackBacksEnabled);
     if (attachment != null) {
@@ -1267,14 +947,6 @@ public class BlogEntry extends Content {
     for (Response response : getResponses()) {
       response.clearEvents();
     }
-  }
-
-  public boolean isPersistent() {
-    return persistent;
-  }
-
-  public void setPersistent(boolean persistent) {
-    this.persistent = persistent;
   }
 
 }

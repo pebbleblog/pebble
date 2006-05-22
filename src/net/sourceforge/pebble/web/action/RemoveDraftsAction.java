@@ -60,18 +60,18 @@ public class RemoveDraftsAction extends SecureAction {
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
     String ids[] = request.getParameterValues("entry");
 
-    if (ids != null) {
-      for (String id : ids) {
-        BlogEntry blogEntry = blog.getDraftBlogEntry(id);
-        if (blogEntry != null) {
-          try {
-            blogEntry.remove();
-          } catch (BlogException be) {
-            throw new ServletException(be);
-          }
-        }
-      }
-    }
+//    if (ids != null) {
+//      for (String id : ids) {
+//        BlogEntry blogEntry = blog.getDraftBlogEntry(id);
+//        if (blogEntry != null) {
+//          try {
+//            blogEntry.remove();
+//          } catch (BlogException be) {
+//            throw new ServletException(be);
+//          }
+//        }
+//      }
+//    }
 
     return new ForwardView("/viewDrafts.secureaction");
   }

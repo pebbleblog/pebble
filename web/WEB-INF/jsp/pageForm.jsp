@@ -21,7 +21,14 @@ window.onload = function()
 <c:set var="displayMode" scope="request" value="preview" />
 
 <a name="preview"></a>
-<jsp:include page="blogEntry.jsp" />
+<c:choose>
+  <c:when test="${blogEntry.staticPage}">
+    <jsp:include page="staticPage.jsp" />
+  </c:when>
+  <c:otherwise>
+    <jsp:include page="blogEntry.jsp" />
+  </c:otherwise>
+</c:choose>
 
 <c:set var="blogEntry" scope="request" value="${originalBlogEntry}" />
 
@@ -29,16 +36,24 @@ window.onload = function()
 <div class="contentItem">
 
   <div class="contentItemLinks">
-    <a href="${pageContext.request.contextPath}/docs/blog-entries.html" target="_blank">Help</a>
+    <c:choose>
+      <c:when test="${blogEntry.type == 8}"><a href="${pageContext.request.contextPath}/docs/static-pages.html" target="_blank">Help</a></c:when>
+      <c:when test="${blogEntry.type != 8}"><a href="${pageContext.request.contextPath}/docs/blog-entries.html" target="_blank">Help</a></c:when>
+    </c:choose>
   </div>
 
-  <div class="title">Blog entry</div>
+  <div class="title">
+    <c:choose>
+      <c:when test="${blogEntry.type == 8}">Static page</c:when>
+      <c:when test="${blogEntry.type != 8}">Blog entry</c:when>
+    </c:choose>
+  </div>
   <div class="subtitle">&nbsp;</div>
 
   <div class="contentItemBody">
     <form name="editBlogEntry" action="saveBlogEntry.secureaction#preview" method="POST" accept-charset="${blog.characterEncoding}">
     <input type="hidden" name="entry" value="${blogEntry.id}" />
-    <input type="hidden" name="persistent" value="${blogEntry.persistent}" />
+    <input type="hidden" name="type" value="${blogEntry.type}" />
 
     <c:if test="${not empty validationContext.errors}">
     <div class="validationError">
@@ -52,6 +67,13 @@ window.onload = function()
     </c:if>
 
     <table width="99%" cellspacing="0" cellpadding="4">
+      <c:if test="${blogEntry.type == 8}">
+      <tr>
+        <td valign="top"><b>Name</b></td>
+        <td>${blog.url}pages/<input type="text" name="staticName" size="20" value="${blogEntry.staticName}">.html</td>
+      </tr>
+      </c:if>
+
       <tr>
         <td valign="top"><b>Title</b></td>
         <td><input type="text" name="title" size="60" value="${blogEntry.title}"></td>
@@ -62,10 +84,12 @@ window.onload = function()
         <td><input type="text" name="subtitle" size="60" value="${blogEntry.subtitle}"></td>
       </tr>
 
+      <c:if test="${!blogEntry.staticPage}">
       <tr>
         <td valign="top"><b>Excerpt</b></td>
         <td><textarea name="excerpt" rows="20" cols="60"><c:out value="${blogEntry.excerpt}" escapeXml="true"/></textarea></td>
       </tr>
+      </c:if>
 
       <tr>
         <td valign="top"><b>Body</b></td>
@@ -80,6 +104,7 @@ window.onload = function()
         </td>
       </tr>
 
+      <c:if test="${not blogEntry.staticPage}">
       <tr>
         <td valign="top"><b>Comments</b> (<span class="help"><a href="${pageContext.request.contextPath}/docs/comments.html" target="_blank">Help</a></span>)</td>
         <td>
@@ -113,69 +138,82 @@ window.onload = function()
           />
         </td>
       </tr>
+      </c:if>
 
-      <c:if test="${not empty blog.rootCategory.subCategories}">
-      <tr>
-        <td valign="top"><b>Category</b></td>
-        <td>
-          <table width="99%" cellpadding="0" cellspacing="0">
-            <tr>
-            <c:forEach var="category" items="${blog.categories}" varStatus="status" begin="1">
-              <c:if test="${status.count % 2 == 1}">
+      <c:if test="${not blogEntry.staticPage}">
+        <c:if test="${not empty blog.rootCategory.subCategories}">
+        <tr>
+          <td valign="top"><b>Category</b></td>
+          <td>
+            <table width="99%" cellpadding="0" cellspacing="0">
               <tr>
-              </c:if>
-              <td>
-              <input type="checkbox" name="category" value="${category.id}"
-              <c:forEach var="blogEntryCategory" items="${blogEntry.categories}"><c:if test="${category eq blogEntryCategory}">checked="true"</c:if></c:forEach>                />&nbsp;${category.name}
-              </td>
-              <c:if test="${status.count % 2 == 0}">
-              </tr>
-              </c:if>
-            </c:forEach>
-            <tr>
-          </table>
-          <br />
-        </td>
-      </tr>
+              <c:forEach var="category" items="${blog.categories}" varStatus="status" begin="1">
+                <c:if test="${status.count % 2 == 1}">
+                <tr>
+                </c:if>
+                <td>
+                <input type="checkbox" name="category" value="${category.id}"
+                <c:forEach var="blogEntryCategory" items="${blogEntry.categories}"><c:if test="${category eq blogEntryCategory}">checked="true"</c:if></c:forEach>                />&nbsp;${category.name}
+                </td>
+                <c:if test="${status.count % 2 == 0}">
+                </tr>
+                </c:if>
+              </c:forEach>
+              <tr>
+            </table>
+            <br />
+          </td>
+        </tr>
+        </c:if>
+
+        <tr>
+          <td valign="top"><b>Tags</b></td>
+          <td>
+            <input type="text" name="tags" size="60" value="${blogEntry.tags}">
+          </td>
+        </tr>
+
+        <c:if test="${blogEntry.type == 1}">
+        <tr>
+          <td valign="top"><b>Date/time</b></td>
+          <td>
+            <input type="text" name="date" size="60" value="<fmt:formatDate value="${blogEntry.date}" type="both" dateStyle="medium" timeStyle="medium" />">
+          </td>
+        </tr>
+        </c:if>
+
+        <tr>
+          <td valign="top"><br /><b>Attachment</b> (<span class="help"><a href="${pageContext.request.contextPath}/docs/blog-entries.html#attachments" target="_blank">Help</a></span>)</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td valign="top"><b>URL</b></td>
+          <td><input type="text" name="attachmentUrl" size="60" value="${blogEntry.attachment.url}"></td>
+        </tr>
+        <tr>
+          <td valign="top"><b>Size</b></td>
+          <td><input type="text" name="attachmentSize" size="20" value="${blogEntry.attachment.size}"></td>
+        </tr>
+        <tr>
+          <td valign="top"><b>Type</b></td>
+          <td><input type="text" name="attachmentType" size="20" value="${blogEntry.attachment.type}"></td>
+        </tr>
+
       </c:if>
-
-      <tr>
-        <td valign="top"><b>Tags</b></td>
-        <td>
-          <input type="text" name="tags" size="60" value="${blogEntry.tags}">
-        </td>
-      </tr>
-
-      <c:if test="${not blogEntry.persistent}">
-      <tr>
-        <td valign="top"><b>Date/time</b></td>
-        <td>
-          <input type="text" name="date" size="60" value="<fmt:formatDate value="${blogEntry.date}" type="both" dateStyle="medium" timeStyle="medium" />">
-        </td>
-      </tr>
-      </c:if>
-
-      <tr>
-        <td valign="top"><br /><b>Attachment</b> (<span class="help"><a href="${pageContext.request.contextPath}/docs/blog-entries.html#attachments" target="_blank">Help</a></span>)</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td valign="top"><b>URL</b></td>
-        <td><input type="text" name="attachmentUrl" size="60" value="${blogEntry.attachment.url}"></td>
-      </tr>
-      <tr>
-        <td valign="top"><b>Size</b></td>
-        <td><input type="text" name="attachmentSize" size="20" value="${blogEntry.attachment.size}"></td>
-      </tr>
-      <tr>
-        <td valign="top"><b>Type</b></td>
-        <td><input type="text" name="attachmentType" size="20" value="${blogEntry.attachment.type}"></td>
-      </tr>
 
       <tr>
         <td colspan="2" align="right">
           <input name="submit" type="submit" Value="Preview" />
+          <c:choose>
+          <c:when test="${blogEntry.staticPage}">
           <input name="submit" type="submit" Value="Publish" />
+          </c:when>
+          <c:otherwise>
+          <input name="submit" type="submit" Value="Save as Template" />
+          <input name="submit" type="submit" Value="Save as Draft" />
+          <input name="submit" type="submit" Value="Publish" />
+          </c:otherwise>
+          </c:choose>
         </td>
       </tr>
     </table>

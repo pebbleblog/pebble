@@ -54,7 +54,7 @@ public class AddBlogEntryActionTest extends SecureActionTestCase {
 
     BlogEntry blogEntry = (BlogEntry)action.getModel().get(Constants.BLOG_ENTRY_KEY);
     assertNotNull("No blog entry was created", blogEntry);
-    assertEquals(BlogEntry.NEW, blogEntry.getType());
+    assertFalse(blogEntry.isPersistent());
 
     assertTrue(view instanceof BlogEntryFormView);
   }

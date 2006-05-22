@@ -53,7 +53,6 @@ import org.apache.lucene.queryParser.ParseException;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.ArrayList;
 import java.io.IOException;
 import java.io.File;
 
@@ -174,8 +173,7 @@ public class SearchIndex {
   }
 
   /**
-   * Helper method to index an individual blog entry. This assumes that the
-   * root blog has already been indexed.
+   * Helper method to index an individual blog entry.
    *
    * @param blogEntry   the BlogEntry instance to index
    * @param writer      the IndexWriter to index with
@@ -218,37 +216,83 @@ public class SearchIndex {
       searchableContent.append(" ");
       searchableContent.append(blogEntry.getBody());
 
-      if (!blogEntry.isStaticPage()) {
-        Iterator it = blogEntry.getCategories().iterator();
-        Category category;
-        while (it.hasNext()) {
-          category = (Category)it.next();
-          document.add(Field.Text("category", category.getId()));
-        }
+      Iterator it = blogEntry.getCategories().iterator();
+      Category category;
+      while (it.hasNext()) {
+        category = (Category)it.next();
+        document.add(Field.Text("category", category.getId()));
+      }
 
-        Iterator tags = blogEntry.getAllTags().iterator();
-        while (tags.hasNext()) {
-          document.add(Field.Text("tag", ((Tag)tags.next()).getName()));
-        }
+      Iterator tags = blogEntry.getAllTags().iterator();
+      while (tags.hasNext()) {
+        document.add(Field.Text("tag", ((Tag)tags.next()).getName()));
+      }
 
-        searchableContent.append(" ");
-        it = blogEntry.getComments().iterator();
-        while (it.hasNext()) {
-          Comment comment = (Comment)it.next();
-          if (comment.isApproved()) {
-            searchableContent.append(comment.getBody());
-            searchableContent.append(" ");
-          }
-        }
-        it = blogEntry.getTrackBacks().iterator();
-        while (it.hasNext()) {
-          TrackBack trackBack = (TrackBack)it.next();
-          if (trackBack.isApproved()) {
-            searchableContent.append(trackBack.getExcerpt());
-            searchableContent.append(" ");
-          }
+      searchableContent.append(" ");
+      it = blogEntry.getComments().iterator();
+      while (it.hasNext()) {
+        Comment comment = (Comment)it.next();
+        if (comment.isApproved()) {
+          searchableContent.append(comment.getBody());
+          searchableContent.append(" ");
         }
       }
+      it = blogEntry.getTrackBacks().iterator();
+      while (it.hasNext()) {
+        TrackBack trackBack = (TrackBack)it.next();
+        if (trackBack.isApproved()) {
+          searchableContent.append(trackBack.getExcerpt());
+          searchableContent.append(" ");
+        }
+      }
+
+      // join the title and body together to make searching on them both easier
+      document.add(Field.UnStored("blogEntry", searchableContent.toString()));
+
+      writer.addDocument(document);
+    } catch (Exception e) {
+      log.error(e.getMessage(), e);
+    }
+  }
+  /**
+   * Helper method to index an individual blog entry.
+   *
+   * @param page    the Page instance instance to index
+   * @param writer      the IndexWriter to index with
+   */
+  private void index(Page page, IndexWriter writer) {
+    try {
+      log.debug("Indexing " + page.getTitle());
+      Document document = new Document();
+      document.add(Field.Keyword("id", page.getId()));
+      if (page.getTitle() != null) {
+        document.add(Field.Text("title", page.getTitle()));
+      } else {
+        document.add(Field.Text("title", ""));
+      }
+      document.add(Field.Keyword("permalink", page.getPermalink()));
+      document.add(Field.UnIndexed("date", DateField.dateToString(page.getDate())));
+      if (page.getBody() != null) {
+        document.add(Field.UnStored("body", page.getBody()));
+      } else {
+        document.add(Field.UnStored("body", ""));
+      }
+      if (page.getTruncatedContent() != null) {
+        document.add(Field.Text("truncatedBody", page.getTruncatedContent()));
+      } else {
+        document.add(Field.Text("truncatedBody", ""));
+      }
+
+      if (page.getAuthor() != null) {
+        document.add(Field.Text("author", page.getAuthor()));
+      }
+
+      // build up one large string with all searchable content
+      // i.e. entry title, entry body and all response bodies
+      StringBuffer searchableContent = new StringBuffer();
+      searchableContent.append(page.getTitle());
+      searchableContent.append(" ");
+      searchableContent.append(page.getBody());
 
       // join the title and body together to make searching on them both easier
       document.add(Field.UnStored("blogEntry", searchableContent.toString()));

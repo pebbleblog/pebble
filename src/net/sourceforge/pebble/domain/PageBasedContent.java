@@ -1,81 +1,48 @@
-/*
- * Copyright (c) 2003-2006, Simon Brown
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- *
- *   - Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
- *
- *   - Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in
- *     the documentation and/or other materials provided with the
- *     distribution.
- *
- *   - Neither the name of Pebble nor the names of its contributors may
- *     be used to endorse or promote products derived from this software
- *     without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
- * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
- * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
- * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
- * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
- * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- */
 package net.sourceforge.pebble.domain;
 
 import net.sourceforge.pebble.security.PebbleUserDetails;
 import net.sourceforge.pebble.security.PebbleUserDetailsService;
-import net.sourceforge.pebble.web.validation.ValidationContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import java.util.Date;
 
 /**
- * Represents a static page.
+ * The superclass for blog entries and pages.
  *
  * @author Simon Brown
  */
-public class StaticPage extends Content {
+public abstract class PageBasedContent extends Content {
+
+  public static final String TITLE_PROPERTY = "title";
+  public static final String SUBTITLE_PROPERTY = "subtitle";
+  public static final String BODY_PROPERTY = "body";
+  public static final String AUTHOR_PROPERTY = "author";
+  public static final String DATE_PROPERTY = "date";
+  public static final String ORIGINAL_PERMALINK_PROPERTY = "originalPermalink";
 
   /**
-   * the log used by this class
-   */
-  private static Log log = LogFactory.getLog(StaticPage.class);
-
-  /**
-   * the id of the blog entry
+   * the id
    */
   private String id;
 
-  /** the permalink */
-  private String permalink;
-
   /**
-   * the title of the blog entry
+   * the title
    */
   private String title = "";
 
   /**
-   * the subtitle of the blog entry
+   * the subtitle
    */
   private String subtitle = "";
 
   /**
-   * the body/content of the blog entry
+   * the body
    */
   private String body = "";
 
   /**
-   * the date that the entry was created
+   * the date that the content was created
    */
   private Date date;
 
@@ -102,7 +69,7 @@ public class StaticPage extends Content {
    *
    * @param blog    the owning Blog
    */
-  public StaticPage(Blog blog) {
+  public PageBasedContent(Blog blog) {
     this.blog = blog;
     setDate(new Date());
   }
@@ -131,10 +98,8 @@ public class StaticPage extends Content {
    * @param newTitle  the title as a String
    */
   public void setTitle(String newTitle) {
+    propertyChangeSupport.firePropertyChange(TITLE_PROPERTY, title, newTitle);
     this.title = newTitle;
-
-    // and cause the permalink to be re-generated
-    this.permalink = null;
   }
 
   /**
@@ -152,6 +117,7 @@ public class StaticPage extends Content {
    * @param newSubtitle  the subtitle as a String
    */
   public void setSubtitle(String newSubtitle) {
+    propertyChangeSupport.firePropertyChange(SUBTITLE_PROPERTY, subtitle, newSubtitle);
     this.subtitle = newSubtitle;
   }
 
@@ -179,6 +145,7 @@ public class StaticPage extends Content {
    * @param newBody the body as a String
    */
   public void setBody(String newBody) {
+    propertyChangeSupport.firePropertyChange(BODY_PROPERTY, body, newBody);
     this.body = newBody;
   }
 
@@ -206,11 +173,9 @@ public class StaticPage extends Content {
    * @param newDate a java.util.Date instance
    */
   public void setDate(Date newDate) {
+    propertyChangeSupport.firePropertyChange(DATE_PROPERTY, date, newDate);
     this.date = newDate;
     this.id = "" + this.date.getTime();
-
-    // and cause the permalink to be re-generated
-    this.permalink = null;
   }
 
   /**
@@ -276,8 +241,10 @@ public class StaticPage extends Content {
    */
   public void setOriginalPermalink(String newPermalink) {
     if (newPermalink == null || newPermalink.length() == 0) {
+      propertyChangeSupport.firePropertyChange(ORIGINAL_PERMALINK_PROPERTY, originalPermalink, null);
       this.originalPermalink = null;
     } else {
+      propertyChangeSupport.firePropertyChange(ORIGINAL_PERMALINK_PROPERTY, originalPermalink, newPermalink);
       this.originalPermalink = newPermalink;
     }
   }
@@ -302,19 +269,7 @@ public class StaticPage extends Content {
    *
    * @return an absolute URL as a String
    */
-  public String getLocalPermalink() {
-    return getBlog().getUrl() + "pages/" + staticName + ".html";
-  }
-
-  private String staticName;
-
-  public void setStaticName(String staticName) {
-    this.staticName = staticName;
-  }
-
-  public String getStaticName() {
-    return this.staticName;
-  }
+  public abstract String getLocalPermalink();
 
   /**
    * Helper method to get the owning Blog instance.
@@ -325,46 +280,7 @@ public class StaticPage extends Content {
     return this.blog;
   }
 
-  public void validate(ValidationContext context) {
-    if (staticName == null || staticName.length() == 0) {
-      context.addError("Name cannot be empty");
-    } else if (!staticName.matches("[\\w_/-]+")) {
-      context.addError("Name \"" + staticName + "\" must contain only A-Za-z0-9_-/");
-    }
-
-    String id = getBlog().getStaticPageIndex().getStaticPage(staticName);
-    if (id != null && !id.equals(getId())) {
-      context.addError("A page with the name \"" + staticName + "\" already exists");
-    }
-  }
-
-  /**
-   * Indicates whether some other object is "equal to" this one.
-   *
-   * @param o   the reference object with which to compare.
-   * @return <code>true</code> if this object is the same as the obj
-   *         argument; <code>false</code> otherwise.
-   * @see #hashCode()
-   * @see java.util.Hashtable
-   */
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-
-    if (!(o instanceof StaticPage)) {
-      return false;
-    }
-
-    StaticPage blogEntry = (StaticPage)o;
-    return
-        id.equals(blogEntry.getId()) &&
-        getBlog().equals(blogEntry.getBlog());
-  }
-
-  public String getGuid() {
-    return getBlog().getId() + "/" + getId();
-  }
+  public abstract String getGuid();
 
   public int hashCode() {
     return getGuid().hashCode();
@@ -377,27 +293,6 @@ public class StaticPage extends Content {
    */
   public String toString() {
     return getBlog().getId() + "/" + getTitle();
-  }
-
-  /**
-   * Creates and returns a copy of this object.
-   *
-   * @return a clone of this instance.
-   * @see Cloneable
-   */
-  public Object clone() {
-    StaticPage entry = new StaticPage(blog);
-    entry.setEventsEnabled(false);
-    entry.setTitle(title);
-    entry.setSubtitle(subtitle);
-    entry.setBody(body);
-    entry.setDate(date);
-    entry.setState(getState());
-    entry.setAuthor(author);
-    entry.setOriginalPermalink(originalPermalink);
-    entry.setStaticName(staticName);
-
-    return entry;
   }
 
   public boolean isPersistent() {

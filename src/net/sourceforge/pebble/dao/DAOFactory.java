@@ -31,9 +31,6 @@
  */
 package net.sourceforge.pebble.dao;
 
-
-
-
 /**
  * Represents a strategy used to load and store blog entries
  * in the filing system.
@@ -51,6 +48,13 @@ public abstract class DAOFactory {
    * @return  a BlogEntryDAO instance
    */
   public abstract BlogEntryDAO getBlogEntryDAO();
+
+//  /**
+//   * Gets a DAO instance responsible for the dao of pages.
+//   *
+//   * @return  a PageDAO instance
+//   */
+//  public abstract PageDAO getPageDAO();
 
   /**
    * Gets a DAO instance responsible for the dao of categories.

@@ -32,16 +32,14 @@
 package net.sourceforge.pebble.index;
 
 import net.sourceforge.pebble.domain.Blog;
-import net.sourceforge.pebble.domain.BlogService;
-import net.sourceforge.pebble.domain.BlogEntry;
-import net.sourceforge.pebble.domain.DailyBlog;
-import net.sourceforge.pebble.comparator.ReverseBlogEntryIdComparator;
-
-import java.util.*;
-import java.io.*;
-
+import net.sourceforge.pebble.domain.Page;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
+import java.io.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Maintains an index of all static pages
@@ -56,7 +54,7 @@ public class StaticPageIndex {
   private Blog blog;
 
   /** the collection of all static pages */
-  private Map<String,String> pages = new HashMap<String,String>();
+  private Map<String,String> index = new HashMap<String,String>();
 
   public StaticPageIndex(Blog blog) {
     this.blog = blog;
@@ -67,41 +65,41 @@ public class StaticPageIndex {
    * Clears the index.
    */
   public void clear() {
-    pages = new HashMap<String,String>();
+    index = new HashMap<String,String>();
     writeIndex();
   }
 
   /**
    * Indexes one or more blog entries.
    *
-   * @param blogEntries   a List of BlogEntry instances
+   * @param pages   a List of Page instances
    */
-  public synchronized void index(List<BlogEntry> blogEntries) {
-    for (BlogEntry blogEntry : blogEntries) {
-      pages.put(blogEntry.getStaticName(), blogEntry.getId());
+  public synchronized void index(List<Page> pages) {
+    for (Page page : pages) {
+      index.put(page.getName(), page.getId());
     }
 
     writeIndex();
   }
 
   /**
-   * Indexes a single blog entry.
+   * Indexes a single page.
    *
-   * @param blogEntry   a BlogEntry instance
+   * @param page    a Page instance
    */
-  public synchronized void index(BlogEntry blogEntry) {
+  public synchronized void index(Page page) {
     // todo - when static name changes, multiple names will refer to the same page
-    pages.put(blogEntry.getStaticName(), blogEntry.getId());
+    index.put(page.getName(), page.getId());
     writeIndex();
   }
 
   /**
-   * Unindexes a single blog entry.
+   * Unindexes a single page.
    *
-   * @param blogEntry   a BlogEntry instance
+   * @param page    a Page instance
    */
-  public synchronized void unindex(BlogEntry blogEntry) {
-    pages.remove(blogEntry.getStaticName());
+  public synchronized void unindex(Page page) {
+    index.remove(page.getName());
     writeIndex();
   }
 
@@ -116,7 +114,7 @@ public class StaticPageIndex {
         String indexEntry = reader.readLine();
         while (indexEntry != null) {
           String[] parts = indexEntry.split("=");
-          pages.put(parts[0], parts[1]);
+          index.put(parts[0], parts[1]);
 
           indexEntry = reader.readLine();
         }
@@ -140,8 +138,8 @@ public class StaticPageIndex {
       File indexFile = new File(blog.getIndexesDirectory(), "pages.index");
       BufferedWriter writer = new BufferedWriter(new FileWriter(indexFile));
 
-      for (String name : pages.keySet()) {
-        writer.write(name + "=" + pages.get(name));
+      for (String name : index.keySet()) {
+        writer.write(name + "=" + index.get(name));
         writer.newLine();
       }
 
@@ -153,24 +151,24 @@ public class StaticPageIndex {
   }
 
   /**
-   * Gets a blog entry for the specified static name.
+   * Gets the page ID for the specified named page.
    *
    * @param name    a String
-   * @return  a BlogEntry instance, or null if no static page exists
-   *          at the specified name
+   * @return  a String instance, or null if no page exists
+   *          with the specified name
    */
   public String getStaticPage(String name) {
-    return pages.get(name);
+    return index.get(name);
   }
 
   /**
-   * Determines whether a static page with the specified permalink exists.
+   * Determines whether a page with the specified permalink exists.
    *
    * @param name   the name as a String
    * @return  true if the page exists, false otherwise
    */
   public boolean contains(String name) {
-    return pages.containsKey(name);
+    return index.containsKey(name);
   }
 
 }

@@ -87,7 +87,7 @@ public class SaveStaticPageAction extends SecureAction {
     populateBlogEntry(blogEntry, request);
 
     ValidationContext validationContext = new ValidationContext();
-    blogEntry.validate(validationContext);
+//    blogEntry.validate(validationContext);
     getModel().put("validationContext", validationContext);
     getModel().put(Constants.BLOG_ENTRY_KEY, blogEntry);
 
@@ -96,11 +96,10 @@ public class SaveStaticPageAction extends SecureAction {
 
   private View savePage(HttpServletRequest request) {
     BlogEntry blogEntry = getBlogEntry(request);
-    blogEntry.setType(BlogEntry.STATIC_PAGE);
     populateBlogEntry(blogEntry, request);
 
     ValidationContext context = new ValidationContext();
-    blogEntry.validate(context);
+//    blogEntry.validate(context);
 
     if (context.hasErrors())  {
       getModel().put("validationContext", context);
@@ -124,7 +123,7 @@ public class SaveStaticPageAction extends SecureAction {
 
   private BlogEntry getBlogEntry(HttpServletRequest request) {
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
-    BlogEntry blogEntry;
+    BlogEntry blogEntry = null;
     String id = request.getParameter("entry");
     String persistent = request.getParameter("persistent");
 
@@ -132,7 +131,7 @@ public class SaveStaticPageAction extends SecureAction {
       BlogService service = new BlogService();
       blogEntry = service.getStaticPage(blog, id);
     } else {
-      blogEntry = blog.getBlogForToday().createStaticPage();
+//      blogEntry = blog.getBlogForToday().createStaticPage();
     }
 
     return blogEntry;
@@ -151,7 +150,7 @@ public class SaveStaticPageAction extends SecureAction {
     blogEntry.setBody(body);
     blogEntry.setAuthor(author);
     blogEntry.setOriginalPermalink(originalPermalink);
-    blogEntry.setStaticName(staticName);
+//    blogEntry.setStaticName(staticName);
   }
 
   /**

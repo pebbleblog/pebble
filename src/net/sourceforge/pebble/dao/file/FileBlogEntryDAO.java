@@ -157,14 +157,14 @@ public class FileBlogEntryDAO implements BlogEntryDAO {
     File files[] = dir.listFiles(new BlogEntryFilenameFilter());
 
     List entries = new ArrayList();
-    if (files != null) {
-      for (int i = 0; i < files.length; i++) {
-        BlogEntry entry;
-        entry = loadBlogEntry(blog, files[i]);
-        entry.setType(BlogEntry.DRAFT);
-        entries.add(entry);
-      }
-    }
+//    if (files != null) {
+//      for (int i = 0; i < files.length; i++) {
+//        BlogEntry entry;
+//        entry = loadBlogEntry(blog, files[i]);
+//        entry.setType(BlogEntry.DRAFT);
+//        entries.add(entry);
+//      }
+//    }
 
     return entries;
   }
@@ -182,14 +182,14 @@ public class FileBlogEntryDAO implements BlogEntryDAO {
     File files[] = dir.listFiles(new BlogEntryFilenameFilter());
 
     List<BlogEntry> entries = new ArrayList<BlogEntry>();
-    if (files != null) {
-      for (File file : files) {
-        BlogEntry entry;
-        entry = loadBlogEntry(blog, file);
-        entry.setType(BlogEntry.STATIC_PAGE);
-        entries.add(entry);
-      }
-    }
+//    if (files != null) {
+//      for (File file : files) {
+//        BlogEntry entry;
+//        entry = loadBlogEntry(blog, file);
+//        entry.setType(BlogEntry.STATIC_PAGE);
+//        entries.add(entry);
+//      }
+//    }
 
     return entries;
   }
@@ -218,17 +218,17 @@ public class FileBlogEntryDAO implements BlogEntryDAO {
   public void storeBlogEntry(BlogEntry blogEntry) throws PersistenceException {
     File outputDir = null;
 
-    switch (blogEntry.getType()) {
-      case BlogEntry.DRAFT:
-        outputDir = new File(blogEntry.getBlog().getRoot(), "drafts");
-        break;
-      case BlogEntry.STATIC_PAGE:
-        outputDir = new File(blogEntry.getBlog().getRoot(), "pages");
-        break;
-      default :
+//    switch (blogEntry.getType()) {
+//      case BlogEntry.DRAFT:
+//        outputDir = new File(blogEntry.getBlog().getRoot(), "drafts");
+//        break;
+//      case BlogEntry.STATIC_PAGE:
+//        outputDir = new File(blogEntry.getBlog().getRoot(), "pages");
+//        break;
+//      default :
         outputDir = new File(getPath(blogEntry.getBlog(), blogEntry.getId()));
-        break;
-    }
+//        break;
+//    }
 
     if (!outputDir.exists()) {
       outputDir.mkdirs();
@@ -322,9 +322,9 @@ public class FileBlogEntryDAO implements BlogEntryDAO {
         authorNode.appendChild(doc.createTextNode(blogEntry.getAuthor()));
       }
 
-      if (blogEntry.getStaticName() != null) {
-        staticNameNode.appendChild(doc.createTextNode(blogEntry.getStaticName()));
-      }
+//      if (blogEntry.getStaticName() != null) {
+//        staticNameNode.appendChild(doc.createTextNode(blogEntry.getStaticName()));
+//      }
 
       SimpleDateFormat sdf = new SimpleDateFormat(NEW_PERSISTENT_DATETIME_FORMAT, Locale.ENGLISH);
       sdf.setTimeZone(blogEntry.getBlog().getTimeZone());
@@ -503,17 +503,17 @@ public class FileBlogEntryDAO implements BlogEntryDAO {
   public void removeBlogEntry(BlogEntry blogEntry) throws PersistenceException {
     File path = null;
 
-    switch (blogEntry.getType()) {
-      case BlogEntry.DRAFT:
-        path = new File(blogEntry.getBlog().getRoot(), "drafts");
-        break;
-      case BlogEntry.STATIC_PAGE:
-        path = new File(blogEntry.getBlog().getRoot(), "pages");
-        break;
-      default :
+//    switch (blogEntry.getType()) {
+//      case BlogEntry.DRAFT:
+//        path = new File(blogEntry.getBlog().getRoot(), "drafts");
+//        break;
+//      case BlogEntry.STATIC_PAGE:
+//        path = new File(blogEntry.getBlog().getRoot(), "pages");
+//        break;
+//      default :
         path = new File(getPath(blogEntry.getBlog(), blogEntry.getId()));
-        break;
-    }
+//        break;
+//    }
 
     File file = new File(path, blogEntry.getId() + ".xml");
     log.debug("Removing " + file.getAbsolutePath());

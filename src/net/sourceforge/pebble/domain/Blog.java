@@ -1313,7 +1313,7 @@ public class Blog extends AbstractBlog {
   public void reindex() {
     BlogService service = new BlogService();
     List<BlogEntry> blogEntries = service.getBlogEntries(this);
-    List<BlogEntry> staticPages = service.getStaticPages(this);
+//    List<Page> pages = service.getStaticPages(this);
 
     blogEntryIndex.clear();
     blogEntryIndex.index(blogEntries);
@@ -1328,11 +1328,11 @@ public class Blog extends AbstractBlog {
     categoryIndex.index(blogEntries);
 
     staticPageIndex.clear();
-    staticPageIndex.index(staticPages);
+//    staticPageIndex.index(pages);
 
     searchIndex.clear();
     searchIndex.index(blogEntries);
-    searchIndex.index(staticPages);
+//    searchIndex.index(pages);
   }
 
   /**

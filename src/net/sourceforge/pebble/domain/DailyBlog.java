@@ -304,17 +304,6 @@ public class DailyBlog extends TimePeriod implements Permalinkable {
   }
 
   /**
-   * Creates a new empty BlogEntry instance representing a static page.
-   *
-   * @return    a new BlogEntry instance
-   */
-  public BlogEntry createStaticPage() {
-    BlogEntry blogEntry = new BlogEntry(getBlog());
-    blogEntry.setType(BlogEntry.STATIC_PAGE);
-    return blogEntry;
-  }
-
-  /**
    * Gets the DailyBlog instance for the previous day.
    *
    * @return    a DailyBlog instance
@@ -367,7 +356,7 @@ public class DailyBlog extends TimePeriod implements Permalinkable {
    */
   public String getLastBlogEntry() {
     if (!blogEntries.isEmpty()) {
-      return (String)blogEntries.get(0);
+      return blogEntries.get(0);
     } else {
       return null;
     }

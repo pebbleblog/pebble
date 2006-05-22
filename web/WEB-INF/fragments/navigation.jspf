@@ -1,6 +1,7 @@
 <c:choose>
 
-  <c:when test="${displayMode == 'detail' && blogEntry.type == 0}">
+  <%-- // todo only show nav links when detail is blog entry, not static page --%>
+  <c:when test="${displayMode == 'detail'}">
   <div id="linearNavigationLinks">
     <c:if test="${not empty blogEntry.previousBlogEntry}">
       &lt;&lt; <a href="${blogEntry.previousBlogEntry.localPermalink}">${blogEntry.previousBlogEntry.title}</a> |
