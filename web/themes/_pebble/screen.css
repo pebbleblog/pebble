@@ -90,7 +90,6 @@ a:visited {
 
 #blogName {
   font-size: 44px;
-  text-align: center;
   color: white;
   padding-top: 8px;
   position: absolute;
@@ -99,7 +98,6 @@ a:visited {
 }
 #blogDescription {
   font-size: 16px;
-  text-align: center;
   color: white;
   padding-top: 8px;
   padding-bottom: 8px;

@@ -32,9 +32,7 @@
 package net.sourceforge.pebble.event.blogentry;
 
 import net.sourceforge.pebble.domain.BlogEntry;
-import net.sourceforge.pebble.domain.BlogException;
 import net.sourceforge.pebble.domain.State;
-import net.sourceforge.pebble.domain.BlogService;
 import net.sourceforge.pebble.util.SecurityUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -60,7 +58,7 @@ public class MarkPendingListener extends BlogEntryListenerSupport {
    */
   public void blogEntryAdded(BlogEntryEvent event) {
     if (!SecurityUtils.isBlogOwner()) {
-      markPending(event.getBlogEntry());
+      event.getBlogEntry().setState(State.PENDING);
     }
   }
 
@@ -90,25 +88,10 @@ public class MarkPendingListener extends BlogEntryListenerSupport {
             property.equals(BlogEntry.CATEGORIES_PROPERTY) ||
             property.equals(BlogEntry.ORIGINAL_PERMALINK_PROPERTY) ||
             property.equals(BlogEntry.ATTACHMENT_PROPERTY)) {
-          markPending(event.getBlogEntry());
+          event.getBlogEntry().setState(State.PENDING);
           return;
         }
       }
-    }
-  }
-
-  /**
-   * Helper method to mark the specified blog entry as pending.
-   *
-   * @param blogEntry   a BlogEntry instance
-   */
-  private void markPending(BlogEntry blogEntry) {
-    blogEntry.setState(State.PENDING);
-    try {
-      BlogService service = new BlogService();
-      service.putBlogEntry(blogEntry);
-    } catch (BlogException be) {
-      log.error("Could not store blog entry to update state", be);
     }
   }
 

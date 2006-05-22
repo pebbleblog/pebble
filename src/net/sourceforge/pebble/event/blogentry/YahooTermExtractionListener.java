@@ -135,8 +135,6 @@ public class YahooTermExtractionListener extends BlogEntryListenerSupport {
       }
 
       blogEntry.setTags(tags.toString());
-      BlogService service = new BlogService();
-      service.putBlogEntry(blogEntry);
     } catch (Exception e) {
       log.error(e.getMessage(), e);
     }

@@ -90,9 +90,7 @@ class RadeoxWikiRenderEngine extends BaseRenderEngine implements WikiRenderEngin
 
   public boolean exists(String name) {
     Blog blog = blogEntry.getBlog();
-    BlogEntry staticPage = blog.getStaticPageIndex().getStaticPage(name);
-
-    return (staticPage != null);
+    return blog.getStaticPageIndex().contains(name);
   }
 
   public boolean showCreate() {

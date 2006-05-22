@@ -32,8 +32,6 @@
 package net.sourceforge.pebble.event.response;
 
 import net.sourceforge.pebble.domain.Response;
-import net.sourceforge.pebble.domain.BlogException;
-import net.sourceforge.pebble.domain.BlogService;
 import net.sourceforge.pebble.event.comment.CommentEvent;
 import net.sourceforge.pebble.event.trackback.TrackBackEvent;
 import org.apache.commons.logging.Log;
@@ -118,19 +116,13 @@ public class DeleteRejectedListener extends BlogEntryResponseListenerSupport {
    * Helper method to delete rejected response.
    */
   private void deleteRejectedResponse(Response response) {
-    try {
-      log.info("Deleting rejected response for " + response.getBlogEntry().getTitle());
-      log.info(response.getTitle());
-      log.info(response.getContent());
-      log.info(response.getSourceName());
-      log.info(response.getSourceLink());
-      log.info(response.getIpAddress());
-      response.getBlogEntry().removeResponse(response);
-      BlogService service = new BlogService();
-      service.putBlogEntry(response.getBlogEntry());
-    } catch (BlogException be) {
-      log.error("Could not store blog entry to delete rejected response", be);
-    }
+    log.info("Deleting rejected response for " + response.getBlogEntry().getTitle());
+    log.info(response.getTitle());
+    log.info(response.getContent());
+    log.info(response.getSourceName());
+    log.info(response.getSourceLink());
+    log.info(response.getIpAddress());
+    response.getBlogEntry().removeResponse(response);
   }
 
 }

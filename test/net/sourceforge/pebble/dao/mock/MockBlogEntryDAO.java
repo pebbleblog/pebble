@@ -17,7 +17,6 @@ public class MockBlogEntryDAO implements BlogEntryDAO {
 
   private Map blogEntries = new HashMap();
   private Map draftBlogEntries = new HashMap();
-  private Map blogEntryTemplates = new HashMap();
   private Map staticPages = new HashMap();
 
   /**
@@ -59,9 +58,6 @@ public class MockBlogEntryDAO implements BlogEntryDAO {
       case BlogEntry.DRAFT :
         draftBlogEntries.put(blogEntry.getId(), blogEntry);
         break;
-      case BlogEntry.TEMPLATE :
-        blogEntryTemplates.put(blogEntry.getId(), blogEntry);
-        break;
       case BlogEntry.STATIC_PAGE :
         staticPages.put(blogEntry.getId(), blogEntry);
         break;
@@ -80,9 +76,6 @@ public class MockBlogEntryDAO implements BlogEntryDAO {
     switch (blogEntry.getType()) {
       case BlogEntry.DRAFT :
         draftBlogEntries.remove(blogEntry.getId());
-        break;
-      case BlogEntry.TEMPLATE :
-        blogEntryTemplates.remove(blogEntry.getId());
         break;
       case BlogEntry.STATIC_PAGE :
         staticPages.remove(blogEntry.getId());
@@ -111,17 +104,6 @@ public class MockBlogEntryDAO implements BlogEntryDAO {
    */
   public Collection getDraftBlogEntries(Blog blog) throws PersistenceException {
     return draftBlogEntries.values();
-  }
-
-  /**
-   * Loads the blog entry templates for a given blog.
-   *
-   * @param blog    the owning Blog instance
-   * @return  a List of BlogEntry instances
-   * @throws  net.sourceforge.pebble.dao.PersistenceException    if blog entries cannot be loaded
-   */
-  public Collection getBlogEntryTemplates(Blog blog) throws PersistenceException {
-    return blogEntryTemplates.values();
   }
 
   /**

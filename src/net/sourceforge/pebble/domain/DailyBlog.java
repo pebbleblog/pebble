@@ -303,30 +303,6 @@ public class DailyBlog extends TimePeriod implements Permalinkable {
     return !blogEntries.isEmpty();
   }
 
-//  /**
-//   * Determines whether this daily blog has entries for a particular category.
-//   *
-//   * @param category    the category to test for
-//   * @return    true if this blog contains entries, false otherwise
-//   */
-//  public boolean hasEntries(Category category) {
-//    return true;
-//
-//    todo
-//    if (category == null) {
-//      return hasBlogEntries();
-//    } else {
-//      Iterator it = entries.iterator();
-//      while (it.hasNext()) {
-//        BlogEntry entry = (BlogEntry)it.next();
-//        if (entry.inCategory(category)) {
-//          return true;
-//        }
-//      }
-//      return false;
-//    }
-//  }
-
   /**
    * Creates a new empty BlogEntry instance representing a static page.
    *

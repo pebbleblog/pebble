@@ -1,0 +1,167 @@
+/*
+ * Copyright (c) 2003-2006, Simon Brown
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *   - Redistributions of source code must retain the above copyright
+ *     notice, this list of conditions and the following disclaimer.
+ *
+ *   - Redistributions in binary form must reproduce the above copyright
+ *     notice, this list of conditions and the following disclaimer in
+ *     the documentation and/or other materials provided with the
+ *     distribution.
+ *
+ *   - Neither the name of Pebble nor the names of its contributors may
+ *     be used to endorse or promote products derived from this software
+ *     without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ */
+package net.sourceforge.pebble.web.action;
+
+import net.sourceforge.pebble.Constants;
+import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.domain.BlogEntry;
+import net.sourceforge.pebble.domain.BlogException;
+import net.sourceforge.pebble.domain.BlogService;
+import net.sourceforge.pebble.util.SecurityUtils;
+import net.sourceforge.pebble.util.StringUtils;
+import net.sourceforge.pebble.web.validation.ValidationContext;
+import net.sourceforge.pebble.web.view.RedirectView;
+import net.sourceforge.pebble.web.view.View;
+import net.sourceforge.pebble.web.view.impl.BlogEntryFormView;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * Saves a static page.
+ *
+ * @author    Simon Brown
+ */
+public class SaveStaticPageAction extends SecureAction {
+
+  /** the log used by this class */
+  private static Log log = LogFactory.getLog(SaveStaticPageAction.class);
+
+  /** the value used if the page is being previewed rather than saved */
+  private static final String PREVIEW = "Preview";
+
+  /**
+   * Peforms the processing associated with this action.
+   *
+   * @param request  the HttpServletRequest instance
+   * @param response the HttpServletResponse instance
+   * @return the name of the next view
+   */
+  public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
+    String submitType = request.getParameter("submit");
+
+    if (submitType != null && submitType.equalsIgnoreCase(PREVIEW)) {
+      return previewPage(request);
+    } else {
+      return savePage(request);
+    }
+  }
+
+  private View previewPage(HttpServletRequest request) {
+    BlogEntry blogEntry = getBlogEntry(request);
+
+    // we don't want to actually edit the original whilst previewing
+    blogEntry = (BlogEntry)blogEntry.clone();
+    populateBlogEntry(blogEntry, request);
+
+    ValidationContext validationContext = new ValidationContext();
+    blogEntry.validate(validationContext);
+    getModel().put("validationContext", validationContext);
+    getModel().put(Constants.BLOG_ENTRY_KEY, blogEntry);
+
+    return new BlogEntryFormView();
+  }
+
+  private View savePage(HttpServletRequest request) {
+    BlogEntry blogEntry = getBlogEntry(request);
+    blogEntry.setType(BlogEntry.STATIC_PAGE);
+    populateBlogEntry(blogEntry, request);
+
+    ValidationContext context = new ValidationContext();
+    blogEntry.validate(context);
+
+    if (context.hasErrors())  {
+      getModel().put("validationContext", context);
+      getModel().put(Constants.BLOG_ENTRY_KEY, blogEntry);
+      return new BlogEntryFormView();
+    } else {
+      try {
+        BlogService service = new BlogService();
+        service.putStaticPage(blogEntry);
+      } catch (BlogException be) {
+        log.error(be.getMessage(), be);
+        be.printStackTrace();
+
+        getModel().put(Constants.BLOG_ENTRY_KEY, blogEntry);
+        return new BlogEntryFormView();
+      }
+
+      return new RedirectView(blogEntry.getLocalPermalink());
+    }
+  }
+
+  private BlogEntry getBlogEntry(HttpServletRequest request) {
+    Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
+    BlogEntry blogEntry;
+    String id = request.getParameter("entry");
+    String persistent = request.getParameter("persistent");
+
+    if (persistent != null && persistent.equalsIgnoreCase("true")) {
+      BlogService service = new BlogService();
+      blogEntry = service.getStaticPage(blog, id);
+    } else {
+      blogEntry = blog.getBlogForToday().createStaticPage();
+    }
+
+    return blogEntry;
+  }
+
+  private void populateBlogEntry(BlogEntry blogEntry, HttpServletRequest request) {
+    String title = request.getParameter("title");
+    String subtitle = request.getParameter("subtitle");
+    String body = StringUtils.filterNewlines(request.getParameter("body"));
+    String originalPermalink = request.getParameter("originalPermalink");
+    String staticName = request.getParameter("staticName");
+    String author = SecurityUtils.getUsername();
+
+    blogEntry.setTitle(title);
+    blogEntry.setSubtitle(subtitle);
+    blogEntry.setBody(body);
+    blogEntry.setAuthor(author);
+    blogEntry.setOriginalPermalink(originalPermalink);
+    blogEntry.setStaticName(staticName);
+  }
+
+  /**
+   * Gets a list of all roles that are allowed to access this action.
+   *
+   * @return  an array of Strings representing role names
+   * @param request
+   */
+  public String[] getRoles(HttpServletRequest request) {
+    return new String[]{Constants.BLOG_CONTRIBUTOR_ROLE};
+  }
+
+}

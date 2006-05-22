@@ -103,15 +103,6 @@ public interface BlogEntryDAO {
   public Collection getDraftBlogEntries(Blog blog) throws PersistenceException;
 
   /**
-   * Loads the blog entry templates for a given blog.
-   *
-   * @param blog    the owning Blog instance
-   * @return  a List of BlogEntry instances
-   * @throws  net.sourceforge.pebble.dao.PersistenceException    if blog entries cannot be loaded
-   */
-  public Collection getBlogEntryTemplates(Blog blog) throws PersistenceException;
-
-  /**
    * Loads the static pages for a given blog.
    *
    * @param blog    the owning Blog instance

@@ -33,9 +33,7 @@ package net.sourceforge.pebble.event.response;
 
 import net.sourceforge.pebble.PluginProperties;
 import net.sourceforge.pebble.domain.Response;
-import net.sourceforge.pebble.domain.BlogException;
 import net.sourceforge.pebble.domain.State;
-import net.sourceforge.pebble.domain.BlogService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -77,13 +75,6 @@ public class IpAddressListener extends BlogEntryResponseListenerSupport {
     } else {
       log.info(response.getTitle() + " marked as pending : IP address " + response.getIpAddress() + " not on blacklist or whitelist");
       response.setState(State.PENDING);
-    }
-
-    try {
-      BlogService service = new BlogService();
-      service.putBlogEntry(response.getBlogEntry());
-    } catch (BlogException be) {
-      log.error("Could not store blog entry to update state of response", be);
     }
   }
 

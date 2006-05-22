@@ -161,9 +161,10 @@ public class BlogEntry extends Content {
   public static final int PUBLISHED = 0;
   public static final int NEW = 1;
   public static final int DRAFT = 2;
-  public static final int TEMPLATE = 4;
-  public static final int STATIC_PAGE = 8;
+
   private int type = PUBLISHED;
+
+  private boolean persistent = false;
 
   /**
    * Creates a new blog entry.
@@ -505,9 +506,6 @@ public class BlogEntry extends Content {
    */
   public void setDate(Date newDate) {
     propertyChangeSupport.firePropertyChange(DATE_PROPERTY, date, newDate);
-    //Calendar cal = getBlog().getCalendar();
-    //cal.setTime(newDate);
-    //this.date = cal.getTime();
     this.date = newDate;
     this.id = "" + this.date.getTime();
 
@@ -1080,15 +1078,6 @@ public class BlogEntry extends Content {
       DAOFactory factory = DAOFactory.getConfiguredFactory();
       BlogEntryDAO dao = factory.getBlogEntryDAO();
       dao.removeBlogEntry(this);
-
-      if (type == PUBLISHED || isStaticPage()) {
-        // and finally un-index the published entry
-        blog.getSearchIndex().unindex(this);
-      }
-
-      if (isStaticPage()) {
-        getBlog().getStaticPageIndex().reindex();
-      }
     } catch (PersistenceException pe) {
       throw new BlogException(pe.getMessage());
     }
@@ -1102,8 +1091,8 @@ public class BlogEntry extends Content {
         context.addError("Name \"" + staticName + "\" must contain only A-Za-z0-9_-/");
       }
 
-      BlogEntry page = getBlog().getStaticPageIndex().getStaticPage(staticName);
-      if (page != null && !page.equals(this)) {
+      String id = getBlog().getStaticPageIndex().getStaticPage(staticName);
+      if (id != null && !id.equals(getId())) {
         context.addError("A page with the name \"" + staticName + "\" already exists");
       }
     }
@@ -1278,6 +1267,14 @@ public class BlogEntry extends Content {
     for (Response response : getResponses()) {
       response.clearEvents();
     }
+  }
+
+  public boolean isPersistent() {
+    return persistent;
+  }
+
+  public void setPersistent(boolean persistent) {
+    this.persistent = persistent;
   }
 
 }

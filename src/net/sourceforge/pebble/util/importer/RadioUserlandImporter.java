@@ -65,9 +65,6 @@ public class RadioUserlandImporter {
     DAOFactory.setConfiguredFactory(new FileDAOFactory());
     Blog blog = new Blog(args[1]);
     blog.setProperty(Blog.TIMEZONE_KEY, args[2]);
-    // todo
-    //SearchIndex indexer = new SearchIndex();
-    //indexer.index(blog);
 
     for (int i = 0; i < sources.length; i++) {
       importFile(blog, sources[i]);

@@ -66,6 +66,7 @@ public class BlogService {
       if (blogEntry != null) {
         blogEntry.setType(BlogEntry.PUBLISHED);
         blogEntry.setEventsEnabled(true);
+        blogEntry.setPersistent(true);
       }
     } catch (PersistenceException e) {
       e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
@@ -92,12 +93,19 @@ public class BlogService {
    */
   public List<BlogEntry> getBlogEntries(Blog blog) {
     BlogEntryDAO dao = DAOFactory.getConfiguredFactory().getBlogEntryDAO();
+    List<BlogEntry> blogEntries;
     try {
-      return dao.loadBlogEntries(blog);
+      blogEntries = dao.loadBlogEntries(blog);
+      for (BlogEntry blogEntry : blogEntries) {
+        blogEntry.setPersistent(true);
+      }
+
     } catch (PersistenceException e) {
       e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-      return new ArrayList<BlogEntry>();
+      blogEntries = new ArrayList<BlogEntry>();
     }
+
+    return blogEntries;
   }
 
   private List<BlogEntry> getBlogEntries(Blog blog, List<String> blogEntryIds) {
@@ -115,43 +123,48 @@ public class BlogService {
    * Puts the blog entry with the specified id.
    */
   public void putBlogEntry(BlogEntry blogEntry) throws BlogException {
+    DAOFactory factory = DAOFactory.getConfiguredFactory();
+    BlogEntryDAO dao = factory.getBlogEntryDAO();
     Blog blog = blogEntry.getBlog();
     blogEntry.setEventsEnabled(false);
 
     synchronized (blog) {
       try {
         BlogEntry be = getBlogEntry(blog, blogEntry.getId());
-        if (blogEntry.getType() == BlogEntry.NEW && be != null) {
+        if (!blogEntry.isPersistent() && be != null) {
           // the blog entry is new but one exists with the same ID already
           // - increment the ID and try again
           blogEntry.setDate(new Date(blogEntry.getDate().getTime() + 1));
           putBlogEntry(blogEntry);
         } else {
-          DAOFactory factory = DAOFactory.getConfiguredFactory();
-          BlogEntryDAO dao = factory.getBlogEntryDAO();
+          if (!blogEntry.isPersistent()) {
+            dao.storeBlogEntry(blogEntry);
+            blog.getEventDispatcher().fireBlogEntryEvent(new BlogEntryEvent(blogEntry, BlogEntryEvent.BLOG_ENTRY_ADDED));
+            blogEntry.setType(BlogEntry.PUBLISHED);
+          } else {
+            dao.storeBlogEntry(blogEntry);
+            if (blogEntry.isDirty()) {
+              BlogEntryEvent event = new BlogEntryEvent(blogEntry, blogEntry.getPropertyChangeEvents());
+              blog.getEventDispatcher().fireBlogEntryEvent(event);
+            }
+          }
+
+          // and also fire any other events that have been stored up
+          for (PebbleEvent event : blogEntry.getEvents()) {
+            if (event instanceof BlogEntryEvent) {
+              blog.getEventDispatcher().fireBlogEntryEvent((BlogEntryEvent)event);
+            } else if (event instanceof CommentEvent) {
+              blog.getEventDispatcher().fireCommentEvent((CommentEvent)event);
+            } else if (event instanceof TrackBackEvent) {
+              blog.getEventDispatcher().fireTrackBackEvent((TrackBackEvent)event);
+            }
+          }
+
+          // and store the blog entry now that listeners have been fired
           dao.storeBlogEntry(blogEntry);
         }
 
-        if (blogEntry.getType() == BlogEntry.NEW) {
-          blog.getEventDispatcher().fireBlogEntryEvent(new BlogEntryEvent(blogEntry, BlogEntryEvent.BLOG_ENTRY_ADDED));
-          blogEntry.setType(BlogEntry.PUBLISHED);
-        } else {
-          if (blogEntry.isDirty()) {
-            BlogEntryEvent event = new BlogEntryEvent(blogEntry, blogEntry.getPropertyChangeEvents());
-            blog.getEventDispatcher().fireBlogEntryEvent(event);
-          }
-        }
-
-        // and also fire any other events that have been stored up
-        for (PebbleEvent event : blogEntry.getEvents()) {
-          if (event instanceof BlogEntryEvent) {
-            blog.getEventDispatcher().fireBlogEntryEvent((BlogEntryEvent)event);
-          } else if (event instanceof CommentEvent) {
-            blog.getEventDispatcher().fireCommentEvent((CommentEvent)event);
-          } else if (event instanceof TrackBackEvent) {
-            blog.getEventDispatcher().fireTrackBackEvent((TrackBackEvent)event);
-          }
-        }
+        blogEntry.setPersistent(true);
       } catch (PersistenceException pe) {
       } finally {
         blogEntry.clearPropertyChangeEvents();
@@ -169,20 +182,9 @@ public class BlogService {
       DAOFactory factory = DAOFactory.getConfiguredFactory();
       BlogEntryDAO dao = factory.getBlogEntryDAO();
       dao.removeBlogEntry(blogEntry);
-
-      if (blogEntry.getType() == BlogEntry.PUBLISHED) {
-        // and finally un-index the published entry
-        blogEntry.getBlog().getSearchIndex().unindex(blogEntry);
-      }
+      blogEntry.setPersistent(false);
 
       blogEntry.getBlog().getEventDispatcher().fireBlogEntryEvent(new BlogEntryEvent(blogEntry, BlogEntryEvent.BLOG_ENTRY_REMOVED));
-
-//      todo
-//      if (isStaticPage()) {
-//        SearchIndex indexer = new SearchIndex();
-//        indexer.unindex(blogEntry);
-//        getBlog().getStaticPageIndex().reindex();
-//      }
     } catch (PersistenceException pe) {
     }
   }
@@ -257,7 +259,7 @@ public class BlogService {
     synchronized (blog) {
       try {
         BlogEntry be = getStaticPage(blog, blogEntry.getId());
-        if (blogEntry.getType() == BlogEntry.NEW && be != null) {
+        if (!blogEntry.isPersistent() && be != null) {
           // the blog entry is new but one exists with the same ID already
           // - increment the ID and try again
           blogEntry.setDate(new Date(blogEntry.getDate().getTime() + 1));
@@ -268,6 +270,7 @@ public class BlogService {
           dao.storeBlogEntry(blogEntry);
 
           blogEntry.getBlog().getSearchIndex().index(blogEntry);
+          blogEntry.getBlog().getStaticPageIndex().index(blogEntry);
         }
       } catch (PersistenceException pe) {
       }
@@ -283,10 +286,8 @@ public class BlogService {
       BlogEntryDAO dao = factory.getBlogEntryDAO();
       dao.removeBlogEntry(blogEntry);
 
-      // un-index the published entry
-//      todo
-//      blogEntry.getBlog().getStaticPageIndex().unindex(blogEntry);
       blogEntry.getBlog().getSearchIndex().unindex(blogEntry);
+      blogEntry.getBlog().getStaticPageIndex().unindex(blogEntry);
 
     } catch (PersistenceException pe) {
     }

@@ -58,7 +58,7 @@ public class ActionFactory {
   private String actionMappingFileName;
 
   /**
-   * Package constructor to prevent additional instantiation. todo
+   * Creates a new instance, using the given configuration file.
    */
   public ActionFactory(String actionMappingFileName) {
     this.actionMappingFileName = actionMappingFileName;

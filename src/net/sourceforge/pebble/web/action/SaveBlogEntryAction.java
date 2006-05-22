@@ -69,7 +69,6 @@ public class SaveBlogEntryAction extends SecureAction {
   /** the value used if the blog entry is being previewed rather than added */
   private static final String PREVIEW = "Preview";
   private static final String SAVE_AS_DRAFT = "Save as Draft";
-  private static final String SAVE_AS_TEMPLATE = "Save as Template";
 
   /**
    * Peforms the processing associated with this action.
@@ -81,26 +80,12 @@ public class SaveBlogEntryAction extends SecureAction {
   public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
     String submitType = request.getParameter("submit");
 
-    int type = BlogEntry.NEW;
-    try {
-      type = Integer.parseInt(request.getParameter("type"));
-    } catch (NumberFormatException nfe) {
-      // do nothing, type will default to NEW
-    }
-
     if (submitType != null && submitType.equalsIgnoreCase(PREVIEW)) {
       return previewBlogEntry(request);
     } else if (submitType != null && submitType.equalsIgnoreCase(SAVE_AS_DRAFT)) {
       return saveBlogEntryAsDraft(request);
-    } else if (submitType != null && submitType.equalsIgnoreCase(SAVE_AS_TEMPLATE)) {
-      return saveBlogEntryAsTemplate(request);
     } else {
-      switch (type) {
-        case BlogEntry.STATIC_PAGE :
-          return saveBlogEntryAsStaticPage(request);
-        default :
-          return postBlogEntry(request);
-      }
+      return postBlogEntry(request);
     }
   }
 
@@ -137,14 +122,6 @@ public class SaveBlogEntryAction extends SecureAction {
       BlogService service = new BlogService();
       try {
         switch (blogEntry.getType()) {
-          case BlogEntry.NEW :
-            service.putBlogEntry(blogEntry);
-            break;
-          case BlogEntry.TEMPLATE :
-            blogEntry = new BlogEntry(blog);
-            populateBlogEntry(blogEntry, request);
-            service.putBlogEntry(blogEntry);
-            break;
           case BlogEntry.DRAFT :
             BlogEntry draftBlogEntry = blogEntry;
             blogEntry = new BlogEntry(blog);
@@ -187,77 +164,22 @@ public class SaveBlogEntryAction extends SecureAction {
     return new ForwardView("/viewDrafts.secureaction");
   }
 
-  private View saveBlogEntryAsTemplate(HttpServletRequest request) {
-    BlogEntry blogEntry = getBlogEntry(request);
-    blogEntry = (BlogEntry)blogEntry.clone();
-    blogEntry.setType(BlogEntry.TEMPLATE);
-    populateBlogEntry(blogEntry, request);
-
-    try {
-      blogEntry.store();
-    } catch (BlogException be) {
-      log.error(be.getMessage(), be);
-      be.printStackTrace();
-
-      getModel().put(Constants.BLOG_ENTRY_KEY, blogEntry);
-      return new BlogEntryFormView();
-    }
-
-    return new ForwardView("/viewTemplates.secureaction");
-  }
-
-  private View saveBlogEntryAsStaticPage(HttpServletRequest request) {
-    BlogEntry blogEntry = getBlogEntry(request);
-    blogEntry.setType(BlogEntry.STATIC_PAGE);
-    populateBlogEntry(blogEntry, request);
-
-    ValidationContext context = new ValidationContext();
-    blogEntry.validate(context);
-
-    if (context.hasErrors())  {
-      getModel().put("validationContext", context);
-      getModel().put(Constants.BLOG_ENTRY_KEY, blogEntry);
-      return new BlogEntryFormView();
-    } else {
-      try {
-        BlogService service = new BlogService();
-        service.putStaticPage(blogEntry);
-      } catch (BlogException be) {
-        log.error(be.getMessage(), be);
-        be.printStackTrace();
-
-        getModel().put(Constants.BLOG_ENTRY_KEY, blogEntry);
-        return new BlogEntryFormView();
-      }
-
-      return new RedirectView(blogEntry.getLocalPermalink());
-    }
-  }
-
   private BlogEntry getBlogEntry(HttpServletRequest request) {
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
     String id = request.getParameter("entry");
-    int type = BlogEntry.NEW;
+    int type = -1;
     try {
       type = Integer.parseInt(request.getParameter("type"));
     } catch (NumberFormatException nfe) {
-      // do nothing, type will default to NEW
+      // do nothing
     }
 
     BlogService service = new BlogService();
     switch (type) {
       case BlogEntry.PUBLISHED :
         return service.getBlogEntry(blog, id);
-      case BlogEntry.TEMPLATE :
-        return blog.getBlogEntryTemplate(id);
       case BlogEntry.DRAFT :
         return blog.getDraftBlogEntry(id);
-      case BlogEntry.STATIC_PAGE :
-        BlogEntry blogEntry = service.getStaticPage(blog, id);
-        if (blogEntry == null) {
-          blogEntry = blog.getBlogForToday().createStaticPage();
-        }
-        return blogEntry;
       default :
         // we're creating a new blog entry
         return new BlogEntry(blog);
@@ -307,7 +229,6 @@ public class SaveBlogEntryAction extends SecureAction {
     blogEntry.setTags(tags);
     blogEntry.setAuthor(author);
     blogEntry.setOriginalPermalink(originalPermalink);
-    blogEntry.setStaticName(staticName);
     if (commentsEnabled != null && commentsEnabled.equalsIgnoreCase("true")) {
       blogEntry.setCommentsEnabled(true);
     } else {

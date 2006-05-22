@@ -80,7 +80,7 @@ public class ManageStaticPageAction extends SecureAction {
       return new ForwardView("/editStaticPage.secureaction?entry=" + id);
     } else if (submit.equalsIgnoreCase("Remove") && confirm != null && confirm.equals("true")) {
       try {
-        blogEntry.remove();
+        service.removeStaticPage(blogEntry);
       } catch (BlogException be) {
         throw new ServletException(be);
       }

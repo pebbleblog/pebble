@@ -491,18 +491,6 @@ public class BlogTest extends SingleBlogTestCase {
   }
 
   /**
-   * Tests that a blog entry template can be accessed.
-   */
-  public void testBlogEntryTemplateAccessible() throws Exception {
-    assertEquals(0, blog.getBlogEntryTemplates().size());
-    BlogEntry draft = new BlogEntry(blog);
-    draft.setType(BlogEntry.TEMPLATE);
-    draft.store();
-    assertEquals(1, blog.getBlogEntryTemplates().size());
-    assertEquals(draft, blog.getBlogEntryTemplate(draft.getId()));
-  }
-
-  /**
    * Tests the domain.
    */
   public void testDomain() {

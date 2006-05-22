@@ -160,33 +160,8 @@ public class FileBlogEntryDAO implements BlogEntryDAO {
     if (files != null) {
       for (int i = 0; i < files.length; i++) {
         BlogEntry entry;
-        entry = loadBlogEntry(blog.getBlogForToday(), files[i]);
+        entry = loadBlogEntry(blog, files[i]);
         entry.setType(BlogEntry.DRAFT);
-        entries.add(entry);
-      }
-    }
-
-    return entries;
-  }
-
-  /**
-   * Loads the blog entry templates for a given blog.
-   *
-   * @param blog the owning Blog instance
-   * @return a List of BlogEntry instances
-   * @throws net.sourceforge.pebble.dao.PersistenceException
-   *          if blog entries cannot be loaded
-   */
-  public Collection getBlogEntryTemplates(Blog blog) throws PersistenceException {
-    File dir = new File(blog.getRoot(), "templates");
-    File files[] = dir.listFiles(new BlogEntryFilenameFilter());
-
-    List entries = new ArrayList();
-    if (files != null) {
-      for (int i = 0; i < files.length; i++) {
-        BlogEntry entry;
-        entry = loadBlogEntry(blog.getBlogForToday(), files[i]);
-        entry.setType(BlogEntry.TEMPLATE);
         entries.add(entry);
       }
     }
@@ -210,7 +185,7 @@ public class FileBlogEntryDAO implements BlogEntryDAO {
     if (files != null) {
       for (File file : files) {
         BlogEntry entry;
-        entry = loadBlogEntry(blog.getBlogForToday(), file);
+        entry = loadBlogEntry(blog, file);
         entry.setType(BlogEntry.STATIC_PAGE);
         entries.add(entry);
       }
@@ -235,44 +210,6 @@ public class FileBlogEntryDAO implements BlogEntryDAO {
   }
 
   /**
-   * Loads a blog entry from the specified file.
-   *
-   * @param dailyBlog the owning DailyBlog instance
-   * @param source    the File pointing to the source
-   * @throws net.sourceforge.pebble.dao.PersistenceException
-   *          if the blog entry can't be loaded
-   */
-  private BlogEntry loadBlogEntry(DailyBlog dailyBlog, File source) throws PersistenceException {
-      log.debug("Loading " + source.getAbsolutePath());
-      BlogEntry blogEntry = new BlogEntry(dailyBlog.getBlog());
-
-      try {
-        DefaultHandler handler = new BlogEntryHandler(blogEntry);
-        SAXParserFactory saxFactory = SAXParserFactory.newInstance();
-        saxFactory.setValidating(false);
-        saxFactory.setNamespaceAware(true);
-        SAXParser parser = saxFactory.newSAXParser();
-        parser.parse(source, handler);
-
-      } catch (Exception e) {
-        log.error(e.getMessage(), e);
-        e.printStackTrace();
-        throw new PersistenceException(e.getMessage());
-      }
-
-  /*
-      // quick check that the name of the file isn't messed up
-      String filename = source.getName();
-      long timeByFilename = Long.parseLong(filename.substring(0, filename.length() - 4));
-      if (blogEntry.getDate().getTime() != timeByFilename) {
-        log.warn("Filename for " + blogEntry.getTitle() + " is incorrect");
-      }
-      */
-
-      return blogEntry;
-  }
-
-  /**
    * Stores the specified blog entry.
    *
    * @param blogEntry the blog entry to store
@@ -284,9 +221,6 @@ public class FileBlogEntryDAO implements BlogEntryDAO {
     switch (blogEntry.getType()) {
       case BlogEntry.DRAFT:
         outputDir = new File(blogEntry.getBlog().getRoot(), "drafts");
-        break;
-      case BlogEntry.TEMPLATE:
-        outputDir = new File(blogEntry.getBlog().getRoot(), "templates");
         break;
       case BlogEntry.STATIC_PAGE:
         outputDir = new File(blogEntry.getBlog().getRoot(), "pages");
@@ -572,9 +506,6 @@ public class FileBlogEntryDAO implements BlogEntryDAO {
     switch (blogEntry.getType()) {
       case BlogEntry.DRAFT:
         path = new File(blogEntry.getBlog().getRoot(), "drafts");
-        break;
-      case BlogEntry.TEMPLATE:
-        path = new File(blogEntry.getBlog().getRoot(), "templates");
         break;
       case BlogEntry.STATIC_PAGE:
         path = new File(blogEntry.getBlog().getRoot(), "pages");
