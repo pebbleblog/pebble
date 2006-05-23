@@ -52,7 +52,7 @@ public class MultiBlogFeedActionTest extends MultiBlogTestCase {
   private MockHttpServletRequest request;
   private MockHttpServletResponse response;
 
-  public void setUp() {
+  protected void setUp() throws Exception {
     super.setUp();
 
     action = new FeedAction();

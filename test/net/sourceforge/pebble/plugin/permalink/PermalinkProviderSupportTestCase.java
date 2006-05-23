@@ -44,7 +44,7 @@ public abstract class PermalinkProviderSupportTestCase extends SingleBlogTestCas
 
   protected PermalinkProvider permalinkProvider;
 
-  public void setUp() {
+  protected void setUp() throws Exception {
     super.setUp();
 
     permalinkProvider = getPermalinkProvider();

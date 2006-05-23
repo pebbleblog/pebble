@@ -42,7 +42,7 @@ public class ThemeTest extends SingleBlogTestCase {
 
   private Theme theme;
 
-  public void setUp() {
+  protected void setUp() throws Exception {
     super.setUp();
 
     theme = new Theme(blog, "custom", "/tmp/themes");

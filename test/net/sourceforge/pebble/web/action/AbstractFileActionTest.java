@@ -41,7 +41,7 @@ import net.sourceforge.pebble.domain.FileMetaData;
  */
 public class AbstractFileActionTest extends SecureActionTestCase {
 
-  public void setUp() {
+  protected void setUp() throws Exception {
     action = new ViewFilesAction();
 
     super.setUp();

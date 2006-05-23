@@ -29,7 +29,7 @@ window.onload = function()
 <div class="contentItem">
 
   <div class="contentItemLinks">
-    <a href="${pageContext.request.contextPath}/docs/blog-entries.html" target="_blank">Help</a>
+    <a href="${pageContext.request.contextPath}/help/blogEntries.html" target="_blank">Help</a>
   </div>
 
   <div class="title">Blog entry</div>
@@ -81,7 +81,7 @@ window.onload = function()
       </tr>
 
       <tr>
-        <td valign="top"><b>Comments</b> (<span class="help"><a href="${pageContext.request.contextPath}/docs/comments.html" target="_blank">Help</a></span>)</td>
+        <td valign="top"><b>Comments</b></td>
         <td>
           Enabled&nbsp;
           <input type="radio" name="commentsEnabled" value="true"
@@ -98,7 +98,7 @@ window.onload = function()
       </tr>
 
       <tr>
-        <td valign="top"><b>TrackBacks</b> (<span class="help"><a href="${pageContext.request.contextPath}/docs/trackbacks.html" target="_blank">Help</a></span>)</td>
+        <td valign="top"><b>TrackBacks</b></td>
         <td>
           Enabled&nbsp;
           <input type="radio" name="trackBacksEnabled" value="true"
@@ -150,13 +150,13 @@ window.onload = function()
       <tr>
         <td valign="top"><b>Date/time</b></td>
         <td>
-          <input type="text" name="date" size="60" value="<fmt:formatDate value="${blogEntry.date}" type="both" dateStyle="medium" timeStyle="medium" />">
+          <input type="text" name="date" size="60" value="<fmt:formatDate value="${blogEntry.date}" type="both" dateStyle="medium" timeStyle="short" />">
         </td>
       </tr>
       </c:if>
 
       <tr>
-        <td valign="top"><br /><b>Attachment</b> (<span class="help"><a href="${pageContext.request.contextPath}/docs/blog-entries.html#attachments" target="_blank">Help</a></span>)</td>
+        <td valign="top"><br /><b>Attachment</b></td>
         <td></td>
       </tr>
       <tr>
@@ -173,9 +173,28 @@ window.onload = function()
       </tr>
 
       <tr>
+        <td valign="top"><br /></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td valign="top"><b>State</b></td>
+        <td>
+          Draft&nbsp;<input type="radio" name="publish" value="false"
+            <c:if test="${not blogEntry.published}">
+              checked="checked"
+            </c:if>
+          />
+          Published&nbsp;<input type="radio" name="publish" value="true"
+            <c:if test="${blogEntry.published}">
+              checked="checked"
+            </c:if>
+          />
+        </td>
+      </tr>
+      <tr>
         <td colspan="2" align="right">
           <input name="submit" type="submit" Value="Preview" />
-          <input name="submit" type="submit" Value="Publish" />
+          <input name="submit" type="submit" Value="Save" />
         </td>
       </tr>
     </table>

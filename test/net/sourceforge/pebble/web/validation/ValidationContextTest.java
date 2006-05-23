@@ -43,7 +43,7 @@ public class ValidationContextTest extends TestCase {
 
   private ValidationContext context;
 
-  public void setUp() {
+  protected void setUp() throws Exception {
     this.context = new ValidationContext();
   }
 

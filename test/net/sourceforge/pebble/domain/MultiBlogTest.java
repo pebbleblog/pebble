@@ -42,7 +42,7 @@ public class MultiBlogTest extends MultiBlogTestCase {
 
   private MultiBlog blog;
 
-  public void setUp() {
+  protected void setUp() throws Exception {
     super.setUp();
 
     this.blog = BlogManager.getInstance().getMultiBlog();

@@ -50,7 +50,7 @@ public class MultiBlogBloggerAPIHandlerTest extends MultiBlogTestCase {
 
   private BloggerAPIHandler handler = new BloggerAPIHandler();
 
-  public void setUp() {
+  protected void setUp() throws Exception {
     super.setUp();
 
     handler.setAuthenticationManager(new net.sourceforge.pebble.mock.MockAuthenticationManager(true, new GrantedAuthority[] {new GrantedAuthorityImpl(Constants.BLOG_CONTRIBUTOR_ROLE)}));

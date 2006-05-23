@@ -15,15 +15,11 @@
     </pebble:isBlogOwnerOrContributor>
 
     <pebble:isBlogOwner>
-    <c:if test="${blogEntry.pending}">
-      <input type="submit" name="submit" value="Approve" />
-      <input type="submit" name="submit" value="Reject" />
+    <c:if test="${blogEntry.unpublished}">
+      <input type="submit" name="submit" value="Publish" />
     </c:if>
-    <c:if test="${blogEntry.rejected}">
-      <input type="submit" name="submit" value="Approve" />
-    </c:if>
-    <c:if test="${blogEntry.approved}">
-      <input type="submit" name="submit" value="Reject" />
+    <c:if test="${blogEntry.published}">
+      <input type="submit" name="submit" value="Unpublish" />
     </c:if>
     </pebble:isBlogOwner>
 

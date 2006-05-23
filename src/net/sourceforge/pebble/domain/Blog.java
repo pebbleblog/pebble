@@ -151,12 +151,12 @@ public class Blog extends AbstractBlog {
 
     yearlyBlogs = new ArrayList();
 
-//    // reindex the blog if the indexes don't exist
-//    File indexes = new File(getIndexesDirectory());
-//    if (!indexes.exists()) {
-//      indexes.mkdir();
+    // reindex the blog if the indexes don't exist
+    File indexes = new File(getIndexesDirectory());
+    if (!indexes.exists()) {
+      indexes.mkdir();
 //      reindex();
-//    }
+    }
 
     // create the various indexes for this blog
     searchIndex = new SearchIndex(this);
@@ -349,7 +349,7 @@ public class Blog extends AbstractBlog {
     defaultProperties.setProperty(THEME_KEY, "default");
     defaultProperties.setProperty(PRIVATE_KEY, FALSE);
     defaultProperties.setProperty(LUCENE_ANALYZER_KEY, "org.apache.lucene.analysis.standard.StandardAnalyzer");
-    defaultProperties.setProperty(BLOG_ENTRY_DECORATORS_KEY, "net.sourceforge.pebble.plugin.decorator.HideUnapprovedBlogEntriesDecorator\r\nnet.sourceforge.pebble.plugin.decorator.HideUnapprovedResponsesDecorator\r\nnet.sourceforge.pebble.plugin.decorator.HtmlDecorator\r\nnet.sourceforge.pebble.plugin.decorator.EscapeMarkupDecorator\r\nnet.sourceforge.pebble.plugin.decorator.RelativeUriDecorator\r\nnet.sourceforge.pebble.plugin.decorator.ReadMoreDecorator\r\nnet.sourceforge.pebble.plugin.decorator.BlogTagsDecorator");
+    defaultProperties.setProperty(BLOG_ENTRY_DECORATORS_KEY, "net.sourceforge.pebble.plugin.decorator.HideUnpublishedBlogEntriesDecorator\r\nnet.sourceforge.pebble.plugin.decorator.HideUnapprovedResponsesDecorator\r\nnet.sourceforge.pebble.plugin.decorator.HtmlDecorator\r\nnet.sourceforge.pebble.plugin.decorator.EscapeMarkupDecorator\r\nnet.sourceforge.pebble.plugin.decorator.RelativeUriDecorator\r\nnet.sourceforge.pebble.plugin.decorator.ReadMoreDecorator\r\nnet.sourceforge.pebble.plugin.decorator.BlogTagsDecorator");
     defaultProperties.setProperty(PERMALINK_PROVIDER_KEY, "net.sourceforge.pebble.plugin.permalink.DefaultPermalinkProvider");
     defaultProperties.setProperty(EVENT_DISPATCHER_KEY, "net.sourceforge.pebble.event.DefaultEventDispatcher");
     defaultProperties.setProperty(LOGGER_KEY, "net.sourceforge.pebble.logging.CombinedLogFormatLogger");
@@ -725,46 +725,92 @@ public class Blog extends AbstractBlog {
    */
   public List getRecentBlogEntries(int numberOfEntries) {
     BlogService service = new BlogService();
-    List<String> blogEntryIds = blogEntryIndex.getRecentBlogEntries(numberOfEntries);
+    List<String> blogEntryIds = blogEntryIndex.getBlogEntries();
     List blogEntries = new ArrayList();
     for (String blogEntryId : blogEntryIds) {
-      blogEntries.add(service.getBlogEntry(this, blogEntryId));
+      BlogEntry blogEntry = service.getBlogEntry(this, blogEntryId);
+      blogEntries.add(blogEntry);
+
+      if (blogEntries.size() == numberOfEntries) {
+        break;
+      }
     }
 
     return blogEntries;
   }
 
   /**
-   * Gets the most recent blog entries, the number of which is taken from
-   * the recentBlogEntriesOnHomePage property.
+   * Gets the most recent published blog entries, the number of which
+   * is taken from the recentBlogEntriesOnHomePage property.
+   *
+   * @return a List containing the most recent blog entries
+   */
+  public List getRecentPublishedBlogEntries() {
+    BlogService service = new BlogService();
+    List<String> blogEntryIds = blogEntryIndex.getBlogEntries();
+    List blogEntries = new ArrayList();
+    for (String blogEntryId : blogEntryIds) {
+      BlogEntry blogEntry = service.getBlogEntry(this, blogEntryId);
+
+      if (blogEntry.isPublished()) {
+        blogEntries.add(blogEntry);
+      }
+
+      if (blogEntries.size() == getRecentBlogEntriesOnHomePage()) {
+        break;
+      }
+    }
+
+    return blogEntries;
+  }
+
+  /**
+   * Gets the most recent published blog entries for a given category, the
+   * number of which is taken from the recentBlogEntriesOnHomePage property.
    *
    * @param   category          a category
    * @return  a List containing the most recent blog entries
    */
-  public List getRecentBlogEntries(Category category) {
+  public List getRecentPublishedBlogEntries(Category category) {
     BlogService service = new BlogService();
-    List<String> blogEntryIds = categoryIndex.getRecentBlogEntries(category, getRecentBlogEntriesOnHomePage());
+    List<String> blogEntryIds = categoryIndex.getRecentBlogEntries(category);
     List blogEntries = new ArrayList();
     for (String blogEntryId : blogEntryIds) {
-      blogEntries.add(service.getBlogEntry(this, blogEntryId));
+      BlogEntry blogEntry = service.getBlogEntry(this, blogEntryId);
+
+      if (blogEntry.isPublished()) {
+        blogEntries.add(blogEntry);
+      }
+
+      if (blogEntries.size() == getRecentBlogEntriesOnHomePage()) {
+        break;
+      }
     }
 
     return blogEntries;
   }
 
   /**
-   * Gets the most recent blog entries, the number of which is taken from
-   * the recentBlogEntriesOnHomePage property.
+   * Gets the most recent published blog entries for a given tag, the
+   * number of which is taken from the recentBlogEntriesOnHomePage property.
    *
    * @param tag             a tag
    * @return a List containing the most recent blog entries
    */
-  public List getRecentBlogEntries(Tag tag) {
+  public List getRecentPublishedBlogEntries(Tag tag) {
     BlogService service = new BlogService();
-    List<String> blogEntryIds = tagIndex.getRecentBlogEntries(tag, getRecentBlogEntriesOnHomePage());
+    List<String> blogEntryIds = tagIndex.getRecentBlogEntries(tag);
     List blogEntries = new ArrayList();
     for (String blogEntryId : blogEntryIds) {
-      blogEntries.add(service.getBlogEntry(this, blogEntryId));
+      BlogEntry blogEntry = service.getBlogEntry(this, blogEntryId);
+
+      if (blogEntry.isPublished()) {
+        blogEntries.add(blogEntry);
+      }
+
+      if (blogEntries.size() == getRecentBlogEntriesOnHomePage()) {
+        break;
+      }
     }
 
     return blogEntries;
@@ -775,7 +821,7 @@ public class Blog extends AbstractBlog {
    *
    * @return a List containing the most recent blog entries
    */
-  public List getRecentResponses() {
+  public List getRecentApprovedResponses() {
     int number = getRecentResponsesOnHomePage();
     BlogService service = new BlogService();
     List<String> responseIds = responseIndex.getRecentResponses(number);

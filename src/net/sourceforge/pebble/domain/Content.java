@@ -144,33 +144,6 @@ public abstract class Content implements Permalinkable, Cloneable {
   }
 
   /**
-   * Determines whether this response is rejected.
-   *
-   * @return  true if the state is rejected, false otherwise
-   */
-  public boolean isRejected() {
-    return state.equals(State.REJECTED);
-  }
-
-  /**
-   * Determines whether this response is approved.
-   *
-   * @return  true if the state is approved, false otherwise
-   */
-  public boolean isApproved() {
-    return state.equals(State.APPROVED);
-  }
-
-  /**
-   * Determines whether this response is pending.
-   *
-   * @return  true if the state is pending, false otherwise
-   */
-  public boolean isPending() {
-    return state.equals(State.PENDING);
-  }
-
-  /**
    * Sets whether events are enabled.
    *
    * @param b   true to enable events, false otherwise

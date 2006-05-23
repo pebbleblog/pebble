@@ -50,7 +50,7 @@ public class TransformingFilterTest extends SingleBlogTestCase {
   private MockHttpServletRequest request;
   private MockHttpServletResponse response;
 
-  public void setUp() {
+  protected void setUp() throws Exception {
     super.setUp();
 
     filter = new TransformingFilter();

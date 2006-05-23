@@ -204,4 +204,31 @@ public abstract class Response extends Content {
     this.spamScore++;
   }
 
+  /**
+   * Determines whether this response is rejected.
+   *
+   * @return  true if the state is rejected, false otherwise
+   */
+  public boolean isRejected() {
+    return getState().equals(State.REJECTED);
+  }
+
+  /**
+   * Determines whether this response is approved.
+   *
+   * @return  true if the state is approved, false otherwise
+   */
+  public boolean isApproved() {
+    return getState().equals(State.APPROVED);
+  }
+
+  /**
+   * Determines whether this response is pending.
+   *
+   * @return  true if the state is pending, false otherwise
+   */
+  public boolean isPending() {
+    return getState().equals(State.PENDING);
+  }
+
 }

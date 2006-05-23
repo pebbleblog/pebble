@@ -94,13 +94,13 @@ public class FeedAction extends Action {
         Category category = getCategory((Blog)blog, request);
 
         if (tag != null) {
-          blogEntries = ((Blog)blog).getRecentBlogEntries(tag);
+          blogEntries = ((Blog)blog).getRecentPublishedBlogEntries(tag);
           getModel().put("tag", tag);
         } else if (category != null) {
-          blogEntries = ((Blog)blog).getRecentBlogEntries(category);
+          blogEntries = ((Blog)blog).getRecentPublishedBlogEntries(category);
           getModel().put("category", category);
         } else {
-          blogEntries = blog.getRecentBlogEntries();
+          blogEntries = ((Blog)blog).getRecentPublishedBlogEntries();
         }
       } else {
         blogEntries = blog.getRecentBlogEntries();

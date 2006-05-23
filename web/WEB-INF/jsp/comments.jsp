@@ -10,10 +10,10 @@
   <c:set var="comment" scope="request" value="${comment}"/>
   <c:choose>
     <c:when test="${status.count % 2 == 0}">
-      <div class="even" style="padding-left: ${(comment.numberOfParents*16)}px; padding-top: 0px; padding-bottom: 0px; padding-right: 0px">
+      <div class="even">
     </c:when>
     <c:otherwise>
-      <div class="odd" style="padding-left: ${(comment.numberOfParents*16)}px; padding-top: 0px; padding-bottom: 0px; padding-right: 0px">
+      <div class="odd">
     </c:otherwise>
   </c:choose>
       <jsp:include page="comment.jsp"/>

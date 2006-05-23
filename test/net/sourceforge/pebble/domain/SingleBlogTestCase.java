@@ -45,10 +45,15 @@ public abstract class SingleBlogTestCase extends PebbleTestCase {
 
   protected Blog blog;
 
-  public void setUp() {
+  protected void setUp() throws Exception {
+    super.setUp();
+
     DAOFactory.setConfiguredFactory(new MockDAOFactory());
-    blog = new Blog(TEST_BLOG_LOCATION.getAbsolutePath());
-    Theme theme = new Theme(blog, "custom", new File(System.getProperty("java.io.tmpdir"), "pebble").getAbsolutePath());
+
+    File blogDirectory = new File(TEST_BLOG_LOCATION, "blogs/default");
+    blogDirectory.mkdir();
+    blog = new Blog(blogDirectory.getAbsolutePath());
+    Theme theme = new Theme(blog, "custom", TEST_BLOG_LOCATION.getAbsolutePath());
     blog.setEditableTheme(theme);
 
     pebbleContext.setUrl("http://www.yourdomain.com/blog/");
@@ -57,10 +62,8 @@ public abstract class SingleBlogTestCase extends PebbleTestCase {
   }
 
   protected void tearDown() throws Exception {
-    blog.getBlogEntryIndex().clear();
-    blog.getResponseIndex().clear();
-    blog.getTagIndex().clear();
     BlogManager.getInstance().removeAllBlogs();
+
     super.tearDown();
   }
 

@@ -44,7 +44,7 @@ import net.sourceforge.pebble.web.view.View;
  */
 public class SaveFileActionTest extends SecureActionTestCase {
 
-  public void setUp() {
+  protected void setUp() throws Exception {
     action = new SaveFileAction();
 
     super.setUp();

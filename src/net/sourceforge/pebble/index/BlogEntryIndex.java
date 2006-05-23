@@ -146,16 +146,12 @@ public class BlogEntryIndex {
   }
 
   /**
-   * Gets the most recent N blog entries.
+   * Gets the full list of blog entries.
    *
    * @return  a List of blog entry IDs
    */
-  public List<String> getRecentBlogEntries(int number) {
-    if (indexEntries.size() >= number) {
-      return indexEntries.subList(0, number);
-    } else {
-      return indexEntries;
-    }
+  public List<String> getBlogEntries() {
+    return new ArrayList<String>(indexEntries);
   }
 
 }

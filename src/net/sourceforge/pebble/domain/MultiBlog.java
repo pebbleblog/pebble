@@ -127,7 +127,7 @@ public class MultiBlog extends AbstractBlog {
     List blogEntries = new ArrayList();
 
     for (Blog blog : BlogManager.getInstance().getPublicBlogs()) {
-      blogEntries.addAll(blog.getRecentBlogEntries(numberOfEntries));
+      blogEntries.addAll(blog.getRecentPublishedBlogEntries());
     }
 
     Collections.sort(blogEntries, new BlogEntryComparator());

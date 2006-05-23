@@ -192,18 +192,30 @@ public class SaveBlogEntryAction extends SecureAction {
     String trackBacksEnabled = request.getParameter("trackBacksEnabled");
     String category[] = request.getParameterValues("category");
     String author = SecurityUtils.getUsername();
+    String publish = request.getParameter("publish");
 
     // the date can only set on those entries that have not yet been persisted
     if (!blogEntry.isPersistent()) {
-      DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM, blog.getLocale());
+      DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT, blog.getLocale());
       dateFormat.setTimeZone(blog.getTimeZone());
-      Date date;
-      try {
-        date = dateFormat.parse(request.getParameter("date"));
-        blogEntry.setDate(date);
-      } catch (ParseException pe) {
-        // do nothing, just log
-        log.warn(pe);
+      dateFormat.setLenient(false);
+
+      Date now = new Date();
+      String dateAsString = request.getParameter("date");
+      if (dateAsString != null && dateAsString.length() > 0) {
+        try {
+          Date date = dateFormat.parse(dateAsString);
+          if (date.after(now)) {
+            date = now;
+          }
+          blogEntry.setDate(date);
+        } catch (ParseException pe) {
+          log.warn(pe);
+          blogEntry.setDate(now);
+        }
+      } else {
+        // the date has been blanked out, so reset to "now"
+        blogEntry.setDate(now);
       }
     }
 
@@ -240,6 +252,12 @@ public class SaveBlogEntryAction extends SecureAction {
       blogEntry.setAttachment(attachment);
     } else {
       blogEntry.setAttachment(null);
+    }
+
+    if (publish != null && publish.equalsIgnoreCase("true")) {
+      blogEntry.setState(State.PUBLISHED);
+    } else {
+      blogEntry.setState(State.UNPUBLISHED);
     }
   }
 

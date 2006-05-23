@@ -43,7 +43,7 @@ public class HideUnapprovedResponsesDecoratorTest extends SingleBlogTestCase {
 
   private BlogEntryDecorator decorator;
 
-  public void setUp() {
+  protected void setUp() throws Exception {
     super.setUp();
 
     decorator = new HideUnapprovedResponsesDecorator();

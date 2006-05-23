@@ -54,7 +54,7 @@ public class SpamScoreListenerTest extends SingleBlogTestCase {
   /**
    * Common setup code.
    */
-  public void setUp() {
+  protected void setUp() throws Exception {
     super.setUp();
 
     listener = new SpamScoreListener();

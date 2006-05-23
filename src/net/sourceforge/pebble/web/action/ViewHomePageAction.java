@@ -79,14 +79,20 @@ public class ViewHomePageAction extends Action {
       }
     } else {
       Blog blog = (Blog)abstractBlog;
-      boolean approvedOnly = true;
+      boolean publishedOnly = true;
       if (SecurityUtils.isUserAuthorisedForBlogAsBlogOwner(blog) ||
           SecurityUtils.isUserAuthorisedForBlogAsBlogContributor(blog)) {
-        approvedOnly = false;
+        publishedOnly = false;
       }
 
       getModel().put(Constants.MONTHLY_BLOG, blog.getBlogForThisMonth());
-      getModel().put(Constants.BLOG_ENTRIES, blog.getRecentBlogEntries());
+
+      if (publishedOnly) {
+        getModel().put(Constants.BLOG_ENTRIES, blog.getRecentPublishedBlogEntries());
+      } else {
+        getModel().put(Constants.BLOG_ENTRIES, blog.getRecentBlogEntries());
+
+      }
 
       return new SingleBlogHomePageView();
     }

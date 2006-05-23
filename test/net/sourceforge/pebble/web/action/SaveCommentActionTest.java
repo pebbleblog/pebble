@@ -44,7 +44,7 @@ import net.sourceforge.pebble.web.view.impl.CommentConfirmationView;
  */
 public class SaveCommentActionTest extends SingleBlogActionTestCase {
 
-  public void setUp() {
+  protected void setUp() throws Exception {
     action = new SaveCommentAction();
 
     super.setUp();

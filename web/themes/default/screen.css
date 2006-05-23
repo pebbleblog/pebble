@@ -110,7 +110,7 @@ a:visited {
   font-size: 24px;
   font-weight: normal;
   color : #6e7d8e;
-  background: white url('images/bullet.jpg') no-repeat center left;
+  background: transparent url('images/bullet.jpg') no-repeat center left;
   padding-top: 4px;
   padding-bottom: 4px;
   padding-right: 4px;
@@ -135,12 +135,12 @@ a:visited {
   padding-top: 8px;
   padding-bottom: 8px;
   margin-bottom: 8px;
+  background: white;
 }
 .contentItemBody {
   line-height: 1.5;
   padding-top: 8px;
   padding-bottom: 8px;
-  background: white;
   padding-left: 16px;
   padding-right: 16px;
   text-align: justify;
@@ -164,7 +164,10 @@ a:visited {
   font-size: 11px;
 }
 .response {
-  padding: 8px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 16px;
+  padding-right: 16px;
 }
 .response .title {
   font-size: 12px;
@@ -176,6 +179,7 @@ a:visited {
   line-height: 1.5;
   padding-top: 8px;
   padding-bottom: 8px;
+  text-align: justify;
 }
 .metadata, .metadata a {
   font-size: 11px;
@@ -185,10 +189,15 @@ a:visited {
 .approved {
 }
 .pending {
-  border: solid #FF9900 1px;
+  border: solid orange 1px;
 }
 .rejected {
   border: solid red 1px;
+}
+.published {
+}
+.unpublished {
+  background: white url('images/draft.jpg') no-repeat top left;
 }
 blockquote {
   border-left: solid #E0E0E0 4px;
@@ -309,6 +318,7 @@ blockquote {
 .calendarToday a {
   font-weight: bold;
   color: white;
+  text-decoration: none;
 }
 .photo {
   padding-top: 0px;

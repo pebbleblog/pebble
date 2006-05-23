@@ -43,7 +43,7 @@ import net.sourceforge.pebble.web.view.impl.BlogEntryFormView;
  */
 public class EditDraftActionTest extends SecureActionTestCase {
 
-  public void setUp() {
+  protected void setUp() throws Exception {
     action = new EditDraftAction();
 
     super.setUp();

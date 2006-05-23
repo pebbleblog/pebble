@@ -44,7 +44,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class SingleBlogFeedActionTest extends SingleBlogActionTestCase {
 
-  public void setUp() {
+  protected void setUp() throws Exception {
     action = new FeedAction();
 
     super.setUp();

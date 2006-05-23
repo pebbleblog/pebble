@@ -52,7 +52,7 @@ public class BlogEntryTest extends SingleBlogTestCase {
 
   private BlogEntry blogEntry;
 
-  public void setUp() {
+  protected void setUp() throws Exception {
     super.setUp();
     blogEntry = new BlogEntry(blog);
     blogEntry.setTitle("A title");

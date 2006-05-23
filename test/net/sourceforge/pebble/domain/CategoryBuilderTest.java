@@ -43,7 +43,7 @@ public class CategoryBuilderTest extends SingleBlogTestCase {
 
   private CategoryBuilder builder;
 
-  public void setUp() {
+  protected void setUp() throws Exception {
     super.setUp();
     builder = new CategoryBuilder(blog);
   }

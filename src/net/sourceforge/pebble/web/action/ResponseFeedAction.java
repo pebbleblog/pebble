@@ -92,7 +92,7 @@ public class ResponseFeedAction extends Action {
           responses = blogEntry.getResponses();
         }
       } else {
-        responses = new ArrayList(blog.getRecentResponses());
+        responses = new ArrayList(blog.getRecentApprovedResponses());
       }
 
       int numberOfResponses = blog.getRecentResponsesOnHomePage();

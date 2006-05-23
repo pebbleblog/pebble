@@ -42,7 +42,7 @@ import net.sourceforge.pebble.web.view.RedirectView;
  */
 public class LogoutActionTest extends SingleBlogActionTestCase {
 
-  public void setUp() {
+  protected void setUp() throws Exception {
     action = new LogoutAction();
 
     super.setUp();

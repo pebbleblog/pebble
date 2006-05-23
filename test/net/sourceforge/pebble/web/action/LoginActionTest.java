@@ -40,7 +40,7 @@ import net.sourceforge.pebble.web.view.RedirectView;
  */
 public class LoginActionTest extends SingleBlogActionTestCase {
 
-  public void setUp() {
+  protected void setUp() throws Exception {
     action = new LoginAction();
 
     super.setUp();

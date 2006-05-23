@@ -44,7 +44,7 @@ public class TrackBackTest extends SingleBlogTestCase {
 
   private TrackBack trackback;
 
-  public void setUp() {
+  protected void setUp() throws Exception {
     super.setUp();
 
     trackback = new BlogEntry(blog).createTrackBack("Title", "Excerpt", "http://www.somedomain.com", "Some blog", "127.0.0.1");

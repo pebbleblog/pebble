@@ -50,7 +50,7 @@ public class SearchIndexListener implements BlogEntryListener {
   public void blogEntryAdded(BlogEntryEvent event) {
     BlogEntry blogEntry = event.getBlogEntry();
 
-    if (blogEntry.isApproved()) {
+    if (blogEntry.isPublished()) {
       updateSearchIndex(blogEntry);
     }
   }
@@ -74,29 +74,30 @@ public class SearchIndexListener implements BlogEntryListener {
   public void blogEntryChanged(BlogEntryEvent event) {
     BlogEntry blogEntry = event.getBlogEntry();
 
-    if (blogEntry.isApproved()) {
+    if (blogEntry.isPublished()) {
       updateSearchIndex(blogEntry);
     }
   }
 
   /**
-   * Called when a blog entry has been approved.
+   * Called when a blog entry has been published.
    *
-   * @param event a BlogEntryEvent inistance
+   * @param event a BlogEntryEvent instance
    */
-  public void blogEntryApproved(BlogEntryEvent event) {
+  public void blogEntryPublished(BlogEntryEvent event) {
     BlogEntry blogEntry = event.getBlogEntry();
     updateSearchIndex(blogEntry);
   }
 
   /**
-   * Called when a blog entry has been rejected.
+   * Called when a blog entry has been unpublished.
    *
    * @param event a BlogEntryEvent instance
    */
-  public void blogEntryRejected(BlogEntryEvent event) {
+  public void blogEntryUnpublished(BlogEntryEvent event) {
     BlogEntry blogEntry = event.getBlogEntry();
-    updateSearchIndex(blogEntry);
+
+    blogEntry.getBlog().getSearchIndex().unindex(blogEntry);
   }
 
   /**

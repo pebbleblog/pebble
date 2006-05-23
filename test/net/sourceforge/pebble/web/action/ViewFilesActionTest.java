@@ -47,7 +47,7 @@ import java.util.List;
  */
 public class ViewFilesActionTest extends SecureActionTestCase {
 
-  public void setUp() {
+  protected void setUp() throws Exception {
     action = new ViewFilesAction();
 
     super.setUp();

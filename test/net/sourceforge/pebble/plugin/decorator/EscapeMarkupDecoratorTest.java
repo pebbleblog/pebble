@@ -46,7 +46,7 @@ public class EscapeMarkupDecoratorTest extends SingleBlogTestCase {
   private BlogEntryDecoratorContext context;
   private BlogEntry blogEntry;
 
-  public void setUp() {
+  protected void setUp() throws Exception {
     super.setUp();
 
     decorator = new EscapeMarkupDecorator();

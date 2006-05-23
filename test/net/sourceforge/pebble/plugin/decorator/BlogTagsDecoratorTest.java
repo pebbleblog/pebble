@@ -48,7 +48,7 @@ public class BlogTagsDecoratorTest extends SingleBlogTestCase {
 
   private BlogEntryDecoratorChain chain;
 
-  public void setUp() {
+  protected void setUp() throws Exception {
     super.setUp();
 
     blogEntry = new BlogEntry(blog);

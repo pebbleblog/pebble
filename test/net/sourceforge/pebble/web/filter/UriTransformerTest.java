@@ -44,7 +44,7 @@ public class UriTransformerTest extends SingleBlogTestCase {
 
   private UriTransformer transformer;
 
-  public void setUp() {
+  protected void setUp() throws Exception {
     super.setUp();
 
     transformer = new UriTransformer();

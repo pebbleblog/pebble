@@ -82,10 +82,10 @@ public class DefaultEventDispatcher extends EventDispatcher {
         listener.blogEntryRemoved(event);
       } else if (event.getType() == BlogEntryEvent.BLOG_ENTRY_CHANGED) {
         listener.blogEntryChanged(event);
-      } else if (event.getType() == BlogEntryEvent.BLOG_ENTRY_APPROVED) {
-        listener.blogEntryApproved(event);
-      } else if (event.getType() == BlogEntryEvent.BLOG_ENTRY_REJECTED) {
-        listener.blogEntryRejected(event);
+      } else if (event.getType() == BlogEntryEvent.BLOG_ENTRY_PUBLISHED) {
+        listener.blogEntryPublished(event);
+      } else if (event.getType() == BlogEntryEvent.BLOG_ENTRY_UNPUBLISHED) {
+        listener.blogEntryUnpublished(event);
       }
     }
   }

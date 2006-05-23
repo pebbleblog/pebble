@@ -53,7 +53,7 @@ public class SingleBlogMetaWeblogAPIHandlerTest extends SingleBlogTestCase {
 
   private MetaWeblogAPIHandler handler = new MetaWeblogAPIHandler();
 
-  public void setUp() {
+  protected void setUp() throws Exception {
     super.setUp();
 
     handler.setAuthenticationManager(new MockAuthenticationManager(true, new GrantedAuthority[] {new GrantedAuthorityImpl(Constants.BLOG_CONTRIBUTOR_ROLE)}));

@@ -42,6 +42,9 @@ public class State {
   public static final State REJECTED = new State("rejected");
   public static final State PENDING = new State("pending");
 
+  public static final State UNPUBLISHED = new State("unpublished");
+  public static final State PUBLISHED = new State("published");
+
   public static State getState(String name) {
     if (name == null) {
       return null;
@@ -51,6 +54,10 @@ public class State {
       return REJECTED;
     } else if (name.equals("pending")) {
       return PENDING;
+    } else if (name.equals("unpublished")) {
+      return UNPUBLISHED;
+    } else if (name.equals("published")) {
+      return PUBLISHED;
     } else {
       return null;
     }

@@ -3,13 +3,13 @@
 --%>
 <c:choose>
   <c:when test="${comment.pending}">
-<div class="response pending">
+<div class="response pending" style="padding-left: ${(comment.numberOfParents*16)+16}px;">
   </c:when>
   <c:when test="${comment.rejected}">
-<div class="response rejected">
+<div class="response rejected" style="padding-left: ${(comment.numberOfParents*16)+16}px;">
   </c:when>
   <c:otherwise>
-<div class="response approved">
+<div class="response approved" style="padding-left: ${(comment.numberOfParents*16)+16}px;">
   </c:otherwise>
 </c:choose>
 

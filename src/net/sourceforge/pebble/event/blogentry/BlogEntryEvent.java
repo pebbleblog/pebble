@@ -37,8 +37,7 @@ import net.sourceforge.pebble.event.PebbleEvent;
 import java.util.List;
 
 /**
- * Event to signify that a blog entry has been added, removed, changed,
- * approved or rejected.
+ * Event to signify that a blog entry has been added, removed or changed.
  *
  * @author Simon Brown
  */
@@ -53,11 +52,11 @@ public class BlogEntryEvent extends PebbleEvent {
   /** constant representing blog entry changed type */
   public static final int BLOG_ENTRY_CHANGED = 2;
 
-  /** constant representing blog entry approved type */
-  public static final int BLOG_ENTRY_APPROVED = 3;
+  /** constant representing blog entry published type */
+  public static final int BLOG_ENTRY_PUBLISHED = 3;
 
-  /** constant representing blog entry rejected type */
-  public static final int BLOG_ENTRY_REJECTED = 4;
+  /** constant representing blog entry unpublished type */
+  public static final int BLOG_ENTRY_UNPUBLISHED = 4;
 
   /** the list of property change events that caused this event */
   private List propertyChangeEvents;

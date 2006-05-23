@@ -21,7 +21,7 @@ public class TagIndexListener implements BlogEntryListener {
    */
   public void blogEntryAdded(BlogEntryEvent event) {
     BlogEntry blogEntry = event.getBlogEntry();
-    if (blogEntry.isApproved()) {
+    if (blogEntry.isPublished()) {
       blogEntry.getBlog().getTagIndex().index(blogEntry);
     }
   }
@@ -33,7 +33,7 @@ public class TagIndexListener implements BlogEntryListener {
    */
   public void blogEntryRemoved(BlogEntryEvent event) {
     BlogEntry blogEntry = event.getBlogEntry();
-    if (blogEntry.isApproved()) {
+    if (blogEntry.isPublished()) {
       blogEntry.getBlog().getTagIndex().unindex(blogEntry);
     }
   }
@@ -46,7 +46,7 @@ public class TagIndexListener implements BlogEntryListener {
   public void blogEntryChanged(BlogEntryEvent event) {
     BlogEntry blogEntry = event.getBlogEntry();
 
-    if (blogEntry.isApproved()) {
+    if (blogEntry.isPublished()) {
       List propertyChangeEvents = event.getPropertyChangeEvents();
       Iterator it = propertyChangeEvents.iterator();
       while (it.hasNext()) {
@@ -63,21 +63,21 @@ public class TagIndexListener implements BlogEntryListener {
   }
 
   /**
-   * Called when a blog entry has been approved.
+   * Called when a blog entry has been published.
    *
-   * @param event a BlogEntryEvent inistance
+   * @param event a BlogEntryEvent instance
    */
-  public void blogEntryApproved(BlogEntryEvent event) {
+  public void blogEntryPublished(BlogEntryEvent event) {
     BlogEntry blogEntry = event.getBlogEntry();
     blogEntry.getBlog().getTagIndex().index(blogEntry);
   }
 
   /**
-   * Called when a blog entry has been rejected.
+   * Called when a blog entry has been unpublished.
    *
    * @param event a BlogEntryEvent instance
    */
-  public void blogEntryRejected(BlogEntryEvent event) {
+  public void blogEntryUnpublished(BlogEntryEvent event) {
     BlogEntry blogEntry = event.getBlogEntry();
     blogEntry.getBlog().getTagIndex().unindex(blogEntry);
   }

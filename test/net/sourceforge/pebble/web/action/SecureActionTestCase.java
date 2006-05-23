@@ -49,7 +49,7 @@ public abstract class SecureActionTestCase extends SingleBlogTestCase {
   protected MockHttpServletResponse response;
   protected Model model;
 
-  public void setUp() {
+  protected void setUp() throws Exception {
     super.setUp();
 
     request = new MockHttpServletRequest();

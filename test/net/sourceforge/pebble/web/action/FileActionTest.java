@@ -44,7 +44,7 @@ import javax.servlet.ServletException;
  */
 public class FileActionTest extends SingleBlogActionTestCase {
 
-  public void setUp() {
+  protected void setUp() throws Exception {
     action = new FileAction();
 
     super.setUp();

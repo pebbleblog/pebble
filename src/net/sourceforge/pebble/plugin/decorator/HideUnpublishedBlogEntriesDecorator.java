@@ -4,12 +4,12 @@ import net.sourceforge.pebble.util.SecurityUtils;
 import net.sourceforge.pebble.domain.BlogEntry;
 
 /**
- * Hides unapproved blog entries if the current user is
+ * Hides unpublished blog entries if the current user is
  * not a blog contributor or blog owner.
  * 
  * @author Simon Brown
  */
-public class HideUnapprovedBlogEntriesDecorator extends BlogEntryDecoratorSupport {
+public class HideUnpublishedBlogEntriesDecorator extends BlogEntryDecoratorSupport {
 
   /**
    * Executes the logic associated with this decorator.
@@ -24,18 +24,16 @@ public class HideUnapprovedBlogEntriesDecorator extends BlogEntryDecoratorSuppor
 
     BlogEntry blogEntry = context.getBlogEntry();
 
-    if (blogEntry.isApproved()) {
+    if (blogEntry.isPublished()) {
       chain.decorate(context);
-      return;
     } else {
       if (SecurityUtils.isUserAuthorisedForBlogAsBlogOwner(blogEntry.getBlog()) ||
           SecurityUtils.isUserAuthorisedForBlogAsBlogContributor(blogEntry.getBlog())) {
         // decorate as normal
         chain.decorate(context);
-        return;
       } else {
-         // hide the blog entry and don't call other decorators
-         context.setBlogEntry(null);
+        // hide the blog entry and don't call other decorators
+        context.setBlogEntry(null);
       }
     }
   }

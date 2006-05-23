@@ -51,7 +51,7 @@ public class MultiBlogPreProcessingFilterTest extends MultiBlogTestCase {
   private MockHttpServletRequest request;
   private MockHttpServletResponse response;
 
-  public void setUp() {
+  protected void setUp() throws Exception {
     super.setUp();
 
     filter = new PreProcessingFilter();

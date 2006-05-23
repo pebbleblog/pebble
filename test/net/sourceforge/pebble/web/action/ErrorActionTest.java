@@ -41,7 +41,7 @@ import net.sourceforge.pebble.web.view.impl.ErrorView;
  */
 public class ErrorActionTest extends SingleBlogActionTestCase {
 
-  public void setUp() {
+  protected void setUp() throws Exception {
     action = new ErrorAction();
 
     super.setUp();

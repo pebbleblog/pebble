@@ -43,7 +43,7 @@ import net.sourceforge.pebble.web.view.impl.SingleBlogHomePageView;
  */
 public class ViewHomePageActionTest extends SingleBlogActionTestCase {
 
-  public void setUp() {
+  protected void setUp() throws Exception {
     action = new ViewHomePageAction();
 
     super.setUp();

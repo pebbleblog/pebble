@@ -44,7 +44,7 @@ public class LogEntryTest extends TestCase {
 
   private LogEntry logEntry;
 
-  public void setUp() {
+  protected void setUp() throws Exception {
     this.logEntry = new LogEntry();
   }
 

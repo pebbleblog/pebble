@@ -45,7 +45,7 @@ public class FileManagerTest extends SingleBlogTestCase {
 
   private FileManager fileManager;
 
-  public void setUp() {
+  protected void setUp() throws Exception {
     super.setUp();
 
     fileManager = new FileManager(blog, FileMetaData.BLOG_FILE);

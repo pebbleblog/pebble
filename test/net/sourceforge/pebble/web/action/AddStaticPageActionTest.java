@@ -43,7 +43,7 @@ import net.sourceforge.pebble.web.view.impl.BlogEntryFormView;
  */
 public class AddStaticPageActionTest extends SecureActionTestCase {
 
-  public void setUp() {
+  protected void setUp() throws Exception {
     action = new AddStaticPageAction();
 
     super.setUp();

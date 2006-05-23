@@ -244,19 +244,13 @@ public class TagIndex {
   }
 
   /**
-   * Gets the most recent N blog entries for a given tag.
+   * Gets the blog entries for a given tag.
    *
    * @param tag   a tag
    * @return  a List of blog entry IDs
    */
-  public List<String> getRecentBlogEntries(Tag tag, int number) {
-    List<String> blogEntries = getTag(tag.getName()).getBlogEntries();
-
-    if (blogEntries.size() >= number) {
-      return blogEntries.subList(0, number);
-    } else {
-      return blogEntries;
-    }
+  public List<String> getRecentBlogEntries(Tag tag) {
+    return new ArrayList<String>(getTag(tag.getName()).getBlogEntries());
   }
 
 }

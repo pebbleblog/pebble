@@ -40,7 +40,7 @@ import net.sourceforge.pebble.Constants;
  */
 public class ManageResponsesActionTest extends SecureActionTestCase {
 
-  public void setUp() {
+  protected void setUp() throws Exception {
     action = new ManageResponsesAction();
 
     super.setUp();

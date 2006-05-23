@@ -46,7 +46,7 @@ public class PageableTest extends TestCase {
   private Pageable pageable;
   private List list;
 
-  public void setUp() {
+  protected void setUp() throws Exception {
     list = new ArrayList();
     for (int i = 0; i < 30; i++) {
       list.add(new Integer(i));

@@ -142,7 +142,7 @@ public class CategoryIndex {
     try {
       File indexes = new File(blog.getIndexesDirectory());
       if (!indexes.exists()) {
-        indexes.mkdir();
+        indexes.mkdirs();
       }
       File indexFile = new File(blog.getIndexesDirectory(), "categories.index");
       BufferedWriter writer = new BufferedWriter(new FileWriter(indexFile));
@@ -165,19 +165,13 @@ public class CategoryIndex {
   }
 
   /**
-   * Gets the most recent N blog entries for a given category.
+   * Gets the the list of blog entries for a given category.
    *
    * @param category    a category
    * @return  a List of blog entry IDs
    */
-  public List<String> getRecentBlogEntries(Category category, int number) {
-    List<String> blogEntries = category.getBlogEntries();
-
-    if (blogEntries.size() >= number) {
-      return blogEntries.subList(0, number);
-    } else {
-      return blogEntries;
-    }
+  public List<String> getRecentBlogEntries(Category category) {
+    return new ArrayList<String>(category.getBlogEntries());
   }
 
 }

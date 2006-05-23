@@ -31,7 +31,7 @@
   <div class="sidebarItem">
     <div class="sidebarItemTitle"><span><fmt:message key="sidebar.recentBlogEntries" /></span></div>
     <ul>
-    <c:forEach var="recentBlogEntry" items="${blog.recentBlogEntries}" >
+    <c:forEach var="recentBlogEntry" items="${blog.recentPublishedBlogEntries}" >
       <li><a href="${recentBlogEntry.permalink}" title="${recentBlogEntry.permalink}">${recentBlogEntry.title}</a><br />${recentBlogEntry.truncatedContent}</li>
     </c:forEach>
     </ul>
@@ -42,7 +42,7 @@
   <div class="sidebarItem">
     <div class="sidebarItemTitle"><span><fmt:message key="sidebar.recentResponses" /></span></div>
     <ul>
-    <c:forEach var="aResponse" items="${blog.recentResponses}" varStatus="status" end="${blog.recentResponsesOnHomePage-1}">
+    <c:forEach var="aResponse" items="${blog.recentApprovedResponses}" varStatus="status" end="${blog.recentResponsesOnHomePage-1}">
       <li><a href="${aResponse.permalink}" title="${aResponse.permalink}">${aResponse.title}</a><br />${aResponse.truncatedContent}</li>
     </c:forEach>
     </ul>

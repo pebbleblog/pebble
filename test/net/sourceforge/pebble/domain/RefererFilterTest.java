@@ -44,7 +44,7 @@ public class RefererFilterTest extends TestCase {
 
   private RefererFilter filter;
 
-  public void setUp() {
+  protected void setUp() throws Exception {
     filter = new RefererFilter(".*localhost.*");
   }
 

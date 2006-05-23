@@ -43,7 +43,7 @@ public class ValidationErrorTest extends TestCase {
 
   private ValidationError error;
 
-  public void setUp() {
+  protected void setUp() throws Exception {
     this.error = new ValidationError("An error message");
   }
 

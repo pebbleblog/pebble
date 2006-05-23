@@ -32,9 +32,9 @@
 package net.sourceforge.pebble.index;
 
 import net.sourceforge.pebble.domain.*;
-import net.sourceforge.pebble.search.SearchResults;
 import net.sourceforge.pebble.search.SearchException;
 import net.sourceforge.pebble.search.SearchHit;
+import net.sourceforge.pebble.search.SearchResults;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.lucene.analysis.Analyzer;
@@ -44,17 +44,17 @@ import org.apache.lucene.document.Field;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.Term;
-import org.apache.lucene.search.Searcher;
+import org.apache.lucene.queryParser.ParseException;
+import org.apache.lucene.queryParser.QueryParser;
+import org.apache.lucene.search.Hits;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
-import org.apache.lucene.search.Hits;
-import org.apache.lucene.queryParser.QueryParser;
-import org.apache.lucene.queryParser.ParseException;
+import org.apache.lucene.search.Searcher;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
-import java.io.IOException;
-import java.io.File;
 
 /**
  * Wraps up the functionality to index blog entries. This is really just
@@ -100,7 +100,11 @@ public class SearchIndex {
   public void index(List blogEntries) {
     synchronized (blog) {
       try {
-        log.debug("Creating index for all blog entries in " + blog.getName());
+        File searchDirectory = new File(blog.getSearchIndexDirectory());
+        if (!searchDirectory.exists()) {
+          clear();
+        }
+
         Analyzer analyzer = getAnalyzer();
         IndexWriter writer = new IndexWriter(blog.getSearchIndexDirectory(), analyzer, false);
 
@@ -126,12 +130,17 @@ public class SearchIndex {
    */
   public void index(BlogEntry blogEntry) {
     try {
-      synchronized (blogEntry) {
-        Analyzer analyzer = getAnalyzer();
+      synchronized (blog) {
+        File searchDirectory = new File(blog.getSearchIndexDirectory());
+        if (!searchDirectory.exists()) {
+          clear();
+        }
+
 
         // first delete the blog entry from the index (if it was there)
         unindex(blogEntry);
 
+        Analyzer analyzer = getAnalyzer();
         IndexWriter writer = new IndexWriter(blog.getSearchIndexDirectory(), analyzer, false);
         index(blogEntry, writer);
         writer.close();
@@ -179,7 +188,7 @@ public class SearchIndex {
    * @param writer      the IndexWriter to index with
    */
   private void index(BlogEntry blogEntry, IndexWriter writer) {
-    if (!blogEntry.isApproved()) {
+    if (!blogEntry.isPublished()) {
       return;
     }
 

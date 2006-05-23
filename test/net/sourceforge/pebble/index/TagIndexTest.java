@@ -42,7 +42,7 @@ public class TagIndexTest extends SingleBlogTestCase {
 
   private TagIndex index;
 
-  public void setUp() {
+  protected void setUp() throws Exception {
     super.setUp();
 
     this.index = new TagIndex(blog);

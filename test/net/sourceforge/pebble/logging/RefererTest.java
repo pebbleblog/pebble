@@ -42,7 +42,7 @@ public class RefererTest extends TestCase {
 
   private Referer url;
 
-  public void setUp() {
+  protected void setUp() throws Exception {
     url = new Referer("http://www.somedomain.com");
   }
 

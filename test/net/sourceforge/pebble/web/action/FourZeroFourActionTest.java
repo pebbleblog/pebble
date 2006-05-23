@@ -41,7 +41,7 @@ import net.sourceforge.pebble.web.view.impl.FourZeroFourView;
  */
 public class FourZeroFourActionTest extends SingleBlogActionTestCase {
 
-  public void setUp() {
+  protected void setUp() throws Exception {
     action = new FourZeroFourAction();
 
     super.setUp();

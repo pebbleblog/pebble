@@ -42,7 +42,7 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Marks new and changed blog entries as pending.
+ * Marks new and changed blog entries as unpublished.
  *
  * @author Simon Brown
  */
@@ -58,7 +58,7 @@ public class MarkPendingListener extends BlogEntryListenerSupport {
    */
   public void blogEntryAdded(BlogEntryEvent event) {
     if (!SecurityUtils.isBlogOwner()) {
-      event.getBlogEntry().setState(State.PENDING);
+      event.getBlogEntry().setState(State.UNPUBLISHED);
     }
   }
 
@@ -70,25 +70,24 @@ public class MarkPendingListener extends BlogEntryListenerSupport {
   public void blogEntryChanged(BlogEntryEvent event) {
     if (!SecurityUtils.isBlogOwner()) {
 
-      // mark the entry as pending if one of the following properties
+      // mark the entry as unpublished if one of the following properties
       // has changed
       //  - title
+      //  - subtitle
       //  - excerpt
       //  - body
-      //  - categories
-      //  - attachment
+      //  - original permalink
       List propertyChangeEvents = event.getPropertyChangeEvents();
       Iterator it = propertyChangeEvents.iterator();
       while (it.hasNext()) {
         PropertyChangeEvent pce = (PropertyChangeEvent)it.next();
         String property = pce.getPropertyName();
         if (property.equals(BlogEntry.TITLE_PROPERTY) ||
+            property.equals(BlogEntry.SUBTITLE_PROPERTY) ||
             property.equals(BlogEntry.EXCERPT_PROPERTY) ||
             property.equals(BlogEntry.BODY_PROPERTY) ||
-            property.equals(BlogEntry.CATEGORIES_PROPERTY) ||
-            property.equals(BlogEntry.ORIGINAL_PERMALINK_PROPERTY) ||
-            property.equals(BlogEntry.ATTACHMENT_PROPERTY)) {
-          event.getBlogEntry().setState(State.PENDING);
+            property.equals(BlogEntry.ORIGINAL_PERMALINK_PROPERTY)) {
+          event.getBlogEntry().setState(State.UNPUBLISHED);
           return;
         }
       }

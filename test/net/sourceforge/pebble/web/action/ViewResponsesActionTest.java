@@ -46,7 +46,7 @@ import net.sourceforge.pebble.web.view.impl.ResponsesView;
  */
 public class ViewResponsesActionTest extends SecureActionTestCase {
 
-  public void setUp() {
+  protected void setUp() throws Exception {
     action = new ViewResponsesAction();
 
     super.setUp();

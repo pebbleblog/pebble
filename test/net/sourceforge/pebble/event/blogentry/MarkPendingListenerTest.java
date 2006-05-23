@@ -53,7 +53,7 @@ public class MarkPendingListenerTest extends SingleBlogTestCase {
   /**
    * Common setup code.
    */
-  public void setUp() {
+  protected void setUp() throws Exception {
     super.setUp();
 
     listener = new MarkPendingListener();
@@ -67,15 +67,15 @@ public class MarkPendingListenerTest extends SingleBlogTestCase {
   public void testBlogEntryAdded() {
     SecurityUtils.runAsBlogOwner();
 
-    assertTrue(blogEntry.isApproved());
+    assertTrue(blogEntry.isPublished());
     blogEntryEvent = new BlogEntryEvent(blogEntry, BlogEntryEvent.BLOG_ENTRY_ADDED);
     listener.blogEntryAdded(blogEntryEvent);
-    assertTrue(blogEntry.isApproved());
+    assertTrue(blogEntry.isPublished());
 
     SecurityUtils.runAsBlogContributor();
     blogEntryEvent = new BlogEntryEvent(blogEntry, BlogEntryEvent.BLOG_ENTRY_ADDED);
     listener.blogEntryAdded(blogEntryEvent);
-    assertTrue(blogEntry.isPending());
+    assertTrue(blogEntry.isUnpublished());
   }
 
   /**
@@ -85,13 +85,13 @@ public class MarkPendingListenerTest extends SingleBlogTestCase {
   public void testBlogEntryChangedByBlogOwner() {
     SecurityUtils.runAsBlogOwner();
 
-    assertTrue(blogEntry.isApproved());
+    assertTrue(blogEntry.isPublished());
     List propertyChangeEvents = new ArrayList();
     PropertyChangeEvent pce = new PropertyChangeEvent(blogEntry, BlogEntry.TITLE_PROPERTY, null, null);
     propertyChangeEvents.add(pce);
     blogEntryEvent = new BlogEntryEvent(blogEntry, propertyChangeEvents);
     listener.blogEntryChanged(blogEntryEvent);
-    assertTrue(blogEntry.isApproved());
+    assertTrue(blogEntry.isPublished());
   }
 
   /**
@@ -99,104 +99,78 @@ public class MarkPendingListenerTest extends SingleBlogTestCase {
    * the blog entry.
    */
   public void testBlogEntryChangedByBlogContributor() {
-    assertTrue(blogEntry.isApproved());
+    assertTrue(blogEntry.isPublished());
     List propertyChangeEvents = new ArrayList();
     PropertyChangeEvent pce = new PropertyChangeEvent(blogEntry, BlogEntry.TITLE_PROPERTY, null, null);
     propertyChangeEvents.add(pce);
     blogEntryEvent = new BlogEntryEvent(blogEntry, propertyChangeEvents);
     listener.blogEntryChanged(blogEntryEvent);
-    assertTrue(blogEntry.isPending());
+    assertTrue(blogEntry.isUnpublished());
   }
 
   /**
    * Tests the blogEntryChanged() method when the title is changed.
    */
   public void testBlogEntryChangedForTitleProperty() {
-    assertTrue(blogEntry.isApproved());
+    assertTrue(blogEntry.isPublished());
     List propertyChangeEvents = new ArrayList();
     PropertyChangeEvent pce = new PropertyChangeEvent(blogEntry, BlogEntry.TITLE_PROPERTY, null, null);
     propertyChangeEvents.add(pce);
     blogEntryEvent = new BlogEntryEvent(blogEntry, propertyChangeEvents);
     listener.blogEntryChanged(blogEntryEvent);
-    assertTrue(blogEntry.isPending());
+    assertTrue(blogEntry.isUnpublished());
   }
 
   /**
    * Tests the blogEntryChanged() method when the excerpt is changed.
    */
   public void testBlogEntryChangedForExcerptProperty() {
-    assertTrue(blogEntry.isApproved());
+    assertTrue(blogEntry.isPublished());
     List propertyChangeEvents = new ArrayList();
     PropertyChangeEvent pce = new PropertyChangeEvent(blogEntry, BlogEntry.EXCERPT_PROPERTY, null, null);
     propertyChangeEvents.add(pce);
     blogEntryEvent = new BlogEntryEvent(blogEntry, propertyChangeEvents);
     listener.blogEntryChanged(blogEntryEvent);
-    assertTrue(blogEntry.isPending());
+    assertTrue(blogEntry.isUnpublished());
   }
 
   /**
    * Tests the blogEntryChanged() method when the body is changed.
    */
   public void testBlogEntryChangedForBodyProperty() {
-    assertTrue(blogEntry.isApproved());
+    assertTrue(blogEntry.isPublished());
     List propertyChangeEvents = new ArrayList();
     PropertyChangeEvent pce = new PropertyChangeEvent(blogEntry, BlogEntry.BODY_PROPERTY, null, null);
     propertyChangeEvents.add(pce);
     blogEntryEvent = new BlogEntryEvent(blogEntry, propertyChangeEvents);
     listener.blogEntryChanged(blogEntryEvent);
-    assertTrue(blogEntry.isPending());
-  }
-
-  /**
-   * Tests the blogEntryChanged() method when the categories are changed.
-   */
-  public void testBlogEntryChangedForCategoriesProperty() {
-    assertTrue(blogEntry.isApproved());
-    List propertyChangeEvents = new ArrayList();
-    PropertyChangeEvent pce = new PropertyChangeEvent(blogEntry, BlogEntry.CATEGORIES_PROPERTY, null, null);
-    propertyChangeEvents.add(pce);
-    blogEntryEvent = new BlogEntryEvent(blogEntry, propertyChangeEvents);
-    listener.blogEntryChanged(blogEntryEvent);
-    assertTrue(blogEntry.isPending());
+    assertTrue(blogEntry.isUnpublished());
   }
 
   /**
    * Tests the blogEntryChanged() method when the original permalink is changed.
    */
   public void testBlogEntryChangedForOriginalPermalinkProperty() {
-    assertTrue(blogEntry.isApproved());
+    assertTrue(blogEntry.isPublished());
     List propertyChangeEvents = new ArrayList();
     PropertyChangeEvent pce = new PropertyChangeEvent(blogEntry, BlogEntry.ORIGINAL_PERMALINK_PROPERTY, null, null);
     propertyChangeEvents.add(pce);
     blogEntryEvent = new BlogEntryEvent(blogEntry, propertyChangeEvents);
     listener.blogEntryChanged(blogEntryEvent);
-    assertTrue(blogEntry.isPending());
-  }
-
-  /**
-   * Tests the blogEntryChanged() method when the attachment is changed.
-   */
-  public void testBlogEntryChangedForAttachmentProperty() {
-    assertTrue(blogEntry.isApproved());
-    List propertyChangeEvents = new ArrayList();
-    PropertyChangeEvent pce = new PropertyChangeEvent(blogEntry, BlogEntry.ATTACHMENT_PROPERTY, null, null);
-    propertyChangeEvents.add(pce);
-    blogEntryEvent = new BlogEntryEvent(blogEntry, propertyChangeEvents);
-    listener.blogEntryChanged(blogEntryEvent);
-    assertTrue(blogEntry.isPending());
+    assertTrue(blogEntry.isUnpublished());
   }
 
   /**
    * Tests the blogEntryChanged() method when the comments enabled is changed.
    */
   public void testBlogEntryChangedForCommentsEnabledProperty() {
-    assertTrue(blogEntry.isApproved());
+    assertTrue(blogEntry.isPublished());
     List propertyChangeEvents = new ArrayList();
     PropertyChangeEvent pce = new PropertyChangeEvent(blogEntry, BlogEntry.COMMENTS_ENABLED_PROPERTY, null, null);
     propertyChangeEvents.add(pce);
     blogEntryEvent = new BlogEntryEvent(blogEntry, propertyChangeEvents);
     listener.blogEntryChanged(blogEntryEvent);
-    assertTrue(blogEntry.isApproved());
+    assertTrue(blogEntry.isPublished());
   }
 
 }

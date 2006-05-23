@@ -46,7 +46,7 @@ public class RefererFilterManagerTest extends SingleBlogTestCase {
 
   private RefererFilterManager refererFilterManager;
 
-  public void setUp() {
+  protected void setUp() throws Exception {
     super.setUp();
     refererFilterManager = new RefererFilterManager(blog);
   }

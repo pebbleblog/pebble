@@ -68,11 +68,11 @@ public class EmailNotificationListener extends BlogEntryListenerSupport {
   }
 
   /**
-   * Called when a blog entry has been approved.
+   * Called when a blog entry has been published.
    *
    * @param event a BlogEntryEvent instance
    */
-  public void blogEntryApproved(BlogEntryEvent event) {
+  public void blogEntryPublished(BlogEntryEvent event) {
     BlogEntry blogEntry = event.getBlogEntry();
     sendNotification(blogEntry);
   }
@@ -89,7 +89,7 @@ public class EmailNotificationListener extends BlogEntryListenerSupport {
     SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy HH:mm:ss z");
     sdf.setTimeZone(blog.getTimeZone());
 
-    String subject = "[Blog entry] " + blogEntry.getTitle();
+    String subject = "[Blog entry-" + blogEntry.getState().getName() + "] " + blogEntry.getTitle();
 
     String message = "Blog entry posted by " + blogEntry.getAuthor() + " on " + sdf.format(blogEntry.getDate());
     message += "\n<br>";
@@ -97,11 +97,9 @@ public class EmailNotificationListener extends BlogEntryListenerSupport {
     message += "\n<br>";
     message += "<a href=\"" + blogEntry.getLocalPermalink() + "\">Permalink</a>";
 
-    if (blogEntry.isPending()) {
+    if (blogEntry.isUnpublished()) {
       message += " | ";
-      message += "<a href=\"" + blog.getUrl() + "approveBlogEntry.secureaction?entry=" + blogEntry.getId() + "\">Approve</a>";
-      message += " | ";
-      message += "<a href=\"" + blog.getUrl() + "rejectBlogEntry.secureaction?entry=" + blogEntry.getId() + "\">Reject</a>";
+      message += "<a href=\"" + blog.getUrl() + "manageBlogEntry.secureaction?entry=" + blogEntry.getId() + "&submit=Publish&confirm=true\">Publish</a>";
     }
 
     // and send the e-mail

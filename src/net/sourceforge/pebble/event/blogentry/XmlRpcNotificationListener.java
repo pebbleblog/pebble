@@ -49,17 +49,17 @@ public class XmlRpcNotificationListener extends BlogEntryListenerSupport {
   public void blogEntryAdded(BlogEntryEvent event) {
     BlogEntry blogEntry = event.getBlogEntry();
 
-    if (blogEntry.isApproved()) {
+    if (blogEntry.isPublished()) {
       sendNotification(blogEntry);
     }
   }
 
   /**
-   * Called when a blog entry has been approved.
+   * Called when a blog entry has been published.
    *
    * @param event a BlogEntryEvent instance
    */
-  public void blogEntryApproved(BlogEntryEvent event) {
+  public void blogEntryPublished(BlogEntryEvent event) {
     sendNotification(event.getBlogEntry());
   }
 

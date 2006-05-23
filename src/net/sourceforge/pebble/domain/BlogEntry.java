@@ -110,6 +110,7 @@ public class BlogEntry extends PageBasedContent {
    */
   public BlogEntry(Blog blog) {
     super(blog);
+    setState(State.PUBLISHED);
   }
 
   /**
@@ -917,21 +918,6 @@ public class BlogEntry extends PageBasedContent {
     }
   }
 
-  /**
-   * Sets the state of this blog entry.
-   */
-  public void setState(State state) {
-    super.setState(state);
-
-    if (areEventsEnabled()) {
-      if (state == State.APPROVED) {
-        addEvent(new BlogEntryEvent(this, BlogEntryEvent.BLOG_ENTRY_APPROVED));
-      } else if (state == State.REJECTED) {
-        addEvent(new BlogEntryEvent(this, BlogEntryEvent.BLOG_ENTRY_REJECTED));
-      }
-    }
-  }
-
   public List<PebbleEvent> getEvents() {
     List<PebbleEvent> events = super.getEvents();
     for (Response response : getResponses()) {
@@ -946,6 +932,39 @@ public class BlogEntry extends PageBasedContent {
 
     for (Response response : getResponses()) {
       response.clearEvents();
+    }
+  }
+
+  /**
+   * Determines whether this response is published.
+   *
+   * @return  true if the state is published, false otherwise
+   */
+  public boolean isPublished() {
+    return getState().equals(State.PUBLISHED);
+  }
+
+  /**
+   * Determines whether this response is unpublished.
+   *
+   * @return  true if the state is unpublished, false otherwise
+   */
+  public boolean isUnpublished() {
+    return getState().equals(State.UNPUBLISHED);
+  }
+
+  /**
+   * Sets the state of this blog entry.
+   */
+  public void setState(State state) {
+    super.setState(state);
+
+    if (areEventsEnabled()) {
+      if (state == State.PUBLISHED) {
+        addEvent(new BlogEntryEvent(this, BlogEntryEvent.BLOG_ENTRY_PUBLISHED));
+      } else if (state == State.UNPUBLISHED) {
+        addEvent(new BlogEntryEvent(this, BlogEntryEvent.BLOG_ENTRY_UNPUBLISHED));
+      }
     }
   }
 

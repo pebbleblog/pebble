@@ -40,19 +40,19 @@ public class BlogEntryIndexListener implements BlogEntryListener {
   }
 
   /**
-   * Called when a blog entry has been approved.
-   *
-   * @param event a BlogEntryEvent inistance
-   */
-  public void blogEntryApproved(BlogEntryEvent event) {
-  }
-
-  /**
-   * Called when a blog entry has been rejected.
+   * Called when a blog entry has been published.
    *
    * @param event a BlogEntryEvent instance
    */
-  public void blogEntryRejected(BlogEntryEvent event) {
+  public void blogEntryPublished(BlogEntryEvent event) {
+  }
+
+  /**
+   * Called when a blog entry has been unpublished.
+   *
+   * @param event a BlogEntryEvent instance
+   */
+  public void blogEntryUnpublished(BlogEntryEvent event) {
   }
 
 }

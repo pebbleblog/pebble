@@ -46,7 +46,7 @@ public class CommentTest extends SingleBlogTestCase {
 
   private Comment comment;
 
-  public void setUp() {
+  protected void setUp() throws Exception {
     super.setUp();
 
     comment = new BlogEntry(blog).createComment("Title", "Body", "Author", "me@somedomain.com", "http://www.google.com", "127.0.0.1");

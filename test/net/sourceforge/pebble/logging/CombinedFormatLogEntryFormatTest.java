@@ -44,7 +44,7 @@ public class CombinedFormatLogEntryFormatTest extends SingleBlogTestCase {
   private LogEntry logEntry;
   private LogEntry parsedLogEntry;
 
-  public void setUp() {
+  protected void setUp() throws Exception {
     super.setUp();
 
     this.format = new CombinedFormatLogEntryFormat(blog);

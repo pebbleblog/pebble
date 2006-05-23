@@ -186,7 +186,11 @@ public class BlogEntryHandler extends DefaultHandler {
           blogEntry.setDate(getDate(elementContent.toString()));
           break;
         case STATE :
-          blogEntry.setState(State.getState(elementContent.toString()));
+          if (elementContent.toString().equals(State.UNPUBLISHED.getName())) {
+            blogEntry.setState(State.UNPUBLISHED);
+          } else {
+            blogEntry.setState(State.PUBLISHED);
+          }
           break;
         case AUTHOR :
           blogEntry.setAuthor(elementContent.toString());

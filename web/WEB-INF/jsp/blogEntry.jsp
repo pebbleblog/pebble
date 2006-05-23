@@ -2,14 +2,11 @@
   renders a single blog entry
 --%>
 <c:choose>
-  <c:when test="${blogEntry.pending}">
-<div class="contentItem pending">
-  </c:when>
-  <c:when test="${blogEntry.rejected}">
-<div class="contentItem rejected">
+  <c:when test="${blogEntry.unpublished}">
+<div class="contentItem unpublished">
   </c:when>
   <c:otherwise>
-<div class="contentItem approved">
+<div class="contentItem published">
   </c:otherwise>
 </c:choose>
 
@@ -54,7 +51,7 @@
         <c:when test="${not empty blogEntry.user.website}"><c:set var="author" value='<a href="${blogEntry.user.website}">${blogEntry.user.name}</a>'/></c:when>
         <c:otherwise><c:set var="author" value="${blogEntry.user.name}"/></c:otherwise>
       </c:choose>
-      <fmt:formatDate var="blogEntryDate" scope="page" value="${blogEntry.date}" type="both" dateStyle="long" timeStyle="long"/>
+      <fmt:formatDate var="blogEntryDate" scope="page" value="${blogEntry.date}" type="both" dateStyle="long" timeStyle="short"/>
       <fmt:message key="blogentry.from">
         <fmt:param value="${author}"/>
         <fmt:param>

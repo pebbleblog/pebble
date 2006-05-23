@@ -1,16 +1,12 @@
 package net.sourceforge.pebble.index;
 
-import net.sourceforge.pebble.event.blogentry.BlogEntryListener;
-import net.sourceforge.pebble.event.blogentry.BlogEntryEvent;
 import net.sourceforge.pebble.domain.BlogEntry;
-import net.sourceforge.pebble.domain.Blog;
-import net.sourceforge.pebble.domain.Category;
-import net.sourceforge.pebble.domain.Tag;
+import net.sourceforge.pebble.event.blogentry.BlogEntryEvent;
+import net.sourceforge.pebble.event.blogentry.BlogEntryListener;
 
-import java.util.Collection;
+import java.beans.PropertyChangeEvent;
 import java.util.Iterator;
 import java.util.List;
-import java.beans.PropertyChangeEvent;
 
 public class CategoryIndexListener implements BlogEntryListener {
 
@@ -21,7 +17,7 @@ public class CategoryIndexListener implements BlogEntryListener {
    */
   public void blogEntryAdded(BlogEntryEvent event) {
     BlogEntry blogEntry = event.getBlogEntry();
-    if (blogEntry.isApproved()) {
+    if (blogEntry.isPublished()) {
       blogEntry.getBlog().getCategoryIndex().index(blogEntry);
     }
   }
@@ -33,7 +29,7 @@ public class CategoryIndexListener implements BlogEntryListener {
    */
   public void blogEntryRemoved(BlogEntryEvent event) {
     BlogEntry blogEntry = event.getBlogEntry();
-    if (blogEntry.isApproved()) {
+    if (blogEntry.isPublished()) {
       blogEntry.getBlog().getCategoryIndex().unindex(blogEntry);
     }
   }
@@ -46,7 +42,7 @@ public class CategoryIndexListener implements BlogEntryListener {
   public void blogEntryChanged(BlogEntryEvent event) {
     BlogEntry blogEntry = event.getBlogEntry();
 
-    if (blogEntry.isApproved()) {
+    if (blogEntry.isPublished()) {
       List propertyChangeEvents = event.getPropertyChangeEvents();
       Iterator it = propertyChangeEvents.iterator();
       while (it.hasNext()) {
@@ -63,21 +59,21 @@ public class CategoryIndexListener implements BlogEntryListener {
   }
 
   /**
-   * Called when a blog entry has been approved.
+   * Called when a blog entry has been published.
    *
-   * @param event a BlogEntryEvent inistance
+   * @param event a BlogEntryEvent instance
    */
-  public void blogEntryApproved(BlogEntryEvent event) {
+  public void blogEntryPublished(BlogEntryEvent event) {
     BlogEntry blogEntry = event.getBlogEntry();
     blogEntry.getBlog().getCategoryIndex().index(blogEntry);
   }
 
   /**
-   * Called when a blog entry has been rejected.
+   * Called when a blog entry has been unpublished.
    *
    * @param event a BlogEntryEvent instance
    */
-  public void blogEntryRejected(BlogEntryEvent event) {
+  public void blogEntryUnpublished(BlogEntryEvent event) {
     BlogEntry blogEntry = event.getBlogEntry();
     blogEntry.getBlog().getCategoryIndex().unindex(blogEntry);
   }

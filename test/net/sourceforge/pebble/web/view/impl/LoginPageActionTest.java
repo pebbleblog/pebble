@@ -42,7 +42,7 @@ import net.sourceforge.pebble.web.view.View;
  */
 public class LoginPageActionTest extends SingleBlogActionTestCase {
 
-  public void setUp() {
+  protected void setUp() throws Exception {
     action = new LoginPageAction();
 
     super.setUp();

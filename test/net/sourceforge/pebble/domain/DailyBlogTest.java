@@ -44,7 +44,7 @@ public class DailyBlogTest extends SingleBlogTestCase {
 
   private DailyBlog dailyBlog;
 
-  public void setUp() {
+  protected void setUp() throws Exception {
     super.setUp();
     dailyBlog = blog.getBlogForToday();
   }

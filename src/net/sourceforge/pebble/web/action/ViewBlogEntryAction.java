@@ -73,7 +73,7 @@ public class ViewBlogEntryAction extends Action {
       // requesting URL was wrong
 
       return new NotFoundView();
-    } else if (!blogEntry.isApproved() && !(SecurityUtils.isUserAuthorisedForBlogAsBlogContributor(blog)
+    } else if (!blogEntry.isPublished() && !(SecurityUtils.isUserAuthorisedForBlogAsBlogContributor(blog)
         || SecurityUtils.isUserAuthorisedForBlogAsBlogOwner(blog))) {
       // the entry exists, but isn't yet approved
       return new NotFoundView();

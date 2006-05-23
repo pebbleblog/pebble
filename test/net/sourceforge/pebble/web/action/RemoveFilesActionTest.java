@@ -47,7 +47,7 @@ import java.io.FileWriter;
  */
 public class RemoveFilesActionTest extends SecureActionTestCase {
 
-  public void setUp() {
+  protected void setUp() throws Exception {
     action = new RemoveFilesAction();
 
     super.setUp();

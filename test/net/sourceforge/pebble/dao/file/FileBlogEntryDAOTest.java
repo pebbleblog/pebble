@@ -51,7 +51,7 @@ public class FileBlogEntryDAOTest extends SingleBlogTestCase {
   private BlogEntryDAO dao= new FileBlogEntryDAO();
   private Locale defaultLocale;
 
-  public void setUp() {
+  protected void setUp() throws Exception {
     super.setUp();
 
     defaultLocale = Locale.getDefault();
@@ -68,7 +68,7 @@ public class FileBlogEntryDAOTest extends SingleBlogTestCase {
   public void testLoadBlogEntryFomFile() throws Exception {
 
     File source = new File("./1081203335000.xml");
-    File destination = new File(TEST_BLOG_LOCATION, "2004/04/05/");
+    File destination = new File(blog.getRoot(), "2004/04/05/");
     destination.mkdirs();
     FileUtils.copyFile(source, new File(destination, "1081203335000.xml"));
 
@@ -86,7 +86,7 @@ public class FileBlogEntryDAOTest extends SingleBlogTestCase {
     assertEquals("<p>Blog entry excerpt.</p>", blogEntry.getExcerpt());
     assertEquals("<p>Blog entry body.</p>", blogEntry.getBody());
     assertEquals(1081203335000L, blogEntry.getDate().getTime());
-    assertTrue(blogEntry.isPending());
+    assertTrue(blogEntry.isUnpublished());
     assertEquals("simon", blogEntry.getAuthor());
     assertTrue(blogEntry.isCommentsEnabled());
     assertTrue(blogEntry.isTrackBacksEnabled());

@@ -41,9 +41,6 @@ import net.sourceforge.pebble.plugin.permalink.DefaultPermalinkProvider;
 import java.io.File;
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 /**
  * Tests for the Blog class.
  *
@@ -51,10 +48,8 @@ import org.apache.commons.logging.LogFactory;
  */
 public class BlogTest extends SingleBlogTestCase {
 
-  private static final Log log = LogFactory.getLog(BlogTest.class);
-
   public void testConstructionOfDefaultInstance() {
-    assertEquals(TEST_BLOG_LOCATION.getAbsolutePath(), blog.getRoot());
+    assertEquals(new File(TEST_BLOG_LOCATION, "blogs/default").getAbsolutePath(), blog.getRoot());
     assertNull(blog.getBlog());
     assertEquals("My blog", blog.getName());
     assertEquals("", blog.getDescription());
@@ -69,7 +64,7 @@ public class BlogTest extends SingleBlogTestCase {
     assertTrue(blog.getUpdateNotificationPingsAsCollection().isEmpty());
     assertTrue(blog.isPublic());
     assertFalse(blog.isPrivate());
-    assertEquals("net.sourceforge.pebble.plugin.decorator.HideUnapprovedBlogEntriesDecorator\r\nnet.sourceforge.pebble.plugin.decorator.HideUnapprovedResponsesDecorator\r\nnet.sourceforge.pebble.plugin.decorator.HtmlDecorator\r\nnet.sourceforge.pebble.plugin.decorator.EscapeMarkupDecorator\r\nnet.sourceforge.pebble.plugin.decorator.RelativeUriDecorator\r\nnet.sourceforge.pebble.plugin.decorator.ReadMoreDecorator\r\nnet.sourceforge.pebble.plugin.decorator.BlogTagsDecorator", blog.getBlogEntryDecorators());
+    assertEquals("net.sourceforge.pebble.plugin.decorator.HideUnpublishedBlogEntriesDecorator\r\nnet.sourceforge.pebble.plugin.decorator.HideUnapprovedResponsesDecorator\r\nnet.sourceforge.pebble.plugin.decorator.HtmlDecorator\r\nnet.sourceforge.pebble.plugin.decorator.EscapeMarkupDecorator\r\nnet.sourceforge.pebble.plugin.decorator.RelativeUriDecorator\r\nnet.sourceforge.pebble.plugin.decorator.ReadMoreDecorator\r\nnet.sourceforge.pebble.plugin.decorator.BlogTagsDecorator", blog.getBlogEntryDecorators());
     assertEquals("net.sourceforge.pebble.plugin.permalink.DefaultPermalinkProvider", blog.getPermalinkProviderName());
     assertTrue(blog.getPermalinkProvider() instanceof DefaultPermalinkProvider);
     assertEquals("net.sourceforge.pebble.event.DefaultEventDispatcher", blog.getEventDispatcherName());

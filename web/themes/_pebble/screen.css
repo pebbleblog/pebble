@@ -110,7 +110,7 @@ a:visited {
   font-size: 24px;
   font-weight: normal;
   color : #6e7d8e;
-  background: white url('images/bullet.jpg') no-repeat center left;
+  background: transparent url('images/bullet.jpg') no-repeat center left;
   padding-top: 4px;
   padding-bottom: 4px;
   padding-right: 4px;
@@ -135,12 +135,12 @@ a:visited {
   padding-top: 8px;
   padding-bottom: 8px;
   margin-bottom: 8px;
+  background: white;
 }
 .contentItemBody {
   line-height: 1.5;
   padding-top: 8px;
   padding-bottom: 8px;
-  background: white;
   padding-left: 16px;
   padding-right: 16px;
   text-align: justify;
@@ -189,6 +189,11 @@ a:visited {
 }
 .rejected {
   border: solid red 1px;
+}
+.published {
+}
+.unpublished {
+  background: transparent url('images/draft.jpg') no-repeat top center;
 }
 blockquote {
   border-left: solid #E0E0E0 4px;

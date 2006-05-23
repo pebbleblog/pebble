@@ -77,16 +77,16 @@ public class ManageBlogEntryAction extends SecureAction {
     if (submit.equals("Edit")) {
       return new ForwardView("/editBlogEntry.secureaction?entry=" + id);
     } else if (confirm != null && confirm.equals("true")) {
-      if (submit.equalsIgnoreCase("Approve")) {
-        blogEntry.setState(State.APPROVED);
+      if (submit.equalsIgnoreCase("Publish")) {
+        blogEntry.setState(State.PUBLISHED);
         try {
           service.putBlogEntry(blogEntry);
         } catch (BlogException be) {
           log.error(be.getMessage(), be);
           throw new ServletException(be);
         }
-      } else if (submit.equalsIgnoreCase("Reject")) {
-        blogEntry.setState(State.REJECTED);
+      } else if (submit.equalsIgnoreCase("Unpublish")) {
+        blogEntry.setState(State.UNPUBLISHED);
         try {
           service.putBlogEntry(blogEntry);
         } catch (BlogException be) {

@@ -43,29 +43,33 @@ import java.io.File;
  */
 public abstract class MultiBlogTestCase extends PebbleTestCase {
 
-  protected static final File TEST_BLOG_LOCATION = new File(System.getProperty("java.io.tmpdir"), "pebble");
-
   protected Blog blog1, blog2;
 
-  public void setUp() {
+  protected void setUp() throws Exception {
+    super.setUp();
+    
     DAOFactory.setConfiguredFactory(new MockDAOFactory());
 
     pebbleContext.setUrl("http://www.yourdomain.com/blog/");
     BlogManager.getInstance().setPebbleContext(pebbleContext);
 
-    // and set up some simple blogs
-    blog1 = new Blog(TEST_BLOG_LOCATION.getAbsolutePath());
+    // and set up some blogs
+    File blogDirectory1 = new File(TEST_BLOG_LOCATION, "blogs/blog1");
+    blogDirectory1.mkdir();
+    blog1 = new Blog(blogDirectory1.getAbsolutePath());
     blog1.setId("blog1");
     BlogManager.getInstance().addBlog(blog1);
-    blog2 = new Blog(TEST_BLOG_LOCATION.getAbsolutePath());
+
+    File blogDirectory2 = new File(TEST_BLOG_LOCATION, "blogs/blog2");
+    blogDirectory2.mkdir();
+    blog2 = new Blog(blogDirectory2.getAbsolutePath());
     blog2.setId("blog2");
     BlogManager.getInstance().addBlog(blog2);
   }
 
   protected void tearDown() throws Exception {
-    blog1.getBlogEntryIndex().clear();
-    blog2.getBlogEntryIndex().clear();
     BlogManager.getInstance().removeAllBlogs();
+
     super.tearDown();
   }
 

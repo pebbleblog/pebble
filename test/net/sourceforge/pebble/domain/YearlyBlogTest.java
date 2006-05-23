@@ -43,7 +43,7 @@ public class YearlyBlogTest extends SingleBlogTestCase {
 
   private YearlyBlog yearlyBlog;
 
-  public void setUp() {
+  protected void setUp() throws Exception {
     super.setUp();
     yearlyBlog = new YearlyBlog(blog, 2003);
   }

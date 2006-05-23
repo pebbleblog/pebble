@@ -37,27 +37,27 @@ import net.sourceforge.pebble.domain.SingleBlogTestCase;
 import net.sourceforge.pebble.domain.State;
 
 /**
- * Tests for the HideUnapprovedBlogEntriesDecorator class.
+ * Tests for the HideUnpublishedBlogEntriesDecorator class.
  *
  * @author    Simon Brown
  */
-public class HideUnapprovedBlogEntriesDecoratorTest extends SingleBlogTestCase {
+public class HideUnpublishedBlogEntriesDecoratorTest extends SingleBlogTestCase {
 
   private BlogEntryDecorator decorator;
   private BlogEntry blogEntry;
 
-  public void setUp() {
+  protected void setUp() throws Exception {
     super.setUp();
 
-    decorator = new HideUnapprovedBlogEntriesDecorator();
+    decorator = new HideUnpublishedBlogEntriesDecorator();
     blogEntry = new BlogEntry(blog);
   }
 
   /**
    * Tests that unapproved blog entries are removed when not logged in.
    */
-  public synchronized void testUnapprovedBlogEntriesRemovedWhenNotLoggedIn() throws Exception {
-    blogEntry.setState(State.APPROVED);
+  public synchronized void testUnpublishedBlogEntriesRemovedWhenNotLoggedIn() throws Exception {
+    blogEntry.setState(State.PUBLISHED);
     BlogEntryDecoratorChain chain = new BlogEntryDecoratorChain(null);
     BlogEntryDecoratorContext context = new BlogEntryDecoratorContext();
     context.setBlogEntry(blogEntry);
@@ -66,16 +66,16 @@ public class HideUnapprovedBlogEntriesDecoratorTest extends SingleBlogTestCase {
     assertEquals(blogEntry, context.getBlogEntry());
 
     SecurityUtils.runAsAnonymous();
-    blogEntry.setState(State.PENDING);
+    blogEntry.setState(State.UNPUBLISHED);
     decorator.decorate(chain, context);
     assertNull(context.getBlogEntry());
   }
 
   /**
-   * Tests that unapproved comments and TrackBacks are not removed.
+   * Tests that unpublished comments and TrackBacks are not removed.
    */
-  public synchronized void testUnapprovedBlogEntriesNotRemovedWhenLoggedIn() throws Exception {
-    blogEntry.setState(State.PENDING);
+  public synchronized void testUnpublishedBlogEntriesNotRemovedWhenLoggedIn() throws Exception {
+    blogEntry.setState(State.UNPUBLISHED);
     BlogEntryDecoratorChain chain = new BlogEntryDecoratorChain(null);
     BlogEntryDecoratorContext context = new BlogEntryDecoratorContext();
     context.setBlogEntry(blogEntry);

@@ -45,7 +45,7 @@ public class CombinedLogFormatLoggerTest extends SingleBlogTestCase {
 
   private CombinedLogFormatLogger logger;
 
-  public void setUp() {
+  protected void setUp() throws Exception {
     super.setUp();
 
     this.logger = new CombinedLogFormatLogger(blog);

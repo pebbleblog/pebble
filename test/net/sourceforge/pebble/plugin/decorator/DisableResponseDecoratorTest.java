@@ -44,7 +44,7 @@ public class DisableResponseDecoratorTest extends SingleBlogTestCase {
   private BlogEntryDecorator decorator;
   private BlogEntry blogEntry;
 
-  public void setUp() {
+  protected void setUp() throws Exception {
     super.setUp();
 
     decorator = new DisableResponseDecorator();

@@ -46,7 +46,7 @@ public class SearchIndexTest extends SingleBlogTestCase {
 
   private SearchIndex index;
 
-  public void setUp() {
+  protected void setUp() throws Exception {
     super.setUp();
 
     index = new SearchIndex(blog);

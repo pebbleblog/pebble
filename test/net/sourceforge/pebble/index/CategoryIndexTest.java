@@ -43,7 +43,7 @@ public class CategoryIndexTest extends SingleBlogTestCase {
   private CategoryIndex index;
   private Category java;
 
-  public void setUp() {
+  protected void setUp() throws Exception {
     super.setUp();
 
     this.index = new CategoryIndex(blog);
@@ -60,7 +60,7 @@ public class CategoryIndexTest extends SingleBlogTestCase {
     index.index(blogEntry);
 
     assertEquals(1, java.getNumberOfBlogEntries());
-    assertTrue(index.getRecentBlogEntries(java, 10).contains(blogEntry.getId()));
+    assertTrue(index.getRecentBlogEntries(java).contains(blogEntry.getId()));
   }
 
   /**
@@ -75,7 +75,7 @@ public class CategoryIndexTest extends SingleBlogTestCase {
     index.unindex(blogEntry);
 
     assertEquals(0, java.getNumberOfBlogEntries());
-    assertFalse(index.getRecentBlogEntries(java, 10).contains(blogEntry.getId()));
+    assertFalse(index.getRecentBlogEntries(java).contains(blogEntry.getId()));
   }
 
 //  /**

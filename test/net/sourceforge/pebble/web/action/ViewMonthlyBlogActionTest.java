@@ -43,7 +43,7 @@ import net.sourceforge.pebble.web.view.impl.BlogMonthlyView;
  */
 public class ViewMonthlyBlogActionTest extends SingleBlogActionTestCase {
 
-  public void setUp() {
+  protected void setUp() throws Exception {
     action = new ViewMonthlyBlogAction();
 
     super.setUp();

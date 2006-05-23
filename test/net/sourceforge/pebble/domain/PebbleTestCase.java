@@ -52,26 +52,35 @@ public abstract class PebbleTestCase extends TestCase {
     // perform the "global" set up logic
     // create the "test" blog directory
     TEST_BLOG_LOCATION = new File(System.getProperty("java.io.tmpdir"), "pebble");
-    TEST_BLOG_LOCATION.mkdir();
-
-    File index = new File(TEST_BLOG_LOCATION, "index");
-    index.mkdir();
-    File segments = new File(index, "segments");
-    segments.mkdir();
-
-    pebbleContext.setDataDirectory(TEST_BLOG_LOCATION.getAbsolutePath());
-
+//    TEST_BLOG_LOCATION.mkdir();
+//
+//    pebbleContext.setDataDirectory(TEST_BLOG_LOCATION.getAbsolutePath());
+//
     // and now register the shutdown hook for tear down logic
     // remove all directories created during the test execution
-    Runtime.getRuntime().addShutdownHook(new PebbleTestCaseShutdownHook());
+    //Runtime.getRuntime().addShutdownHook(new PebbleTestCaseShutdownHook());
   }
 
-  static class PebbleTestCaseShutdownHook extends Thread {
+  protected void setUp() throws Exception {
+    super.setUp();
 
-    public void run() {
-      FileUtils.deleteFile(TEST_BLOG_LOCATION);
-    }
-
+    TEST_BLOG_LOCATION.mkdir();
+    new File(TEST_BLOG_LOCATION, "blogs").mkdir();
+    pebbleContext.setDataDirectory(TEST_BLOG_LOCATION.getAbsolutePath());
   }
+
+  protected void tearDown() throws Exception {
+    FileUtils.deleteFile(TEST_BLOG_LOCATION);
+
+    super.tearDown();
+  }
+
+//  static class PebbleTestCaseShutdownHook extends Thread {
+//
+//    public void run() {
+//      FileUtils.deleteFile(TEST_BLOG_LOCATION);
+//    }
+//
+//  }
 
 }

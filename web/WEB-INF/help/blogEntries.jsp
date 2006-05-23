@@ -99,7 +99,7 @@
 
     <p>
     To ensure that unapproved blog entries are hidden from view, add the
-    <code>net.sourceforge.pebble.plugin.decorator.HideUnapprovedBlogEntriesDecorator</code> to your list of blog entry
+    <code>net.sourceforge.pebble.plugin.decorator.HideUnpublishedBlogEntriesDecorator</code> to your list of blog entry
     decorators. With this decorator, you will see unapproved blog entries only when logged in as a blog owner or contributor.
     </p>
   </div>

@@ -64,19 +64,19 @@ public abstract class BlogEntryListenerSupport implements BlogEntryListener {
   }
 
   /**
-   * Called when a blog entry has been approved.
+   * Called when a blog entry has been published.
    *
-   * @param event   a BlogEntryEvent instance
+   * @param event a BlogEntryEvent instance
    */
-  public void blogEntryApproved(BlogEntryEvent event) {
+  public void blogEntryPublished(BlogEntryEvent event) {
   }
 
   /**
-   * Called when a blog entry has been rejected.
+   * Called when a blog entry has been unpublished.
    *
-   * @param event   a BlogEntryEvent instance
+   * @param event a BlogEntryEvent instance
    */
-  public void blogEntryRejected(BlogEntryEvent event) {
+  public void blogEntryUnpublished(BlogEntryEvent event) {
   }
 
 }

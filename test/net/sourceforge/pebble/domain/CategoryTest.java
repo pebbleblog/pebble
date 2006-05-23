@@ -43,7 +43,7 @@ public class CategoryTest extends SingleBlogTestCase {
 
   private Category category;
 
-  public void setUp() {
+  protected void setUp() throws Exception {
     super.setUp();
 
     category = new Category("id", "name");

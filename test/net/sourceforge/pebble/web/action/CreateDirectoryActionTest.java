@@ -45,7 +45,7 @@ import java.io.File;
  */
 public class CreateDirectoryActionTest extends SecureActionTestCase {
 
-  public void setUp() {
+  protected void setUp() throws Exception {
     action = new CreateDirectoryAction();
 
     super.setUp();

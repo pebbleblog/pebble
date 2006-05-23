@@ -42,7 +42,7 @@ public class RequestTest extends TestCase {
 
   private Request url;
 
-  public void setUp() {
+  protected void setUp() throws Exception {
     url = new Request("http://www.somedomain.com");
   }
 

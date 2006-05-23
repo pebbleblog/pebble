@@ -42,7 +42,7 @@ import net.sourceforge.pebble.domain.BlogService;
  */
 public class RemoveStaticPagesActionTest extends SecureActionTestCase {
 
-  public void setUp() {
+  protected void setUp() throws Exception {
     action = new RemoveStaticPagesAction();
 
     super.setUp();

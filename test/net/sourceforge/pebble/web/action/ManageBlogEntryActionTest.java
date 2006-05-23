@@ -45,41 +45,41 @@ import net.sourceforge.pebble.domain.BlogService;
  */
 public class ManageBlogEntryActionTest extends SecureActionTestCase {
 
-  public void setUp() {
+  protected void setUp() throws Exception {
     action = new ManageBlogEntryAction();
 
     super.setUp();
   }
 
-  public void testApproveBlogEntry() throws Exception {
+  public void testPublishBlogEntry() throws Exception {
     BlogService service = new BlogService();
     BlogEntry blogEntry = new BlogEntry(blog);
-    blogEntry.setState(State.PENDING);
+    blogEntry.setState(State.UNPUBLISHED);
     service.putBlogEntry(blogEntry);
 
     // now execute the action
     request.setParameter("entry", blogEntry.getId());
     request.setParameter("confirm", "true");
-    request.setParameter("submit", "Approve");
+    request.setParameter("submit", "Publish");
     View view = action.process(request, response);
 
-    assertTrue(blogEntry.isApproved());
+    assertTrue(blogEntry.isPublished());
     assertTrue(view instanceof RedirectView);
   }
 
-  public void testRejectBlogEntry() throws Exception {
+  public void testUnpublishBlogEntry() throws Exception {
     BlogService service = new BlogService();
     BlogEntry blogEntry = new BlogEntry(blog);
-    blogEntry.setState(State.PENDING);
+    blogEntry.setState(State.PUBLISHED);
     service.putBlogEntry(blogEntry);
 
     // now execute the action
     request.setParameter("entry", blogEntry.getId());
     request.setParameter("confirm", "true");
-    request.setParameter("submit", "Reject");
+    request.setParameter("submit", "Unpublish");
     View view = action.process(request, response);
 
-    assertTrue(blogEntry.isRejected());
+    assertTrue(blogEntry.isUnpublished());
     assertTrue(view instanceof RedirectView);
   }
 
