@@ -1,8 +1,7 @@
 package net.sourceforge.pebble.plugin.decorator;
 
-import net.sourceforge.pebble.domain.BlogEntry;
 import net.sourceforge.pebble.domain.Blog;
-import net.sourceforge.pebble.domain.Attachment;
+import net.sourceforge.pebble.domain.BlogEntry;
 
 import java.util.ResourceBundle;
 
@@ -25,13 +24,23 @@ public class ReadMoreDecorator extends BlogEntryDecoratorSupport {
    */
   public void decorate(BlogEntryDecoratorChain chain, BlogEntryDecoratorContext context)
     throws BlogEntryDecoratorException {
+
     BlogEntry blogEntry = context.getBlogEntry();
+    Blog blog = blogEntry.getBlog();
+    ResourceBundle bundle = ResourceBundle.getBundle("resources", blog.getLocale());
 
-    if (blogEntry.isAggregated() ||
-        (blogEntry.getExcerpt() != null && blogEntry.getExcerpt().length() > 0 && context.getView() == BlogEntryDecoratorContext.SUMMARY_VIEW)) {
-      Blog blog = blogEntry.getBlog();
-      ResourceBundle bundle = ResourceBundle.getBundle("resources", blog.getLocale());
+    if ((blogEntry.getExcerpt() != null && blogEntry.getExcerpt().length() > 0 && context.getView() == BlogEntryDecoratorContext.SUMMARY_VIEW)) {
+      StringBuffer buf = new StringBuffer();
+      buf.append(blogEntry.getExcerpt());
 
+      buf.append("<p><a href=\"");
+      buf.append(blogEntry.getPermalink());
+      buf.append("\">");
+      buf.append(bundle.getString("common.readMore"));
+      buf.append("</a></p>");
+
+      blogEntry.setExcerpt(buf.toString());
+    } else if (blogEntry.isAggregated()) {
       StringBuffer buf = new StringBuffer();
       buf.append(blogEntry.getBody());
 
