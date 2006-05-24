@@ -172,28 +172,6 @@ window.onload = function()
         <td><input type="text" name="attachmentType" size="20" value="${blogEntry.attachment.type}"></td>
       </tr>
 
-<%--
-      <tr>
-        <td valign="top"><br /></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td valign="top"><b>State</b></td>
-        <td>
-          Draft&nbsp;<input type="radio" name="publish" value="false"
-            <c:if test="${not blogEntry.published}">
-              checked="checked"
-            </c:if>
-          />
-          Published&nbsp;<input type="radio" name="publish" value="true"
-            <c:if test="${blogEntry.published}">
-              checked="checked"
-            </c:if>
-          />
-        </td>
-      </tr>
---%>
-
       <tr>
         <td colspan="2" align="right">
           <input name="submit" type="submit" Value="Preview" />

@@ -1173,45 +1173,6 @@ public class Blog extends AbstractBlog {
     return properties.getProperty(PRIVATE_KEY).equalsIgnoreCase(TRUE);
   }
 
-  public List getDraftBlogEntries() {
-    List blogEntries = new ArrayList();
-
-    try {
-      DAOFactory factory = DAOFactory.getConfiguredFactory();
-      BlogEntryDAO dao = factory.getBlogEntryDAO();
-      blogEntries.addAll(dao.getDraftBlogEntries(this));
-    } catch (PersistenceException e) {
-      e.printStackTrace();
-    }
-
-    Collections.sort(blogEntries, new BlogEntryByTitleComparator());
-
-    return blogEntries;
-  }
-
-  /**
-   * Gets the draft blog entry with the specified id.
-   *
-   * @param entryId   the id of the blog entry
-   * @return  a BlogEntry instance, or null if the entry couldn't be found
-   */
-  public BlogEntry getDraftBlogEntry(String entryId) {
-    if (entryId == null) {
-      return null;
-    }
-
-    List blogEntries = getDraftBlogEntries();
-    Iterator it = blogEntries.iterator();
-    while (it.hasNext()) {
-      BlogEntry blogEntry = (BlogEntry)it.next();
-      if (blogEntry.getId().equals(entryId)) {
-        return blogEntry;
-      }
-    }
-
-    return null;
-  }
-
   /**
    * Called to start (i.e. activate/initialise, restore the theme, etc) this
    * blog.

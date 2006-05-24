@@ -31,11 +31,9 @@
  */
 package net.sourceforge.pebble.dao;
 
-import net.sourceforge.pebble.domain.BlogEntry;
-import net.sourceforge.pebble.domain.DailyBlog;
 import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.domain.BlogEntry;
 
-import java.util.Collection;
 import java.util.List;
 
 public interface BlogEntryDAO {
@@ -83,24 +81,6 @@ public interface BlogEntryDAO {
    * @throws  PersistenceException    if the yearly blogs cannot be loaded
    */
   public List getYearlyBlogs(Blog rootBlog) throws PersistenceException;
-
-//  /**
-//   * Loads the blog entries for a given daily blog.
-//   *
-//   * @param dailyBlog   the DailyBlog instance
-//   * @return  a List of BlogEntry instances
-//   * @throws  net.sourceforge.pebble.dao.PersistenceException    if blog entries cannot be loaded
-//   */
-//  public List getBlogEntries(DailyBlog dailyBlog) throws PersistenceException;
-
-  /**
-   * Loads the draft blog entries for a given blog.
-   *
-   * @param blog    the owning Blog instance
-   * @return  a List of BlogEntry instances
-   * @throws  net.sourceforge.pebble.dao.PersistenceException    if blog entries cannot be loaded
-   */
-  public Collection getDraftBlogEntries(Blog blog) throws PersistenceException;
 
   /**
    * Loads the static pages for a given blog.

@@ -145,31 +145,6 @@ public class FileBlogEntryDAO implements BlogEntryDAO {
   }
 
   /**
-   * Loads the draft blog entries for a given blog.
-   *
-   * @param blog the owning Blog instance
-   * @return a List of BlogEntry instances
-   * @throws net.sourceforge.pebble.dao.PersistenceException
-   *          if blog entries cannot be loaded
-   */
-  public Collection getDraftBlogEntries(Blog blog) throws PersistenceException {
-    File dir = new File(blog.getRoot(), "drafts");
-    File files[] = dir.listFiles(new BlogEntryFilenameFilter());
-
-    List entries = new ArrayList();
-//    if (files != null) {
-//      for (int i = 0; i < files.length; i++) {
-//        BlogEntry entry;
-//        entry = loadBlogEntry(blog, files[i]);
-//        entry.setType(BlogEntry.DRAFT);
-//        entries.add(entry);
-//      }
-//    }
-
-    return entries;
-  }
-
-  /**
    * Loads the static pages for a given blog.
    *
    * @param blog the owning Blog instance
@@ -219,9 +194,6 @@ public class FileBlogEntryDAO implements BlogEntryDAO {
     File outputDir = null;
 
 //    switch (blogEntry.getType()) {
-//      case BlogEntry.DRAFT:
-//        outputDir = new File(blogEntry.getBlog().getRoot(), "drafts");
-//        break;
 //      case BlogEntry.STATIC_PAGE:
 //        outputDir = new File(blogEntry.getBlog().getRoot(), "pages");
 //        break;

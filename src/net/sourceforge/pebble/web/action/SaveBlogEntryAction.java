@@ -67,7 +67,6 @@ public class SaveBlogEntryAction extends SecureAction {
 
   /** the value used if the blog entry is being previewed rather than added */
   private static final String PREVIEW = "Preview";
-//  private static final String SAVE_AS_DRAFT = "Save as Draft";
 
   /**
    * Peforms the processing associated with this action.
@@ -81,8 +80,6 @@ public class SaveBlogEntryAction extends SecureAction {
 
     if (submitType != null && submitType.equalsIgnoreCase(PREVIEW)) {
       return previewBlogEntry(request);
-//    } else if (submitType != null && submitType.equalsIgnoreCase(SAVE_AS_DRAFT)) {
-//      return saveBlogEntryAsDraft(request);
     } else {
       return saveBlogEntry(request);
     }
@@ -91,8 +88,6 @@ public class SaveBlogEntryAction extends SecureAction {
   private View previewBlogEntry(HttpServletRequest request) {
     BlogEntry blogEntry = getBlogEntry(request);
 
-//    // we don't want to actually edit the original whilst previewing
-//    blogEntry = (BlogEntry)blogEntry.clone();
     populateBlogEntry(blogEntry, request);
 
     ValidationContext validationContext = new ValidationContext();
@@ -119,19 +114,7 @@ public class SaveBlogEntryAction extends SecureAction {
     } else {
       BlogService service = new BlogService();
       try {
-//        switch (blogEntry.getType()) {
-//          case BlogEntry.DRAFT :
-//            BlogEntry draftBlogEntry = blogEntry;
-//            blogEntry = new BlogEntry(blog);
-//            populateBlogEntry(blogEntry, request);
-//            service.putBlogEntry(blogEntry);
-//            draftBlogEntry.remove();
-//            break;
-//          default :
-            service.putBlogEntry(blogEntry);
-//            break;
-//        }
-
+        service.putBlogEntry(blogEntry);
         getModel().put(Constants.BLOG_ENTRY_KEY, blogEntry);
         return new RedirectView(blogEntry.getLocalPermalink());
       } catch (BlogException be) {
@@ -141,26 +124,6 @@ public class SaveBlogEntryAction extends SecureAction {
       }
     }
   }
-
-//  private View saveBlogEntryAsDraft(HttpServletRequest request) {
-//    BlogEntry blogEntry = getBlogEntry(request);
-//    blogEntry = (BlogEntry)blogEntry.clone();
-//    blogEntry.setType(BlogEntry.DRAFT);
-//    populateBlogEntry(blogEntry, request);
-//
-//
-//    try {
-//      blogEntry.store();
-//    } catch (BlogException be) {
-//      log.error(be.getMessage(), be);
-//      be.printStackTrace();
-//
-//      getModel().put(Constants.BLOG_ENTRY_KEY, blogEntry);
-//      return new BlogEntryFormView();
-//    }
-//
-//    return new ForwardView("/viewDrafts.secureaction");
-//  }
 
   private BlogEntry getBlogEntry(HttpServletRequest request) {
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
@@ -173,11 +136,6 @@ public class SaveBlogEntryAction extends SecureAction {
     } else {
       return new BlogEntry(blog);
     }
-//      case BlogEntry.DRAFT :
-//        return blog.getDraftBlogEntry(id);
-//      default :
-//        // we're creating a new blog entry
-//        return new BlogEntry(blog);
   }
 
   private void populateBlogEntry(BlogEntry blogEntry, HttpServletRequest request) {
@@ -192,7 +150,6 @@ public class SaveBlogEntryAction extends SecureAction {
     String trackBacksEnabled = request.getParameter("trackBacksEnabled");
     String category[] = request.getParameterValues("category");
     String author = SecurityUtils.getUsername();
-//    String publish = request.getParameter("publish");
 
     // the date can only set on those entries that have not yet been persisted
     if (!blogEntry.isPersistent()) {
@@ -253,12 +210,6 @@ public class SaveBlogEntryAction extends SecureAction {
     } else {
       blogEntry.setAttachment(null);
     }
-//
-//    if (publish != null && publish.equalsIgnoreCase("true")) {
-//      blogEntry.setPublished(true);
-//    } else {
-//      blogEntry.setPublished(false);
-//    }
   }
 
   private Attachment populateAttachment(BlogEntry blogEntry, String attachmentUrl, String attachmentSize, String attachmentType) {
