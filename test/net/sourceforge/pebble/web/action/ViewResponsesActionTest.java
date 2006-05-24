@@ -88,6 +88,12 @@ public class ViewResponsesActionTest extends SecureActionTestCase {
     }
     service.putBlogEntry(blogEntry);
 
+    for (Comment comment : blogEntry.getComments()) {
+      comment.setApproved();
+    }
+    service.putBlogEntry(blogEntry);
+    
+
     View view = action.process(request, response);
     assertTrue(view instanceof ResponsesView);
 

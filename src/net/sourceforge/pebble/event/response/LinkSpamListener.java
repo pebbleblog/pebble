@@ -97,7 +97,7 @@ public class LinkSpamListener extends BlogEntryResponseListenerSupport {
 
       if (count > threshold) {
         log.info(response.getTitle() + " marked as pending : number of links is " + count + ", threshold is " + threshold);
-        response.setState(State.PENDING);
+        response.setPending();
         response.incrementSpamScore();
       }
     }

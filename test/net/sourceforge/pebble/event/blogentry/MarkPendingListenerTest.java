@@ -67,10 +67,10 @@ public class MarkPendingListenerTest extends SingleBlogTestCase {
   public void testBlogEntryAdded() {
     SecurityUtils.runAsBlogOwner();
 
-    assertTrue(blogEntry.isPublished());
+    assertTrue(blogEntry.isUnpublished());
     blogEntryEvent = new BlogEntryEvent(blogEntry, BlogEntryEvent.BLOG_ENTRY_ADDED);
     listener.blogEntryAdded(blogEntryEvent);
-    assertTrue(blogEntry.isPublished());
+    assertTrue(blogEntry.isUnpublished());
 
     SecurityUtils.runAsBlogContributor();
     blogEntryEvent = new BlogEntryEvent(blogEntry, BlogEntryEvent.BLOG_ENTRY_ADDED);
@@ -83,9 +83,9 @@ public class MarkPendingListenerTest extends SingleBlogTestCase {
    * the blog entry.
    */
   public void testBlogEntryChangedByBlogOwner() {
+    blogEntry.setPublished(true);
     SecurityUtils.runAsBlogOwner();
 
-    assertTrue(blogEntry.isPublished());
     List propertyChangeEvents = new ArrayList();
     PropertyChangeEvent pce = new PropertyChangeEvent(blogEntry, BlogEntry.TITLE_PROPERTY, null, null);
     propertyChangeEvents.add(pce);
@@ -99,7 +99,7 @@ public class MarkPendingListenerTest extends SingleBlogTestCase {
    * the blog entry.
    */
   public void testBlogEntryChangedByBlogContributor() {
-    assertTrue(blogEntry.isPublished());
+    blogEntry.setPublished(true);
     List propertyChangeEvents = new ArrayList();
     PropertyChangeEvent pce = new PropertyChangeEvent(blogEntry, BlogEntry.TITLE_PROPERTY, null, null);
     propertyChangeEvents.add(pce);
@@ -112,7 +112,7 @@ public class MarkPendingListenerTest extends SingleBlogTestCase {
    * Tests the blogEntryChanged() method when the title is changed.
    */
   public void testBlogEntryChangedForTitleProperty() {
-    assertTrue(blogEntry.isPublished());
+    blogEntry.setPublished(true);
     List propertyChangeEvents = new ArrayList();
     PropertyChangeEvent pce = new PropertyChangeEvent(blogEntry, BlogEntry.TITLE_PROPERTY, null, null);
     propertyChangeEvents.add(pce);
@@ -125,7 +125,7 @@ public class MarkPendingListenerTest extends SingleBlogTestCase {
    * Tests the blogEntryChanged() method when the excerpt is changed.
    */
   public void testBlogEntryChangedForExcerptProperty() {
-    assertTrue(blogEntry.isPublished());
+    blogEntry.setPublished(true);
     List propertyChangeEvents = new ArrayList();
     PropertyChangeEvent pce = new PropertyChangeEvent(blogEntry, BlogEntry.EXCERPT_PROPERTY, null, null);
     propertyChangeEvents.add(pce);
@@ -138,7 +138,7 @@ public class MarkPendingListenerTest extends SingleBlogTestCase {
    * Tests the blogEntryChanged() method when the body is changed.
    */
   public void testBlogEntryChangedForBodyProperty() {
-    assertTrue(blogEntry.isPublished());
+    blogEntry.setPublished(true);
     List propertyChangeEvents = new ArrayList();
     PropertyChangeEvent pce = new PropertyChangeEvent(blogEntry, BlogEntry.BODY_PROPERTY, null, null);
     propertyChangeEvents.add(pce);
@@ -151,7 +151,7 @@ public class MarkPendingListenerTest extends SingleBlogTestCase {
    * Tests the blogEntryChanged() method when the original permalink is changed.
    */
   public void testBlogEntryChangedForOriginalPermalinkProperty() {
-    assertTrue(blogEntry.isPublished());
+    blogEntry.setPublished(true);
     List propertyChangeEvents = new ArrayList();
     PropertyChangeEvent pce = new PropertyChangeEvent(blogEntry, BlogEntry.ORIGINAL_PERMALINK_PROPERTY, null, null);
     propertyChangeEvents.add(pce);
@@ -164,7 +164,7 @@ public class MarkPendingListenerTest extends SingleBlogTestCase {
    * Tests the blogEntryChanged() method when the comments enabled is changed.
    */
   public void testBlogEntryChangedForCommentsEnabledProperty() {
-    assertTrue(blogEntry.isPublished());
+    blogEntry.setPublished(true);
     List propertyChangeEvents = new ArrayList();
     PropertyChangeEvent pce = new PropertyChangeEvent(blogEntry, BlogEntry.COMMENTS_ENABLED_PROPERTY, null, null);
     propertyChangeEvents.add(pce);

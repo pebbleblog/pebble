@@ -201,14 +201,15 @@ public class TrackBack extends Response {
   /**
    * Sets the state of this TrackBack.
    */
-  public void setState(State state) {
+  void setState(State state) {
+    State previousState = getState();
     super.setState(state);
 
     if (areEventsEnabled()) {
-      if (state == State.APPROVED) {
-        addEvent(new TrackBackEvent(this, TrackBackEvent.TRACKBACK_APPROVED));
-      } else if (state == State.REJECTED) {
-        addEvent(new TrackBackEvent(this, TrackBackEvent.TRACKBACK_REJECTED));
+      if (isApproved() && previousState != State.APPROVED) {
+        blogEntry.addEvent(new TrackBackEvent(this, TrackBackEvent.TRACKBACK_APPROVED));
+      } else if (isRejected() && previousState != State.REJECTED) {
+        blogEntry.addEvent(new TrackBackEvent(this, TrackBackEvent.TRACKBACK_REJECTED));
       }
     }
   }

@@ -5,7 +5,11 @@ import org.acegisecurity.userdetails.UserDetails;
 import org.acegisecurity.userdetails.UsernameNotFoundException;
 import org.acegisecurity.GrantedAuthority;
 import org.acegisecurity.GrantedAuthorityImpl;
+import org.acegisecurity.providers.encoding.PasswordEncoder;
+import org.acegisecurity.providers.dao.SaltSource;
 import org.springframework.dao.DataAccessException;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import net.sourceforge.pebble.PebbleContext;
 import net.sourceforge.pebble.Constants;
 
@@ -23,6 +27,8 @@ import java.util.Properties;
  */
 public class PebbleUserDetailsService implements UserDetailsService {
 
+  private static final Log log = LogFactory.getLog(PebbleUserDetailsService.class);
+
   private static final String REALM_DIRECTORY_NAME = "realm";
 
   private static final String PASSWORD = "password";
@@ -32,6 +38,10 @@ public class PebbleUserDetailsService implements UserDetailsService {
   private static final String WEBSITE = "website";
 
   private PebbleContext pebbleContext;
+
+  private PasswordEncoder passwordEncoder;
+
+  private SaltSource saltSource;
 
   /**
    * Getter the for the pebbleContext property.
@@ -51,6 +61,22 @@ public class PebbleUserDetailsService implements UserDetailsService {
     this.pebbleContext = pebbleContext;
   }
 
+  public PasswordEncoder getPasswordEncoder() {
+    return passwordEncoder;
+  }
+
+  public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+    this.passwordEncoder = passwordEncoder;
+  }
+
+  public SaltSource getSaltSource() {
+    return saltSource;
+  }
+
+  public void setSaltSource(SaltSource saltSource) {
+    this.saltSource = saltSource;
+  }
+
   /**
    * Looks up and returns user details for the given username.
    *
@@ -60,6 +86,15 @@ public class PebbleUserDetailsService implements UserDetailsService {
    * @throws org.springframework.dao.DataAccessException
    */
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException {
+
+    // create the realm, if it doesn't exist
+    File realm = getFileForRealm();
+    if (!realm.exists()) {
+      realm.mkdir();
+      log.info("*** Creating default user (username/password)");
+      log.info("*** Don't forget to delete this user in a production deployment!");
+      createUser("username", "password", "Default User", "username@domain.com", "http://www.domain.com", new String[] {Constants.BLOG_OWNER_ROLE, Constants.BLOG_CONTRIBUTOR_ROLE, Constants.PEBBLE_ADMIN_ROLE});
+    }
 
     File user = getFileForUser(username);
     if (!user.exists()) {
@@ -88,12 +123,24 @@ public class PebbleUserDetailsService implements UserDetailsService {
     }
   }
 
-  public void createUser(String username, String password, String name, String emailAddress, String website, String roles) {
+  public void createUser(String username, String password, String name, String emailAddress, String website, String[] roles) {
     File user = getFileForUser(username);
 
+    String rolesAsString = "";
+    GrantedAuthority[] authorities = new GrantedAuthority[roles.length];
+    for (int i = 0; i < roles.length; i++) {
+      rolesAsString += roles[i];
+      if (i < (roles.length-1)) {
+        rolesAsString += ",";
+      }
+      authorities[i] = new GrantedAuthorityImpl(roles[i]);
+    }
+
+    PebbleUserDetails pud = new PebbleUserDetails(username, password, name, emailAddress, website, authorities);
+
     Properties props = new Properties();
-    props.setProperty(PASSWORD, password);
-    props.setProperty(ROLES, roles);
+    props.setProperty(PASSWORD, passwordEncoder.encodePassword(password, saltSource.getSalt(pud)));
+    props.setProperty(ROLES, rolesAsString);
     props.setProperty(NAME, name);
     props.setProperty(EMAIL_ADDRESS, emailAddress);
     props.setProperty(WEBSITE, website);
@@ -111,13 +158,7 @@ public class PebbleUserDetailsService implements UserDetailsService {
   private File getFileForRealm() {
     // find the directory and file corresponding to the user, of the form
     // ${pebbleContext.dataDirectory}/realm/${username}.properties
-    File realm = new File(pebbleContext.getDataDirectory(), REALM_DIRECTORY_NAME);
-    if (!realm.exists()) {
-      realm.mkdir();
-      createUser("username", "password", "Default User", "", "", Constants.BLOG_OWNER_ROLE + "," + Constants.BLOG_CONTRIBUTOR_ROLE + "," + Constants.PEBBLE_ADMIN_ROLE);
-    }
-
-    return realm;
+    return new File(pebbleContext.getDataDirectory(), REALM_DIRECTORY_NAME);
   }
 
   private File getFileForUser(String username) {

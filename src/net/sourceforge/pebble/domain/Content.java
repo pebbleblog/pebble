@@ -40,6 +40,9 @@ import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 /**
  * Superclass for blog entries, comments and TrackBacks.
  *
@@ -47,11 +50,13 @@ import java.util.List;
  */
 public abstract class Content implements Permalinkable, Cloneable {
 
+  private static final Log log = LogFactory.getLog(Content.class);
+
   private static final int MAX_CONTENT_LENGTH = 255;
   private static final int MAX_WORD_LENGTH = 20;
 
   /** the state of the object */
-  private State state = State.APPROVED;
+  private State state;
 
   /** flag to indicate whether events are enabled */
   private boolean eventsEnabled = false;
@@ -139,7 +144,7 @@ public abstract class Content implements Permalinkable, Cloneable {
   /**
    * Sets the state of this comment.
    */
-  public void setState(State state) {
+  void setState(State state) {
     this.state = state;
   }
 
@@ -192,15 +197,46 @@ public abstract class Content implements Permalinkable, Cloneable {
    *
    * @param event   a PebbleEvent instance
    */
-  void addEvent(PebbleEvent event) {
+  synchronized void addEvent(PebbleEvent event) {
     events.add(event);
   }
 
-  void clearEvents() {
+  /**
+   * Inserts an event to the list into the front of the list.
+   *
+   * @param event   a PebbleEvent instance
+   */
+  synchronized void insertEvent(PebbleEvent event) {
+    events.add(0, event);
+  }
+
+  /**
+   * Determines whether this object has outstanding events.
+   *
+   * @return    true if events are outstanding, false otherwise
+   */
+  public synchronized boolean hasEvents() {
+    return !events.isEmpty();
+  }
+
+  /**
+   * Gets the next event to be handled.
+   *
+   * @return  a PebbleEvent instance, or null if no more events
+   */
+  public synchronized PebbleEvent nextEvent() {
+    if (hasEvents()) {
+      return events.remove(0);
+    } else {
+      return null;
+    }
+  }
+
+  synchronized void clearEvents() {
     events = new ArrayList<PebbleEvent>();
   }
 
-  public List<PebbleEvent> getEvents() {
+  public synchronized List<PebbleEvent> getEvents() {
     return new ArrayList<PebbleEvent>(events);
   }
 

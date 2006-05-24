@@ -71,6 +71,7 @@ public class MultiBlogTest extends MultiBlogTestCase {
     // now add an entry
     BlogService service = new BlogService();
     BlogEntry blogEntry = new BlogEntry(blog1);
+    blogEntry.setPublished(true);
     service.putBlogEntry(blogEntry);
 
     // ask for zero entries

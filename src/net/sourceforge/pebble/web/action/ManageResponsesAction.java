@@ -82,14 +82,14 @@ public class ManageResponsesAction extends SecureAction {
 
         if (submit.equalsIgnoreCase("Approve")) {
           try {
-            ber.setState(State.APPROVED);
+            ber.setApproved();
             service.putBlogEntry(ber.getBlogEntry());
           } catch (BlogException be) {
             log.error("Error updating state for response", be);
           }
         } else if (submit.equalsIgnoreCase("Reject")) {
           try {
-            ber.setState(State.REJECTED);
+            ber.setRejected();
             service.putBlogEntry(ber.getBlogEntry());
           } catch (BlogException be) {
             log.error("Error updating state for response", be);

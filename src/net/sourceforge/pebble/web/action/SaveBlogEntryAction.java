@@ -192,7 +192,7 @@ public class SaveBlogEntryAction extends SecureAction {
     String trackBacksEnabled = request.getParameter("trackBacksEnabled");
     String category[] = request.getParameterValues("category");
     String author = SecurityUtils.getUsername();
-    String publish = request.getParameter("publish");
+//    String publish = request.getParameter("publish");
 
     // the date can only set on those entries that have not yet been persisted
     if (!blogEntry.isPersistent()) {
@@ -253,12 +253,12 @@ public class SaveBlogEntryAction extends SecureAction {
     } else {
       blogEntry.setAttachment(null);
     }
-
-    if (publish != null && publish.equalsIgnoreCase("true")) {
-      blogEntry.setState(State.PUBLISHED);
-    } else {
-      blogEntry.setState(State.UNPUBLISHED);
-    }
+//
+//    if (publish != null && publish.equalsIgnoreCase("true")) {
+//      blogEntry.setPublished(true);
+//    } else {
+//      blogEntry.setPublished(false);
+//    }
   }
 
   private Attachment populateAttachment(BlogEntry blogEntry, String attachmentUrl, String attachmentSize, String attachmentType) {

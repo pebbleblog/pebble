@@ -116,7 +116,7 @@ public class LinkSpamListenerTest extends SingleBlogTestCase {
     listener.commentAdded(commentEvent);
     assertTrue(comment.isPending());
 
-    comment.setState(State.APPROVED);
+    comment.setApproved();
     blog.getPluginProperties().setProperty(LinkSpamListener.COMMENT_THRESHOLD_KEY, "4");
     listener.commentAdded(commentEvent);
     assertTrue(comment.isApproved());

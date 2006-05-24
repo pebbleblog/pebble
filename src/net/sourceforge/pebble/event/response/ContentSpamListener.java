@@ -90,22 +90,22 @@ public class ContentSpamListener extends BlogEntryResponseListenerSupport {
     // check each of the fields in turn
     if (!contentWithinThreshold(response.getTitle(), regexes, threshold)) {
       log.info(response.getTitle() + " marked as pending : threshold for title exceeded");
-      response.setState(State.PENDING);
+      response.setPending();
       response.incrementSpamScore();
     }
     if (!contentWithinThreshold(response.getSourceName(), regexes, threshold)) {
       log.info(response.getTitle() + " marked as pending : threshold for source name exceeded");
-      response.setState(State.PENDING);
+      response.setPending();
       response.incrementSpamScore();
     }
     if (!contentWithinThreshold(response.getSourceLink(), regexes, threshold)) {
       log.info(response.getTitle() + " marked as pending : threshold for source link exceeded");
-      response.setState(State.PENDING);
+      response.setPending();
       response.incrementSpamScore();
     }
     if (!contentWithinThreshold(response.getContent(), regexes, threshold)) {
       log.info(response.getTitle() + " marked as pending : threshold for content exceeded");
-      response.setState(State.PENDING);
+      response.setPending();
       response.incrementSpamScore();
     }
   }

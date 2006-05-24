@@ -110,7 +110,7 @@ public class BlogEntry extends PageBasedContent {
    */
   public BlogEntry(Blog blog) {
     super(blog);
-    setState(State.PUBLISHED);
+    setPublished(false);
   }
 
   /**
@@ -905,26 +905,9 @@ public class BlogEntry extends PageBasedContent {
     super.setEventsEnabled(b);
 
     // and cascade
-    Iterator it = getComments().iterator();
-    while (it.hasNext()) {
-      Comment comment = (Comment)it.next();
-      comment.setEventsEnabled(b);
-    }
-
-    it = getTrackBacks().iterator();
-    while (it.hasNext()) {
-      TrackBack trackBack = (TrackBack)it.next();
-      trackBack.setEventsEnabled(b);
-    }
-  }
-
-  public List<PebbleEvent> getEvents() {
-    List<PebbleEvent> events = super.getEvents();
     for (Response response : getResponses()) {
-      events.addAll(response.getEvents());
+      response.setEventsEnabled(b);
     }
-
-    return events;
   }
 
   public void clearEvents() {
@@ -954,15 +937,29 @@ public class BlogEntry extends PageBasedContent {
   }
 
   /**
+   * Sets the state of this entry.
+   *
+   * @param published   true if this entry is published, false if unpublished
+   */
+  public void setPublished(boolean published) {
+    if (published) {
+      setState(State.PUBLISHED);
+    } else {
+      setState(State.UNPUBLISHED);
+    }
+  }
+
+  /**
    * Sets the state of this blog entry.
    */
-  public void setState(State state) {
+  void setState(State state) {
+    State previousState = getState();
     super.setState(state);
 
     if (areEventsEnabled()) {
-      if (state == State.PUBLISHED) {
+      if (isPublished() && previousState == State.UNPUBLISHED) {
         addEvent(new BlogEntryEvent(this, BlogEntryEvent.BLOG_ENTRY_PUBLISHED));
-      } else if (state == State.UNPUBLISHED) {
+      } else if (isUnpublished() && previousState == State.PUBLISHED) {
         addEvent(new BlogEntryEvent(this, BlogEntryEvent.BLOG_ENTRY_UNPUBLISHED));
       }
     }

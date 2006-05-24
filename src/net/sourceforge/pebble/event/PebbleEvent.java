@@ -83,4 +83,8 @@ public abstract class PebbleEvent extends EventObject {
     return this.vetoed;
   }
 
+  public String toString() {
+    return getClass().getName() + "/" + source + "/" + type;
+  }
+
 }

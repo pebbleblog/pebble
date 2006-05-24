@@ -125,7 +125,7 @@ public class BlogService {
     DAOFactory factory = DAOFactory.getConfiguredFactory();
     BlogEntryDAO dao = factory.getBlogEntryDAO();
     Blog blog = blogEntry.getBlog();
-    blogEntry.setEventsEnabled(false);
+//    blogEntry.setEventsEnabled(false);
 
     synchronized (blog) {
       try {
@@ -139,25 +139,15 @@ public class BlogService {
         } else {
           if (!blogEntry.isPersistent()) {
             dao.storeBlogEntry(blogEntry);
-            blog.getEventDispatcher().fireBlogEntryEvent(new BlogEntryEvent(blogEntry, BlogEntryEvent.BLOG_ENTRY_ADDED));
+            blogEntry.insertEvent(new BlogEntryEvent(blogEntry, BlogEntryEvent.BLOG_ENTRY_ADDED));
           } else {
             dao.storeBlogEntry(blogEntry);
             if (blogEntry.isDirty()) {
-              BlogEntryEvent event = new BlogEntryEvent(blogEntry, blogEntry.getPropertyChangeEvents());
-              blog.getEventDispatcher().fireBlogEntryEvent(event);
+              blogEntry.insertEvent(new BlogEntryEvent(blogEntry, blogEntry.getPropertyChangeEvents()));
             }
           }
 
-          // and also fire any other events that have been stored up
-          for (PebbleEvent event : blogEntry.getEvents()) {
-            if (event instanceof BlogEntryEvent) {
-              blog.getEventDispatcher().fireBlogEntryEvent((BlogEntryEvent)event);
-            } else if (event instanceof CommentEvent) {
-              blog.getEventDispatcher().fireCommentEvent((CommentEvent)event);
-            } else if (event instanceof TrackBackEvent) {
-              blog.getEventDispatcher().fireTrackBackEvent((TrackBackEvent)event);
-            }
-          }
+          blogEntry.getBlog().getEventDispatcher().fireEvents(blogEntry);
 
           // and store the blog entry now that listeners have been fired
           dao.storeBlogEntry(blogEntry);
@@ -183,7 +173,8 @@ public class BlogService {
       dao.removeBlogEntry(blogEntry);
       blogEntry.setPersistent(false);
 
-      blogEntry.getBlog().getEventDispatcher().fireBlogEntryEvent(new BlogEntryEvent(blogEntry, BlogEntryEvent.BLOG_ENTRY_REMOVED));
+      blogEntry.insertEvent(new BlogEntryEvent(blogEntry, BlogEntryEvent.BLOG_ENTRY_REMOVED));
+      blogEntry.getBlog().getEventDispatcher().fireEvents(blogEntry);
     } catch (PersistenceException pe) {
     }
   }

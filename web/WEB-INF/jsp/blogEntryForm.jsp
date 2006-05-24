@@ -172,6 +172,7 @@ window.onload = function()
         <td><input type="text" name="attachmentType" size="20" value="${blogEntry.attachment.type}"></td>
       </tr>
 
+<%--
       <tr>
         <td valign="top"><br /></td>
         <td></td>
@@ -191,6 +192,8 @@ window.onload = function()
           />
         </td>
       </tr>
+--%>
+
       <tr>
         <td colspan="2" align="right">
           <input name="submit" type="submit" Value="Preview" />

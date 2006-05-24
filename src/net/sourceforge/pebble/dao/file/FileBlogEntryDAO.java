@@ -504,9 +504,6 @@ public class FileBlogEntryDAO implements BlogEntryDAO {
     File path = null;
 
 //    switch (blogEntry.getType()) {
-//      case BlogEntry.DRAFT:
-//        path = new File(blogEntry.getBlog().getRoot(), "drafts");
-//        break;
 //      case BlogEntry.STATIC_PAGE:
 //        path = new File(blogEntry.getBlog().getRoot(), "pages");
 //        break;
@@ -515,12 +512,13 @@ public class FileBlogEntryDAO implements BlogEntryDAO {
 //        break;
 //    }
 
-    File file = new File(path, blogEntry.getId() + ".xml");
-    log.debug("Removing " + file.getAbsolutePath());
+    File oldFile = new File(path, blogEntry.getId() + ".xml");
+    File newFile = new File(path, blogEntry.getId() + ".deleted");
+    log.debug("Removing " + blogEntry.getGuid());
 
-    boolean success = file.delete();
+    boolean success = oldFile.renameTo(newFile);
     if (!success) {
-      throw new PersistenceException("Removal of " + file.getAbsoluteFile() + " failed");
+      throw new PersistenceException("Deletion of blog entry " + blogEntry.getGuid() + " failed");
     }
   }
 

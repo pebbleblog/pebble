@@ -31,10 +31,7 @@
  */
 package net.sourceforge.pebble.index;
 
-import net.sourceforge.pebble.domain.SingleBlogTestCase;
-import net.sourceforge.pebble.domain.BlogEntry;
-import net.sourceforge.pebble.domain.Category;
-import net.sourceforge.pebble.domain.Comment;
+import net.sourceforge.pebble.domain.*;
 import net.sourceforge.pebble.search.SearchResults;
 
 /**
@@ -63,6 +60,7 @@ public class SearchIndexTest extends SingleBlogTestCase {
 
        BlogEntry blogEntry = new BlogEntry(blog);
        blogEntry.setTitle("Some JSP topic");
+       blogEntry.setPublished(true);
        index.index(blogEntry);
 
        results = index.search("jsp");
@@ -83,6 +81,7 @@ public class SearchIndexTest extends SingleBlogTestCase {
 
        BlogEntry blogEntry = new BlogEntry(blog);
        blogEntry.setBody("Some JSP topic");
+       blogEntry.setPublished(true);
        index.index(blogEntry);
 
        results = index.search("jsp");
@@ -106,6 +105,7 @@ public class SearchIndexTest extends SingleBlogTestCase {
 
        BlogEntry blogEntry = new BlogEntry(blog);
        blogEntry.addCategory(blog.getCategory("/category1"));
+       blogEntry.setPublished(true);
        index.index(blogEntry);
 
        results = index.search("category:/category1");
@@ -135,6 +135,7 @@ public class SearchIndexTest extends SingleBlogTestCase {
 
        BlogEntry blogEntry = new BlogEntry(blog);
        blogEntry.addCategory(blog.getCategory("/category1"));
+       blogEntry.setPublished(true);
        index.index(blogEntry);
 
        // should be no hits returned yet
@@ -166,6 +167,7 @@ public class SearchIndexTest extends SingleBlogTestCase {
      try {
        BlogEntry blogEntry = new BlogEntry(blog);
        blogEntry.setTitle("Some JSP topic");
+       blogEntry.setPublished(true);
        index.index(blogEntry);
 
        SearchResults results = index.search("jsp");

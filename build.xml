@@ -197,12 +197,7 @@
     <!-- copy pebble.war into the distribution -->
     <zip zipfile="${release.dir}/pebble.war">
       <fileset dir="web">
-        <exclude name="pebble-web.iml"/>
-        <exclude name="themes/blog/"/>
-        <exclude name="themes/test/"/>
-        <exclude name="themes/blog1/"/>
-        <exclude name="themes/blog2/"/>
-        <exclude name="themes/blog3/"/>
+        <exclude name="themes/user-*/"/>
         <exclude name="WEB-INF/tmp/"/>
         <exclude name="WEB-INF/work/"/>
       </fileset>
@@ -222,6 +217,14 @@
       <fileset dir="${bin.dir}"/>
     </copy>
 
+    <!-- these libraries are required to be installed separately on some app servers -->
+    <mkdir dir="${release.dir}/lib"/>
+    <copy todir="${release.dir}/lib">
+      <fileset dir="lib">
+        <include name="activation.jar" />
+        <include name="mail.jar" />
+      </fileset>
+    </copy>
 <!--
     <mkdir dir="${release.dir}/docs"/>
     <copy todir="${release.dir}/docs">

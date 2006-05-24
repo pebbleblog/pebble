@@ -205,6 +205,13 @@ public abstract class Response extends Content {
   }
 
   /**
+   * Sets the state of this response to rejected.
+   */
+  public void setRejected() {
+    setState(State.REJECTED);
+  }
+
+  /**
    * Determines whether this response is rejected.
    *
    * @return  true if the state is rejected, false otherwise
@@ -214,12 +221,26 @@ public abstract class Response extends Content {
   }
 
   /**
+   * Sets the state of this response to approved.
+   */
+  public void setApproved() {
+    setState(State.APPROVED);
+  }
+
+  /**
    * Determines whether this response is approved.
    *
    * @return  true if the state is approved, false otherwise
    */
   public boolean isApproved() {
     return getState().equals(State.APPROVED);
+  }
+
+  /**
+   * Sets the state of this response to pending.
+   */
+  public void setPending() {
+    setState(State.PENDING);
   }
 
   /**

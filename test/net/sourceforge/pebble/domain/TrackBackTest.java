@@ -156,7 +156,7 @@ public class TrackBackTest extends SingleBlogTestCase {
     };
 
     blog.getEventListenerList().addTrackBackListener(listener);
-    trackback.setState(State.PENDING);
+    trackback.setPending();
   }
 
   /**
@@ -166,7 +166,7 @@ public class TrackBackTest extends SingleBlogTestCase {
     // create 2 listeners, veto the event in the first and
     // fail if the second receives the event
 
-    trackback.setState(State.PENDING);
+    trackback.setPending();
 
     TrackBackListener listener1 = new TrackBackListener() {
       public void trackBackAdded(TrackBackEvent event) {
@@ -207,7 +207,7 @@ public class TrackBackTest extends SingleBlogTestCase {
     blog.getEventListenerList().addTrackBackListener(listener1);
     blog.getEventListenerList().addTrackBackListener(listener2);
 
-    trackback.setState(State.APPROVED);
+    trackback.setApproved();
   }
 
   /**
@@ -216,7 +216,7 @@ public class TrackBackTest extends SingleBlogTestCase {
    * generate excess events if not disabled.
    */
   public void testListenersNotFiredWhenClonedTrackBackApproved() {
-    trackback.setState(State.PENDING);
+    trackback.setPending();
     trackback = (TrackBack)trackback.clone();
 
     TrackBackListener listener = new TrackBackListener() {
@@ -238,7 +238,7 @@ public class TrackBackTest extends SingleBlogTestCase {
     };
 
     blog.getEventListenerList().addTrackBackListener(listener);
-    trackback.setState(State.APPROVED);
+    trackback.setApproved();
   }
 
 }

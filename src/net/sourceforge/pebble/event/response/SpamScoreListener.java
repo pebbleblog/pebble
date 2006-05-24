@@ -83,7 +83,7 @@ public class SpamScoreListener extends BlogEntryResponseListenerSupport {
 
     if (response.getSpamScore() > threshold) {
       log.info(response.getTitle() + " rejected : spam score is " + response.getSpamScore() + ", threshold is " + threshold);
-      response.setState(State.REJECTED);
+      response.setRejected();
     }
   }
 

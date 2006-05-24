@@ -55,11 +55,11 @@ public class HideUnapprovedResponsesDecoratorTest extends SingleBlogTestCase {
   public void testUnapprovedResponsesRemovedWhenNotLoggedIn() throws Exception {
     BlogEntry blogEntry = new BlogEntry(blog);
     Comment comment = blogEntry.createComment("title", "body", "author", "email", "website", "127.0.0.1");
-    comment.setState(State.PENDING);
+    comment.setPending();
     blogEntry.addComment(comment);
 
     TrackBack trackBack = blogEntry.createTrackBack("title", "excerpt", "url", "blogName", "127.0.0.1");
-    trackBack.setState(State.PENDING);
+    trackBack.setPending();
     blogEntry.addTrackBack(trackBack);
 
     SecurityUtils.runAsAnonymous();
@@ -79,11 +79,11 @@ public class HideUnapprovedResponsesDecoratorTest extends SingleBlogTestCase {
   public void testUnapprovedResponsesRemovedWhenLoggedIn() throws Exception {
     BlogEntry blogEntry = new BlogEntry(blog);
     Comment comment = blogEntry.createComment("title", "body", "author", "email", "website", "127.0.0.1");
-    comment.setState(State.PENDING);
+    comment.setPending();
     blogEntry.addComment(comment);
 
     TrackBack trackBack = blogEntry.createTrackBack("title", "excerpt", "url", "blogName", "127.0.0.1");
-    trackBack.setState(State.PENDING);
+    trackBack.setPending();
     blogEntry.addTrackBack(trackBack);
 
     SecurityUtils.runAsBlogContributor();
@@ -103,11 +103,11 @@ public class HideUnapprovedResponsesDecoratorTest extends SingleBlogTestCase {
   public void testUnapprovedResponsesNotRemovedWhenLoggedIn() throws Exception {
     BlogEntry blogEntry = new BlogEntry(blog);
     Comment comment = blogEntry.createComment("title", "body", "author", "email", "website", "127.0.0.1");
-    comment.setState(State.PENDING);
+    comment.setPending();
     blogEntry.addComment(comment);
 
     TrackBack trackBack = blogEntry.createTrackBack("title", "excerpt", "url", "blogName", "127.0.0.1");
-    trackBack.setState(State.PENDING);
+    trackBack.setPending();
     blogEntry.addTrackBack(trackBack);
 
     BlogEntryDecoratorChain chain = new BlogEntryDecoratorChain(null);

@@ -32,38 +32,43 @@
 package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
-import net.sourceforge.pebble.domain.BlogEntry;
-import net.sourceforge.pebble.domain.BlogService;
-import net.sourceforge.pebble.domain.State;
 import net.sourceforge.pebble.web.view.View;
-import net.sourceforge.pebble.web.view.impl.PublishBlogEntryView;
+import net.sourceforge.pebble.web.view.RedirectView;
+import net.sourceforge.pebble.domain.BlogEntry;
+import net.sourceforge.pebble.domain.State;
+import net.sourceforge.pebble.domain.BlogService;
+
+import java.util.Date;
 
 /**
- * Tests for the ManageBlogEntryAction class.
+ * Tests for the PublishBlogEntryAction class.
  *
  * @author    Simon Brown
  */
-public class ManageBlogEntryActionTest extends SecureActionTestCase {
+public class PublishBlogEntryActionTest extends SecureActionTestCase {
 
   protected void setUp() throws Exception {
-    action = new ManageBlogEntryAction();
+    action = new PublishBlogEntryAction();
 
     super.setUp();
   }
 
-  public void testPublishBlogEntry() throws Exception {
+  public void testPublishBlogEntryNow() throws Exception {
     BlogService service = new BlogService();
     BlogEntry blogEntry = new BlogEntry(blog);
+    blogEntry.setDate(new Date(100000));
     blogEntry.setPublished(false);
     service.putBlogEntry(blogEntry);
 
     // now execute the action
     request.setParameter("entry", blogEntry.getId());
+    request.setParameter("now", "true");
     request.setParameter("submit", "Publish");
     View view = action.process(request, response);
 
-    assertTrue(blogEntry.isUnpublished());
-    assertTrue(view instanceof PublishBlogEntryView);
+    assertTrue(blogEntry.isPublished());
+    assertEquals(new Date().getTime(), blogEntry.getDate().getTime(), 1000);
+    assertTrue(view instanceof RedirectView);
   }
 
   public void testUnpublishBlogEntry() throws Exception {
@@ -77,8 +82,8 @@ public class ManageBlogEntryActionTest extends SecureActionTestCase {
     request.setParameter("submit", "Unpublish");
     View view = action.process(request, response);
 
-    assertTrue(blogEntry.isPublished());
-    assertTrue(view instanceof PublishBlogEntryView);
+    assertTrue(blogEntry.isUnpublished());
+    assertTrue(view instanceof RedirectView);
   }
 
   /**

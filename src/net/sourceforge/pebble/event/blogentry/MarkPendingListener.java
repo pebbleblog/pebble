@@ -58,7 +58,7 @@ public class MarkPendingListener extends BlogEntryListenerSupport {
    */
   public void blogEntryAdded(BlogEntryEvent event) {
     if (!SecurityUtils.isBlogOwner()) {
-      event.getBlogEntry().setState(State.UNPUBLISHED);
+      event.getBlogEntry().setPublished(false);
     }
   }
 
@@ -87,7 +87,7 @@ public class MarkPendingListener extends BlogEntryListenerSupport {
             property.equals(BlogEntry.EXCERPT_PROPERTY) ||
             property.equals(BlogEntry.BODY_PROPERTY) ||
             property.equals(BlogEntry.ORIGINAL_PERMALINK_PROPERTY)) {
-          event.getBlogEntry().setState(State.UNPUBLISHED);
+          event.getBlogEntry().setPublished(false);
           return;
         }
       }

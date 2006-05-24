@@ -39,8 +39,10 @@ import net.sourceforge.pebble.event.comment.CommentEvent;
 import net.sourceforge.pebble.event.comment.CommentListener;
 import net.sourceforge.pebble.event.trackback.TrackBackEvent;
 import net.sourceforge.pebble.event.trackback.TrackBackListener;
+import net.sourceforge.pebble.domain.BlogEntry;
 
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * Responsible for dispatching events to registered listeners, which are
@@ -64,6 +66,11 @@ public class DefaultEventDispatcher extends EventDispatcher {
       } else if (event.getType() == BlogEvent.BLOG_STOPPED) {
         listener.blogStopped(event);
       }
+
+      // has the event been vetoed?
+      if (event.isVetoed()) {
+        break;
+      }
     }
   }
 
@@ -72,7 +79,7 @@ public class DefaultEventDispatcher extends EventDispatcher {
    *
    * @param event   the BlogEntryEvent instance
    */
-  public void fireBlogEntryEvent(BlogEntryEvent event) {
+  void fireBlogEntryEvent(BlogEntryEvent event) {
     Iterator it = getEventListenerList().getBlogEntryListeners().iterator();
     while (it.hasNext()) {
       BlogEntryListener listener = (BlogEntryListener)it.next();
@@ -87,6 +94,11 @@ public class DefaultEventDispatcher extends EventDispatcher {
       } else if (event.getType() == BlogEntryEvent.BLOG_ENTRY_UNPUBLISHED) {
         listener.blogEntryUnpublished(event);
       }
+
+      // has the event been vetoed?
+      if (event.isVetoed()) {
+        break;
+      }
     }
   }
 
@@ -95,7 +107,7 @@ public class DefaultEventDispatcher extends EventDispatcher {
    *
    * @param event   the CommentEvent instance
    */
-  public void fireCommentEvent(CommentEvent event) {
+  void fireCommentEvent(CommentEvent event) {
     Iterator it = getEventListenerList().getCommentListeners().iterator();
     while (it.hasNext()) {
       CommentListener listener = (CommentListener)it.next();
@@ -121,7 +133,7 @@ public class DefaultEventDispatcher extends EventDispatcher {
    *
    * @param event   the TrackBackEvent instance
    */
-  public void fireTrackBackEvent(TrackBackEvent event) {
+  void fireTrackBackEvent(TrackBackEvent event) {
     Iterator it = getEventListenerList().getTrackBackListeners().iterator();
     while (it.hasNext()) {
       TrackBackListener listener = (TrackBackListener)it.next();

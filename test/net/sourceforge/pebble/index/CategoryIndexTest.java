@@ -168,7 +168,7 @@ public class CategoryIndexTest extends SingleBlogTestCase {
 //    assertFalse(blog.getTagIndex().getTags().contains(blog.getTagIndex().getTag("java")));
 //
 //    // blog entry rejected
-//    blogEntry.setState(State.REJECTED);
+//    blogEntry.setRejected();
 //    service.putBlogEntry(blogEntry);
 //    assertEquals(0, root.getNumberOfBlogEntries());
 //    assertEquals(0, java.getNumberOfBlogEntries());
@@ -180,7 +180,7 @@ public class CategoryIndexTest extends SingleBlogTestCase {
 //    assertTrue(blog.getTagIndex().getTags().isEmpty());
 //
 //    // blog entry approved
-//    blogEntry.setState(State.APPROVED);
+//    blogEntry.setApproved();
 //    service.putBlogEntry(blogEntry);
 //    assertEquals(1, root.getNumberOfBlogEntries());
 //    assertEquals(0, java.getNumberOfBlogEntries());

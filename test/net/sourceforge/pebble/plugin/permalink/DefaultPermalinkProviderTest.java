@@ -62,6 +62,7 @@ public class DefaultPermalinkProviderTest extends PermalinkProviderSupportTestCa
     service.putBlogEntry(blogEntry);
 
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy'/'MM'/'dd'/'");
+    sdf.setTimeZone(blog.getTimeZone());
     StringBuffer buf = new StringBuffer();
     buf.append("/");
     buf.append(sdf.format(blogEntry.getDate()));

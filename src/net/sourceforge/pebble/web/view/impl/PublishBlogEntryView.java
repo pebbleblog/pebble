@@ -29,31 +29,36 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package net.sourceforge.pebble.event.response;
+package net.sourceforge.pebble.web.view.impl;
 
-import net.sourceforge.pebble.domain.Response;
-import net.sourceforge.pebble.domain.State;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import net.sourceforge.pebble.Constants;
+import net.sourceforge.pebble.domain.BlogEntry;
+import net.sourceforge.pebble.web.view.HtmlView;
 
 /**
- * Sets the status of new comments and TrackBacks to pending.
+ * Represents a page allowing the user to publish/unpublish a blog entry.
  *
- * @author Simon Brown
+ * @author    Simon Brown
  */
-public class MarkPendingListener extends BlogEntryResponseListenerSupport {
-
-  /** the log used by this class */
-  private static final Log log = LogFactory.getLog(MarkPendingListener.class);
+public class PublishBlogEntryView extends HtmlView {
 
   /**
-   * Called when a comment or TrackBack has been added.
+   * Gets the title of this view.
    *
-   * @param response a Response
+   * @return the title as a String
    */
-  protected void blogEntryResponseAdded(Response response) {
-    log.info(response.getTitle() + " marked as pending");
-    response.setPending();
+  public String getTitle() {
+    BlogEntry blogEntry = (BlogEntry)getModel().get(Constants.BLOG_ENTRY_KEY);
+    return blogEntry.getTitle();
+  }
+
+  /**
+   * Gets the URI that this view represents.
+   *
+   * @return the URI as a String
+   */
+  public String getUri() {
+    return "/WEB-INF/jsp/publishBlogEntry.jsp";
   }
 
 }

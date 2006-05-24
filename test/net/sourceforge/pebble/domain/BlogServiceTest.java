@@ -107,8 +107,9 @@ public class BlogServiceTest extends SingleBlogTestCase {
   public void testListenersFiredWhenCommentApproved() throws Exception {
     final StringBuffer buf = new StringBuffer("123");
     final Comment comment = blogEntry.createComment("title", "body", "author", "email", "website", "127.0.0.1");
+
     blogEntry.addComment(comment);
-    comment.setState(State.PENDING);
+    comment.setPending();
     service.putBlogEntry(blogEntry);
 
     CommentListener listener = new CommentListener() {
@@ -131,7 +132,7 @@ public class BlogServiceTest extends SingleBlogTestCase {
     };
 
     blog.getEventListenerList().addCommentListener(listener);
-    comment.setState(State.APPROVED);
+    comment.setApproved();
     service.putBlogEntry(blogEntry);
     assertEquals("321", buf.toString());
   }
@@ -143,20 +144,17 @@ public class BlogServiceTest extends SingleBlogTestCase {
     final StringBuffer buf = new StringBuffer("123");
     final Comment comment = blogEntry.createComment("title", "body", "author", "email", "website", "127.0.0.1");
     blogEntry.addComment(comment);
-    comment.setState(State.PENDING);
+    comment.setPending();
     service.putBlogEntry(blogEntry);
 
     CommentListener listener = new CommentListener() {
       public void commentAdded(CommentEvent event) {
-        fail();
       }
 
       public void commentRemoved(CommentEvent event) {
-        fail();
       }
 
       public void commentApproved(CommentEvent event) {
-        fail();
       }
 
       public void commentRejected(CommentEvent event) {
@@ -166,7 +164,7 @@ public class BlogServiceTest extends SingleBlogTestCase {
     };
 
     blog.getEventListenerList().addCommentListener(listener);
-    comment.setState(State.REJECTED);
+    comment.setRejected();
     service.putBlogEntry(blogEntry);
     assertEquals("321", buf.toString());
   }
@@ -245,7 +243,7 @@ public class BlogServiceTest extends SingleBlogTestCase {
     final StringBuffer buf = new StringBuffer("123");
     final TrackBack trackBack = blogEntry.createTrackBack("title", "excerpt", "url", "blogName", "127.0.0.1");
     blogEntry.addTrackBack(trackBack);
-    trackBack.setState(State.PENDING);
+    trackBack.setPending();
     service.putBlogEntry(blogEntry);
 
     TrackBackListener listener = new TrackBackListener() {
@@ -268,7 +266,7 @@ public class BlogServiceTest extends SingleBlogTestCase {
     };
 
     blog.getEventListenerList().addTrackBackListener(listener);
-    trackBack.setState(State.APPROVED);
+    trackBack.setApproved();
     service.putBlogEntry(blogEntry);
     assertEquals("321", buf.toString());
   }
@@ -280,20 +278,17 @@ public class BlogServiceTest extends SingleBlogTestCase {
     final StringBuffer buf = new StringBuffer("123");
     final TrackBack trackBack = blogEntry.createTrackBack("title", "excerpt", "url", "blogName", "127.0.0.1");
     blogEntry.addTrackBack(trackBack);
-    trackBack.setState(State.PENDING);
+    trackBack.setPending();
     service.putBlogEntry(blogEntry);
 
     TrackBackListener listener = new TrackBackListener() {
       public void trackBackAdded(TrackBackEvent event) {
-        fail();
       }
 
       public void trackBackRemoved(TrackBackEvent event) {
-        fail();
       }
 
       public void trackBackApproved(TrackBackEvent event) {
-        fail();
       }
 
       public void trackBackRejected(TrackBackEvent event) {
@@ -303,7 +298,7 @@ public class BlogServiceTest extends SingleBlogTestCase {
     };
 
     blog.getEventListenerList().addTrackBackListener(listener);
-    trackBack.setState(State.REJECTED);
+    trackBack.setRejected();
     service.putBlogEntry(blogEntry);
     assertEquals("321", buf.toString());
   }
@@ -313,7 +308,7 @@ public class BlogServiceTest extends SingleBlogTestCase {
    */
   public void testListenersFiredWhenBlogEntryPublished() throws Exception {
     final StringBuffer buf = new StringBuffer("123");
-    blogEntry.setState(State.UNPUBLISHED);
+    blogEntry.setPublished(false);
     service.putBlogEntry(blogEntry);
 
     BlogEntryListener listener = new BlogEntryListener() {
@@ -340,7 +335,7 @@ public class BlogServiceTest extends SingleBlogTestCase {
     };
 
     blog.getEventListenerList().addBlogEntryListener(listener);
-    blogEntry.setState(State.PUBLISHED);
+    blogEntry.setPublished(true);
     service.putBlogEntry(blogEntry);
     assertEquals("321", buf.toString());
   }
@@ -350,7 +345,7 @@ public class BlogServiceTest extends SingleBlogTestCase {
    */
   public void testListenersFiredWhenBlogEntryUnpublished() throws Exception {
     final StringBuffer buf = new StringBuffer("123");
-    blogEntry.setState(State.PUBLISHED);
+    blogEntry.setPublished(true);
     service.putBlogEntry(blogEntry);
 
     BlogEntryListener listener = new BlogEntryListener() {
@@ -377,7 +372,7 @@ public class BlogServiceTest extends SingleBlogTestCase {
     };
 
     blog.getEventListenerList().addBlogEntryListener(listener);
-    blogEntry.setState(State.UNPUBLISHED);
+    blogEntry.setPublished(false);
     service.putBlogEntry(blogEntry);
     assertEquals("321", buf.toString());
   }

@@ -61,6 +61,7 @@ public class TitlePermalinkProviderTest extends PermalinkProviderSupportTestCase
     service.putBlogEntry(blogEntry);
 
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy'/'MM'/'dd'/'");
+    sdf.setTimeZone(blog.getTimeZone());
     String prefix = "/";
     prefix += sdf.format(blogEntry.getDate());
     String suffix = ".html";
@@ -129,6 +130,7 @@ public class TitlePermalinkProviderTest extends PermalinkProviderSupportTestCase
     service.putBlogEntry(blogEntry1);
 
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy'/'MM'/'dd'/'");
+    sdf.setTimeZone(blog.getTimeZone());
     String prefix = "/";
     prefix += sdf.format(blogEntry1.getDate());
     String suffix = ".html";
@@ -206,6 +208,7 @@ public class TitlePermalinkProviderTest extends PermalinkProviderSupportTestCase
     service.putBlogEntry(blogEntry);
 
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy'/'MM'/'dd'/'");
+    sdf.setTimeZone(blog.getTimeZone());
     String prefix = blog.getUrl();
     prefix += sdf.format(blogEntry.getDate());
     String suffix = ".html";

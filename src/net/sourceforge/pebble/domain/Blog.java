@@ -350,6 +350,18 @@ public class Blog extends AbstractBlog {
     defaultProperties.setProperty(PRIVATE_KEY, FALSE);
     defaultProperties.setProperty(LUCENE_ANALYZER_KEY, "org.apache.lucene.analysis.standard.StandardAnalyzer");
     defaultProperties.setProperty(BLOG_ENTRY_DECORATORS_KEY, "net.sourceforge.pebble.plugin.decorator.HideUnpublishedBlogEntriesDecorator\r\nnet.sourceforge.pebble.plugin.decorator.HideUnapprovedResponsesDecorator\r\nnet.sourceforge.pebble.plugin.decorator.HtmlDecorator\r\nnet.sourceforge.pebble.plugin.decorator.EscapeMarkupDecorator\r\nnet.sourceforge.pebble.plugin.decorator.RelativeUriDecorator\r\nnet.sourceforge.pebble.plugin.decorator.ReadMoreDecorator\r\nnet.sourceforge.pebble.plugin.decorator.BlogTagsDecorator");
+    defaultProperties.setProperty(COMMENT_LISTENERS_KEY,
+        "net.sourceforge.pebble.event.response.IpAddressListener\r\n" +
+        "net.sourceforge.pebble.event.response.LinkSpamListener\r\n" +
+        "net.sourceforge.pebble.event.response.ContentSpamListener\r\n" +
+        "net.sourceforge.pebble.event.response.SpamScoreListener\r\n" +
+        "#net.sourceforge.pebble.event.comment.EmailNotificationListener");
+    defaultProperties.setProperty(TRACKBACK_LISTENERS_KEY,
+        "net.sourceforge.pebble.event.response.IpAddressListener\r\n" +
+        "net.sourceforge.pebble.event.response.LinkSpamListener\r\n" +
+        "net.sourceforge.pebble.event.response.ContentSpamListener\r\n" +
+        "net.sourceforge.pebble.event.response.SpamScoreListener\r\n" +
+        "#net.sourceforge.pebble.event.trackback.EmailNotificationListener");
     defaultProperties.setProperty(PERMALINK_PROVIDER_KEY, "net.sourceforge.pebble.plugin.permalink.DefaultPermalinkProvider");
     defaultProperties.setProperty(EVENT_DISPATCHER_KEY, "net.sourceforge.pebble.event.DefaultEventDispatcher");
     defaultProperties.setProperty(LOGGER_KEY, "net.sourceforge.pebble.logging.CombinedLogFormatLogger");

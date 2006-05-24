@@ -10,10 +10,6 @@
       <input type="submit" name="submit" value="Edit" />
     </pebble:isBlogContributor>
 
-    <pebble:isBlogOwnerOrContributor>
-      <input type="checkbox" name="confirm" value="true" />
-    </pebble:isBlogOwnerOrContributor>
-
     <pebble:isBlogOwner>
     <c:if test="${blogEntry.unpublished}">
       <input type="submit" name="submit" value="Publish" />
@@ -24,6 +20,7 @@
     </pebble:isBlogOwner>
 
     <pebble:isBlogContributor>
+      <input type="checkbox" name="confirm" value="true" />
       <input type="submit" name="submit" value="Remove" />
     </pebble:isBlogContributor>
 

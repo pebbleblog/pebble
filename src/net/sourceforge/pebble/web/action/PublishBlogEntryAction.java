@@ -33,27 +33,28 @@ package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.domain.*;
-import net.sourceforge.pebble.web.view.ForwardView;
+import net.sourceforge.pebble.web.view.NotFoundView;
 import net.sourceforge.pebble.web.view.RedirectView;
 import net.sourceforge.pebble.web.view.View;
-import net.sourceforge.pebble.web.view.NotFoundView;
-import net.sourceforge.pebble.web.view.impl.PublishBlogEntryView;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.util.Date;
 
 /**
- * Allows the user to manage (edit, remove, etc) a blog entry.
+ * Allows the user to publish/unpublish a blog entry.
  *
  * @author    Simon Brown
  */
-public class ManageBlogEntryAction extends SecureAction {
+public class PublishBlogEntryAction extends SecureAction {
 
   /** the log used by this class */
-  private static final Log log = LogFactory.getLog(ManageBlogEntryAction.class);
+  private static final Log log = LogFactory.getLog(PublishBlogEntryAction.class);
 
   /**
    * Peforms the processing associated with this action.
@@ -65,8 +66,8 @@ public class ManageBlogEntryAction extends SecureAction {
   public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
     String id = request.getParameter("entry");
-    String confirm = request.getParameter("confirm");
     String submit = request.getParameter("submit");
+    String now = request.getParameter("now");
 
     BlogService service = new BlogService();
     BlogEntry blogEntry = service.getBlogEntry(blog, id);
@@ -75,20 +76,45 @@ public class ManageBlogEntryAction extends SecureAction {
       return new NotFoundView();
     }
 
-    if (submit.equals("Edit")) {
-      return new ForwardView("/editBlogEntry.secureaction?entry=" + id);
-    } else if (submit.equals("Publish") || submit.equals("Unpublish")) {
-      getModel().put(Constants.BLOG_ENTRY_KEY, blogEntry);
-      return new PublishBlogEntryView();
-    } else if (confirm != null && confirm.equals("true")) {
-      if (submit.equalsIgnoreCase("Remove")) {
-        try {
-          service.removeBlogEntry(blogEntry);
-        } catch (BlogException be) {
-          throw new ServletException(be);
-        }
+    if (submit.equals("Publish")) {
+      DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT, blog.getLocale());
+      dateFormat.setTimeZone(blog.getTimeZone());
+      dateFormat.setLenient(false);
 
-        return new ForwardView("/viewHomePage.action");
+      Date publishDate = new Date();
+      if (now != null && now.equalsIgnoreCase("false")) {
+        String dateAsString = request.getParameter("date");
+        if (dateAsString != null && dateAsString.length() > 0) {
+          try {
+            publishDate = dateFormat.parse(dateAsString);
+            if (publishDate.after(new Date())) {
+              publishDate = new Date();
+            }
+          } catch (ParseException pe) {
+            log.warn(pe);
+          }
+        }
+      }
+
+      // now save the published entry and remove the unpublished version
+      try {
+        log.info("Removing blog entry dated " + blogEntry.getDate());
+        service.removeBlogEntry(blogEntry);
+
+        blogEntry.setDate(publishDate);
+        blogEntry.setPublished(true);
+        log.info("Putting blog entry dated " + blogEntry.getDate());
+        service.putBlogEntry(blogEntry);
+      } catch (BlogException be) {
+        log.error(be);
+      }
+
+    } else if (submit.equals("Unpublish")) {
+      blogEntry.setPublished(false);
+      try {
+        service.putBlogEntry(blogEntry);
+      } catch (BlogException be) {
+        log.error(be);
       }
     }
 
@@ -102,21 +128,6 @@ public class ManageBlogEntryAction extends SecureAction {
    * @param request
    */
   public String[] getRoles(HttpServletRequest request) {
-    String submit = request.getParameter("submit");
-
-    if (submit != null) {
-      if (submit.equalsIgnoreCase("Publish")) {
-        return new String[]{Constants.BLOG_OWNER_ROLE};
-      } else if (submit.equalsIgnoreCase("Unpublish")) {
-        return new String[]{Constants.BLOG_OWNER_ROLE};
-      } else if (submit.equalsIgnoreCase("Remove")) {
-        return new String[]{Constants.BLOG_CONTRIBUTOR_ROLE};
-      } else if (submit.equalsIgnoreCase("Edit")) {
-        return new String[]{Constants.BLOG_CONTRIBUTOR_ROLE};
-      }
-    }
-
-    // default back to blog owner role
     return new String[]{Constants.BLOG_OWNER_ROLE};
   }
 

@@ -57,7 +57,7 @@ public class HideUnpublishedBlogEntriesDecoratorTest extends SingleBlogTestCase 
    * Tests that unapproved blog entries are removed when not logged in.
    */
   public synchronized void testUnpublishedBlogEntriesRemovedWhenNotLoggedIn() throws Exception {
-    blogEntry.setState(State.PUBLISHED);
+    blogEntry.setPublished(true);
     BlogEntryDecoratorChain chain = new BlogEntryDecoratorChain(null);
     BlogEntryDecoratorContext context = new BlogEntryDecoratorContext();
     context.setBlogEntry(blogEntry);
@@ -66,7 +66,7 @@ public class HideUnpublishedBlogEntriesDecoratorTest extends SingleBlogTestCase 
     assertEquals(blogEntry, context.getBlogEntry());
 
     SecurityUtils.runAsAnonymous();
-    blogEntry.setState(State.UNPUBLISHED);
+    blogEntry.setPublished(false);
     decorator.decorate(chain, context);
     assertNull(context.getBlogEntry());
   }
@@ -75,7 +75,7 @@ public class HideUnpublishedBlogEntriesDecoratorTest extends SingleBlogTestCase 
    * Tests that unpublished comments and TrackBacks are not removed.
    */
   public synchronized void testUnpublishedBlogEntriesNotRemovedWhenLoggedIn() throws Exception {
-    blogEntry.setState(State.UNPUBLISHED);
+    blogEntry.setPublished(false);
     BlogEntryDecoratorChain chain = new BlogEntryDecoratorChain(null);
     BlogEntryDecoratorContext context = new BlogEntryDecoratorContext();
     context.setBlogEntry(blogEntry);

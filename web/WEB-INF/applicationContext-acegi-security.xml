@@ -27,11 +27,13 @@
     </property>
   </bean>
 
-  <bean id="pebbleUserDetailsService" class="net.sourceforge.pebble.security.PebbleUserDetailsService">
+  <bean id="pebbleUserDetailsService" class="net.sourceforge.pebble.security.PebbleUserDetailsService" singleton="true">
     <property name="pebbleContext"><ref bean="pebbleContext"/></property>
+    <property name="passwordEncoder"><ref local="passwordEncoder"/></property>
+    <property name="saltSource"><ref bean="saltSource"/></property>
   </bean>
 
-  <bean id="passwordEncoder" class="org.acegisecurity.providers.encoding.Md5PasswordEncoder"/>
+  <bean id="passwordEncoder" class="org.acegisecurity.providers.encoding.ShaPasswordEncoder"/>
 
   <bean id="saltSource" class="org.acegisecurity.providers.dao.salt.ReflectionSaltSource">
     <property name="userPropertyToUse" value="getUsername" />
@@ -39,10 +41,8 @@
 
   <bean id="daoAuthenticationProvider" class="org.acegisecurity.providers.dao.DaoAuthenticationProvider">
     <property name="userDetailsService"><ref local="pebbleUserDetailsService"/></property>
-    <!-- uncomment the following block to use password encoding
     <property name="passwordEncoder"><ref local="passwordEncoder"/></property>
     <property name="saltSource"><ref bean="saltSource"/></property>
-    -->
   </bean>
 
    <!-- Automatically receives AuthenticationEvent messages -->

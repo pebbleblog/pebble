@@ -35,6 +35,9 @@ import net.sourceforge.pebble.event.blog.BlogEvent;
 import net.sourceforge.pebble.event.blogentry.BlogEntryEvent;
 import net.sourceforge.pebble.event.comment.CommentEvent;
 import net.sourceforge.pebble.event.trackback.TrackBackEvent;
+import net.sourceforge.pebble.domain.BlogEntry;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * Responsible for dispatching events to registered listeners.
@@ -42,6 +45,8 @@ import net.sourceforge.pebble.event.trackback.TrackBackEvent;
  * @author Simon Brown
  */
 public abstract class EventDispatcher {
+
+  private static final Log log = LogFactory.getLog(EventDispatcher.class);
 
   /** the event listener list */
   private EventListenerList eventListenerList;
@@ -65,6 +70,25 @@ public abstract class EventDispatcher {
   }
 
   /**
+   * Fires all outstanding events on a given blog entry.
+   *
+   * @param blogEntry   the blog entry to fire events on
+   */
+  public void fireEvents(BlogEntry blogEntry) {
+    while (blogEntry.hasEvents()) {
+      PebbleEvent event = blogEntry.nextEvent();
+      log.info("Firing " + event);
+      if (event instanceof BlogEntryEvent) {
+        fireBlogEntryEvent((BlogEntryEvent)event);
+      } else if (event instanceof CommentEvent) {
+        fireCommentEvent((CommentEvent)event);
+      } else if (event instanceof TrackBackEvent) {
+        fireTrackBackEvent((TrackBackEvent)event);
+      }
+    }
+  }
+
+  /**
    * Fires a blog event to registered listeners.
    *
    * @param event   the BlogEvent instance
@@ -76,19 +100,19 @@ public abstract class EventDispatcher {
    *
    * @param event   the BlogEntryEvent instance
    */
-  public abstract void fireBlogEntryEvent(BlogEntryEvent event);
+  abstract void fireBlogEntryEvent(BlogEntryEvent event);
 
   /**
    * Fires a comment event to registered listeners.
    *
    * @param event   the CommentEvent instance
    */
-  public abstract void fireCommentEvent(CommentEvent event);
+  abstract void fireCommentEvent(CommentEvent event);
   /**
    * Fires a TrackBack event to registered listeners.
    *
    * @param event   the TrackBackEvent instance
    */
-  public abstract void fireTrackBackEvent(TrackBackEvent event);
+  abstract void fireTrackBackEvent(TrackBackEvent event);
 
 }

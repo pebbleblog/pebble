@@ -149,7 +149,7 @@ public class TagIndexTest extends SingleBlogTestCase {
 //    assertFalse(index.getTags().contains(index.getTag("java")));
 //
 //    // blog entry rejected
-//    blogEntry.setState(State.REJECTED);
+//    blogEntry.setRejected();
 //    service.putBlogEntry(blogEntry);
 //    assertEquals(0, index.getTag("myblog").getNumberOfBlogEntries());
 //    assertEquals(0, index.getTag("java").getNumberOfBlogEntries());
@@ -158,7 +158,7 @@ public class TagIndexTest extends SingleBlogTestCase {
 //    assertTrue(index.getTags().isEmpty());
 //
 //    // blog entry approved
-//    blogEntry.setState(State.APPROVED);
+//    blogEntry.setApproved();
 //    service.putBlogEntry(blogEntry);
 //    assertEquals(1, index.getTag("myblog").getNumberOfBlogEntries());
 //    assertEquals(0, index.getTag("java").getNumberOfBlogEntries());

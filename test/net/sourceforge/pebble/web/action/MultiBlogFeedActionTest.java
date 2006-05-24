@@ -73,10 +73,12 @@ public class MultiBlogFeedActionTest extends MultiBlogTestCase {
 
     BlogEntry entry1 = new BlogEntry(blog1);
     entry1.addCategory(cat1);
+    entry1.setPublished(true);
     service.putBlogEntry(entry1);
 
     BlogEntry entry2 = new BlogEntry(blog1);
     entry2.addCategory(cat2);
+    entry2.setPublished(true);
     service.putBlogEntry(entry2);
 
     request.setParameter("category", "/cat2");

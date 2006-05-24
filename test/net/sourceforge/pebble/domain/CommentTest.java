@@ -274,13 +274,13 @@ public class CommentTest extends SingleBlogTestCase {
     assertFalse(comment.isPending());
     assertFalse(comment.isRejected());
 
-    comment.setState(State.PENDING);
+    comment.setPending();
     assertEquals(State.PENDING, comment.getState());
     assertFalse(comment.isApproved());
     assertTrue(comment.isPending());
     assertFalse(comment.isRejected());
 
-    comment.setState(State.REJECTED);
+    comment.setRejected();
     assertEquals(State.REJECTED, comment.getState());
     assertFalse(comment.isApproved());
     assertFalse(comment.isPending());
@@ -311,7 +311,7 @@ public class CommentTest extends SingleBlogTestCase {
     };
 
     blog.getEventListenerList().addCommentListener(listener);
-    comment.setState(State.PENDING);
+    comment.setPending();
   }
 
   /**
@@ -321,7 +321,7 @@ public class CommentTest extends SingleBlogTestCase {
     // create 2 listeners, veto the event in the first and
     // fail if the second receives the event
 
-    comment.setState(State.PENDING);
+    comment.setPending();
 
     CommentListener listener1 = new CommentListener() {
       public void commentAdded(CommentEvent event) {
@@ -362,7 +362,7 @@ public class CommentTest extends SingleBlogTestCase {
     blog.getEventListenerList().addCommentListener(listener1);
     blog.getEventListenerList().addCommentListener(listener2);
 
-    comment.setState(State.APPROVED);
+    comment.setApproved();
   }
 
   /**
@@ -371,7 +371,7 @@ public class CommentTest extends SingleBlogTestCase {
    * generate excess events if not disabled.
    */
   public void testListenersNotFiredWhenCommentApprovedOnClone() {
-    comment.setState(State.PENDING);
+    comment.setPending();
     comment = (Comment)comment.clone();
 
     CommentListener listener = new CommentListener() {
@@ -393,7 +393,7 @@ public class CommentTest extends SingleBlogTestCase {
     };
 
     blog.getEventListenerList().addCommentListener(listener);
-    comment.setState(State.APPROVED);
+    comment.setApproved();
   }
 
 }

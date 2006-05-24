@@ -187,9 +187,9 @@ public class BlogEntryHandler extends DefaultHandler {
           break;
         case STATE :
           if (elementContent.toString().equals(State.UNPUBLISHED.getName())) {
-            blogEntry.setState(State.UNPUBLISHED);
+            blogEntry.setPublished(false);
           } else {
-            blogEntry.setState(State.PUBLISHED);
+            blogEntry.setPublished(true);
           }
           break;
         case AUTHOR :

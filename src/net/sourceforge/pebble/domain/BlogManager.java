@@ -60,6 +60,8 @@ public class BlogManager {
   /** the current PebbleContext instance */
   private PebbleContext pebbleContext;
 
+  private PebbleUserDetailsService pebbleUserDetailsService;
+
   /** the directory where themes are located */
   private String webappRoot;
 
@@ -276,6 +278,14 @@ public class BlogManager {
 
   public void setPebbleContext(PebbleContext pebbleContext) {
     this.pebbleContext = pebbleContext;
+  }
+
+  public PebbleUserDetailsService getPebbleUserDetailsService() {
+    return pebbleUserDetailsService;
+  }
+
+  public void setPebbleUserDetailsService(PebbleUserDetailsService pebbleUserDetailsService) {
+    this.pebbleUserDetailsService = pebbleUserDetailsService;
   }
 
 }

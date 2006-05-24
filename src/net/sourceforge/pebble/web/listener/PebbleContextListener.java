@@ -32,6 +32,7 @@
 package net.sourceforge.pebble.web.listener;
 
 import net.sourceforge.pebble.PebbleContext;
+import net.sourceforge.pebble.security.PebbleUserDetailsService;
 import net.sourceforge.pebble.dao.DAOFactory;
 import net.sourceforge.pebble.domain.BlogManager;
 import org.apache.commons.logging.Log;
@@ -63,9 +64,11 @@ public class PebbleContextListener implements ServletContextListener {
 
     ApplicationContext applicationContext = WebApplicationContextUtils.getRequiredWebApplicationContext(event.getServletContext());
     PebbleContext pebbleContext = (PebbleContext)applicationContext.getBean("pebbleContext");
+    PebbleUserDetailsService pebbleUserDetailsService = (PebbleUserDetailsService)applicationContext.getBean("pebbleUserDetailsService");
 
     DAOFactory.setConfiguredFactory(pebbleContext.getDaoFactory());
     BlogManager.getInstance().setPebbleContext(pebbleContext);
+    BlogManager.getInstance().setPebbleUserDetailsService(pebbleUserDetailsService);
     BlogManager.getInstance().setWebappRoot(event.getServletContext().getRealPath("/"));
     BlogManager.getInstance().setFileUploadSize(pebbleContext.getFileUploadSize());
     BlogManager.getInstance().setFileUploadQuota(pebbleContext.getFileUploadQuota());
