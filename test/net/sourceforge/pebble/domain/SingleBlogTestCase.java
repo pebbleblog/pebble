@@ -33,6 +33,8 @@ package net.sourceforge.pebble.domain;
 
 import net.sourceforge.pebble.dao.DAOFactory;
 import net.sourceforge.pebble.dao.mock.MockDAOFactory;
+import net.sourceforge.pebble.Configuration;
+import net.sourceforge.pebble.PebbleContext;
 
 import java.io.File;
 
@@ -56,8 +58,10 @@ public abstract class SingleBlogTestCase extends PebbleTestCase {
     Theme theme = new Theme(blog, "custom", TEST_BLOG_LOCATION.getAbsolutePath());
     blog.setEditableTheme(theme);
 
-    pebbleContext.setUrl("http://www.yourdomain.com/blog/");
-    BlogManager.getInstance().setPebbleContext(pebbleContext);
+    Configuration config = new Configuration();
+    config.setUrl("http://www.yourdomain.com/blog/");
+    PebbleContext.getInstance().setConfiguration(config);
+
     BlogManager.getInstance().addBlog(blog);
   }
 

@@ -32,6 +32,7 @@
 package net.sourceforge.pebble.web.listener;
 
 import net.sourceforge.pebble.PebbleContext;
+import net.sourceforge.pebble.Configuration;
 import net.sourceforge.pebble.security.PebbleUserDetailsService;
 import net.sourceforge.pebble.dao.DAOFactory;
 import net.sourceforge.pebble.domain.BlogManager;
@@ -63,15 +64,15 @@ public class PebbleContextListener implements ServletContextListener {
     log.info("Starting Pebble");
 
     ApplicationContext applicationContext = WebApplicationContextUtils.getRequiredWebApplicationContext(event.getServletContext());
-    PebbleContext pebbleContext = (PebbleContext)applicationContext.getBean("pebbleContext");
+    Configuration config = (Configuration)applicationContext.getBean("pebbleConfiguration");
     PebbleUserDetailsService pebbleUserDetailsService = (PebbleUserDetailsService)applicationContext.getBean("pebbleUserDetailsService");
 
-    DAOFactory.setConfiguredFactory(pebbleContext.getDaoFactory());
-    BlogManager.getInstance().setPebbleContext(pebbleContext);
-    BlogManager.getInstance().setPebbleUserDetailsService(pebbleUserDetailsService);
+    DAOFactory.setConfiguredFactory(config.getDaoFactory());
+    PebbleContext ctx = PebbleContext.getInstance();
+    ctx.setConfiguration(config);
+    ctx.setPebbleUserDetailsService(pebbleUserDetailsService);
+
     BlogManager.getInstance().setWebappRoot(event.getServletContext().getRealPath("/"));
-    BlogManager.getInstance().setFileUploadSize(pebbleContext.getFileUploadSize());
-    BlogManager.getInstance().setFileUploadQuota(pebbleContext.getFileUploadQuota());
     BlogManager.getInstance().startBlogs();
 
     long endTime = System.currentTimeMillis();

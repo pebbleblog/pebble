@@ -32,6 +32,7 @@
 package net.sourceforge.pebble.domain;
 
 import net.sourceforge.pebble.comparator.BlogEntryComparator;
+import net.sourceforge.pebble.PebbleContext;
 
 import java.util.*;
 
@@ -93,7 +94,7 @@ public class MultiBlog extends AbstractBlog {
    * @return a URL as a String
    */
   public String getUrl() {
-    return BlogManager.getInstance().getPebbleContext().getUrl();
+    return PebbleContext.getInstance().getConfiguration().getUrl();
   }
 
   /**

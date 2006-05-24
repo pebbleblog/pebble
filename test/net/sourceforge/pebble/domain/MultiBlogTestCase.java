@@ -33,6 +33,7 @@ package net.sourceforge.pebble.domain;
 
 import net.sourceforge.pebble.dao.DAOFactory;
 import net.sourceforge.pebble.dao.mock.MockDAOFactory;
+import net.sourceforge.pebble.PebbleContext;
 
 import java.io.File;
 
@@ -50,8 +51,7 @@ public abstract class MultiBlogTestCase extends PebbleTestCase {
     
     DAOFactory.setConfiguredFactory(new MockDAOFactory());
 
-    pebbleContext.setUrl("http://www.yourdomain.com/blog/");
-    BlogManager.getInstance().setPebbleContext(pebbleContext);
+    PebbleContext.getInstance().getConfiguration().setUrl("http://www.yourdomain.com/blog/");
 
     // and set up some blogs
     File blogDirectory1 = new File(TEST_BLOG_LOCATION, "blogs/blog1");

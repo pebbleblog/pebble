@@ -34,6 +34,7 @@ package net.sourceforge.pebble.domain;
 import junit.framework.TestCase;
 import net.sourceforge.pebble.util.FileUtils;
 import net.sourceforge.pebble.PebbleContext;
+import net.sourceforge.pebble.Configuration;
 
 import java.io.File;
 
@@ -46,19 +47,8 @@ public abstract class PebbleTestCase extends TestCase {
 
   protected static final File TEST_BLOG_LOCATION;
 
-  protected static final PebbleContext pebbleContext = new PebbleContext();
-
   static {
-    // perform the "global" set up logic
-    // create the "test" blog directory
     TEST_BLOG_LOCATION = new File(System.getProperty("java.io.tmpdir"), "pebble");
-//    TEST_BLOG_LOCATION.mkdir();
-//
-//    pebbleContext.setDataDirectory(TEST_BLOG_LOCATION.getAbsolutePath());
-//
-    // and now register the shutdown hook for tear down logic
-    // remove all directories created during the test execution
-    //Runtime.getRuntime().addShutdownHook(new PebbleTestCaseShutdownHook());
   }
 
   protected void setUp() throws Exception {
@@ -66,7 +56,11 @@ public abstract class PebbleTestCase extends TestCase {
 
     TEST_BLOG_LOCATION.mkdir();
     new File(TEST_BLOG_LOCATION, "blogs").mkdir();
-    pebbleContext.setDataDirectory(TEST_BLOG_LOCATION.getAbsolutePath());
+
+    Configuration config = new Configuration();
+    config.setUrl("http://www.yourdomain.com/blog/");
+    config.setDataDirectory(TEST_BLOG_LOCATION.getAbsolutePath());
+    PebbleContext.getInstance().setConfiguration(config);
   }
 
   protected void tearDown() throws Exception {
@@ -74,13 +68,5 @@ public abstract class PebbleTestCase extends TestCase {
 
     super.tearDown();
   }
-
-//  static class PebbleTestCaseShutdownHook extends Thread {
-//
-//    public void run() {
-//      FileUtils.deleteFile(TEST_BLOG_LOCATION);
-//    }
-//
-//  }
 
 }

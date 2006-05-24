@@ -77,7 +77,6 @@ public abstract class EventDispatcher {
   public void fireEvents(BlogEntry blogEntry) {
     while (blogEntry.hasEvents()) {
       PebbleEvent event = blogEntry.nextEvent();
-      log.info("Firing " + event);
       if (event instanceof BlogEntryEvent) {
         fireBlogEntryEvent((BlogEntryEvent)event);
       } else if (event instanceof CommentEvent) {

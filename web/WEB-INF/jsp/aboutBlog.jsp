@@ -70,7 +70,7 @@
       <tr class="odd">
         <td valign="top"><b>XML-RPC Details</b></td>
         <td>
-          ${blogManager.pebbleContext.url}xmlrpc/
+          ${pebbleContext.configuration.url}xmlrpc/
           (handler is blogger or metaWeblog, blog id is ${blog.id})
         </td>
       </tr>

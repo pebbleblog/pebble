@@ -45,8 +45,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.jstl.core.Config;
 import java.io.IOException;
-import java.util.Locale;
 import java.net.URLDecoder;
+import java.util.Locale;
 
 /**
  * A filter respsonsible for setting up common objects.
@@ -85,20 +85,17 @@ public class PreProcessingFilter implements Filter {
     HttpServletRequest httpRequest = (HttpServletRequest)request;
     HttpServletResponse httpResponse = (HttpServletResponse)response;
 
-    PebbleContext pebbleContext = null;
-    if (filterConfig.getServletContext() != null) {
-      ApplicationContext applicationContext = WebApplicationContextUtils.getRequiredWebApplicationContext(filterConfig.getServletContext());
-      pebbleContext = (PebbleContext)applicationContext.getBean("pebbleContext");
-      request.setAttribute("pebbleContext", pebbleContext);
-    }
+    PebbleContext pebbleContext = PebbleContext.getInstance();
+    request.setAttribute("pebbleContext", pebbleContext);
 
     AbstractBlog blog;
 
-    if (pebbleContext != null && (pebbleContext.getUrl() == null || pebbleContext.getUrl().length() == 0)) {
+    String url = pebbleContext.getConfiguration().getUrl();
+    if (pebbleContext != null && (url == null || url.length() == 0)) {
       String scheme = httpRequest.getScheme();
-      String url = scheme + "://" + httpRequest.getServerName() + ":" + httpRequest.getServerPort() + httpRequest.getContextPath();
+      url = scheme + "://" + httpRequest.getServerName() + ":" + httpRequest.getServerPort() + httpRequest.getContextPath();
       log.info("Setting Pebble URL to " + url);
-      pebbleContext.setUrl(url);
+      PebbleContext.getInstance().getConfiguration().setUrl(url);
     }
 
     // get URI and strip off the context (e.g. /blog)

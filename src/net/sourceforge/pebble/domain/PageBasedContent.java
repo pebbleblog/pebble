@@ -2,6 +2,7 @@ package net.sourceforge.pebble.domain;
 
 import net.sourceforge.pebble.security.PebbleUserDetails;
 import net.sourceforge.pebble.security.PebbleUserDetailsService;
+import net.sourceforge.pebble.PebbleContext;
 
 import java.util.Date;
 
@@ -192,8 +193,7 @@ public abstract class PageBasedContent extends Content {
    */
   public PebbleUserDetails getUser() {
     if (this.user == null) {
-      PebbleUserDetailsService puds = BlogManager.getInstance().getPebbleUserDetailsService();
-      puds.setPebbleContext(BlogManager.getInstance().getPebbleContext());
+      PebbleUserDetailsService puds = PebbleContext.getInstance().getPebbleUserDetailsService();
       try {
         this.user = (PebbleUserDetails)puds.loadUserByUsername(getAuthor());
       } catch (Exception e) {

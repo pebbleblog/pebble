@@ -5,7 +5,7 @@
 
   <div class="contentItemBody">
     <c:set var="fileUploadSize" scope="page">
-      <fmt:formatNumber value="${pebbleContext.fileUploadSize}" type="number" />&nbsp;KB
+      <fmt:formatNumber value="${pebbleContext.configuration.fileUploadSize}" type="number" />&nbsp;KB
     </c:set>
     <fmt:message key="error.fileTooLarge">
       <fmt:param value="${fileUploadSize}"/>

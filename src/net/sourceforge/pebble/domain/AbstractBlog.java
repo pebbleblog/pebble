@@ -242,12 +242,11 @@ public abstract class AbstractBlog extends TimePeriod {
    * @return  a URL as a String
    */
   public String getUrl() {
-    BlogManager blogManager = BlogManager.getInstance();
-    PebbleContext pebbleContext = blogManager.getPebbleContext();
-    if (blogManager.isMultiUser()) {
-      return pebbleContext.getUrl() + getId() + "/";
+    String url = PebbleContext.getInstance().getConfiguration().getUrl();
+    if (BlogManager.getInstance().isMultiUser()) {
+      return url + getId() + "/";
     } else {
-      return pebbleContext.getUrl();
+      return url;
     }
   }
 

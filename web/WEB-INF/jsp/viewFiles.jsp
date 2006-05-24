@@ -25,9 +25,9 @@
 
   <div class="contentItemBody">
   <p>
-    <c:if test="${pebbleContext.fileUploadQuota > -1}">
+    <c:if test="${pebbleContext.configuration.fileUploadQuota > -1}">
       You are using <fmt:formatNumber value="${currentUsage}" type="number" />&nbsp;KB of
-      your <fmt:formatNumber value="${pebbleContext.fileUploadQuota}" type="number" />&nbsp;KB quota, which is shared between
+      your <fmt:formatNumber value="${pebbleContext.configuration.fileUploadQuota}" type="number" />&nbsp;KB quota, which is shared between
       all of your images, files and theme.
     </c:if>
   </p>
@@ -132,7 +132,7 @@
 
   <form name="uploadFile" enctype="multipart/form-data" action="${uploadAction}" method="post">
     <p>
-      <b>Upload file</b> (files must be less than <fmt:formatNumber value="${pebbleContext.fileUploadSize}" type="number" />&nbsp;KB)
+      <b>Upload file</b> (files must be less than <fmt:formatNumber value="${pebbleContext.configuration.fileUploadSize}" type="number" />&nbsp;KB)
       <br /><br />
       Local Name
       <input type="hidden" name="path" value="${directory.absolutePath}" />

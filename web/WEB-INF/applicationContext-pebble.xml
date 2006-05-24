@@ -3,7 +3,7 @@
 
 <beans>
 
-  <bean id="pebbleContext" class="net.sourceforge.pebble.PebbleContext" singleton="true">
+  <bean id="pebbleConfiguration" class="net.sourceforge.pebble.Configuration">
 
     <!-- the location where your Pebble data is stored, default is ${user.home}/pebble -->
     <property name="dataDirectory" value="${user.home}/pebble"/>

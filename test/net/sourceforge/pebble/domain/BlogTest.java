@@ -32,6 +32,7 @@
 package net.sourceforge.pebble.domain;
 
 import net.sourceforge.pebble.Constants;
+import net.sourceforge.pebble.PebbleContext;
 import net.sourceforge.pebble.event.DefaultEventDispatcher;
 import net.sourceforge.pebble.event.blog.BlogEvent;
 import net.sourceforge.pebble.event.blog.BlogListener;
@@ -479,7 +480,7 @@ public class BlogTest extends SingleBlogTestCase {
   public void testDomain() {
     assertEquals("www.yourdomain.com", blog.getDomainName());
 
-    pebbleContext.setUrl("http://www.yourdomain.com:8080/blog");
+    PebbleContext.getInstance().getConfiguration().setUrl("http://www.yourdomain.com:8080/blog");
     assertEquals("www.yourdomain.com", blog.getDomainName());
   }
 

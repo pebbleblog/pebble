@@ -31,10 +31,8 @@
  */
 package net.sourceforge.pebble.domain;
 
-import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.PebbleContext;
 import net.sourceforge.pebble.comparator.BlogByLastModifiedDateComparator;
-import net.sourceforge.pebble.security.PebbleUserDetailsService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -56,11 +54,6 @@ public class BlogManager {
 
   private static final String THEMES_PATH = "themes";
   private static final String DEFAULT_BLOG = "default";
-
-  /** the current PebbleContext instance */
-  private PebbleContext pebbleContext;
-
-  private PebbleUserDetailsService pebbleUserDetailsService;
 
   /** the directory where themes are located */
   private String webappRoot;
@@ -112,7 +105,7 @@ public class BlogManager {
    * Configures this instance to manage the blog(s) in the specified directory.
    */
   public void startBlogs() {
-    File dataDirectory = new File(pebbleContext.getDataDirectory());
+    File dataDirectory = new File(PebbleContext.getInstance().getConfiguration().getDataDirectory());
     if (!dataDirectory.exists()) {
       log.info("Pebble data directory does not exist - creating");
       dataDirectory.mkdirs();
@@ -249,7 +242,7 @@ public class BlogManager {
   }
 
   public MultiBlog getMultiBlog() {
-    return new MultiBlog(pebbleContext.getDataDirectory());
+    return new MultiBlog(PebbleContext.getInstance().getConfiguration().getDataDirectory());
   }
 
   public long getFileUploadSize() {
@@ -269,23 +262,7 @@ public class BlogManager {
   }
 
   private File getBlogsDirectory() {
-    return new File(pebbleContext.getDataDirectory(), "blogs");
-  }
-
-  public PebbleContext getPebbleContext() {
-    return pebbleContext;
-  }
-
-  public void setPebbleContext(PebbleContext pebbleContext) {
-    this.pebbleContext = pebbleContext;
-  }
-
-  public PebbleUserDetailsService getPebbleUserDetailsService() {
-    return pebbleUserDetailsService;
-  }
-
-  public void setPebbleUserDetailsService(PebbleUserDetailsService pebbleUserDetailsService) {
-    this.pebbleUserDetailsService = pebbleUserDetailsService;
+    return new File(PebbleContext.getInstance().getConfiguration().getDataDirectory(), "blogs");
   }
 
 }

@@ -12,6 +12,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import net.sourceforge.pebble.PebbleContext;
 import net.sourceforge.pebble.Constants;
+import net.sourceforge.pebble.Configuration;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -37,28 +38,18 @@ public class PebbleUserDetailsService implements UserDetailsService {
   private static final String EMAIL_ADDRESS = "emailAddress";
   private static final String WEBSITE = "website";
 
-  private PebbleContext pebbleContext;
+  private Configuration configuration;
 
   private PasswordEncoder passwordEncoder;
 
   private SaltSource saltSource;
 
-  /**
-   * Getter the for the pebbleContext property.
-   *
-   * @return  a PebbleContext instance
-   */
-  public PebbleContext getPebbleContext() {
-    return pebbleContext;
+  public Configuration getConfiguration() {
+    return configuration;
   }
 
-  /**
-   * Setter the for the pebbleContext property.
-   *
-   * @param pebbleContext   a PebbleContext instance
-   */
-  public void setPebbleContext(PebbleContext pebbleContext) {
-    this.pebbleContext = pebbleContext;
+  public void setConfiguration(Configuration configuration) {
+    this.configuration = configuration;
   }
 
   public PasswordEncoder getPasswordEncoder() {
@@ -158,7 +149,7 @@ public class PebbleUserDetailsService implements UserDetailsService {
   private File getFileForRealm() {
     // find the directory and file corresponding to the user, of the form
     // ${pebbleContext.dataDirectory}/realm/${username}.properties
-    return new File(pebbleContext.getDataDirectory(), REALM_DIRECTORY_NAME);
+    return new File(configuration.getDataDirectory(), REALM_DIRECTORY_NAME);
   }
 
   private File getFileForUser(String username) {

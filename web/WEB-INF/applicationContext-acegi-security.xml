@@ -28,7 +28,7 @@
   </bean>
 
   <bean id="pebbleUserDetailsService" class="net.sourceforge.pebble.security.PebbleUserDetailsService" singleton="true">
-    <property name="pebbleContext"><ref bean="pebbleContext"/></property>
+    <property name="configuration"><ref bean="pebbleConfiguration"/></property>
     <property name="passwordEncoder"><ref local="passwordEncoder"/></property>
     <property name="saltSource"><ref bean="saltSource"/></property>
   </bean>

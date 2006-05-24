@@ -31,9 +31,8 @@
  */
 package net.sourceforge.pebble;
 
-import net.sourceforge.pebble.dao.DAOFactory;
-import net.sourceforge.pebble.dao.file.FileDAOFactory;
 import net.sourceforge.pebble.util.RelativeDate;
+import net.sourceforge.pebble.security.PebbleUserDetailsService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -43,7 +42,7 @@ import java.util.Date;
 import java.util.Properties;
 
 /**
- * A bean representing configurable properties for Pebble.
+ * A bean representing the Pebble context.
  *
  * @author    Simon Brown
  */
@@ -52,14 +51,12 @@ public class PebbleContext {
   /** the log used by this class */
   private static Log log = LogFactory.getLog(PebbleContext.class);
 
+  private Configuration configuration;
+
+  private PebbleUserDetailsService pebbleUserDetailsService;
+
   private String buildVersion;
   private String buildDate;
-
-  private String dataDirectory = "${user.home}/pebble";
-  private String url;
-  private long fileUploadSize = 2048;
-  private long fileUploadQuota = -1;
-  private DAOFactory daoFactory = new FileDAOFactory();
 
   private static final String BUILD_VERSION_KEY = "build.version";
   private static final String BUILD_DATE_KEY = "build.date";
@@ -67,7 +64,13 @@ public class PebbleContext {
   /** the time that Pebble was started */
   private Date startTime;
 
-  public PebbleContext() {
+  private static final PebbleContext instance = new PebbleContext();
+
+  public static PebbleContext getInstance() {
+    return instance;
+  }
+
+  private PebbleContext() {
     // and note when Pebble was started
     this.startTime = new Date();
 
@@ -121,71 +124,20 @@ public class PebbleContext {
     return Runtime.getRuntime().totalMemory() / 1024;
   }
 
-  public String getUrl() {
-    return url;
+  public Configuration getConfiguration() {
+    return configuration;
   }
 
-  public void setUrl(String s) {
-    this.url = s;
-
-    if (url != null && !(url.length() == 0) && !url.endsWith("/")) {
-      url += "/";
-    }
+  public void setConfiguration(Configuration configuration) {
+    this.configuration = configuration;
   }
 
-  public long getFileUploadSize() {
-    return fileUploadSize;
+  public PebbleUserDetailsService getPebbleUserDetailsService() {
+    return pebbleUserDetailsService;
   }
 
-  public void setFileUploadSize(long fileUploadSize) {
-    this.fileUploadSize = fileUploadSize;
+  public void setPebbleUserDetailsService(PebbleUserDetailsService pebbleUserDetailsService) {
+    this.pebbleUserDetailsService = pebbleUserDetailsService;
   }
-
-  public long getFileUploadQuota() {
-    return fileUploadQuota;
-  }
-
-  public void setFileUploadQuota(long fileUploadQuota) {
-    this.fileUploadQuota = fileUploadQuota;
-  }
-
-  public DAOFactory getDaoFactory() {
-    return daoFactory;
-  }
-
-  public void setDaoFactory(DAOFactory daoFactory) {
-    this.daoFactory = daoFactory;
-  }
-
-  public String getDataDirectory() {
-    return dataDirectory;
-  }
-
-  public void setDataDirectory(String dataDirectory) {
-    this.dataDirectory = evaluateDirectory(dataDirectory);
-  }
-
-  /**
-   * Replaces ${some.property} at the start of the string with the value
-   * from System.getProperty(some.property).
-   *
-   * @param s   the String to transform
-   * @return  a new String, or the same String if it doesn't start with a
-   *          property name delimited by ${...}
-   */
-  private String evaluateDirectory(String s) {
-    log.debug("Raw string is " + s);
-    if (s.startsWith("${")) {
-      int index = s.indexOf("}");
-      String propertyName = s.substring(2, index);
-      String propertyValue = System.getProperty(propertyName);
-      log.debug(propertyName + " = " + propertyValue);
-      return propertyValue + s.substring(index+1);
-    } else {
-      return s;
-    }
-  }
-
-
-
+  
 }
