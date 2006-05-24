@@ -31,6 +31,10 @@ public class ResponseIndex {
   public ResponseIndex(Blog blog) {
     this.blog = blog;
 
+    File indexes = new File(blog.getIndexesDirectory());
+    if (!indexes.exists()) {
+      indexes.mkdir();
+    }
     approvedResponses = readIndex(State.APPROVED);
     pendingResponses = readIndex(State.PENDING);
     rejectedResponses = readIndex(State.REJECTED);
@@ -168,10 +172,6 @@ public class ResponseIndex {
     }
 
     try {
-      File indexes = new File(blog.getIndexesDirectory());
-      if (!indexes.exists()) {
-        indexes.mkdir();
-      }
       File indexFile = new File(blog.getIndexesDirectory(), filename);
       BufferedWriter writer = new BufferedWriter(new FileWriter(indexFile));
 

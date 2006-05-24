@@ -71,6 +71,11 @@ public class SearchIndex {
 
   public SearchIndex(Blog blog) {
     this.blog = blog;
+
+    File searchDirectory = new File(blog.getSearchIndexDirectory());
+    if (!searchDirectory.exists()) {
+      clear();
+    }
   }
 
   /**
@@ -100,11 +105,6 @@ public class SearchIndex {
   public void index(List blogEntries) {
     synchronized (blog) {
       try {
-        File searchDirectory = new File(blog.getSearchIndexDirectory());
-        if (!searchDirectory.exists()) {
-          clear();
-        }
-
         Analyzer analyzer = getAnalyzer();
         IndexWriter writer = new IndexWriter(blog.getSearchIndexDirectory(), analyzer, false);
 
@@ -131,12 +131,6 @@ public class SearchIndex {
   public void index(BlogEntry blogEntry) {
     try {
       synchronized (blog) {
-        File searchDirectory = new File(blog.getSearchIndexDirectory());
-        if (!searchDirectory.exists()) {
-          clear();
-        }
-
-
         // first delete the blog entry from the index (if it was there)
         unindex(blogEntry);
 
@@ -168,10 +162,9 @@ public class SearchIndex {
    */
   public void unindex(BlogEntry blogEntry) {
     try {
-      Blog rootBlog = blogEntry.getBlog();
-      synchronized (blogEntry) {
+      synchronized (blog) {
         log.debug("Attempting to delete index for " + blogEntry.getTitle());
-        IndexReader reader = IndexReader.open(rootBlog.getSearchIndexDirectory());
+        IndexReader reader = IndexReader.open(blog.getSearchIndexDirectory());
         Term term = new Term("id", blogEntry.getId());
         log.debug("Deleted " + reader.delete(term) + " document(s) from the index");
         reader.close();

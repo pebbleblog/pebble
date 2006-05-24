@@ -58,6 +58,11 @@ public class StaticPageIndex {
 
   public StaticPageIndex(Blog blog) {
     this.blog = blog;
+
+    File indexes = new File(blog.getIndexesDirectory());
+    if (!indexes.exists()) {
+      indexes.mkdir();
+    }
     readIndex();
   }
 
@@ -131,10 +136,6 @@ public class StaticPageIndex {
    */
   private void writeIndex() {
     try {
-      File indexes = new File(blog.getIndexesDirectory());
-      if (!indexes.exists()) {
-        indexes.mkdir();
-      }
       File indexFile = new File(blog.getIndexesDirectory(), "pages.index");
       BufferedWriter writer = new BufferedWriter(new FileWriter(indexFile));
 

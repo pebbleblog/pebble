@@ -54,6 +54,11 @@ public class CategoryIndex {
 
   public CategoryIndex(Blog blog) {
     this.blog = blog;
+
+    File indexes = new File(blog.getIndexesDirectory());
+    if (!indexes.exists()) {
+      indexes.mkdir();
+    }
     readIndex();
   }
 
@@ -140,10 +145,6 @@ public class CategoryIndex {
    */
   private void writeIndex() {
     try {
-      File indexes = new File(blog.getIndexesDirectory());
-      if (!indexes.exists()) {
-        indexes.mkdirs();
-      }
       File indexFile = new File(blog.getIndexesDirectory(), "categories.index");
       BufferedWriter writer = new BufferedWriter(new FileWriter(indexFile));
 

@@ -59,6 +59,11 @@ public class TagIndex {
 
   public TagIndex(Blog blog) {
     this.blog = blog;
+
+    File indexes = new File(blog.getIndexesDirectory());
+    if (!indexes.exists()) {
+      indexes.mkdir();
+    }
     readIndex();
     recalculateTagRankings();
   }
@@ -153,10 +158,6 @@ public class TagIndex {
    */
   private void writeIndex() {
     try {
-      File indexes = new File(blog.getIndexesDirectory());
-      if (!indexes.exists()) {
-        indexes.mkdir();
-      }
       File indexFile = new File(blog.getIndexesDirectory(), "tags.index");
       BufferedWriter writer = new BufferedWriter(new FileWriter(indexFile));
 
