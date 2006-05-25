@@ -62,7 +62,6 @@ public class BlogTest extends SingleBlogTestCase {
     assertEquals("UTF-8", blog.getCharacterEncoding());
     assertEquals(3, blog.getRecentBlogEntriesOnHomePage());
     assertEquals(3, blog.getRecentResponsesOnHomePage());
-    assertTrue(blog.getUpdateNotificationPingsAsCollection().isEmpty());
     assertTrue(blog.isPublic());
     assertFalse(blog.isPrivate());
     assertEquals("net.sourceforge.pebble.plugin.decorator.HideUnpublishedBlogEntriesDecorator\r\nnet.sourceforge.pebble.plugin.decorator.HideUnapprovedResponsesDecorator\r\nnet.sourceforge.pebble.plugin.decorator.HtmlDecorator\r\nnet.sourceforge.pebble.plugin.decorator.EscapeMarkupDecorator\r\nnet.sourceforge.pebble.plugin.decorator.RelativeUriDecorator\r\nnet.sourceforge.pebble.plugin.decorator.ReadMoreDecorator\r\nnet.sourceforge.pebble.plugin.decorator.BlogTagsDecorator", blog.getBlogEntryDecorators());
@@ -142,6 +141,7 @@ public class BlogTest extends SingleBlogTestCase {
 
   /**
    * Tests that we can get a specific YearlyBlog instance.
+   */
    public void testGetBlogForYear() {
    Calendar cal = blog.getCalendar();
    YearlyBlog yearlyBlog = blog.getBlogForYear(cal.get(Calendar.YEAR));
@@ -150,7 +150,8 @@ public class BlogTest extends SingleBlogTestCase {
    }
 
    /**
-   * Tests that we can get a previous YearlyBlog instance.
+    * Tests that we can get a previous YearlyBlog instance.
+    */
    public void testGetBlogForPreviousYear() {
    Calendar cal = blog.getCalendar();
    YearlyBlog yearlyBlog = blog.getBlogForYear(cal.get(Calendar.YEAR));
@@ -160,7 +161,8 @@ public class BlogTest extends SingleBlogTestCase {
    }
 
    /**
-   * Tests that we can get a next YearlyBlog instance.
+    * Tests that we can get a next YearlyBlog instance.
+    */
    public void testGetBlogForNextYear() {
    Calendar cal = blog.getCalendar();
    YearlyBlog yearlyBlog = blog.getBlogForYear(cal.get(Calendar.YEAR));
@@ -168,7 +170,6 @@ public class BlogTest extends SingleBlogTestCase {
    assertNotNull(yearlyBlog);
    assertEquals(cal.get(Calendar.YEAR)+1, yearlyBlog.getYear());
    }
-   */
 
   /**
    * Tests that we can get the first MonthlyBlog instance.
@@ -352,24 +353,6 @@ public class BlogTest extends SingleBlogTestCase {
     assertTrue(blog.isUserInRole(Constants.BLOG_CONTRIBUTOR_ROLE, "usern"));
   }
 
-  public void testUpdateNotificationPingWebSites() {
-    blog.setProperty(Blog.UPDATE_NOTIFICATION_PINGS_KEY, null);
-    assertTrue(blog.getUpdateNotificationPingsAsCollection().isEmpty());
-
-    blog.setProperty(Blog.UPDATE_NOTIFICATION_PINGS_KEY, "");
-    assertTrue(blog.getUpdateNotificationPingsAsCollection().isEmpty());
-
-    blog.setProperty(Blog.UPDATE_NOTIFICATION_PINGS_KEY, "http://www.abc.com");
-    assertEquals(1, blog.getUpdateNotificationPingsAsCollection().size());
-    assertEquals("http://www.abc.com", blog.getUpdateNotificationPingsAsCollection().iterator().next());
-
-    blog.setProperty(Blog.UPDATE_NOTIFICATION_PINGS_KEY, "http://www.abc.com\r\nhttp://www.def.com");
-    assertEquals(2, blog.getUpdateNotificationPingsAsCollection().size());
-    Iterator it = blog.getUpdateNotificationPingsAsCollection().iterator();
-    assertEquals("http://www.abc.com", it.next());
-    assertEquals("http://www.def.com", it.next());
-  }
-
   public void testInvalidDayOfMonthAfterTimeZoneChanges() {
     blog.getRecentBlogEntries();
     blog.setProperty(Blog.TIMEZONE_KEY, "America/New_York");
@@ -533,6 +516,22 @@ public class BlogTest extends SingleBlogTestCase {
     blog.getEventListenerList().addBlogListener(listener);
     blog.stop();
     assertEquals("321", buf.toString());
+  }
+
+  public void testApprovedCommentsForUnpublishedBlogEntriesDontShowUp() throws BlogException {
+    BlogService service = new BlogService();
+
+    BlogEntry blogEntry = new BlogEntry(blog);
+    blogEntry.setTitle("title1");
+    blogEntry.setBody("body1");
+    blogEntry.setPublished(false);
+    service.putBlogEntry(blogEntry);
+
+    Comment comment = blogEntry.createComment("title", "body", "author", "email", "website", "127.0.0.1");
+    blogEntry.addComment(comment);
+    service.putBlogEntry(blogEntry);
+
+    assertFalse(blog.getRecentApprovedResponses().contains(comment));
   }
 
 }

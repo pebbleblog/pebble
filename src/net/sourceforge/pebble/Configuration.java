@@ -48,6 +48,7 @@ public class Configuration {
 
   private String dataDirectory = "${user.home}/pebble";
   private String url;
+  private String smtpHost = "java:comp/env/mail/Session";
   private long fileUploadSize = 2048;
   private long fileUploadQuota = -1;
   private DAOFactory daoFactory = new FileDAOFactory();
@@ -65,6 +66,14 @@ public class Configuration {
     if (url != null && !(url.length() == 0) && !url.endsWith("/")) {
       url += "/";
     }
+  }
+
+  public String getSmtpHost() {
+    return smtpHost;
+  }
+
+  public void setSmtpHost(String smtpHost) {
+    this.smtpHost = smtpHost;
   }
 
   public long getFileUploadSize() {

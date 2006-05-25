@@ -32,6 +32,7 @@
 package net.sourceforge.pebble.event.blogentry;
 
 import net.sourceforge.pebble.domain.BlogEntry;
+import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.webservice.UpdateNotificationPingsClient;
 
 /**
@@ -40,6 +41,9 @@ import net.sourceforge.pebble.webservice.UpdateNotificationPingsClient;
  * @author Simon Brown
  */
 public class XmlRpcNotificationListener extends BlogEntryListenerSupport {
+
+  /** the name of the URL list property */
+  public static final String URL_LIST_KEY = "XmlRpcNotificationListener.urlList";
 
   /**
    * Called when a blog entry has been added.
@@ -69,7 +73,13 @@ public class XmlRpcNotificationListener extends BlogEntryListenerSupport {
    * @param blogEntry   the BlogEntry instance
    */
   private void sendNotification(BlogEntry blogEntry) {
+    Blog blog = blogEntry.getBlog();
+    String urlList = blog.getPluginProperties().getProperty(URL_LIST_KEY);
+    String urls[] = new String[0];
+    if (urlList != null) {
+      urls = urlList.split(",");
+    }
     UpdateNotificationPingsClient client = new UpdateNotificationPingsClient();
-    client.sendUpdateNotificationPing(blogEntry.getBlog());
+    client.sendUpdateNotificationPing(blog, urls);
   }
 }

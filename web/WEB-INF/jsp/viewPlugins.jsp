@@ -75,6 +75,15 @@
 
       <tr>
         <td valign="top">
+          Lucene Analyzer
+        </td>
+        <td>
+          <input type="text" name="luceneAnalyzer" size="60" value="${blog.luceneAnalyzer}">
+        </td>
+      </tr>
+
+      <tr>
+        <td valign="top">
           Logger (<span class="help"><a href="${pageContext.request.contextPath}/docs/logs.html" target="_blank">Help</a></span>)
         </td>
         <td>

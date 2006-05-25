@@ -129,6 +129,12 @@ a:visited {
   padding-top: 4px;
   color: #6e7d8e;
 }
+.subsubtitle {
+  font-size: 12px;
+  font-weight: normal;
+  padding-top: 4px;
+  color: #6e7d8e;
+}
 .contentItem {
   padding-left: 8px;
   padding-right: 8px;

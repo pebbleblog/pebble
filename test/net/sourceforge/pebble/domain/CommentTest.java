@@ -44,12 +44,14 @@ import java.util.Date;
  */
 public class CommentTest extends SingleBlogTestCase {
 
+  private BlogEntry blogEntry;
   private Comment comment;
 
   protected void setUp() throws Exception {
     super.setUp();
 
-    comment = new BlogEntry(blog).createComment("Title", "Body", "Author", "me@somedomain.com", "http://www.google.com", "127.0.0.1");
+    blogEntry = new BlogEntry(blog);
+    comment = blogEntry.createComment("Title", "Body", "Author", "me@somedomain.com", "http://www.google.com", "127.0.0.1");
     comment.setEventsEnabled(true);
   }
 
@@ -394,6 +396,34 @@ public class CommentTest extends SingleBlogTestCase {
 
     blog.getEventListenerList().addCommentListener(listener);
     comment.setApproved();
+  }
+
+  public void testNestedCommentsAreUnindexedWhenParentDeleted() throws Exception {
+    BlogService service = new BlogService();
+    Comment comment2 = blogEntry.createComment("Title", "Body", "Author", "me@somedomain.com", "http://www.google.com", "127.0.0.1");
+    Comment comment3 = blogEntry.createComment("Title", "Body", "Author", "me@somedomain.com", "http://www.google.com", "127.0.0.1");
+
+    service.putBlogEntry(blogEntry);
+    blogEntry.addComment(comment);
+
+    comment2.setParent(comment);
+    blogEntry.addComment(comment2);
+    service.putBlogEntry(blogEntry);
+
+    comment3.setParent(comment);
+    blogEntry.addComment(comment3);
+    service.putBlogEntry(blogEntry);
+
+    assertTrue(blog.getResponseIndex().getPendingResponses().contains(comment.getGuid()));
+    assertTrue(blog.getResponseIndex().getPendingResponses().contains(comment2.getGuid()));
+    assertTrue(blog.getResponseIndex().getPendingResponses().contains(comment3.getGuid()));
+
+    blogEntry.removeComment(comment.getId());
+    service.putBlogEntry(blogEntry);
+
+    assertFalse(blog.getResponseIndex().getPendingResponses().contains(comment.getGuid()));
+    assertFalse(blog.getResponseIndex().getPendingResponses().contains(comment2.getGuid()));
+    assertFalse(blog.getResponseIndex().getPendingResponses().contains(comment3.getGuid()));
   }
 
 }

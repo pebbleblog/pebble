@@ -416,4 +416,88 @@ public class BlogServiceTest extends SingleBlogTestCase {
     assertEquals("321", buf.toString());
   }
 
+  /**
+   * Tests that comment listeners are fired when a blog entry is removed.
+   */
+  public void testListenersFiredForCommentsWhenBlogEntryRemoved() throws Exception {
+    final Comment comment1 = blogEntry.createComment("title", "body", "author", "email", "website", "127.0.0.1");
+    final Comment comment2 = blogEntry.createComment("title", "body", "author", "email", "website", "127.0.0.1");
+    final Comment comment3 = blogEntry.createComment("title", "body", "author", "email", "website", "127.0.0.1");
+
+    blogEntry.addComment(comment1);
+    blogEntry.addComment(comment2);
+    service.putBlogEntry(blogEntry);
+
+    comment3.setParent(comment2);
+    blogEntry.addComment(comment3);
+    service.putBlogEntry(blogEntry);
+
+    final List comments = new ArrayList();
+
+    CommentListener listener = new CommentListener() {
+      public void commentAdded(CommentEvent event) {
+        fail();
+      }
+
+      public void commentRemoved(CommentEvent event) {
+        comments.add(event.getSource());
+      }
+
+      public void commentApproved(CommentEvent event) {
+        fail();
+      }
+
+      public void commentRejected(CommentEvent event) {
+        fail();
+      }
+    };
+
+    blog.getEventListenerList().addCommentListener(listener);
+    service.removeBlogEntry(blogEntry);
+
+    assertEquals(comment1, comments.get(0));
+    assertEquals(comment2, comments.get(1));
+    assertEquals(comment3, comments.get(2));
+  }
+
+  /**
+   * Tests that TrackBack listeners are fired when a blog entry is removed.
+   */
+  public void testListenersFiredForTrackBacksWhenBlogEntryRemoved() throws Exception {
+    final TrackBack trackBack1 = blogEntry.createTrackBack("title", "excerpt", "url", "blogName", "127.0.0.1");
+    final TrackBack trackBack2 = blogEntry.createTrackBack("title", "excerpt", "url", "blogName", "127.0.0.1");
+    final TrackBack trackBack3 = blogEntry.createTrackBack("title", "excerpt", "url", "blogName", "127.0.0.1");
+
+    blogEntry.addTrackBack(trackBack1);
+    blogEntry.addTrackBack(trackBack2);
+    blogEntry.addTrackBack(trackBack3);
+    service.putBlogEntry(blogEntry);
+
+    final List trackBacks = new ArrayList();
+
+    TrackBackListener listener = new TrackBackListener() {
+      public void trackBackAdded(TrackBackEvent event) {
+        fail();
+      }
+
+      public void trackBackRemoved(TrackBackEvent event) {
+        trackBacks.add(event.getSource());
+      }
+
+      public void trackBackApproved(TrackBackEvent event) {
+        fail();
+      }
+
+      public void trackBackRejected(TrackBackEvent event) {
+        fail();
+      }
+    };
+
+    blog.getEventListenerList().addTrackBackListener(listener);
+    service.removeBlogEntry(blogEntry);
+
+    assertEquals(trackBack1, trackBacks.get(0));
+    assertEquals(trackBack2, trackBacks.get(1));
+    assertEquals(trackBack3, trackBacks.get(2));
+  }
 }

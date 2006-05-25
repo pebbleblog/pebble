@@ -297,8 +297,18 @@ public class Comment extends Response {
    */
   void removeComment(Comment comment) {
     if (comment != null && comments.contains(comment)) {
+      // remove all children
+      for (Comment child : getComments()) {
+        comment.removeComment(child);
+      }
+
+      // then remove the comment itself
       comments.remove(comment);
       comment.setParent(null);
+
+      if (areEventsEnabled()) {
+        getBlogEntry().addEvent(new CommentEvent(comment, CommentEvent.COMMENT_REMOVED));
+      }
     }
   }
 
@@ -307,8 +317,8 @@ public class Comment extends Response {
    *
    * @return  a List of Comment instances
    */
-  public List getComments() {
-    return Collections.unmodifiableList(comments);
+  public List<Comment> getComments() {
+    return new ArrayList<Comment>(comments);
   }
 
   /**

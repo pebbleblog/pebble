@@ -588,7 +588,7 @@ public class BlogEntry extends PageBasedContent {
       // not the same instance
       comment.setDate(new Date(comment.getDate().getTime() + 1));
       addComment(comment);
-    } else if (existingComment != null && existingComment == comment) {
+    } else if (existingComment != null) {
       return;
     } else {
       if (comment.getParent() != null) {
@@ -662,6 +662,11 @@ public class BlogEntry extends PageBasedContent {
   public synchronized void removeComment(long id) {
     Comment comment = getComment(id);
     if (comment != null) {
+
+      // get all children and delete them
+      for (Comment child : comment.getComments()) {
+        comment.removeComment(child);
+      }
 
       if (comment.getParent() != null) {
         comment.getParent().removeComment(comment);

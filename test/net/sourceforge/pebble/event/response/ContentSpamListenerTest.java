@@ -57,6 +57,7 @@ public class ContentSpamListenerTest extends SingleBlogTestCase {
   protected void setUp() throws Exception {
     super.setUp();
 
+    blog.getPluginProperties().setProperty(ContentSpamListener.REGEX_LIST_KEY, "test");
     listener = new ContentSpamListener();
     BlogEntry blogEntry = new BlogEntry(blog);
     comment = blogEntry.createComment("Title", "Body", "Author", "me@somedomain.com", "http://www.google.com", "127.0.0.1");

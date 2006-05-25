@@ -27,9 +27,12 @@
           <tr>
             <td valign="top"><b>Date/time</b></td>
             <td>
-              <input type="radio" name="now" value="true" checked="checked" />&nbsp;Now
+              <input type="radio" name="publishDate" value="as-is" checked="checked" />&nbsp;As-is (<fmt:formatDate value="${blogEntry.date}" type="both" dateStyle="medium" timeStyle="long" />)
               <br />
-              <input type="radio" name="now" value="false" />&nbsp;<input type="text" name="date" size="20" value="<fmt:formatDate value="${blogEntry.date}" type="both" dateStyle="medium" timeStyle="short" />" onfocus="publishBlogEntryForm.now[1].checked=true">
+              <input type="radio" name="publishDate" value="now" />&nbsp;Now
+              <br />
+              <jsp:useBean id="now" class="java.util.Date" />
+              <input type="radio" name="publishDate" value="custom" />&nbsp;<input type="text" name="date" size="20" value="<fmt:formatDate value="${now}" type="both" dateStyle="medium" timeStyle="short" />" onfocus="publishBlogEntryForm.publishDate[2].checked=true">
             </td>
           </tr>
 

@@ -32,6 +32,7 @@
 package net.sourceforge.pebble;
 
 import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.event.response.ContentSpamListener;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -66,11 +67,23 @@ public class PluginProperties {
   }
 
   /**
+   * Gets the default properties for a Blog.
+   *
+   * @return    a Properties instance
+   */
+  protected Properties getDefaultProperties() {
+    Properties defaultProperties = new Properties();
+    defaultProperties.setProperty(ContentSpamListener.REGEX_LIST_KEY, "cialis, viagra, poker, casino, xanax, holdem, hold-em, hold em, sex, craps, fuck, shit, teenage, phentermine, blackjack, roulette, gambling, pharmacy, carisoprodol, pills, penis, penis enlargement, anal, hentai, anime, vicodin, massage, nude, ejaculation, porn, gay, naked, girl, teens, babe, masturbating, squirt, incest, fetish, discount, cheap, interesdting, Anonymous, h1, levitra, government, grants, loan, &\\#.*;, kasino, slots, play, bingo, mortgage, baccarat");
+
+    return defaultProperties;
+  }
+
+  /**
    * Helper method to load the properties from disk.
    */
   private void loadProperties() {
     try {
-      this.properties = new Properties();
+      this.properties = new Properties(getDefaultProperties());
       FileInputStream fin = new FileInputStream(blog.getPluginPropertiesFile());
       properties.load(fin);
       fin.close();

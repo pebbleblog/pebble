@@ -484,11 +484,10 @@ public class FileBlogEntryDAO implements BlogEntryDAO {
 //        break;
 //    }
 
-    File oldFile = new File(path, blogEntry.getId() + ".xml");
-    File newFile = new File(path, blogEntry.getId() + ".deleted");
+    File file = new File(path, blogEntry.getId() + ".xml");
     log.debug("Removing " + blogEntry.getGuid());
 
-    boolean success = oldFile.renameTo(newFile);
+    boolean success = file.delete();
     if (!success) {
       throw new PersistenceException("Deletion of blog entry " + blogEntry.getGuid() + " failed");
     }

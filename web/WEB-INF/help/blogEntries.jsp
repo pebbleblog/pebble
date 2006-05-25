@@ -16,7 +16,7 @@
     </p>
 
     <p>
-    The body of a blog entry is just a XHTML or HTML fragment, meaning that you can use any XHTML or HTML tags you like for markup and formatting. Common examples include using bold and italics. Also, you can include other elements such as hyperlinks and <a href="images.html">images</a>.
+    The body of a blog entry is just a XHTML or HTML fragment, meaning that you can use any XHTML or HTML tags you like for markup and formatting. Common examples include using bold and italics. Also, you can include other elements such as hyperlinks and <a href="images.jsp">images</a>.
     </p>
 
     <h3>Excerpts</h3>

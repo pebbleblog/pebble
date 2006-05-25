@@ -140,6 +140,13 @@ public class BlogService {
           if (!blogEntry.isPersistent()) {
             dao.storeBlogEntry(blogEntry);
             blogEntry.insertEvent(new BlogEntryEvent(blogEntry, BlogEntryEvent.BLOG_ENTRY_ADDED));
+
+            for (Comment comment : blogEntry.getComments()) {
+              blogEntry.addEvent(new CommentEvent(comment, CommentEvent.COMMENT_ADDED));
+            }
+            for (TrackBack trackBack : blogEntry.getTrackBacks()) {
+              blogEntry.addEvent(new TrackBackEvent(trackBack, TrackBackEvent.TRACKBACK_ADDED));
+            }
           } else {
             dao.storeBlogEntry(blogEntry);
             if (blogEntry.isDirty()) {
@@ -174,6 +181,16 @@ public class BlogService {
       blogEntry.setPersistent(false);
 
       blogEntry.insertEvent(new BlogEntryEvent(blogEntry, BlogEntryEvent.BLOG_ENTRY_REMOVED));
+
+      // and remove all of the responses, so the appropriate events are raised
+      // and the responses get unindexed
+      for (Comment comment : blogEntry.getComments()) {
+        blogEntry.addEvent(new CommentEvent(comment, CommentEvent.COMMENT_REMOVED));
+      }
+      for (TrackBack trackBack : blogEntry.getTrackBacks()) {
+        blogEntry.addEvent(new TrackBackEvent(trackBack, TrackBackEvent.TRACKBACK_REMOVED));
+      }
+
       blogEntry.getBlog().getEventDispatcher().fireEvents(blogEntry);
     } catch (PersistenceException pe) {
     }

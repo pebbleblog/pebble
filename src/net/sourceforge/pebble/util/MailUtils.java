@@ -35,6 +35,7 @@ import net.sourceforge.pebble.domain.Blog;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import net.sourceforge.pebble.web.validation.ValidationContext;
+import net.sourceforge.pebble.PebbleContext;
 
 import javax.mail.Message;
 import javax.mail.Session;
@@ -210,7 +211,7 @@ public class MailUtils {
    * @throws Exception    if something goes wronf creating a session
    */
   public static Session createSession(Blog blog) throws Exception {
-    String ref = blog.getSmtpHost();
+    String ref = PebbleContext.getInstance().getConfiguration().getSmtpHost();
     if (ref.startsWith("java:comp/env")) {
       // this is a JNDI based mail session
       Context ctx = new InitialContext();

@@ -110,7 +110,7 @@ public class ActionFactory {
 
         return action;
       } else {
-        throw new ActionNotFoundException("An action called " + name + " could not be found - please check the " + actionMappingFileName + " file");
+        throw new ActionNotFoundException("An action called " + name + " could not be found");
       }
     } catch (ClassNotFoundException cnfe) {
       log.error(cnfe.getMessage(), cnfe);

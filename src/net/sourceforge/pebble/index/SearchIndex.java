@@ -72,10 +72,10 @@ public class SearchIndex {
   public SearchIndex(Blog blog) {
     this.blog = blog;
 
-    File searchDirectory = new File(blog.getSearchIndexDirectory());
-    if (!searchDirectory.exists()) {
-      clear();
-    }
+//    File searchDirectory = new File(blog.getSearchIndexDirectory());
+//    if (!searchDirectory.exists()) {
+//      clear();
+//    }
   }
 
   /**

@@ -61,8 +61,6 @@ import java.util.*;
 public class Blog extends AbstractBlog {
 
   public static final String EMAIL_KEY = "email";
-  public static final String SMTP_HOST_KEY = "smtpHost";
-  public static final String UPDATE_NOTIFICATION_PINGS_KEY = "updateNotificationPings";
   public static final String BLOG_OWNERS_KEY = "blogOwners";
   public static final String BLOG_CONTRIBUTORS_KEY = "blogContributors";
   public static final String PRIVATE_KEY = "private";
@@ -151,13 +149,6 @@ public class Blog extends AbstractBlog {
 
     yearlyBlogs = new ArrayList();
 
-    // reindex the blog if the indexes don't exist
-    File indexes = new File(getIndexesDirectory());
-    if (!indexes.exists()) {
-      indexes.mkdir();
-//      reindex();
-    }
-
     // create the various indexes for this blog
     searchIndex = new SearchIndex(this);
     blogEntryIndex = new BlogEntryIndex(this);
@@ -165,6 +156,13 @@ public class Blog extends AbstractBlog {
     tagIndex = new TagIndex(this);
     categoryIndex = new CategoryIndex(this);
     staticPageIndex = new StaticPageIndex(this);
+
+    // reindex the blog if the indexes don't exist
+    File indexes = new File(getIndexesDirectory());
+    if (!indexes.exists()) {
+      indexes.mkdir();
+      reindex();
+    }
 
     File imagesDirectory = new File(getImagesDirectory());
     if (!imagesDirectory.exists()) {
@@ -345,22 +343,24 @@ public class Blog extends AbstractBlog {
     defaultProperties.setProperty(CHARACTER_ENCODING_KEY, "UTF-8");
     defaultProperties.setProperty(RECENT_BLOG_ENTRIES_ON_HOME_PAGE_KEY, "3");
     defaultProperties.setProperty(RECENT_RESPONSES_ON_HOME_PAGE_KEY, "3");
-    defaultProperties.setProperty(UPDATE_NOTIFICATION_PINGS_KEY, "");
     defaultProperties.setProperty(THEME_KEY, "default");
     defaultProperties.setProperty(PRIVATE_KEY, FALSE);
     defaultProperties.setProperty(LUCENE_ANALYZER_KEY, "org.apache.lucene.analysis.standard.StandardAnalyzer");
     defaultProperties.setProperty(BLOG_ENTRY_DECORATORS_KEY, "net.sourceforge.pebble.plugin.decorator.HideUnpublishedBlogEntriesDecorator\r\nnet.sourceforge.pebble.plugin.decorator.HideUnapprovedResponsesDecorator\r\nnet.sourceforge.pebble.plugin.decorator.HtmlDecorator\r\nnet.sourceforge.pebble.plugin.decorator.EscapeMarkupDecorator\r\nnet.sourceforge.pebble.plugin.decorator.RelativeUriDecorator\r\nnet.sourceforge.pebble.plugin.decorator.ReadMoreDecorator\r\nnet.sourceforge.pebble.plugin.decorator.BlogTagsDecorator");
+    defaultProperties.setProperty(BLOG_ENTRY_LISTENERS_KEY, "net.sourceforge.pebble.event.blogentry.XmlRpcNotificationListener");
     defaultProperties.setProperty(COMMENT_LISTENERS_KEY,
         "net.sourceforge.pebble.event.response.IpAddressListener\r\n" +
         "net.sourceforge.pebble.event.response.LinkSpamListener\r\n" +
         "net.sourceforge.pebble.event.response.ContentSpamListener\r\n" +
         "net.sourceforge.pebble.event.response.SpamScoreListener\r\n" +
+        "#net.sourceforge.pebble.event.response.DeleteRejectedListener\r\n" +
         "#net.sourceforge.pebble.event.comment.EmailNotificationListener");
     defaultProperties.setProperty(TRACKBACK_LISTENERS_KEY,
         "net.sourceforge.pebble.event.response.IpAddressListener\r\n" +
         "net.sourceforge.pebble.event.response.LinkSpamListener\r\n" +
         "net.sourceforge.pebble.event.response.ContentSpamListener\r\n" +
         "net.sourceforge.pebble.event.response.SpamScoreListener\r\n" +
+        "#net.sourceforge.pebble.event.response.DeleteRejectedListener\r\n" +
         "#net.sourceforge.pebble.event.trackback.EmailNotificationListener");
     defaultProperties.setProperty(PERMALINK_PROVIDER_KEY, "net.sourceforge.pebble.plugin.permalink.DefaultPermalinkProvider");
     defaultProperties.setProperty(EVENT_DISPATCHER_KEY, "net.sourceforge.pebble.event.DefaultEventDispatcher");
@@ -417,44 +417,6 @@ public class Blog extends AbstractBlog {
     } else {
       return "";
     }
-  }
-
-  /**
-   * Gets the name of the SMTP (mail) host.
-   *
-   * @return    the SMTP host
-   */
-  public String getSmtpHost() {
-    return properties.getProperty(SMTP_HOST_KEY);
-  }
-
-  /**
-   * Gets the list of websites that should be pinged when this
-   * blog is updated.
-   *
-   * @return  a comma separated list of website addresses
-   */
-  public String getUpdateNotificationPings() {
-    return properties.getProperty(UPDATE_NOTIFICATION_PINGS_KEY);
-  }
-
-  /**
-   * Gets the collection of websites that should be pinged when this
-   * blog is updated.
-   *
-   * @return  a Collection of Strings representing website addresses
-   */
-  public Collection getUpdateNotificationPingsAsCollection() {
-    Set websites = new HashSet();
-    String notificationPings = getUpdateNotificationPings();
-    if (notificationPings != null && notificationPings.length() > 0) {
-      String s[] = notificationPings.split("\\s+");
-      for (int i = 0; i < s.length; i++) {
-        websites.add(s[i]);
-      }
-    }
-
-    return websites;
   }
 
   /**
@@ -833,13 +795,19 @@ public class Blog extends AbstractBlog {
    *
    * @return a List containing the most recent blog entries
    */
-  public List getRecentApprovedResponses() {
-    int number = getRecentResponsesOnHomePage();
+  public List<Response> getRecentApprovedResponses() {
     BlogService service = new BlogService();
-    List<String> responseIds = responseIndex.getRecentResponses(number);
-    List responses = new ArrayList();
+    List<String> responseIds = responseIndex.getApprovedResponses();
+    List<Response> responses = new ArrayList<Response>();
     for (String responseId : responseIds) {
-      responses.add(service.getResponse(this, responseId));
+      Response response = service.getResponse(this, responseId);
+      if (response.getBlogEntry().isPublished()) {
+        responses.add(response);
+      }
+
+      if (responses.size() == getRecentBlogEntriesOnHomePage()) {
+        break;
+      }
     }
 
     return responses;

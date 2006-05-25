@@ -59,10 +59,10 @@ public class StaticPageIndex {
   public StaticPageIndex(Blog blog) {
     this.blog = blog;
 
-    File indexes = new File(blog.getIndexesDirectory());
-    if (!indexes.exists()) {
-      indexes.mkdir();
-    }
+//    File indexes = new File(blog.getIndexesDirectory());
+//    if (!indexes.exists()) {
+//      indexes.mkdir();
+//    }
     readIndex();
   }
 

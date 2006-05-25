@@ -1,5 +1,5 @@
-Prequisites
------------
+Prerequisites
+-------------
  - Java 5.0
  - A JSP 2.0/Servlet 2.4 compatible server such as Apache Tomcat 5.5.x 
 

@@ -39,9 +39,7 @@ import org.apache.xmlrpc.XmlRpcClient;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Collection;
 import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.Vector;
 
 /**
@@ -63,9 +61,10 @@ public class UpdateNotificationPingsClient {
    * recently been updated. This version sends the blog's home URL.
    *
    * @param blog    the Blog representing the updated blog
+   * @param sites   the list of sites (URLs) to ping
    */
-  public void sendUpdateNotificationPing(Blog blog) {
-    sendUpdateNotificationPing(blog, blog.getUrl());
+  public void sendUpdateNotificationPing(Blog blog, String[] sites) {
+    sendUpdateNotificationPing(blog, blog.getUrl(), sites);
   }
 
   /**
@@ -74,15 +73,13 @@ public class UpdateNotificationPingsClient {
    *
    * @param blog    the Blog representing the updated blog
    * @param url     the URL to send the ping for
+   * @param sites   the list of sites (URLs) to ping
    */
-  public void sendUpdateNotificationPing(Blog blog, String url) {
+  public void sendUpdateNotificationPing(Blog blog, String url, String[] sites) {
     try {
-      Collection websites = blog.getUpdateNotificationPingsAsCollection();
-      Iterator it = websites.iterator();
-      while (it.hasNext()) {
-        String website = (String)it.next();
-        log.info("Pinging " + website);
-        XmlRpcClient xmlrpc = new XmlRpcClient(website);
+      for (String site : sites) {
+        log.debug("Pinging " + site);
+        XmlRpcClient xmlrpc = new XmlRpcClient(site);
         Vector params = new Vector();
         params.addElement(blog.getName());
         params.addElement(url);
@@ -108,7 +105,7 @@ public class UpdateNotificationPingsClient {
     public void handleResult(Object o, URL url, String method) {
       Hashtable result = (Hashtable)o;
       if (result != null) {
-        log.info("Result of calling " + method + " at " + url + " was " + result.get("flerror") + ", " + result.get("message"));
+        log.debug("Result of calling " + method + " at " + url + " was " + result.get("flerror") + ", " + result.get("message"));
       }
     }
 

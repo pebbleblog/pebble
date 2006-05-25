@@ -67,7 +67,7 @@ public class PublishBlogEntryAction extends SecureAction {
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
     String id = request.getParameter("entry");
     String submit = request.getParameter("submit");
-    String now = request.getParameter("now");
+    String publishDate = request.getParameter("publishDate");
 
     BlogService service = new BlogService();
     BlogEntry blogEntry = service.getBlogEntry(blog, id);
@@ -81,34 +81,44 @@ public class PublishBlogEntryAction extends SecureAction {
       dateFormat.setTimeZone(blog.getTimeZone());
       dateFormat.setLenient(false);
 
-      Date publishDate = new Date();
-      if (now != null && now.equalsIgnoreCase("false")) {
-        String dateAsString = request.getParameter("date");
-        if (dateAsString != null && dateAsString.length() > 0) {
-          try {
-            publishDate = dateFormat.parse(dateAsString);
-            if (publishDate.after(new Date())) {
-              publishDate = new Date();
+      if (publishDate != null && publishDate.equalsIgnoreCase("as-is")) {
+        // this is the easiest scenario - just set the blog entry to published
+        try {
+          blogEntry.setPublished(true);
+          service.putBlogEntry(blogEntry);
+        } catch (BlogException be) {
+          log.error(be);
+        }
+      } else {
+        Date date = new Date();
+        if (publishDate != null && publishDate.equalsIgnoreCase("custom")) {
+          Date now = new Date();
+          String dateAsString = request.getParameter("date");
+          if (dateAsString != null && dateAsString.length() > 0) {
+            try {
+              date = dateFormat.parse(dateAsString);
+              if (date.after(now)) {
+                date = now;
+              }
+            } catch (ParseException pe) {
+              log.warn(pe);
             }
-          } catch (ParseException pe) {
-            log.warn(pe);
           }
         }
+
+        // now save the published entry and remove the unpublished version
+        try {
+          log.info("Removing blog entry dated " + blogEntry.getDate());
+          service.removeBlogEntry(blogEntry);
+
+          blogEntry.setDate(date);
+          blogEntry.setPublished(true);
+          log.info("Putting blog entry dated " + blogEntry.getDate());
+          service.putBlogEntry(blogEntry);
+        } catch (BlogException be) {
+          log.error(be);
+        }
       }
-
-      // now save the published entry and remove the unpublished version
-      try {
-        log.info("Removing blog entry dated " + blogEntry.getDate());
-        service.removeBlogEntry(blogEntry);
-
-        blogEntry.setDate(publishDate);
-        blogEntry.setPublished(true);
-        log.info("Putting blog entry dated " + blogEntry.getDate());
-        service.putBlogEntry(blogEntry);
-      } catch (BlogException be) {
-        log.error(be);
-      }
-
     } else if (submit.equals("Unpublish")) {
       blogEntry.setPublished(false);
       try {

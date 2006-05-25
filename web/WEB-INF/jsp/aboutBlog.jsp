@@ -134,12 +134,19 @@
         </td>
       </tr>
 
-      <tr class="odd">
-        <td valign="top"><b>Logger</b></td>
-        <td>
+    <tr class="odd">
+      <td valign="top"><b>Lucene Analyzer</b></td>
+      <td>
+          ${blog.luceneAnalyzer}
+      </td>
+    </tr>
+
+    <tr class="even">
+      <td valign="top"><b>Logger</b></td>
+      <td>
           ${blog.logger.class.name}
-        </td>
-      </tr>
+      </td>
+    </tr>
 
     </table>
   </div>

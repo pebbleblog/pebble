@@ -32,11 +32,13 @@
 package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
+import net.sourceforge.pebble.event.response.IpAddressListener;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.RedirectView;
 import net.sourceforge.pebble.domain.BlogEntry;
 import net.sourceforge.pebble.domain.State;
 import net.sourceforge.pebble.domain.BlogService;
+import net.sourceforge.pebble.domain.Comment;
 
 import java.util.Date;
 
@@ -62,13 +64,69 @@ public class PublishBlogEntryActionTest extends SecureActionTestCase {
 
     // now execute the action
     request.setParameter("entry", blogEntry.getId());
-    request.setParameter("now", "true");
+    request.setParameter("publishDate", "now");
     request.setParameter("submit", "Publish");
     View view = action.process(request, response);
 
     assertTrue(blogEntry.isPublished());
     assertEquals(new Date().getTime(), blogEntry.getDate().getTime(), 1000);
     assertTrue(view instanceof RedirectView);
+  }
+
+  public void testPublishBlogEntryAsIsAndCheckCommentsStaysIndexed() throws Exception {
+    blog.getPluginProperties().setProperty(IpAddressListener.WHITELIST_KEY, "127.0.0.1");
+    BlogService service = new BlogService();
+    BlogEntry blogEntry = new BlogEntry(blog);
+    blogEntry.setDate(new Date(100000));
+    blogEntry.setPublished(false);
+    service.putBlogEntry(blogEntry);
+
+    Comment comment = blogEntry.createComment("title", "body", "author", "email", "website", "127.0.0.1");
+    blogEntry.addComment(comment);
+    service.putBlogEntry(blogEntry);
+
+    String commentId = comment.getGuid();
+    assertTrue(blog.getResponseIndex().getApprovedResponses().contains(commentId));
+
+    // now execute the action
+    request.setParameter("entry", blogEntry.getId());
+    request.setParameter("publishDate", "as-is");
+    request.setParameter("submit", "Publish");
+    View view = action.process(request, response);
+    assertTrue(blogEntry.isPublished());
+    assertEquals(new Date(100000), blogEntry.getDate());
+
+    // check that the original comment remains intact
+    assertTrue(blog.getResponseIndex().getApprovedResponses().contains(commentId));
+  }
+
+  public void testPublishBlogEntryNowAndCheckCommentsReindexed() throws Exception {
+    blog.getPluginProperties().setProperty(IpAddressListener.WHITELIST_KEY, "127.0.0.1");
+    BlogService service = new BlogService();
+    BlogEntry blogEntry = new BlogEntry(blog);
+    blogEntry.setDate(new Date(100000));
+    blogEntry.setPublished(false);
+    service.putBlogEntry(blogEntry);
+
+    Comment comment = blogEntry.createComment("title", "body", "author", "email", "website", "127.0.0.1");
+    blogEntry.addComment(comment);
+    service.putBlogEntry(blogEntry);
+
+    String commentId = comment.getGuid();
+    assertTrue(blog.getResponseIndex().getApprovedResponses().contains(commentId));
+
+    // now execute the action
+    request.setParameter("entry", blogEntry.getId());
+    request.setParameter("publishDate", "now");
+    request.setParameter("submit", "Publish");
+    View view = action.process(request, response);
+
+    assertTrue(blogEntry.isPublished());
+    assertEquals(new Date().getTime(), blogEntry.getDate().getTime(), 1000);
+
+    // check that the original comment has been unindexed
+    assertFalse(blog.getResponseIndex().getApprovedResponses().contains(commentId));
+    assertTrue(blog.getResponseIndex().getApprovedResponses().contains(comment.getGuid()));
   }
 
   public void testUnpublishBlogEntry() throws Exception {
@@ -90,16 +148,6 @@ public class PublishBlogEntryActionTest extends SecureActionTestCase {
    * Test that only blog owners can approve comments.
    */
   public void testDefaultRoleIsBlogOwner() {
-    String roles[] = action.getRoles(request);
-    assertEquals(1, roles.length);
-    assertEquals(Constants.BLOG_OWNER_ROLE, roles[0]);
-  }
-
-  /**
-   * Test that only blog owners can approve comments.
-   */
-  public void testOnlyBlogOwnersHaveAccessToApprove() {
-    request.setParameter("submit", "Approve");
     String roles[] = action.getRoles(request);
     assertEquals(1, roles.length);
     assertEquals(Constants.BLOG_OWNER_ROLE, roles[0]);

@@ -54,6 +54,15 @@
 
       <tr>
         <td>
+          E-mail address
+        </td>
+        <td>
+          <input type="text" name="email" size="40" value="${blog.email}">
+        </td>
+      </tr>
+
+      <tr>
+        <td>
           Theme
         </td>
         <td>
@@ -123,15 +132,6 @@
       </tr>
 
       <tr>
-        <td>
-          Lucene Analyzer
-        </td>
-        <td>
-          <input type="text" name="luceneAnalyzer" size="40" value="${blog.luceneAnalyzer}">
-        </td>
-      </tr>
-
-      <tr>
         <td colspan="2">
           <br />
           <b>Security</b> (<span class="help"><a href="${pageContext.request.contextPath}/docs/multiuser-blogs.html#security" target="_blank">Help</a></span>)
@@ -153,47 +153,6 @@
         </td>
         <td>
           <input type="text" name="blogContributors" size="40" value="${blog.blogContributors}">
-        </td>
-      </tr>
-
-      <tr>
-        <td colspan="2">
-          <br />
-          <b>E-mail notifications</b>
-        </td>
-      </tr>
-
-      <tr>
-        <td>
-          E-mail address
-        </td>
-        <td>
-          <input type="text" name="email" size="40" value="${blog.email}">
-        </td>
-      </tr>
-
-      <tr>
-        <td>
-          SMTP (host or JNDI name)
-        </td>
-        <td>
-          <input type="text" name="smtpHost" size="40" value="${blog.smtpHost}">
-        </td>
-      </tr>
-
-      <tr>
-        <td colspan="2">
-          <br />
-          <b>XML-RPC update notification pings</b> (<span class="help"><a href="${pageContext.request.contextPath}/docs/update-pings.html" target="_blank">Help</a></span>)
-        </td>
-      </tr>
-
-      <tr>
-        <td valign="top">
-          Websites to ping
-        </td>
-        <td>
-          <textarea name="updateNotificationPings" rows="8" cols="40">${blog.updateNotificationPings}</textarea>
         </td>
       </tr>
 
