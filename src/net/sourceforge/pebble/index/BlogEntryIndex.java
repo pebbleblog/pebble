@@ -135,8 +135,10 @@ public class BlogEntryIndex {
           DailyBlog dailyBlog = blog.getBlogForDay(date);
 
           if (published) {
+            publishedIndexEntries.add(indexEntry);
             dailyBlog.addPublishedBlogEntry(indexEntry);
           } else {
+            unpublishedIndexEntries.add(indexEntry);
             dailyBlog.addUnpublishedBlogEntry(indexEntry);
           }
 
