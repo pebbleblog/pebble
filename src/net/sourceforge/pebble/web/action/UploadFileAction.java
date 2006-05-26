@@ -81,7 +81,7 @@ public abstract class UploadFileAction extends AbstractFileAction {
 
       if (isMultipart) {
         DiskFileUpload upload = new DiskFileUpload();
-        long sizeInBytes = BlogManager.getInstance().getFileUploadSize() * 1024; // convert to bytes
+        long sizeInBytes = PebbleContext.getInstance().getConfiguration().getFileUploadSize() * 1024; // convert to bytes
         upload.setSizeMax(sizeInBytes);
         upload.setSizeThreshold((int)sizeInBytes/4);
         upload.setRepositoryPath(System.getProperty("java.io.tmpdir"));

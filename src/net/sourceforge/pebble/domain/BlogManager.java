@@ -61,9 +61,6 @@ public class BlogManager {
   /** the blogs that are currently being managed */
   private Map blogs = new HashMap();
 
-  private long fileUploadSize = 2048;
-  private long fileUploadQuota = -1;
-
   /**
    * Creates a new instance - private constructor for the singleton pattern.
    */
@@ -243,22 +240,6 @@ public class BlogManager {
 
   public MultiBlog getMultiBlog() {
     return new MultiBlog(PebbleContext.getInstance().getConfiguration().getDataDirectory());
-  }
-
-  public long getFileUploadSize() {
-    return fileUploadSize;
-  }
-
-  public void setFileUploadSize(long fileUploadSize) {
-    this.fileUploadSize = fileUploadSize;
-  }
-
-  public long getFileUploadQuota() {
-    return fileUploadQuota;
-  }
-
-  public void setFileUploadQuota(long fileUploadQuota) {
-    this.fileUploadQuota = fileUploadQuota;
   }
 
   private File getBlogsDirectory() {

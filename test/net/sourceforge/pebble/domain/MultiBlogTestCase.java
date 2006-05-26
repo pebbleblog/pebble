@@ -48,7 +48,7 @@ public abstract class MultiBlogTestCase extends PebbleTestCase {
 
   protected void setUp() throws Exception {
     super.setUp();
-    
+
     DAOFactory.setConfiguredFactory(new MockDAOFactory());
 
     PebbleContext.getInstance().getConfiguration().setUrl("http://www.yourdomain.com/blog/");

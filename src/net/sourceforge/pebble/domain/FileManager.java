@@ -33,6 +33,7 @@ package net.sourceforge.pebble.domain;
 
 import net.sourceforge.pebble.comparator.FileMetaDataComparator;
 import net.sourceforge.pebble.util.FileUtils;
+import net.sourceforge.pebble.PebbleContext;
 
 import java.io.*;
 import java.util.*;
@@ -443,7 +444,7 @@ public class FileManager {
    * @return  true if there is enough space or quotas aren't active
    */
   public static boolean hasEnoughSpace(Blog blog, long itemSize) {
-    long quota = BlogManager.getInstance().getFileUploadQuota();
+    long quota = PebbleContext.getInstance().getConfiguration().getFileUploadQuota();
 
     return (quota == -1) || ((quota - getCurrentUsage(blog)) > itemSize);
   }

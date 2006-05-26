@@ -32,6 +32,7 @@
 package net.sourceforge.pebble.webservice;
 
 import net.sourceforge.pebble.domain.*;
+import net.sourceforge.pebble.PebbleContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.xmlrpc.XmlRpcException;
@@ -109,7 +110,7 @@ public class MetaWeblogAPIHandler extends AbstractAPIHandler {
         FileMetaData file = manager.saveFile(name, bytes);
         ht.put(URL, file.getUrl());
       } else {
-        throw new XmlRpcException(0, "You do not have enough free space - please free some space by removing unused files or asking your system administrator to increase your quota from " + BlogManager.getInstance().getFileUploadQuota() + " KB.");
+        throw new XmlRpcException(0, "You do not have enough free space - please free some space by removing unused files or asking your system administrator to increase your quota from " + PebbleContext.getInstance().getConfiguration().getFileUploadQuota() + " KB.");
       }
     } catch (IOException e) {
       e.printStackTrace();

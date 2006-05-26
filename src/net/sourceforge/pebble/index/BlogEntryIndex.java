@@ -40,6 +40,8 @@ public class BlogEntryIndex {
    */
   public void clear() {
     indexEntries = new ArrayList<String>();
+    publishedIndexEntries = new ArrayList<String>();
+    unpublishedIndexEntries = new ArrayList<String>();
     writeIndex(true);
     writeIndex(false);
   }

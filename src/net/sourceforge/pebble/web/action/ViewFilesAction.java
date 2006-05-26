@@ -32,6 +32,7 @@
 package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
+import net.sourceforge.pebble.PebbleContext;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.ForbiddenView;
 import net.sourceforge.pebble.web.view.impl.FilesView;
@@ -98,7 +99,7 @@ public class ViewFilesAction extends AbstractFileAction {
     getModel().put("uploadAction", uploadAction);
     getModel().put("root", fileManager.getFileMetaData("/"));
 
-    if (BlogManager.getInstance().getFileUploadQuota() > -1) {
+    if (PebbleContext.getInstance().getConfiguration().getFileUploadQuota() > -1) {
       getModel().put("currentUsage", new Long(FileManager.getCurrentUsage(blog)));
     }
 
