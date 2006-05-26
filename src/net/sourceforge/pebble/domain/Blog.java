@@ -33,8 +33,6 @@ package net.sourceforge.pebble.domain;
 
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.PluginProperties;
-import net.sourceforge.pebble.comparator.BlogEntryByTitleComparator;
-import net.sourceforge.pebble.dao.BlogEntryDAO;
 import net.sourceforge.pebble.dao.CategoryDAO;
 import net.sourceforge.pebble.dao.DAOFactory;
 import net.sourceforge.pebble.dao.PersistenceException;
@@ -721,14 +719,11 @@ public class Blog extends AbstractBlog {
    */
   public List getRecentPublishedBlogEntries() {
     BlogService service = new BlogService();
-    List<String> blogEntryIds = blogEntryIndex.getBlogEntries();
+    List<String> blogEntryIds = blogEntryIndex.getPublishedBlogEntries();
     List blogEntries = new ArrayList();
     for (String blogEntryId : blogEntryIds) {
       BlogEntry blogEntry = service.getBlogEntry(this, blogEntryId);
-
-      if (blogEntry.isPublished()) {
-        blogEntries.add(blogEntry);
-      }
+      blogEntries.add(blogEntry);
 
       if (blogEntries.size() == getRecentBlogEntriesOnHomePage()) {
         break;
@@ -903,7 +898,12 @@ public class Blog extends AbstractBlog {
 
     if (blogEntryId != null) {
       BlogService service = new BlogService();
-      return service.getBlogEntry(this, blogEntryId);
+      BlogEntry previousBlogEntry = service.getBlogEntry(this, blogEntryId);
+//      if (previousBlogEntry.isPublished()) {
+        return previousBlogEntry;
+//      } else {
+//        return getPreviousBlogEntry(previousBlogEntry);
+//      }
     } else {
       return null;
     }
@@ -921,7 +921,12 @@ public class Blog extends AbstractBlog {
 
     if (blogEntryId != null) {
       BlogService service = new BlogService();
-      return service.getBlogEntry(this, blogEntryId);
+      BlogEntry nextBlogEntry = service.getBlogEntry(this, blogEntryId);
+//      if (nextBlogEntry.isPublished()) {
+        return nextBlogEntry;
+//      } else {
+//        return getNextBlogEntry(nextBlogEntry);
+//      }
     } else {
       return null;
     }

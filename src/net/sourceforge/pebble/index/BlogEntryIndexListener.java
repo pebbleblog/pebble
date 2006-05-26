@@ -45,6 +45,9 @@ public class BlogEntryIndexListener implements BlogEntryListener {
    * @param event a BlogEntryEvent instance
    */
   public void blogEntryPublished(BlogEntryEvent event) {
+    BlogEntry blogEntry = event.getBlogEntry();
+    blogEntry.getBlog().getBlogEntryIndex().unindex(blogEntry);
+    blogEntry.getBlog().getBlogEntryIndex().index(blogEntry);
   }
 
   /**
@@ -53,6 +56,9 @@ public class BlogEntryIndexListener implements BlogEntryListener {
    * @param event a BlogEntryEvent instance
    */
   public void blogEntryUnpublished(BlogEntryEvent event) {
+    BlogEntry blogEntry = event.getBlogEntry();
+    blogEntry.getBlog().getBlogEntryIndex().unindex(blogEntry);
+    blogEntry.getBlog().getBlogEntryIndex().index(blogEntry);
   }
 
 }

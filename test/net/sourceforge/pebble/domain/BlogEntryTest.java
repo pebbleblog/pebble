@@ -573,12 +573,15 @@ public class BlogEntryTest extends SingleBlogTestCase {
 
     BlogEntry b1 = new BlogEntry(blog);
     b1.setDate(twoDaysAgo.getDate());
+    b1.setPublished(true);
 
     BlogEntry b2 = new BlogEntry(blog);
     b2.setDate(oneDayAgo.getDate());
+    b2.setPublished(true);
 
     BlogEntry b3 = new BlogEntry(blog);
     b3.setDate(today.getDate());
+    b3.setPublished(true);
 
     service.putBlogEntry(b1);
     service.putBlogEntry(b2);
@@ -600,12 +603,15 @@ public class BlogEntryTest extends SingleBlogTestCase {
 
     BlogEntry b1 = new BlogEntry(blog);
     b1.setDate(twoDaysAgo.getDate());
+    b1.setPublished(true);
 
     BlogEntry b2 = new BlogEntry(blog);
     b2.setDate(oneDayAgo.getDate());
+    b2.setPublished(true);
 
     BlogEntry b3 = new BlogEntry(blog);
     b3.setDate(today.getDate());
+    b3.setPublished(true);
 
     service.putBlogEntry(b1);
     service.putBlogEntry(b2);

@@ -1,0 +1,228 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Pebble</title>
+    <link rel="stylesheet" href="screen.css" type="text/css" media="screen" />
+  </head>
+
+  <body>
+
+    <div id="container">
+
+      <div id="header">
+        <div id="blogName"><span>Pebble</span></div>
+        <div id="blogDescription"><span>A lightweight, open source, Java EE blogging tool</span></div>
+      </div>
+
+      <div id="linearNavigationLinks">
+        <a href="http://sourceforge.net/projects/pebble/">SourceForge.net project page</a> |
+        <a href="http://lists.sourceforge.net/mailman/listinfo/pebble-user/">pebble-users mailing list</a>
+      </div>
+
+
+      <div id="sidebar">
+
+        <div class="sidebarItem">
+          <div class="sidebarItemTitle"><span>Download</span></div>
+          <br />
+            Current release : <a href="http://prdownloads.sourceforge.net/pebble/pebble-2.0.0-M2.zip?download">Pebble 2.0.0-M2</a>
+            <br /><br />
+            Last stable release : <a href="http://prdownloads.sourceforge.net/pebble/pebble-1.9.zip?download">Pebble 1.9</a>
+            <br /><br />
+            Latest code : <a href="http://sourceforge.net/svn/?group_id=79200">/trunk</a>
+        </div>
+
+        <div class="sidebarItem">
+          <div class="sidebarItemTitle"><span>Technology</span></div>
+          <b>Pebble uses the following technologies</b>
+          <br />
+          Java<br />
+          JavaServer Pages<br />
+          JSP Standard Tag Library<br />
+          Java Servlets<br />
+          Acegi Security System for Spring<br />
+          Spring<br />
+          Apache Lucene<br />
+          Jakarta Commons<br />
+          Apache XML-RPC<br />
+          Radeox<br />
+
+          <br />
+
+          <b>Pebble is built with the following technologies</b>
+          <br />
+          IntelliJ IDEA<br />
+          Apache Ant<br />
+          JUnit<br />
+          Clover<br />
+          Subversion<br />
+        </div>
+
+        <div class="sidebarItem">
+          <div class="sidebarItemTitle"><span>License</span></div>
+          <p>
+            Pebble is open source and licensed under a <a href="license.txt">BSD license</a>.
+          </p>
+        </div>
+
+        <div class="sidebarItem">
+          <div class="sidebarItemTitle"><span>Thanks to</span></div>
+          <ul>
+            <li><a href="http://sourceforge.net"><img src="http://sourceforge.net/sflogo.php?group_id=79200&type=1" border="0" alt="Forged on SourceForge" /></a></li>
+            <li><a href="http://www.atlassian.com/software/jira/?clicked=Non-Profit"><img src="images/jira_button_120wx60h.gif" border="0" alt="Issues tracked by JIRA" /></a></li>
+            <li><a href="http://www.cenqua.com/clover"><img src="images/clovered2.gif" width="89" height="33" border="0" alt="Code Coverage by Clover"/></a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div id="content">
+
+        <div class="contentItem published">
+          <div class="title">Overview</div>
+          <div class="subtitle">What is Pebble?</div>
+
+          <div class="contentItemBody">
+            <p>
+              Pebble is a lightweight, open source, Java EE blogging tool. It's small, fast and feature-rich with unrivalled ease of installation and use. Blog content is stored as XML files on disk and served up dynamically, so there's no need to install a database. All maintenance and administration can be performed through your web browser,  making Pebble ideal for anybody who is constantly on the move or doesn't have direct access to their host.
+              You can see an example blog <a href="http://www.simongbrown.com/blog/">here</a>.
+            </p>
+
+            <p>
+              Download now and you can be blogging in less than 5 minutes.
+            </p>
+
+            <div class="subsubtitle">Quickstart with Tomcat</div>
+            <ol>
+             <li>Take the <code>pebble.war</code> file from the distribution and deploy it, by copying it to <code>$TOMCAT_HOME/webapps</code>.</li>
+             <li>Restart Tomcat and point your browser to <code>http://localhost:8080/pebble/</code>.</li>
+             <li>Start blogging by logging in with username/password.</li>
+            </ol>
+
+            <div class="subsubtitle">Minimum requirements</div>
+            <ol>
+              <li><a href="http://java.sun.com/javase/downloads/">Java 5.0</a></li>
+              <li>A JSP 2.0/Servlet 2.4 compatible web/application server such as <a href="http://tomcat.apache.org">Apache Tomcat 5.5.x</a></li>
+            </ol>
+
+          </div>
+        </div>
+
+        <div class="contentItem published">
+          <div class="title">Features</div>
+          <div class="subtitle">What does it do?</div>
+
+          <div class="contentItemBody">
+          <p>
+            Here is a summary of the key features that are supported by Pebble. Further details can be found in the integrated help, which is available after you login to your blog.
+          </p>
+
+            <div class="subsubtitle"><a name="content"></a>Content</div>
+            <ul>
+              <li>Posting and management of content through your web browser or Blogger/MetaWeblog API compatible tools.</li>
+              <li>Categorisation of content into multiple hierarchical categories.</li>
+              <li>Tagging of content and a generation of a tagcloud.</li>
+              <li>RSS enclosures for distrbuting files or podcasting.</li>
+              <li>Simple content publication workflow.</li>
+              <li>Pinging websites via XML-RPC when new blog entries are added.</li>
+              <li>Publication of static content alongside your blog entries.</li>
+            </ul>
+
+            <div class="subsubtitle"><a name="responses"></a>Reader responses</div>
+            <ul>
+              <li>Reader responses, in the form of threaded comments and MovableType TrackBacks.</li>
+              <li>E-mail notifications when new responses are received.</li>
+              <li>Pluggable moderation and spam detection, with bulk response management features.</li>
+            </ul>
+
+            <div class="subsubtitle"><a name="admin"></a>Web-based Adminstration</div>
+            <ul>
+              <li>Management of your blog via a web browser.</li>
+              <li>File management and the ability to upload arbitary files and images.</li>
+              <li>Capture of blog referers, requests and logs for viewing or export.</li>
+              <li>Customizable regex based referer filters to combat referer spam.</li>
+              <li>Integrated help and documentation.</li>
+            </ul>
+
+            <div class="subsubtitle"><a name="newsfeeds"></a>Newsfeeds</div>
+            <ul>
+              <li>RSS 2.0, RDF and Atom 1.0 feeds.</li>
+              <li>Category and tag specific newsfeeds.</li>
+            </ul>
+
+            <div class="subsubtitle"><a name="navigation"></a>Navigation</div>
+            <ul>
+              <li>View blog entries by permalink, day or month.</li>
+              <li>Navigate through your blog entries in several ways, including a locale-aware calendar control.</li>
+              <li>Text based and advanced searching.</li>
+            </ul>
+
+            <div class="subsubtitle"><a name="multiblog"></a>Team, project, multi-user blogs and security</div>
+            <ul>
+              <li>Multiple people can contribute to a single blog.</li>
+              <li>Host more than a single blog for a project, group or community.</li>
+              <li>Integrate Pebble with your existing security infrastructure (e.g. LDAP, Active Directory, RDBMS, etc).</li>
+            </ul>
+
+            <div class="subsubtitle"><a name="i18n"></a>i18n</div>
+            <ul>
+              <li>Content in international character sets such as UTF-8.</li>
+              <li>Publication of content aligned with your timezone, regardless of where your host is based.</li>
+              <li>Locale sensitive delivery of dates, times and numbers.</li>
+              <li>Translated public-facing text provides a consistent user experience in a single language, including :<br /><br />
+                <table>
+                  <tr>
+                    <td valign="top" width="33%">
+                      <ul>
+                      <li>Chinese&nbsp;(Simplified)</li>
+                      <li>Chinese&nbsp;(Traditional)</li>
+                      <li>Danish</li>
+                      <li>Dutch</li>
+                      <li>English</li>
+                      </ul>
+                    </td>
+                    <td valign="top" width="33%">
+                      <ul>
+                      <li>Finnish</li>
+                      <li>French</li>
+                      <li>German</li>
+                      <li>Hindi</li>
+                      <li>Italian</li>
+                      </ul>
+                    </td>
+                    <td valign="top" width="33%">
+                      <ul>
+                      <li>Japanese</li>
+                      <li>Norwegian</li>
+                      <li>Portuguese</li>
+                      <li>Spanish</li>
+                      <li>Swedish</li>
+                      </ul>
+                    </td>
+                  </tr>
+                </table>
+              </li>
+            </ul>
+
+            <div class="subsubtitle"><a name="plugins"></a>Plugin APIs</div>
+            <ul>
+              <li>Blog entry decorators let you customize how blog entries are displayed.</li>
+              <li>Permalink providers let you customize the format of your permalinks.</li>
+              <li>Blog entry listeners let you write Java code that is called when blog entries are added, removed, published and unpublished.</li>
+              <li>Comment listeners let you write Java code that is called when comments are added, removed, approved and rejected.</li>
+              <li>TrackBack listeners let you write Java code that is called when TrackBacks are added, removed, approved and rejected.</li>
+              <li>Blog listeners let you write Java code that is called when your blog starts up and shuts down.</li>
+            </ul>
+
+          </div>
+        </div>
+
+      </div>
+
+      <div id="footer">
+        Pebble is written and maintained by <a href="http://www.simongbrown.com/blog/">Simon Brown</a>
+      </div>
+
+    </div>
+  </body>
+</html>

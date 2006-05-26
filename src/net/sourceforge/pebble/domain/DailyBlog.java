@@ -50,6 +50,8 @@ public class DailyBlog extends TimePeriod implements Permalinkable {
 
   /** the collection of blog entry keys */
   private List<String> blogEntries = new ArrayList<String>();
+  private List<String> publishedBlogEntries = new ArrayList<String>();
+  private List<String> unpublishedBlogEntries = new ArrayList<String>();
 
   /**
    * Creates a new DailyBlog for the specified month and day.
@@ -172,18 +174,31 @@ public class DailyBlog extends TimePeriod implements Permalinkable {
    * @return    an ordered List of BlogEntry instances
    */
   public List<String> getBlogEntries() {
-    return Collections.unmodifiableList(blogEntries);
+    return new ArrayList<String>(blogEntries);
   }
 
-  public synchronized void addBlogEntry(String blogEntryId) {
-    if (!blogEntries.contains(blogEntryId)) {
-      blogEntries.add(blogEntryId);
-      Collections.sort(blogEntries, new ReverseBlogEntryIdComparator());
-    }
+  public synchronized void addPublishedBlogEntry(String blogEntryId) {
+    publishedBlogEntries.add(blogEntryId);
+    Collections.sort(publishedBlogEntries, new ReverseBlogEntryIdComparator());
+
+    // and add to the aggregated view
+    blogEntries.add(blogEntryId);
+    Collections.sort(blogEntries, new ReverseBlogEntryIdComparator());
   }
 
-  public synchronized void removeBlogEntry(String blogEntryId) {
-    blogEntries.remove(blogEntryId);
+  public synchronized void addUnpublishedBlogEntry(String blogEntryId) {
+    unpublishedBlogEntries.add(blogEntryId);
+    Collections.sort(unpublishedBlogEntries, new ReverseBlogEntryIdComparator());
+
+    // and add to the aggregated view
+    blogEntries.add(blogEntryId);
+    Collections.sort(blogEntries, new ReverseBlogEntryIdComparator());
+  }
+
+  public synchronized void removeBlogEntry(BlogEntry blogEntry) {
+    publishedBlogEntries.remove(blogEntry.getId());
+    unpublishedBlogEntries.remove(blogEntry.getId());
+    blogEntries.remove(blogEntry.getId());
   }
 
 //  /**
@@ -300,7 +315,7 @@ public class DailyBlog extends TimePeriod implements Permalinkable {
    * @return    true if this blog contains entries, false otherwise
    */
   public boolean hasBlogEntries() {
-    return !blogEntries.isEmpty();
+    return !publishedBlogEntries.isEmpty();
   }
 
   /**
@@ -328,9 +343,9 @@ public class DailyBlog extends TimePeriod implements Permalinkable {
    * @return  the previous BlogEntry, or null if one doesn't exist
    */
   public String getPreviousBlogEntry(String blogEntry) {
-    int index = blogEntries.indexOf(blogEntry);
-    if (index >= 0 && index < (blogEntries.size()-1)) {
-      return blogEntries.get(index+1);
+    int index = publishedBlogEntries.indexOf(blogEntry);
+    if (index >= 0 && index < (publishedBlogEntries.size()-1)) {
+      return publishedBlogEntries.get(index+1);
     } else {
       return null;
     }
@@ -342,8 +357,8 @@ public class DailyBlog extends TimePeriod implements Permalinkable {
    * @return    a BlogEntry instance, or null is no entries have been posted
    */
   public String getFirstBlogEntry() {
-    if (!blogEntries.isEmpty()) {
-      return blogEntries.get(blogEntries.size()-1);
+    if (!publishedBlogEntries.isEmpty()) {
+      return publishedBlogEntries.get(publishedBlogEntries.size()-1);
     } else {
       return null;
     }
@@ -355,8 +370,8 @@ public class DailyBlog extends TimePeriod implements Permalinkable {
    * @return    a BlogEntry instance, or null is no entries have been posted
    */
   public String getLastBlogEntry() {
-    if (!blogEntries.isEmpty()) {
-      return blogEntries.get(0);
+    if (!publishedBlogEntries.isEmpty()) {
+      return publishedBlogEntries.get(0);
     } else {
       return null;
     }
@@ -369,9 +384,9 @@ public class DailyBlog extends TimePeriod implements Permalinkable {
    * @return  the next BlogEntry, or null if one doesn't exist
    */
   public String getNextBlogEntry(String blogEntry) {
-    int index = blogEntries.lastIndexOf(blogEntry);
-    if (index > 0 && index <= blogEntries.size()) {
-      return blogEntries.get(index-1);
+    int index = publishedBlogEntries.lastIndexOf(blogEntry);
+    if (index > 0 && index <= publishedBlogEntries.size()) {
+      return publishedBlogEntries.get(index-1);
     } else {
       return null;
     }

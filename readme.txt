@@ -1,5 +1,7 @@
-Prerequisites
--------------
+Pebble 2.0.0-M2
+---------------
+
+The prerequisites are :
  - Java 5.0
  - A JSP 2.0/Servlet 2.4 compatible server such as Apache Tomcat 5.5.x 
 

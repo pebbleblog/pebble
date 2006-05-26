@@ -1,0 +1,378 @@
+body {
+  font-family: Lucida Grande, Tahoma, Verdana, Arial, sans-serif;
+  font-size: 13px;
+  background: gray url('images/background.jpg') repeat-x top left;
+  color : black;
+  text-align: left;
+  margin: 48px 32px 32px 32px;
+}
+#container {
+  width: 800px;
+  margin: auto;
+  background: white;
+}
+#header {
+  background: white url('images/header.jpg') repeat-x bottom left;
+  color: black;
+  font-weight: normal;
+  height: 200px;
+  text-align: left;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 0px;
+  position: relative;
+}
+#content {
+  background: white;
+  padding-top: 8px;
+  padding-right: 8px;
+  padding-bottom: 8px;
+  padding-left: 0px;
+  margin-right: 220px;
+}
+#sidebar {
+  text-align: center;
+  background: white;
+  float: right;
+  width: 220px;
+  padding-left: 8px;
+  padding-top: 0px;
+  padding-right: 0px;
+  padding-bottom: 32px;
+  margin-top: 8px;
+  font-size: 11px;
+}
+#footer {
+  background: gray url('images/footer.jpg') no-repeat bottom left;
+  clear: both;
+  text-align: center;
+  font-size: 11px;
+  padding: 8px;
+  color: gray;
+}
+#footer a {
+  color: gray;
+}
+.sidebarItem {
+  background: white;
+  border-bottom: white solid 8px;
+}
+.sidebarItemTitle {
+  text-align: left;
+  font-size: 12px;
+  font-weight: normal;
+  background: white url('images/sidebartitle.jpg') no-repeat left;
+  color: white;
+  padding-left: 12px;
+  padding-top: 8px;
+  height: 24px;
+}
+.sidebarItem ul {
+  margin: 0px;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+.sidebarItem li {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 8px;
+  padding-right: 8px;
+  list-style-type: none;
+}
+
+a:link {
+  text-decoration: underline;
+  color: black;
+}
+a:visited {
+  color: gray;
+}
+
+#blogName {
+  font-size: 44px;
+  color: white;
+  padding-top: 8px;
+  position: absolute;
+  top: 90px;
+  left: 20px;
+}
+#blogDescription {
+  font-size: 16px;
+  color: white;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  font-weight: normal;
+  position: absolute;
+  bottom: 20px;
+  left: 24px;
+}
+.title {
+  font-size: 24px;
+  font-weight: normal;
+  color : #6e7d8e;
+  background: transparent url('images/bullet.jpg') no-repeat center left;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-right: 4px;
+  padding-left: 30px;
+}
+.title a {
+  color : #6e7d8e;
+  text-decoration: none;
+}
+.title a:hover {
+  text-decoration: underline;
+}
+.subtitle {
+  font-size: 12px;
+  font-weight: normal;
+  padding-top: 4px;
+  color: #6e7d8e;
+}
+.subsubtitle {
+  font-size: 12px;
+  font-weight: normal;
+  padding-top: 4px;
+  color: #6e7d8e;
+}
+.contentItem {
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+  background: white;
+}
+.contentItemBody {
+  line-height: 1.5;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 16px;
+  padding-right: 16px;
+  text-align: justify;
+}
+.contentItemLinks {
+  float: right;
+  text-align: right;
+  font-size: 11px;
+  color: gray;
+}
+.contentItemLinks a {
+  color: gray;
+}
+.even {
+  background: #F4F4F4;
+}
+.odd {
+  background: white;
+}
+.small {
+  font-size: 11px;
+}
+.response {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+.response .title {
+  font-size: 12px;
+  font-weight: normal;
+  background: transparent;
+  padding-left: 0px;
+}
+.responseBody {
+  line-height: 1.5;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  text-align: justify;
+}
+.metadata, .metadata a {
+  font-size: 11px;
+  color: gray;
+  line-height: 1.5em;
+}
+.approved {
+}
+.pending {
+  border: solid orange 1px;
+}
+.rejected {
+  border: solid red 1px;
+}
+.published {
+}
+.unpublished {
+  background: white url('images/draft.jpg') no-repeat top left;
+}
+blockquote {
+  border-left: solid #E0E0E0 4px;
+  padding-left: 8px;
+  color: gray;
+}
+.tags, .categories {
+  border: solid #F0F0F0 1px;
+  margin: 16px;
+  padding: 4px;
+  background: #F8F8F8;
+  font-weight: normal;
+  font-size: 11px;
+}
+.tags a, .categories a {
+  color : gray;
+  font-weight: normal;
+}
+.tagCloud {
+  font-size: 20px;
+  line-height: 1.0em;
+  text-align: justify;
+}
+.sidebarTagCloud {
+  font-size: 18px;
+  line-height: 0.8em;
+  text-align: justify;
+}
+.tagCloud1 {
+  font-size: 0.5em;
+}
+.tagCloud2 {
+  font-size: 0.6em;
+  font-weight: bold;
+}
+.tagCloud3 {
+  font-size: 0.65em;
+  font-weight: bold;
+}
+.tagCloud4 {
+  font-size: 0.7em;
+  font-weight: bold;
+}
+.tagCloud5 {
+  font-size: 0.75em;
+  font-weight: bold;
+}
+.tagCloud6 {
+  font-size: 0.8em;
+  font-weight: bold;
+}
+.tagCloud7 {
+  font-size: 0.85em;
+  font-weight: bold;
+}
+.tagCloud8 {
+  font-size: 0.9em;
+  font-weight: bold;
+}
+.tagCloud9 {
+  font-size: 1.0em;
+  font-weight: bold;
+}
+.tagCloud10 {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+.tagCloud ul, .sidebarTagCloud ul {
+  padding: 8px;
+  margin: 0px;
+}
+.tagCloud li, .sidebarTagCloud li {
+  display: inline;
+  margin: 0px;
+  padding: 0px;
+  white-space: nowrap;
+}
+.tagCloud a, .sidebarTagCloud a {
+  text-decoration: none;
+}
+.tagCloud a:hover, .sidebarTagCloud a:hover {
+  color: white;
+  background: #6e7d8e;
+}
+
+.calendar {
+  padding: 8px;
+}
+.calendarDayHeader {
+  font-weight: bold;
+  text-align: right;
+}
+.calendarDay {
+  text-align: right;
+  padding: 2px;
+}
+.calendarDayWithEntries {
+  background: #C0C0C0;
+  text-align: right;
+  padding: 2px;
+}
+.calendarDayWithEntries a {
+  font-weight: bold;
+  color: white;
+  text-decoration: none;
+}
+.calendarDayWithEntries:hover {
+  color: white;
+  background: #6e7d8e;
+}
+.calendarToday {
+  background : #6e7d8e;
+  color: white;
+  text-align: right;
+  padding: 2px;
+  font-weight: bold;
+}
+.calendarToday a {
+  font-weight: bold;
+  color: white;
+  text-decoration: none;
+}
+.photo {
+  padding-top: 0px;
+  padding-right: 0px;
+  padding-bottom: 0px;
+  padding-left: 0px;
+  border: solid black 1px;
+  text-align: center;
+}
+.codeSample {
+  font-family: Courier, sans-serif;
+  border: solid #F0F0F0 1px;
+  text-align: left;
+  background: #F8F8F8;
+  margin-left: 32px;
+  margin-right: 32px;
+  padding: 16px;
+  overflow: auto;
+}
+#linearNavigationLinks {
+  background: black;
+  padding: 6px;
+  color: white;
+  text-align: center;
+}
+#linearNavigationLinks a {
+  color: white;
+  text-decoration: none;
+}
+#linearNavigationLinks a:hover {
+  text-decoration: underline;
+}
+#search {
+  position: absolute;
+  top: 11px;
+  right: 10px;
+  color: white;
+}
+#subscriptions {
+  position: absolute;
+  top: 11px;
+  left: 10px;
+  color: white;
+}
+#subscriptions a {
+  color: white;
+  text-decoration: none;
+}
+#subscriptions a:hover {
+  text-decoration: underline;
+}

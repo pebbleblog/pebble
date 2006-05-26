@@ -4,7 +4,7 @@
   <property name="clover.dir" value="clover"/>
   <property name="etc.dir" value="${basedir}/etc"/>
   <property name="src.dir" value="${basedir}/src"/>
-  <property name="docs.dir" value="${basedir}/docs"/>
+  <property name="website.dir" value="${basedir}/website"/>
   <property name="javadoc.dir" value="${basedir}/javadoc"/>
   <property name="test.dir" value="${basedir}/test"/>
   <property name="build.dir" value="${basedir}/build"/>
@@ -110,6 +110,15 @@
         <include name="*.gif"/>
         <include name="*.jpg"/>
         <include name="*.png"/>
+      </fileset>
+    </copy>
+
+    <copy file="web/themes/default/screen.css" tofile="web/themes/orange/screen.css" />
+    <replace file="web/themes/orange/screen.css" token="#6e7d8e" value="#ac6944" />
+    <copy todir="web/themes/orange/jsp">
+      <fileset dir="web/themes/default/jsp">
+        <include name="sidebar.jsp"/>
+        <include name="template.jsp"/>
       </fileset>
     </copy>
 
@@ -262,23 +271,23 @@
   </target>
 
   <target name="website">
-    <property name="website.dir" value="${build.dir}/website"/>
-    <mkdir dir="${website.dir}"/>
-    <copy todir="${website.dir}">
-      <fileset dir="pebble-docs/build" />
-      <fileset dir=".">
-        <include name="license.txt"/>
-        <include name="apache-license.txt"/>
-        <include name="changelog.txt"/>
+    <copy file="web/themes/default/screen.css" tofile="${website.dir}/screen.css" />
+    <copy todir="${website.dir}/images">
+      <fileset dir="web/themes/default/images">
+        <include name="*.gif"/>
+        <include name="*.jpg"/>
+        <include name="*.png"/>
       </fileset>
     </copy>
-    <mkdir dir="${website.dir}/javadoc"/>
-    <ant dir="pebble-core" target="javadoc"/>
-    <copy todir="${website.dir}/javadoc">
-      <fileset dir="pebble-core/javadoc"/>
+    <copy todir="${website.dir}">
+      <fileset dir=".">
+        <include name="license.txt"/>
+      </fileset>
     </copy>
-    <copy todir="${website.dir}/clover">
-      <fileset dir="${clover.dir}"/>
+
+    <mkdir dir="${build.dir}/website"/>
+    <copy todir="${build.dir}/website">
+      <fileset dir="${website.dir}" />
     </copy>
 
     <zip destfile="${build.dir}/website.zip" basedir="${build.dir}/website" />

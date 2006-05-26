@@ -25,15 +25,14 @@ public class BlogEntryIndex {
   private Blog blog;
 
   private List<String> indexEntries = new ArrayList<String>();
+  private List<String> publishedIndexEntries = new ArrayList<String>();
+  private List<String> unpublishedIndexEntries = new ArrayList<String>();
 
   public BlogEntryIndex(Blog blog) {
     this.blog = blog;
 
-//    File indexes = new File(blog.getIndexesDirectory());
-//    if (!indexes.exists()) {
-//      indexes.mkdir();
-//    }
-    readIndex();
+    readIndex(true);
+    readIndex(false);
   }
 
   /**
@@ -41,7 +40,8 @@ public class BlogEntryIndex {
    */
   public void clear() {
     indexEntries = new ArrayList<String>();
-    writeIndex();
+    writeIndex(true);
+    writeIndex(false);
   }
 
   /**
@@ -51,11 +51,23 @@ public class BlogEntryIndex {
    */
   public synchronized void index(List<BlogEntry> blogEntries) {
     for (BlogEntry blogEntry : blogEntries) {
+      DailyBlog dailyBlog = blog.getBlogForDay(blogEntry.getDate());
+      if (blogEntry.isPublished()) {
+        publishedIndexEntries.add(blogEntry.getId());
+        dailyBlog.addPublishedBlogEntry(blogEntry.getId());
+      } else {
+        unpublishedIndexEntries.add(blogEntry.getId());
+        dailyBlog.addUnpublishedBlogEntry(blogEntry.getId());
+      }
       indexEntries.add(blogEntry.getId());
     }
 
     Collections.sort(indexEntries, new ReverseBlogEntryIdComparator());
-    writeIndex();
+    Collections.sort(publishedIndexEntries, new ReverseBlogEntryIdComparator());
+    Collections.sort(unpublishedIndexEntries, new ReverseBlogEntryIdComparator());
+
+    writeIndex(true);
+    writeIndex(false);
   }
 
   /**
@@ -64,13 +76,21 @@ public class BlogEntryIndex {
    * @param blogEntry   a BlogEntry instance
    */
   public synchronized void index(BlogEntry blogEntry) {
+    DailyBlog dailyBlog = blog.getBlogForDay(blogEntry.getDate());
+    if (blogEntry.isPublished()) {
+      publishedIndexEntries.add(blogEntry.getId());
+      dailyBlog.addPublishedBlogEntry(blogEntry.getId());
+      writeIndex(true);
+    } else {
+      unpublishedIndexEntries.add(blogEntry.getId());
+      dailyBlog.addUnpublishedBlogEntry(blogEntry.getId());
+      writeIndex(false);
+    }
     indexEntries.add(blogEntry.getId());
 
-    DailyBlog dailyBlog = blog.getBlogForDay(blogEntry.getDate());
-    dailyBlog.addBlogEntry(blogEntry.getId());
-
     Collections.sort(indexEntries, new ReverseBlogEntryIdComparator());
-    writeIndex();
+    Collections.sort(publishedIndexEntries, new ReverseBlogEntryIdComparator());
+    Collections.sort(unpublishedIndexEntries, new ReverseBlogEntryIdComparator());
   }
 
   /**
@@ -80,18 +100,27 @@ public class BlogEntryIndex {
    */
   public synchronized void unindex(BlogEntry blogEntry) {
     DailyBlog dailyBlog = blog.getBlogForDay(blogEntry.getDate());
-    dailyBlog.removeBlogEntry(blogEntry.getId());
+    dailyBlog.removeBlogEntry(blogEntry);
 
     indexEntries.remove(blogEntry.getId());
+    publishedIndexEntries.remove(blogEntry.getId());
+    unpublishedIndexEntries.remove(blogEntry.getId());
 
-    writeIndex();
+    writeIndex(true);
+    writeIndex(false);
   }
 
   /**
    * Helper method to load the index.
    */
-  private void readIndex() {
-    File indexFile = new File(blog.getIndexesDirectory(), "blogentries.index");
+  private void readIndex(boolean published) {
+    File indexFile;
+    if (published) {
+      indexFile = new File(blog.getIndexesDirectory(), "blogentries-published.index");
+    } else {
+      indexFile = new File(blog.getIndexesDirectory(), "blogentries-unpublished.index");
+    }
+
     if (indexFile.exists()) {
       try {
         BufferedReader reader = new BufferedReader(new FileReader(indexFile));
@@ -99,11 +128,15 @@ public class BlogEntryIndex {
         while (indexEntry != null) {
           indexEntries.add(indexEntry);
 
-
           // and add it to the internal memory structures
           Date date = new Date(Long.parseLong(indexEntry));
           DailyBlog dailyBlog = blog.getBlogForDay(date);
-          dailyBlog.addBlogEntry(indexEntry);
+
+          if (published) {
+            dailyBlog.addPublishedBlogEntry(indexEntry);
+          } else {
+            dailyBlog.addUnpublishedBlogEntry(indexEntry);
+          }
 
           indexEntry = reader.readLine();
         }
@@ -115,19 +148,33 @@ public class BlogEntryIndex {
     }
 
     Collections.sort(indexEntries, new ReverseBlogEntryIdComparator());
+    Collections.sort(publishedIndexEntries, new ReverseBlogEntryIdComparator());
+    Collections.sort(unpublishedIndexEntries, new ReverseBlogEntryIdComparator());
   }
 
   /**
    * Helper method to write out the index to disk.
    */
-  private void writeIndex() {
+  private void writeIndex(boolean published) {
     try {
-      File indexFile = new File(blog.getIndexesDirectory(), "blogentries.index");
+      File indexFile;
+      if (published) {
+        indexFile = new File(blog.getIndexesDirectory(), "blogentries-published.index");
+      } else {
+        indexFile = new File(blog.getIndexesDirectory(), "blogentries-unpublished.index");
+      }
       BufferedWriter writer = new BufferedWriter(new FileWriter(indexFile));
 
-      for (String indexEntry : indexEntries) {
-        writer.write(indexEntry);
-        writer.newLine();
+      if (published) {
+        for (String indexEntry : publishedIndexEntries) {
+          writer.write(indexEntry);
+          writer.newLine();
+        }
+      } else {
+        for (String indexEntry : unpublishedIndexEntries) {
+          writer.write(indexEntry);
+          writer.newLine();
+        }
       }
 
       writer.flush();
@@ -153,6 +200,24 @@ public class BlogEntryIndex {
    */
   public List<String> getBlogEntries() {
     return new ArrayList<String>(indexEntries);
+  }
+
+  /**
+   * Gets the full list of published blog entries.
+   *
+   * @return  a List of blog entry IDs
+   */
+  public List<String> getPublishedBlogEntries() {
+    return new ArrayList<String>(publishedIndexEntries);
+  }
+
+  /**
+   * Gets the full list of unpublished blog entries.
+   *
+   * @return  a List of blog entry IDs
+   */
+  public List<String> getUnpublishedBlogEntries() {
+    return new ArrayList<String>(unpublishedIndexEntries);
   }
 
 }
