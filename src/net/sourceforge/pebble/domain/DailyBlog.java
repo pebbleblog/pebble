@@ -178,21 +178,31 @@ public class DailyBlog extends TimePeriod implements Permalinkable {
   }
 
   public synchronized void addPublishedBlogEntry(String blogEntryId) {
-    publishedBlogEntries.add(blogEntryId);
-    Collections.sort(publishedBlogEntries, new ReverseBlogEntryIdComparator());
+    if (!publishedBlogEntries.contains(blogEntryId)) {
+      publishedBlogEntries.add(blogEntryId);
+      Collections.sort(publishedBlogEntries, new ReverseBlogEntryIdComparator());
+    }
+    unpublishedBlogEntries.remove(blogEntryId);
 
-    // and add to the aggregated view
-    blogEntries.add(blogEntryId);
-    Collections.sort(blogEntries, new ReverseBlogEntryIdComparator());
+    if (!blogEntries.contains(blogEntryId)) {
+      // and add to the aggregated view
+      blogEntries.add(blogEntryId);
+      Collections.sort(blogEntries, new ReverseBlogEntryIdComparator());
+    }
   }
 
   public synchronized void addUnpublishedBlogEntry(String blogEntryId) {
-    unpublishedBlogEntries.add(blogEntryId);
-    Collections.sort(unpublishedBlogEntries, new ReverseBlogEntryIdComparator());
+    if (!unpublishedBlogEntries.contains(blogEntryId)) {
+      unpublishedBlogEntries.add(blogEntryId);
+      Collections.sort(unpublishedBlogEntries, new ReverseBlogEntryIdComparator());
+    }
+    publishedBlogEntries.remove(blogEntryId);
 
-    // and add to the aggregated view
-    blogEntries.add(blogEntryId);
-    Collections.sort(blogEntries, new ReverseBlogEntryIdComparator());
+    if (!blogEntries.contains(blogEntryId)) {
+      // and add to the aggregated view
+      blogEntries.add(blogEntryId);
+      Collections.sort(blogEntries, new ReverseBlogEntryIdComparator());
+    }
   }
 
   public synchronized void removeBlogEntry(BlogEntry blogEntry) {
