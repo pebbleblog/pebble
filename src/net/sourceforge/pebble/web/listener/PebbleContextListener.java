@@ -71,8 +71,8 @@ public class PebbleContextListener implements ServletContextListener {
     PebbleContext ctx = PebbleContext.getInstance();
     ctx.setConfiguration(config);
     ctx.setPebbleUserDetailsService(pebbleUserDetailsService);
+    ctx.setWebApplicationRoot(event.getServletContext().getRealPath("/"));
 
-    BlogManager.getInstance().setWebappRoot(event.getServletContext().getRealPath("/"));
     BlogManager.getInstance().startBlogs();
 
     long endTime = System.currentTimeMillis();

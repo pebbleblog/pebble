@@ -64,6 +64,9 @@ public class PebbleContext {
   /** the time that Pebble was started */
   private Date startTime;
 
+  /** the directory where Pebble is deployed */
+  private String webApplicationRoot;
+
   private static final PebbleContext instance = new PebbleContext();
 
   public static PebbleContext getInstance() {
@@ -140,4 +143,17 @@ public class PebbleContext {
     this.pebbleUserDetailsService = pebbleUserDetailsService;
   }
   
+  /**
+   * Sets the directory where themes are located.
+   *
+   * @param webApplicationRoot    the absolute path to the webapp root on disk
+   */
+  public void setWebApplicationRoot(String webApplicationRoot) {
+    this.webApplicationRoot = webApplicationRoot;
+  }
+
+  public String getWebApplicationRoot() {
+    return webApplicationRoot;
+  }
+
 }

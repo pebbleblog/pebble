@@ -12,6 +12,7 @@
     <table>
       <tr>
         <td valign="top">
+          <a name="blogEntryDecorators"></a>
           Blog entry decorators (<span class="help"><a href="${pageContext.request.contextPath}/docs/blog-entry-decorators.html" target="_blank">Help</a></span>)
         </td>
         <td>
@@ -21,6 +22,7 @@
 
       <tr>
         <td valign="top">
+          <a name="permalinkProvider"></a>
           Permalink provider (<span class="help"><a href="${pageContext.request.contextPath}/docs/permalink-providers.html" target="_blank">Help</a></span>)
         </td>
         <td>
@@ -30,6 +32,7 @@
 
       <tr>
         <td valign="top">
+          <a name="blogListeners"></a>
           Blog listeners (<span class="help"><a href="${pageContext.request.contextPath}/docs/blog-listeners.html" target="_blank">Help</a></span>)
         </td>
         <td>
@@ -39,6 +42,7 @@
 
       <tr>
         <td valign="top">
+          <a name="blogEntryListeners"></a>
           Blog entry listeners (<span class="help"><a href="${pageContext.request.contextPath}/docs/blog-entry-listeners.html" target="_blank">Help</a></span>)
         </td>
         <td>
@@ -48,6 +52,7 @@
 
       <tr>
         <td valign="top">
+          <a name="commentListeners"></a>
           Comment listeners (<span class="help"><a href="${pageContext.request.contextPath}/docs/comment-listeners.html" target="_blank">Help</a></span>)
         </td>
         <td>
@@ -57,6 +62,7 @@
 
       <tr>
         <td valign="top">
+          <a name="trackbackListeners"></a>
           TrackBack listeners (<span class="help"><a href="${pageContext.request.contextPath}/docs/trackback-listeners.html" target="_blank">Help</a></span>)
         </td>
         <td>
@@ -66,6 +72,7 @@
 
       <tr>
         <td valign="top">
+          <a name="properties"></a>
           Properties (<span class="help"><a href="${pageContext.request.contextPath}/docs/plugins.html" target="_blank">Help</a></span>)
         </td>
         <td>
@@ -84,6 +91,7 @@
 
       <tr>
         <td valign="top">
+          <a name="logger"></a>
           Logger (<span class="help"><a href="${pageContext.request.contextPath}/docs/logs.html" target="_blank">Help</a></span>)
         </td>
         <td>

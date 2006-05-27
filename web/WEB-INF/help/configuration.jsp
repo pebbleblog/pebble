@@ -8,8 +8,8 @@
       To edit the properties, just change the values and click the "Save Properties" button when done. The following table describes each of the properties.
     </p>
 
+    <div class="subsubtitle">General blog properties</div>
     <p>
-      <div class="subsubtitle">General blog properties</div>
       <table border="0">
         <tr><td width="33%" valign="top">Name</td><td valign="top">The name of your blog.</td></tr>
         <tr><td width="33%" valign="top">Description</td><td valign="top">The description of your blog.</td></tr>
@@ -22,8 +22,8 @@
       </table>
     </p>
 
+    <div class="subsubtitle">Internationalization and localization</div>
     <p>
-      <div class="subsubtitle">Internationalization and localization</div>
       <table border="0">
         <tr><td width="33%" valign="top">Country</td><td valign="top">The country in which you reside, as a two letter ISO code.</td></tr>
         <tr><td width="33%" valign="top">Language</td><td valign="top">The language of your blog, as a two letter ISO code.</td></tr>
@@ -32,16 +32,16 @@
       </table>
     </p>
 
+    <div class="subsubtitle">Security</div>
     <p>
-      <div class="subsubtitle">Security</div>
       <table border="0">
         <tr><td width="33%" valign="top">Blog owners</td><td valign="top">A comma separated list of usernames for those users that are blog owners for this blog. This is used when Pebble runs in multi-user mode.</td></tr>
         <tr><td width="33%" valign="top">Blog contributors</td><td valign="top">A comma separated list of usernames for those users that are blog contributors for this blog. This is used when Pebble runs in multi-user mode.</td></tr>
       </table>
     </p>
 
+    <div class="subsubtitle">Multi-blog properties (available when Pebble is hosting more than a single blog)</div>
     <p>
-      <div class="subsubtitle">Multi-blog properties (available when Pebble is hosting more than a single blog)</div>
       <table border="0">
         <tr><td width="33%" valign="top">Public/Private blog</td><td valign="top">Enables or disables aggregation of this blog in both the multi-blog home page and feeds.</td></tr>
       </table>

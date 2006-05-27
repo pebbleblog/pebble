@@ -3,10 +3,12 @@
   <div class="subtitle">&nbsp;</div>
 
   <div class="contentItemBody">
+    <p>
     This is the online help for Pebble and the pages within here contain lots of information
     about the many aspects of running your blog. Should you need additional help and support, this
     is available via the pebble-users@lists.sourceforge.net mailing list. Details on subscribing
     to this list can be found at <a href="http://lists.sourceforge.net/mailman/listinfo/pebble-user">http://lists.sourceforge.net/mailman/listinfo/pebble-user</a>.
+    </p>
 
     <table width="100%" cellspacing="0" cellpadding="8">
       <tr>
@@ -15,35 +17,27 @@
             <div class="subsubtitle">Using Pebble</div>
             <ol>
               <li><a href="help/configuration.html">Configuring your blog</a></li>
-              <li>Blog Entries</li>
+              <li><a href="help/blogEntries.html">Blog Entries</a></li>
               <li><a href="help/categories.html">Categories</a></li>
               <li><a href="help/tags.html">Tags</a></li>
               <li><a href="help/images.html">Images</a></li>
               <li><a href="help/files.html">Files</a></li>
-              <li>Comments</li>
-              <li>TrackBacks</li>
+              <li><a href="help/comments.html">Comments</a></li>
+              <li><a href="help/trackbacks.html">TrackBacks</a></li>
               <li>Comment and TrackBack Spam</li>
-              <li>Static Pages</li>
+              <li><a href="help/staticPages.html">Static Pages</a></li>
               <li><a href="help/newsfeeds.html">Newsfeeds (RSS and Atom)</a></li>
               <li><a href="help/referers.html">Referers</a></li>
               <li><a href="help/logs.html">Logs</a></li>
-              <li>XML-RPC Update Pings</li>
-              <li>Blogger API</li>
-              <li>MetaWeblog API</li>
-              <li>Themes</li>
-              <li>Multi-contributor and Team Blogs</li>
+              <li><a href="help/xmlrpcUpdatePings.html">XML-RPC Update Pings</a></li>
+              <li><a href="help/bloggerApi.html">Blogger API</a></li>
+              <li><a href="help/metaWeblogApi.html">MetaWeblog API</a></li>
+              <li><a href="help/themes.html">Themes</a></li>
               <li>Multi-user Blogs</li>
               <li>Private Blogs</li>
 <%--
               <li><a href="help/blogEntries.html">Blog Entries</a></li>
-              <li><a href="comments.html">Comments</a></li>
-              <li><a href="trackbacks.html">TrackBacks</a></li>
               <li><a href="comment-and-trackback-spam.html">Comment and TrackBack Spam</a></li>
-              <li><a href="static-pages.html">Static Pages</a></li>
-              <li><a href="update-pings.html">XML-RPC Update Pings</a></li>
-              <li><a href="blogger-api.html">Blogger API</a></li>
-              <li><a href="metaweblog-api.html">MetaWeblog API</a></li>
-              <li><a href="themes.html">Themes</a></li>
               <li><a href="team-blogs.html">Multi-contributor and Team Blogs</a></li>
               <li><a href="multiuser-blogs.html">Multi-user Blogs</a></li>
               <li><a href="private-blogs.html">Private Blogs</a></li>

@@ -64,7 +64,7 @@ window.onload = function()
 
       <tr>
         <td valign="top"><b>Excerpt</b></td>
-        <td><textarea name="excerpt" rows="20" cols="60"><c:out value="${blogEntry.excerpt}" escapeXml="true"/></textarea></td>
+        <td><textarea name="excerpt" rows="20" cols="60"><c:out value="${blogEntry.excerpt}" escapeXml="true"/></textarea>        <div class="small">(optional, short version of body for home/month/day pages)</div></td>
       </tr>
 
       <tr>

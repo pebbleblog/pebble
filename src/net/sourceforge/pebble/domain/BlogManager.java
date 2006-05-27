@@ -55,9 +55,6 @@ public class BlogManager {
   private static final String THEMES_PATH = "themes";
   private static final String DEFAULT_BLOG = "default";
 
-  /** the directory where themes are located */
-  private String webappRoot;
-
   /** the blogs that are currently being managed */
   private Map blogs = new HashMap();
 
@@ -155,7 +152,7 @@ public class BlogManager {
     Blog blog = new Blog(blogDir);
     blog.setId(blogId);
 
-    File pathToLiveThemes = new File(webappRoot, THEMES_PATH);
+    File pathToLiveThemes = new File(PebbleContext.getInstance().getWebApplicationRoot(), THEMES_PATH);
     Theme theme = new Theme(blog, "user-" + blogId, pathToLiveThemes.getAbsolutePath());
     blog.setEditableTheme(theme);
 
@@ -178,15 +175,6 @@ public class BlogManager {
    */
   public boolean isMultiUser() {
     return blogs.size() > 1;
-  }
-
-  /**
-   * Sets the directory where themes are located.
-   *
-   * @param webappRoot    the absolute path to the webapp root on disk
-   */
-  public void setWebappRoot(String webappRoot) {
-    this.webappRoot = webappRoot;
   }
 
   public void addBlog(Blog blog) {

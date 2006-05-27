@@ -16,9 +16,9 @@
       With the default theme, links to these feeds are shown at the top of page.
     </p>
 
+    <div class="subsubtitle">Category and tag specific newsfeeds</div>
     <p>
-      <div class="subsubtitle">Category and tag specific newsfeeds</div>
-      Pebble can also generate newsfeeds that are specific to a particular category or tag. See <a href="help/categories.html">Categories</a> or <a href="help/tags.html">Tags</a> for more information. 
+      Pebble can also generate newsfeeds that are specific to a particular category or tag. See <a href="help/categories.html">Categories</a> or <a href="help/tags.html">Tags</a> for more information.
     </p>
   </div>
 </div>
