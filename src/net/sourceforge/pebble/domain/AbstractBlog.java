@@ -243,7 +243,10 @@ public abstract class AbstractBlog extends TimePeriod {
    */
   public String getUrl() {
     String url = PebbleContext.getInstance().getConfiguration().getUrl();
-    if (BlogManager.getInstance().isMultiUser()) {
+
+    if (url == null || url.length() == 0) {
+      return "";
+    } else if (BlogManager.getInstance().isMultiBlog()) {
       return url + getId() + "/";
     } else {
       return url;

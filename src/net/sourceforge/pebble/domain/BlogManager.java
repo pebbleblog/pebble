@@ -58,6 +58,8 @@ public class BlogManager {
   /** the blogs that are currently being managed */
   private Map blogs = new HashMap();
 
+  private boolean multiBlog = false;
+
   /**
    * Creates a new instance - private constructor for the singleton pattern.
    */
@@ -161,11 +163,9 @@ public class BlogManager {
   }
 
   public void addBlog(String blogId) {
-    if (isMultiUser()) {
-      File file = new File(getBlogsDirectory(), blogId);
-      file.mkdirs();
-      startBlog(file.getAbsolutePath(), blogId);
-    }
+    File file = new File(getBlogsDirectory(), blogId);
+    file.mkdirs();
+    startBlog(file.getAbsolutePath(), blogId);
   }
 
   /**
@@ -173,8 +173,12 @@ public class BlogManager {
    *
    * @return  true if multiple blogs are supported, false otherwise
    */
-  public boolean isMultiUser() {
-    return blogs.size() > 1;
+  public boolean isMultiBlog() {
+    return this.multiBlog;
+  }
+
+  public void setMultiBlog(boolean multiBlog) {
+    this.multiBlog = multiBlog;
   }
 
   public void addBlog(Blog blog) {

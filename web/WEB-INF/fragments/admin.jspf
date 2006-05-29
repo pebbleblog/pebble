@@ -69,7 +69,7 @@
   </li>
   </pebble:isBlogOwner>
 
-  <c:if test="${blogManager.multiUser}">
+  <c:if test="${blogManager.multiBlog}">
   <pebble:isPebbleAdmin>
   <li><b>Pebble</b>
   <br />

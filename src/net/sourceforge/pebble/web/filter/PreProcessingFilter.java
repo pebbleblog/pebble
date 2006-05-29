@@ -103,7 +103,7 @@ public class PreProcessingFilter implements Filter {
     uri = uri.substring(httpRequest.getContextPath().length(), uri.length());
 
     // now we're left with a URI
-    if (BlogManager.getInstance().isMultiUser()) {
+    if (BlogManager.getInstance().isMultiBlog()) {
       if (uri.length() == 0) {
         uri = "/";
       }

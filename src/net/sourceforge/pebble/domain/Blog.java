@@ -155,28 +155,6 @@ public class Blog extends AbstractBlog {
     categoryIndex = new CategoryIndex(this);
     staticPageIndex = new StaticPageIndex(this);
 
-    // reindex the blog if the indexes don't exist
-    File indexes = new File(getIndexesDirectory());
-    if (!indexes.exists()) {
-      indexes.mkdir();
-      reindex();
-    }
-
-    File imagesDirectory = new File(getImagesDirectory());
-    if (!imagesDirectory.exists()) {
-      imagesDirectory.mkdir();
-    }
-
-    File filesDirectory = new File(getFilesDirectory());
-    if (!filesDirectory.exists()) {
-      filesDirectory.mkdir();
-    }
-
-    File logDirectory = new File(getLogsDirectory());
-    if (!logDirectory.exists()) {
-      logDirectory.mkdir();
-    }
-
     initLogger();
     initEventDispatcher();
     initBlogListeners();
@@ -1153,10 +1131,26 @@ public class Blog extends AbstractBlog {
   void start() {
     log.debug("Starting blog with ID " + getId());
 
-    // create an index if one doesn't already exist
-    File indexesDirectory = new File(getIndexesDirectory());
-    if (!indexesDirectory.exists()) {
-        indexesDirectory.mkdir();
+    // reindex the blog if the indexes don't exist
+    File indexes = new File(getIndexesDirectory());
+    if (!indexes.exists()) {
+      indexes.mkdir();
+      reindex();
+    }
+
+    File imagesDirectory = new File(getImagesDirectory());
+    if (!imagesDirectory.exists()) {
+      imagesDirectory.mkdir();
+    }
+
+    File filesDirectory = new File(getFilesDirectory());
+    if (!filesDirectory.exists()) {
+      filesDirectory.mkdir();
+    }
+
+    File logDirectory = new File(getLogsDirectory());
+    if (!logDirectory.exists()) {
+      logDirectory.mkdir();
     }
 
     logger.start();
@@ -1174,7 +1168,6 @@ public class Blog extends AbstractBlog {
     log.debug("Stopping blog with ID " + getId());
 
     logger.stop();
-    logger = null;
     editableTheme.backup();
 
     // call blog listeners
@@ -1303,6 +1296,8 @@ public class Blog extends AbstractBlog {
   }
 
   public void reindex() {
+    log.info("Reindexing blog with ID " + getId());
+    
     BlogService service = new BlogService();
     List<BlogEntry> blogEntries = service.getBlogEntries(this);
 //    List<Page> pages = service.getStaticPages(this);

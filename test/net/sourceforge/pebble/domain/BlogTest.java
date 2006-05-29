@@ -420,7 +420,7 @@ public class BlogTest extends SingleBlogTestCase {
   public void testThemeDirectoryAccessible() {
     File file = new File(blog.getRoot(), "theme");
     assertEquals(file, new File(blog.getThemeDirectory()));
-    assertFalse(file.exists());
+    assertTrue(file.exists());
   }
 
   /**
@@ -501,7 +501,6 @@ public class BlogTest extends SingleBlogTestCase {
    * Tests that listeners are fired when the blog is stopped.
    */
   public void testListenersFiredWhenBlogStopped() {
-    blog.start();
     final StringBuffer buf = new StringBuffer("123");
     BlogListener listener = new BlogListener() {
       public void blogStarted(BlogEvent event) {

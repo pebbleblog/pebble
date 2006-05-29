@@ -43,6 +43,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import java.io.File;
 
 /**
  * Allows the blog to be loaded when this web application is started up.
@@ -73,6 +74,18 @@ public class PebbleContextListener implements ServletContextListener {
     ctx.setPebbleUserDetailsService(pebbleUserDetailsService);
     ctx.setWebApplicationRoot(event.getServletContext().getRealPath("/"));
 
+    File blogsDirectory = new File(config.getDataDirectory(), "blogs");
+    File files[] = blogsDirectory.listFiles();
+    int count = 0;
+    if (files != null) {
+      for (File file : files) {
+        if (file.isDirectory()) {
+          count++;
+        }
+      }
+    }
+
+    BlogManager.getInstance().setMultiBlog(count > 1);
     BlogManager.getInstance().startBlogs();
 
     long endTime = System.currentTimeMillis();

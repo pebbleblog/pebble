@@ -156,7 +156,7 @@
         </td>
       </tr>
 
-      <c:if test="${blogManager.multiUser}">
+      <c:if test="${blogManager.multiBlog}">
       <tr>
         <td colspan="2">
           <br />
