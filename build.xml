@@ -114,7 +114,7 @@
     </copy>
 
     <copy file="web/themes/default/screen.css" tofile="web/themes/orange/screen.css" />
-    <replace file="web/themes/orange/screen.css" token="#6e7d8e" value="#ac6944" />
+    <replace file="web/themes/orange/screen.css" token="#6e7d8e" value="#9b6e50" />
     <copy todir="web/themes/orange/jsp">
       <fileset dir="web/themes/default/jsp">
         <include name="sidebar.jsp"/>

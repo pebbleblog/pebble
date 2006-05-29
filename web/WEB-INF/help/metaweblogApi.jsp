@@ -20,7 +20,7 @@
       <li>Blog ID : ${blog.id}</li>
     </ul>
 
-    <div class="subsubtitle">Uploading imagea and files</div>
+    <div class="subsubtitle">Uploading images and files</div>
     <p>
       With the MetaWeblog API you can upload images and other files to your blog.
       By default, any files you upload will be stored underneath <a href="./images/">Images</a>.

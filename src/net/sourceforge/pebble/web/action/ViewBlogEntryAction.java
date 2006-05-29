@@ -75,7 +75,7 @@ public class ViewBlogEntryAction extends Action {
       return new NotFoundView();
     } else if (!blogEntry.isPublished() && !(SecurityUtils.isUserAuthorisedForBlogAsBlogContributor(blog)
         || SecurityUtils.isUserAuthorisedForBlogAsBlogOwner(blog))) {
-      // the entry exists, but isn't yet approved
+      // the entry exists, but isn't yet published
       return new NotFoundView();
     } else {
       getModel().put(Constants.BLOG_ENTRY_KEY, blogEntry);
