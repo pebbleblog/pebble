@@ -45,9 +45,15 @@ public class Constants {
   public static final String BLOG_ENTRIES = "blogEntries";
   public static final String RESPONSES = "responses";
 
+  public static final String RECENT_BLOG_ENTRIES = "recentBlogEntries";
+  public static final String RECENT_RESPONSES = "recentResponses";
+  public static final String CATEGORIES = "categories";
+  public static final String TAGS = "tags";
+
   public static final String BLOG_ENTRY_KEY = "blogEntry";
   public static final String COMMENT_KEY = "comment";
   public static final String BLOG_MANAGER = "blogManager";
+  public static final String PEBBLE_CONTEXT = "pebbleContext";
   public static final String PEBBLE_PROPERTIES = "pebbleProperties";
   public static final String TITLE_KEY = "title";
 

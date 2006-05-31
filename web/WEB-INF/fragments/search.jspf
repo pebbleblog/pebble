@@ -1,4 +1,6 @@
+<c:if test='${blog.class.name eq "net.sourceforge.pebble.domain.Blog"}'>
 <form name="searchForm" method="post" action="search.action" accept-charset="<c:out value="${blog.characterEncoding}"/>">
   <input type="text" name="query" />
   <input type="submit" value="<fmt:message key="common.search" />" />
 </form>
+</c:if>

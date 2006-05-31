@@ -1,5 +1,12 @@
 <%--
-  the main template into which all other content is placed
+  The main template into which all other content is placed. The following
+  objects are available for use in templates.
+
+   - blog
+   - pebbleContext
+   - tags
+   - recentBlogEntries
+   - recentResponses
 --%>
 <%@ include file="/WEB-INF/fragments/header.jspf" %>
 
@@ -9,11 +16,9 @@
 </div>
 
 <%-- only show the search box on normal single-blog pages, not multi-blog pages --%>
-<c:if test='${blog.class.name eq "net.sourceforge.pebble.domain.Blog"}'>
 <div id="search">
   <%@ include file="/WEB-INF/fragments/search.jspf" %>
 </div>
-</c:if>
 
 <div id="header">
   <div id="blogName"><span>${blog.name}</span></div>

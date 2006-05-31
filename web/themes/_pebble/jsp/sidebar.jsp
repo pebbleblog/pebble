@@ -1,5 +1,5 @@
 <%--
-  the sidebar that includes the admin links
+  The sidebar that includes the admin links.
 --%>
 <div id="sidebar">
 

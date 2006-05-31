@@ -35,6 +35,7 @@ import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.PebbleContext;
 import net.sourceforge.pebble.domain.AbstractBlog;
 import net.sourceforge.pebble.domain.BlogManager;
+import net.sourceforge.pebble.domain.Blog;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.context.ApplicationContext;
@@ -83,10 +84,8 @@ public class PreProcessingFilter implements Filter {
       throws ServletException, IOException {
 
     HttpServletRequest httpRequest = (HttpServletRequest)request;
-    HttpServletResponse httpResponse = (HttpServletResponse)response;
 
     PebbleContext pebbleContext = PebbleContext.getInstance();
-    request.setAttribute("pebbleContext", pebbleContext);
 
     AbstractBlog blog;
 
@@ -128,9 +127,15 @@ public class PreProcessingFilter implements Filter {
     }
     log.debug("uri : " + uri);
 
+    httpRequest.setAttribute(Constants.PEBBLE_CONTEXT, pebbleContext);
     httpRequest.setAttribute(Constants.BLOG_KEY, blog);
     httpRequest.setAttribute(Constants.EXTERNAL_URI, uri);
-    httpRequest.setAttribute("blogManager", BlogManager.getInstance());
+    httpRequest.setAttribute(Constants.BLOG_MANAGER, BlogManager.getInstance());
+
+    if (blog instanceof Blog) {
+      httpRequest.setAttribute(Constants.RECENT_BLOG_ENTRIES, ((Blog)blog).getRecentPublishedBlogEntries());
+      httpRequest.setAttribute(Constants.RECENT_RESPONSES, ((Blog)blog).getRecentApprovedResponses());
+    }
 
     // change the character encoding so that we can successfully get
     // international characters from the request when HTML forms are submitted
