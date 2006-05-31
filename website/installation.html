@@ -1,0 +1,267 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Pebble</title>
+    <link rel="stylesheet" href="screen.css" type="text/css" media="screen" />
+  </head>
+
+  <body>
+
+    <div id="container">
+
+      <div id="header">
+        <div id="blogName"><span>Pebble</span></div>
+        <div id="blogDescription"><span>A lightweight, open source, Java EE blogging tool</span></div>
+      </div>
+
+      <div id="linearNavigationLinks">
+        <a href="http://sourceforge.net/projects/pebble/">SourceForge.net project page</a> |
+        <a href="http://lists.sourceforge.net/mailman/listinfo/pebble-user/">pebble-users mailing list</a>
+      </div>
+
+      <div id="sidebar">
+
+        <div class="sidebarItem">
+          <div class="sidebarItemTitle"><span>Download</span></div>
+          <br />
+            Current release : <a href="http://prdownloads.sourceforge.net/pebble/pebble-2.0.0-M2.zip?download">Pebble 2.0.0-M2</a>
+            <br /><br />
+            Last stable release : <a href="http://prdownloads.sourceforge.net/pebble/pebble-1.9.zip?download">Pebble 1.9</a>
+            <br /><br />
+            Latest code : <a href="http://sourceforge.net/svn/?group_id=79200">/trunk</a>
+        </div>
+
+        <div class="sidebarItem">
+          <div class="sidebarItemTitle"><span>Technology</span></div>
+          <b>Pebble uses the following technologies</b>
+          <br />
+          Java<br />
+          JavaServer Pages<br />
+          JSP Standard Tag Library<br />
+          Java Servlets<br />
+          Acegi Security System for Spring<br />
+          Spring<br />
+          Apache Lucene<br />
+          Jakarta Commons<br />
+          Apache XML-RPC<br />
+          Radeox<br />
+
+          <br />
+
+          <b>Pebble is built with the following technologies</b>
+          <br />
+          IntelliJ IDEA<br />
+          Apache Ant<br />
+          JUnit<br />
+          Clover<br />
+          Subversion<br />
+        </div>
+
+        <div class="sidebarItem">
+          <div class="sidebarItemTitle"><span>License</span></div>
+          <p>
+            Pebble is open source and licensed under a <a href="license.txt">BSD license</a>.
+          </p>
+        </div>
+
+        <div class="sidebarItem">
+          <div class="sidebarItemTitle"><span>Thanks to</span></div>
+          <ul>
+            <li><a href="http://sourceforge.net"><img src="http://sourceforge.net/sflogo.php?group_id=79200&type=1" border="0" alt="Forged on SourceForge" /></a></li>
+            <li><a href="http://www.atlassian.com/software/jira/?clicked=Non-Profit"><img src="images/jira_button_120wx60h.gif" border="0" alt="Issues tracked by JIRA" /></a></li>
+            <li><a href="http://www.cenqua.com/clover"><img src="images/clovered2.gif" width="89" height="33" border="0" alt="Code Coverage by Clover"/></a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div id="content">
+
+        <div class="contentItem published">
+          <div class="title">Configuration</div>
+          <div class="subtitle">What do I need to configure?</div>
+
+          <div class="contentItemBody">
+            <p>
+            There are several pieces of information that you may want to configure with Pebble, all of which are specified in the <code>/WEB-INF/applicationContext-pebble.xml</code> file.
+            </p>
+
+            <ul>
+              <li>Data directory (dataDirectory) : the location where your Pebble data is stored. The default is <code>${user.home}/pebble</code>, and this directory is created automatically if it doesn't exist.</li>
+              <li>URL (url) : the URL where your blog is hosted. The default value is blank, which means "auto-discover at runtime".</li>
+              <li>SMTP host (smtpHost) : the name/IP address of the server through which e-mail is sent, or a JNDI name starting <code>java:/comp/env</code> pointing to a preconfigured javax.mail.Session instance. The default is <code>java:comp/env/mail/Session</code>.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="contentItem published">
+          <div class="title">Upgrading</div>
+          <div class="subtitle">What if I have an existing Pebble blog?</div>
+
+          <div class="contentItemBody">
+            <p>
+            If you're upgrading from a previous version of Pebble, you'll need to follow these instructions.
+            </p>
+
+            <div class="subsubtitle">Directory structure</div>
+            <p>
+            Pebble 2.0 introduces a new directory structure for the storage of its data so, if you are upgrading from a previous version, you'll need to restructure your directories very slightly. Pebble will automatically create this structure if the data directory specified in the configuration doesn't exist.
+            </p>
+
+            <p>
+            The following diagrams show the directory structure when Pebble is hosting a single blog, in Pebble 1.x and Pebble 2.x respectively. You will need to restructure your existing directories to match this new layout.
+            </p>
+
+            <table width="99%">
+              <tr>
+                <td valign="top">
+                  <pre class="codeSample">- <b>Blog directory</b>
+|-- blog.properties
+|-- 2006
+|-- files
+|-- images
+|-- ...</pre>
+                </td>
+                <td valign="top">
+                  <pre class="codeSample">- Pebble data directory
+|-- blogs
+| |-- <b>default</b>
+|   |-- blog.properties
+|   |-- 2006
+|   |-- files
+|   |-- images
+|   |-- ...
+|-- realm
+  |-- {username1}.properties
+  |-- {usernameN}.properties</pre>
+                </td>
+              </tr>
+            </table>
+
+            <p>
+              The following diagrams show the directory structure when Pebble is hosting more than a single blog, in Pebble 1.x and Pebble 2.x respectively. You will need to restructure your existing directories to match this new layout.
+            </p>
+
+            <table width="99%">
+              <tr>
+                <td valign="top">
+                  <pre class="codeSample">- Blog directory
+|-- blog.properties
+|-- <b>blog1</b>
+| |-- blog.properties
+| |-- 2006
+| |-- files
+| |-- images
+| |-- ...
+|-- <b>blogN</b>
+| |-- blog.properties
+| |-- 2006
+| |-- files
+| |-- images
+| |-- ...</pre>
+                </td>
+                <td valign="top">
+                  <pre class="codeSample">- Pebble data directory
+|-- blogs
+| |-- blog.properties
+| |-- <b>blog1</b>
+|   |-- blog.properties
+|   |-- 2006
+|   |-- files
+|   |-- images
+|   |-- ...
+| |-- <b>blogN</b>
+|   |-- blog.properties
+|   |-- 2006
+|   |-- files
+|   |-- images
+|   |-- ...
+|-- realm
+  |-- {username1}.properties
+  |-- {usernameN}.properties</pre>
+                </td>
+              </tr>
+            </table>
+
+            <div class="subsubtitle">Themes</div>
+            <p>
+            The way Pebble themes are implemented has been simplified and Pebble 1.x themes are not compatible. For this reason, the following steps should be followed before starting up Pebble.
+            </p>
+
+            <ul>
+              <li>Reset theme to default : open up <code>blog.properties</code> for each blog and remove the line that starts <code>theme=</code></li>
+              <li>Remove the backup theme : remove the directory called <code>theme</code> underneath each blog</li>
+            </ul>
+
+            <div class="subsubtitle">Plugins</div>
+            <p>
+            The names for the plugins have changed and the easiest way to correct these is to open up the blog.properties file for each blog and remove the lines that start with the following.
+            </p>
+
+            <ul>
+              <li><code>blogEntryDecorators=</code></li>
+              <li><code>blogEntryListeners=</code></li>
+              <li><code>commentListeners=</code></li>
+              <li><code>trackBackListeners=</code></li>
+              <li><code>permalinkProviderName=</code></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="contentItem published">
+          <div class="title">Security</div>
+          <div class="subtitle">How do I add new users?</div>
+
+          <div class="contentItemBody">
+            <p>
+              User information is stored underneath the Pebble data directory, in a sub-directory called <code>realm</code>. In here there is
+              one file per user, with the filename convention of <code>{username}.properties</code>. Each file contains a series of name=value
+              pairs that correspond to the information stored about each user. An example file (the default <code>username.properties</code>)
+              is as follows.
+            </p>
+
+            <pre class="codeSample">name=Default User
+password=1d26806da123dd76cdc52fc3daa9ad6777522935
+roles=ROLE_BLOG_OWNER,ROLE_BLOG_CONTRIBUTOR,ROLE_PEBBLE_ADMIN
+website=http://www.domain.com
+emailAddress=username@domain.com</pre>
+
+            <p>
+              To add more users, create an additional file for each user and customize the contents as necessary. Pebble uses
+              the Acegi Security System for Spring and has been cofigured to use an SHA encoded password with the username used as the salt, although this is configurable.
+            </p>
+
+            <p>
+              A short shell script has been included in the <code>bin</code> directory to help you encode your own passwords. To use it, open the file and modify the value of <code>PEBBLE_HOME</code> to point to an unexploded copy of the <code>pebble.war</code> file. The usage of the file is as follows.
+            </p>
+
+            <pre class="codeSample">encode-password.sh [md5|sha] username password</pre>
+
+            <p>
+              For example, the password above can be generated by the following command.
+            </p>
+
+            <pre class="codeSample">encode-password.sh sha username password</pre>
+          </div>
+        </div>
+
+        <div class="contentItem published">
+          <div class="title">Help and support</div>
+          <div class="subtitle">What if I have further questions?</div>
+
+          <div class="contentItemBody">
+            <p>
+              Help and support is available via the pebble-users mailing list, details of which can be found at
+              <a href="http://lists.sourceforge.net/mailman/listinfo/pebble-user">http://lists.sourceforge.net/mailman/listinfo/pebble-user</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div id="footer">
+        Pebble is written and maintained by <a href="http://www.simongbrown.com/blog/">Simon Brown</a>
+      </div>
+
+    </div>
+  </body>
+</html>

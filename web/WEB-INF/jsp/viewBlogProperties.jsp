@@ -1,7 +1,7 @@
 <div class="contentItem">
 
   <div class="contentItemLinks">
-    <a href="${pageContext.request.contextPath}/docs/configuration.html" target="_blank">Help</a>
+    <a href="./help/configuration.html" target="_blank">Help</a>
   </div>
 
   <div class="title">Blog properties</div>
@@ -134,7 +134,7 @@
       <tr>
         <td colspan="2">
           <br />
-          <b>Security</b> (<span class="help"><a href="${pageContext.request.contextPath}/docs/multiuser-blogs.html#security" target="_blank">Help</a></span>)
+          <b>Security</b> (<span class="help"><a href="./help/multiuser-blogs.html#security" target="_blank">Help</a></span>)
         </td>
       </tr>
 

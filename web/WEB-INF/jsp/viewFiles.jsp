@@ -6,9 +6,9 @@
     </c:if>
     <a href="zipDirectory.secureaction?path=${directory.absolutePath}&type=${type}">Export as ZIP</a> |
     <c:choose>
-      <c:when test="${type == 'blogImage'}"><a href="${pageContext.request.contextPath}/docs/images.html" target="_blank">Help</a></c:when>
-      <c:when test="${type == 'blogFile'}"><a href="${pageContext.request.contextPath}/docs/files.html" target="_blank">Help</a></c:when>
-      <c:when test="${type == 'themeFile'}"><a href="${pageContext.request.contextPath}/docs/themes.html" target="_blank">Help</a></c:when>
+      <c:when test="${type == 'blogImage'}"><a href="./help/images.html" target="_blank">Help</a></c:when>
+      <c:when test="${type == 'blogFile'}"><a href="./help/files.html" target="_blank">Help</a></c:when>
+      <c:when test="${type == 'themeFile'}"><a href="./help/themes.html" target="_blank">Help</a></c:when>
       <c:when test="${type == 'blogData'}"></c:when>
     </c:choose>
   </div>

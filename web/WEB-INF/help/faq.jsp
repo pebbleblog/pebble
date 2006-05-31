@@ -11,7 +11,7 @@
 
     <b>Blog entries</b><br />
     <ol>
-      <li><b>I'm setting up a team blog and I'd like all blog entries to be approved before publication. Is this possible?</b> Yes, see <a href="help/blogEntries.html#moderation">Blog entry moderation</a> for more details.</li>
+      <li><b>I'm setting up a team blog and I'd like all blog entries to be approved before publication. Is this possible?</b> Yes, see <a href="./help/blogEntries.html#moderation">Blog entry moderation</a> for more details.</li>
     </ol>
 
     <b>Comments and TrackBacks</b><br />

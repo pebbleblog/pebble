@@ -42,8 +42,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Allows the user to invalidate the cache, so that entries can be reloaded
- * from the persistent store.
+ * Reloads a blog from disk.
  *
  * @author    Simon Brown
  */

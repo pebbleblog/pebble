@@ -29,49 +29,57 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package net.sourceforge.pebble.dao;
+package net.sourceforge.pebble.web.action;
 
+import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.domain.Blog;
-import net.sourceforge.pebble.domain.BlogEntry;
+import net.sourceforge.pebble.domain.BlogException;
+import net.sourceforge.pebble.web.view.ForwardView;
+import net.sourceforge.pebble.web.view.View;
 
-import java.util.List;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-public interface BlogEntryDAO {
-
-  /**
-   * Loads a specific blog entry.
-   *
-   * @param blogEntryId   the blog entry ID
-   * @return a BlogEntry instance
-   * @throws net.sourceforge.pebble.dao.PersistenceException
-   *          if the specified blog entry cannot be loaded
-   */
-  public BlogEntry loadBlogEntry(Blog blog, String blogEntryId) throws PersistenceException;
-
-  /**
-   * Loads all blog entries.
-   *
-   * @param blog    the Blog to load all entries for
-   * @return a List of BlogEntry objects
-   * @throws net.sourceforge.pebble.dao.PersistenceException
-   *          if the blog entries cannot be loaded
-   */
-  public List<BlogEntry> loadBlogEntries(Blog blog) throws PersistenceException;
+/**
+ * Resets the theme, decorators and listeners associated with a blog.
+ *
+ * @author    Simon Brown
+ */
+public class ResetBlogAction extends SecureAction {
 
   /**
-   * Stores the specified blog entry.
+   * Peforms the processing associated with this action.
    *
-   * @param blogEntry   the blog entry to store
-   * @throws PersistenceException   if something goes wrong storing the entry
+   * @param request  the HttpServletRequest instance
+   * @param response the HttpServletResponse instance
+   * @return the name of the next view
    */
-  public void storeBlogEntry(BlogEntry blogEntry) throws PersistenceException;
+  public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
+    Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
+
+    try {
+      blog.removeProperty(Blog.THEME_KEY);
+      blog.removeProperty(Blog.BLOG_ENTRY_DECORATORS_KEY);
+      blog.removeProperty(Blog.BLOG_ENTRY_LISTENERS_KEY);
+      blog.removeProperty(Blog.COMMENT_LISTENERS_KEY);
+      blog.removeProperty(Blog.TRACKBACK_LISTENERS_KEY);
+      blog.storeProperties();
+    } catch (BlogException e) {
+      e.printStackTrace();
+    }
+
+    return new ForwardView("/reloadBlog.secureaction");
+  }
 
   /**
-   * Removes the specified blog entry.
+   * Gets a list of all roles that are allowed to access this action.
    *
-   * @param blogEntry   the blog entry to remove
-   * @throws PersistenceException   if something goes wrong removing the entry
+   * @return  an array of Strings representing role names
+   * @param request
    */
-  public void removeBlogEntry(BlogEntry blogEntry) throws PersistenceException;
+  public String[] getRoles(HttpServletRequest request) {
+    return new String[]{Constants.BLOG_OWNER_ROLE};
+  }
 
 }

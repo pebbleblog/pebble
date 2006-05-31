@@ -2,10 +2,13 @@ package net.sourceforge.pebble.dao.mock;
 
 import net.sourceforge.pebble.dao.BlogEntryDAO;
 import net.sourceforge.pebble.dao.PersistenceException;
-import net.sourceforge.pebble.domain.BlogEntry;
 import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.domain.BlogEntry;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * This is a mock implementation of BlogEntryDAO that is used when performing
@@ -16,7 +19,6 @@ import java.util.*;
 public class MockBlogEntryDAO implements BlogEntryDAO {
 
   private Map blogEntries = new HashMap();
-  private Map staticPages = new HashMap();
 
   /**
    * Loads a specific blog entry.
@@ -53,13 +55,7 @@ public class MockBlogEntryDAO implements BlogEntryDAO {
    * @throws PersistenceException   if something goes wrong storing the entry
    */
   public void storeBlogEntry(BlogEntry blogEntry) throws PersistenceException {
-//    switch (blogEntry.getType()) {
-//      case BlogEntry.STATIC_PAGE :
-//        staticPages.put(blogEntry.getId(), blogEntry);
-//        break;
-//      default :
-        blogEntries.put(blogEntry.getId(), blogEntry);
-//    }
+    blogEntries.put(blogEntry.getId(), blogEntry);
   }
 
   /**
@@ -69,47 +65,7 @@ public class MockBlogEntryDAO implements BlogEntryDAO {
    * @throws PersistenceException   if something goes wrong removing the entry
    */
   public void removeBlogEntry(BlogEntry blogEntry) throws PersistenceException {
-//    switch (blogEntry.getType()) {
-//      case BlogEntry.STATIC_PAGE :
-//        staticPages.remove(blogEntry.getId());
-//        break;
-//      default :
-        blogEntries.remove(blogEntry.getId());
-//    }
-  }
-
-  /**
-   * Gets the YearlyBlogs that the specified root blog is managing.
-   *
-   * @param rootBlog    the owning Blog instance
-   * @throws  PersistenceException    if the yearly blogs cannot be loaded
-   */
-  public List getYearlyBlogs(Blog rootBlog) throws PersistenceException {
-    return new ArrayList();
-  }
-
-  /**
-   * Loads the static pages for a given blog.
-   *
-   * @param blog    the owning Blog instance
-   * @return  a List of BlogEntry instances
-   * @throws  net.sourceforge.pebble.dao.PersistenceException    if blog entries cannot be loaded
-   */
-  public List<BlogEntry> loadStaticPages(Blog blog) throws PersistenceException {
-    return new ArrayList<BlogEntry>(staticPages.values());
-  }
-
-  /**
-   * Loads a specific static page.
-   *
-   * @param blog    the owning Blog
-   * @param pageId   the page ID
-   * @return a BlogEntry instance
-   * @throws net.sourceforge.pebble.dao.PersistenceException
-   *          if the specified blog entry cannot be loaded
-   */
-  public BlogEntry loadStaticPage(Blog blog, String pageId) throws PersistenceException {
-    return (BlogEntry)staticPages.get(pageId);
+    blogEntries.remove(blogEntry.getId());
   }
 
 }

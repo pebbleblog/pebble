@@ -226,7 +226,6 @@ public class MetaWeblogAPIHandler extends AbstractAPIHandler {
    * @param password  the password used for logging in via XML-RPC
    * @param struct    the struct containing the new blog entry
    * @param publish   a flag to indicate whether the entry should be published
-   *                  (this is ignored as all new entries are published)
    * @return  a String representing the ID of the new blog entry
    * @throws org.apache.xmlrpc.XmlRpcException    if something goes wrong, including an authentication error
    */
@@ -242,16 +241,15 @@ public class MetaWeblogAPIHandler extends AbstractAPIHandler {
       Blog blog = getBlogWithBlogId(blogid);
       authenticate(blog, username, password);
 
-      BlogEntry entry = null;
+      BlogEntry entry = new BlogEntry(blog);
+
       if (struct.containsKey(PUB_DATE)) {
         Date date = (Date)struct.get(PUB_DATE);
-        entry = new BlogEntry(blog);
         entry.setDate(date);
-      } else {
-        entry = new BlogEntry(blog);
       }
 
       populateEntry(entry, struct, username);
+      entry.setPublished(publish);
 
       BlogService service = new BlogService();
       service.putBlogEntry(entry);
@@ -270,7 +268,6 @@ public class MetaWeblogAPIHandler extends AbstractAPIHandler {
    * @param password  the password used for logging in via XML-RPC
    * @param struct    the new content of the new blog entry
    * @param publish   a flag to indicate whether the entry should be published
-   *                  (this is ignored as all new entries are published)
    * @return  a boolean true value to signal success
    * @throws org.apache.xmlrpc.XmlRpcException    if something goes wrong, including an authentication error
    */
@@ -291,6 +288,8 @@ public class MetaWeblogAPIHandler extends AbstractAPIHandler {
 
       if (entry != null) {
         populateEntry(entry, struct, username);
+        entry.setPublished(publish);
+
         service.putBlogEntry(entry);
       } else {
         throw new XmlRpcException(0, "Blog entry with ID of " + postid + " was not found.");

@@ -38,7 +38,7 @@
 
     <div class="subsubtitle">Comment moderation and spam</div>
     <p>
-      For more information about how to deal with comment spam, please see <a href="help/responseSpam.html">Comment and TrackBack Spam</a>.
+      For more information about how to deal with comment spam, please see <a href="./help/responseSpam.html">Comment and TrackBack Spam</a>.
     </p>
   </div>
 </div>

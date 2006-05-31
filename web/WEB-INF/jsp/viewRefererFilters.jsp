@@ -1,7 +1,7 @@
 <div class="contentItem">
 
   <div class="contentItemLinks">
-    <a href="${pageContext.request.contextPath}/docs/referers.html" target="_blank">Help</a>
+    <a href="./help/referers.html" target="_blank">Help</a>
   </div>
 
   <div class="title">Referer filters</div>

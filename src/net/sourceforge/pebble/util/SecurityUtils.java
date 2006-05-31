@@ -41,6 +41,8 @@ import org.acegisecurity.context.SecurityContextHolder;
 import org.acegisecurity.providers.TestingAuthenticationToken;
 import org.acegisecurity.providers.encoding.Md5PasswordEncoder;
 import org.acegisecurity.providers.encoding.ShaPasswordEncoder;
+import org.acegisecurity.providers.encoding.PlaintextPasswordEncoder;
+import org.acegisecurity.providers.encoding.PasswordEncoder;
 import org.springframework.context.ApplicationContext;
 
 /**
@@ -135,15 +137,18 @@ public final class SecurityUtils {
 
   public static void main(String[] args) {
     if (args.length != 3) {
-      System.out.println("Usage : [md5|sha] username password");
+      System.out.println("Usage : [md5|sha|plaintext] username password");
     } else if (args[0].equals("md5")) {
-      Md5PasswordEncoder encoder = new Md5PasswordEncoder();
+      PasswordEncoder encoder = new Md5PasswordEncoder();
       System.out.println(encoder.encodePassword(args[2], args[1]));
     } else if (args[0].equals("sha")) {
-      ShaPasswordEncoder encoder = new ShaPasswordEncoder();
+      PasswordEncoder encoder = new ShaPasswordEncoder();
+      System.out.println(encoder.encodePassword(args[2], args[1]));
+    } else if (args[0].equals("plaintext")) {
+      PasswordEncoder encoder = new PlaintextPasswordEncoder();
       System.out.println(encoder.encodePassword(args[2], args[1]));
     } else {
-      System.out.println("Algorithm must be md5 or sha");
+      System.out.println("Algorithm must be md5, sha or plaintext");
     }
   }
 

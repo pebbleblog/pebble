@@ -1,10 +1,10 @@
 <div class="contentItem">
 
   <div class="contentItemLinks">
-    <a href="${pageContext.request.contextPath}/docs/configuration.html" target="_blank">Help</a>
+    <a href="./help/configuration.html" target="_blank">Help</a>
   </div>
 
-  <div class="title">Blog properties</div>
+  <div class="title">Pebble properties</div>
   <div class="subtitle">&nbsp;</div>
 
   <div class="contentItemBody">
@@ -12,7 +12,7 @@
     <table>
       <tr>
         <td colspan="2">
-          <b>General blog properties</b>
+          <b>General properties</b>
         </td>
       </tr>
 
@@ -45,7 +45,7 @@
 
       <tr>
         <td>
-          Recent blog entries
+          Maximum recent blog entries
         </td>
         <td>
           <pebble:select name="recentBlogEntriesOnHomePage" items="${numbers}" selected="${blog.recentBlogEntriesOnHomePage}" />

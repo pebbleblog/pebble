@@ -19,7 +19,7 @@
   <pebble:isBlogContributor>
   <li><b>Content</b>
   <br />
-  <a href="addBlogEntry.secureaction#form" title="Add a new entry">New blog entry</a> (${blog.numberOfBlogEntries})
+  <a href="addBlogEntry.secureaction#form" title="Add a new entry">New blog entry</a> (<fmt:formatNumber value="${blog.numberOfBlogEntries}"/>)
 <%--    |
   <a href="javascript:void(location.href='<c:out value="${blog.url}saveBlogEntry.secureaction"/>?title='+escape(document.title)+'&amp;body=%3Ca+href%3D%22'+escape(document.URL)+'%22%3E'+escape(document.title)+'%3C%2Fa%3E&amp;trackBacksEnabled=true&amp;commentsEnabled=true&amp;submit=Preview#form')" title="Add this bookmarklet to your favourites">Blog this</a>
   --%>
@@ -79,7 +79,7 @@
   </pebble:isPebbleAdmin>
   </c:if>
 
-  <li><pebble:isBlogOwnerOrContributor><a href="${pageContext.request.contextPath}/help/index.html" title="Help">Help</a> | </pebble:isBlogOwnerOrContributor><a href="${pageContext.request.contextPath}/logout.action?redirectUrl=${blog.url}"><fmt:message key="common.logout" /></a></li>
+  <li><pebble:isBlogOwnerOrContributor><a href="./help/index.html" title="Help">Help</a> | </pebble:isBlogOwnerOrContributor><a href="${pageContext.request.contextPath}/logout.action?redirectUrl=${blog.url}"><fmt:message key="common.logout" /></a></li>
 
   </ul>
 </pebble:isAuthenticated>

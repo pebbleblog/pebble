@@ -2,7 +2,7 @@
   <pebble:isBlogContributor>
 
     <div>
-    <b>Send a TrackBack</b> (<span class="help"><a href="${pageContext.request.contextPath}/docs/trackbacks.html" target="_blank">Help</a></span>)
+    <b>Send a TrackBack</b> (<span class="help"><a href="./help/trackbacks.html" target="_blank">Help</a></span>)
     <br /><br />
 
     <form name="sendTrackBack" action="sendTrackBack.secureaction" method="post" accept-charset="<c:out value="${blog.characterEncoding}" />">

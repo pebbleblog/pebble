@@ -24,7 +24,7 @@
 
     <div class="subsubtitle">Tagging</div>
     <p>
-      See <a href="help/tags.html">Tags</a> for more information on how categories can be tagged.
+      See <a href="./help/tags.html">Tags</a> for more information on how categories can be tagged.
     </p>
 
     <div class="subsubtitle">Category-based feeds</div>

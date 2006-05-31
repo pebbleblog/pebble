@@ -1,5 +1,5 @@
 # Utility to encode a password using a specific algorithm, using the username as the salt.
-# Usage : [md5|sha] username password
+# Usage : [md5|sha|plaintext] username password
 #
 # Set PEBBLE_HOME to the location of your exploded web application root
 export PEBBLE_HOME=web

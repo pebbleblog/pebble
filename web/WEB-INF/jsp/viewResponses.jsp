@@ -1,7 +1,7 @@
 <div class="contentItem">
 
   <div class="contentItemLinks">
-    <a href="${pageContext.request.contextPath}/docs/comment-and-trackback-spam.html" target="_blank">Help</a>
+    <a href="./help/comment-and-trackback-spam.html" target="_blank">Help</a>
   </div>
 
   <div class="title">

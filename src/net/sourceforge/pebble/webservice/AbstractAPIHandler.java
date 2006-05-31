@@ -78,7 +78,6 @@ public abstract class AbstractAPIHandler {
         throw new XmlRpcAuthenticationException("Not authorised for this blog.");
       }
     } catch (AuthenticationException ae) {
-      ae.printStackTrace();
       throw new XmlRpcAuthenticationException("Username and password did not pass authentication.");
     }
   }

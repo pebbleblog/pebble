@@ -10,7 +10,7 @@
       <value>
         CONVERT_URL_TO_LOWERCASE_BEFORE_COMPARISON
         PATTERN_TYPE_APACHE_ANT
-        /xmlrpc/**=,
+        /xmlrpc/**=anonymousProcessingFilter
         /**=httpSessionContextIntegrationFilter,authenticationProcessingFilter,rememberMeProcessingFilter,exceptionTranslationFilter,filterInvocationInterceptor
       </value>
     </property>
@@ -67,6 +67,11 @@
   <bean id="roleVoter" class="org.acegisecurity.vote.RoleVoter" />
 
    <!-- ===================== HTTP REQUEST SECURITY ==================== -->
+
+  <bean id="anonymousProcessingFilter" class="org.acegisecurity.providers.anonymous.AnonymousProcessingFilter">
+    <property name="key"><value>anonymous</value></property>
+    <property name="userAttribute"><value>anonymousUser,ROLE_ANONYMOUS</value></property>
+  </bean>
 
   <bean id="exceptionTranslationFilter" class="org.acegisecurity.ui.ExceptionTranslationFilter">
     <property name="authenticationEntryPoint"><ref local="authenticationProcessingFilterEntryPoint"/></property>

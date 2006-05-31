@@ -29,7 +29,7 @@ window.onload = function()
 <div class="contentItem">
 
   <div class="contentItemLinks">
-    <a href="${pageContext.request.contextPath}/help/blogEntries.html" target="_blank">Help</a>
+    <a href="./help/blogEntries.html" target="_blank">Help</a>
   </div>
 
   <div class="title">Blog entry</div>

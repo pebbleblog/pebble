@@ -336,6 +336,7 @@ blockquote {
 }
 .codeSample {
   font-family: Courier, sans-serif;
+  font-size: 11px;
   border: solid #F0F0F0 1px;
   text-align: left;
   background: #F8F8F8;

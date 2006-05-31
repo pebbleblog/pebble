@@ -36,42 +36,26 @@ import net.sourceforge.pebble.domain.BlogEntry;
 
 import java.util.List;
 
-public interface BlogEntryDAO {
+public interface StaticPageDAO {
 
   /**
-   * Loads a specific blog entry.
+   * Loads the static pages for a given blog.
    *
-   * @param blogEntryId   the blog entry ID
+   * @param blog    the owning Blog instance
+   * @return  a List of BlogEntry instances
+   * @throws  PersistenceException    if blog entries cannot be loaded
+   */
+  public List<BlogEntry> loadStaticPages(Blog blog) throws PersistenceException;
+
+  /**
+   * Loads a specific static page.
+   *
+   * @param blog    the owning Blog
+   * @param pageId   the page ID
    * @return a BlogEntry instance
-   * @throws net.sourceforge.pebble.dao.PersistenceException
+   * @throws PersistenceException
    *          if the specified blog entry cannot be loaded
    */
-  public BlogEntry loadBlogEntry(Blog blog, String blogEntryId) throws PersistenceException;
-
-  /**
-   * Loads all blog entries.
-   *
-   * @param blog    the Blog to load all entries for
-   * @return a List of BlogEntry objects
-   * @throws net.sourceforge.pebble.dao.PersistenceException
-   *          if the blog entries cannot be loaded
-   */
-  public List<BlogEntry> loadBlogEntries(Blog blog) throws PersistenceException;
-
-  /**
-   * Stores the specified blog entry.
-   *
-   * @param blogEntry   the blog entry to store
-   * @throws PersistenceException   if something goes wrong storing the entry
-   */
-  public void storeBlogEntry(BlogEntry blogEntry) throws PersistenceException;
-
-  /**
-   * Removes the specified blog entry.
-   *
-   * @param blogEntry   the blog entry to remove
-   * @throws PersistenceException   if something goes wrong removing the entry
-   */
-  public void removeBlogEntry(BlogEntry blogEntry) throws PersistenceException;
+  public BlogEntry loadStaticPage(Blog blog, String pageId) throws PersistenceException;
 
 }

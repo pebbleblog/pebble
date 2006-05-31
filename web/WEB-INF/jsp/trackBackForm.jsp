@@ -1,7 +1,7 @@
 <div class="contentItem">
 
   <div class="contentItemLinks">
-    <a href="${pageContext.request.contextPath}/docs/trackbacks.html" target="_blank">Help</a>
+    <a href="./help/trackbacks.html" target="_blank">Help</a>
   </div>
 
   <div class="title">Send a TrackBack</div>

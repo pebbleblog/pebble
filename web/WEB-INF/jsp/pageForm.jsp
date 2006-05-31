@@ -37,8 +37,8 @@ window.onload = function()
 
   <div class="contentItemLinks">
     <c:choose>
-      <c:when test="${blogEntry.type == 8}"><a href="${pageContext.request.contextPath}/docs/static-pages.html" target="_blank">Help</a></c:when>
-      <c:when test="${blogEntry.type != 8}"><a href="${pageContext.request.contextPath}/docs/blog-entries.html" target="_blank">Help</a></c:when>
+      <c:when test="${blogEntry.type == 8}"><a href="./help/static-pages.html" target="_blank">Help</a></c:when>
+      <c:when test="${blogEntry.type != 8}"><a href="./help/blog-entries.html" target="_blank">Help</a></c:when>
     </c:choose>
   </div>
 
@@ -106,7 +106,7 @@ window.onload = function()
 
       <c:if test="${not blogEntry.staticPage}">
       <tr>
-        <td valign="top"><b>Comments</b> (<span class="help"><a href="${pageContext.request.contextPath}/docs/comments.html" target="_blank">Help</a></span>)</td>
+        <td valign="top"><b>Comments</b> (<span class="help"><a href="./help/comments.html" target="_blank">Help</a></span>)</td>
         <td>
           Enabled&nbsp;
           <input type="radio" name="commentsEnabled" value="true"
@@ -123,7 +123,7 @@ window.onload = function()
       </tr>
 
       <tr>
-        <td valign="top"><b>TrackBacks</b> (<span class="help"><a href="${pageContext.request.contextPath}/docs/trackbacks.html" target="_blank">Help</a></span>)</td>
+        <td valign="top"><b>TrackBacks</b> (<span class="help"><a href="./help/trackbacks.html" target="_blank">Help</a></span>)</td>
         <td>
           Enabled&nbsp;
           <input type="radio" name="trackBacksEnabled" value="true"
@@ -183,7 +183,7 @@ window.onload = function()
         </c:if>
 
         <tr>
-          <td valign="top"><br /><b>Attachment</b> (<span class="help"><a href="${pageContext.request.contextPath}/docs/blog-entries.html#attachments" target="_blank">Help</a></span>)</td>
+          <td valign="top"><br /><b>Attachment</b> (<span class="help"><a href="./help/blog-entries.html#attachments" target="_blank">Help</a></span>)</td>
           <td></td>
         </tr>
         <tr>

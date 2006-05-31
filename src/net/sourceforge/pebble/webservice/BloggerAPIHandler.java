@@ -193,7 +193,6 @@ public class BloggerAPIHandler extends AbstractAPIHandler {
    * @param password  the password used for logging in via XML-RPC
    * @param content   the content of the new blog entry
    * @param publish   a flag to indicate whether the entry should be published
-   *                  (this is ignored as all new entries are published)
    * @return  a String representing the ID of the new blog entry
    * @throws XmlRpcException    if something goes wrong, including an authentication error
    */
@@ -212,6 +211,7 @@ public class BloggerAPIHandler extends AbstractAPIHandler {
 
       BlogEntry blogEntry = new BlogEntry(blog);
       populateEntry(blogEntry, content, username);
+      blogEntry.setPublished(publish);
 
       BlogService service = new BlogService();
       service.putBlogEntry(blogEntry);
@@ -253,6 +253,7 @@ public class BloggerAPIHandler extends AbstractAPIHandler {
 
       if (entry != null) {
         populateEntry(entry, content, username);
+        entry.setPublished(publish);
         service.putBlogEntry(entry);
       } else {
         throw new XmlRpcException(0, "Blog entry with ID of " + postid + " was not found.");

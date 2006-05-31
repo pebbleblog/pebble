@@ -135,6 +135,8 @@ public class PreProcessingFilter implements Filter {
     if (blog instanceof Blog) {
       httpRequest.setAttribute(Constants.RECENT_BLOG_ENTRIES, ((Blog)blog).getRecentPublishedBlogEntries());
       httpRequest.setAttribute(Constants.RECENT_RESPONSES, ((Blog)blog).getRecentApprovedResponses());
+      httpRequest.setAttribute(Constants.CATEGORIES, ((Blog)blog).getCategories());
+      httpRequest.setAttribute(Constants.TAGS, ((Blog)blog).getTags());
     }
 
     // change the character encoding so that we can successfully get

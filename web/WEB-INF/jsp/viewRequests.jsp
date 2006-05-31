@@ -1,7 +1,7 @@
 <div class="contentItem">
 
   <div class="contentItemLinks">
-    <a href="${pageContext.request.contextPath}/docs/logs.html" target="_blank">Help</a>
+    <a href="./help/logs.html" target="_blank">Help</a>
   </div>
 
   <div class="title">Requests for <c:out value="${logPeriod}"/></div>

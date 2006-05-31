@@ -15,7 +15,7 @@
     </p>
 
     <p>
-      The body of a blog entry is just a XHTML or HTML fragment, meaning that you can use any XHTML or HTML tags you like for markup and formatting. Common examples include using bold and italics. Also, you can include other elements such as hyperlinks and <a href="help/images.html">images</a>.
+      The body of a blog entry is just a XHTML or HTML fragment, meaning that you can use any XHTML or HTML tags you like for markup and formatting. Common examples include using bold and italics. Also, you can include other elements such as hyperlinks and <a href="./help/images.html">images</a>.
     </p>
 
     <div class="subsubtitle">Excerpts</div>
@@ -56,8 +56,8 @@
     </p>
 
     <p>
-    To attach a file, enter a relative URL (e.g. <code>./files/somefile.mp3</code> to point to a <a href="help/files.html">file</a> that you have already uploaded to your blog) or absolute URL for the file you'd like to attach to your blog entry. If the attachment size
-    and type are left blank, they will be populated automatically when the blog entry is previewed or saved. See <a href="help/files.html#mimeTypes">Files : MIME types</a> if the MIME type isn't automatically populated when you are trying to attach a file hosted from your blog.
+    To attach a file, enter a relative URL (e.g. <code>./files/somefile.mp3</code> to point to a <a href="./help/files.html">file</a> that you have already uploaded to your blog) or absolute URL for the file you'd like to attach to your blog entry. If the attachment size
+    and type are left blank, they will be populated automatically when the blog entry is previewed or saved. See <a href="./help/files.html#mimeTypes">Files : MIME types</a> if the MIME type isn't automatically populated when you are trying to attach a file hosted from your blog.
     </p>
   </div>
 </div>

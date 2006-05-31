@@ -1,136 +1,20 @@
-Pebble 2.0.0-M2
----------------
+Pebble 2.0.0-M2 - 31st May 2006
+-------------------------------
+The prerequisites are as follows.
 
-The prerequisites are :
  - Java 5.0
  - A JSP 2.0/Servlet 2.4 compatible server such as Apache Tomcat 5.5.x 
 
-1.0 Quickstart with Tomcat 5.5.x
---------------------------------
-If you're in a hurry, here's a summary of how to get up and running.
+Quickstart with Apache Tomcat 5.5.x
+-----------------------------------
+If you're in a hurry, you can get Pebble and up running in a couple of minutes by following these steps.
 
  (1) Take the pebble.war file from the distribution and deploy it, by copying it to $TOMCAT_HOME/webapps.
  (2) Restart Tomcat and point your browser to http://localhost:8080/pebble/.
  (3) Start blogging by logging in with username/password.
 
-2.0 Configuration
+For further installation details, please see docs/installation.html in the distribution.
+
+Further questions
 -----------------
-There are several pieces of information that you may want to configure with Pebble, all of which are specified in the <webapp>/WEB-INF/applicationContext-pebble.xml file.
-
-  Data directory (dataDirectory) : the location where your Pebble data is stored, default is ${user.home}/pebble.
-  URL (url) : the URL where your blog is hosted, default is auto-discover at runtime.
-  SMTP host (smtpHost) : the name/IP address of the server through which e-mail is sent, or a JNDI name starting java:/comp/env pointing to a preconfigured javax.mail.Session instance.
-
-3.0 Upgrading from a previous version
--------------------------------------
-If you're upgrading from a previous version of Pebble, you'll need to follow these instructions.
-
-3.1 Directory structure
------------------------
-Pebble 2.0 introduces a new directory structure for the storage of its data so, if you are upgrading from a previous version, you'll need to restructure your directories very slightly. Pebble will automatically create this structure if the data directory specified in the configuration doesn't exist.
-
-The following diagram shows the directory structure when a previous version of Pebble was running a single blog.
-
- - Blog directory
- |-- blog.properties
- |-- 2006
- |-- files
- |-- images
- |-- ...
-
-The following diagram shows the new directory structure that you will need to migrate to if Pebble is hosting a single blog.
-
- - Pebble data directory
- |-- blogs
- | |-- default
- |   |-- blog.properties
- |   |-- 2006
- |   |-- files
- |   |-- images
- |   |-- ...
- |-- realm
-   |-- <username1>.properties
-   |-- <usernameN>.properties
-
-The following diagram shows the directory structure when a previous version of Pebble was running more than a single blog (i.e. multi-user).
-
- - Blog directory
- |-- blog.properties
- |-- blog1
- | |-- blog.properties
- | |-- 2006
- | |-- files
- | |-- images
- | |-- ...
- |-- blogN
- | |-- blog.properties
- | |-- 2006
- | |-- files
- | |-- images
- | |-- ...
-
-The following diagram shows the new directory structure that you will need to migrate to if Pebble is hosting more than a single blog.
-
- - Pebble data directory
- |-- blogs
- | |-- blog.properties
- | |-- blog1
- |   |-- blog.properties
- |   |-- 2006
- |   |-- files
- |   |-- images
- |   |-- ...
- | |-- blogN
- |   |-- blog.properties
- |   |-- 2006
- |   |-- files
- |   |-- images
- |   |-- ...
- |-- realm
-   |-- <username1>.properties
-   |-- <usernameN>.properties
-
-3.2 Themes
-----------
-The way Pebble themes are implemented has been simplified and old themes are not compatible. For this reason, the following steps should be followed before starting up Pebble.
-
-  Reset theme to default : open up blog.properties for each blog and remove the line that starts theme=.
-  Remove the backup theme : remove the directory called theme underneath each blog.
-
-3.3 Plugins
------------
-The names for some plugins has changed and the easiest way to correct these is to open up the blog.properties file for each blog and remove the lines that start with the following.
-
-  blogEntryDecorators=
-  blogEntryListeners=
-  commentListeners=
-  trackBackListeners=
-  permalinkProviderName=
-
-4.0 Security
-------------
-User information is stored underneath the Pebble data directory, in a sub-directory called realm. In here there is
-one file per user, with the filename convention of <username>.properties. Each file contains a series of name=value
-pairs that correspond to the information stored about each user. An example file (the default username.properties)
-is as follows.
-
-  name=Default User
-  password=1d26806da123dd76cdc52fc3daa9ad6777522935
-  roles=ROLE_BLOG_OWNER,ROLE_BLOG_CONTRIBUTOR,ROLE_PEBBLE_ADMIN
-  website=http://www.domain.com
-  emailAddress=username@domain.com
-
-To add more users, create an additional file for each user and customize the contents as necessary. Pebble uses
-the Acegi Security System for Spring and has been cofigured to use an SHA encoded password with the username used as the salt.
-
-A short shell script has been included in the bin directory to help you encode your own passwords. To use it, open the file and modify the value of PEBBLE_HOME to point to an unexploded copy of the pebble.war file. The usage of the file is as follows.
-
-  encode-password.sh [md5|sha] username password
-
-For example, the password above can be generated by the following command.
-
-  encode-password.sh sha username password
-
-5.0 Further questions
----------------------
 Help and support is available via the pebble-users[at]lists.sourceforge.net mailing list. Details on subscribing to this list can be found at http://lists.sourceforge.net/mailman/listinfo/pebble-user.

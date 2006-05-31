@@ -24,7 +24,7 @@
 
     <div class="subsubtitle">TrackBack moderation and spam</div>
     <p>
-      For more information about how to deal with TrackBack spam, please see <a href="help/responseSpam.html">Comment and TrackBack Spam</a>.
+      For more information about how to deal with TrackBack spam, please see <a href="./help/responseSpam.html">Comment and TrackBack Spam</a>.
     </p>
   </div>
 </div>
