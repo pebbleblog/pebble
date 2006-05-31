@@ -66,6 +66,10 @@ public class CategoryIndex {
    * Clears the index.
    */
   public void clear() {
+    for (Category category : blog.getCategories()) {
+      category.removeAllBlogEntries();
+    }
+
     writeIndex();
   }
 

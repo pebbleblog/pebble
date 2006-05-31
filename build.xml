@@ -178,6 +178,7 @@
     <!-- copy pebble.war into the distribution -->
     <zip zipfile="${release.dir}/pebble.war">
       <fileset dir="web">
+        <exclude name="themes/orange/"/>
         <exclude name="themes/user-*/"/>
         <exclude name="WEB-INF/tmp/"/>
         <exclude name="WEB-INF/work/"/>

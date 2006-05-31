@@ -381,7 +381,7 @@ public class Category implements Permalinkable, Comparable, Serializable {
   }
 
   /**
-   * Removes a blog entry to this category.
+   * Removes a blog entry from this category.
    *
    * @param blogEntry   a blog entry id
    */
@@ -393,6 +393,13 @@ public class Category implements Permalinkable, Comparable, Serializable {
         getParent().removeBlogEntry(blogEntry);
       }
     }
+  }
+
+  /**
+   * Removes all blog entries from this category.
+   */
+  public synchronized void removeAllBlogEntries() {
+    blogEntries = new ArrayList<String>();
   }
 
   /**
