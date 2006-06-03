@@ -57,6 +57,7 @@ public class CategoryIndexTest extends SingleBlogTestCase {
   public void testIndexBlogEntry() throws Exception {
     BlogEntry blogEntry = new BlogEntry(blog);
     blogEntry.addCategory(java);
+    blogEntry.setPublished(true);
     index.index(blogEntry);
 
     assertEquals(1, java.getNumberOfBlogEntries());

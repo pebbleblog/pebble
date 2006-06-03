@@ -162,73 +162,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="viewBlogProperties.jsp" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/viewBlogProperties.jsp">
+      <file leaf-file-name="TidyListener.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/event/blogentry/TidyListener.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="44" selection-start="177" selection-end="177" vertical-scroll-proportion="0.13308688">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="template.jsp" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/themes/default/jsp/template.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="27" column="40" selection-start="1011" selection-end="1011" vertical-scroll-proportion="0.59889096">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="navigation.jspf" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/WEB-INF/fragments/navigation.jspf">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="admin.jspf" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/WEB-INF/fragments/admin.jspf">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="21" column="143" selection-start="873" selection-end="873" vertical-scroll-proportion="0.44362292">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PreProcessingFilter.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/filter/PreProcessingFilter.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="138" column="65" selection-start="5316" selection-end="5316" vertical-scroll-proportion="0.5785582">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="viewPebbleProperties.jsp" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/viewPebbleProperties.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="47" column="19" selection-start="1062" selection-end="1062" vertical-scroll-proportion="0.04436229">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="blogEntry.jsp" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/blogEntry.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="103" column="166" selection-start="4231" selection-end="4231" vertical-scroll-proportion="0.9556377">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MultiBlog.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/domain/MultiBlog.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="49" column="13" selection-start="2235" selection-end="2235" vertical-scroll-proportion="-1.2181146">
+            <state line="111" column="15" selection-start="4361" selection-end="4361" vertical-scroll-proportion="1.6762295">
               <folding />
             </state>
           </provider>
@@ -237,7 +174,34 @@
       <file leaf-file-name="Blog.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/domain/Blog.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="978" column="24" selection-start="31463" selection-end="31463" vertical-scroll-proportion="0.35489833">
+            <state line="710" column="33" selection-start="24229" selection-end="24229" vertical-scroll-proportion="1.1803279">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TagIndexTest.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/net/sourceforge/pebble/index/TagIndexTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="58" column="0" selection-start="2186" selection-end="2186" vertical-scroll-proportion="0.3319672">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CategoryIndexTest.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/test/net/sourceforge/pebble/index/CategoryIndexTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="61" column="0" selection-start="2302" selection-end="2302" vertical-scroll-proportion="0.3319672">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TagIndexListener.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/index/TagIndexListener.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="47" column="20" selection-start="1383" selection-end="1383" vertical-scroll-proportion="1.1803279">
               <folding />
             </state>
           </provider>
@@ -246,7 +210,43 @@
       <file leaf-file-name="TagIndex.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/index/TagIndex.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="242" column="14" selection-start="7110" selection-end="7110" vertical-scroll-proportion="0.53419596">
+            <state line="84" column="18" selection-start="2904" selection-end="2904" vertical-scroll-proportion="2.0204918">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="IndexedTag.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/index/IndexedTag.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="78" column="40" selection-start="2802" selection-end="2802" vertical-scroll-proportion="0.8852459">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Category.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/domain/Category.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="46" column="13" selection-start="1917" selection-end="1917" vertical-scroll-proportion="-15.057377">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SearchIndex.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/index/SearchIndex.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="185" column="15" selection-start="6100" selection-end="6100" vertical-scroll-proportion="0.8852459">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BlogEntryIndex.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/index/BlogEntryIndex.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="30" column="26" selection-start="936" selection-end="936" vertical-scroll-proportion="0.93442625">
               <folding />
             </state>
           </provider>
@@ -360,69 +360,7 @@
         <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
       </PATH_ELEMENT>
       <PATH_ELEMENT>
-        <option name="myItemId" value="domain" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-      </PATH_ELEMENT>
-    </PATH>
-    <PATH>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="pebble.ipr" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="pebble" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="net.sourceforge.pebble" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="dao" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-      </PATH_ELEMENT>
-    </PATH>
-    <PATH>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="pebble.ipr" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="pebble" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="net.sourceforge.pebble" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="dao" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="mock" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-      </PATH_ELEMENT>
-    </PATH>
-    <PATH>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="pebble.ipr" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="pebble" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="net.sourceforge.pebble" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="dao" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="file" />
+        <option name="myItemId" value="index" />
         <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
       </PATH_ELEMENT>
     </PATH>
@@ -793,7 +731,7 @@
     <option name="STATE" value="0" />
   </component>
   <component name="ProjectView">
-    <navigator currentView="ProjectPane" splitterProportion="0.5">
+    <navigator currentView="PackagesPane" splitterProportion="0.5">
       <flattenPackages PackagesPane="false" ProjectPane="false" />
       <showMembers />
       <showModules />
@@ -854,31 +792,17 @@
   <component name="RestoreUpdateTree" />
   <component name="RunManager">
     <activeType name="JUnit" />
-    <tempConfiguration selected="false" default="false" name="MultiBlogPreProcessingFilterTest" type="JUnit" factoryName="JUnit">
-      <module name="pebble" />
+    <tempConfiguration selected="true" default="false" name="TidyListener" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="net.sourceforge.pebble.event.blogentry.TidyListener" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="net.sourceforge.pebble.web.filter" />
-      <option name="MAIN_CLASS_NAME" value="net.sourceforge.pebble.web.filter.MultiBlogPreProcessingFilterTest" />
-      <option name="METHOD_NAME" />
-      <option name="TEST_OBJECT" value="class" />
-      <option name="VM_PARAMETERS" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ADDITIONAL_CLASS_PATH" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="wholeProject" />
-      </option>
+      <module name="pebble" />
       <RunnerSettings RunnerId="Run" />
       <ConfigurationWrapper RunnerId="Run" />
     </tempConfiguration>
-    <configuration selected="false" default="true" type="Remote" factoryName="Remote">
-      <option name="USE_SOCKET_TRANSPORT" value="true" />
-      <option name="SERVER_MODE" value="false" />
-      <option name="SHMEM_ADDRESS" value="javadebug" />
-      <option name="HOST" value="localhost" />
-      <option name="PORT" value="5005" />
-    </configuration>
     <configuration selected="false" default="true" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" />
       <option name="VM_PARAMETERS" />
@@ -888,17 +812,12 @@
       <option name="ALTERNATIVE_JRE_PATH" />
       <module name="" />
     </configuration>
-    <configuration selected="false" default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
+    <configuration selected="false" default="true" type="Remote" factoryName="Remote">
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" value="javadebug" />
+      <option name="HOST" value="localhost" />
+      <option name="PORT" value="5005" />
     </configuration>
     <configuration selected="false" default="true" type="JUnit" factoryName="JUnit">
       <module name="" />
@@ -915,6 +834,18 @@
       <option name="TEST_SEARCH_SCOPE">
         <value defaultName="wholeProject" />
       </option>
+    </configuration>
+    <configuration selected="false" default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
     </configuration>
     <configuration selected="true" default="false" name="Unit Tests" type="JUnit" factoryName="JUnit">
       <module name="pebble" />
@@ -989,7 +920,7 @@
     <layout>
       <window_info id="CVS" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.33" order="12" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.53630364" order="7" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="docked" type="docked" visible="true" weight="0.36782786" order="0" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="docked" type="docked" visible="true" weight="0.3944672" order="0" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.5462046" order="1" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.25" order="1" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.37623763" order="8" />
@@ -998,7 +929,7 @@
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.33" order="9" />
       <window_info id="Favorites" active="false" anchor="right" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.32991803" order="5" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.22540984" order="1" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.4793578" order="2" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="true" weight="0.47854784" order="2" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.25" order="2" />
       <window_info id="File View" active="false" anchor="right" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.33" order="4" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.4" order="4" />
@@ -1093,107 +1024,107 @@
     </buildFile>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/applicationContext-acegi-security.xml">
+    <entry file="file://$PROJECT_DIR$/web/themes/default/jsp/template.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="0" selection-start="1517" selection-end="1517" vertical-scroll-proportion="0.37892792">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/website/installation.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="230" column="170" selection-start="9342" selection-end="9342" vertical-scroll-proportion="0.13308688">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/website/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="15" selection-start="1163" selection-end="1163" vertical-scroll-proportion="0.6432532">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/viewFiles.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="52" selection-start="439" selection-end="439" vertical-scroll-proportion="0.123844735">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/action/ResetBlogAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="68" column="26" selection-start="2914" selection-end="2914" vertical-scroll-proportion="0.66543436">
+        <state line="27" column="40" selection-start="1011" selection-end="1011" vertical-scroll-proportion="0.55637705">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/viewBlogProperties.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="44" selection-start="177" selection-end="177" vertical-scroll-proportion="0.13308688">
+        <state line="6" column="44" selection-start="177" selection-end="177" vertical-scroll-proportion="0.022181146">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/themes/default/jsp/template.jsp">
+    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/index/CategoryIndex.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="40" selection-start="1011" selection-end="1011" vertical-scroll-proportion="0.59889096">
+        <state line="116" column="5" selection-start="3537" selection-end="3537" vertical-scroll-proportion="0.9556377">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/fragments/navigation.jspf">
+    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/index/ResponseIndex.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+        <state line="20" column="13" selection-start="563" selection-end="563" vertical-scroll-proportion="0.3529412">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/fragments/admin.jspf">
+    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/index/ResponseIndexListener.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="143" selection-start="873" selection-end="873" vertical-scroll-proportion="0.44362292">
+        <state line="14" column="13" selection-start="510" selection-end="510" vertical-scroll-proportion="0.3529412">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/domain/Blog.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="978" column="24" selection-start="31463" selection-end="31463" vertical-scroll-proportion="0.35489833">
+        <state line="710" column="33" selection-start="24229" selection-end="24229" vertical-scroll-proportion="1.1803279">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/net/sourceforge/pebble/index/TagIndexTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="58" column="0" selection-start="2186" selection-end="2186" vertical-scroll-proportion="0.3319672">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/index/BlogEntryIndex.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="26" selection-start="936" selection-end="936" vertical-scroll-proportion="0.93442625">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/index/SearchIndex.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="185" column="15" selection-start="6100" selection-end="6100" vertical-scroll-proportion="0.8852459">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/domain/Category.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="46" column="13" selection-start="1917" selection-end="1917" vertical-scroll-proportion="-15.057377">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/index/IndexedTag.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="78" column="40" selection-start="2802" selection-end="2802" vertical-scroll-proportion="0.8852459">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/index/TagIndex.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="242" column="14" selection-start="7110" selection-end="7110" vertical-scroll-proportion="0.53419596">
+        <state line="84" column="18" selection-start="2904" selection-end="2904" vertical-scroll-proportion="2.0204918">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/domain/MultiBlog.java">
+    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/index/TagIndexListener.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="49" column="13" selection-start="2235" selection-end="2235" vertical-scroll-proportion="-1.2181146">
+        <state line="47" column="20" selection-start="1383" selection-end="1383" vertical-scroll-proportion="1.1803279">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/filter/PreProcessingFilter.java">
+    <entry file="file://$PROJECT_DIR$/test/net/sourceforge/pebble/index/CategoryIndexTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="138" column="65" selection-start="5316" selection-end="5316" vertical-scroll-proportion="0.5785582">
+        <state line="61" column="0" selection-start="2302" selection-end="2302" vertical-scroll-proportion="0.3319672">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/viewPebbleProperties.jsp">
+    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/event/blogentry/TidyListener.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="19" selection-start="1062" selection-end="1062" vertical-scroll-proportion="0.04436229">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/blogEntry.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="103" column="166" selection-start="4231" selection-end="4231" vertical-scroll-proportion="0.9556377">
+        <state line="111" column="15" selection-start="4361" selection-end="4361" vertical-scroll-proportion="1.6762295">
           <folding />
         </state>
       </provider>

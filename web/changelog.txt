@@ -1,5 +1,18 @@
-Version 2.0 - In Progress
--------------------------
+Version 2.0.0-M3 - in progress
+------------------------------
+Added a TidyListener to ensure blog entry excerpts and bodies are valid XHTML.
+
+Version 2.0.0-M2 - 31st May 2006
+--------------------------------
+Internal redesign to be more service-like and introduction of multiple indexes to remove the need to load all blog entries and their responses into memory.
+Modified the way that Pebble stores data on disk.
+Added a bespoke security realm on top of Acegi.
+Changed the approved/pending/rejected/draft blog entry model into a much simpler published/unpublished model.
+Disabled static page functionality, pending a rewrite of the DAO layer.
+New theme.
+
+Version 2.0.0-M1
+----------------
 Upgrade to Java 5.0, JSP 2.0 and Servlet 2.4 specifications.
 Integrated Acegi security.
 Tags are now space separated instead of comma separated.

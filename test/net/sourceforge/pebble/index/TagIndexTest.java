@@ -54,6 +54,7 @@ public class TagIndexTest extends SingleBlogTestCase {
   public void testIndexBlogEntry() throws Exception {
     BlogEntry blogEntry = new BlogEntry(blog);
     blogEntry.setTags("junit");
+    blogEntry.setPublished(true);
     index.index(blogEntry);
 
     assertEquals(1, index.getTag("junit").getNumberOfBlogEntries());

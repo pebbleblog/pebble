@@ -74,7 +74,7 @@ public class IndexedTag extends Tag {
    * @param blogEntryId   a blog entry ID
    */
   public synchronized void addBlogEntry(String blogEntryId) {
-    if (blogEntryId != null) {
+    if (blogEntryId != null && !blogEntries.contains(blogEntryId)) {
       blogEntries.add(blogEntryId);
       Collections.sort(blogEntries, new ReverseBlogEntryIdComparator());
     }

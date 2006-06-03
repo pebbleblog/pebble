@@ -80,8 +80,10 @@ public class CategoryIndex {
    */
   public synchronized void index(List<BlogEntry> blogEntries) {
     for (BlogEntry blogEntry : blogEntries) {
-      for (Category category: blogEntry.getCategories()) {
-        category.addBlogEntry(blogEntry.getId());
+      if (blogEntry.isPublished()) {
+        for (Category category: blogEntry.getCategories()) {
+          category.addBlogEntry(blogEntry.getId());
+        }
       }
     }
 
@@ -94,11 +96,13 @@ public class CategoryIndex {
    * @param blogEntry   a BlogEntry instance
    */
   public synchronized void index(BlogEntry blogEntry) {
-    for (Category category : blogEntry.getCategories()) {
-      category.addBlogEntry(blogEntry.getId());
-    }
+    if (blogEntry.isPublished()) {
+      for (Category category : blogEntry.getCategories()) {
+        category.addBlogEntry(blogEntry.getId());
+      }
 
-    writeIndex();
+      writeIndex();
+    }
   }
 
   /**

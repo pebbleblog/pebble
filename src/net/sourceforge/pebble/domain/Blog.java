@@ -323,7 +323,9 @@ public class Blog extends AbstractBlog {
     defaultProperties.setProperty(PRIVATE_KEY, FALSE);
     defaultProperties.setProperty(LUCENE_ANALYZER_KEY, "org.apache.lucene.analysis.standard.StandardAnalyzer");
     defaultProperties.setProperty(BLOG_ENTRY_DECORATORS_KEY, "net.sourceforge.pebble.plugin.decorator.HideUnpublishedBlogEntriesDecorator\r\nnet.sourceforge.pebble.plugin.decorator.HideUnapprovedResponsesDecorator\r\nnet.sourceforge.pebble.plugin.decorator.HtmlDecorator\r\nnet.sourceforge.pebble.plugin.decorator.EscapeMarkupDecorator\r\nnet.sourceforge.pebble.plugin.decorator.RelativeUriDecorator\r\nnet.sourceforge.pebble.plugin.decorator.ReadMoreDecorator\r\nnet.sourceforge.pebble.plugin.decorator.BlogTagsDecorator");
-    defaultProperties.setProperty(BLOG_ENTRY_LISTENERS_KEY, "net.sourceforge.pebble.event.blogentry.XmlRpcNotificationListener");
+    defaultProperties.setProperty(BLOG_ENTRY_LISTENERS_KEY,
+        "net.sourceforge.pebble.event.blogentry.TidyListener\r\n" +
+        "net.sourceforge.pebble.event.blogentry.XmlRpcNotificationListener");
     defaultProperties.setProperty(COMMENT_LISTENERS_KEY,
         "net.sourceforge.pebble.event.response.IpAddressListener\r\n" +
         "net.sourceforge.pebble.event.response.LinkSpamListener\r\n" +
@@ -701,7 +703,10 @@ public class Blog extends AbstractBlog {
     List blogEntries = new ArrayList();
     for (String blogEntryId : blogEntryIds) {
       BlogEntry blogEntry = service.getBlogEntry(this, blogEntryId);
-      blogEntries.add(blogEntry);
+
+      if (blogEntry != null) {
+        blogEntries.add(blogEntry);
+      }
 
       if (blogEntries.size() == getRecentBlogEntriesOnHomePage()) {
         break;
@@ -725,7 +730,7 @@ public class Blog extends AbstractBlog {
     for (String blogEntryId : blogEntryIds) {
       BlogEntry blogEntry = service.getBlogEntry(this, blogEntryId);
 
-      if (blogEntry.isPublished()) {
+      if (blogEntry != null && blogEntry.isPublished()) {
         blogEntries.add(blogEntry);
       }
 
@@ -751,7 +756,7 @@ public class Blog extends AbstractBlog {
     for (String blogEntryId : blogEntryIds) {
       BlogEntry blogEntry = service.getBlogEntry(this, blogEntryId);
 
-      if (blogEntry.isPublished()) {
+      if (blogEntry != null && blogEntry.isPublished()) {
         blogEntries.add(blogEntry);
       }
 

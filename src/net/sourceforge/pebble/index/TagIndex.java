@@ -60,10 +60,6 @@ public class TagIndex {
   public TagIndex(Blog blog) {
     this.blog = blog;
 
-//    File indexes = new File(blog.getIndexesDirectory());
-//    if (!indexes.exists()) {
-//      indexes.mkdir();
-//    }
     readIndex();
     recalculateTagRankings();
   }
@@ -83,9 +79,11 @@ public class TagIndex {
    */
   public synchronized void index(List<BlogEntry> blogEntries) {
     for (BlogEntry blogEntry : blogEntries) {
-      for (Tag tag : blogEntry.getAllTags()) {
-        IndexedTag t = getTag(tag.getName());
-        t.addBlogEntry(blogEntry.getId());
+      if (blogEntry.isPublished()) {
+        for (Tag tag : blogEntry.getAllTags()) {
+          IndexedTag t = getTag(tag.getName());
+          t.addBlogEntry(blogEntry.getId());
+        }
       }
     }
 
@@ -99,13 +97,15 @@ public class TagIndex {
    * @param blogEntry   a BlogEntry instance
    */
   public synchronized void index(BlogEntry blogEntry) {
-    for (Tag tag : blogEntry.getAllTags()) {
-      IndexedTag t = getTag(tag.getName());
-      t.addBlogEntry(blogEntry.getId());
-    }
+    if (blogEntry.isPublished()) {
+      for (Tag tag : blogEntry.getAllTags()) {
+        IndexedTag t = getTag(tag.getName());
+        t.addBlogEntry(blogEntry.getId());
+      }
 
-    writeIndex();
-    recalculateTagRankings();
+      writeIndex();
+      recalculateTagRankings();
+    }
   }
 
   /**

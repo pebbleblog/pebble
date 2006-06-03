@@ -50,7 +50,8 @@ public class ViewMonthlyBlogActionTest extends SingleBlogActionTestCase {
   }
 
   /**
-   * Tests what happens when the default home page is requested.
+   * Tests what happens when a specific month is requested.
+   *
    * @throws Exception
    */
   public void testViewMonthlyBlog() throws Exception {
@@ -59,7 +60,7 @@ public class ViewMonthlyBlogActionTest extends SingleBlogActionTestCase {
     View view = action.process(request, response);
 
     Model model = action.getModel();
-    assertEquals(blog.getBlogForThisMonth(), model.get(Constants.MONTHLY_BLOG));
+    assertEquals(blog.getBlogForMonth(2006, 5), model.get(Constants.MONTHLY_BLOG));
     assertNotNull(model.get(Constants.BLOG_ENTRIES));
     assertTrue(view instanceof BlogMonthlyView);
   }

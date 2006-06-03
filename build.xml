@@ -26,7 +26,7 @@
   <target name="init">
     <propertyfile file="pebble-build.properties" comment="Build information">
         <entry key="build.date" type="date" value="now" pattern="dd MMMM yyyy HH:mm:ss ZZZ"/>
-        <entry key="build.version" value="2.0.0-M2"/>
+        <entry key="build.version" value="2.0.0-M3-dev"/>
     </propertyfile>
     <loadproperties srcFile="pebble-build.properties"/>
 
@@ -86,6 +86,7 @@
         <include name="saxpath.jar"/>
         <include name="spring-1.2.6.jar"/>
         <include name="standard-1.1.2.jar"/>
+        <include name="tidy.jar"/>
         <include name="xmlrpc-1.2-b1.jar"/>
       </fileset>
     </copy>

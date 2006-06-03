@@ -33,9 +33,7 @@ public class TagIndexListener implements BlogEntryListener {
    */
   public void blogEntryRemoved(BlogEntryEvent event) {
     BlogEntry blogEntry = event.getBlogEntry();
-    if (blogEntry.isPublished()) {
-      blogEntry.getBlog().getTagIndex().unindex(blogEntry);
-    }
+    blogEntry.getBlog().getTagIndex().unindex(blogEntry);
   }
 
   /**
