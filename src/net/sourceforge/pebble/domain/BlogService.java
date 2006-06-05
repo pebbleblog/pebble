@@ -162,6 +162,7 @@ public class BlogService {
 
         blogEntry.setPersistent(true);
       } catch (PersistenceException pe) {
+        pe.printStackTrace();
       } finally {
         blogEntry.clearPropertyChangeEvents();
         blogEntry.clearEvents();
@@ -193,6 +194,7 @@ public class BlogService {
 
       blogEntry.getBlog().getEventDispatcher().fireEvents(blogEntry);
     } catch (PersistenceException pe) {
+      pe.printStackTrace();
     }
   }
 
