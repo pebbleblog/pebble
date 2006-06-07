@@ -5,12 +5,12 @@
 
   <%@ include file="/WEB-INF/fragments/staticPageLinks.jspf" %>
 
-  <a name="a${blogEntry.id}"></a>
-  <div class="title"><a href="${blogEntry.permalink}">${blogEntry.title}</a></div>
-  <div class="subtitle">${blogEntry.subtitle}</div>
+  <a name="a${staticPage.id}"></a>
+  <div class="title"><a href="${staticPage.permalink}">${staticPage.title}</a></div>
+  <div class="subtitle">${staticPage.subtitle}</div>
 
   <div class="contentItemBody">
-    <c:out value="${blogEntry.body}" escapeXml="false" />
+    <c:out value="${staticPage.body}" escapeXml="false" />
   </div>
 
 </div>

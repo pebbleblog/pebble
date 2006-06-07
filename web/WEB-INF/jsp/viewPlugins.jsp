@@ -16,7 +16,7 @@
           Blog entry decorators (<span class="help"><a href="./help/blog-entry-decorators.html" target="_blank">Help</a></span>)
         </td>
         <td>
-          <textarea name="blogEntryDecorators" rows="10" cols="60">${blog.blogEntryDecorators}</textarea>
+          <textarea name="decorators" rows="10" cols="60">${blog.contentDecorators}</textarea>
         </td>
       </tr>
 

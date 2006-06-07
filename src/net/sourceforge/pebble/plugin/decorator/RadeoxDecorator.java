@@ -2,6 +2,7 @@ package net.sourceforge.pebble.plugin.decorator;
 
 import net.sourceforge.pebble.domain.BlogEntry;
 import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.domain.StaticPage;
 import org.radeox.api.engine.RenderEngine;
 import org.radeox.api.engine.WikiRenderEngine;
 import org.radeox.api.engine.context.InitialRenderContext;
@@ -18,30 +19,40 @@ import java.util.regex.Pattern;
  *
  * @author Simon Brown
  */
-public class RadeoxDecorator extends BlogEntryDecoratorSupport {
+public class RadeoxDecorator extends ContentDecoratorSupport {
 
   private static final String WIKI_START_TAG = "<wiki>";
   private static final String WIKI_END_TAG = "</wiki>";
 
   /**
-   * Executes the logic associated with this decorator.
+   * Decorates the specified blog entry.
    *
-   * @param chain   the chain of BlogEntryDecorators to apply
-   * @param context the context in which the decoration is running
-   * @throws BlogEntryDecoratorException if something goes wrong when running the decorator
+   * @param context   the context in which the decoration is running
+   * @param blogEntry the blog entry to be decorated
    */
-  public void decorate(BlogEntryDecoratorChain chain, BlogEntryDecoratorContext context)
-      throws BlogEntryDecoratorException {
-
-    BlogEntry blogEntry = context.getBlogEntry();
+  public BlogEntry decorate(ContentDecoratorContext context, BlogEntry blogEntry) {
     InitialRenderContext initialContext = new BaseInitialRenderContext();
     initialContext.set(RenderContext.INPUT_LOCALE, getBlog().getLocale());
-    RenderEngine engineWithContext = new RadeoxWikiRenderEngine(initialContext, blogEntry);
+    RenderEngine engineWithContext = new RadeoxWikiRenderEngine(initialContext, getBlog());
 
     blogEntry.setExcerpt(wikify(blogEntry.getExcerpt(), engineWithContext, initialContext));
     blogEntry.setBody(wikify(blogEntry.getBody(), engineWithContext, initialContext));
 
-    chain.decorate(context);
+    return blogEntry;
+  }
+
+  /**
+   * Decorates the specified static page.
+   *
+   * @param context    the context in which the decoration is running
+   * @param staticPage the static page to be decorated
+   */
+  public void decorate(ContentDecoratorContext context, StaticPage staticPage) {
+    InitialRenderContext initialContext = new BaseInitialRenderContext();
+    initialContext.set(RenderContext.INPUT_LOCALE, getBlog().getLocale());
+    RenderEngine engineWithContext = new RadeoxWikiRenderEngine(initialContext, getBlog());
+
+    staticPage.setBody(wikify(staticPage.getBody(), engineWithContext, initialContext));
   }
 
   private String wikify(String content, RenderEngine renderEngine, InitialRenderContext renderContext) {
@@ -80,16 +91,15 @@ public class RadeoxDecorator extends BlogEntryDecoratorSupport {
 
 class RadeoxWikiRenderEngine extends BaseRenderEngine implements WikiRenderEngine {
 
-  private BlogEntry blogEntry;
+  private Blog blog;
 
-  public RadeoxWikiRenderEngine(InitialRenderContext context, BlogEntry blogEntry) {
+  public RadeoxWikiRenderEngine(InitialRenderContext context, Blog blog) {
     super(context);
     context.setRenderEngine(this);
-    this.blogEntry = blogEntry;
+    this.blog = blog;
   }
 
   public boolean exists(String name) {
-    Blog blog = blogEntry.getBlog();
     return blog.getStaticPageIndex().contains(name);
   }
 
@@ -103,7 +113,7 @@ class RadeoxWikiRenderEngine extends BaseRenderEngine implements WikiRenderEngin
 
   public void appendLink(StringBuffer buffer, String name, String view, String anchor) {
     buffer.append("<a href=\"");
-    buffer.append(blogEntry.getBlog().getUrl() + "pages/" + name + ".html");
+    buffer.append(blog.getUrl() + "pages/" + name + ".html");
     if (anchor != null && anchor.trim().length() > 0) {
       buffer.append("#");
       buffer.append(anchor);

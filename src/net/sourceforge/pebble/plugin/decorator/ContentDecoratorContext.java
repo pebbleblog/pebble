@@ -31,34 +31,42 @@
  */
 package net.sourceforge.pebble.plugin.decorator;
 
-import net.sourceforge.pebble.domain.Blog;
-
 /**
- * Starting point for BlogEntryDecorator implementations to extend.
+ * Provides context to content decorators, of where they are running, etc.
  *
  * @author    Simon Brown
  */
-public abstract class BlogEntryDecoratorSupport implements BlogEntryDecorator {
+public class ContentDecoratorContext {
 
-  /** the blog to which this decorator is associated */
-  private Blog blog;
+  public static final int SUMMARY_VIEW = 0;
+  public static final int DETAIL_VIEW = 1;
+  public static final int PREVIEW = 2;
 
-  /**
-   * Gets the blog to which this decorator is associated.
-   *
-   * @return  a Blog instance
-   */
-  public Blog getBlog() {
-    return this.blog;
+  public static final int HTML_PAGE = 0;
+  public static final int NEWS_FEED = 1;
+  public static final int DESKTOP_UI = 2;
+  public static final int EMAIL = 4;
+
+  private int view = 0;
+  private int media = 0;
+
+  public ContentDecoratorContext() {
   }
 
-  /**
-   * Sets the blog to which this decorator is associated.
-   *
-   * @param blog    a Blog instance
-   */
-  public void setBlog(Blog blog) {
-    this.blog = blog;
+  public int getView() {
+    return view;
+  }
+
+  public void setView(int view) {
+    this.view = view;
+  }
+
+  public int getMedia() {
+    return media;
+  }
+
+  public void setMedia(int media) {
+    this.media = media;
   }
 
 }

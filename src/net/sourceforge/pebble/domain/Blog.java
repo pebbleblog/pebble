@@ -47,7 +47,8 @@ import net.sourceforge.pebble.event.trackback.TrackBackListener;
 import net.sourceforge.pebble.index.*;
 import net.sourceforge.pebble.logging.AbstractLogger;
 import net.sourceforge.pebble.logging.CombinedLogFormatLogger;
-import net.sourceforge.pebble.plugin.decorator.BlogEntryDecoratorManager;
+import net.sourceforge.pebble.plugin.decorator.ContentDecoratorChain;
+import net.sourceforge.pebble.plugin.decorator.ContentDecorator;
 import net.sourceforge.pebble.plugin.permalink.DefaultPermalinkProvider;
 import net.sourceforge.pebble.plugin.permalink.PermalinkProvider;
 
@@ -63,7 +64,7 @@ public class Blog extends AbstractBlog {
   public static final String BLOG_CONTRIBUTORS_KEY = "blogContributors";
   public static final String PRIVATE_KEY = "private";
   public static final String LUCENE_ANALYZER_KEY = "luceneAnalyzer";
-  public static final String BLOG_ENTRY_DECORATORS_KEY = "blogEntryDecorators";
+  public static final String CONTENT_DECORATORS_KEY = "decorators";
   public static final String BLOG_LISTENERS_KEY = "blogListeners";
   public static final String BLOG_ENTRY_LISTENERS_KEY = "blogEntryListeners";
   public static final String COMMENT_LISTENERS_KEY = "commentListeners";
@@ -93,8 +94,8 @@ public class Blog extends AbstractBlog {
   /** the log used to log referers, requests, etc */
   private AbstractLogger logger;
 
-  /** the decorator manager associated with this blog */
-  private BlogEntryDecoratorManager blogEntryDecoratorManager;
+  /** the decorator chain associated with this blog */
+  private ContentDecoratorChain decoratorChain;
 
   /** the event dispatcher */
   private EventDispatcher eventDispatcher;
@@ -143,8 +144,6 @@ public class Blog extends AbstractBlog {
 
     refererFilterManager = new RefererFilterManager(this);
     pluginProperties = new PluginProperties(this);
-    blogEntryDecoratorManager = new BlogEntryDecoratorManager(this, getBlogEntryDecorators());
-
     yearlyBlogs = new ArrayList();
 
     // create the various indexes for this blog
@@ -155,12 +154,15 @@ public class Blog extends AbstractBlog {
     categoryIndex = new CategoryIndex(this);
     staticPageIndex = new StaticPageIndex(this);
 
+    decoratorChain = new ContentDecoratorChain(this);
+
     initLogger();
     initEventDispatcher();
     initBlogListeners();
     initBlogEntryListeners();
     initCommentListeners();
     initTrackBackListeners();
+    initDecorators();
   }
 
   /**
@@ -302,6 +304,31 @@ public class Blog extends AbstractBlog {
   }
 
   /**
+   * Initialises any content decorators configufred for this blog.
+   */
+  private void initDecorators() {
+    log.debug("Registering decorators");
+
+    String classNames = getContentDecorators();
+    if (classNames != null && classNames.length() > 0) {
+      String classes[] = classNames.split("\\s+");
+      for (int i = 0; i < classes.length; i++) {
+        if (!classes[i].startsWith("#")) {
+          try {
+            Class c = Class.forName(classes[i].trim());
+            ContentDecorator decorator = (ContentDecorator)c.newInstance();
+            decorator.setBlog(this);
+            decoratorChain.add(decorator);
+          } catch (Exception e) {
+            e.printStackTrace();
+            log.error(classes[i] + " could not be started", e);
+          }
+        }
+      }
+    }
+  }
+
+  /**
    * Gets the default properties for a Blog.
    *
    * @return    a Properties instance
@@ -322,9 +349,15 @@ public class Blog extends AbstractBlog {
     defaultProperties.setProperty(THEME_KEY, "default");
     defaultProperties.setProperty(PRIVATE_KEY, FALSE);
     defaultProperties.setProperty(LUCENE_ANALYZER_KEY, "org.apache.lucene.analysis.standard.StandardAnalyzer");
-    defaultProperties.setProperty(BLOG_ENTRY_DECORATORS_KEY, "net.sourceforge.pebble.plugin.decorator.HideUnpublishedBlogEntriesDecorator\r\nnet.sourceforge.pebble.plugin.decorator.HideUnapprovedResponsesDecorator\r\nnet.sourceforge.pebble.plugin.decorator.HtmlDecorator\r\nnet.sourceforge.pebble.plugin.decorator.EscapeMarkupDecorator\r\nnet.sourceforge.pebble.plugin.decorator.RelativeUriDecorator\r\nnet.sourceforge.pebble.plugin.decorator.ReadMoreDecorator\r\nnet.sourceforge.pebble.plugin.decorator.BlogTagsDecorator");
+    defaultProperties.setProperty(CONTENT_DECORATORS_KEY,
+        "net.sourceforge.pebble.plugin.decorator.HideUnapprovedResponsesDecorator\n" +
+        "net.sourceforge.pebble.plugin.decorator.RadeoxDecorator\n" +
+        "net.sourceforge.pebble.plugin.decorator.HtmlDecorator\n" +
+        "net.sourceforge.pebble.plugin.decorator.EscapeMarkupDecorator\n" +
+        "net.sourceforge.pebble.plugin.decorator.RelativeUriDecorator\n" +
+        "net.sourceforge.pebble.plugin.decorator.ReadMoreDecorator\n" +
+        "net.sourceforge.pebble.plugin.decorator.BlogTagsDecorator");
     defaultProperties.setProperty(BLOG_ENTRY_LISTENERS_KEY,
-        "net.sourceforge.pebble.event.blogentry.TidyListener\r\n" +
         "net.sourceforge.pebble.event.blogentry.XmlRpcNotificationListener");
     defaultProperties.setProperty(COMMENT_LISTENERS_KEY,
         "net.sourceforge.pebble.event.response.IpAddressListener\r\n" +
@@ -1194,8 +1227,8 @@ public class Blog extends AbstractBlog {
    *
    * @return  a comma separated list of class names
    */
-  public String getBlogEntryDecorators() {
-    return getProperty(BLOG_ENTRY_DECORATORS_KEY);
+  public String getContentDecorators() {
+    return getProperty(CONTENT_DECORATORS_KEY);
   }
 
   /**
@@ -1203,8 +1236,8 @@ public class Blog extends AbstractBlog {
    *
    * @return  a BlogEntryDecoratorManager instance
    */
-  public BlogEntryDecoratorManager getBlogEntryDecoratorManager() {
-    return this.blogEntryDecoratorManager;
+  public ContentDecoratorChain getContentDecoratorChain() {
+    return this.decoratorChain;
   }
 
   /**
@@ -1305,7 +1338,7 @@ public class Blog extends AbstractBlog {
     
     BlogService service = new BlogService();
     List<BlogEntry> blogEntries = service.getBlogEntries(this);
-//    List<Page> pages = service.getStaticPages(this);
+    List<StaticPage> staticPages = service.getStaticPages(this);
 
     blogEntryIndex.clear();
     blogEntryIndex.index(blogEntries);
@@ -1320,11 +1353,11 @@ public class Blog extends AbstractBlog {
     categoryIndex.index(blogEntries);
 
     staticPageIndex.clear();
-//    staticPageIndex.index(pages);
+    staticPageIndex.index(staticPages);
 
     searchIndex.clear();
     searchIndex.index(blogEntries);
-//    searchIndex.index(pages);
+    //searchIndex.index(staticPages);
   }
 
   /**

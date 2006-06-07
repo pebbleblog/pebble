@@ -33,29 +33,35 @@ package net.sourceforge.pebble.dao;
 
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.domain.BlogEntry;
+import net.sourceforge.pebble.domain.StaticPage;
 
 import java.util.List;
+import java.util.Collection;
 
+/**
+ * Interface for the static page data access object.
+ *
+ * @author    Simon Brown
+ */
 public interface StaticPageDAO {
 
   /**
    * Loads the static pages for a given blog.
    *
    * @param blog    the owning Blog instance
-   * @return  a List of BlogEntry instances
-   * @throws  PersistenceException    if blog entries cannot be loaded
+   * @return  a Collection of StaticPage instances
+   * @throws  PersistenceException    if static pages cannot be loaded
    */
-  public List<BlogEntry> loadStaticPages(Blog blog) throws PersistenceException;
+  public Collection<StaticPage> loadStaticPages(Blog blog) throws PersistenceException;
 
   /**
    * Loads a specific static page.
    *
    * @param blog    the owning Blog
    * @param pageId   the page ID
-   * @return a BlogEntry instance
-   * @throws PersistenceException
-   *          if the specified blog entry cannot be loaded
+   * @return a StaticPage instance
+   * @throws PersistenceException   if the static page cannot be loaded
    */
-  public BlogEntry loadStaticPage(Blog blog, String pageId) throws PersistenceException;
+  public StaticPage loadStaticPage(Blog blog, String pageId) throws PersistenceException;
 
 }

@@ -41,7 +41,7 @@ import net.sourceforge.pebble.domain.SingleBlogTestCase;
  */
 public class DisableCommentsDecoratorTest extends SingleBlogTestCase {
 
-  private BlogEntryDecorator decorator;
+  private ContentDecorator decorator;
   private BlogEntry blogEntry;
 
   protected void setUp() throws Exception {
@@ -57,10 +57,8 @@ public class DisableCommentsDecoratorTest extends SingleBlogTestCase {
   public void testImageUriInBody() throws Exception {
     blogEntry.setCommentsEnabled(true);
     blogEntry.setTrackBacksEnabled(true);
-    BlogEntryDecoratorChain chain = new BlogEntryDecoratorChain(null);
-    BlogEntryDecoratorContext context = new BlogEntryDecoratorContext();
-    context.setBlogEntry(blogEntry);
-    decorator.decorate(chain, context);
+    ContentDecoratorContext context = new ContentDecoratorContext();
+    decorator.decorate(context, blogEntry);
     assertFalse(blogEntry.isCommentsEnabled());
     assertTrue(blogEntry.isTrackBacksEnabled());
   }

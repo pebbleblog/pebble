@@ -33,8 +33,8 @@ package net.sourceforge.pebble.event.blogentry;
 
 import net.sourceforge.pebble.domain.BlogEntry;
 import net.sourceforge.pebble.domain.Blog;
-import net.sourceforge.pebble.plugin.decorator.BlogEntryDecoratorContext;
-import net.sourceforge.pebble.plugin.decorator.BlogEntryDecoratorManager;
+import net.sourceforge.pebble.plugin.decorator.ContentDecoratorContext;
+import net.sourceforge.pebble.plugin.decorator.ContentDecoratorChain;
 import net.sourceforge.pebble.util.MailUtils;
 
 import java.text.SimpleDateFormat;
@@ -78,14 +78,15 @@ public class EmailNotificationListener extends BlogEntryListenerSupport {
   }
 
   private void sendNotification(BlogEntry blogEntry) {
+    Blog blog = blogEntry.getBlog();
+
     // first of all decorate the blog entry, as if it was being rendered
     // via a HTML page or XML feed
-    BlogEntryDecoratorContext decoratorContext = new BlogEntryDecoratorContext();
-    decoratorContext.setView(BlogEntryDecoratorContext.SUMMARY_VIEW);
-    decoratorContext.setMedia(BlogEntryDecoratorContext.EMAIL);
-    blogEntry = BlogEntryDecoratorManager.applyDecorators(blogEntry, decoratorContext);
+    ContentDecoratorContext context = new ContentDecoratorContext();
+    context.setView(ContentDecoratorContext.SUMMARY_VIEW);
+    context.setMedia(ContentDecoratorContext.EMAIL);
+    blogEntry = blog.getContentDecoratorChain().decorate(context, blogEntry);
 
-    Blog blog = blogEntry.getBlog();
     SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy HH:mm:ss z");
     sdf.setTimeZone(blog.getTimeZone());
 

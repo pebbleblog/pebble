@@ -12,21 +12,17 @@ import java.util.ResourceBundle;
  * 
  * @author Simon Brown
  */
-public abstract class AbstractTagsDecorator extends BlogEntryDecoratorSupport {
+public abstract class AbstractTagsDecorator extends ContentDecoratorSupport {
 
   /**
-   * Executes the logic associated with this decorator.
+   * Decorates the specified blog entry.
    *
-   * @param chain   the chain of BlogEntryDecorators to apply
-   * @param context     the context in which the decoration is running
-   * @throws BlogEntryDecoratorException
+   * @param context   the context in which the decoration is running
+   * @param blogEntry the blog entry to be decorated
    *          if something goes wrong when running the decorator
    */
-  public void decorate(BlogEntryDecoratorChain chain, BlogEntryDecoratorContext context)
-      throws BlogEntryDecoratorException {
-
-    if (context.getMedia() == BlogEntryDecoratorContext.HTML_PAGE) {
-      BlogEntry blogEntry = context.getBlogEntry();
+  public BlogEntry decorate(ContentDecoratorContext context, BlogEntry blogEntry) {
+    if (context.getMedia() == ContentDecoratorContext.HTML_PAGE) {
       ResourceBundle bundle = ResourceBundle.getBundle("resources", blogEntry.getBlog().getLocale());
       Iterator tags = blogEntry.getAllTags().iterator();
 
@@ -40,7 +36,8 @@ public abstract class AbstractTagsDecorator extends BlogEntryDecoratorSupport {
         buf.append(" : ");
         while (tags.hasNext()) {
           Tag tag = (Tag)tags.next();
-          buf.append("<a href=\"" + baseUrl);
+          buf.append("<a href=\"");
+          buf.append(baseUrl);
           buf.append(tag.getName());
           buf.append("\" rel=\"tag\">");
           buf.append(tag.getName());
@@ -65,7 +62,7 @@ public abstract class AbstractTagsDecorator extends BlogEntryDecoratorSupport {
       }
     }
 
-    chain.decorate(context);
+    return blogEntry;
   }
 
   /**

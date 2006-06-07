@@ -32,7 +32,7 @@
 package net.sourceforge.pebble.index;
 
 import net.sourceforge.pebble.domain.Blog;
-import net.sourceforge.pebble.domain.Page;
+import net.sourceforge.pebble.domain.StaticPage;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -59,10 +59,6 @@ public class StaticPageIndex {
   public StaticPageIndex(Blog blog) {
     this.blog = blog;
 
-//    File indexes = new File(blog.getIndexesDirectory());
-//    if (!indexes.exists()) {
-//      indexes.mkdir();
-//    }
     readIndex();
   }
 
@@ -77,11 +73,11 @@ public class StaticPageIndex {
   /**
    * Indexes one or more blog entries.
    *
-   * @param pages   a List of Page instances
+   * @param staticPages   a List of Page instances
    */
-  public synchronized void index(List<Page> pages) {
-    for (Page page : pages) {
-      index.put(page.getName(), page.getId());
+  public synchronized void index(List<StaticPage> staticPages) {
+    for (StaticPage staticPage : staticPages) {
+      index.put(staticPage.getName(), staticPage.getId());
     }
 
     writeIndex();
@@ -90,21 +86,21 @@ public class StaticPageIndex {
   /**
    * Indexes a single page.
    *
-   * @param page    a Page instance
+   * @param staticPage    a Page instance
    */
-  public synchronized void index(Page page) {
+  public synchronized void index(StaticPage staticPage) {
     // todo - when static name changes, multiple names will refer to the same page
-    index.put(page.getName(), page.getId());
+    index.put(staticPage.getName(), staticPage.getId());
     writeIndex();
   }
 
   /**
    * Unindexes a single page.
    *
-   * @param page    a Page instance
+   * @param staticPage    a Page instance
    */
-  public synchronized void unindex(Page page) {
-    index.remove(page.getName());
+  public synchronized void unindex(StaticPage staticPage) {
+    index.remove(staticPage.getName());
     writeIndex();
   }
 

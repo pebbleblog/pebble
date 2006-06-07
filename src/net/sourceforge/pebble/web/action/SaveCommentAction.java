@@ -33,8 +33,8 @@ package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.domain.*;
-import net.sourceforge.pebble.plugin.decorator.BlogEntryDecoratorContext;
-import net.sourceforge.pebble.plugin.decorator.BlogEntryDecoratorManager;
+import net.sourceforge.pebble.plugin.decorator.ContentDecoratorContext;
+import net.sourceforge.pebble.plugin.decorator.ContentDecoratorChain;
 import net.sourceforge.pebble.util.CookieUtils;
 import net.sourceforge.pebble.util.MailUtils;
 import net.sourceforge.pebble.web.view.NotFoundView;
@@ -118,15 +118,17 @@ public class SaveCommentAction extends Action {
     String previewButton = bundle.getString("comment.previewButton");
 
     if (submitType == null || submitType.equalsIgnoreCase(previewButton) || context.hasErrors()) {
-      BlogEntryDecoratorContext decoratorContext = new BlogEntryDecoratorContext();
-      decoratorContext.setView(BlogEntryDecoratorContext.DETAIL_VIEW);
-      decoratorContext.setMedia(BlogEntryDecoratorContext.HTML_PAGE);
+      ContentDecoratorContext decoratorContext = new ContentDecoratorContext();
+      decoratorContext.setView(ContentDecoratorContext.DETAIL_VIEW);
+      decoratorContext.setMedia(ContentDecoratorContext.HTML_PAGE);
 
-      BlogEntry clonedBlogEntry = (BlogEntry)blogEntry.clone();
-      comment.setParent(clonedBlogEntry.getComment(parent));
-      clonedBlogEntry.addComment(comment);
-      BlogEntry decoratedBlogEntry = BlogEntryDecoratorManager.applyDecorators(clonedBlogEntry, decoratorContext);
-      getModel().put("decoratedComment", decoratedBlogEntry.getComment(comment.getId()));
+//      BlogEntry clonedBlogEntry = (BlogEntry)blogEntry.clone();
+//      comment.setParent(clonedBlogEntry.getComment(parent));
+//      clonedBlogEntry.addComment(comment);
+//      BlogEntry decoratedBlogEntry = ContentDecoratorChain.applyDecorators(clonedBlogEntry, decoratorContext);
+      Comment decoratedComment = (Comment)comment.clone();
+      blog.getContentDecoratorChain().decorate(decoratorContext, decoratedComment);
+      getModel().put("decoratedComment", decoratedComment);
       getModel().put("undecoratedComment", comment);
 
       return new CommentFormView();

@@ -127,12 +127,12 @@ public class SaveStaticPageAction extends SecureAction {
     String id = request.getParameter("entry");
     String persistent = request.getParameter("persistent");
 
-    if (persistent != null && persistent.equalsIgnoreCase("true")) {
-      BlogService service = new BlogService();
-      blogEntry = service.getStaticPage(blog, id);
-    } else {
-//      blogEntry = blog.getBlogForToday().createStaticPage();
-    }
+//    if (persistent != null && persistent.equalsIgnoreCase("true")) {
+//      BlogService service = new BlogService();
+//      blogEntry = service.getStaticPage(blog, id);
+//    } else {
+////      blogEntry = blog.getBlogForToday().createStaticPage();
+//    }
 
     return blogEntry;
   }

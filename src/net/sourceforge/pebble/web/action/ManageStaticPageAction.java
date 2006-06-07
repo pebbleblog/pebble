@@ -64,28 +64,28 @@ public class ManageStaticPageAction extends SecureAction {
    * @return the name of the next view
    */
   public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
-    Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
-    String id = request.getParameter("entry");
-    String confirm = request.getParameter("confirm");
-    String submit = request.getParameter("submit");
-
-    BlogService service = new BlogService();
-    BlogEntry blogEntry = service.getStaticPage(blog, id);
-
-    if (blogEntry == null) {
-      return new NotFoundView();
-    }
-
-    if (submit.equals("Edit")) {
-      return new ForwardView("/editStaticPage.secureaction?entry=" + id);
-    } else if (submit.equalsIgnoreCase("Remove") && confirm != null && confirm.equals("true")) {
-      try {
-        service.removeStaticPage(blogEntry);
-      } catch (BlogException be) {
-        throw new ServletException(be);
-      }
-    }
-
+//    Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
+//    String id = request.getParameter("entry");
+//    String confirm = request.getParameter("confirm");
+//    String submit = request.getParameter("submit");
+//
+//    BlogService service = new BlogService();
+//    BlogEntry blogEntry = service.getStaticPage(blog, id);
+//
+//    if (blogEntry == null) {
+//      return new NotFoundView();
+//    }
+//
+//    if (submit.equals("Edit")) {
+//      return new ForwardView("/editStaticPage.secureaction?entry=" + id);
+//    } else if (submit.equalsIgnoreCase("Remove") && confirm != null && confirm.equals("true")) {
+//      try {
+//        service.removeStaticPage(blogEntry);
+//      } catch (BlogException be) {
+//        throw new ServletException(be);
+//      }
+//    }
+//
     return new ForwardView("/viewStaticPages.secureaction");
   }
 

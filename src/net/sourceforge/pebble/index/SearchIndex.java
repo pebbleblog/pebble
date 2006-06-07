@@ -99,10 +99,9 @@ public class SearchIndex {
   }
 
   /**
-   * Allows an entire root blog to be indexed. In other words, this indexes
-   * all of the blog entries within the specified root blog.
+   * Allows a collection of blog entries to be indexed.
    */
-  public void index(List blogEntries) {
+  public void index(List<BlogEntry> blogEntries) {
     synchronized (blog) {
       try {
         Analyzer analyzer = getAnalyzer();
@@ -259,42 +258,42 @@ public class SearchIndex {
   /**
    * Helper method to index an individual blog entry.
    *
-   * @param page    the Page instance instance to index
+   * @param staticPage    the Page instance instance to index
    * @param writer      the IndexWriter to index with
    */
-  private void index(Page page, IndexWriter writer) {
+  private void index(StaticPage staticPage, IndexWriter writer) {
     try {
-      log.debug("Indexing " + page.getTitle());
+      log.debug("Indexing " + staticPage.getTitle());
       Document document = new Document();
-      document.add(Field.Keyword("id", page.getId()));
-      if (page.getTitle() != null) {
-        document.add(Field.Text("title", page.getTitle()));
+      document.add(Field.Keyword("id", staticPage.getId()));
+      if (staticPage.getTitle() != null) {
+        document.add(Field.Text("title", staticPage.getTitle()));
       } else {
         document.add(Field.Text("title", ""));
       }
-      document.add(Field.Keyword("permalink", page.getPermalink()));
-      document.add(Field.UnIndexed("date", DateField.dateToString(page.getDate())));
-      if (page.getBody() != null) {
-        document.add(Field.UnStored("body", page.getBody()));
+      document.add(Field.Keyword("permalink", staticPage.getPermalink()));
+      document.add(Field.UnIndexed("date", DateField.dateToString(staticPage.getDate())));
+      if (staticPage.getBody() != null) {
+        document.add(Field.UnStored("body", staticPage.getBody()));
       } else {
         document.add(Field.UnStored("body", ""));
       }
-      if (page.getTruncatedContent() != null) {
-        document.add(Field.Text("truncatedBody", page.getTruncatedContent()));
+      if (staticPage.getTruncatedContent() != null) {
+        document.add(Field.Text("truncatedBody", staticPage.getTruncatedContent()));
       } else {
         document.add(Field.Text("truncatedBody", ""));
       }
 
-      if (page.getAuthor() != null) {
-        document.add(Field.Text("author", page.getAuthor()));
+      if (staticPage.getAuthor() != null) {
+        document.add(Field.Text("author", staticPage.getAuthor()));
       }
 
       // build up one large string with all searchable content
       // i.e. entry title, entry body and all response bodies
       StringBuffer searchableContent = new StringBuffer();
-      searchableContent.append(page.getTitle());
+      searchableContent.append(staticPage.getTitle());
       searchableContent.append(" ");
-      searchableContent.append(page.getBody());
+      searchableContent.append(staticPage.getBody());
 
       // join the title and body together to make searching on them both easier
       document.add(Field.UnStored("blogEntry", searchableContent.toString()));

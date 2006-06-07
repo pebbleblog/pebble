@@ -29,41 +29,33 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package net.sourceforge.pebble.plugin.decorator;
+package net.sourceforge.pebble.comparator;
 
-import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.domain.PageBasedContent;
+
+import java.util.Comparator;
 
 /**
- * Interface implemented by blog entry decorators. Decorators are created on a
- * per blog basis, meaning that multiple threads can be operating on an
- * instance at any one time.
+ * A comparator used to order PageBasedContent instances, in alphabetical order of
+ * their titles.
  *
  * @author    Simon Brown
  */
-public interface BlogEntryDecorator {
+public class PageBasedContentByTitleComparator implements Comparator {
 
   /**
-   * Executes the logic associated with this decorator for a BlogEntry instance.
+   * Compares two objects.
    *
-   * @param chain   the chain of BlogEntryDecorators to apply
-   * @param context     the context in which the decoration is running
-   * @throws BlogEntryDecoratorException  if something goes wrong when running the decorator
+   * @param o1  object 1
+   * @param o2  object 2
+   * @return  -n, 0 or +n if the title of the first blog entry is less than,
+   *          the same as or greater than the second, respectively
    */
-  public void decorate(BlogEntryDecoratorChain chain, BlogEntryDecoratorContext context)
-      throws BlogEntryDecoratorException;
+  public int compare(Object o1, Object o2) {
+    PageBasedContent c1 = (PageBasedContent)o1;
+    PageBasedContent c2 = (PageBasedContent)o2;
 
-  /**
-   * Gets the blog to which this decorator is associated.
-   *
-   * @return  a Blog instance
-   */
-  public Blog getBlog();
-
-  /**
-   * Sets the blog to which this decorator is associated.
-   *
-   * @param blog    a Blog instance
-   */
-  public void setBlog(Blog blog);
+    return c1.getTitle().compareToIgnoreCase(c2.getTitle());
+  }
 
 }

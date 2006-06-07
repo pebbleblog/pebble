@@ -41,9 +41,8 @@ import net.sourceforge.pebble.domain.SingleBlogTestCase;
  */
 public class EscapeMarkupDecoratorTest extends SingleBlogTestCase {
 
-  private BlogEntryDecorator decorator;
-  private BlogEntryDecoratorChain chain;
-  private BlogEntryDecoratorContext context;
+  private ContentDecorator decorator;
+  private ContentDecoratorContext context;
   private BlogEntry blogEntry;
 
   protected void setUp() throws Exception {
@@ -51,9 +50,7 @@ public class EscapeMarkupDecoratorTest extends SingleBlogTestCase {
 
     decorator = new EscapeMarkupDecorator();
     blogEntry = new BlogEntry(blog);
-    chain = new BlogEntryDecoratorChain(null);
-    context = new BlogEntryDecoratorContext();
-    context.setBlogEntry(blogEntry);
+    context = new ContentDecoratorContext();
   }
 
   /**
@@ -61,32 +58,32 @@ public class EscapeMarkupDecoratorTest extends SingleBlogTestCase {
    */
   public void testEscapeTextInBody() throws Exception {
     blogEntry.setBody(null);
-    decorator.decorate(chain, context);
+    decorator.decorate(context, blogEntry);
     assertEquals("", blogEntry.getBody());
 
     blogEntry.setBody("");
-    decorator.decorate(chain, context);
+    decorator.decorate(context, blogEntry);
     assertEquals("", blogEntry.getBody());
 
     blogEntry.setBody("Here is some <b>HTML</b>.");
-    decorator.decorate(chain, context);
+    decorator.decorate(context, blogEntry);
     assertEquals("Here is some <b>HTML</b>.", blogEntry.getBody());
 
     blogEntry.setBody("Here is some <escape><b>escaped HTML</b></escape>.");
-    decorator.decorate(chain, context);
+    decorator.decorate(context, blogEntry);
     assertEquals("Here is some &lt;b&gt;escaped HTML&lt;/b&gt;.", blogEntry.getBody());
 
     blogEntry.setBody("Here is some <escape><b>escaped HTML</b></escape> and <escape><i>some more</i></escape>.");
-    decorator.decorate(chain, context);
+    decorator.decorate(context, blogEntry);
     assertEquals("Here is some &lt;b&gt;escaped HTML&lt;/b&gt; and &lt;i&gt;some more&lt;/i&gt;.", blogEntry.getBody());
 
     blogEntry.setBody("Here is some <escape><b>escaped\n" +
         "HTML</b></escape>.");
-    decorator.decorate(chain, context);
+    decorator.decorate(context, blogEntry);
     assertEquals("Here is some &lt;b&gt;escaped\nHTML&lt;/b&gt;.", blogEntry.getBody());
 
     blogEntry.setBody("abc <escape></escape> def");
-    decorator.decorate(chain, context);
+    decorator.decorate(context, blogEntry);
     assertEquals("abc <escape></escape> def", blogEntry.getBody());
   }
 
@@ -95,32 +92,32 @@ public class EscapeMarkupDecoratorTest extends SingleBlogTestCase {
    */
   public void testEscapeTextInExcerpt() throws Exception {
     blogEntry.setExcerpt(null);
-    decorator.decorate(chain, context);
+    decorator.decorate(context, blogEntry);
     assertEquals("", blogEntry.getExcerpt());
 
     blogEntry.setExcerpt("");
-    decorator.decorate(chain, context);
+    decorator.decorate(context, blogEntry);
     assertEquals("", blogEntry.getExcerpt());
 
     blogEntry.setExcerpt("Here is some <b>HTML</b>.");
-    decorator.decorate(chain, context);
+    decorator.decorate(context, blogEntry);
     assertEquals("Here is some <b>HTML</b>.", blogEntry.getExcerpt());
 
     blogEntry.setExcerpt("Here is some <escape><b>escaped HTML</b></escape>.");
-    decorator.decorate(chain, context);
+    decorator.decorate(context, blogEntry);
     assertEquals("Here is some &lt;b&gt;escaped HTML&lt;/b&gt;.", blogEntry.getExcerpt());
 
     blogEntry.setExcerpt("Here is some <escape><b>escaped HTML</b></escape> and <escape><i>some more</i></escape>.");
-    decorator.decorate(chain, context);
+    decorator.decorate(context, blogEntry);
     assertEquals("Here is some &lt;b&gt;escaped HTML&lt;/b&gt; and &lt;i&gt;some more&lt;/i&gt;.", blogEntry.getExcerpt());
 
     blogEntry.setExcerpt("Here is some <escape><b>escaped\n" +
         "HTML</b></escape>.");
-    decorator.decorate(chain, context);
+    decorator.decorate(context, blogEntry);
     assertEquals("Here is some &lt;b&gt;escaped\nHTML&lt;/b&gt;.", blogEntry.getExcerpt());
 
     blogEntry.setExcerpt("abc <escape></escape> def");
-    decorator.decorate(chain, context);
+    decorator.decorate(context, blogEntry);
     assertEquals("abc <escape></escape> def", blogEntry.getExcerpt());
   }
 

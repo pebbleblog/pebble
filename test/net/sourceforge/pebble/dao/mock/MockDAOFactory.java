@@ -31,10 +31,7 @@
  */
 package net.sourceforge.pebble.dao.mock;
 
-import net.sourceforge.pebble.dao.BlogEntryDAO;
-import net.sourceforge.pebble.dao.CategoryDAO;
-import net.sourceforge.pebble.dao.DAOFactory;
-import net.sourceforge.pebble.dao.RefererFilterDAO;
+import net.sourceforge.pebble.dao.*;
 
 /**
  * Represents a strategy used to load and store blog entries
@@ -59,6 +56,15 @@ public class MockDAOFactory extends DAOFactory {
    */
   public BlogEntryDAO getBlogEntryDAO() {
     return blogEntryDAO;
+  }
+
+  /**
+   * Gets a DAO instance responsible for the dao of static pages.
+   *
+   * @return a StaticPageDAO instance
+   */
+  public StaticPageDAO getStaticPageDAO() {
+    return new MockStaticPageDAO();
   }
 
   /**

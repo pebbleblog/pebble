@@ -12,24 +12,20 @@ import java.util.ResourceBundle;
  *
  * @author Simon Brown
  */
-public class ReadMoreDecorator extends BlogEntryDecoratorSupport {
+public class ReadMoreDecorator extends ContentDecoratorSupport {
+
 
   /**
-   * Executes the logic associated with this decorator.
+   * Decorates the specified blog entry.
    *
-   * @param chain   the chain of BlogEntryDecorators to apply
-   * @param context     the context in which the decoration is running
-   * @throws net.sourceforge.pebble.plugin.decorator.BlogEntryDecoratorException
-   *          if something goes wrong when running the decorator
+   * @param context   the context in which the decoration is running
+   * @param blogEntry the blog entry to be decorated
    */
-  public void decorate(BlogEntryDecoratorChain chain, BlogEntryDecoratorContext context)
-    throws BlogEntryDecoratorException {
-
-    BlogEntry blogEntry = context.getBlogEntry();
+  public BlogEntry decorate(ContentDecoratorContext context, BlogEntry blogEntry) {
     Blog blog = blogEntry.getBlog();
     ResourceBundle bundle = ResourceBundle.getBundle("resources", blog.getLocale());
 
-    if ((blogEntry.getExcerpt() != null && blogEntry.getExcerpt().length() > 0 && context.getView() == BlogEntryDecoratorContext.SUMMARY_VIEW)) {
+    if ((blogEntry.getExcerpt() != null && blogEntry.getExcerpt().length() > 0 && context.getView() == ContentDecoratorContext.SUMMARY_VIEW)) {
       StringBuffer buf = new StringBuffer();
       buf.append(blogEntry.getExcerpt());
 
@@ -53,7 +49,7 @@ public class ReadMoreDecorator extends BlogEntryDecoratorSupport {
       blogEntry.setBody(buf.toString());
     }
 
-    chain.decorate(context);
+    return blogEntry;
   }
 
 }

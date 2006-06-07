@@ -32,9 +32,11 @@
 package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
+import net.sourceforge.pebble.util.SecurityUtils;
 import net.sourceforge.pebble.domain.MonthlyBlog;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.domain.BlogService;
+import net.sourceforge.pebble.domain.BlogEntry;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.NotFoundView;
 import net.sourceforge.pebble.web.view.impl.BlogMonthlyView;
@@ -42,6 +44,8 @@ import net.sourceforge.pebble.web.view.impl.BlogMonthlyView;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Finds all blog entries for a particular month, ready for them
@@ -73,7 +77,8 @@ public class ViewMonthlyBlogAction extends Action {
 
     BlogService service = new BlogService();
 
-    getModel().put(Constants.BLOG_ENTRIES, service.getBlogEntries(blog, Integer.parseInt(year), Integer.parseInt(month)));
+    List<BlogEntry> blogEntries = service.getBlogEntries(blog, Integer.parseInt(year), Integer.parseInt(month));
+    getModel().put(Constants.BLOG_ENTRIES, filter(blog, blogEntries));
     getModel().put("displayMode", "month");
     getModel().put(Constants.MONTHLY_BLOG, monthly);
 
@@ -91,6 +96,25 @@ public class ViewMonthlyBlogAction extends Action {
     }
 
     return new BlogMonthlyView();
+  }
+
+  private List<BlogEntry> filter(Blog blog, List<BlogEntry> blogEntries) {
+    List<BlogEntry> filtered = new ArrayList<BlogEntry>();
+
+    for (BlogEntry blogEntry : blogEntries) {
+      if (
+          blogEntry.isPublished() ||
+          (
+            (SecurityUtils.isUserAuthorisedForBlogAsBlogOwner(blog) ||
+             SecurityUtils.isUserAuthorisedForBlogAsBlogContributor(blog)) &&
+            blogEntry.isUnpublished()
+          )
+         ) {
+        filtered.add(blogEntry);
+      }
+    }
+
+    return filtered;
   }
 
 }

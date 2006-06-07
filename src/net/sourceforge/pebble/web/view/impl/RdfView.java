@@ -31,14 +31,6 @@
  */
 package net.sourceforge.pebble.web.view.impl;
 
-import net.sourceforge.pebble.Constants;
-import net.sourceforge.pebble.plugin.decorator.BlogEntryDecoratorContext;
-import net.sourceforge.pebble.plugin.decorator.BlogEntryDecoratorManager;
-import net.sourceforge.pebble.domain.AbstractBlog;
-import net.sourceforge.pebble.web.view.XmlView;
-
-import java.util.List;
-
 /**
  * Represents an RDF newsfeed.
  *

@@ -32,16 +32,16 @@
 package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
-import net.sourceforge.pebble.domain.DailyBlog;
-import net.sourceforge.pebble.domain.Blog;
-import net.sourceforge.pebble.domain.MonthlyBlog;
-import net.sourceforge.pebble.domain.BlogService;
+import net.sourceforge.pebble.util.SecurityUtils;
+import net.sourceforge.pebble.domain.*;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.impl.BlogDailyView;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Finds all blog entries for a particular day, ready for them to be displayed.
@@ -76,7 +76,7 @@ public class ViewDailyBlogAction extends Action {
 
     getModel().put(Constants.MONTHLY_BLOG, daily.getMonthlyBlog());
     getModel().put(Constants.DAILY_BLOG, daily);
-    getModel().put(Constants.BLOG_ENTRIES, service.getBlogEntries(blog, Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day)));
+    getModel().put(Constants.BLOG_ENTRIES, filter(blog, service.getBlogEntries(blog, Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day))));
     getModel().put("displayMode", "day");
 
     // put the previous and next days in the model for navigation purposes
@@ -93,6 +93,25 @@ public class ViewDailyBlogAction extends Action {
     }
 
     return new BlogDailyView();
+  }
+
+  private List<BlogEntry> filter(Blog blog, List<BlogEntry> blogEntries) {
+    List<BlogEntry> filtered = new ArrayList<BlogEntry>();
+
+    for (BlogEntry blogEntry : blogEntries) {
+      if (
+          blogEntry.isPublished() ||
+          (
+            (SecurityUtils.isUserAuthorisedForBlogAsBlogOwner(blog) ||
+             SecurityUtils.isUserAuthorisedForBlogAsBlogContributor(blog)) &&
+            blogEntry.isUnpublished()
+          )
+         ) {
+        filtered.add(blogEntry);
+      }
+    }
+
+    return filtered;
   }
 
 }

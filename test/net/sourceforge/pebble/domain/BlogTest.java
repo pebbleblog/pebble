@@ -64,7 +64,6 @@ public class BlogTest extends SingleBlogTestCase {
     assertEquals(3, blog.getRecentResponsesOnHomePage());
     assertTrue(blog.isPublic());
     assertFalse(blog.isPrivate());
-    assertEquals("net.sourceforge.pebble.plugin.decorator.HideUnpublishedBlogEntriesDecorator\r\nnet.sourceforge.pebble.plugin.decorator.HideUnapprovedResponsesDecorator\r\nnet.sourceforge.pebble.plugin.decorator.HtmlDecorator\r\nnet.sourceforge.pebble.plugin.decorator.EscapeMarkupDecorator\r\nnet.sourceforge.pebble.plugin.decorator.RelativeUriDecorator\r\nnet.sourceforge.pebble.plugin.decorator.ReadMoreDecorator\r\nnet.sourceforge.pebble.plugin.decorator.BlogTagsDecorator", blog.getBlogEntryDecorators());
     assertEquals("net.sourceforge.pebble.plugin.permalink.DefaultPermalinkProvider", blog.getPermalinkProviderName());
     assertTrue(blog.getPermalinkProvider() instanceof DefaultPermalinkProvider);
     assertEquals("net.sourceforge.pebble.event.DefaultEventDispatcher", blog.getEventDispatcherName());

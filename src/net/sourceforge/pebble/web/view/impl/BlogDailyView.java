@@ -35,13 +35,13 @@ import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.comparator.BlogEntryComparator;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.domain.DailyBlog;
-import net.sourceforge.pebble.plugin.decorator.BlogEntryDecoratorContext;
-import net.sourceforge.pebble.plugin.decorator.BlogEntryDecoratorManager;
+import net.sourceforge.pebble.plugin.decorator.ContentDecoratorChain;
+import net.sourceforge.pebble.plugin.decorator.ContentDecoratorContext;
 import net.sourceforge.pebble.web.view.HtmlView;
 
 import java.text.DateFormat;
-import java.util.List;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * Represents the home page view of a simple blog.
@@ -51,12 +51,12 @@ import java.util.Collections;
 public class BlogDailyView extends HtmlView {
 
   public void prepare() {
-    BlogEntryDecoratorContext decoratorContext = new BlogEntryDecoratorContext();
-    decoratorContext.setView(BlogEntryDecoratorContext.SUMMARY_VIEW);
-    decoratorContext.setMedia(BlogEntryDecoratorContext.HTML_PAGE);
+    ContentDecoratorContext context = new ContentDecoratorContext();
+    context.setView(ContentDecoratorContext.SUMMARY_VIEW);
+    context.setMedia(ContentDecoratorContext.HTML_PAGE);
 
     List blogEntries = (List)getModel().get(Constants.BLOG_ENTRIES);
-    blogEntries = BlogEntryDecoratorManager.applyDecorators(blogEntries, decoratorContext);
+    blogEntries = ContentDecoratorChain.decorate(context, blogEntries);
     Collections.sort(blogEntries, new BlogEntryComparator());
     getModel().put(Constants.BLOG_ENTRIES, blogEntries);
   }

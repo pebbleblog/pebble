@@ -42,20 +42,16 @@ import net.sourceforge.pebble.domain.SingleBlogTestCase;
  */
 public class BlogTagsDecoratorTest extends SingleBlogTestCase {
 
-  private BlogEntryDecorator decorator;
+  private ContentDecorator decorator;
   private BlogEntry blogEntry;
-  private BlogEntryDecoratorContext context;
-
-  private BlogEntryDecoratorChain chain;
+  private ContentDecoratorContext context;
 
   protected void setUp() throws Exception {
     super.setUp();
 
     blogEntry = new BlogEntry(blog);
     decorator = new BlogTagsDecorator();
-    chain = new BlogEntryDecoratorChain(null);
-    context = new BlogEntryDecoratorContext();
-    context.setBlogEntry(blogEntry);
+    context = new ContentDecoratorContext();
   }
 
   /**
@@ -64,8 +60,8 @@ public class BlogTagsDecoratorTest extends SingleBlogTestCase {
   public void testBlogEntryHasNoTags() throws Exception {
     blogEntry.setExcerpt("Excerpt - here is some text");
     blogEntry.setBody("Body - here is some text");
-    context.setMedia(BlogEntryDecoratorContext.HTML_PAGE);
-    decorator.decorate(chain, context);
+    context.setMedia(ContentDecoratorContext.HTML_PAGE);
+    decorator.decorate(context, blogEntry);
     assertEquals("Excerpt - here is some text", blogEntry.getExcerpt());
     assertEquals("Body - here is some text", blogEntry.getBody());
   }
@@ -81,8 +77,8 @@ public class BlogTagsDecoratorTest extends SingleBlogTestCase {
     blogEntry.setExcerpt("Excerpt - here is some text");
     blogEntry.setBody("Body - here is some text");
     blogEntry.setTags("junit, automated unit testing");
-    context.setMedia(BlogEntryDecoratorContext.HTML_PAGE);
-    decorator.decorate(chain, context);
+    context.setMedia(ContentDecoratorContext.HTML_PAGE);
+    decorator.decorate(context, blogEntry);
 
     StringBuffer tags = new StringBuffer();
     tags.append("<div class=\"tags\">Tags : ");
@@ -106,8 +102,8 @@ public class BlogTagsDecoratorTest extends SingleBlogTestCase {
     blogEntry.setExcerpt("Excerpt - here is some text");
     blogEntry.setBody("Body - here is some text");
     blogEntry.setTags("junit, automated unit testing");
-    context.setMedia(BlogEntryDecoratorContext.NEWS_FEED);
-    decorator.decorate(chain, context);
+    context.setMedia(ContentDecoratorContext.NEWS_FEED);
+    decorator.decorate(context, blogEntry);
 
     StringBuffer tags = new StringBuffer();
 //    tags.append("<!--<div class=\"tags\">Tags : ");

@@ -14,26 +14,20 @@ import java.util.regex.Pattern;
  * 
  * @author Simon Brown
  */
-public class NoFollowDecorator extends BlogEntryDecoratorSupport {
+public class NoFollowDecorator extends ContentDecoratorSupport {
 
   /** the regex used to find HTML links */
   private static Pattern HTML_LINK_PATTERN = Pattern.compile("<a.*?href=.*?>", Pattern.CASE_INSENSITIVE);
 
   /**
-   * Executes the logic associated with this decorator.
+   * Decorates the specified blog entry.
    *
-   * @param chain   the chain of BlogEntryDecorators to apply
-   * @param context     the context in which the decoration is running
-   * @throws BlogEntryDecoratorException
-   *          if something goes wrong when running the decorator
+   * @param context   the context in which the decoration is running
+   * @param blogEntry the blog entry to be decorated
    */
-  public void decorate(BlogEntryDecoratorChain chain, BlogEntryDecoratorContext context)
-      throws BlogEntryDecoratorException {
-
-    BlogEntry blogEntry = context.getBlogEntry();
-
+  public BlogEntry decorate(ContentDecoratorContext context, BlogEntry blogEntry) {
     // only apply in detail mode
-    if (context.getView() == BlogEntryDecoratorContext.DETAIL_VIEW) {
+    if (context.getView() == ContentDecoratorContext.DETAIL_VIEW) {
       Iterator it = blogEntry.getComments().iterator();
       while (it.hasNext()) {
         Comment comment = (Comment)it.next();
@@ -47,7 +41,7 @@ public class NoFollowDecorator extends BlogEntryDecoratorSupport {
       }
     }
 
-    chain.decorate(context);
+    return blogEntry;
   }
 
   /**

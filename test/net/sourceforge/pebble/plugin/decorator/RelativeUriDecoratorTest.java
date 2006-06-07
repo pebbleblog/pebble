@@ -42,20 +42,16 @@ import net.sourceforge.pebble.domain.SingleBlogTestCase;
  */
 public class RelativeUriDecoratorTest extends SingleBlogTestCase {
 
-  private BlogEntryDecorator decorator;
+  private ContentDecorator decorator;
   private BlogEntry blogEntry;
-  private BlogEntryDecoratorContext context;
-
-  private BlogEntryDecoratorChain chain;
+  private ContentDecoratorContext context;
 
   protected void setUp() throws Exception {
     super.setUp();
 
     blogEntry = new BlogEntry(blog);
     decorator = new RelativeUriDecorator();
-    chain = new BlogEntryDecoratorChain(null);
-    context = new BlogEntryDecoratorContext();
-    context.setBlogEntry(blogEntry);
+    context = new ContentDecoratorContext();
   }
 
   /**
@@ -63,7 +59,7 @@ public class RelativeUriDecoratorTest extends SingleBlogTestCase {
    */
   public void testImageUriInBody() throws Exception {
     blogEntry.setBody("Body - <img src=\"./images/someimage.jpg\">");
-    decorator.decorate(chain, context);
+    decorator.decorate(context, blogEntry);
     assertEquals("Body - <img src=\"http://www.yourdomain.com/blog/images/someimage.jpg\">", blogEntry.getBody());
   }
 
@@ -72,7 +68,7 @@ public class RelativeUriDecoratorTest extends SingleBlogTestCase {
    */
   public void testFileUriInBody() throws Exception {
     blogEntry.setBody("Body - <a href=\"./files/someimage.zip\">");
-    decorator.decorate(chain, context);
+    decorator.decorate(context, blogEntry);
     assertEquals("Body - <a href=\"http://www.yourdomain.com/blog/files/someimage.zip\">", blogEntry.getBody());
   }
 
@@ -81,7 +77,7 @@ public class RelativeUriDecoratorTest extends SingleBlogTestCase {
    */
   public void testImageUriInExcerpt() throws Exception {
     blogEntry.setExcerpt("Excerpt - <img src=\"./images/someimage.jpg\">");
-    decorator.decorate(chain, context);
+    decorator.decorate(context, blogEntry);
     assertEquals("Excerpt - <img src=\"http://www.yourdomain.com/blog/images/someimage.jpg\">", blogEntry.getExcerpt());
   }
 
@@ -90,7 +86,7 @@ public class RelativeUriDecoratorTest extends SingleBlogTestCase {
    */
   public void testFileUriInExcerpt() throws Exception {
     blogEntry.setExcerpt("Excerpt - <a href=\"./files/someimage.zip\">");
-    decorator.decorate(chain, context);
+    decorator.decorate(context, blogEntry);
     assertEquals("Excerpt - <a href=\"http://www.yourdomain.com/blog/files/someimage.zip\">", blogEntry.getExcerpt());
   }
 
@@ -98,10 +94,10 @@ public class RelativeUriDecoratorTest extends SingleBlogTestCase {
    * Tests that a relative URI pointing to an image is translated, in the excerpt.
    */
   public void testRelativeUrisNotChangedWhenMediaIsDesktopUI() throws Exception {
-    context.setMedia(BlogEntryDecoratorContext.DESKTOP_UI);
+    context.setMedia(ContentDecoratorContext.DESKTOP_UI);
     blogEntry.setBody("Body - <img src=\"./images/someimage.jpg\">");
     blogEntry.setExcerpt("Excerpt - <img src=\"./images/someimage.jpg\">");
-    decorator.decorate(chain, context);
+    decorator.decorate(context, blogEntry);
     assertEquals("Body - <img src=\"./images/someimage.jpg\">", blogEntry.getBody());
     assertEquals("Excerpt - <img src=\"./images/someimage.jpg\">", blogEntry.getExcerpt());
   }
@@ -111,7 +107,7 @@ public class RelativeUriDecoratorTest extends SingleBlogTestCase {
    */
   public void testRelativeUriInAttachment() throws Exception {
     blogEntry.setAttachment(new Attachment("./files/someimage.jpg", 1024, "image/jpeg"));
-    decorator.decorate(chain, context);
+    decorator.decorate(context, blogEntry);
     assertEquals("http://www.yourdomain.com/blog/files/someimage.jpg", blogEntry.getAttachment().getUrl());
   }
 

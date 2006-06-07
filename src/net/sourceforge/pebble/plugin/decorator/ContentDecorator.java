@@ -29,33 +29,63 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package net.sourceforge.pebble.comparator;
+package net.sourceforge.pebble.plugin.decorator;
 
-import net.sourceforge.pebble.domain.BlogEntry;
-
-import java.util.Comparator;
+import net.sourceforge.pebble.domain.*;
 
 /**
- * A comparator used to order BlogEntry instances, in alphabetical order of
- * their titles.
+ * Interface implemented by blog entry decorators. Decorators are created on a
+ * per blog basis, meaning that multiple threads can be operating on an
+ * instance at any one time.
  *
  * @author    Simon Brown
  */
-public class BlogEntryByTitleComparator implements Comparator {
+public interface ContentDecorator {
 
   /**
-   * Compares two objects.
+   * Decorates the specified blog entry.
    *
-   * @param o1  object 1
-   * @param o2  object 2
-   * @return  -n, 0 or +n if the title of the first blog entry is less than,
-   *          the same as or greater than the second, respectively
+   * @param context     the context in which the decoration is running
+   * @param blogEntry   the blog entry to be decorated
    */
-  public int compare(Object o1, Object o2) {
-    BlogEntry b1 = (BlogEntry)o1;
-    BlogEntry b2 = (BlogEntry)o2;
+  public BlogEntry decorate(ContentDecoratorContext context, BlogEntry blogEntry);
 
-    return b1.getTitle().compareToIgnoreCase(b2.getTitle());
-  }
+  /**
+   * Decorates the specified comment.
+   *
+   * @param context     the context in which the decoration is running
+   * @param comment     the comment to be decorated
+   */
+  public void decorate(ContentDecoratorContext context, Comment comment);
+
+  /**
+   * Decorates the specified TrackBack.
+   *
+   * @param context     the context in which the decoration is running
+   * @param trackBack   the TrackBack to be decorated
+   */
+  public void decorate(ContentDecoratorContext context, TrackBack trackBack);
+
+  /**
+   * Decorates the specified static page.
+   *
+   * @param context       the context in which the decoration is running
+   * @param staticPage    the static page to be decorated
+   */
+  public void decorate(ContentDecoratorContext context, StaticPage staticPage);
+
+  /**
+   * Gets the blog to which this decorator is associated.
+   *
+   * @return  a Blog instance
+   */
+  public Blog getBlog();
+
+  /**
+   * Sets the blog to which this decorator is associated.
+   *
+   * @param blog    a Blog instance
+   */
+  public void setBlog(Blog blog);
 
 }

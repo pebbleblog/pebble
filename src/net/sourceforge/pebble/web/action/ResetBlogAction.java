@@ -60,7 +60,7 @@ public class ResetBlogAction extends SecureAction {
 
     try {
       blog.removeProperty(Blog.THEME_KEY);
-      blog.removeProperty(Blog.BLOG_ENTRY_DECORATORS_KEY);
+      blog.removeProperty(Blog.CONTENT_DECORATORS_KEY);
       blog.removeProperty(Blog.BLOG_ENTRY_LISTENERS_KEY);
       blog.removeProperty(Blog.COMMENT_LISTENERS_KEY);
       blog.removeProperty(Blog.TRACKBACK_LISTENERS_KEY);

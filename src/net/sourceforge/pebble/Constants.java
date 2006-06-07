@@ -51,6 +51,7 @@ public class Constants {
   public static final String TAGS = "tags";
 
   public static final String BLOG_ENTRY_KEY = "blogEntry";
+  public static final String STATIC_PAGE_KEY = "staticPage";
   public static final String COMMENT_KEY = "comment";
   public static final String BLOG_MANAGER = "blogManager";
   public static final String PEBBLE_CONTEXT = "pebbleContext";

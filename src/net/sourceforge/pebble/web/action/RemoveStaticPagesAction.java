@@ -62,18 +62,18 @@ public class RemoveStaticPagesAction extends SecureAction {
     String ids[] = request.getParameterValues("entry");
     BlogService service = new BlogService();
 
-    if (ids != null) {
-      for (String id : ids) {
-        BlogEntry blogEntry = service.getStaticPage(blog, id);
-        if (blogEntry != null) {
-          try {
-            service.removeStaticPage(blogEntry);
-          } catch (BlogException be) {
-            throw new ServletException(be);
-          }
-        }
-      }
-    }
+//    if (ids != null) {
+//      for (String id : ids) {
+//        BlogEntry blogEntry = service.getStaticPage(blog, id);
+//        if (blogEntry != null) {
+//          try {
+//            service.removeStaticPage(blogEntry);
+//          } catch (BlogException be) {
+//            throw new ServletException(be);
+//          }
+//        }
+//      }
+//    }
 
     return new ForwardView("/viewStaticPages.secureaction");
   }

@@ -13,21 +13,15 @@ import java.util.List;
  * 
  * @author Simon Brown
  */
-public class HideUnapprovedResponsesDecorator extends BlogEntryDecoratorSupport {
+public class HideUnapprovedResponsesDecorator extends ContentDecoratorSupport {
 
   /**
-   * Executes the logic associated with this decorator.
+   * Decorates the specified blog entry.
    *
-   * @param chain   the chain of BlogEntryDecorators to apply
-   * @param context     the context in which the decoration is running
-   * @throws BlogEntryDecoratorException
-   *          if something goes wrong when running the decorator
+   * @param context   the context in which the decoration is running
+   * @param blogEntry the blog entry to be decorated
    */
-  public void decorate(BlogEntryDecoratorChain chain, BlogEntryDecoratorContext context)
-      throws BlogEntryDecoratorException {
-
-    BlogEntry blogEntry = context.getBlogEntry();
-
+  public BlogEntry decorate(ContentDecoratorContext context, BlogEntry blogEntry) {
     if (!SecurityUtils.isUserAuthorisedForBlogAsBlogContributor(blogEntry.getBlog())) {
       List comments = blogEntry.getComments();
       for (int i = comments.size()-1; i >= 0; i--) {
@@ -46,7 +40,7 @@ public class HideUnapprovedResponsesDecorator extends BlogEntryDecoratorSupport 
       }
     }
 
-    chain.decorate(context);
+    return blogEntry;
   }
 
 }

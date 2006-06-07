@@ -78,7 +78,7 @@
       <tr class="even">
         <td valign="top"><b>Blog entry decorators</b></td>
         <td>
-          <c:forEach var="decorator" items="${blog.blogEntryDecoratorManager.blogEntryDecorators}">
+          <c:forEach var="decorator" items="${blog.contentDecoratorChain.contentDecorators}">
             ${decorator.class.name}<br />
           </c:forEach>
         </td>

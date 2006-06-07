@@ -31,55 +31,71 @@
  */
 package net.sourceforge.pebble.plugin.decorator;
 
-import net.sourceforge.pebble.domain.BlogEntry;
-
+import net.sourceforge.pebble.domain.*;
 
 /**
- * Provides context to blog entry decorators, of where they are running, etc.
+ * Starting point for BlogEntryDecorator implementations to extend.
  *
  * @author    Simon Brown
  */
-public class BlogEntryDecoratorContext {
+public abstract class ContentDecoratorSupport implements ContentDecorator {
 
-  public static final int SUMMARY_VIEW = 0;
-  public static final int DETAIL_VIEW = 1;
-  public static final int PREVIEW = 2;
+  /** the blog to which this decorator is associated */
+  private Blog blog;
 
-  public static final int HTML_PAGE = 0;
-  public static final int NEWS_FEED = 1;
-  public static final int DESKTOP_UI = 2;
-  public static final int EMAIL = 4;
-
-  private int view = 0;
-  private int media = 0;
-
-  private BlogEntry blogEntry;
-
-  public BlogEntryDecoratorContext() {
+  /**
+   * Gets the blog to which this decorator is associated.
+   *
+   * @return  a Blog instance
+   */
+  public Blog getBlog() {
+    return this.blog;
   }
 
-  public int getView() {
-    return view;
+  /**
+   * Sets the blog to which this decorator is associated.
+   *
+   * @param blog    a Blog instance
+   */
+  public void setBlog(Blog blog) {
+    this.blog = blog;
   }
 
-  public void setView(int view) {
-    this.view = view;
-  }
-
-  public int getMedia() {
-    return media;
-  }
-
-  public void setMedia(int media) {
-    this.media = media;
-  }
-
-  public BlogEntry getBlogEntry() {
+  /**
+   * Decorates the specified blog entry.
+   *
+   * @param context   the context in which the decoration is running
+   * @param blogEntry the blog entry to be decorated
+   */
+  public BlogEntry decorate(ContentDecoratorContext context, BlogEntry blogEntry) {
     return blogEntry;
   }
 
-  public void setBlogEntry(BlogEntry blogEntry) {
-    this.blogEntry = blogEntry;
+  /**
+   * Decorates the specified comment.
+   *
+   * @param context the context in which the decoration is running
+   * @param comment the comment to be decorated
+   */
+  public void decorate(ContentDecoratorContext context, Comment comment) {
+  }
+
+  /**
+   * Decorates the specified TrackBack.
+   *
+   * @param context   the context in which the decoration is running
+   * @param trackBack the TrackBack to be decorated
+   */
+  public void decorate(ContentDecoratorContext context, TrackBack trackBack) {
+  }
+
+  /**
+   * Decorates the specified static page.
+   *
+   * @param context    the context in which the decoration is running
+   * @param staticPage the static page to be decorated
+   */
+  public void decorate(ContentDecoratorContext context, StaticPage staticPage) {
   }
 
 }

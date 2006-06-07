@@ -38,7 +38,7 @@ import net.sourceforge.pebble.web.validation.ValidationContext;
  *
  * @author Simon Brown
  */
-public class Page extends PageBasedContent {
+public class StaticPage extends PageBasedContent {
 
   /** the name of the page */
   private String name;
@@ -48,7 +48,7 @@ public class Page extends PageBasedContent {
    *
    * @param blog    the owning Blog
    */
-  public Page(Blog blog) {
+  public StaticPage(Blog blog) {
     super(blog);
   }
 
@@ -102,12 +102,12 @@ public class Page extends PageBasedContent {
       return true;
     }
 
-    if (!(o instanceof Page)) {
+    if (!(o instanceof StaticPage)) {
       return false;
     }
 
-    Page page = (Page)o;
-    return getGuid().equals(page.getGuid());
+    StaticPage staticPage = (StaticPage)o;
+    return getGuid().equals(staticPage.getGuid());
   }
 
 //  /**

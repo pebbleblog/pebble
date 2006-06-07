@@ -12,37 +12,50 @@ import java.util.Iterator;
  * 
  * @author Simon Brown
  */
-public class HtmlDecorator extends BlogEntryDecoratorSupport {
+public class HtmlDecorator extends ContentDecoratorSupport {
 
   /**
-   * Executes the logic associated with this decorator.
+   * Decorates the specified blog entry.
    *
-   * @param chain   the chain of BlogEntryDecorators to apply
-   * @param context     the context in which the decoration is running
-   * @throws BlogEntryDecoratorException
-   *          if something goes wrong when running the decorator
+   * @param context   the context in which the decoration is running
+   * @param blogEntry the blog entry to be decorated
    */
-  public void decorate(BlogEntryDecoratorChain chain, BlogEntryDecoratorContext context)
-      throws BlogEntryDecoratorException {
-
-    BlogEntry blogEntry = context.getBlogEntry();
-
+  public BlogEntry decorate(ContentDecoratorContext context, BlogEntry blogEntry) {
     // render comments if in detail mode
-    if (context.getView() == BlogEntryDecoratorContext.DETAIL_VIEW) {
+    if (context.getView() == ContentDecoratorContext.DETAIL_VIEW) {
       Iterator it = blogEntry.getComments().iterator();
       while (it.hasNext()) {
         Comment comment = (Comment)it.next();
-        comment.setBody(StringUtils.transformToHTMLSubset(StringUtils.transformHTML(comment.getBody())));
+        decorate(context, comment);
       }
 
       it = blogEntry.getTrackBacks().iterator();
       while (it.hasNext()) {
         TrackBack trackBack = (TrackBack)it.next();
-        trackBack.setExcerpt(StringUtils.transformToHTMLSubset(StringUtils.transformHTML(trackBack.getExcerpt())));
+        decorate(context, trackBack);
       }
     }
 
-    chain.decorate(context);
+    return blogEntry;
   }
 
+  /**
+   * Decorates the specified comment.
+   *
+   * @param context the context in which the decoration is running
+   * @param comment the comment to be decorated
+   */
+  public void decorate(ContentDecoratorContext context, Comment comment) {
+    comment.setBody(StringUtils.transformToHTMLSubset(StringUtils.transformHTML(comment.getBody())));
+  }
+
+  /**
+   * Decorates the specified TrackBack.
+   *
+   * @param context   the context in which the decoration is running
+   * @param trackBack the TrackBack to be decorated
+   */
+  public void decorate(ContentDecoratorContext context, TrackBack trackBack) {
+    trackBack.setExcerpt(StringUtils.transformToHTMLSubset(StringUtils.transformHTML(trackBack.getExcerpt())));
+  }
 }

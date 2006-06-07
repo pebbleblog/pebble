@@ -32,7 +32,6 @@
 package net.sourceforge.pebble.comparator;
 
 import net.sourceforge.pebble.domain.BlogEntry;
-import net.sourceforge.pebble.domain.DailyBlog;
 import net.sourceforge.pebble.domain.SingleBlogTestCase;
 
 /**
@@ -43,7 +42,7 @@ import net.sourceforge.pebble.domain.SingleBlogTestCase;
 public class BlogEntryByTitleComparatorTest extends SingleBlogTestCase {
 
   public void testCompare() {
-    BlogEntryByTitleComparator comp = new BlogEntryByTitleComparator();
+    PageBasedContentByTitleComparator comp = new PageBasedContentByTitleComparator();
 
     BlogEntry b1 = new BlogEntry(blog);
     b1.setTitle("A title");
@@ -57,7 +56,7 @@ public class BlogEntryByTitleComparatorTest extends SingleBlogTestCase {
   }
 
   public void testCompareIgnoreCase() {
-    BlogEntryByTitleComparator comp = new BlogEntryByTitleComparator();
+    PageBasedContentByTitleComparator comp = new PageBasedContentByTitleComparator();
 
     BlogEntry b1 = new BlogEntry(blog);
     b1.setTitle("a title");

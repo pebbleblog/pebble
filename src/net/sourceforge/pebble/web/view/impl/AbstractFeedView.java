@@ -32,8 +32,8 @@
 package net.sourceforge.pebble.web.view.impl;
 
 import net.sourceforge.pebble.Constants;
-import net.sourceforge.pebble.plugin.decorator.BlogEntryDecoratorContext;
-import net.sourceforge.pebble.plugin.decorator.BlogEntryDecoratorManager;
+import net.sourceforge.pebble.plugin.decorator.ContentDecoratorContext;
+import net.sourceforge.pebble.plugin.decorator.ContentDecoratorChain;
 import net.sourceforge.pebble.domain.AbstractBlog;
 import net.sourceforge.pebble.web.view.XmlView;
 
@@ -60,12 +60,13 @@ public abstract class AbstractFeedView extends XmlView {
    * Prepares the view for presentation.
    */
   public void prepare() {
-    BlogEntryDecoratorContext decoratorContext = new BlogEntryDecoratorContext();
-    decoratorContext.setView(BlogEntryDecoratorContext.SUMMARY_VIEW);
-    decoratorContext.setMedia(BlogEntryDecoratorContext.NEWS_FEED);
+    ContentDecoratorContext context = new ContentDecoratorContext();
+    context.setView(ContentDecoratorContext.SUMMARY_VIEW);
+    context.setMedia(ContentDecoratorContext.NEWS_FEED);
 
     List blogEntries = (List)getModel().get(Constants.BLOG_ENTRIES);
-    getModel().put(Constants.BLOG_ENTRIES, BlogEntryDecoratorManager.applyDecorators(blogEntries, decoratorContext));
+    blogEntries = ContentDecoratorChain.decorate(context, blogEntries);
+    getModel().put(Constants.BLOG_ENTRIES, blogEntries);
   }
 
 }

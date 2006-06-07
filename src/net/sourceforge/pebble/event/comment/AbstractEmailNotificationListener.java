@@ -32,10 +32,8 @@
 package net.sourceforge.pebble.event.comment;
 
 import net.sourceforge.pebble.domain.Blog;
-import net.sourceforge.pebble.domain.BlogEntry;
 import net.sourceforge.pebble.domain.Comment;
-import net.sourceforge.pebble.plugin.decorator.BlogEntryDecoratorContext;
-import net.sourceforge.pebble.plugin.decorator.BlogEntryDecoratorManager;
+import net.sourceforge.pebble.plugin.decorator.ContentDecoratorContext;
 import net.sourceforge.pebble.util.MailUtils;
 
 import javax.mail.Session;
@@ -81,11 +79,11 @@ public abstract class AbstractEmailNotificationListener extends CommentListenerS
   private void sendNotification(Comment comment) {
     Blog blog = comment.getBlogEntry().getBlog();
 
-    BlogEntryDecoratorContext decoratorContext = new BlogEntryDecoratorContext();
-    decoratorContext.setView(BlogEntryDecoratorContext.DETAIL_VIEW);
-    decoratorContext.setMedia(BlogEntryDecoratorContext.EMAIL);
-    BlogEntry blogEntry = BlogEntryDecoratorManager.applyDecorators(comment.getBlogEntry(), decoratorContext);
-    comment = blogEntry.getComment(comment.getId());
+    ContentDecoratorContext context = new ContentDecoratorContext();
+    context.setView(ContentDecoratorContext.DETAIL_VIEW);
+    context.setMedia(ContentDecoratorContext.EMAIL);
+
+    blog.getContentDecoratorChain().decorate(context, comment);
 
     SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy HH:mm:ss z");
     sdf.setTimeZone(blog.getTimeZone());

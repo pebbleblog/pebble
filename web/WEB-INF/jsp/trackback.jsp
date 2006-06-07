@@ -16,7 +16,7 @@
   <%@ include file="/WEB-INF/fragments/trackbackLinks.jspf" %>
 
   <div class="title">
-    <a name="trackback${trackback.id}">${trackback.title}</a>
+    <a name="trackback${trackback.id}"></a>${trackback.title}
   </div>
 
   <div class="metadata">

@@ -49,12 +49,12 @@ public abstract class DAOFactory {
    */
   public abstract BlogEntryDAO getBlogEntryDAO();
 
-//  /**
-//   * Gets a DAO instance responsible for the dao of pages.
-//   *
-//   * @return  a PageDAO instance
-//   */
-//  public abstract PageDAO getPageDAO();
+  /**
+   * Gets a DAO instance responsible for the dao of static pages.
+   *
+   * @return  a StaticPageDAO instance
+   */
+  public abstract StaticPageDAO getStaticPageDAO();
 
   /**
    * Gets a DAO instance responsible for the dao of categories.

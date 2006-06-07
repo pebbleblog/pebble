@@ -7,23 +7,19 @@ import net.sourceforge.pebble.domain.BlogEntry;
  * 
  * @author Simon Brown
  */
-public class DisableResponseDecorator extends BlogEntryDecoratorSupport {
+public class DisableResponseDecorator extends ContentDecoratorSupport {
 
   /**
-   * Executes the logic associated with this decorator.
+   * Decorates the specified blog entry.
    *
-   * @param chain   the chain of BlogEntryDecorators to apply
-   * @param context     the context in which the decoration is running
-   * @throws BlogEntryDecoratorException
-   *          if something goes wrong when running the decorator
+   * @param context   the context in which the decoration is running
+   * @param blogEntry the blog entry to be decorated
    */
-  public void decorate(BlogEntryDecoratorChain chain, BlogEntryDecoratorContext context)
-      throws BlogEntryDecoratorException {
-    BlogEntry blogEntry = context.getBlogEntry();
+  public BlogEntry decorate(ContentDecoratorContext context, BlogEntry blogEntry) {
     blogEntry.setCommentsEnabled(false);
     blogEntry.setTrackBacksEnabled(false);
-    
-    chain.decorate(context);
+
+    return blogEntry;
   }
 
 }

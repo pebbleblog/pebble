@@ -1,39 +1,48 @@
 package net.sourceforge.pebble.plugin.decorator;
 
 import net.sourceforge.pebble.domain.BlogEntry;
+import net.sourceforge.pebble.domain.StaticPage;
 import net.sourceforge.pebble.util.StringUtils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Escapes &lt; and &gt; tags in the blog entry body.
+ * Escapes &lt; and &gt; tags in the excerpt/body of blog entries and
+ * the body of static pages.
  * 
  * @author Simon Brown
  */
-public class EscapeMarkupDecorator extends BlogEntryDecoratorSupport {
+public class EscapeMarkupDecorator extends ContentDecoratorSupport {
 
   private static final String ESCAPE_START_TAG = "<escape>";
   private static final String ESCAPE_END_TAG = "</escape>";
 
   /**
-   * Executes the logic associated with this decorator.
+   * Decorates the specified blog entry.
    *
-   * @param chain   the chain of BlogEntryDecorators to apply
-   * @param context     the context in which the decoration is running
-   * @throws BlogEntryDecoratorException
-   *          if something goes wrong when running the decorator
+   * @param context   the context in which the decoration is running
+   * @param blogEntry the blog entry to be decorated
    */
-  public void decorate(BlogEntryDecoratorChain chain, BlogEntryDecoratorContext context)
-      throws BlogEntryDecoratorException {
-    BlogEntry blogEntry = context.getBlogEntry();
+  public BlogEntry decorate(ContentDecoratorContext context, BlogEntry blogEntry) {
     String escapedBody = escape(blogEntry.getBody());
     blogEntry.setBody(escapedBody);
 
     String escapedExcerpt = escape(blogEntry.getExcerpt());
     blogEntry.setExcerpt(escapedExcerpt);
 
-    chain.decorate(context);
+    return blogEntry;
+  }
+
+  /**
+   * Decorates the specified static page.
+   *
+   * @param context    the context in which the decoration is running
+   * @param staticPage the static page to be decorated
+   */
+  public void decorate(ContentDecoratorContext context, StaticPage staticPage) {
+    String escapedBody = escape(staticPage.getBody());
+    staticPage.setBody(escapedBody);
   }
 
   private String escape(String content) {

@@ -50,8 +50,10 @@ public class EditStaticPageAction extends AbstractEditBlogEntryAction {
    * @return a BlogEntry instance
    */
   protected BlogEntry getBlogEntry(Blog blog, String entryId) {
-    BlogService service = new BlogService();
-    return service.getStaticPage(blog, entryId);
+//    BlogService service = new BlogService();
+//    return service.getStaticPageById(blog, entryId);
+    // todo
+    return null;
   }
 
 }

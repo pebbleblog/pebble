@@ -31,11 +31,11 @@
  */
 package net.sourceforge.pebble.domain;
 
-import net.sourceforge.pebble.comparator.BlogEntryByTitleComparator;
+import net.sourceforge.pebble.comparator.PageBasedContentByTitleComparator;
 import net.sourceforge.pebble.dao.BlogEntryDAO;
 import net.sourceforge.pebble.dao.DAOFactory;
 import net.sourceforge.pebble.dao.PersistenceException;
-import net.sourceforge.pebble.event.PebbleEvent;
+import net.sourceforge.pebble.dao.StaticPageDAO;
 import net.sourceforge.pebble.event.blogentry.BlogEntryEvent;
 import net.sourceforge.pebble.event.comment.CommentEvent;
 import net.sourceforge.pebble.event.trackback.TrackBackEvent;
@@ -220,20 +220,19 @@ public class BlogService {
    * @param blog    the Blog
    * @return  a list of BlogEntry instances
    */
-  public List<BlogEntry> getStaticPages(Blog blog) {
-    List<BlogEntry> blogEntries = new ArrayList<BlogEntry>();
-//
-//    try {
-//      DAOFactory factory = DAOFactory.getConfiguredFactory();
-//      BlogEntryDAO dao = factory.getBlogEntryDAO();
-//      blogEntries.addAll(dao.loadStaticPages(blog));
-//    } catch (PersistenceException e) {
-//      e.printStackTrace();
-//    }
-//
-//    Collections.sort(blogEntries, new BlogEntryByTitleComparator());
+  public List<StaticPage> getStaticPages(Blog blog) {
+    List<StaticPage> staticPages = new ArrayList<StaticPage>();
+    try {
+      DAOFactory factory = DAOFactory.getConfiguredFactory();
+      StaticPageDAO dao = factory.getStaticPageDAO();
+      staticPages.addAll(dao.loadStaticPages(blog));
+    } catch (PersistenceException e) {
+      e.printStackTrace();
+    }
 
-    return blogEntries;
+    Collections.sort(staticPages, new PageBasedContentByTitleComparator());
+
+    return staticPages;
   }
 
   /**
@@ -243,18 +242,27 @@ public class BlogService {
    * @param blog    the Blog
    * @return  a Page instance, or null if the page couldn't be found
    */
-  public BlogEntry getStaticPage(Blog blog, String pageId) {
-//    try {
-//      DAOFactory factory = DAOFactory.getConfiguredFactory();
-//      PageDAO dao = factory.getPageDAO();
-//      Page page = dao.loadPage(blog, pageId);
-//
-//      return page;
-//    } catch (PersistenceException e) {
-//      e.printStackTrace();
-//    }
-//
-    return null;
+  public StaticPage getStaticPagebyId(Blog blog, String pageId) {
+    try {
+      DAOFactory factory = DAOFactory.getConfiguredFactory();
+      StaticPageDAO dao = factory.getStaticPageDAO();
+      return dao.loadStaticPage(blog, pageId);
+    } catch (PersistenceException e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
+
+  /**
+   * Gets the static page with the specified name.
+   *
+   * @param name    the name of the static page
+   * @param blog    the Blog
+   * @return  a StaticPage instance, or null if the page couldn't be found
+   */
+  public StaticPage getStaticPageByName(Blog blog, String name) {
+    String id = blog.getStaticPageIndex().getStaticPage(name);
+    return getStaticPagebyId(blog, id);
   }
 
   /**

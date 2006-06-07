@@ -33,8 +33,7 @@ package net.sourceforge.pebble.web.view.impl;
 
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.domain.BlogEntry;
-import net.sourceforge.pebble.plugin.decorator.BlogEntryDecoratorContext;
-import net.sourceforge.pebble.plugin.decorator.BlogEntryDecoratorManager;
+import net.sourceforge.pebble.plugin.decorator.ContentDecoratorContext;
 import net.sourceforge.pebble.web.view.HtmlView;
 
 /**
@@ -49,10 +48,13 @@ public class BlogEntryFormView extends HtmlView {
    */
   public void prepare() {
     BlogEntry blogEntry = (BlogEntry)getModel().get(Constants.BLOG_ENTRY_KEY);
-    BlogEntryDecoratorContext decoratorContext = new BlogEntryDecoratorContext();
-    decoratorContext.setView(BlogEntryDecoratorContext.PREVIEW);
-    decoratorContext.setMedia(BlogEntryDecoratorContext.HTML_PAGE);
-    getModel().put("previewBlogEntry", BlogEntryDecoratorManager.applyDecorators(blogEntry, decoratorContext));
+    BlogEntry previewBlogEntry = (BlogEntry)blogEntry.clone();
+
+    ContentDecoratorContext context = new ContentDecoratorContext();
+    context.setView(ContentDecoratorContext.PREVIEW);
+    context.setMedia(ContentDecoratorContext.HTML_PAGE);
+    previewBlogEntry = blogEntry.getBlog().getContentDecoratorChain().decorate(context, previewBlogEntry);
+    getModel().put("previewBlogEntry", previewBlogEntry);
   }
 
   /**

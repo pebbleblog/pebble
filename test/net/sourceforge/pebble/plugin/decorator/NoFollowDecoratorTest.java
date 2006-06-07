@@ -43,8 +43,7 @@ import net.sourceforge.pebble.domain.TrackBack;
  */
 public class NoFollowDecoratorTest extends SingleBlogTestCase {
 
-  private BlogEntryDecorator decorator;
-  private BlogEntryDecoratorChain chain;
+  private ContentDecorator decorator;
   private BlogEntry blogEntry;
 
   protected void setUp() throws Exception {
@@ -52,17 +51,14 @@ public class NoFollowDecoratorTest extends SingleBlogTestCase {
 
     decorator = new NoFollowDecorator();
     blogEntry = new BlogEntry(blog);
-
-    chain = new BlogEntryDecoratorChain(null);
   }
 
   /**
    * Tests that the rel="nofollow" link is added to comments.
    */
   public void testNoFollowAddedToComments() throws Exception {
-    BlogEntryDecoratorContext context = new BlogEntryDecoratorContext();
-    context.setView(BlogEntryDecoratorContext.DETAIL_VIEW);
-    context.setBlogEntry(blogEntry);
+    ContentDecoratorContext context = new ContentDecoratorContext();
+    context.setView(ContentDecoratorContext.DETAIL_VIEW);
 
     Comment comment1 = blogEntry.createComment("title1", "body1", "author", "email", "website", "127.0.0.1");
     blogEntry.addComment(comment1);
@@ -71,50 +67,50 @@ public class NoFollowDecoratorTest extends SingleBlogTestCase {
 
     comment1.setBody("<p>Here is some body.</p>");
     comment2.setBody("<p>Here is some body again.</p>");
-    decorator.decorate(chain, context);
+    decorator.decorate(context, blogEntry);
     assertEquals("<p>Here is some body.</p>", comment1.getBody());
     assertEquals("<p>Here is some body again.</p>", comment2.getBody());
 
     comment1.setBody("<p>Here is a <a href=\"http://www.google.com\">a link</a>.</p>");
     comment2.setBody("<p>Here is a <a href=http://www.google.com>a link</a> again.</p>");
-    decorator.decorate(chain, context);
+    decorator.decorate(context, blogEntry);
     assertEquals("<p>Here is a <a href=\"http://www.google.com\" rel=\"nofollow\">a link</a>.</p>", comment1.getBody());
     assertEquals("<p>Here is a <a href=http://www.google.com rel=\"nofollow\">a link</a> again.</p>", comment2.getBody());
 
     comment1.setBody("<p>Here is a <a href=\"ftp://www.google.com\">a link</a>.</p>");
     comment2.setBody("<p>Here is a <a href=\"mailto://www.google.com\">a link</a> again.</p>");
-    decorator.decorate(chain, context);
+    decorator.decorate(context, blogEntry);
     assertEquals("<p>Here is a <a href=\"ftp://www.google.com\" rel=\"nofollow\">a link</a>.</p>", comment1.getBody());
     assertEquals("<p>Here is a <a href=\"mailto://www.google.com\" rel=\"nofollow\">a link</a> again.</p>", comment2.getBody());
 
     comment1.setBody("<p>Here is a <a href=\"http://www.google.com\">a link</a> and <a href=\"http://www.yahoo.com\">another</a>.</p>");
     comment2.setBody("<p>Here is some body again.</p>");
-    decorator.decorate(chain, context);
+    decorator.decorate(context, blogEntry);
     assertEquals("<p>Here is a <a href=\"http://www.google.com\" rel=\"nofollow\">a link</a> and <a href=\"http://www.yahoo.com\" rel=\"nofollow\">another</a>.</p>", comment1.getBody());
     assertEquals("<p>Here is some body again.</p>", comment2.getBody());
 
     // test that we don't add an extra nofollow if one is present already
     comment1.setBody("<p>Here is a <a href=\"http://www.google.com\">a link</a> and <a href=\"http://www.yahoo.com\" rel=\"nofollow\">another</a>.</p>");
-    decorator.decorate(chain, context);
+    decorator.decorate(context, blogEntry);
     assertEquals("<p>Here is a <a href=\"http://www.google.com\" rel=\"nofollow\">a link</a> and <a href=\"http://www.yahoo.com\" rel=\"nofollow\">another</a>.</p>", comment1.getBody());
     comment1.setBody("<p>Here is a <a href=\"http://www.google.com\">a link</a> and <a href=\"http://www.yahoo.com\" rel=\"NOFOLLOW\">another</a>.</p>");
-    decorator.decorate(chain, context);
+    decorator.decorate(context, blogEntry);
     assertEquals("<p>Here is a <a href=\"http://www.google.com\" rel=\"nofollow\">a link</a> and <a href=\"http://www.yahoo.com\" rel=\"NOFOLLOW\">another</a>.</p>", comment1.getBody());
 
     comment1.setBody("<p>Here is a <a target=\"_blank\" href=\"http://www.google.com\">a link</a>.</p>");
-    decorator.decorate(chain, context);
+    decorator.decorate(context, blogEntry);
     assertEquals("<p>Here is a <a target=\"_blank\" href=\"http://www.google.com\" rel=\"nofollow\">a link</a>.</p>", comment1.getBody());
 
     comment1.setBody("<p>Here is a <A HREF=\"http://www.google.com\">a link</A>.</p>");
-    decorator.decorate(chain, context);
+    decorator.decorate(context, blogEntry);
     assertEquals("<p>Here is a <A HREF=\"http://www.google.com\" rel=\"nofollow\">a link</A>.</p>", comment1.getBody());
 
     comment1.setBody("<p>Here is a <a href=\"http://www.google.com\" rel=\"bookmark\">a link</a>.</p>");
-    decorator.decorate(chain, context);
+    decorator.decorate(context, blogEntry);
     assertEquals("<p>Here is a <a href=\"http://www.google.com\" rel=\"bookmark nofollow\">a link</a>.</p>", comment1.getBody());
 
     comment1.setBody("<p>Here is a <a href=\"http://www.google.com\" rel=\"bookmark heading\">a link</a>.</p>");
-    decorator.decorate(chain, context);
+    decorator.decorate(context, blogEntry);
     assertEquals("<p>Here is a <a href=\"http://www.google.com\" rel=\"bookmark heading nofollow\">a link</a>.</p>", comment1.getBody());
   }
 
@@ -122,9 +118,8 @@ public class NoFollowDecoratorTest extends SingleBlogTestCase {
    * Tests that the rel="nofollow" link is added to TrackBacks.
    */
   public void testNoFollowAddedToTrackBacks() throws Exception {
-    BlogEntryDecoratorContext context = new BlogEntryDecoratorContext();
-    context.setView(BlogEntryDecoratorContext.DETAIL_VIEW);
-    context.setBlogEntry(blogEntry);
+    ContentDecoratorContext context = new ContentDecoratorContext();
+    context.setView(ContentDecoratorContext.DETAIL_VIEW);
 
     TrackBack trackBack1 = blogEntry.createTrackBack("title", "excerpt", "url", "blogName", "127.0.0.1");
     blogEntry.addTrackBack(trackBack1);
@@ -133,13 +128,13 @@ public class NoFollowDecoratorTest extends SingleBlogTestCase {
 
     trackBack1.setExcerpt("<p>Here is an excerpt.</p>");
     trackBack2.setExcerpt("<p>Here is an excerpt again.</p>");
-    decorator.decorate(chain, context);
+    decorator.decorate(context, blogEntry);
     assertEquals("<p>Here is an excerpt.</p>", trackBack1.getExcerpt());
     assertEquals("<p>Here is an excerpt again.</p>", trackBack2.getExcerpt());
 
     trackBack1.setExcerpt("<p>Here is a <a href=\"http://www.google.com\">a link</a>.</p>");
     trackBack2.setExcerpt("<p>Here is a <a href=http://www.google.com>a link</a> again.</p>");
-    decorator.decorate(chain, context);
+    decorator.decorate(context, blogEntry);
     assertEquals("<p>Here is a <a href=\"http://www.google.com\" rel=\"nofollow\">a link</a>.</p>", trackBack1.getExcerpt());
     assertEquals("<p>Here is a <a href=http://www.google.com rel=\"nofollow\">a link</a> again.</p>", trackBack2.getExcerpt());
   }

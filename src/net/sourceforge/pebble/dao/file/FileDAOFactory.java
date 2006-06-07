@@ -31,10 +31,7 @@
  */
 package net.sourceforge.pebble.dao.file;
 
-import net.sourceforge.pebble.dao.BlogEntryDAO;
-import net.sourceforge.pebble.dao.CategoryDAO;
-import net.sourceforge.pebble.dao.DAOFactory;
-import net.sourceforge.pebble.dao.RefererFilterDAO;
+import net.sourceforge.pebble.dao.*;
 
 /**
  * Represents a strategy used to load and store blog entries
@@ -45,6 +42,7 @@ import net.sourceforge.pebble.dao.RefererFilterDAO;
 public class FileDAOFactory extends DAOFactory {
 
   private BlogEntryDAO blogEntryDAO;
+  private StaticPageDAO staticPageDAO;
   private CategoryDAO categoryDAO;
   private RefererFilterDAO refererFilterDAO;
 
@@ -53,6 +51,7 @@ public class FileDAOFactory extends DAOFactory {
    */
   public FileDAOFactory() {
     this.blogEntryDAO = new FileBlogEntryDAO();
+    this.staticPageDAO = new FileStaticPageDAO();
     this.categoryDAO = new FileCategoryDAO();
     this.refererFilterDAO = new FileRefererFilterDAO();
   }
@@ -64,6 +63,15 @@ public class FileDAOFactory extends DAOFactory {
    */
   public BlogEntryDAO getBlogEntryDAO() {
     return this.blogEntryDAO;
+  }
+
+  /**
+   * Gets a DAO instance responsible for the dao of static pages.
+   *
+   * @return a StaticPageDAO instance
+   */
+  public StaticPageDAO getStaticPageDAO() {
+    return this.staticPageDAO;
   }
 
   /**

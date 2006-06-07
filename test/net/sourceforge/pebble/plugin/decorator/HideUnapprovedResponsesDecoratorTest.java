@@ -41,7 +41,7 @@ import net.sourceforge.pebble.util.SecurityUtils;
  */
 public class HideUnapprovedResponsesDecoratorTest extends SingleBlogTestCase {
 
-  private BlogEntryDecorator decorator;
+  private ContentDecorator decorator;
 
   protected void setUp() throws Exception {
     super.setUp();
@@ -64,10 +64,8 @@ public class HideUnapprovedResponsesDecoratorTest extends SingleBlogTestCase {
 
     SecurityUtils.runAsAnonymous();
 
-    BlogEntryDecoratorChain chain = new BlogEntryDecoratorChain(null);
-    BlogEntryDecoratorContext context = new BlogEntryDecoratorContext();
-    context.setBlogEntry(blogEntry);
-    decorator.decorate(chain, context);
+    ContentDecoratorContext context = new ContentDecoratorContext();
+    decorator.decorate(context, blogEntry);
     assertEquals(0, blogEntry.getComments().size());
     assertEquals(0, blogEntry.getTrackBacks().size());
   }
@@ -89,10 +87,8 @@ public class HideUnapprovedResponsesDecoratorTest extends SingleBlogTestCase {
     SecurityUtils.runAsBlogContributor();
     blog.setProperty(Blog.BLOG_CONTRIBUTORS_KEY, "some_contributor");
 
-    BlogEntryDecoratorChain chain = new BlogEntryDecoratorChain(null);
-    BlogEntryDecoratorContext context = new BlogEntryDecoratorContext();
-    context.setBlogEntry(blogEntry);
-    decorator.decorate(chain, context);
+    ContentDecoratorContext context = new ContentDecoratorContext();
+    decorator.decorate(context, blogEntry);
     assertEquals(0, blogEntry.getComments().size());
     assertEquals(0, blogEntry.getTrackBacks().size());
   }
@@ -110,13 +106,11 @@ public class HideUnapprovedResponsesDecoratorTest extends SingleBlogTestCase {
     trackBack.setPending();
     blogEntry.addTrackBack(trackBack);
 
-    BlogEntryDecoratorChain chain = new BlogEntryDecoratorChain(null);
-    BlogEntryDecoratorContext context = new BlogEntryDecoratorContext();
-    context.setBlogEntry(blogEntry);
+    ContentDecoratorContext context = new ContentDecoratorContext();
 
     SecurityUtils.runAsBlogContributor();
 
-    decorator.decorate(chain, context);
+    decorator.decorate(context, blogEntry);
     assertEquals(1, blogEntry.getComments().size());
     assertEquals(1, blogEntry.getTrackBacks().size());
   }

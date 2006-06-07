@@ -16,7 +16,7 @@
   <%@ include file="/WEB-INF/fragments/commentLinks.jspf" %>
 
   <div class="title">
-    <a name="comment${comment.id}">${comment.title}</a>
+    <a name="comment${comment.id}"></a>${comment.title}
   </div>
 
   <div class="metadata">

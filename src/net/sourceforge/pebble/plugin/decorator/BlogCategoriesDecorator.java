@@ -12,21 +12,16 @@ import java.util.ResourceBundle;
  * 
  * @author Simon Brown
  */
-public class BlogCategoriesDecorator extends BlogEntryDecoratorSupport {
+public class BlogCategoriesDecorator extends ContentDecoratorSupport {
 
   /**
-   * Executes the logic associated with this decorator.
+   * Decorates the specified blog entry.
    *
-   * @param chain   the chain of BlogEntryDecorators to apply
-   * @param context     the context in which the decoration is running
-   * @throws net.sourceforge.pebble.plugin.decorator.BlogEntryDecoratorException
-   *          if something goes wrong when running the decorator
+   * @param context   the context in which the decoration is running
+   * @param blogEntry the blog entry to be decorated
    */
-  public void decorate(BlogEntryDecoratorChain chain, BlogEntryDecoratorContext context)
-      throws BlogEntryDecoratorException {
-
-    if (context.getMedia() == BlogEntryDecoratorContext.HTML_PAGE) {
-      BlogEntry blogEntry = context.getBlogEntry();
+  public BlogEntry decorate(ContentDecoratorContext context, BlogEntry blogEntry) {
+  if (context.getMedia() == ContentDecoratorContext.HTML_PAGE) {
       ResourceBundle bundle = ResourceBundle.getBundle("resources", blogEntry.getBlog().getLocale());
       Iterator categories = blogEntry.getCategories().iterator();
 
@@ -63,7 +58,7 @@ public class BlogCategoriesDecorator extends BlogEntryDecoratorSupport {
       }
     }
 
-    chain.decorate(context);
+    return blogEntry;
   }
 
 }
