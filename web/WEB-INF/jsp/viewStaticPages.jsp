@@ -1,7 +1,7 @@
 <div class="contentItem">
 
   <div class="contentItemLinks">
-    <a href="./help/static-pages.html" target="_blank">Help</a>
+    <a href="./help/staticPages.html" target="_blank">Help</a>
   </div>
 
   <div class="title">Static pages</div>
@@ -20,10 +20,10 @@
           </c:otherwise>
         </c:choose>
         <td width="2%">
-          <input type="checkbox" name="entry" value="${staticPage.id}" />
+          <input type="checkbox" name="page" value="${staticPage.id}" />
         </td>
         <td>
-          <a href="editStaticPage.secureaction?entry=${staticPage.id}#form">${staticPage.title}</a>
+          <a href="editStaticPage.secureaction?page=${staticPage.id}#form">${staticPage.title}</a>
         </td>
         <td align="right">
         </td>
@@ -36,8 +36,8 @@
     <table width="99%" cellspacing="0" cellpadding="0">
       <tr>
         <td align="left">
-          <input type="button" value="Check All" onclick="checkAll(document.staticPagesForm.entry)" />
-          <input type="button" value="Uncheck All" onclick="uncheckAll(document.staticPagesForm.entry)" />
+          <input type="button" value="Check All" onclick="checkAll(document.staticPagesForm.page)" />
+          <input type="button" value="Uncheck All" onclick="uncheckAll(document.staticPagesForm.page)" />
         </td>
         <td align="right">
           <input type="submit" value="Remove" />

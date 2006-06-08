@@ -32,12 +32,10 @@
 package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
-import net.sourceforge.pebble.domain.BlogEntry;
-import net.sourceforge.pebble.domain.BlogException;
-import net.sourceforge.pebble.domain.Blog;
-import net.sourceforge.pebble.domain.BlogService;
+import net.sourceforge.pebble.domain.*;
 import net.sourceforge.pebble.web.view.ForwardView;
 import net.sourceforge.pebble.web.view.View;
+import net.sourceforge.pebble.web.view.RedirectView;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -59,23 +57,23 @@ public class RemoveStaticPagesAction extends SecureAction {
    */
   public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
-    String ids[] = request.getParameterValues("entry");
+    String ids[] = request.getParameterValues("page");
     BlogService service = new BlogService();
 
-//    if (ids != null) {
-//      for (String id : ids) {
-//        BlogEntry blogEntry = service.getStaticPage(blog, id);
-//        if (blogEntry != null) {
-//          try {
-//            service.removeStaticPage(blogEntry);
-//          } catch (BlogException be) {
-//            throw new ServletException(be);
-//          }
-//        }
-//      }
-//    }
+    if (ids != null) {
+      for (String id : ids) {
+        StaticPage staticPage = service.getStaticPageById(blog, id);
+        if (staticPage != null) {
+          try {
+            service.removeStaticPage(staticPage);
+          } catch (BlogException be) {
+            throw new ServletException(be);
+          }
+        }
+      }
+    }
 
-    return new ForwardView("/viewStaticPages.secureaction");
+    return new RedirectView(blog.getUrl() + "viewStaticPages.secureaction");
   }
 
   /**

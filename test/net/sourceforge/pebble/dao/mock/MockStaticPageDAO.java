@@ -42,5 +42,26 @@ public class MockStaticPageDAO implements StaticPageDAO {
     return pages.get(pageId);
   }
 
+  /**
+   * Stores the specified static page.
+   *
+   * @param staticPage the static page to store
+   * @throws net.sourceforge.pebble.dao.PersistenceException
+   *          if something goes wrong storing the static page
+   */
+  public void storeStaticPage(StaticPage staticPage) throws PersistenceException {
+    pages.put(staticPage.getId(), staticPage);
+  }
+
+  /**
+   * Removes the specified static page.
+   *
+   * @param staticPage the static page to remove
+   * @throws net.sourceforge.pebble.dao.PersistenceException
+   *          if something goes wrong removing the page
+   */
+  public void removeStaticPage(StaticPage staticPage) throws PersistenceException {
+    pages.remove(staticPage.getId());
+  }
 
 }

@@ -1,0 +1,75 @@
+<c:set var="originalStaticPage" scope="request" value="${staticPage}" />
+<c:set var="staticPage" scope="request" value="${previewStaticPage}" />
+<c:set var="displayMode" scope="request" value="preview" />
+
+<a name="preview"></a>
+<jsp:include page="staticPage.jsp" />
+
+<c:set var="staticPage" scope="request" value="${originalStaticPage}" />
+
+<a name="form"></a>
+<div class="contentItem">
+
+  <div class="contentItemLinks">
+    <a href="./help/staticPages.html" target="_blank">Help</a>
+  </div>
+
+  <div class="title">Static page</div>
+  <div class="subtitle">&nbsp;</div>
+
+  <div class="contentItemBody">
+    <form name="editStaticPage" action="saveStaticPage.secureaction#preview" method="POST" accept-charset="${blog.characterEncoding}">
+    <input type="hidden" name="page" value="${staticPage.id}" />
+    <input type="hidden" name="persistent" value="${staticPage.persistent}" />
+
+    <c:if test="${not empty validationContext.errors}">
+    <div class="validationError">
+      <b>${validationContext.numberOfErrors} error(s)</b>
+      <ul>
+      <c:forEach var="error" items="${validationContext.errors}">
+        <li>${error.message}</li>
+      </c:forEach>
+      </ul>
+    </div>
+    </c:if>
+
+    <table width="99%" cellspacing="0" cellpadding="4">
+      <tr>
+        <td valign="top"><b>Name</b></td>
+        <td><c:out value="${blog.url}pages/"/><input type="text" name="name" size="20" value="${staticPage.name}">.html</td>
+      </tr>
+
+      <tr>
+        <td valign="top"><b>Title</b></td>
+        <td><input type="text" name="title" size="60" value="${staticPage.title}"></td>
+      </tr>
+
+      <tr>
+        <td valign="top"><b>Subtitle</b></td>
+        <td><input type="text" name="subtitle" size="60" value="${staticPage.subtitle}"></td>
+      </tr>
+
+      <tr>
+        <td valign="top"><b>Body</b></td>
+        <td><textarea name="body" rows="40" cols="60"><c:out value="${staticPage.body}" escapeXml="true"/></textarea></td>
+      </tr>
+
+      <tr>
+        <td valign="top"><b>Original permalink</b></td>
+        <td>
+          <input type="text" name="originalPermalink" size="60" value="${staticPage.originalPermalink}">
+          <div class="small">(optional, this will become the permalink for your static page)</div>
+        </td>
+      </tr>
+
+      <tr>
+        <td colspan="2" align="right">
+          <input name="submit" type="submit" Value="Preview" />
+          <input name="submit" type="submit" Value="Save" />
+        </td>
+      </tr>
+    </table>
+    </form>
+  </div>
+
+</div>

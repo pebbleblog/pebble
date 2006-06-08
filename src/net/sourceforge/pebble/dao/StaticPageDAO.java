@@ -64,4 +64,20 @@ public interface StaticPageDAO {
    */
   public StaticPage loadStaticPage(Blog blog, String pageId) throws PersistenceException;
 
+  /**
+   * Stores the specified static page.
+   *
+   * @param staticPage  the static page to store
+   * @throws PersistenceException   if something goes wrong storing the static page
+   */
+  public void storeStaticPage(StaticPage staticPage) throws PersistenceException;
+
+  /**
+   * Removes the specified static page.
+   *
+   * @param staticPage    the static page to remove
+   * @throws PersistenceException   if something goes wrong removing the page
+   */
+  public void removeStaticPage(StaticPage staticPage) throws PersistenceException;
+
 }

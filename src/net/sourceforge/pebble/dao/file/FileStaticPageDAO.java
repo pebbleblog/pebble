@@ -1,6 +1,5 @@
 package net.sourceforge.pebble.dao.file;
 
-import net.sourceforge.pebble.dao.BlogEntryDAO;
 import net.sourceforge.pebble.dao.PersistenceException;
 import net.sourceforge.pebble.dao.StaticPageDAO;
 import net.sourceforge.pebble.domain.*;
@@ -22,7 +21,6 @@ import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.*;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -102,6 +100,35 @@ public class FileStaticPageDAO implements StaticPageDAO {
     File path = new File(getPath(blog, pageId));
     File file = new File(path, pageId + ".xml");
     return loadStaticPage(blog, file);
+  }
+
+  /**
+   * Stores the specified static page.
+   *
+   * @param staticPage the static page to store
+   * @throws net.sourceforge.pebble.dao.PersistenceException
+   *          if something goes wrong storing the static page
+   */
+  public void storeStaticPage(StaticPage staticPage) throws PersistenceException {
+    // todo
+  }
+
+  /**
+   * Removes the specified static page.
+   *
+   * @param staticPage the static page to remove
+   * @throws net.sourceforge.pebble.dao.PersistenceException
+   *          if something goes wrong removing the page
+   */
+  public void removeStaticPage(StaticPage staticPage) throws PersistenceException {
+    File path = new File(getPath(staticPage.getBlog(), staticPage.getId()));
+    File file = new File(path, staticPage.getId() + ".xml");
+    log.debug("Removing " + staticPage.getGuid());
+
+    boolean success = file.delete();
+    if (!success) {
+      throw new PersistenceException("Deletion of static page" + staticPage.getGuid() + " failed");
+    }
   }
 
   /**

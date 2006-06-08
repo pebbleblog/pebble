@@ -125,7 +125,6 @@ public class BlogService {
     DAOFactory factory = DAOFactory.getConfiguredFactory();
     BlogEntryDAO dao = factory.getBlogEntryDAO();
     Blog blog = blogEntry.getBlog();
-//    blogEntry.setEventsEnabled(false);
 
     synchronized (blog) {
       try {
@@ -242,11 +241,17 @@ public class BlogService {
    * @param blog    the Blog
    * @return  a Page instance, or null if the page couldn't be found
    */
-  public StaticPage getStaticPagebyId(Blog blog, String pageId) {
+  public StaticPage getStaticPageById(Blog blog, String pageId) {
     try {
       DAOFactory factory = DAOFactory.getConfiguredFactory();
       StaticPageDAO dao = factory.getStaticPageDAO();
-      return dao.loadStaticPage(blog, pageId);
+
+      StaticPage staticPage = dao.loadStaticPage(blog, pageId);
+      if (staticPage != null) {
+        staticPage.setPersistent(true);
+      }
+
+      return staticPage;
     } catch (PersistenceException e) {
       e.printStackTrace();
       return null;
@@ -262,50 +267,51 @@ public class BlogService {
    */
   public StaticPage getStaticPageByName(Blog blog, String name) {
     String id = blog.getStaticPageIndex().getStaticPage(name);
-    return getStaticPagebyId(blog, id);
+    return getStaticPageById(blog, id);
   }
 
   /**
    * Puts the static page.
    */
-  public void putStaticPage(BlogEntry blogEntry) throws BlogException {
-//    Blog blog = blogEntry.getBlog();
-//
-//    synchronized (blog) {
-//      try {
-//        BlogEntry be = getStaticPage(blog, blogEntry.getId());
-//        if (!blogEntry.isPersistent() && be != null) {
-//          // the blog entry is new but one exists with the same ID already
-//          // - increment the ID and try again
-//          blogEntry.setDate(new Date(blogEntry.getDate().getTime() + 1));
-//          putStaticPage(blogEntry);
-//        } else {
-//          DAOFactory factory = DAOFactory.getConfiguredFactory();
-//          BlogEntryDAO dao = factory.getBlogEntryDAO();
-//          dao.storeBlogEntry(blogEntry);
-//
-//          blogEntry.getBlog().getSearchIndex().index(blogEntry);
-//          blogEntry.getBlog().getStaticPageIndex().index(blogEntry);
-//        }
-//      } catch (PersistenceException pe) {
-//      }
-//    }
+  public void putStaticPage(StaticPage staticPage) throws BlogException {
+    DAOFactory factory = DAOFactory.getConfiguredFactory();
+    StaticPageDAO dao = factory.getStaticPageDAO();
+    Blog blog = staticPage.getBlog();
+
+    synchronized (blog) {
+      try {
+        StaticPage sp = getStaticPageById(blog, staticPage.getId());
+
+        if (!staticPage.isPersistent() && sp != null) {
+          // the blog entry is new but one exists with the same ID already
+          // - increment the date/ID and try again
+          staticPage.setDate(new Date(staticPage.getDate().getTime() + 1));
+          putStaticPage(staticPage);
+        } else {
+          dao.storeStaticPage(staticPage);
+        }
+
+        staticPage.setPersistent(true);
+      } catch (PersistenceException pe) {
+        pe.printStackTrace();
+      }
+    }
   }
 
   /**
    * Removes a static page.
    */
-  public void removeStaticPage(BlogEntry blogEntry) throws BlogException {
-//    try {
-//      DAOFactory factory = DAOFactory.getConfiguredFactory();
-//      BlogEntryDAO dao = factory.getBlogEntryDAO();
-//      dao.removeBlogEntry(blogEntry);
-//
-//      blogEntry.getBlog().getSearchIndex().unindex(blogEntry);
-//      blogEntry.getBlog().getStaticPageIndex().unindex(blogEntry);
-//
-//    } catch (PersistenceException pe) {
-//    }
+  public void removeStaticPage(StaticPage staticPage) throws BlogException {
+    try {
+      DAOFactory factory = DAOFactory.getConfiguredFactory();
+      StaticPageDAO dao = factory.getStaticPageDAO();
+      dao.removeStaticPage(staticPage);
+
+      staticPage.getBlog().getSearchIndex().unindex(staticPage);
+      staticPage.getBlog().getStaticPageIndex().unindex(staticPage);
+
+    } catch (PersistenceException pe) {
+    }
   }
 
 }

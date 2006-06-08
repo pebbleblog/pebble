@@ -110,25 +110,25 @@ public class StaticPage extends PageBasedContent {
     return getGuid().equals(staticPage.getGuid());
   }
 
-//  /**
-//   * Creates and returns a copy of this object.
-//   *
-//   * @return a clone of this instance.
-//   * @see Cloneable
-//   */
-//  public Object clone() {
-//    Page entry = new Page(blog);
-//    entry.setEventsEnabled(false);
-//    entry.setTitle(title);
-//    entry.setSubtitle(subtitle);
-//    entry.setBody(body);
-//    entry.setDate(date);
-//    entry.setState(getState());
-//    entry.setAuthor(author);
-//    entry.setOriginalPermalink(originalPermalink);
-//    entry.setStaticName(staticName);
-//
-//    return entry;
-//  }
+  /**
+   * Creates and returns a copy of this object.
+   *
+   * @return a clone of this instance.
+   * @see Cloneable
+   */
+  public Object clone() {
+    StaticPage page = new StaticPage(getBlog());
+    page.setEventsEnabled(false);
+    page.setTitle(getTitle());
+    page.setSubtitle(getSubtitle());
+    page.setBody(getBody());
+    page.setDate(getDate());
+    page.setState(getState());
+    page.setAuthor(getAuthor());
+    page.setOriginalPermalink(getOriginalPermalink());
+    page.setName(getName());
+
+    return page;
+  }
 
 }

@@ -3,8 +3,6 @@
   <div class="subtitle">&nbsp;</div>
 
   <div class="contentItemBody">
-    <p><b>Please note, static page functionality described here is disabled in this release, but will reappear before the final 2.0 release.</b></p>
-
     <p>
       Although most of the content on a blog consists of blog entries, there may be times where you'd like to include some static content.
       For example, you might want to have an "About me" page, or a page containing links to other sites that you find useful. Although you could have a separate web application serving up this content, Pebble provides a simple way to manage small amounts of static content with the following benefits.

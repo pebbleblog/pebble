@@ -32,13 +32,12 @@
 package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
-import net.sourceforge.pebble.domain.Blog;
-import net.sourceforge.pebble.domain.BlogEntry;
-import net.sourceforge.pebble.domain.BlogException;
-import net.sourceforge.pebble.domain.BlogService;
+import net.sourceforge.pebble.domain.*;
 import net.sourceforge.pebble.web.view.ForwardView;
 import net.sourceforge.pebble.web.view.NotFoundView;
 import net.sourceforge.pebble.web.view.View;
+import net.sourceforge.pebble.web.view.RedirectView;
+import net.sourceforge.pebble.web.view.impl.PublishBlogEntryView;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -64,29 +63,31 @@ public class ManageStaticPageAction extends SecureAction {
    * @return the name of the next view
    */
   public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
-//    Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
-//    String id = request.getParameter("entry");
-//    String confirm = request.getParameter("confirm");
-//    String submit = request.getParameter("submit");
-//
-//    BlogService service = new BlogService();
-//    BlogEntry blogEntry = service.getStaticPage(blog, id);
-//
-//    if (blogEntry == null) {
-//      return new NotFoundView();
-//    }
-//
-//    if (submit.equals("Edit")) {
-//      return new ForwardView("/editStaticPage.secureaction?entry=" + id);
-//    } else if (submit.equalsIgnoreCase("Remove") && confirm != null && confirm.equals("true")) {
-//      try {
-//        service.removeStaticPage(blogEntry);
-//      } catch (BlogException be) {
-//        throw new ServletException(be);
-//      }
-//    }
-//
-    return new ForwardView("/viewStaticPages.secureaction");
+    Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
+    String id = request.getParameter("page");
+    String confirm = request.getParameter("confirm");
+    String submit = request.getParameter("submit");
+
+    BlogService service = new BlogService();
+    StaticPage staticPage = service.getStaticPageById(blog, id);
+
+    if (staticPage == null) {
+      return new NotFoundView();
+    }
+
+    if (submit.equals("Edit")) {
+      return new ForwardView("/editStaticPage.secureaction?page=" + id);
+    } else if (submit.equalsIgnoreCase("Remove") && confirm != null && confirm.equals("true")) {
+      try {
+        service.removeStaticPage(staticPage);
+
+        return new RedirectView(blog.getUrl() + "viewStaticPages.secureaction");
+      } catch (BlogException be) {
+        throw new ServletException(be);
+      }
+    }
+
+    return new RedirectView(staticPage.getLocalPermalink());
   }
 
   /**

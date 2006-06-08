@@ -32,16 +32,14 @@
 package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
-import net.sourceforge.pebble.domain.Blog;
-import net.sourceforge.pebble.domain.BlogEntry;
-import net.sourceforge.pebble.domain.BlogException;
-import net.sourceforge.pebble.domain.BlogService;
+import net.sourceforge.pebble.domain.*;
 import net.sourceforge.pebble.util.SecurityUtils;
 import net.sourceforge.pebble.util.StringUtils;
 import net.sourceforge.pebble.web.validation.ValidationContext;
 import net.sourceforge.pebble.web.view.RedirectView;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.impl.BlogEntryFormView;
+import net.sourceforge.pebble.web.view.impl.StaticPageFormView;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -80,77 +78,73 @@ public class SaveStaticPageAction extends SecureAction {
   }
 
   private View previewPage(HttpServletRequest request) {
-    BlogEntry blogEntry = getBlogEntry(request);
+    StaticPage staticPage = getStaticPage(request);
 
     // we don't want to actually edit the original whilst previewing
-    blogEntry = (BlogEntry)blogEntry.clone();
-    populateBlogEntry(blogEntry, request);
+    staticPage = (StaticPage)staticPage.clone();
+    populateStaticPage(staticPage, request);
 
     ValidationContext validationContext = new ValidationContext();
-//    blogEntry.validate(validationContext);
+    staticPage.validate(validationContext);
     getModel().put("validationContext", validationContext);
-    getModel().put(Constants.BLOG_ENTRY_KEY, blogEntry);
+    getModel().put(Constants.STATIC_PAGE_KEY, staticPage);
 
-    return new BlogEntryFormView();
+    return new StaticPageFormView();
   }
 
   private View savePage(HttpServletRequest request) {
-    BlogEntry blogEntry = getBlogEntry(request);
-    populateBlogEntry(blogEntry, request);
+    StaticPage staticPage = getStaticPage(request);
+    populateStaticPage(staticPage, request);
 
     ValidationContext context = new ValidationContext();
-//    blogEntry.validate(context);
+    populateStaticPage(staticPage, request);
+    getModel().put(Constants.STATIC_PAGE_KEY, staticPage);
 
     if (context.hasErrors())  {
       getModel().put("validationContext", context);
-      getModel().put(Constants.BLOG_ENTRY_KEY, blogEntry);
       return new BlogEntryFormView();
     } else {
       try {
         BlogService service = new BlogService();
-        service.putStaticPage(blogEntry);
+        service.putStaticPage(staticPage);
       } catch (BlogException be) {
         log.error(be.getMessage(), be);
         be.printStackTrace();
 
-        getModel().put(Constants.BLOG_ENTRY_KEY, blogEntry);
-        return new BlogEntryFormView();
+        return new StaticPageFormView();
       }
 
-      return new RedirectView(blogEntry.getLocalPermalink());
+      return new RedirectView(staticPage.getLocalPermalink());
     }
   }
 
-  private BlogEntry getBlogEntry(HttpServletRequest request) {
+  private StaticPage getStaticPage(HttpServletRequest request) {
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
-    BlogEntry blogEntry = null;
-    String id = request.getParameter("entry");
+    String id = request.getParameter("page");
     String persistent = request.getParameter("persistent");
 
-//    if (persistent != null && persistent.equalsIgnoreCase("true")) {
-//      BlogService service = new BlogService();
-//      blogEntry = service.getStaticPage(blog, id);
-//    } else {
-////      blogEntry = blog.getBlogForToday().createStaticPage();
-//    }
-
-    return blogEntry;
+    if (persistent != null && persistent.equalsIgnoreCase("true")) {
+      BlogService service = new BlogService();
+      return service.getStaticPageById(blog, id);
+    } else {
+      return new StaticPage(blog);
+    }
   }
 
-  private void populateBlogEntry(BlogEntry blogEntry, HttpServletRequest request) {
+  private void populateStaticPage(StaticPage staticPage, HttpServletRequest request) {
     String title = request.getParameter("title");
     String subtitle = request.getParameter("subtitle");
     String body = StringUtils.filterNewlines(request.getParameter("body"));
     String originalPermalink = request.getParameter("originalPermalink");
-    String staticName = request.getParameter("staticName");
+    String name = request.getParameter("name");
     String author = SecurityUtils.getUsername();
 
-    blogEntry.setTitle(title);
-    blogEntry.setSubtitle(subtitle);
-    blogEntry.setBody(body);
-    blogEntry.setAuthor(author);
-    blogEntry.setOriginalPermalink(originalPermalink);
-//    blogEntry.setStaticName(staticName);
+    staticPage.setTitle(title);
+    staticPage.setSubtitle(subtitle);
+    staticPage.setBody(body);
+    staticPage.setAuthor(author);
+    staticPage.setOriginalPermalink(originalPermalink);
+    staticPage.setName(name);
   }
 
   /**

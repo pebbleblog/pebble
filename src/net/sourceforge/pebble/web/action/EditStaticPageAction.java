@@ -31,9 +31,17 @@
  */
 package net.sourceforge.pebble.web.action;
 
-import net.sourceforge.pebble.domain.BlogEntry;
+import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.domain.BlogService;
+import net.sourceforge.pebble.domain.StaticPage;
+import net.sourceforge.pebble.web.view.NotFoundView;
+import net.sourceforge.pebble.web.view.View;
+import net.sourceforge.pebble.web.view.impl.StaticPageFormView;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Edits an existing static page. This is called to populate a HTML
@@ -41,19 +49,36 @@ import net.sourceforge.pebble.domain.BlogService;
  *
  * @author    Simon Brown
  */
-public class EditStaticPageAction extends AbstractEditBlogEntryAction {
+public class EditStaticPageAction extends SecureAction {
 
   /**
-   * Finds the blog entry that is to be edited.
+   * Peforms the processing associated with this action.
    *
-   * @param blog the Blog that owns the entry
-   * @return a BlogEntry instance
+   * @param request  the HttpServletRequest instance
+   * @param response the HttpServletResponse instance
+   * @return the name of the next view
    */
-  protected BlogEntry getBlogEntry(Blog blog, String entryId) {
-//    BlogService service = new BlogService();
-//    return service.getStaticPageById(blog, entryId);
-    // todo
-    return null;
+  public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
+    Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
+    BlogService service = new BlogService();
+    StaticPage staticPage = service.getStaticPageById(blog, request.getParameter("page"));
+
+    if (staticPage == null) {
+      return new NotFoundView();
+    } else {
+      getModel().put(Constants.STATIC_PAGE_KEY, staticPage);
+      return new StaticPageFormView();
+    }
+  }
+
+  /**
+   * Gets a list of all roles that are allowed to access this action.
+   *
+   * @return  an array of Strings representing role names
+   * @param request
+   */
+  public String[] getRoles(HttpServletRequest request) {
+    return new String[]{Constants.BLOG_CONTRIBUTOR_ROLE};
   }
 
 }

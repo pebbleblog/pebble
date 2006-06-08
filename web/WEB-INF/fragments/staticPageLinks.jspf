@@ -2,8 +2,8 @@
   <c:if test="${displayMode != 'preview'}">
 
   <pebble:isBlogContributor>
-  <form name="blogEntryForm" action="manageStaticPage.secureaction" method="post">
-    <input type="hidden" name="entry" value="${blogEntry.id}" />
+  <form name="staticPageForm" action="manageStaticPage.secureaction" method="post">
+    <input type="hidden" name="page" value="${staticPage.id}" />
     <input type="submit" name="submit" value="Edit" />
     <input type="checkbox" name="confirm" value="true" />
     <input type="submit" name="submit" value="Remove" />

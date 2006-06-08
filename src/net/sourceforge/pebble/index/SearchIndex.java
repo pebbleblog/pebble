@@ -71,11 +71,6 @@ public class SearchIndex {
 
   public SearchIndex(Blog blog) {
     this.blog = blog;
-
-//    File searchDirectory = new File(blog.getSearchIndexDirectory());
-//    if (!searchDirectory.exists()) {
-//      clear();
-//    }
   }
 
   /**
@@ -165,6 +160,25 @@ public class SearchIndex {
         log.debug("Attempting to delete index for " + blogEntry.getTitle());
         IndexReader reader = IndexReader.open(blog.getSearchIndexDirectory());
         Term term = new Term("id", blogEntry.getId());
+        log.debug("Deleted " + reader.delete(term) + " document(s) from the index");
+        reader.close();
+      }
+    } catch (Exception e) {
+      log.error(e.getMessage(), e);
+    }
+  }
+
+  /**
+   * Removes the index for a single blog entry to be removed.
+   *
+   * @param staticPage    the StaticPage instance to be removed
+   */
+  public void unindex(StaticPage staticPage) {
+    try {
+      synchronized (blog) {
+        log.debug("Attempting to delete index for " + staticPage.getTitle());
+        IndexReader reader = IndexReader.open(blog.getSearchIndexDirectory());
+        Term term = new Term("id", staticPage.getId());
         log.debug("Deleted " + reader.delete(term) + " document(s) from the index");
         reader.close();
       }

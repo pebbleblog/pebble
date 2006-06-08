@@ -29,61 +29,51 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package net.sourceforge.pebble.web.action;
+package net.sourceforge.pebble.web.view.impl;
 
 import net.sourceforge.pebble.Constants;
-import net.sourceforge.pebble.domain.BlogEntry;
-import net.sourceforge.pebble.domain.Blog;
-import net.sourceforge.pebble.web.view.NotFoundView;
-import net.sourceforge.pebble.web.view.View;
-import net.sourceforge.pebble.web.view.impl.BlogEntryFormView;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import net.sourceforge.pebble.domain.StaticPage;
+import net.sourceforge.pebble.plugin.decorator.ContentDecoratorContext;
+import net.sourceforge.pebble.web.view.HtmlView;
 
 /**
- * Superclass for actions that allow an existing blog entry to be edited.
+ * Represents the static page form.
  *
  * @author    Simon Brown
  */
-public abstract class AbstractEditBlogEntryAction extends SecureAction {
+public class StaticPageFormView extends HtmlView {
 
   /**
-   * Peforms the processing associated with this action.
-   *
-   * @param request  the HttpServletRequest instance
-   * @param response the HttpServletResponse instance
-   * @return the name of the next view
+   * Prepares the view for presentation.
    */
-  public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
-    Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
-    BlogEntry blogEntry = getBlogEntry(blog, request.getParameter("entry"));
+  public void prepare() {
+    StaticPage staticPage = (StaticPage)getModel().get(Constants.STATIC_PAGE_KEY);
+    StaticPage previewStaticPage = (StaticPage)staticPage.clone();
 
-    if (blogEntry == null) {
-      return new NotFoundView();
-    } else {
-      getModel().put(Constants.BLOG_ENTRY_KEY, blogEntry);
-      return new BlogEntryFormView();
-    }
+    ContentDecoratorContext context = new ContentDecoratorContext();
+    context.setView(ContentDecoratorContext.PREVIEW);
+    context.setMedia(ContentDecoratorContext.HTML_PAGE);
+    staticPage.getBlog().getContentDecoratorChain().decorate(context, previewStaticPage);
+    getModel().put("previewStaticPage", previewStaticPage);
   }
 
   /**
-   * Finds the blog entry that is to be edited.
+   * Gets the title of this view.
    *
-   * @param blog    the Blog that owns the entry
-   * @return    a BlogEntry instance
+   * @return the title as a String
    */
-  protected abstract BlogEntry getBlogEntry(Blog blog, String entryId);
+  public String getTitle() {
+    StaticPage staticPage = (StaticPage)getModel().get(Constants.STATIC_PAGE_KEY);
+    return staticPage.getTitle();
+  }
 
   /**
-   * Gets a list of all roles that are allowed to access this action.
+   * Gets the URI that this view represents.
    *
-   * @return  an array of Strings representing role names
-   * @param request
+   * @return the URI as a String
    */
-  public String[] getRoles(HttpServletRequest request) {
-    return new String[]{Constants.BLOG_CONTRIBUTOR_ROLE};
+  public String getUri() {
+    return "/WEB-INF/jsp/staticPageForm.jsp";
   }
 
 }
