@@ -31,10 +31,10 @@
  */
 package net.sourceforge.pebble.event;
 
-import net.sourceforge.pebble.event.blog.BlogListener;
-import net.sourceforge.pebble.event.blogentry.BlogEntryListener;
-import net.sourceforge.pebble.event.comment.CommentListener;
-import net.sourceforge.pebble.event.trackback.TrackBackListener;
+import net.sourceforge.pebble.api.event.blog.BlogListener;
+import net.sourceforge.pebble.api.event.blogentry.BlogEntryListener;
+import net.sourceforge.pebble.api.event.comment.CommentListener;
+import net.sourceforge.pebble.api.event.trackback.TrackBackListener;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 

@@ -31,18 +31,17 @@
  */
 package net.sourceforge.pebble.event;
 
-import net.sourceforge.pebble.event.blog.BlogEvent;
-import net.sourceforge.pebble.event.blog.BlogListener;
-import net.sourceforge.pebble.event.blogentry.BlogEntryEvent;
-import net.sourceforge.pebble.event.blogentry.BlogEntryListener;
-import net.sourceforge.pebble.event.comment.CommentEvent;
-import net.sourceforge.pebble.event.comment.CommentListener;
-import net.sourceforge.pebble.event.trackback.TrackBackEvent;
-import net.sourceforge.pebble.event.trackback.TrackBackListener;
-import net.sourceforge.pebble.domain.BlogEntry;
+import net.sourceforge.pebble.api.event.blog.BlogEvent;
+import net.sourceforge.pebble.api.event.blog.BlogListener;
+import net.sourceforge.pebble.api.event.blogentry.BlogEntryEvent;
+import net.sourceforge.pebble.api.event.blogentry.BlogEntryListener;
+import net.sourceforge.pebble.api.event.comment.CommentEvent;
+import net.sourceforge.pebble.api.event.comment.CommentListener;
+import net.sourceforge.pebble.api.event.EventDispatcher;
+import net.sourceforge.pebble.api.event.trackback.TrackBackEvent;
+import net.sourceforge.pebble.api.event.trackback.TrackBackListener;
 
 import java.util.Iterator;
-import java.util.List;
 
 /**
  * Responsible for dispatching events to registered listeners, which are
@@ -79,7 +78,7 @@ public class DefaultEventDispatcher extends EventDispatcher {
    *
    * @param event   the BlogEntryEvent instance
    */
-  void fireBlogEntryEvent(BlogEntryEvent event) {
+  public void fireBlogEntryEvent(BlogEntryEvent event) {
     Iterator it = getEventListenerList().getBlogEntryListeners().iterator();
     while (it.hasNext()) {
       BlogEntryListener listener = (BlogEntryListener)it.next();
@@ -107,7 +106,7 @@ public class DefaultEventDispatcher extends EventDispatcher {
    *
    * @param event   the CommentEvent instance
    */
-  void fireCommentEvent(CommentEvent event) {
+  public void fireCommentEvent(CommentEvent event) {
     Iterator it = getEventListenerList().getCommentListeners().iterator();
     while (it.hasNext()) {
       CommentListener listener = (CommentListener)it.next();
@@ -133,7 +132,7 @@ public class DefaultEventDispatcher extends EventDispatcher {
    *
    * @param event   the TrackBackEvent instance
    */
-  void fireTrackBackEvent(TrackBackEvent event) {
+  public void fireTrackBackEvent(TrackBackEvent event) {
     Iterator it = getEventListenerList().getTrackBackListeners().iterator();
     while (it.hasNext()) {
       TrackBackListener listener = (TrackBackListener)it.next();
