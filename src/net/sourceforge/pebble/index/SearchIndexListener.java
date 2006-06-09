@@ -32,8 +32,8 @@
 package net.sourceforge.pebble.index;
 
 import net.sourceforge.pebble.domain.BlogEntry;
-import net.sourceforge.pebble.event.blogentry.BlogEntryEvent;
-import net.sourceforge.pebble.event.blogentry.BlogEntryListener;
+import net.sourceforge.pebble.api.event.blogentry.BlogEntryEvent;
+import net.sourceforge.pebble.api.event.blogentry.BlogEntryListener;
 
 /**
  * Listens to blog entry events and keeps the search index up to date.

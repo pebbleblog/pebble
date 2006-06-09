@@ -1,13 +1,9 @@
 package net.sourceforge.pebble.index;
 
-import net.sourceforge.pebble.event.blogentry.BlogEntryListener;
-import net.sourceforge.pebble.event.blogentry.BlogEntryEvent;
+import net.sourceforge.pebble.api.event.blogentry.BlogEntryListener;
+import net.sourceforge.pebble.api.event.blogentry.BlogEntryEvent;
 import net.sourceforge.pebble.domain.BlogEntry;
-import net.sourceforge.pebble.domain.Blog;
-import net.sourceforge.pebble.domain.Category;
-import net.sourceforge.pebble.domain.Tag;
 
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.beans.PropertyChangeEvent;

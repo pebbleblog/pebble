@@ -67,7 +67,7 @@ public class SearchIndex {
   /** the log used by this class */
   private static final Log log = LogFactory.getLog(SearchIndex.class);
 
-  private Blog blog;
+  private final Blog blog;
 
   public SearchIndex(Blog blog) {
     this.blog = blog;
@@ -96,16 +96,34 @@ public class SearchIndex {
   /**
    * Allows a collection of blog entries to be indexed.
    */
-  public void index(List<BlogEntry> blogEntries) {
+  public void indexBlogEntries(List<BlogEntry> blogEntries) {
     synchronized (blog) {
       try {
         Analyzer analyzer = getAnalyzer();
         IndexWriter writer = new IndexWriter(blog.getSearchIndexDirectory(), analyzer, false);
 
-        Iterator it = blogEntries.iterator();
-        while (it.hasNext()) {
-          BlogEntry blogEntry = (BlogEntry)it.next();
+        for (BlogEntry blogEntry : blogEntries) {
           index(blogEntry, writer);
+        }
+
+        writer.close();
+      } catch (Exception e) {
+        log.error(e.getMessage(), e);
+      }
+    }
+  }
+
+  /**
+   * Allows a collection of static pages to be indexed.
+   */
+  public void indexStaticPages(List<StaticPage> staticPages) {
+    synchronized (blog) {
+      try {
+        Analyzer analyzer = getAnalyzer();
+        IndexWriter writer = new IndexWriter(blog.getSearchIndexDirectory(), analyzer, false);
+
+        for (StaticPage staticPage : staticPages) {
+          index(staticPage, writer);
         }
 
         writer.close();
@@ -131,6 +149,29 @@ public class SearchIndex {
         Analyzer analyzer = getAnalyzer();
         IndexWriter writer = new IndexWriter(blog.getSearchIndexDirectory(), analyzer, false);
         index(blogEntry, writer);
+        writer.close();
+      }
+    } catch (Exception e) {
+      log.error(e.getMessage(), e);
+    }
+  }
+
+  /**
+   * Allows a single static page to be (re)indexed. If the page is already
+   * indexed, this method deletes the previous index before adding the new
+   * one.
+   *
+   * @param staticPage    the StaticPage instance to index
+   */
+  public void index(StaticPage staticPage) {
+    try {
+      synchronized (blog) {
+        // first delete the static page from the index (if it was there)
+        unindex(staticPage);
+
+        Analyzer analyzer = getAnalyzer();
+        IndexWriter writer = new IndexWriter(blog.getSearchIndexDirectory(), analyzer, false);
+        index(staticPage, writer);
         writer.close();
       }
     } catch (Exception e) {
@@ -231,20 +272,16 @@ public class SearchIndex {
       searchableContent.append(" ");
       searchableContent.append(blogEntry.getBody());
 
-      Iterator it = blogEntry.getCategories().iterator();
-      Category category;
-      while (it.hasNext()) {
-        category = (Category)it.next();
+      for (Category category : blogEntry.getCategories()) {
         document.add(Field.Text("category", category.getId()));
       }
 
-      Iterator tags = blogEntry.getAllTags().iterator();
-      while (tags.hasNext()) {
-        document.add(Field.Text("tag", ((Tag)tags.next()).getName()));
+      for (Tag tag : blogEntry.getAllTags()) {
+        document.add(Field.Text("tag", tag.getName()));
       }
 
       searchableContent.append(" ");
-      it = blogEntry.getComments().iterator();
+      Iterator it = blogEntry.getComments().iterator();
       while (it.hasNext()) {
         Comment comment = (Comment)it.next();
         if (comment.isApproved()) {

@@ -40,6 +40,7 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Iterator;
 
 /**
  * Maintains an index of all static pages
@@ -89,7 +90,18 @@ public class StaticPageIndex {
    * @param staticPage    a Page instance
    */
   public synchronized void index(StaticPage staticPage) {
-    // todo - when static name changes, multiple names will refer to the same page
+    // when static name changes, multiple names will refer to the same page
+    // this block removes the page if it's been previously indexed
+    Iterator it = index.keySet().iterator();
+    while (it.hasNext()) {
+      String key = (String)it.next();
+      String value = index.get(key);
+      if (value.equals(staticPage.getId())) {
+        it.remove();
+      }
+    }
+
+    // and now index the page
     index.put(staticPage.getName(), staticPage.getId());
     writeIndex();
   }
