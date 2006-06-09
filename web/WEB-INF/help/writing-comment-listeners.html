@@ -10,21 +10,21 @@
     <td>
       <p>
       Comment listeners are a type of Pebble plugin that allow you to write code that is called
-      whenever a comment is added, removed, approved or rejected. To write your own listener, you need to write a Java class that implements the <a href="../javadoc/pebble/event/CommentListener.html">net.sourceforge.pebble.event.comment.CommentListener</a> interface
+      whenever a comment is added, removed, approved or rejected. To write your own listener, you need to write a Java class that implements the <a href="../javadoc/pebble/event/CommentListener.html">net.sourceforge.pebble.api.listener.comment.CommentListener</a> interface
       as shown below. To gain access to the associated
-      <a href="../javadoc/pebble/blog/Comment.html">comment</a>, use the <code>getComment()</code> method on the <a href="../javadoc/pebble/event/CommentEvent.html">net.sourceforge.pebble.event.comment.CommentEvent</a> object
+      <a href="../javadoc/pebble/blog/Comment.html">comment</a>, use the <code>getComment()</code> method on the <a href="../javadoc/pebble/event/CommentEvent.html">net.sourceforge.pebble.api.listener.comment.CommentEvent</a> object
       that is passed to the callback methods.
       </p>
 
       <p>
-        An empty implementation is provided by the <a href="../javadoc/pebble/event/comment/CommentListenerSupport.html">net.sourceforge.pebble.event.comment.CommentListenerSupport</a> class, which
+        An empty implementation is provided by the <a href="../javadoc/pebble/event/comment/CommentListenerSupport.html">net.sourceforge.pebble.api.listener.comment.CommentListenerSupport</a> class, which
         you can use as a starting point. If you are writing an implementation that is useful for both comments and TrackBacks, you can
-        use the <a href="../javadoc/pebble/event/response/BlogEntryResponseListenerSupport.html">net.sourceforge.pebble.event.response.BlogEntryResponseListenerSupport</a>
+        use the <a href="../javadoc/pebble/event/response/BlogEntryResponseListenerSupport.html">net.sourceforge.pebble.listener.response.BlogEntryResponseListenerSupport</a>
         as a starting point instead, where there are similar blogEntryResponseX() methods.
       </p>
 
       <p>
-<pre class="codeSample">package net.sourceforge.pebble.event;
+<pre class="codeSample">package net.sourceforge.pebble.listener;
 
 /**
  * Implemented by classes wanting to be notified of comment events.

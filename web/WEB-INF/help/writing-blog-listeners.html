@@ -10,10 +10,10 @@
     <td>
       <p>
       Blog listeners are a type of Pebble plugin that allow you to write code that is called
-      whenever your blog is started and stopped. To write your own listener, you need to write a Java class that implements the <a href="../javadoc/pebble/event/BlogListener.html">net.sourceforge.pebble.event.blog.BlogListener</a> interface
-      as shown below. To gain access to the associated <a href="../javadoc/pebble/blog/Blog.html">blog</a>, use the <code>getBlog()</code> method on the <a href="../javadoc/pebble/event/BlogEvent.html">net.sourceforge.pebble.event.blog.BlogEvent</a> object
+      whenever your blog is started and stopped. To write your own listener, you need to write a Java class that implements the <a href="../javadoc/pebble/event/BlogListener.html">net.sourceforge.pebble.api.listener.blog.BlogListener</a> interface
+      as shown below. To gain access to the associated <a href="../javadoc/pebble/blog/Blog.html">blog</a>, use the <code>getBlog()</code> method on the <a href="../javadoc/pebble/event/BlogEvent.html">net.sourceforge.pebble.api.listener.blog.BlogEvent</a> object
       that is passed to the callback methods.
-<pre class="codeSample">package net.sourceforge.pebble.event;
+<pre class="codeSample">package net.sourceforge.pebble.listener;
 
 /**
  * Implemented by classes wanting to be notified of blog events.

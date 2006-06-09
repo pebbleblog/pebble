@@ -220,7 +220,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/acegi-security-1.0.0-RC2.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/tidy.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -229,7 +229,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/tidy.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/acegi-security-1.0.0-RC2.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

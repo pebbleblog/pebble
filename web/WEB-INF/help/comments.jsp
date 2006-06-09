@@ -28,7 +28,7 @@
       comment listeners on the <a href="viewPlugins.secureaction">plugins</a> page.
     </p>
 
-    <pre class="codeSample">net.sourceforge.pebble.event.comment.EmailNotificationListener</pre>
+    <pre class="codeSample">net.sourceforge.pebble.listenerner.comment.EmailNotificationListener</pre>
 
     <p>
       Readers can opt-out of these e-mails on a per blog entry basis by clicking the opt-out link in the e-mail.

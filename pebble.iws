@@ -15,11 +15,6 @@
     <option name="CHANGE_AFTER" value="" />
   </component>
   <component name="CheckinPanelState">
-    <Excluded key="$PROJECT_DIR$/web/themes/blog" />
-    <Excluded key="$PROJECT_DIR$/web/themes/blog/jsp" />
-    <Excluded key="$PROJECT_DIR$/web/themes/blog/jsp/sidebar.jsp" />
-    <Excluded key="$PROJECT_DIR$/web/themes/blog/jsp/template.jsp" />
-    <Excluded key="$PROJECT_DIR$/web/themes/blog/theme.css" />
     <Excluded key="$PROJECT_DIR$/pebble.iml" />
     <Excluded key="$PROJECT_DIR$/pebble.iws" />
   </component>
@@ -162,73 +157,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="EditStaticPageAction.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/action/EditStaticPageAction.java">
+      <file leaf-file-name="DisableCommentsDecorator.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/decorator/DisableCommentsDecorator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="69" column="29" selection-start="3013" selection-end="3013" vertical-scroll-proportion="0.6432532">
+            <state line="21" column="0" selection-start="679" selection-end="679" vertical-scroll-proportion="0.42144176">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="staticPageForm.jsp" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/staticPageForm.jsp">
+      <file leaf-file-name="AbstractFeedView.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/view/impl/AbstractFeedView.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="38" column="106" selection-start="1413" selection-end="1413" vertical-scroll-proportion="0.8428835">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SaveStaticPageAction.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/action/SaveStaticPageAction.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="83" column="48" selection-start="3445" selection-end="3445" vertical-scroll-proportion="-0.24214418">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BlogService.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/domain/BlogService.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="294" column="0" selection-start="10486" selection-end="10486" vertical-scroll-proportion="0.55637705">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BlogEntryDAO.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/dao/BlogEntryDAO.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="68" column="0" selection-start="2712" selection-end="2712" vertical-scroll-proportion="0.7763401">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="StaticPageDAO.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/dao/StaticPageDAO.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="72" column="0" selection-start="2770" selection-end="2770" vertical-scroll-proportion="0.8207024">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MockStaticPageDAO.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test/net/sourceforge/pebble/dao/mock/MockStaticPageDAO.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="55" column="46" selection-start="1656" selection-end="1656" vertical-scroll-proportion="0.9556377">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FileStaticPageDAO.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/dao/file/FileStaticPageDAO.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="112" column="11" selection-start="3640" selection-end="3640" vertical-scroll-proportion="0.8890943">
+            <state line="67" column="4" selection-start="2683" selection-end="2683" vertical-scroll-proportion="0.6876155">
               <folding />
             </state>
           </provider>
@@ -237,17 +178,75 @@
       <file leaf-file-name="BlogEntryFormView.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/view/impl/BlogEntryFormView.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="58" column="0" selection-start="2540" selection-end="2540" vertical-scroll-proportion="0.55452865">
+            <state line="55" column="0" selection-start="2368" selection-end="2368" vertical-scroll-proportion="0.35674676">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="StaticPageFormView.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/view/impl/StaticPageFormView.java">
+      <file leaf-file-name="ContentDecoratorChain.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/decorator/ContentDecoratorChain.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="56" column="57" selection-start="2529" selection-end="2529" vertical-scroll-proportion="0.51016635">
+            <state line="88" column="0" selection-start="3003" selection-end="3003" vertical-scroll-proportion="0.15526803">
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="EscapeMarkupDecorator.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/decorator/EscapeMarkupDecorator.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="17" column="13" selection-start="539" selection-end="539" vertical-scroll-proportion="0.22181146">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="HideUnapprovedResponsesDecorator.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/decorator/HideUnapprovedResponsesDecorator.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="17" column="13" selection-start="552" selection-end="552" vertical-scroll-proportion="0.22181146">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="HtmlDecorator.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/decorator/HtmlDecorator.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="15" column="0" selection-start="487" selection-end="487" vertical-scroll-proportion="0.24399261">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RelativeUriDecorator.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/decorator/RelativeUriDecorator.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="10" column="13" selection-start="413" selection-end="413" vertical-scroll-proportion="0.13308688">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Utilities.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/util/Utilities.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="55" column="13" selection-start="2379" selection-end="2379" vertical-scroll-proportion="0.55452865">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AbstractTagsDecorator.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/decorator/AbstractTagsDecorator.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="16" column="22" selection-start="482" selection-end="482" vertical-scroll-proportion="0.35489833">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -360,149 +359,7 @@
         <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
       </PATH_ELEMENT>
       <PATH_ELEMENT>
-        <option name="myItemId" value="web" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-      </PATH_ELEMENT>
-    </PATH>
-    <PATH>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="pebble.ipr" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="pebble" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="net.sourceforge.pebble" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="web" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="action" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-      </PATH_ELEMENT>
-    </PATH>
-    <PATH>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="pebble.ipr" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="pebble" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="net.sourceforge.pebble" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="plugin" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-      </PATH_ELEMENT>
-    </PATH>
-    <PATH>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="pebble.ipr" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="pebble" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="net.sourceforge.pebble" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="plugin" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
         <option name="myItemId" value="decorator" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-      </PATH_ELEMENT>
-    </PATH>
-    <PATH>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="pebble.ipr" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="pebble" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="net.sourceforge.pebble" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="index" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-      </PATH_ELEMENT>
-    </PATH>
-    <PATH>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="pebble.ipr" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="pebble" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="net.sourceforge.pebble" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="dao" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-      </PATH_ELEMENT>
-    </PATH>
-    <PATH>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="pebble.ipr" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="pebble" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="net.sourceforge.pebble" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="dao" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="mock" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-      </PATH_ELEMENT>
-    </PATH>
-    <PATH>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="pebble.ipr" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="pebble" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="net.sourceforge.pebble" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="dao" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="file" />
         <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
       </PATH_ELEMENT>
     </PATH>
@@ -873,7 +730,7 @@
     <option name="STATE" value="0" />
   </component>
   <component name="ProjectView">
-    <navigator currentView="ProjectPane" splitterProportion="0.5">
+    <navigator currentView="PackagesPane" splitterProportion="0.5">
       <flattenPackages PackagesPane="false" ProjectPane="false" />
       <showMembers />
       <showModules />
@@ -921,27 +778,37 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="net.sourceforge.pebble.decorator" />
       <recent name="net.sourceforge.pebble.index" />
       <recent name="net.sourceforge.pebble" />
       <recent name="" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
-      <recent name="net.sourceforge.pebble.index" />
-      <recent name="net.sourceforge.pebble" />
-      <recent name="net.sourceforge.pebble.web.action" />
+      <recent name="net.sourceforge.pebble.event.trackback" />
+      <recent name="net.sourceforge.pebble.event.response" />
+      <recent name="net.sourceforge.pebble.event.comment" />
+      <recent name="net.sourceforge.pebble.event.blogentry" />
+      <recent name="net.sourceforge.pebble.event.blog" />
     </key>
   </component>
   <component name="RestoreUpdateTree" />
   <component name="RunManager">
     <activeType name="JUnit" />
-    <tempConfiguration selected="true" default="false" name="TidyListener" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" value="net.sourceforge.pebble.event.blogentry.TidyListener" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+    <tempConfiguration selected="true" default="false" name="RelativeUriDecoratorTest" type="JUnit" factoryName="JUnit">
+      <module name="pebble" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
-      <module name="pebble" />
+      <option name="PACKAGE_NAME" value="net.sourceforge.pebble.decorator" />
+      <option name="MAIN_CLASS_NAME" value="net.sourceforge.pebble.decorator.RelativeUriDecoratorTest" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ADDITIONAL_CLASS_PATH" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="wholeProject" />
+      </option>
       <RunnerSettings RunnerId="Run" />
       <ConfigurationWrapper RunnerId="Run" />
     </tempConfiguration>
@@ -989,7 +856,7 @@
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
     </configuration>
-    <configuration selected="true" default="false" name="Unit Tests" type="JUnit" factoryName="JUnit">
+    <configuration selected="false" default="false" name="Unit Tests" type="JUnit" factoryName="JUnit">
       <module name="pebble" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" value="" />
@@ -1166,108 +1033,112 @@
     </buildFile>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/domain/BlogEntry.java">
+    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/view/impl/MultiBlogHomePageView.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="903" column="0" selection-start="25828" selection-end="25828" vertical-scroll-proportion="0.9556377">
+        <state line="53" column="4" selection-start="2311" selection-end="2311" vertical-scroll-proportion="0.37410071">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/domain/StaticPage.java">
+    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/view/impl/SingleBlogHomePageView.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="119" column="17" selection-start="3740" selection-end="3740" vertical-scroll-proportion="0.6672828">
+        <state line="53" column="4" selection-start="2311" selection-end="2311" vertical-scroll-proportion="0.37410071">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/action/ManageStaticPageAction.java">
+    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/view/impl/BlogEntryView.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="83" column="48" selection-start="3507" selection-end="3507" vertical-scroll-proportion="0.55637705">
+        <state line="51" column="4" selection-start="2274" selection-end="2274" vertical-scroll-proportion="0.35674676">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/action/SaveBlogEntryAction.java">
+    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/view/impl/BlogMonthlyView.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="139" column="0" selection-start="5175" selection-end="5175" vertical-scroll-proportion="0.7781885">
+        <state line="56" column="4" selection-start="2425" selection-end="2425" vertical-scroll-proportion="0.26802218">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/staticPage.jsp">
+    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/view/impl/BlogDailyView.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+        <state line="58" column="4" selection-start="2514" selection-end="2514" vertical-scroll-proportion="0.22365989">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/action/EditStaticPageAction.java">
+    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/view/impl/AbstractFeedView.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="69" column="29" selection-start="3013" selection-end="3013" vertical-scroll-proportion="0.6432532">
+        <state line="67" column="4" selection-start="2683" selection-end="2683" vertical-scroll-proportion="0.6876155">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/decorator/DisableCommentsDecorator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="0" selection-start="679" selection-end="679" vertical-scroll-proportion="0.42144176">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/view/impl/BlogEntryFormView.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="58" column="0" selection-start="2540" selection-end="2540" vertical-scroll-proportion="0.55452865">
+        <state line="55" column="0" selection-start="2368" selection-end="2368" vertical-scroll-proportion="0.35674676">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/view/impl/StaticPageFormView.java">
+    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/decorator/ContentDecoratorChain.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="56" column="57" selection-start="2529" selection-end="2529" vertical-scroll-proportion="0.51016635">
+        <state line="88" column="0" selection-start="3003" selection-end="3003" vertical-scroll-proportion="0.15526803">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/staticPageForm.jsp">
+    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/decorator/EscapeMarkupDecorator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="38" column="106" selection-start="1413" selection-end="1413" vertical-scroll-proportion="0.8428835">
+        <state line="17" column="13" selection-start="539" selection-end="539" vertical-scroll-proportion="0.22181146">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/action/SaveStaticPageAction.java">
+    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/decorator/HideUnapprovedResponsesDecorator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="83" column="48" selection-start="3445" selection-end="3445" vertical-scroll-proportion="-0.24214418">
+        <state line="17" column="13" selection-start="552" selection-end="552" vertical-scroll-proportion="0.22181146">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/domain/BlogService.java">
+    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/decorator/HtmlDecorator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="294" column="0" selection-start="10486" selection-end="10486" vertical-scroll-proportion="0.55637705">
+        <state line="15" column="0" selection-start="487" selection-end="487" vertical-scroll-proportion="0.24399261">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/dao/BlogEntryDAO.java">
+    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/decorator/RelativeUriDecorator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="68" column="0" selection-start="2712" selection-end="2712" vertical-scroll-proportion="0.7763401">
+        <state line="10" column="13" selection-start="413" selection-end="413" vertical-scroll-proportion="0.13308688">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/dao/StaticPageDAO.java">
+    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/util/Utilities.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="72" column="0" selection-start="2770" selection-end="2770" vertical-scroll-proportion="0.8207024">
-          <folding />
+        <state line="55" column="13" selection-start="2379" selection-end="2379" vertical-scroll-proportion="0.55452865">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/net/sourceforge/pebble/dao/mock/MockStaticPageDAO.java">
+    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/decorator/AbstractTagsDecorator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="55" column="46" selection-start="1656" selection-end="1656" vertical-scroll-proportion="0.9556377">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/dao/file/FileStaticPageDAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="112" column="11" selection-start="3640" selection-end="3640" vertical-scroll-proportion="0.8890943">
-          <folding />
+        <state line="16" column="22" selection-start="482" selection-end="482" vertical-scroll-proportion="0.35489833">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

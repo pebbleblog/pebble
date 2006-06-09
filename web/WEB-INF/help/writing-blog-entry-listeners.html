@@ -10,19 +10,19 @@
     <td>
       <p>
       Blog entry listeners are a type of Pebble plugin that allow you to write code that is called
-      whenever a blog entry is added, removed, changed, approved or rejected. To write your own listener, you need to write a Java class that implements the <a href="../javadoc/pebble/event/blogentry/BlogEntryListener.html">net.sourceforge.pebble.event.blogentry.BlogEntryListener</a> interface
+      whenever a blog entry is added, removed, changed, approved or rejected. To write your own listener, you need to write a Java class that implements the <a href="../javadoc/pebble/event/blogentry/BlogEntryListener.html">net.sourceforge.pebble.api.listener.blogentry.BlogEntryListener</a> interface
       as shown below. To gain access to the associated <a href="../javadoc/pebble/blog/BlogEntry.html">blog entry</a>, use the <code>getBlogEntry()</code> method on the
-      <a href="../javadoc/pebble/event/blogentry/BlogEntryEvent.html">net.sourceforge.pebble.event.blogentry.BlogEntryEvent</a> object
+      <a href="../javadoc/pebble/event/blogentry/BlogEntryEvent.html">net.sourceforge.pebble.api.listener.blogentry.BlogEntryEvent</a> object
       that is passed to the callback methods.
       </p>
 
       <p>
-        An empty implementation is provided by the <a href="../javadoc/pebble/event/blogentry/BlogEntryListenerSupport.html">net.sourceforge.pebble.event.blogentry.BlogEntryListenerSupport</a> class, which
+        An empty implementation is provided by the <a href="../javadoc/pebble/event/blogentry/BlogEntryListenerSupport.html">net.sourceforge.pebble.api.listener.blogentry.BlogEntryListenerSupport</a> class, which
         you can use as a starting point.
       </p>
 
       <p>
-<pre class="codeSample">package net.sourceforge.pebble.event;
+<pre class="codeSample">package net.sourceforge.pebble.listener;
 
 /**
  * Implemented by classes wanting to be notified of blog entry events.
