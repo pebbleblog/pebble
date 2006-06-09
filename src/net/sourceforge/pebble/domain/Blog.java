@@ -33,24 +33,24 @@ package net.sourceforge.pebble.domain;
 
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.PluginProperties;
+import net.sourceforge.pebble.api.decorator.ContentDecorator;
+import net.sourceforge.pebble.api.permalink.PermalinkProvider;
+import net.sourceforge.pebble.api.event.blog.BlogListener;
 import net.sourceforge.pebble.dao.CategoryDAO;
 import net.sourceforge.pebble.dao.DAOFactory;
 import net.sourceforge.pebble.dao.PersistenceException;
 import net.sourceforge.pebble.event.DefaultEventDispatcher;
-import net.sourceforge.pebble.event.EventDispatcher;
+import net.sourceforge.pebble.api.event.EventDispatcher;
+import net.sourceforge.pebble.api.event.comment.CommentListener;
+import net.sourceforge.pebble.api.event.trackback.TrackBackListener;
 import net.sourceforge.pebble.event.EventListenerList;
-import net.sourceforge.pebble.event.blog.BlogEvent;
-import net.sourceforge.pebble.event.blog.BlogListener;
-import net.sourceforge.pebble.event.blogentry.BlogEntryListener;
-import net.sourceforge.pebble.event.comment.CommentListener;
-import net.sourceforge.pebble.event.trackback.TrackBackListener;
+import net.sourceforge.pebble.api.event.blog.BlogEvent;
+import net.sourceforge.pebble.api.event.blogentry.BlogEntryListener;
 import net.sourceforge.pebble.index.*;
 import net.sourceforge.pebble.logging.AbstractLogger;
 import net.sourceforge.pebble.logging.CombinedLogFormatLogger;
-import net.sourceforge.pebble.plugin.decorator.ContentDecoratorChain;
-import net.sourceforge.pebble.plugin.decorator.ContentDecorator;
-import net.sourceforge.pebble.plugin.permalink.DefaultPermalinkProvider;
-import net.sourceforge.pebble.plugin.permalink.PermalinkProvider;
+import net.sourceforge.pebble.decorator.ContentDecoratorChain;
+import net.sourceforge.pebble.permalink.DefaultPermalinkProvider;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
@@ -350,13 +350,13 @@ public class Blog extends AbstractBlog {
     defaultProperties.setProperty(PRIVATE_KEY, FALSE);
     defaultProperties.setProperty(LUCENE_ANALYZER_KEY, "org.apache.lucene.analysis.standard.StandardAnalyzer");
     defaultProperties.setProperty(CONTENT_DECORATORS_KEY,
-        "net.sourceforge.pebble.plugin.decorator.HideUnapprovedResponsesDecorator\n" +
-        "net.sourceforge.pebble.plugin.decorator.RadeoxDecorator\n" +
-        "net.sourceforge.pebble.plugin.decorator.HtmlDecorator\n" +
-        "net.sourceforge.pebble.plugin.decorator.EscapeMarkupDecorator\n" +
-        "net.sourceforge.pebble.plugin.decorator.RelativeUriDecorator\n" +
-        "net.sourceforge.pebble.plugin.decorator.ReadMoreDecorator\n" +
-        "net.sourceforge.pebble.plugin.decorator.BlogTagsDecorator");
+        "net.sourceforge.pebble.decorator.HideUnapprovedResponsesDecorator\n" +
+        "net.sourceforge.pebble.decorator.RadeoxDecorator\n" +
+        "net.sourceforge.pebble.decorator.HtmlDecorator\n" +
+        "net.sourceforge.pebble.decorator.EscapeMarkupDecorator\n" +
+        "net.sourceforge.pebble.decorator.RelativeUriDecorator\n" +
+        "net.sourceforge.pebble.decorator.ReadMoreDecorator\n" +
+        "net.sourceforge.pebble.decorator.BlogTagsDecorator");
     defaultProperties.setProperty(BLOG_ENTRY_LISTENERS_KEY,
         "net.sourceforge.pebble.event.blogentry.XmlRpcNotificationListener");
     defaultProperties.setProperty(COMMENT_LISTENERS_KEY,
@@ -373,7 +373,7 @@ public class Blog extends AbstractBlog {
         "net.sourceforge.pebble.event.response.SpamScoreListener\r\n" +
         "#net.sourceforge.pebble.event.response.DeleteRejectedListener\r\n" +
         "#net.sourceforge.pebble.event.trackback.EmailNotificationListener");
-    defaultProperties.setProperty(PERMALINK_PROVIDER_KEY, "net.sourceforge.pebble.plugin.permalink.DefaultPermalinkProvider");
+    defaultProperties.setProperty(PERMALINK_PROVIDER_KEY, "net.sourceforge.pebble.permalink.DefaultPermalinkProvider");
     defaultProperties.setProperty(EVENT_DISPATCHER_KEY, "net.sourceforge.pebble.event.DefaultEventDispatcher");
     defaultProperties.setProperty(LOGGER_KEY, "net.sourceforge.pebble.logging.CombinedLogFormatLogger");
 
@@ -1356,8 +1356,8 @@ public class Blog extends AbstractBlog {
     staticPageIndex.index(staticPages);
 
     searchIndex.clear();
-    searchIndex.index(blogEntries);
-    //searchIndex.index(staticPages);
+    searchIndex.indexBlogEntries(blogEntries);
+    searchIndex.indexStaticPages(staticPages);
   }
 
   /**

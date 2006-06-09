@@ -301,4 +301,35 @@ public abstract class PageBasedContent extends Content {
     this.persistent = persistent;
   }
 
+  /**
+   * Determines whether this content is published.
+   *
+   * @return  true if the state is published, false otherwise
+   */
+  public boolean isPublished() {
+    return getState().equals(State.PUBLISHED);
+  }
+
+  /**
+   * Determines whether this content is unpublished.
+   *
+   * @return  true if the state is unpublished, false otherwise
+   */
+  public boolean isUnpublished() {
+    return getState().equals(State.UNPUBLISHED);
+  }
+
+  /**
+   * Sets the state of this content.
+   *
+   * @param published   true if this content is published, false if unpublished
+   */
+  public void setPublished(boolean published) {
+    if (published) {
+      setState(State.PUBLISHED);
+    } else {
+      setState(State.UNPUBLISHED);
+    }
+  }
+
 }

@@ -32,10 +32,9 @@
 package net.sourceforge.pebble.domain;
 
 import net.sourceforge.pebble.comparator.ResponseByDateComparator;
-import net.sourceforge.pebble.event.PebbleEvent;
-import net.sourceforge.pebble.event.blogentry.BlogEntryEvent;
-import net.sourceforge.pebble.event.comment.CommentEvent;
-import net.sourceforge.pebble.event.trackback.TrackBackEvent;
+import net.sourceforge.pebble.api.event.blogentry.BlogEntryEvent;
+import net.sourceforge.pebble.api.event.comment.CommentEvent;
+import net.sourceforge.pebble.api.event.trackback.TrackBackEvent;
 import net.sourceforge.pebble.web.validation.ValidationContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -920,37 +919,6 @@ public class BlogEntry extends PageBasedContent {
 
     for (Response response : getResponses()) {
       response.clearEvents();
-    }
-  }
-
-  /**
-   * Determines whether this response is published.
-   *
-   * @return  true if the state is published, false otherwise
-   */
-  public boolean isPublished() {
-    return getState().equals(State.PUBLISHED);
-  }
-
-  /**
-   * Determines whether this response is unpublished.
-   *
-   * @return  true if the state is unpublished, false otherwise
-   */
-  public boolean isUnpublished() {
-    return getState().equals(State.UNPUBLISHED);
-  }
-
-  /**
-   * Sets the state of this entry.
-   *
-   * @param published   true if this entry is published, false if unpublished
-   */
-  public void setPublished(boolean published) {
-    if (published) {
-      setState(State.PUBLISHED);
-    } else {
-      setState(State.UNPUBLISHED);
     }
   }
 

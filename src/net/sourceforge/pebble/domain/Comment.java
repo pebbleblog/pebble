@@ -31,7 +31,7 @@
  */
 package net.sourceforge.pebble.domain;
 
-import net.sourceforge.pebble.event.comment.CommentEvent;
+import net.sourceforge.pebble.api.event.comment.CommentEvent;
 import net.sourceforge.pebble.util.StringUtils;
 
 import java.util.*;

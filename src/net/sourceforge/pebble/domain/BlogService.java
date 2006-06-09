@@ -36,9 +36,9 @@ import net.sourceforge.pebble.dao.BlogEntryDAO;
 import net.sourceforge.pebble.dao.DAOFactory;
 import net.sourceforge.pebble.dao.PersistenceException;
 import net.sourceforge.pebble.dao.StaticPageDAO;
-import net.sourceforge.pebble.event.blogentry.BlogEntryEvent;
-import net.sourceforge.pebble.event.comment.CommentEvent;
-import net.sourceforge.pebble.event.trackback.TrackBackEvent;
+import net.sourceforge.pebble.api.event.blogentry.BlogEntryEvent;
+import net.sourceforge.pebble.api.event.comment.CommentEvent;
+import net.sourceforge.pebble.api.event.trackback.TrackBackEvent;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -292,6 +292,9 @@ public class BlogService {
         }
 
         staticPage.setPersistent(true);
+
+        staticPage.getBlog().getSearchIndex().index(staticPage);
+        staticPage.getBlog().getStaticPageIndex().index(staticPage);
       } catch (PersistenceException pe) {
         pe.printStackTrace();
       }

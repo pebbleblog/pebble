@@ -32,7 +32,7 @@
 package net.sourceforge.pebble.domain;
 
 import net.sourceforge.pebble.util.StringUtils;
-import net.sourceforge.pebble.event.PebbleEvent;
+import net.sourceforge.pebble.api.event.PebbleEvent;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;

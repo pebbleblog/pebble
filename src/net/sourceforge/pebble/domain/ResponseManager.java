@@ -32,10 +32,10 @@
 package net.sourceforge.pebble.domain;
 
 import net.sourceforge.pebble.comparator.ResponseByDateComparator;
-import net.sourceforge.pebble.event.comment.CommentEvent;
-import net.sourceforge.pebble.event.comment.CommentListener;
-import net.sourceforge.pebble.event.trackback.TrackBackEvent;
-import net.sourceforge.pebble.event.trackback.TrackBackListener;
+import net.sourceforge.pebble.api.event.comment.CommentEvent;
+import net.sourceforge.pebble.api.event.comment.CommentListener;
+import net.sourceforge.pebble.api.event.trackback.TrackBackEvent;
+import net.sourceforge.pebble.api.event.trackback.TrackBackListener;
 
 import java.util.*;
 

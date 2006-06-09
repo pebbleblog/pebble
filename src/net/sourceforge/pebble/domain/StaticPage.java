@@ -50,6 +50,7 @@ public class StaticPage extends PageBasedContent {
    */
   public StaticPage(Blog blog) {
     super(blog);
+    setPublished(true);
   }
 
   public String getName() {
@@ -119,6 +120,7 @@ public class StaticPage extends PageBasedContent {
   public Object clone() {
     StaticPage page = new StaticPage(getBlog());
     page.setEventsEnabled(false);
+    page.setPersistent(isPersistent());
     page.setTitle(getTitle());
     page.setSubtitle(getSubtitle());
     page.setBody(getBody());
