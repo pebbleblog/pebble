@@ -272,7 +272,7 @@
       <attribute name="URI" value="/WEB-INF/lib/tidy.jar" />
       <url>jar://$MODULE_DIR$/lib/tidy.jar!/</url>
     </containerElement>
-    <deploymentDescriptor name="web.xml" url="file://$MODULE_DIR$/web/WEB-INF/web.xml" version="2.4" />
+    <deploymentDescriptor name="web.xml" url="file://$MODULE_DIR$/web/WEB-INF/web.xml" optional="false" version="2.4" />
     <webroots>
       <root url="file://$MODULE_DIR$/web" relative="/" />
     </webroots>
