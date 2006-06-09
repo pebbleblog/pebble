@@ -244,10 +244,6 @@ public class FileBlogEntryDAO implements BlogEntryDAO {
         authorNode.appendChild(doc.createTextNode(blogEntry.getAuthor()));
       }
 
-//      if (blogEntry.getStaticName() != null) {
-//        staticNameNode.appendChild(doc.createTextNode(blogEntry.getStaticName()));
-//      }
-
       SimpleDateFormat sdf = new SimpleDateFormat(NEW_PERSISTENT_DATETIME_FORMAT, Locale.ENGLISH);
       sdf.setTimeZone(blogEntry.getBlog().getTimeZone());
       dateNode.appendChild(doc.createTextNode(sdf.format(blogEntry.getDate())));

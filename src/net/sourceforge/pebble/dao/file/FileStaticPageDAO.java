@@ -110,7 +110,106 @@ public class FileStaticPageDAO implements StaticPageDAO {
    *          if something goes wrong storing the static page
    */
   public void storeStaticPage(StaticPage staticPage) throws PersistenceException {
-    // todo
+    File outputDir = new File(getPath(staticPage.getBlog(), staticPage.getId()));
+    if (!outputDir.exists()) {
+      outputDir.mkdirs();
+    }
+
+    File outputFile = new File(outputDir, staticPage.getId() + ".xml");
+    storeStaticPage(staticPage, outputFile);
+  }
+
+  /**
+   * Stores a static page to the specified file.
+   *
+   * @param staticPage    the StaticPage that is being stored
+   * @param destination the File pointing to the destination
+   * @throws PersistenceException if something goes wrong storing the static page
+   */
+  private void storeStaticPage(StaticPage staticPage, File destination) throws PersistenceException {
+    File backupFile = new File(destination.getParentFile(), destination.getName() + ".bak");
+    try {
+      DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+      factory.setValidating(false);
+      factory.setNamespaceAware(true);
+      factory.setIgnoringElementContentWhitespace(true);
+      factory.setIgnoringComments(true);
+
+      DocumentBuilder builder = factory.newDocumentBuilder();
+      Document doc = builder.newDocument();
+
+      Element root = doc.createElement("staticPage");
+      doc.appendChild(root);
+
+      Element titleNode = doc.createElement("title");
+      Element subtitleNode = doc.createElement("subtitle");
+      Element bodyNode = doc.createElement("body");
+      Element dateNode = doc.createElement("date");
+      Element stateNode = doc.createElement("state");
+      Element authorNode = doc.createElement("author");
+      Element staticNameNode = doc.createElement("staticName");
+
+      root.appendChild(titleNode);
+      root.appendChild(subtitleNode);
+      root.appendChild(bodyNode);
+      root.appendChild(dateNode);
+      root.appendChild(stateNode);
+      root.appendChild(authorNode);
+      root.appendChild(staticNameNode);
+
+      if (staticPage.isAggregated()) {
+        Element permalinkNode = doc.createElement("originalPermalink");
+        permalinkNode.appendChild(doc.createTextNode(staticPage.getOriginalPermalink()));
+        root.appendChild(permalinkNode);
+      }
+
+      titleNode.appendChild(doc.createTextNode(staticPage.getTitle()));
+      subtitleNode.appendChild(doc.createTextNode(staticPage.getSubtitle()));
+      bodyNode.appendChild(doc.createCDATASection(staticPage.getBody()));
+
+      if (staticPage.getAuthor() != null) {
+        authorNode.appendChild(doc.createTextNode(staticPage.getAuthor()));
+      }
+
+      if (staticPage.getName() != null) {
+        staticNameNode.appendChild(doc.createTextNode(staticPage.getName()));
+      }
+
+      SimpleDateFormat sdf = new SimpleDateFormat(NEW_PERSISTENT_DATETIME_FORMAT, Locale.ENGLISH);
+      sdf.setTimeZone(staticPage.getBlog().getTimeZone());
+      dateNode.appendChild(doc.createTextNode(sdf.format(staticPage.getDate())));
+
+      stateNode.appendChild(createTextNode(doc, staticPage.getState().getName()));
+
+      // write the XMl to a String, and then write this string to a file
+      // (if the XML format fails, we don't corrupt the file)
+      StringWriter sw = new StringWriter();
+      Source source = new DOMSource(doc);
+      Result result = new StreamResult(sw);
+      Transformer xformer = TransformerFactory.newInstance().newTransformer();
+      xformer.setOutputProperty(OutputKeys.METHOD, "xml");
+      xformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+      xformer.setOutputProperty(OutputKeys.MEDIA_TYPE, "text/xml");
+      xformer.setOutputProperty(OutputKeys.CDATA_SECTION_ELEMENTS, "body");
+      xformer.setOutputProperty(OutputKeys.INDENT, "yes");
+      xformer.transform(source, result);
+
+      // now take a backup of the correct file
+      if (destination.exists() && destination.length() > 0) {
+        log.debug("Backing up to " + backupFile.getAbsolutePath());
+        destination.renameTo(backupFile);
+      }
+
+      log.debug("Saving to " + destination.getAbsolutePath());
+      BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(destination), "UTF-8"));
+      bw.write(sw.getBuffer().toString());
+      bw.flush();
+      bw.close();
+    } catch (Exception e) {
+      log.error(e.getMessage(), e);
+      e.printStackTrace();
+      throw new PersistenceException(e.getMessage());
+    }
   }
 
   /**
