@@ -32,8 +32,8 @@
 package net.sourceforge.pebble.web.filter;
 
 import net.sourceforge.pebble.domain.*;
-import net.sourceforge.pebble.plugin.permalink.DefaultPermalinkProvider;
-import net.sourceforge.pebble.plugin.permalink.TitlePermalinkProvider;
+import net.sourceforge.pebble.permalink.DefaultPermalinkProvider;
+import net.sourceforge.pebble.permalink.TitlePermalinkProvider;
 
 /**
  * Tests for the UriTransformer class.
