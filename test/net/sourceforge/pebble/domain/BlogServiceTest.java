@@ -1,16 +1,13 @@
 package net.sourceforge.pebble.domain;
 
-import net.sourceforge.pebble.web.validation.ValidationContext;
-import net.sourceforge.pebble.event.comment.CommentListener;
-import net.sourceforge.pebble.event.comment.CommentEvent;
-import net.sourceforge.pebble.event.trackback.TrackBackListener;
-import net.sourceforge.pebble.event.trackback.TrackBackEvent;
-import net.sourceforge.pebble.event.blogentry.BlogEntryListener;
-import net.sourceforge.pebble.event.blogentry.BlogEntryEvent;
+import net.sourceforge.pebble.api.event.comment.CommentListener;
+import net.sourceforge.pebble.api.event.comment.CommentEvent;
+import net.sourceforge.pebble.api.event.trackback.TrackBackListener;
+import net.sourceforge.pebble.api.event.trackback.TrackBackEvent;
+import net.sourceforge.pebble.api.event.blogentry.BlogEntryEvent;
+import net.sourceforge.pebble.api.event.blogentry.BlogEntryListener;
 
 import java.util.*;
-import java.text.DecimalFormat;
-import java.beans.PropertyChangeEvent;
 
 /**
  * Tests for the BlogService class.

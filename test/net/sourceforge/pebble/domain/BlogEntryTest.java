@@ -31,14 +31,6 @@
  */
 package net.sourceforge.pebble.domain;
 
-import net.sourceforge.pebble.event.blogentry.BlogEntryEvent;
-import net.sourceforge.pebble.event.blogentry.BlogEntryListener;
-import net.sourceforge.pebble.event.comment.CommentEvent;
-import net.sourceforge.pebble.event.comment.CommentListener;
-import net.sourceforge.pebble.event.trackback.TrackBackEvent;
-import net.sourceforge.pebble.event.trackback.TrackBackListener;
-import net.sourceforge.pebble.web.validation.ValidationContext;
-
 import java.beans.PropertyChangeEvent;
 import java.text.DecimalFormat;
 import java.util.*;

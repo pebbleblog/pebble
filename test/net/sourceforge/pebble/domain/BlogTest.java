@@ -34,10 +34,10 @@ package net.sourceforge.pebble.domain;
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.PebbleContext;
 import net.sourceforge.pebble.event.DefaultEventDispatcher;
-import net.sourceforge.pebble.event.blog.BlogEvent;
-import net.sourceforge.pebble.event.blog.BlogListener;
+import net.sourceforge.pebble.api.event.blog.BlogEvent;
+import net.sourceforge.pebble.api.event.blog.BlogListener;
 import net.sourceforge.pebble.logging.CombinedLogFormatLogger;
-import net.sourceforge.pebble.plugin.permalink.DefaultPermalinkProvider;
+import net.sourceforge.pebble.permalink.DefaultPermalinkProvider;
 
 import java.io.File;
 import java.util.*;
@@ -64,7 +64,7 @@ public class BlogTest extends SingleBlogTestCase {
     assertEquals(3, blog.getRecentResponsesOnHomePage());
     assertTrue(blog.isPublic());
     assertFalse(blog.isPrivate());
-    assertEquals("net.sourceforge.pebble.plugin.permalink.DefaultPermalinkProvider", blog.getPermalinkProviderName());
+    assertEquals("net.sourceforge.pebble.permalink.DefaultPermalinkProvider", blog.getPermalinkProviderName());
     assertTrue(blog.getPermalinkProvider() instanceof DefaultPermalinkProvider);
     assertEquals("net.sourceforge.pebble.event.DefaultEventDispatcher", blog.getEventDispatcherName());
     assertTrue(blog.getEventDispatcher() instanceof DefaultEventDispatcher);

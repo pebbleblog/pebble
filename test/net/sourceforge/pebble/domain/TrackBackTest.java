@@ -31,8 +31,8 @@
  */
 package net.sourceforge.pebble.domain;
 
-import net.sourceforge.pebble.event.trackback.TrackBackEvent;
-import net.sourceforge.pebble.event.trackback.TrackBackListener;
+import net.sourceforge.pebble.api.event.trackback.TrackBackEvent;
+import net.sourceforge.pebble.api.event.trackback.TrackBackListener;
 
 
 /**
