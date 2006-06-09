@@ -31,32 +31,52 @@
  */
 package net.sourceforge.pebble.web.action;
 
-import net.sourceforge.pebble.domain.BlogEntry;
+import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.domain.StaticPage;
+import net.sourceforge.pebble.util.SecurityUtils;
+import net.sourceforge.pebble.web.view.View;
+import net.sourceforge.pebble.web.view.impl.StaticPageFormView;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
- * Adds a new static page. This is called to create a blank blog entry
- * to populate a HTML form containing the contents of that entry.
+ * Adds a new static page. This is called to create a blank static page
+ * to populate a HTML form containing the contents of that page.
  *
  * @author    Simon Brown
  */
-public class AddStaticPageAction extends AbstractAddBlogEntryAction {
+public class AddStaticPageAction extends SecureAction {
 
   /**
-   * Creates a new blog entry, ready for editing.
+   * Peforms the processing associated with this action.
    *
-   * @param blog      the Blog that will own the new entry
-   * @param request   the HttpServletRequest that caused this action
-   * @return a BlogEntry instance
+   * @param request  the HttpServletRequest instance
+   * @param response the HttpServletResponse instance
+   * @return the name of the next view
    */
-  protected BlogEntry createBlogEntry(Blog blog, HttpServletRequest request) {
-//    BlogEntry staticPage = blog.getBlogForToday().createStaticPage();
-//    staticPage.setStaticName(request.getParameter("staticName"));
-//    staticPage.setTitle("Title");
-//    return staticPage;
-    return null;
+  public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
+    Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
+    StaticPage staticPage = new StaticPage(blog);
+    staticPage.setTitle("Title");
+    staticPage.setBody("<p>\n\n</p>");
+    staticPage.setAuthor(SecurityUtils.getUsername());
+
+    getModel().put(Constants.STATIC_PAGE_KEY, staticPage);
+
+    return new StaticPageFormView();
+  }
+
+  /**
+   * Gets a list of all roles that are allowed to access this action.
+   *
+   * @return  an array of Strings representing role names
+   * @param request
+   */
+  public String[] getRoles(HttpServletRequest request) {
+    return new String[]{Constants.BLOG_CONTRIBUTOR_ROLE};
   }
 
 }

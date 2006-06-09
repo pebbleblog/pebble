@@ -34,8 +34,13 @@ package net.sourceforge.pebble.web.action;
 import net.sourceforge.pebble.domain.BlogEntry;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.util.SecurityUtils;
+import net.sourceforge.pebble.web.view.View;
+import net.sourceforge.pebble.web.view.impl.BlogEntryFormView;
+import net.sourceforge.pebble.Constants;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.ServletException;
 
 /**
  * Adds a new blog entry. This is called to create a blank blog entry
@@ -43,22 +48,35 @@ import javax.servlet.http.HttpServletRequest;
  *
  * @author    Simon Brown
  */
-public class AddBlogEntryAction extends AbstractAddBlogEntryAction {
+public class AddBlogEntryAction extends SecureAction {
 
   /**
-   * Creates a new blog entry, ready for editing.
+   * Peforms the processing associated with this action.
    *
-   * @param blog      the Blog that will own the new entry
-   * @param request   the HttpServletRequest that caused this action
-   * @return a BlogEntry instance
+   * @param request  the HttpServletRequest instance
+   * @param response the HttpServletResponse instance
+   * @return the name of the next view
    */
-  protected BlogEntry createBlogEntry(Blog blog, HttpServletRequest request) {
+  public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
+    Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
     BlogEntry entry = new BlogEntry(blog);
     entry.setTitle("Title");
     entry.setBody("<p>\n\n</p>");
     entry.setAuthor(SecurityUtils.getUsername());
 
-    return entry;
+    getModel().put(Constants.BLOG_ENTRY_KEY, entry);
+
+    return new BlogEntryFormView();
+  }
+
+  /**
+   * Gets a list of all roles that are allowed to access this action.
+   *
+   * @return  an array of Strings representing role names
+   * @param request
+   */
+  public String[] getRoles(HttpServletRequest request) {
+    return new String[]{Constants.BLOG_CONTRIBUTOR_ROLE};
   }
 
 }

@@ -32,11 +32,11 @@
 package net.sourceforge.pebble.web.view.impl;
 
 import net.sourceforge.pebble.Constants;
+import net.sourceforge.pebble.api.decorator.ContentDecoratorContext;
 import net.sourceforge.pebble.comparator.BlogEntryComparator;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.domain.DailyBlog;
-import net.sourceforge.pebble.plugin.decorator.ContentDecoratorChain;
-import net.sourceforge.pebble.plugin.decorator.ContentDecoratorContext;
+import net.sourceforge.pebble.decorator.ContentDecoratorChain;
 import net.sourceforge.pebble.web.view.HtmlView;
 
 import java.text.DateFormat;
@@ -56,7 +56,7 @@ public class BlogDailyView extends HtmlView {
     context.setMedia(ContentDecoratorContext.HTML_PAGE);
 
     List blogEntries = (List)getModel().get(Constants.BLOG_ENTRIES);
-    blogEntries = ContentDecoratorChain.decorate(context, blogEntries);
+    ContentDecoratorChain.decorate(context, blogEntries);
     Collections.sort(blogEntries, new BlogEntryComparator());
     getModel().put(Constants.BLOG_ENTRIES, blogEntries);
   }

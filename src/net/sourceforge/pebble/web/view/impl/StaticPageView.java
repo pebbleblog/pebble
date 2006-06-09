@@ -32,8 +32,8 @@
 package net.sourceforge.pebble.web.view.impl;
 
 import net.sourceforge.pebble.Constants;
+import net.sourceforge.pebble.api.decorator.ContentDecoratorContext;
 import net.sourceforge.pebble.domain.StaticPage;
-import net.sourceforge.pebble.plugin.decorator.ContentDecoratorContext;
 import net.sourceforge.pebble.web.view.HtmlView;
 
 

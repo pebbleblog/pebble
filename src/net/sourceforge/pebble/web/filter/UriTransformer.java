@@ -32,8 +32,8 @@
 package net.sourceforge.pebble.web.filter;
 
 import net.sourceforge.pebble.domain.*;
-import net.sourceforge.pebble.plugin.permalink.DefaultPermalinkProvider;
-import net.sourceforge.pebble.plugin.permalink.PermalinkProvider;
+import net.sourceforge.pebble.permalink.DefaultPermalinkProvider;
+import net.sourceforge.pebble.api.permalink.PermalinkProvider;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 

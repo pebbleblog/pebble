@@ -32,8 +32,8 @@
 package net.sourceforge.pebble.web.view.impl;
 
 import net.sourceforge.pebble.Constants;
+import net.sourceforge.pebble.api.decorator.ContentDecoratorContext;
 import net.sourceforge.pebble.domain.BlogEntry;
-import net.sourceforge.pebble.plugin.decorator.ContentDecoratorContext;
 import net.sourceforge.pebble.web.view.HtmlView;
 
 /**
@@ -49,7 +49,7 @@ public class BlogEntryView extends HtmlView {
     context.setMedia(ContentDecoratorContext.HTML_PAGE);
 
     BlogEntry blogEntry = (BlogEntry)getModel().get(Constants.BLOG_ENTRY_KEY);
-    blogEntry = blogEntry.getBlog().getContentDecoratorChain().decorate(context, blogEntry);
+    blogEntry.getBlog().getContentDecoratorChain().decorate(context, blogEntry);
     getModel().put(Constants.BLOG_ENTRY_KEY, blogEntry);
   }
 
