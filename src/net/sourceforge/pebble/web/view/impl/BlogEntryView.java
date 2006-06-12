@@ -50,7 +50,6 @@ public class BlogEntryView extends HtmlView {
 
     BlogEntry blogEntry = (BlogEntry)getModel().get(Constants.BLOG_ENTRY_KEY);
     blogEntry.getBlog().getContentDecoratorChain().decorate(context, blogEntry);
-    getModel().put(Constants.BLOG_ENTRY_KEY, blogEntry);
   }
 
   /**

@@ -59,7 +59,10 @@ public class AddStaticPageAction extends SecureAction {
    */
   public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
+    String name = request.getParameter("name");
+
     StaticPage staticPage = new StaticPage(blog);
+    staticPage.setName(name);
     staticPage.setTitle("Title");
     staticPage.setBody("<p>\n\n</p>");
     staticPage.setAuthor(SecurityUtils.getUsername());

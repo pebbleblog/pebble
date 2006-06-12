@@ -63,13 +63,17 @@ window.onload = function()
       </tr>
 
       <tr>
-        <td valign="top"><b>Excerpt</b></td>
-        <td><textarea name="excerpt" rows="20" cols="60"><c:out value="${blogEntry.excerpt}" escapeXml="true"/></textarea>        <div class="small">(optional, short version of body for home/month/day pages)</div></td>
+        <td colspan="2"><b>Excerpt</b></td>
+      </tr>
+      <tr>
+        <td colspan="2"><textarea name="excerpt" rows="20" cols="60"><c:out value="${blogEntry.excerpt}" escapeXml="true"/></textarea>        <div class="small">(optional, short version of body for home/month/day pages)</div></td>
       </tr>
 
       <tr>
-        <td valign="top"><b>Body</b></td>
-        <td><textarea name="body" rows="40" cols="60"><c:out value="${blogEntry.body}" escapeXml="true"/></textarea></td>
+        <td colspan="2"><b>Body</b></td>
+      </tr>
+      <tr>
+        <td colspan="2"><textarea name="body" rows="40" cols="60"><c:out value="${blogEntry.body}" escapeXml="true"/></textarea></td>
       </tr>
 
       <tr>

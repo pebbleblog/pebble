@@ -80,8 +80,10 @@ public class FileStaticPageDAO implements StaticPageDAO {
     List<StaticPage> list = new ArrayList<StaticPage>();
     File root = new File(blog.getRoot(), "pages");
     File files[] = root.listFiles(new BlogEntryFilenameFilter());
-    for (File file : files) {
-      list.add(loadStaticPage(blog, file));
+    if (files != null) {
+        for (File file : files) {
+            list.add(loadStaticPage(blog, file));
+        }
     }
 
     return list;

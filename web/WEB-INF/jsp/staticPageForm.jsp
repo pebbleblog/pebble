@@ -50,8 +50,10 @@
       </tr>
 
       <tr>
-        <td valign="top"><b>Body</b></td>
-        <td><textarea name="body" rows="40" cols="60"><c:out value="${staticPage.body}" escapeXml="true"/></textarea></td>
+        <td colspan="2"><b>Body</b></td>
+      </tr>
+      <tr>
+        <td colspan="2"><textarea name="body" rows="40" cols="60"><c:out value="${staticPage.body}" escapeXml="true"/></textarea></td>
       </tr>
 
       <tr>

@@ -10,7 +10,7 @@
     to this list can be found at <a href="http://lists.sourceforge.net/mailman/listinfo/pebble-user">http://lists.sourceforge.net/mailman/listinfo/pebble-user</a>.
     </p>
 
-    <table width="100%" cellspacing="0" cellpadding="8">
+    <table width="99%" cellspacing="0" cellpadding="8">
       <tr>
         <td width="50%" valign="top">
           <p>

@@ -124,7 +124,7 @@ class RadeoxWikiRenderEngine extends BaseRenderEngine implements WikiRenderEngin
   }
 
   public void appendCreateLink(StringBuffer buffer, String name, String view) {
-    buffer.append("<a href=\"addStaticPage.secureaction?staticName=");
+    buffer.append("<a href=\"addStaticPage.secureaction?name=");
     buffer.append(name);
     buffer.append("\">");
     buffer.append(view);

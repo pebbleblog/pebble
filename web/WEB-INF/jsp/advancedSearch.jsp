@@ -47,12 +47,11 @@
       <td valign="top"><b><fmt:message key="blogentry.tags" /></b></td>
       <td>
         <input type="text" name="tags" size="60" />
-        <div class="small"><fmt:message key="common.commaSeparated" /></div>
       </td>
       </tr>
 
       <tr>
-      <td colspan="2">
+      <td colspan="2" align="right">
       <input type="submit" value="<fmt:message key="common.search" />" />
       </td>
       </tr>
