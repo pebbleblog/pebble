@@ -85,7 +85,7 @@ public abstract class AbstractEmailNotificationListener extends TrackBackListene
     Collection to = getEmailAddresses(trackBack);
 
     try {
-      MailUtils.sendMail(MailUtils.createSession(blog), blog, to, subject, message);
+      MailUtils.sendMail(MailUtils.createSession(), blog, to, subject, message);
     } catch (Exception e) {
       e.printStackTrace();
     }

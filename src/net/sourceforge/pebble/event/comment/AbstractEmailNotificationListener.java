@@ -118,7 +118,7 @@ public abstract class AbstractEmailNotificationListener extends CommentListenerS
     // now send personalized e-mails to the blog owner and everybody
     // that left a comment specifying their e-mail address
     try {
-      Session session = MailUtils.createSession(blog);
+      Session session = MailUtils.createSession();
       Iterator emailAddresses = to.iterator();
       while (emailAddresses.hasNext()) {
         String emailAddress = (String)emailAddresses.next();
@@ -160,7 +160,7 @@ public abstract class AbstractEmailNotificationListener extends CommentListenerS
     Collection to = getEmailAddresses(comment);
 
     try {
-      MailUtils.sendMail(MailUtils.createSession(blog), blog, to, subject, message);
+      MailUtils.sendMail(MailUtils.createSession(), blog, to, subject, message);
     } catch (Exception e) {
       e.printStackTrace();
     }

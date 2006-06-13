@@ -32,23 +32,21 @@
 package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
+import net.sourceforge.pebble.api.comment.CommentConfirmationStrategy;
 import net.sourceforge.pebble.api.decorator.ContentDecoratorContext;
 import net.sourceforge.pebble.domain.*;
-import net.sourceforge.pebble.util.CookieUtils;
-import net.sourceforge.pebble.util.MailUtils;
+import net.sourceforge.pebble.web.validation.ValidationContext;
 import net.sourceforge.pebble.web.view.NotFoundView;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.impl.CommentConfirmationView;
 import net.sourceforge.pebble.web.view.impl.CommentFormView;
-import net.sourceforge.pebble.web.validation.ValidationContext;
+import net.sourceforge.pebble.web.view.impl.ConfirmCommentView;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ResourceBundle;
 
 /**
@@ -56,9 +54,7 @@ import java.util.ResourceBundle;
  *
  * @author    Simon Brown
  */
-public class SaveCommentAction extends Action {
-
-  private static final String REFERER_HEADER = "Referer";
+public class SaveCommentAction extends AbstractCommentAction {
 
   /** the log used by this class */
   private static Log log = LogFactory.getLog(SaveCommentAction.class);
@@ -71,20 +67,11 @@ public class SaveCommentAction extends Action {
    * @return the name of the next view
    */
   public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
-
-    String referer = request.getHeader(REFERER_HEADER);
-    log.debug("Referer is " + referer);
-
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
-    BlogEntry blogEntry = null;
-    Comment comment = null;
+    BlogEntry blogEntry;
+    Comment comment;
 
     String entry = request.getParameter("entry");
-    long parent = -1;
-    try {
-      parent = Long.parseLong(request.getParameter("parent"));
-    } catch (NumberFormatException nfe) {
-    }
     String rememberMe = request.getParameter("rememberMe");
     String submitType = request.getParameter("submit");
 
@@ -96,100 +83,42 @@ public class SaveCommentAction extends Action {
       return new NotFoundView();
     } else if (!blogEntry.isCommentsEnabled()) {
       return new CommentConfirmationView();
-    } else if (referer == null ||
-      (
-        referer.indexOf("replyToBlogEntry.action") == -1 &&
-        referer.indexOf("saveComment.action") == -1
-      )) {
-      // somebody is trying to hit this action directly without using the form
-      // could be spam
-      return new NotFoundView();
     }
 
-    getModel().put(Constants.BLOG_ENTRY_KEY, blogEntry);
     comment = createComment(request, blogEntry);
     ValidationContext context = validateComment(comment);
-
-    getModel().put("rememberMe", rememberMe);
 
     // are we previewing or adding the comment?
     ResourceBundle bundle = ResourceBundle.getBundle("resources", blog.getLocale());
     String previewButton = bundle.getString("comment.previewButton");
 
+    ContentDecoratorContext decoratorContext = new ContentDecoratorContext();
+    decoratorContext.setView(ContentDecoratorContext.DETAIL_VIEW);
+    decoratorContext.setMedia(ContentDecoratorContext.HTML_PAGE);
+
+    Comment decoratedComment = (Comment)comment.clone();
+    blog.getContentDecoratorChain().decorate(decoratorContext, decoratedComment);
+    getModel().put("decoratedComment", decoratedComment);
+    getModel().put("undecoratedComment", comment);
+    getModel().put("rememberMe", rememberMe);
+    getModel().put(Constants.BLOG_ENTRY_KEY, blogEntry);
+    getModel().put(Constants.COMMENT_KEY, comment);
+
     if (submitType == null || submitType.equalsIgnoreCase(previewButton) || context.hasErrors()) {
-      ContentDecoratorContext decoratorContext = new ContentDecoratorContext();
-      decoratorContext.setView(ContentDecoratorContext.DETAIL_VIEW);
-      decoratorContext.setMedia(ContentDecoratorContext.HTML_PAGE);
-
-//      BlogEntry clonedBlogEntry = (BlogEntry)blogEntry.clone();
-//      comment.setParent(clonedBlogEntry.getComment(parent));
-//      clonedBlogEntry.addComment(comment);
-//      BlogEntry decoratedBlogEntry = ContentDecoratorChain.applyDecorators(clonedBlogEntry, decoratorContext);
-      Comment decoratedComment = (Comment)comment.clone();
-      blog.getContentDecoratorChain().decorate(decoratorContext, decoratedComment);
-      getModel().put("decoratedComment", decoratedComment);
-      getModel().put("undecoratedComment", comment);
-
       return new CommentFormView();
     } else {
-      // we are storing the comment
-      comment.setParent(blogEntry.getComment(parent));
-      blogEntry.addComment(comment);
-
-      try {
-        service.putBlogEntry(blogEntry);
-
-        // remember me functionality
-        if (rememberMe != null && rememberMe.equals("true")) {
-          CookieUtils.addCookie(response, "rememberMe", "true", CookieUtils.ONE_MONTH);
-          CookieUtils.addCookie(response, "rememberMe.author", encode(comment.getAuthor(), blog.getCharacterEncoding()), CookieUtils.ONE_MONTH);
-          CookieUtils.addCookie(response, "rememberMe.email", encode(comment.getEmail(), blog.getCharacterEncoding()), CookieUtils.ONE_MONTH);
-          CookieUtils.addCookie(response, "rememberMe.website", encode(comment.getWebsite(), blog.getCharacterEncoding()), CookieUtils.ONE_MONTH);
-        } else {
-          CookieUtils.removeCookie(response, "rememberMe");
-          CookieUtils.removeCookie(response, "rememberMe.author");
-          CookieUtils.removeCookie(response, "rememberMe.email");
-          CookieUtils.removeCookie(response, "rememberMe.website");
+      CommentConfirmationStrategy strategy = blog.getCommentConfirmationStrategy();
+      if (strategy.confirmationRequired(request, comment)) {
+        strategy.setupConfirmation(request, comment);
+        return new ConfirmCommentView();
+      } else {
+        try {
+          saveComment(request, response, blogEntry, comment);
+          return new CommentConfirmationView();
+        } catch (BlogException be) {
+          log.error(be.getMessage(), be);
+          throw new ServletException(be);
         }
-
-        getModel().put(Constants.COMMENT_KEY, comment);
-        return new CommentConfirmationView();
-      } catch (BlogException be) {
-        log.error(be.getMessage(), be);
-        throw new ServletException(be);
-      }
-    }
-  }
-
-  private Comment createComment(HttpServletRequest request, BlogEntry blogEntry) {
-    String author = request.getParameter("author");
-    String email = request.getParameter("email");
-    String website = request.getParameter("website");
-    String ipAddress = request.getRemoteAddr();
-    String title = request.getParameter("title");
-    String body = request.getParameter("body");
-
-    Comment comment = null;
-    comment = blogEntry.createComment(title, body, author, email, website, ipAddress);
-    return comment;
-  }
-
-  private ValidationContext validateComment(Comment comment) {
-    ValidationContext context = new ValidationContext();
-    MailUtils.validate(comment.getEmail(), context);
-    getModel().put("validationContext", context);
-    return context;
-  }
-
-  private String encode(String s, String characterEncoding) {
-    if (s == null) {
-      return "";
-    } else {
-      try {
-        return URLEncoder.encode(s, characterEncoding);
-      } catch (UnsupportedEncodingException e) {
-        log.error(e);
-        return "";
       }
     }
   }

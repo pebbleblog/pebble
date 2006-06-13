@@ -45,6 +45,8 @@ import javax.mail.internet.MimeMessage;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Utilities for e-mail related functions.
@@ -55,6 +57,9 @@ public class MailUtils {
 
   /** the log used by this class */
   private static Log log = LogFactory.getLog(MailUtils.class);
+
+  /** thread pool used to send e-mail */
+  private static ExecutorService pool = Executors.newFixedThreadPool(1);
 
   /**
    * Sends an e-mail.
@@ -106,15 +111,15 @@ public class MailUtils {
    * @param message       the body of the e-mail
    */
   public static void sendMail(Session session, Blog blog, Collection to, Collection cc, Collection bcc, String subject, String message) {
-    Thread t = new SendMailThread(session, blog, to, cc, bcc, subject, message);
-    t.start();
+    Runnable r = new SendMailRunnable(session, blog, to, cc, bcc, subject, message);
+    pool.execute(r);
   }
 
   /**
    * A thread allowing the e-mail to be sent asynchronously, so the requesting
    * thread (and therefore the user) isn't held up.
    */
-  static class SendMailThread extends Thread {
+  static class SendMailRunnable implements Runnable {
 
     /** the JavaMail session */
     private Session session;
@@ -148,7 +153,7 @@ public class MailUtils {
      * @param subject       the subject of the e-mail
      * @param message       the body of the e-mail
      */
-    public SendMailThread(Session session, Blog blog, Collection to, Collection cc, Collection bcc, String subject, String message) {
+    public SendMailRunnable(Session session, Blog blog, Collection to, Collection cc, Collection bcc, String subject, String message) {
       this.session = session;
       this.blog = blog;
       this.to = to;
@@ -206,11 +211,10 @@ public class MailUtils {
   /**
    * Creates a reference to a JavaMail Session.
    *
-   * @param blog    the Blog to create a session for
    * @return  a Session instance
-   * @throws Exception    if something goes wronf creating a session
+   * @throws Exception    if something goes wrong creating a session
    */
-  public static Session createSession(Blog blog) throws Exception {
+  public static Session createSession() throws Exception {
     String ref = PebbleContext.getInstance().getConfiguration().getSmtpHost();
     if (ref.startsWith("java:comp/env")) {
       // this is a JNDI based mail session

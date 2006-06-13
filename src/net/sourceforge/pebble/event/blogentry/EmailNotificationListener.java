@@ -106,7 +106,7 @@ public class EmailNotificationListener extends BlogEntryListenerSupport {
 
     // and send the e-mail
     try {
-      MailUtils.sendMail(MailUtils.createSession(blog), blog, blog.getEmailAddresses(), new HashSet(), subject, message);
+      MailUtils.sendMail(MailUtils.createSession(), blog, blog.getEmailAddresses(), new HashSet(), subject, message);
     } catch (Exception e) {
       e.printStackTrace();
     }

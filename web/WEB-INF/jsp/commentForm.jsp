@@ -4,7 +4,7 @@
 
   <div class="contentItemBody">
     <a name="form"></a>
-    <form name="commentForm" action="saveComment.action" method="post" accept-charset="<c:out value="${blog.characterEncoding}" />">
+    <form name="commentForm" action="saveComment.action" method="post" accept-charset="${blog.characterEncoding}">
     <input type="hidden" name="entry" value="<c:out value="${blogEntry.id}"/>" />
     <input type="hidden" name="parent" value="<c:out value="${undecoratedComment.parent.id}"/>" />
 

@@ -33,6 +33,8 @@ package net.sourceforge.pebble.domain;
 
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.PluginProperties;
+import net.sourceforge.pebble.comment.DefaultCommentConfirmationStrategy;
+import net.sourceforge.pebble.comment.SimpleMathsCommentConfirmationStrategy;
 import net.sourceforge.pebble.api.decorator.ContentDecorator;
 import net.sourceforge.pebble.api.permalink.PermalinkProvider;
 import net.sourceforge.pebble.api.event.blog.BlogListener;
@@ -46,6 +48,7 @@ import net.sourceforge.pebble.api.event.trackback.TrackBackListener;
 import net.sourceforge.pebble.event.EventListenerList;
 import net.sourceforge.pebble.api.event.blog.BlogEvent;
 import net.sourceforge.pebble.api.event.blogentry.BlogEntryListener;
+import net.sourceforge.pebble.api.comment.CommentConfirmationStrategy;
 import net.sourceforge.pebble.index.*;
 import net.sourceforge.pebble.logging.AbstractLogger;
 import net.sourceforge.pebble.logging.CombinedLogFormatLogger;
@@ -96,6 +99,8 @@ public class Blog extends AbstractBlog {
 
   /** the decorator chain associated with this blog */
   private ContentDecoratorChain decoratorChain;
+
+  private CommentConfirmationStrategy commentConfirmationStrategy = new SimpleMathsCommentConfirmationStrategy();
 
   /** the event dispatcher */
   private EventDispatcher eventDispatcher;
@@ -1380,6 +1385,10 @@ public class Blog extends AbstractBlog {
 
     Blog blog = (Blog)o;
     return getId().equals(blog.getId());
+  }
+
+  public CommentConfirmationStrategy getCommentConfirmationStrategy() {
+    return commentConfirmationStrategy;
   }
 
 }

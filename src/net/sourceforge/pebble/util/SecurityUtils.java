@@ -32,6 +32,9 @@
 package net.sourceforge.pebble.util;
 
 import net.sourceforge.pebble.Constants;
+import net.sourceforge.pebble.PebbleContext;
+import net.sourceforge.pebble.security.PebbleUserDetails;
+import net.sourceforge.pebble.security.PebbleUserDetailsService;
 import net.sourceforge.pebble.domain.Blog;
 import org.acegisecurity.Authentication;
 import org.acegisecurity.GrantedAuthority;
@@ -60,6 +63,11 @@ public final class SecurityUtils {
     } else {
       return null;
     }
+  }
+
+  public static PebbleUserDetails getUserDetails() {
+    PebbleUserDetailsService puds = PebbleContext.getInstance().getPebbleUserDetailsService();
+    return (PebbleUserDetails)puds.loadUserByUsername(getUsername());
   }
 
   public static boolean isUserInRole(String role) {
