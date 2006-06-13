@@ -75,6 +75,7 @@ public class Blog extends AbstractBlog {
   public static final String EVENT_DISPATCHER_KEY = "eventDispatcher";
   public static final String LOGGER_KEY = "logger";
   public static final String PERMALINK_PROVIDER_KEY = "permalinkProviderName";
+  public static final String COMMENT_CONFIRMATION_STRATEGY_KEY = "commentConfirmationStrategy";
 
   /** the ID of this blog */
   private String id = "default";
@@ -100,7 +101,7 @@ public class Blog extends AbstractBlog {
   /** the decorator chain associated with this blog */
   private ContentDecoratorChain decoratorChain;
 
-  private CommentConfirmationStrategy commentConfirmationStrategy = new SimpleMathsCommentConfirmationStrategy();
+  private CommentConfirmationStrategy commentConfirmationStrategy;
 
   /** the event dispatcher */
   private EventDispatcher eventDispatcher;
@@ -160,6 +161,14 @@ public class Blog extends AbstractBlog {
     staticPageIndex = new StaticPageIndex(this);
 
     decoratorChain = new ContentDecoratorChain(this);
+
+    try {
+      Class c = Class.forName(getCommentConfirmationStrategyName());
+      commentConfirmationStrategy = (CommentConfirmationStrategy)c.newInstance();
+    } catch (Exception e) {
+      e.printStackTrace();
+      commentConfirmationStrategy = new DefaultCommentConfirmationStrategy();
+    }
 
     initLogger();
     initEventDispatcher();
@@ -381,6 +390,7 @@ public class Blog extends AbstractBlog {
     defaultProperties.setProperty(PERMALINK_PROVIDER_KEY, "net.sourceforge.pebble.permalink.DefaultPermalinkProvider");
     defaultProperties.setProperty(EVENT_DISPATCHER_KEY, "net.sourceforge.pebble.event.DefaultEventDispatcher");
     defaultProperties.setProperty(LOGGER_KEY, "net.sourceforge.pebble.logging.CombinedLogFormatLogger");
+    defaultProperties.setProperty(COMMENT_CONFIRMATION_STRATEGY_KEY, "net.sourceforge.pebble.comment.DefaultCommentConfirmationStrategy");
 
     return defaultProperties;
   }
@@ -1385,6 +1395,11 @@ public class Blog extends AbstractBlog {
 
     Blog blog = (Blog)o;
     return getId().equals(blog.getId());
+  }
+
+
+  public String getCommentConfirmationStrategyName() {
+    return getProperty(COMMENT_CONFIRMATION_STRATEGY_KEY);
   }
 
   public CommentConfirmationStrategy getCommentConfirmationStrategy() {

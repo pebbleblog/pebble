@@ -119,6 +119,13 @@
       </tr>
 
       <tr class="odd">
+        <td valign="top"><b>Comment confirmation</b></td>
+        <td>
+            ${blog.commentConfirmationStrategy.class.name}
+        </td>
+      </tr>
+
+      <tr class="odd">
         <td valign="top"><b>TrackBack listeners</b></td>
         <td>
           <c:forEach var="listener" items="${blog.eventListenerList.trackBackListeners}">

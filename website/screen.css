@@ -116,7 +116,7 @@ a:visited {
   padding-right: 4px;
   padding-left: 30px;
 }
-.title a {
+.title a:link, .title a:visited {
   color : #6e7d8e;
   text-decoration: none;
 }

@@ -36,6 +36,8 @@ import net.sourceforge.pebble.domain.Comment;
 import net.sourceforge.pebble.domain.BlogService;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.impl.CommentConfirmationView;
+import net.sourceforge.pebble.web.view.impl.ConfirmCommentView;
+import net.sourceforge.pebble.util.SecurityUtils;
 
 /**
  * Tests for the SaveCommentAction class.
@@ -50,7 +52,7 @@ public class SaveCommentActionTest extends SingleBlogActionTestCase {
     super.setUp();
   }
 
-  public void testProcess() throws Exception {
+  public void testProcessAsBlogContributor() throws Exception {
     BlogService service = new BlogService();
     BlogEntry blogEntry = new BlogEntry(blog);
     service.putBlogEntry(blogEntry);
@@ -63,17 +65,38 @@ public class SaveCommentActionTest extends SingleBlogActionTestCase {
     request.setParameter("website", "http://www.somedomain.com");
     request.setParameter("submit", "Add Comment");
 
-    request.setHeader("Referer", blog.getUrl() + "replyToBlogEntry.action");
+    SecurityUtils.runAsBlogContributor();
+
     View view = action.process(request, response);
     assertTrue(view instanceof CommentConfirmationView);
 
     assertEquals(1, blogEntry.getComments().size());
 
-    Comment comment = (Comment)blogEntry.getComments().get(0);
+    Comment comment = blogEntry.getComments().get(0);
     assertEquals("Test Title", comment.getTitle());
     assertEquals("Test Body", comment.getBody());
     assertEquals("Test Author", comment.getAuthor());
     assertEquals("http://www.somedomain.com", comment.getWebsite());
+  }
+
+  public void testProcessAsAnonymousUser() throws Exception {
+    BlogService service = new BlogService();
+    BlogEntry blogEntry = new BlogEntry(blog);
+    service.putBlogEntry(blogEntry);
+
+    request.setParameter("entry", "" + blogEntry.getId());
+    request.setParameter("parent", "");
+    request.setParameter("title", "Test Title");
+    request.setParameter("body", "Test Body");
+    request.setParameter("author", "Test Author");
+    request.setParameter("website", "http://www.somedomain.com");
+    request.setParameter("submit", "Add Comment");
+
+    SecurityUtils.runAsAnonymous();
+
+    View view = action.process(request, response);
+    assertTrue(view instanceof ConfirmCommentView);
+    assertEquals(0, blogEntry.getComments().size());
   }
 
   public void testProcessWhenCommentsDisabled() throws Exception {

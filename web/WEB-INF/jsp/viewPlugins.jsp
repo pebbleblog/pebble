@@ -62,6 +62,15 @@
 
       <tr>
         <td valign="top">
+          Comment confirmation strategy
+        </td>
+        <td>
+          <input type="text" name="commentConfirmationStrategy" size="60" value="${blog.commentConfirmationStrategyName}">
+        </td>
+      </tr>
+
+      <tr>
+        <td valign="top">
           <a name="trackbackListeners"></a>
           TrackBack listeners (<span class="help"><a href="./help/trackback-listeners.html" target="_blank">Help</a></span>)
         </td>

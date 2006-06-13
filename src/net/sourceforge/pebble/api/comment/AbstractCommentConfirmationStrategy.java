@@ -1,6 +1,7 @@
 package net.sourceforge.pebble.api.comment;
 
 import net.sourceforge.pebble.domain.Comment;
+import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.util.SecurityUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +23,8 @@ public abstract class AbstractCommentConfirmationStrategy implements CommentConf
    * @return true if the comment should be confirmed, false otherwise
    */
   public boolean confirmationRequired(HttpServletRequest request, Comment comment) {
-    return !SecurityUtils.isUserAuthenticated();
+    Blog blog = comment.getBlogEntry().getBlog();
+    return !(SecurityUtils.isUserAuthorisedForBlogAsBlogContributor(blog) || SecurityUtils.isUserAuthorisedForBlogAsBlogOwner(blog));
   }
 
   /**
