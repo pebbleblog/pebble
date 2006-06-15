@@ -168,6 +168,9 @@ public class UriTransformer {
 
         result = "/viewHelp.action?name=";
         result += name.substring(0, name.length()-5);
+      } else if (uri.equals("/help") || uri.equals("/help/")) {
+        // url matches /help/
+        result = "/viewHelp.action?name=index";
       } else if (uri.startsWith("/rss.xml")) {
         // url matches rss.xml
         result = "/feed.action?flavor=rss20";

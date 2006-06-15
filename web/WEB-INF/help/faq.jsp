@@ -16,8 +16,8 @@
 
     <b>Comments and TrackBacks</b><br />
     <ol>
-      <li><b>My blog has been getting some comment/TrackBack spam recently, what can I do about this?</b> Pebble has several features to fight spam. See <a href="comment-and-trackback-spam.html">Comment and TrackBack Spam</a> for more details.</li>
-      <li><b>My blog has just received a lot of spam, how can I clean this up?</b> See <a href="comment-and-trackback-spam.html#bulkManagement">Comment and TrackBack Spam</a> for details on the bulk comment and TrackBack management features.</li>
+      <li><b>My blog has been getting some comment/TrackBack spam recently, what can I do about this?</b> Pebble has several features to fight spam. See <a href="commentAndTrackbackSpam.jsp">Comment and TrackBack Spam</a> for more details.</li>
+      <li><b>My blog has just received a lot of spam, how can I clean this up?</b> See <a href="commentAndTrackbackSpam.jsp#bulkManagement">Comment and TrackBack Spam</a> for details on the bulk comment and TrackBack management features.</li>
     </ol>
 
     <b>Technical</b><br />

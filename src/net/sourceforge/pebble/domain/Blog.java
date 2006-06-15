@@ -379,14 +379,14 @@ public class Blog extends AbstractBlog {
         "net.sourceforge.pebble.event.response.ContentSpamListener\r\n" +
         "net.sourceforge.pebble.event.response.SpamScoreListener\r\n" +
         "#net.sourceforge.pebble.event.response.DeleteRejectedListener\r\n" +
-        "#net.sourceforge.pebble.event.comment.EmailNotificationListener");
+        "#net.sourceforge.pebble.event.comment.EmailAuthorNotificationListener");
     defaultProperties.setProperty(TRACKBACK_LISTENERS_KEY,
         "net.sourceforge.pebble.event.response.IpAddressListener\r\n" +
         "net.sourceforge.pebble.event.response.LinkSpamListener\r\n" +
         "net.sourceforge.pebble.event.response.ContentSpamListener\r\n" +
         "net.sourceforge.pebble.event.response.SpamScoreListener\r\n" +
         "#net.sourceforge.pebble.event.response.DeleteRejectedListener\r\n" +
-        "#net.sourceforge.pebble.event.trackback.EmailNotificationListener");
+        "#net.sourceforge.pebble.event.trackback.EmailAuthorNotificationListener");
     defaultProperties.setProperty(PERMALINK_PROVIDER_KEY, "net.sourceforge.pebble.permalink.DefaultPermalinkProvider");
     defaultProperties.setProperty(EVENT_DISPATCHER_KEY, "net.sourceforge.pebble.event.DefaultEventDispatcher");
     defaultProperties.setProperty(LOGGER_KEY, "net.sourceforge.pebble.logging.CombinedLogFormatLogger");

@@ -24,7 +24,7 @@
               <li><a href="./help/files.html">Files</a></li>
               <li><a href="./help/comments.html">Comments</a></li>
               <li><a href="./help/trackbacks.html">TrackBacks</a></li>
-              <li>Comment and TrackBack Spam</li>
+              <li><a href="./help/commentAndTrackbackSpam.html">Comment and TrackBack Spam</a></li>
               <li><a href="./help/staticPages.html">Static Pages</a></li>
               <li><a href="./help/newsfeeds.html">Newsfeeds (RSS and Atom)</a></li>
               <li><a href="./help/referers.html">Referers</a></li>
@@ -33,14 +33,10 @@
               <li><a href="./help/bloggerApi.html">Blogger API</a></li>
               <li><a href="./help/metaWeblogApi.html">MetaWeblog API</a></li>
               <li><a href="./help/themes.html">Themes</a></li>
-              <li>Multi-user Blogs</li>
-              <li>Private Blogs</li>
+              <li><a href="./help/multiuserBlogs.html">Multi-user Blogs</a></li>
+              <li><a href="./help/privateBlogs.html">Private Blogs</a></li>
 <%--
-              <li><a href="./help/blogEntries.html">Blog Entries</a></li>
-              <li><a href="comment-and-trackback-spam.html">Comment and TrackBack Spam</a></li>
               <li><a href="team-blogs.html">Multi-contributor and Team Blogs</a></li>
-              <li><a href="multiuser-blogs.html">Multi-user Blogs</a></li>
-              <li><a href="private-blogs.html">Private Blogs</a></li>
 --%>
             </ol>
           </p>
@@ -49,26 +45,21 @@
           <p>
             <div class="subsubtitle">Plugins</div>
             <ol>
-              <li>What are plugins?</li>
+              <li><a href="./help/plugins.html">Plugins</a></li>
               <li>Blog entry decorators</li>
-              <li>Permalink providers</li>
-              <li>Blog listeners</li>
+              <li><a href="./help/permalinkProviders.html">Permalink Providers</a></li>
+              <li><a href="./help/blogListeners.html">Blog Listeners</a></li>
               <li>Blog entry listeners</li>
-              <li>Comment listeners</li>
-              <li>TrackBack listeners</li>
+              <li><a href="./help/commentListeners.html">Comment Listeners</a></li>
+              <li><a href="./help/trackbackListeners.html">TrackBack Listeners</a></li>
 <%--
-              <li><a href="plugins.html">What are plugins?</a></li>
               <li><a href="blog-entry-decorators.html">Blog entry decorators</a></li>
-              <li><a href="permalink-providers.html">Permalink providers</a></li>
-              <li><a href="blog-listeners.html">Blog listeners</a></li>
               <li><a href="blog-entry-listeners.html">Blog entry listeners</a></li>
-              <li><a href="comment-listeners.html">Comment listeners</a></li>
-              <li><a href="trackback-listeners.html">TrackBack listeners</a></li>
 --%>
             </ol>
             <div class="subsubtitle">Extending Pebble</div>
             <ol>
-              <li>Developer notes</li>
+              <li><a href="./help/developers.html">Developer Notes</a></li>
               <li>Custom tag reference</li>
               <li>Writing blog entry decorators</li>
               <li>Writing permalink providers</li>
@@ -77,7 +68,6 @@
               <li>Writing comment listeners</li>
               <li>Writing TrackBack listeners</li>
 <%--
-              <li><a href="developers.html">Developer notes</a></li>
               <li><a href="custom-tags.html">Custom tag reference</a></li>
               <li><a href="writing-blog-entry-decorators.html">Writing blog entry decorators</a></li>
               <li><a href="writing-permalink-providers.html">Writing permalink providers</a></li>
