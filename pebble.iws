@@ -180,16 +180,16 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="screen.css" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="screen.css" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/web/themes/default/screen.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="27" column="61" selection-start="612" selection-end="612" vertical-scroll-proportion="0.3941606">
+            <state line="128" column="16" selection-start="2408" selection-end="2410" vertical-scroll-proportion="0.6569343">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AbstractEmailNotificationListener.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="AbstractEmailNotificationListener.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/event/comment/AbstractEmailNotificationListener.java">
           <provider selected="true" editor-type-id="text-editor">
             <state line="122" column="31" selection-start="4831" selection-end="4831" vertical-scroll-proportion="0.82156134">
@@ -1088,13 +1088,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/themes/default/screen.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="61" selection-start="612" selection-end="612" vertical-scroll-proportion="0.3941606">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/event/comment/EmailNotificationListener.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="52" column="22" selection-start="2117" selection-end="2127" vertical-scroll-proportion="0.27737227">
@@ -1112,6 +1105,13 @@
     <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/event/comment/AbstractEmailNotificationListener.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="122" column="31" selection-start="4831" selection-end="4831" vertical-scroll-proportion="0.82156134">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/themes/default/screen.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="128" column="16" selection-start="2408" selection-end="2410" vertical-scroll-proportion="0.6569343">
           <folding />
         </state>
       </provider>
