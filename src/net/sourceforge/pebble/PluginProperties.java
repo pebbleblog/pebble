@@ -33,11 +33,13 @@ package net.sourceforge.pebble;
 
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.event.response.ContentSpamListener;
+import net.sourceforge.pebble.event.response.SpamScoreListener;
+import net.sourceforge.pebble.event.response.LinkSpamListener;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import java.io.*;
-import java.util.Properties;
+import java.util.*;
 
 /**
  * Contains properties that can be used by Pebble plugins.
@@ -66,24 +68,24 @@ public class PluginProperties {
   }
 
   /**
-   * Gets the default properties for a Blog.
-   *
-   * @return    a Properties instance
-   */
-  protected Properties getDefaultProperties() {
-    Properties defaultProperties = new Properties();
-    defaultProperties.setProperty(ContentSpamListener.REGEX_LIST_KEY, "cialis, viagra, poker, casino, xanax, holdem, hold-em, hold em, sex, craps, fuck, shit, teenage, phentermine, blackjack, roulette, gambling, pharmacy, carisoprodol, pills, penis, penis enlargement, anal, hentai, anime, vicodin, massage, nude, ejaculation, porn, gay, naked, girl, teens, babe, masturbating, squirt, incest, fetish, discount, cheap, interesdting, Anonymous, h1, levitra, government, grants, loan, &\\#.*;, kasino, slots, play, bingo, mortgage, baccarat");
-
-    return defaultProperties;
-  }
-
-  /**
    * Helper method to load the properties from disk.
    */
   private void loadProperties() {
     try {
-      this.properties = new Properties(getDefaultProperties());
-      FileInputStream fin = new FileInputStream(blog.getPluginPropertiesFile());
+      properties = new Properties();
+      properties.setProperty(ContentSpamListener.REGEX_LIST_KEY, ContentSpamListener.DEFAULT_REGEX_LIST);
+      properties.setProperty(ContentSpamListener.THRESHOLD_KEY, "" + ContentSpamListener.DEFAULT_THRESHOLD);
+      properties.setProperty(LinkSpamListener.COMMENT_THRESHOLD_KEY, "" + LinkSpamListener.DEFAULT_THRESHOLD);
+      properties.setProperty(LinkSpamListener.TRACKBACK_THRESHOLD_KEY, "" + LinkSpamListener.DEFAULT_THRESHOLD);
+      properties.setProperty(SpamScoreListener.COMMENT_THRESHOLD_KEY, "" + SpamScoreListener.DEFAULT_THRESHOLD);
+      properties.setProperty(SpamScoreListener.TRACKBACK_THRESHOLD_KEY, "" + SpamScoreListener.DEFAULT_THRESHOLD);
+
+      File propertiesFile = new File(blog.getPluginPropertiesFile());
+      if (!propertiesFile.exists()) {
+        return;
+      }
+
+      FileInputStream fin = new FileInputStream(propertiesFile);
       properties.load(fin);
       fin.close();
     } catch (FileNotFoundException fnfe) {
@@ -99,25 +101,19 @@ public class PluginProperties {
    * @return  a String
    */
   public String getPropertiesAsString() {
-    StringBuffer content = new StringBuffer();
-    try {
-      BufferedReader reader = new BufferedReader(new FileReader(blog.getPluginPropertiesFile()));
-      String line = reader.readLine();
-      while (line != null) {
-        content.append(line);
-
-        line = reader.readLine();
-        if (line != null) {
-          content.append(System.getProperty("line.separator"));
-        }
-      }
-      reader.close();
-    } catch (FileNotFoundException fnfe) {
-    } catch (IOException ioe) {
-      log.error(ioe.getMessage());
+    StringBuffer buf = new StringBuffer();
+    List keys = new ArrayList(properties.keySet());
+    Collections.sort(keys);
+    Iterator it = keys.iterator();
+    while (it.hasNext()) {
+      String key = (String)it.next();
+      buf.append(key);
+      buf.append("=");
+      buf.append(properties.getProperty(key));
+      buf.append(System.getProperty("line.separator"));
     }
 
-    return content.toString();
+    return buf.toString();
   }
 
   /**

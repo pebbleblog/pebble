@@ -52,6 +52,9 @@ public class ContentSpamListener extends BlogEntryResponseListenerSupport {
   /** the log used by this class */
   private static final Log log = LogFactory.getLog(ContentSpamListener.class);
 
+  /** the default regex list */
+  public static final String DEFAULT_REGEX_LIST = "cialis, viagra, poker, casino, xanax, holdem, hold-em, hold em, sex, craps, fuck, shit, teenage, phentermine, blackjack, roulette, gambling, pharmacy, carisoprodol, pills, penis, penis enlargement, anal, hentai, anime, vicodin, massage, nude, ejaculation, porn, gay, naked, girl, teens, babe, masturbating, squirt, incest, fetish, discount, cheap, interesdting, Anonymous, h1, levitra, government, grants, loan, &\\#.*;, kasino, slots, play, bingo, mortgage, baccarat";
+  
   /** the default threshold for the number of content matches */
   public static final int DEFAULT_THRESHOLD = 0;
 

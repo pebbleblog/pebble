@@ -36,7 +36,7 @@
 
       Comment confirmation strategy
       <br />
-      <input type="text" name="commentConfirmationStrategy" size="80" value="${blog.commentConfirmationStrategyName}" />
+      <input type="text" name="commentConfirmationStrategy" size="60" value="${blog.commentConfirmationStrategyName}" />
       <br /><br />
 
       <a name="trackbackListeners"></a>
@@ -54,18 +54,18 @@
       <a name="permalinkProvider"></a>
       Permalink provider (<span class="help"><a href="./help/permalinkProviders.html" target="_blank">Help</a></span>)
       <br />
-      <input type="text" name="permalinkProviderName" size="80" value="${blog.permalinkProviderName}" />
+      <input type="text" name="permalinkProviderName" size="60" value="${blog.permalinkProviderName}" />
       <br /><br />
 
       Lucene Analyzer
       <br />
-      <input type="text" name="luceneAnalyzer" size="80" value="${blog.luceneAnalyzer}" />
+      <input type="text" name="luceneAnalyzer" size="60" value="${blog.luceneAnalyzer}" />
       <br /><br />
 
       <a name="logger"></a>
       Logger (<span class="help"><a href="./help/logs.html" target="_blank">Help</a></span>)
       <br />
-      <input type="text" name="logger" size="80" value="${blog.loggerName}">
+      <input type="text" name="logger" size="60" value="${blog.loggerName}">
       <br /><br />
 
       <table width="99%">
