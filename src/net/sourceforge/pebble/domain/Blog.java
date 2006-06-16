@@ -838,7 +838,7 @@ public class Blog extends AbstractBlog {
         responses.add(response);
       }
 
-      if (responses.size() == getRecentBlogEntriesOnHomePage()) {
+      if (responses.size() == getRecentResponsesOnHomePage()) {
         break;
       }
     }
