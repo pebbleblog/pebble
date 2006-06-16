@@ -72,6 +72,7 @@
     </pebble:isBlogContributor>
 
     <br /><br />
+    <a name="responses"></a>
     <jsp:include page="/WEB-INF/jsp/comments.jsp"/>
     <jsp:include page="/WEB-INF/jsp/trackbacks.jsp"/>
 

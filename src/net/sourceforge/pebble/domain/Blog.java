@@ -166,6 +166,7 @@ public class Blog extends AbstractBlog {
       Class c = Class.forName(getCommentConfirmationStrategyName());
       commentConfirmationStrategy = (CommentConfirmationStrategy)c.newInstance();
     } catch (Exception e) {
+      addMessage(new Message("Could not load comment confirmation strategy \"" + getCommentConfirmationStrategyName() + "\""));
       e.printStackTrace();
       commentConfirmationStrategy = new DefaultCommentConfirmationStrategy();
     }
@@ -190,6 +191,7 @@ public class Blog extends AbstractBlog {
       Constructor cons = c.getConstructor(new Class[] {Blog.class});
       this.logger = (AbstractLogger)cons.newInstance(new Object[] {this});
     } catch (Exception e) {
+      addMessage(new Message("Could not start logger \"" + getLoggerName() + "\""));
       e.printStackTrace();
       this.logger = new CombinedLogFormatLogger(this);
     }
@@ -229,6 +231,7 @@ public class Blog extends AbstractBlog {
             BlogListener listener = (BlogListener)c.newInstance();
             eventListenerList.addBlogListener(listener);
           } catch (Exception e) {
+            addMessage(new Message("Could not start blog listener \"" + classes[i] + "\""));
             log.error("Blog listener " + classes[i] + " could not be registered", e);
           }
         }
@@ -252,6 +255,7 @@ public class Blog extends AbstractBlog {
             BlogEntryListener listener = (BlogEntryListener)c.newInstance();
             eventListenerList.addBlogEntryListener(listener);
           } catch (Exception e) {
+            addMessage(new Message("Could not start blog entry listener \"" + classes[i] + "\""));
             log.error("Blog entry listener " + classes[i] + " could not be registered", e);
           }
         }
@@ -281,6 +285,7 @@ public class Blog extends AbstractBlog {
             CommentListener listener = (CommentListener)c.newInstance();
             eventListenerList.addCommentListener(listener);
           } catch (Exception e) {
+            addMessage(new Message("Could not start comment listener \"" + classes[i] + "\""));
             log.error("Comment listener " + classes[i] + " could not be registered", e);
           }
         }
@@ -307,6 +312,7 @@ public class Blog extends AbstractBlog {
             TrackBackListener listener = (TrackBackListener)c.newInstance();
             eventListenerList.addTrackBackListener(listener);
           } catch (Exception e) {
+            addMessage(new Message("Could not start TrackBack listener \"" + classes[i] + "\""));
             log.error("TrackBack listener " + classes[i] + " could not be registered", e);
           }
         }
@@ -334,6 +340,7 @@ public class Blog extends AbstractBlog {
             decorator.setBlog(this);
             decoratorChain.add(decorator);
           } catch (Exception e) {
+            addMessage(new Message("Could not start decorator \"" + classes[i] + "\""));
             e.printStackTrace();
             log.error(classes[i] + " could not be started", e);
           }

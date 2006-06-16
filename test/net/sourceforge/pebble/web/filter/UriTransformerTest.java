@@ -59,8 +59,8 @@ public class UriTransformerTest extends SingleBlogTestCase {
     assertEquals("/feed.action?flavor=rss20", transformer.getUri("/rss.xml", blog));
   }
 
-  public void testRssWithCommentsAndTrackBacksUrlForSingleUserBlog() throws Exception {
-    assertEquals("/feed.action?flavor=rss20WithCommentsAndTrackBacks", transformer.getUri("/rssWithCommentsAndTrackBacks.xml", blog));
+  public void testRssUrlForResponseFeed() throws Exception {
+    assertEquals("/responseFeed.action?flavor=rss20", transformer.getUri("/responses/rss.xml", blog));
   }
 
   public void testRdfUrlForSingleUserBlog() throws Exception {
@@ -69,6 +69,10 @@ public class UriTransformerTest extends SingleBlogTestCase {
 
   public void testAtomUrlForSingleUserBlog() throws Exception {
     assertEquals("/feed.action?flavor=atom", transformer.getUri("/atom.xml", blog));
+  }
+
+  public void testAtomUrlForResponseFeed() throws Exception {
+    assertEquals("/responseFeed.action?flavor=atom", transformer.getUri("/responses/atom.xml", blog));
   }
 
   public void testIncorrectRssUrlForSingleUserBlog() throws Exception {

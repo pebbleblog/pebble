@@ -1,5 +1,5 @@
 body {
-  font-family: Lucida Grande, Tahoma, Verdana, Arial, sans-serif;
+  font-family: Lucida Grande, Verdana, Tahoma, Arial, sans-serif;
   font-size: 13px;
   text-align: left;
 }
@@ -70,6 +70,7 @@ a:visited {
 .subsubtitle {
   font-size: 12px;
   font-weight: normal;
+  padding-left: 30px;
   padding-top: 4px;
   color: #6e7d8e;
 }
@@ -231,12 +232,13 @@ blockquote {
 }
 .codeSample {
   font-family: Courier, sans-serif;
+  font-size: 11px;
   border: solid #F0F0F0 1px;
   text-align: left;
   background: #F8F8F8;
-  margin-left: 32px;
-  margin-right: 32px;
-  padding: 16px;
+  margin-left: 8px;
+  margin-right: 8px;
+  padding: 8px;
   overflow: auto;
 }
 #linearNavigationLinks {

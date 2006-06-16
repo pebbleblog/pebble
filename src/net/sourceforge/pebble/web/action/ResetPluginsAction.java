@@ -42,11 +42,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Resets the theme, decorators and listeners associated with a blog.
+ * Resets the plugins associated with a blog.
  *
  * @author    Simon Brown
  */
-public class ResetBlogAction extends SecureAction {
+public class ResetPluginsAction extends SecureAction {
 
   /**
    * Peforms the processing associated with this action.
@@ -59,11 +59,15 @@ public class ResetBlogAction extends SecureAction {
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
 
     try {
-      blog.removeProperty(Blog.THEME_KEY);
+      blog.removeProperty(Blog.PERMALINK_PROVIDER_KEY);
       blog.removeProperty(Blog.CONTENT_DECORATORS_KEY);
+      blog.removeProperty(Blog.BLOG_LISTENERS_KEY);
       blog.removeProperty(Blog.BLOG_ENTRY_LISTENERS_KEY);
       blog.removeProperty(Blog.COMMENT_LISTENERS_KEY);
+      blog.removeProperty(Blog.COMMENT_CONFIRMATION_STRATEGY_KEY);
       blog.removeProperty(Blog.TRACKBACK_LISTENERS_KEY);
+      blog.removeProperty(Blog.LUCENE_ANALYZER_KEY);
+      blog.removeProperty(Blog.LOGGER_KEY);
       blog.storeProperties();
     } catch (BlogException e) {
       e.printStackTrace();

@@ -74,18 +74,7 @@ public class PebbleContextListener implements ServletContextListener {
     ctx.setPebbleUserDetailsService(pebbleUserDetailsService);
     ctx.setWebApplicationRoot(event.getServletContext().getRealPath("/"));
 
-    File blogsDirectory = new File(config.getDataDirectory(), "blogs");
-    File files[] = blogsDirectory.listFiles();
-    int count = 0;
-    if (files != null) {
-      for (File file : files) {
-        if (file.isDirectory()) {
-          count++;
-        }
-      }
-    }
-
-    BlogManager.getInstance().setMultiBlog(count > 1);
+    BlogManager.getInstance().setMultiBlog(config.isMultiBlog());
     BlogManager.getInstance().startBlogs();
 
     long endTime = System.currentTimeMillis();

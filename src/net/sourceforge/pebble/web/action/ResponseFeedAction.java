@@ -88,8 +88,13 @@ public class ResponseFeedAction extends Action {
       if (entryId != null) {
         BlogService service = new BlogService();
         BlogEntry blogEntry = service.getBlogEntry(blog, entryId);
-        if (blogEntry != null) {
-          responses = blogEntry.getResponses();
+        if (blogEntry != null && blogEntry.isPublished()) {
+          getModel().put(Constants.BLOG_ENTRY_KEY, blogEntry);
+          for (Response r : blogEntry.getResponses()) {
+            if (r.isApproved()) {
+              responses.add(r);
+            }
+          }
         }
       } else {
         responses = new ArrayList(blog.getRecentApprovedResponses());

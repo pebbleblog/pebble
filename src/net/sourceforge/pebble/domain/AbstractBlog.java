@@ -68,6 +68,8 @@ public abstract class AbstractBlog extends TimePeriod {
   public static final String CHARACTER_ENCODING_KEY = "characterEncoding";
   public static final String THEME_KEY = "theme";
 
+  private List<Message> messages = new ArrayList<Message>();
+
   /** the properties for this blog */
   protected Properties properties;
 
@@ -445,6 +447,18 @@ public abstract class AbstractBlog extends TimePeriod {
    */
   public String toString() {
     return getName();
+  }
+
+  public void addMessage(Message message) {
+    messages.add(message);
+  }
+
+  public List<Message> getMessages() {
+    return new ArrayList<Message>(messages);
+  }
+
+  public int getNumberOfMessages() {
+    return messages.size();
   }
 
 }

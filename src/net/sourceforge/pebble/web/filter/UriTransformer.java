@@ -171,18 +171,21 @@ public class UriTransformer {
       } else if (uri.equals("/help") || uri.equals("/help/")) {
         // url matches /help/
         result = "/viewHelp.action?name=index";
+      } else if (uri.equals("/responses/rss.xml")) {
+        // url is for a response feed
+        result = "/responseFeed.action?flavor=rss20";
       } else if (uri.startsWith("/rss.xml")) {
         // url matches rss.xml
         result = "/feed.action?flavor=rss20";
       } else if (uri.startsWith("/feed.xml")) {
         // url matches feed.xml
         result = "/feed.action?flavor=rss20";
-      } else if (uri.startsWith("/rssWithCommentsAndTrackBacks.xml")) {
-        // url matches rss.xml
-        result = "/feed.action?flavor=rss20WithCommentsAndTrackBacks";
       } else if (uri.startsWith("/rdf.xml")) {
         // url matches rdf.xml
         result = "/feed.action?flavor=rdf";
+      } else if (uri.startsWith("/responses/atom.xml")) {
+        // url is for a response feed
+        result = "/responseFeed.action?flavor=atom";
       } else if (uri.startsWith("/atom.xml")) {
         // url matches atom.xml
         result = "/feed.action?flavor=atom";

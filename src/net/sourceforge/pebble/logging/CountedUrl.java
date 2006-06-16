@@ -40,7 +40,7 @@ package net.sourceforge.pebble.logging;
 public abstract class CountedUrl {
 
   /** the maximum length of the name */
-  public static final int NAME_LENGTH_LIMIT = 80;
+  public static final int NAME_LENGTH_LIMIT = 60;
 
   /** the URL as a String */
   private String url;

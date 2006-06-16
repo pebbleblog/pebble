@@ -18,7 +18,7 @@
       </td>
     </tr>
 
-    <tr class="odd">
+    <tr class="even">
       <td valign="top"><b>Responses</b></td>
       <td>
           <fmt:formatNumber value="${blog.numberOfResponses}"/>
@@ -32,7 +32,7 @@
       </td>
     </tr>
 
-    <tr class="odd">
+    <tr class="even">
       <td valign="top"><b>Uptime</b></td>
       <td>
         <fmt:formatNumber value="${pebbleContext.uptime.days}"/> days, <fmt:formatNumber value="${pebbleContext.uptime.hours}" pattern="00"/>:<fmt:formatNumber value="${pebbleContext.uptime.minutes}" pattern="00"/>:<fmt:formatNumber value="${pebbleContext.uptime.seconds}" pattern="00"/>
@@ -46,7 +46,7 @@
       </td>
     </tr>
 
-    <tr class="odd">
+    <tr class="even">
       <td valign="top"><b>JVM memory</b></td>
       <td>
         Using <fmt:formatNumber value="${pebbleContext.memoryUsageInKB}"/> KB of <fmt:formatNumber value="${pebbleContext.totalMemoryInKB}"/> KB (<a href="gc.secureaction" title="Run the garbage collector">GC</a>)
@@ -76,8 +76,8 @@
       </tr>
 
       <tr class="even">
-        <td valign="top"><b>Blog entry decorators</b></td>
-        <td>
+        <td colspan="2">
+          <b>Blog entry decorators</b><br />
           <c:forEach var="decorator" items="${blog.contentDecoratorChain.contentDecorators}">
             ${decorator.class.name}<br />
           </c:forEach>
@@ -85,15 +85,15 @@
       </tr>
 
       <tr class="odd">
-        <td valign="top"><b>Permalink provider</b></td>
-        <td>
+        <td colspan="2">
+          <b>Permalink provider</b><br />
           ${blog.permalinkProvider.class.name}
         </td>
       </tr>
 
       <tr class="even">
-        <td valign="top"><b>Blog listeners</b></td>
-        <td>
+        <td colspan="2">
+          <b>Blog listeners</b><br />
           <c:forEach var="listener" items="${blog.eventListenerList.blogListeners}">
             ${listener.class.name}
           </c:forEach>
@@ -101,8 +101,8 @@
       </tr>
 
       <tr class="odd">
-        <td valign="top"><b>Blog entry listeners</b></td>
-        <td>
+        <td colspan="2">
+          <b>Blog entry listeners</b><br />
           <c:forEach var="listener" items="${blog.eventListenerList.blogEntryListeners}">
             ${listener.class.name}<br />
           </c:forEach>
@@ -110,8 +110,8 @@
       </tr>
 
       <tr class="even">
-        <td valign="top"><b>Comment listeners</b></td>
-        <td>
+        <td colspan="2">
+          <b>Comment listeners</b><br />
           <c:forEach var="listener" items="${blog.eventListenerList.commentListeners}">
             ${listener.class.name}<br />
           </c:forEach>
@@ -119,39 +119,41 @@
       </tr>
 
       <tr class="odd">
-        <td valign="top"><b>Comment confirmation</b></td>
-        <td>
-            ${blog.commentConfirmationStrategy.class.name}
+        <td colspan="2">
+          <b>Comment confirmation</b><br />
+          ${blog.commentConfirmationStrategy.class.name}
         </td>
       </tr>
 
-      <tr class="odd">
-        <td valign="top"><b>TrackBack listeners</b></td>
-        <td>
+      <tr class="even">
+        <td colspan="2">
+          <b>TrackBack listeners</b><br />
           <c:forEach var="listener" items="${blog.eventListenerList.trackBackListeners}">
             ${listener.class.name}<br />
           </c:forEach>
         </td>
       </tr>
 
+<%--
       <tr class="even">
-        <td valign="top"><b>Properties</b></td>
-        <td>
+        <td colspan="2">
+          <b>Properties</b><br />
           <pre>${blog.pluginProperties.propertiesAsString}</pre>
         </td>
       </tr>
+--%>
 
     <tr class="odd">
-      <td valign="top"><b>Lucene Analyzer</b></td>
-      <td>
-          ${blog.luceneAnalyzer}
+      <td colspan="2">
+        <b>Lucene Analyzer</b><br />
+        ${blog.luceneAnalyzer}
       </td>
     </tr>
 
     <tr class="even">
-      <td valign="top"><b>Logger</b></td>
-      <td>
-          ${blog.logger.class.name}
+      <td colspan="2">
+        <b>Logger</b><br />
+        ${blog.logger.class.name}
       </td>
     </tr>
 

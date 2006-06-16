@@ -1,24 +1,41 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <id>tag:<c:out value="${blog.domainName}"/>,0000-00-00:<c:out value="${blog.id}"/></id>
-  <title><c:out value="${blog.name} - Responses"  escapeXml="true" /></title>
-  <link rel="alternate" type="text/html" href="${blog.url}"/>
-  <link rel="self" type="application/atom+xml" href="${blog.url}responses.xml?flavor=atom"/>
-  <updated><fmt:formatDate value="${blog.lastModified}" pattern="yyyy-MM-dd'T'HH:mm:ssZ" timeZone="${blog.timeZone}"/></updated>
-  <author>
-    <name><c:out value="${blog.author}"/></name>
-  </author>
-  <subtitle><c:out value="${blog.description}"/></subtitle>
-  <rights><c:out value="${blog.author}"/></rights>
-  <generator uri="http://pebble.sourceforge.net" version="<c:out value="${pebbleContext.buildVersion}"/>">Pebble</generator>
+  <id>tag:<c:out value="${blog.domainName}"/>,0000-00-00:${blog.id}</id>
+
+  <c:choose>
+    <c:when test="${not empty blogEntry}">
+<title><c:out value="${blog.name}"  escapeXml="true" /> - ${blogEntry.title}</title>
+<link rel="alternate" type="text/html" href="${blogEntry.permalink}"/>
+<link rel="self" type="application/atom+xml" href="${blog.url}responses/atom.xml?entry=${blogEntry.id}"/>
+<updated><fmt:formatDate value="${blogEntry.lastModified}" pattern="yyyy-MM-dd'T'HH:mm:ssZ" timeZone="${blog.timeZone}"/></updated>
+<author>
+  <name>${blogEntry.user.name}</name>
+</author>
+<subtitle>${blogEntry.truncatedContent}</subtitle>
+<rights>${blogEntry.user.name}</rights>
+    </c:when>
+    <c:otherwise>
+<title><c:out value="${blog.name}"  escapeXml="true" /> - Responses</title>
+<link rel="alternate" type="text/html" href="${blog.url}"/>
+<link rel="self" type="application/atom+xml" href="${blog.url}responses/atom.xml"/>
+<updated><fmt:formatDate value="${blog.lastModified}" pattern="yyyy-MM-dd'T'HH:mm:ssZ" timeZone="${blog.timeZone}"/></updated>
+<author>
+  <name>${blog.author}</name>
+</author>
+<subtitle>${blog.description}</subtitle>
+<rights>${blog.author}</rights>
+    </c:otherwise>
+  </c:choose>
+
+  <generator uri="http://pebble.sourceforge.net" version="${pebbleContext.buildVersion}">Pebble</generator>
 
   <c:forEach var="aResponse" items="${responses}">
   <entry>
-    <title><c:out value="${aResponse.title}"/></title>
-    <link rel="alternate" type="text/html" href="<c:out value="${aResponse.permalink}"/>"/>
+    <title>${aResponse.title}</title>
+    <link rel="alternate" type="text/html" href="${aResponse.permalink}"/>
     <author>
-      <name><c:out value="${aResponse.sourceName}"/></name>
+      <name>${aResponse.sourceName}</name>
     </author>
-    <id>tag:<c:out value="${blogEntry.blog.domainName}"/>,<fmt:formatDate value="${blogEntry.date}" pattern="yyyy-MM-dd" timeZone="UTC"/>:<c:out value="${blogEntry.blog.id}"/>/<c:out value="${aResponse.id}"/></id>
+    <id>tag:${blogEntry.blog.domainName},<fmt:formatDate value="${blogEntry.date}" pattern="yyyy-MM-dd" timeZone="UTC"/>:${blogEntry.blog.id}/${blogEntry.id}/${aResponse.id}</id>
     <updated><fmt:formatDate value="${aResponse.date}" pattern="yyyy-MM-dd'T'HH:mm:ssZ" timeZone="${blog.timeZone}"/></updated>
     <published><fmt:formatDate value="${aResponse.date}" pattern="yyyy-MM-dd'T'HH:mm:ssZ" timeZone="${blog.timeZone}"/></published>
     <content type="html">

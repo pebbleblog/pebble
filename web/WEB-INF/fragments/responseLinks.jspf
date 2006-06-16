@@ -1,8 +1,6 @@
 <div class="contentItemLinks">
-  <c:if test="${blogEntry.trackBacksEnabled || not empty blogEntry.trackBacks}">
-    <a href="${blogEntry.trackBacksLink}"><fmt:message key="blogentry.trackbacks" />[<fmt:formatNumber value="${blogEntry.numberOfTrackBacks}"/>]</a>
-  </c:if>
-  <c:if test="${blogEntry.commentsEnabled || not empty blogEntry.comments}">
-    <a href="${blogEntry.commentsLink}"><fmt:message key="blogentry.comments" />[<fmt:formatNumber value="${blogEntry.numberOfComments}"/>]</a>
+  <c:if test="${blogEntry.trackBacksEnabled or blogEntry.commentsEnabled}">
+    <a href="${blogEntry.permalink}#responses">Responses[<fmt:formatNumber value="${blogEntry.numberOfResponses}"/>]</a>
+    <a href="responses/rss.xml?entry=${blogEntry.id}"><img src="common/images/feed-icon-10x10.png" alt="RSS feed for responses to this blog entry" border="0" /></a>
   </c:if>
 </div>

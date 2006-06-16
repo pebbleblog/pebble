@@ -48,6 +48,7 @@ public class Configuration {
 
   private String dataDirectory = "${user.home}/pebble";
   private String url;
+  private boolean multiBlog = false;
   private String smtpHost = "java:comp/env/mail/Session";
   private long fileUploadSize = 2048;
   private long fileUploadQuota = -1;
@@ -106,6 +107,14 @@ public class Configuration {
 
   public void setDataDirectory(String dataDirectory) {
     this.dataDirectory = evaluateDirectory(dataDirectory);
+  }
+
+  public boolean isMultiBlog() {
+    return multiBlog;
+  }
+
+  public void setMultiBlog(boolean multiBlog) {
+    this.multiBlog = multiBlog;
   }
 
   /**
