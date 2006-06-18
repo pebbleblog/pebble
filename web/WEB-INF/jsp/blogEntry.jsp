@@ -99,7 +99,7 @@
 <div align="center">
   <br />
   <c:if test="${blogEntry.commentsEnabled}">
-    <a href="replyToBlogEntry.action?entry=${blogEntry.id}"><fmt:message key="comment.reply"/></a><br /><br />
+    <a href="replyToBlogEntry.action?entry=${blogEntry.id}"><fmt:message key="comment.addComment"/></a><br /><br />
   </c:if>
   <c:if test="${blogEntry.trackBacksEnabled}">
     <fmt:message key="trackback.url"/> <a href="${blog.url}addTrackBack.action?entry=${blogEntry.id}">${blog.url}addTrackBack.action?entry=${blogEntry.id}</a><br />

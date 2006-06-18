@@ -84,11 +84,13 @@ public class LoggingFilter implements Filter {
       if (!SecurityUtils.isBlogOwner() && !SecurityUtils.isBlogContributor() && !SecurityUtils.isPebbleAdmin()) {
         // this is the list of URIs that get logged
         if (internalUri.startsWith("/feed.action") ||
+            internalUri.startsWith("/responseFeed.action") ||
             internalUri.startsWith("/viewCategory.action") ||
             internalUri.startsWith("/viewTags.action") ||
             internalUri.startsWith("/viewTag.action") ||
             internalUri.startsWith("/search.action") ||
             internalUri.startsWith("/viewBlogEntry.action") ||
+            internalUri.startsWith("/viewStaticPage.action") ||
             internalUri.startsWith("/viewDailyBlog.action") ||
             internalUri.startsWith("/viewMonthlyBlog.action") ||
             internalUri.startsWith("/file.action?type=" + FileMetaData.BLOG_FILE) ||
