@@ -33,9 +33,9 @@ package net.sourceforge.pebble.util;
 
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.PebbleContext;
-import net.sourceforge.pebble.security.PebbleUserDetails;
-import net.sourceforge.pebble.security.PebbleUserDetailsService;
 import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.security.PebbleUserDetails;
+import net.sourceforge.pebble.security.SecurityRealm;
 import org.acegisecurity.Authentication;
 import org.acegisecurity.GrantedAuthority;
 import org.acegisecurity.GrantedAuthorityImpl;
@@ -43,10 +43,9 @@ import org.acegisecurity.context.SecurityContext;
 import org.acegisecurity.context.SecurityContextHolder;
 import org.acegisecurity.providers.TestingAuthenticationToken;
 import org.acegisecurity.providers.encoding.Md5PasswordEncoder;
-import org.acegisecurity.providers.encoding.ShaPasswordEncoder;
-import org.acegisecurity.providers.encoding.PlaintextPasswordEncoder;
 import org.acegisecurity.providers.encoding.PasswordEncoder;
-import org.springframework.context.ApplicationContext;
+import org.acegisecurity.providers.encoding.PlaintextPasswordEncoder;
+import org.acegisecurity.providers.encoding.ShaPasswordEncoder;
 
 /**
  * A collection of utility methods for security.
@@ -66,8 +65,8 @@ public final class SecurityUtils {
   }
 
   public static PebbleUserDetails getUserDetails() {
-    PebbleUserDetailsService puds = PebbleContext.getInstance().getPebbleUserDetailsService();
-    return (PebbleUserDetails)puds.loadUserByUsername(getUsername());
+    SecurityRealm realm = PebbleContext.getInstance().getSecurityRealm();
+    return realm.getUser(getUsername());
   }
 
   public static boolean isUserInRole(String role) {

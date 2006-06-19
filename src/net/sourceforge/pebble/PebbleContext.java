@@ -31,8 +31,8 @@
  */
 package net.sourceforge.pebble;
 
+import net.sourceforge.pebble.security.SecurityRealm;
 import net.sourceforge.pebble.util.RelativeDate;
-import net.sourceforge.pebble.security.PebbleUserDetailsService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -53,7 +53,7 @@ public class PebbleContext {
 
   private Configuration configuration;
 
-  private PebbleUserDetailsService pebbleUserDetailsService;
+  private SecurityRealm securityRealm;
 
   private String buildVersion;
   private String buildDate;
@@ -135,14 +135,14 @@ public class PebbleContext {
     this.configuration = configuration;
   }
 
-  public PebbleUserDetailsService getPebbleUserDetailsService() {
-    return pebbleUserDetailsService;
+  public SecurityRealm getSecurityRealm() {
+    return securityRealm;
   }
 
-  public void setPebbleUserDetailsService(PebbleUserDetailsService pebbleUserDetailsService) {
-    this.pebbleUserDetailsService = pebbleUserDetailsService;
+  public void setSecurityRealm(SecurityRealm securityRealm) {
+    this.securityRealm = securityRealm;
   }
-  
+
   /**
    * Sets the directory where themes are located.
    *

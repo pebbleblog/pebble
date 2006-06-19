@@ -4,7 +4,7 @@ import org.acegisecurity.GrantedAuthority;
 import org.acegisecurity.userdetails.User;
 
 /**
- * Extension of the standard User class that adds additional information
+ * Extension of the Acegi User class that adds additional information
  * such as the user's e-mail address.
  *
  * @author    Simon Brown

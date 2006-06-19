@@ -33,7 +33,8 @@ package net.sourceforge.pebble.web.listener;
 
 import net.sourceforge.pebble.PebbleContext;
 import net.sourceforge.pebble.Configuration;
-import net.sourceforge.pebble.security.PebbleUserDetailsService;
+import net.sourceforge.pebble.security.DefaultUserDetailsService;
+import net.sourceforge.pebble.security.SecurityRealm;
 import net.sourceforge.pebble.dao.DAOFactory;
 import net.sourceforge.pebble.domain.BlogManager;
 import org.apache.commons.logging.Log;
@@ -43,7 +44,6 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-import java.io.File;
 
 /**
  * Allows the blog to be loaded when this web application is started up.
@@ -66,12 +66,12 @@ public class PebbleContextListener implements ServletContextListener {
 
     ApplicationContext applicationContext = WebApplicationContextUtils.getRequiredWebApplicationContext(event.getServletContext());
     Configuration config = (Configuration)applicationContext.getBean("pebbleConfiguration");
-    PebbleUserDetailsService pebbleUserDetailsService = (PebbleUserDetailsService)applicationContext.getBean("pebbleUserDetailsService");
+    SecurityRealm realm = (SecurityRealm)applicationContext.getBean("pebbleSecurityRealm");
 
     DAOFactory.setConfiguredFactory(config.getDaoFactory());
     PebbleContext ctx = PebbleContext.getInstance();
     ctx.setConfiguration(config);
-    ctx.setPebbleUserDetailsService(pebbleUserDetailsService);
+    ctx.setSecurityRealm(realm);
     ctx.setWebApplicationRoot(event.getServletContext().getRealPath("/"));
 
     BlogManager.getInstance().setMultiBlog(config.isMultiBlog());

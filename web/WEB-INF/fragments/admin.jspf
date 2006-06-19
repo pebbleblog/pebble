@@ -16,10 +16,6 @@
   <div class="sidebarItemTitle"><span>Logged in as <authz:authentication operation="username"/></span></div>
   <ul>
 
-    <li>
-      <a href="viewMessages.secureaction">Messages (${blog.numberOfMessages})</a>
-    </li>
-
   <pebble:isBlogContributor>
   <li><b>Content</b>
   <br />
@@ -54,6 +50,7 @@
   <a href="viewPlugins.secureaction" title="Manage your plugins">Plugins</a> |
   <a href="aboutBlog.secureaction" title="About this blog">About</a>
   <br />
+  <a href="viewMessages.secureaction">Messages (${blog.numberOfMessages})</a> |
   <a href="utilities.secureaction" title="Maintenance and upgrade utilities">Utilities</a> |
   <a href="theme/" title="Manage and edit the files in your theme">Theme</a>
   </li>

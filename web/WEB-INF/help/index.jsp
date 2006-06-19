@@ -12,7 +12,7 @@
 
     <table width="99%" cellspacing="0" cellpadding="8">
       <tr>
-        <td width="50%" valign="top">
+        <td width="50%" valign="top" align="left">
           <p>
             <div class="subsubtitle">Using Pebble</div>
             <ol>
@@ -46,16 +46,12 @@
             <div class="subsubtitle">Plugins</div>
             <ol>
               <li><a href="./help/plugins.html">Plugins</a></li>
-              <li>Blog entry decorators</li>
+              <li><a href="./help/decorators.html">Decorators</a></li>
               <li><a href="./help/permalinkProviders.html">Permalink Providers</a></li>
               <li><a href="./help/blogListeners.html">Blog Listeners</a></li>
-              <li>Blog entry listeners</li>
+              <li><a href="./help/blogEntryListeners.html">Blog Entry Listeners</a></li>
               <li><a href="./help/commentListeners.html">Comment Listeners</a></li>
               <li><a href="./help/trackbackListeners.html">TrackBack Listeners</a></li>
-<%--
-              <li><a href="blog-entry-decorators.html">Blog entry decorators</a></li>
-              <li><a href="blog-entry-listeners.html">Blog entry listeners</a></li>
---%>
             </ol>
             <div class="subsubtitle">Extending Pebble</div>
             <ol>
