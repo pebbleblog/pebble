@@ -36,15 +36,30 @@ package net.sourceforge.pebble.domain;
  *
  * @author    Simon Brown
  */
-public class BlogException extends Exception {
+public class BlogServiceException extends Exception {
 
   /**
    * Creates a new instance with the specified message.
    *
+   * @param blog      the Blog to which this exception applies
    * @param message   the message for the exception
    */
-  public BlogException(String message) {
+  public BlogServiceException(Blog blog, String message) {
     super(message);
+
+    blog.addMessage(new Message(message));
+  }
+
+  /**
+   * Creates a new instance with the specified cause.
+   *
+   * @param blog      the Blog to which this exception applies
+   * @param cause   the causing Exception
+   */
+  public BlogServiceException(Blog blog, Exception cause) {
+    super(cause);
+
+    blog.addMessage(new Message(cause.getMessage()));
   }
 
 }

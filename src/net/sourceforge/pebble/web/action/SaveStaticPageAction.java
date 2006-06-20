@@ -77,7 +77,7 @@ public class SaveStaticPageAction extends SecureAction {
     }
   }
 
-  private View previewPage(HttpServletRequest request) {
+  private View previewPage(HttpServletRequest request) throws ServletException {
     StaticPage staticPage = getStaticPage(request);
 
     // we don't want to actually edit the original whilst previewing
@@ -92,7 +92,7 @@ public class SaveStaticPageAction extends SecureAction {
     return new StaticPageFormView();
   }
 
-  private View savePage(HttpServletRequest request) {
+  private View savePage(HttpServletRequest request) throws ServletException {
     StaticPage staticPage = getStaticPage(request);
     populateStaticPage(staticPage, request);
 
@@ -107,7 +107,7 @@ public class SaveStaticPageAction extends SecureAction {
       try {
         BlogService service = new BlogService();
         service.putStaticPage(staticPage);
-      } catch (BlogException be) {
+      } catch (BlogServiceException be) {
         log.error(be.getMessage(), be);
         be.printStackTrace();
 
@@ -118,14 +118,18 @@ public class SaveStaticPageAction extends SecureAction {
     }
   }
 
-  private StaticPage getStaticPage(HttpServletRequest request) {
+  private StaticPage getStaticPage(HttpServletRequest request) throws ServletException {
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
     String id = request.getParameter("page");
     String persistent = request.getParameter("persistent");
 
     if (persistent != null && persistent.equalsIgnoreCase("true")) {
-      BlogService service = new BlogService();
-      return service.getStaticPageById(blog, id);
+      try {
+        BlogService service = new BlogService();
+        return service.getStaticPageById(blog, id);
+      } catch (BlogServiceException e) {
+        throw new ServletException(e);
+      }
     } else {
       return new StaticPage(blog);
     }

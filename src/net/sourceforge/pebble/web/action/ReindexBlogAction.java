@@ -1,21 +1,21 @@
 package net.sourceforge.pebble.web.action;
 
-import net.sourceforge.pebble.web.view.View;
-import net.sourceforge.pebble.web.view.ForwardView;
-import net.sourceforge.pebble.domain.Blog;
-import net.sourceforge.pebble.domain.BlogServiceException;
 import net.sourceforge.pebble.Constants;
+import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.util.Utilities;
+import net.sourceforge.pebble.web.view.ForwardView;
+import net.sourceforge.pebble.web.view.View;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.ServletException;
 
 /**
- * Resets the theme associated with a blog back to "default".
+ * Rebuilds the indexes associated with a blog.
  *
  * @author    Simon Brown
  */
-public class ResetThemeAction extends SecureAction {
+public class ReindexBlogAction extends SecureAction {
 
   /**
    * Peforms the processing associated with this action.
@@ -26,13 +26,7 @@ public class ResetThemeAction extends SecureAction {
    */
   public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
-
-    try {
-      blog.removeProperty(Blog.THEME_KEY);
-      blog.storeProperties();
-    } catch (BlogServiceException e) {
-      e.printStackTrace();
-    }
+    Utilities.buildIndexes(blog);
 
     return new ForwardView("/reloadBlog.secureaction");
   }

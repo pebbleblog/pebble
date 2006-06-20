@@ -114,7 +114,7 @@ public class BlogTest extends SingleBlogTestCase {
    // and clean up
    blog.removeProperty("aNewPropertyKey");
    blog.storeProperties();
-   } catch (BlogException e) {
+   } catch (BlogServiceException e) {
    fail();
    }
    }
@@ -364,7 +364,7 @@ public class BlogTest extends SingleBlogTestCase {
     assertTrue(blog.getRecentBlogEntries(3).isEmpty());
   }
 
-  public void testGetRecentBlogEntries() throws BlogException {
+  public void testGetRecentBlogEntries() throws BlogServiceException {
     BlogService service = new BlogService();
 
     BlogEntry entry1 = new BlogEntry(blog);
@@ -516,7 +516,7 @@ public class BlogTest extends SingleBlogTestCase {
     assertEquals("321", buf.toString());
   }
 
-  public void testApprovedCommentsForUnpublishedBlogEntriesDontShowUp() throws BlogException {
+  public void testApprovedCommentsForUnpublishedBlogEntriesDontShowUp() throws BlogServiceException {
     BlogService service = new BlogService();
 
     BlogEntry blogEntry = new BlogEntry(blog);

@@ -6,7 +6,7 @@
   <language>${blog.language}</language>
   <copyright><c:out value="${blog.author}" escapeXml="true"/></copyright>
   <lastBuildDate><fmt:formatDate value="${blog.lastModified}" pattern="EEE, dd MMM yyyy HH:mm:ss z" timeZone="GMT"/></lastBuildDate>
-  <generator>Pebble</generator>
+  <generator>Pebble (http://pebble.sourceforge.net)</generator>
   <docs>http://backend.userland.com/rss</docs>
   <c:if test="${not empty image}">
   <image>

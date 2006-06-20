@@ -36,6 +36,7 @@ import net.sourceforge.pebble.util.SecurityUtils;
 import net.sourceforge.pebble.domain.BlogEntry;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.domain.BlogService;
+import net.sourceforge.pebble.domain.BlogServiceException;
 import net.sourceforge.pebble.web.view.NotFoundView;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.impl.BlogEntryView;
@@ -65,7 +66,11 @@ public class ViewBlogEntryAction extends Action {
     BlogEntry blogEntry = null;
     if (entryId != null) {
       BlogService service = new BlogService();
-      blogEntry = service.getBlogEntry(blog, entryId);
+      try {
+        blogEntry = service.getBlogEntry(blog, entryId);
+      } catch (BlogServiceException e) {
+        throw new ServletException(e);
+      }
     }
 
     if (blogEntry == null) {

@@ -51,7 +51,7 @@ public abstract class AbstractCommentAction extends Action {
     return context;
   }
 
-  protected void saveComment(HttpServletRequest request, HttpServletResponse response, BlogEntry blogEntry, Comment comment) throws BlogException {
+  protected void saveComment(HttpServletRequest request, HttpServletResponse response, BlogEntry blogEntry, Comment comment) throws BlogServiceException {
     Blog blog = blogEntry.getBlog();
     blogEntry.addComment(comment);
 

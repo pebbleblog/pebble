@@ -33,10 +33,7 @@ package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.security.PebbleUserDetails;
-import net.sourceforge.pebble.domain.BlogEntry;
-import net.sourceforge.pebble.domain.Comment;
-import net.sourceforge.pebble.domain.Blog;
-import net.sourceforge.pebble.domain.BlogService;
+import net.sourceforge.pebble.domain.*;
 import net.sourceforge.pebble.util.CookieUtils;
 import net.sourceforge.pebble.util.SecurityUtils;
 import net.sourceforge.pebble.web.view.NotFoundView;
@@ -77,7 +74,11 @@ public class ReplyToBlogEntryAction extends Action {
     BlogService service = new BlogService();
     BlogEntry blogEntry = null;
     if (entryId != null) {
-      blogEntry = service.getBlogEntry(blog, entryId);
+      try {
+        blogEntry = service.getBlogEntry(blog, entryId);
+      } catch (BlogServiceException e) {
+        throw new ServletException(e);
+      }
     }
 
     if (blogEntry == null) {

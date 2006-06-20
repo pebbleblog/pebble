@@ -32,7 +32,7 @@
 package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
-import net.sourceforge.pebble.domain.BlogException;
+import net.sourceforge.pebble.domain.BlogServiceException;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.web.view.ForwardView;
 import net.sourceforge.pebble.web.view.View;
@@ -82,7 +82,7 @@ public class SaveBlogPropertiesAction extends SecureAction {
 
       try {
         blog.storeProperties();
-      } catch (BlogException e) {
+      } catch (BlogServiceException e) {
         throw new ServletException(e);
       }
 

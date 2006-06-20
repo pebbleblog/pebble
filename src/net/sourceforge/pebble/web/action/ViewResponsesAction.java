@@ -34,6 +34,7 @@ package net.sourceforge.pebble.web.action;
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.domain.BlogService;
+import net.sourceforge.pebble.domain.BlogServiceException;
 import net.sourceforge.pebble.util.Pageable;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.impl.ResponsesView;
@@ -96,7 +97,12 @@ public class ViewResponsesAction extends SecureAction {
         BlogService service = new BlogService();
         Iterator it = super.getListForPage().iterator();
         while (it.hasNext()) {
-          responses.add(service.getResponse(blog, (String)it.next()));
+          try {
+            responses.add(service.getResponse(blog, (String)it.next()));
+          } catch (BlogServiceException e) {
+            // do nothing - some responses just won't get shown,
+            // but a message will be sent to the blog
+          }
         }
         return responses;
       }

@@ -33,26 +33,26 @@ package net.sourceforge.pebble.domain;
 
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.PluginProperties;
-import net.sourceforge.pebble.comment.DefaultCommentConfirmationStrategy;
-import net.sourceforge.pebble.comment.SimpleMathsCommentConfirmationStrategy;
+import net.sourceforge.pebble.api.comment.CommentConfirmationStrategy;
 import net.sourceforge.pebble.api.decorator.ContentDecorator;
-import net.sourceforge.pebble.api.permalink.PermalinkProvider;
+import net.sourceforge.pebble.api.event.EventDispatcher;
+import net.sourceforge.pebble.api.event.blog.BlogEvent;
 import net.sourceforge.pebble.api.event.blog.BlogListener;
+import net.sourceforge.pebble.api.event.blogentry.BlogEntryListener;
+import net.sourceforge.pebble.api.event.comment.CommentListener;
+import net.sourceforge.pebble.api.event.trackback.TrackBackListener;
+import net.sourceforge.pebble.api.permalink.PermalinkProvider;
+import net.sourceforge.pebble.comment.DefaultCommentConfirmationStrategy;
 import net.sourceforge.pebble.dao.CategoryDAO;
 import net.sourceforge.pebble.dao.DAOFactory;
 import net.sourceforge.pebble.dao.PersistenceException;
+import net.sourceforge.pebble.decorator.ContentDecoratorChain;
+import net.sourceforge.pebble.decorator.HideUnapprovedResponsesDecorator;
 import net.sourceforge.pebble.event.DefaultEventDispatcher;
-import net.sourceforge.pebble.api.event.EventDispatcher;
-import net.sourceforge.pebble.api.event.comment.CommentListener;
-import net.sourceforge.pebble.api.event.trackback.TrackBackListener;
 import net.sourceforge.pebble.event.EventListenerList;
-import net.sourceforge.pebble.api.event.blog.BlogEvent;
-import net.sourceforge.pebble.api.event.blogentry.BlogEntryListener;
-import net.sourceforge.pebble.api.comment.CommentConfirmationStrategy;
 import net.sourceforge.pebble.index.*;
 import net.sourceforge.pebble.logging.AbstractLogger;
 import net.sourceforge.pebble.logging.CombinedLogFormatLogger;
-import net.sourceforge.pebble.decorator.ContentDecoratorChain;
 import net.sourceforge.pebble.permalink.DefaultPermalinkProvider;
 
 import javax.servlet.http.HttpServletRequest;
@@ -329,6 +329,8 @@ public class Blog extends AbstractBlog {
   private void initDecorators() {
     log.debug("Registering decorators");
 
+    decoratorChain.add(new HideUnapprovedResponsesDecorator());
+
     String classNames = getContentDecorators();
     if (classNames != null && classNames.length() > 0) {
       String classes[] = classNames.split("\\s+");
@@ -371,7 +373,6 @@ public class Blog extends AbstractBlog {
     defaultProperties.setProperty(PRIVATE_KEY, FALSE);
     defaultProperties.setProperty(LUCENE_ANALYZER_KEY, "org.apache.lucene.analysis.standard.StandardAnalyzer");
     defaultProperties.setProperty(CONTENT_DECORATORS_KEY,
-        "net.sourceforge.pebble.decorator.HideUnapprovedResponsesDecorator\n" +
         "net.sourceforge.pebble.decorator.RadeoxDecorator\n" +
         "net.sourceforge.pebble.decorator.HtmlDecorator\n" +
         "net.sourceforge.pebble.decorator.EscapeMarkupDecorator\n" +
@@ -697,7 +698,11 @@ public class Blog extends AbstractBlog {
       YearlyBlog yearlyBlog = (YearlyBlog)yearlyBlogs.get(year);
       MonthlyBlog[] months = yearlyBlog.getMonthlyBlogs();
       for (int month = 11; month >= 0; month--) {
-        blogEntries.addAll(service.getBlogEntries(this, yearlyBlog.getYear(), months[month].getMonth()));
+        try {
+          blogEntries.addAll(service.getBlogEntries(this, yearlyBlog.getYear(), months[month].getMonth()));
+        } catch (BlogServiceException e) {
+          // do nothing
+        }
       }
     }
 
@@ -735,8 +740,12 @@ public class Blog extends AbstractBlog {
     List<String> blogEntryIds = blogEntryIndex.getBlogEntries();
     List blogEntries = new ArrayList();
     for (String blogEntryId : blogEntryIds) {
-      BlogEntry blogEntry = service.getBlogEntry(this, blogEntryId);
-      blogEntries.add(blogEntry);
+      try {
+        BlogEntry blogEntry = service.getBlogEntry(this, blogEntryId);
+        blogEntries.add(blogEntry);
+      } catch (BlogServiceException e) {
+        // do nothing
+      }
 
       if (blogEntries.size() == numberOfEntries) {
         break;
@@ -757,10 +766,13 @@ public class Blog extends AbstractBlog {
     List<String> blogEntryIds = blogEntryIndex.getPublishedBlogEntries();
     List blogEntries = new ArrayList();
     for (String blogEntryId : blogEntryIds) {
-      BlogEntry blogEntry = service.getBlogEntry(this, blogEntryId);
-
-      if (blogEntry != null) {
-        blogEntries.add(blogEntry);
+      try {
+        BlogEntry blogEntry = service.getBlogEntry(this, blogEntryId);
+        if (blogEntry != null) {
+          blogEntries.add(blogEntry);
+        }
+      } catch (BlogServiceException e) {
+        // do nothing
       }
 
       if (blogEntries.size() == getRecentBlogEntriesOnHomePage()) {
@@ -783,10 +795,13 @@ public class Blog extends AbstractBlog {
     List<String> blogEntryIds = categoryIndex.getRecentBlogEntries(category);
     List blogEntries = new ArrayList();
     for (String blogEntryId : blogEntryIds) {
-      BlogEntry blogEntry = service.getBlogEntry(this, blogEntryId);
-
-      if (blogEntry != null && blogEntry.isPublished()) {
-        blogEntries.add(blogEntry);
+      try {
+        BlogEntry blogEntry = service.getBlogEntry(this, blogEntryId);
+        if (blogEntry != null && blogEntry.isPublished()) {
+          blogEntries.add(blogEntry);
+        }
+      } catch (BlogServiceException e) {
+        // do nothing
       }
 
       if (blogEntries.size() == getRecentBlogEntriesOnHomePage()) {
@@ -809,10 +824,13 @@ public class Blog extends AbstractBlog {
     List<String> blogEntryIds = tagIndex.getRecentBlogEntries(tag);
     List blogEntries = new ArrayList();
     for (String blogEntryId : blogEntryIds) {
-      BlogEntry blogEntry = service.getBlogEntry(this, blogEntryId);
-
-      if (blogEntry != null && blogEntry.isPublished()) {
-        blogEntries.add(blogEntry);
+      try {
+        BlogEntry blogEntry = service.getBlogEntry(this, blogEntryId);
+        if (blogEntry != null && blogEntry.isPublished()) {
+          blogEntries.add(blogEntry);
+        }
+      } catch (BlogServiceException e) {
+        // do nothing
       }
 
       if (blogEntries.size() == getRecentBlogEntriesOnHomePage()) {
@@ -833,9 +851,13 @@ public class Blog extends AbstractBlog {
     List<String> responseIds = responseIndex.getApprovedResponses();
     List<Response> responses = new ArrayList<Response>();
     for (String responseId : responseIds) {
-      Response response = service.getResponse(this, responseId);
-      if (response.getBlogEntry().isPublished()) {
-        responses.add(response);
+      try {
+        Response response = service.getResponse(this, responseId);
+        if (response != null && response.getBlogEntry().isPublished()) {
+          responses.add(response);
+        }
+      } catch (BlogServiceException e) {
+        // do nothing
       }
 
       if (responses.size() == getRecentResponsesOnHomePage()) {
@@ -936,15 +958,15 @@ public class Blog extends AbstractBlog {
 
     if (blogEntryId != null) {
       BlogService service = new BlogService();
-      BlogEntry previousBlogEntry = service.getBlogEntry(this, blogEntryId);
-//      if (previousBlogEntry.isPublished()) {
+      try {
+        BlogEntry previousBlogEntry = service.getBlogEntry(this, blogEntryId);
         return previousBlogEntry;
-//      } else {
-//        return getPreviousBlogEntry(previousBlogEntry);
-//      }
-    } else {
-      return null;
+      } catch (BlogServiceException e) {
+        // do nothing
+      }
     }
+
+    return null;
   }
 
   public BlogEntry getNextBlogEntry(BlogEntry blogEntry) {
@@ -959,15 +981,15 @@ public class Blog extends AbstractBlog {
 
     if (blogEntryId != null) {
       BlogService service = new BlogService();
-      BlogEntry nextBlogEntry = service.getBlogEntry(this, blogEntryId);
-//      if (nextBlogEntry.isPublished()) {
+      try {
+        BlogEntry nextBlogEntry = service.getBlogEntry(this, blogEntryId);
         return nextBlogEntry;
-//      } else {
-//        return getNextBlogEntry(nextBlogEntry);
-//      }
-    } else {
-      return null;
+      } catch (BlogServiceException e) {
+        // do nothing
+      }
     }
+
+    return null;
   }
 
   /**
@@ -1358,28 +1380,33 @@ public class Blog extends AbstractBlog {
   public void reindex() {
     log.info("Reindexing blog with ID " + getId());
     
-    BlogService service = new BlogService();
-    List<BlogEntry> blogEntries = service.getBlogEntries(this);
-    List<StaticPage> staticPages = service.getStaticPages(this);
-
     blogEntryIndex.clear();
-    blogEntryIndex.index(blogEntries);
-
     responseIndex.clear();
-    responseIndex.index(blogEntries);
-
     tagIndex.clear();
-    tagIndex.index(blogEntries);
-
     categoryIndex.clear();
-    categoryIndex.index(blogEntries);
-
-    staticPageIndex.clear();
-    staticPageIndex.index(staticPages);
-
     searchIndex.clear();
-    searchIndex.indexBlogEntries(blogEntries);
-    searchIndex.indexStaticPages(staticPages);
+    staticPageIndex.clear();
+
+    BlogService service = new BlogService();
+
+    try {
+      List<BlogEntry> blogEntries = service.getBlogEntries(this);
+      blogEntryIndex.index(blogEntries);
+      responseIndex.index(blogEntries);
+      tagIndex.index(blogEntries);
+      categoryIndex.index(blogEntries);
+      searchIndex.indexBlogEntries(blogEntries);
+    } catch (BlogServiceException e) {
+      // do nothing
+    }
+
+    try {
+      List<StaticPage> staticPages = service.getStaticPages(this);
+      staticPageIndex.index(staticPages);
+      searchIndex.indexStaticPages(staticPages);
+    } catch (BlogServiceException e) {
+      // do nothing
+    }
   }
 
   /**

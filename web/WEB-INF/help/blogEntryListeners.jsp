@@ -4,19 +4,20 @@
 
   <div class="contentItemBody">
     <p>
-    Blog entry listeners are a type of Pebble plugin that allow custom code to be called
-    whenever a blog entry is added, removed, changed, published or unpublished. The following blog entry listeners are included with the Pebble distribution.
+      Blog entry listeners are a type of Pebble plugin that allow custom code to be called
+      whenever a blog entry is added, removed, changed, published or unpublished. The following blog entry listeners are included with the Pebble distribution and those
+      marked with a (*) are configured by default.
+    </p>
+
+    <p>
+      <b>net.sourceforge.pebble.event.blogentry.XmlRpcNotificationListener</b> (*)<br />
+      Sends an <a href="./help/xmlrpcUpdatePings.html">XML-RPC update notification ping</a> when a blog entry is published.<br /><br />The list of websites can be specified in the <a href="configuration.jsp#xmlrpcNotifications">XML-RPC update notifications</a> section of the blog properties page.
     </p>
 
     <p>
       <b>net.sourceforge.pebble.event.blogentry.EmailNotificationListener</b><br />
       Sends a notification e-mail to the blog owner when a new blog entry is added, changed or published.
      </p>
-
-    <p>
-      <b>net.sourceforge.pebble.event.blogentry.XmlRpcNotificationListener</b><br />
-      Sends an <a href="./help/xmlrpcUpdatePings.html">XML-RPC update notification ping</a> when a blog entry is published.<br /><br />The list of websites can be specified in the <a href="configuration.jsp#xmlrpcNotifications">XML-RPC update notifications</a> section of the blog properties page.
-    </p>
 
     <p>
       <b>net.sourceforge.pebble.event.blogentry.MarkPendingListener</b><br />
@@ -34,7 +35,9 @@
 
     <div class="subsubtitle">Configuring blog entry listeners</div>
     <p>
-      To configure the blog entry listeners used by your blog, modify the list on the <a href="viewPlugins.secureaction#blogEntryListeners">Plugins</a> page.
+      To configure the blog entry listeners used by your blog, modify the list on the <a href="viewPlugins.secureaction#blogEntryListeners">Plugins</a> page. Your blog is using the
+      following blog entry listeners.
     </p>
+    <pre class="codeSample"><c:forEach var="listener" items="${blog.eventListenerList.blogEntryListeners}">${listener.class.name}<br /></c:forEach></pre>
   </div>
 </div>

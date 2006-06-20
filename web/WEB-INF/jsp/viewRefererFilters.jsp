@@ -9,9 +9,11 @@
 
   <div class="contentItemBody">
     <form name="newRefererFilterForm" action="addRefererFilters.secureaction" method="post">
-      <b>Filter (regex)</b>
-      <input type="text" name="expression" size="40" value=".*www.somedomain.com.*" />
+      <b>Filter</b>
+      <input type="text" name="expression" size="40" value=""/>
       <input name="submit" type="submit" Value="Add Filter" />
+      <br />
+      <div class="small">(this is a regular expression, such as .*\.somedomain\.com.*)</div>
     </form>
 
     <form name="refererFiltersForm" action="removeRefererFilters.secureaction" method="post">

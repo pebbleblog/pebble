@@ -64,7 +64,7 @@ public class MultiBlogTest extends MultiBlogTestCase {
   /**
    * Tests that the recent blog entries can be accessed.
    */
-  public void testRecentBlogEntries() throws BlogException {
+  public void testRecentBlogEntries() throws BlogServiceException {
     // should be no daily blogs to start with
     assertTrue(blog.getRecentBlogEntries(0).isEmpty());
 

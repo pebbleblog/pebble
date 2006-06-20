@@ -77,7 +77,7 @@
 
       <tr class="even">
         <td colspan="2">
-          <b>Blog entry decorators</b><br />
+          <b>Content Decorators</b><br />
           <c:forEach var="decorator" items="${blog.contentDecoratorChain.contentDecorators}">
             ${decorator.class.name}<br />
           </c:forEach>
@@ -86,14 +86,14 @@
 
       <tr class="odd">
         <td colspan="2">
-          <b>Permalink provider</b><br />
+          <b>Permalink Provider</b><br />
           ${blog.permalinkProvider.class.name}
         </td>
       </tr>
 
       <tr class="even">
         <td colspan="2">
-          <b>Blog listeners</b><br />
+          <b>Blog Listeners</b><br />
           <c:forEach var="listener" items="${blog.eventListenerList.blogListeners}">
             ${listener.class.name}
           </c:forEach>
@@ -102,7 +102,7 @@
 
       <tr class="odd">
         <td colspan="2">
-          <b>Blog entry listeners</b><br />
+          <b>Blog Entry Listeners</b><br />
           <c:forEach var="listener" items="${blog.eventListenerList.blogEntryListeners}">
             ${listener.class.name}<br />
           </c:forEach>
@@ -111,7 +111,7 @@
 
       <tr class="even">
         <td colspan="2">
-          <b>Comment listeners</b><br />
+          <b>Comment Listeners</b><br />
           <c:forEach var="listener" items="${blog.eventListenerList.commentListeners}">
             ${listener.class.name}<br />
           </c:forEach>
@@ -120,14 +120,14 @@
 
       <tr class="odd">
         <td colspan="2">
-          <b>Comment confirmation</b><br />
+          <b>Comment Confirmation Strategy</b><br />
           ${blog.commentConfirmationStrategy.class.name}
         </td>
       </tr>
 
       <tr class="even">
         <td colspan="2">
-          <b>TrackBack listeners</b><br />
+          <b>TrackBack Listeners</b><br />
           <c:forEach var="listener" items="${blog.eventListenerList.trackBackListeners}">
             ${listener.class.name}<br />
           </c:forEach>

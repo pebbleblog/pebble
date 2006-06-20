@@ -166,11 +166,11 @@ public class UriTransformer {
         // url matches /help/xyz.html
         String name = uri.substring(6, uri.length());
 
-        result = "/viewHelp.action?name=";
+        result = "/viewHelp.secureaction?name=";
         result += name.substring(0, name.length()-5);
       } else if (uri.equals("/help") || uri.equals("/help/")) {
         // url matches /help/
-        result = "/viewHelp.action?name=index";
+        result = "/viewHelp.secureaction?name=index";
       } else if (uri.equals("/responses/rss.xml")) {
         // url is for a response feed
         result = "/responseFeed.action?flavor=rss20";

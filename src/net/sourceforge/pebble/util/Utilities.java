@@ -106,7 +106,7 @@ public class Utilities {
 //
 //      try {
 //        blogEntry.store();
-//      } catch (BlogException e) {
+//      } catch (BlogServiceException e) {
 //        log.error("Error storing " + blogEntry.getTitle() + " (" + blogEntry.getDate() + ")");
 //      }
     }
@@ -143,7 +143,7 @@ public class Utilities {
       try {
         BlogService service = new BlogService();
         service.putBlogEntry(blogEntry);
-      } catch (BlogException e) {
+      } catch (BlogServiceException e) {
         log.error("Error storing " + blogEntry.getTitle() + " (" + blogEntry.getDate() + ")");
       }
     }
@@ -203,7 +203,7 @@ public class Utilities {
         try {
           BlogService service = new BlogService();
           service.putBlogEntry(blogEntry);
-        } catch (BlogException e) {
+        } catch (BlogServiceException e) {
           log.info("Error storing " + blogEntry.getTitle() + " (" + blogEntry.getDate() + ")");
         }
       }

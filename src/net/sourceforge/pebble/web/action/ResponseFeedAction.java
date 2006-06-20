@@ -87,7 +87,12 @@ public class ResponseFeedAction extends Action {
       String entryId = request.getParameter("entry");
       if (entryId != null) {
         BlogService service = new BlogService();
-        BlogEntry blogEntry = service.getBlogEntry(blog, entryId);
+        BlogEntry blogEntry = null;
+        try {
+          blogEntry = service.getBlogEntry(blog, entryId);
+        } catch (BlogServiceException e) {
+          throw new ServletException(e);
+        }
         if (blogEntry != null && blogEntry.isPublished()) {
           getModel().put(Constants.BLOG_ENTRY_KEY, blogEntry);
           for (Response r : blogEntry.getResponses()) {

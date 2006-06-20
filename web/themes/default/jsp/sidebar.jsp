@@ -53,8 +53,10 @@
     To show your del.icio.us links on your blog, add the following to your plugin properties.
      - delicious.username
      - delicious.password
+  --%>
   <c:set var="deliciousUsername" value='${blog.pluginProperties.properties["delicious.username"]}' />
   <c:set var="deliciousPassword" value='${blog.pluginProperties.properties["delicious.password"]}' />
+  <c:if test="${not empty deliciousUsername}">
   <delicious:recentPosts var="deliciousPosts" username="${deliciousUsername}" password="${deliciousPassword}" count="3" />
   <div class="sidebarItem">
     <div class="sidebarItemTitle"><span>del.icio.us</span></div>
@@ -64,10 +66,9 @@
     </c:forEach>
     </ul>
     <br />
-    <a href="http://del.icio.us/${deliciousUsername}">del.icio.us</a> |
-    <a href="http://del.icio.us/rss/${deliciousUsername}"><fmt:message key="newsfeed.rss" /></a> <a href="http://del.icio.us/rss/${deliciousUsername}" style="border: 0px;"><img src="common/images/feed-icon-16x16.png" alt="RSS feed" border="0" /></a>
+    <a href="http://del.icio.us/${deliciousUsername}">del.icio.us</a> <a href="http://del.icio.us/rss/${deliciousUsername}" style="border: 0px;"><img src="common/images/feed-icon-10x10.png" alt="RSS feed" border="0" /></a>
     <br /><br />
   </div>
-  --%>
+  </c:if>
 
 </div>

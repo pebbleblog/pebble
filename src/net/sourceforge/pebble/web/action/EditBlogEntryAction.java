@@ -34,6 +34,7 @@ package net.sourceforge.pebble.web.action;
 import net.sourceforge.pebble.domain.BlogEntry;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.domain.BlogService;
+import net.sourceforge.pebble.domain.BlogServiceException;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.NotFoundView;
 import net.sourceforge.pebble.web.view.impl.BlogEntryFormView;
@@ -61,7 +62,12 @@ public class EditBlogEntryAction extends SecureAction {
   public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
     BlogService service = new BlogService();
-    BlogEntry blogEntry = service.getBlogEntry(blog, request.getParameter("entry"));
+    BlogEntry blogEntry = null;
+    try {
+      blogEntry = service.getBlogEntry(blog, request.getParameter("entry"));
+    } catch (BlogServiceException e) {
+      throw new ServletException(e);
+    }
 
     if (blogEntry == null) {
       return new NotFoundView();

@@ -67,13 +67,18 @@ public class ManageBlogEntriesAction extends SecureAction {
     if (ids != null) {
       for (String id : ids) {
         BlogService service = new BlogService();
-        BlogEntry blogEntry = service.getBlogEntry(blog, id);
+        BlogEntry blogEntry = null;
+        try {
+          blogEntry = service.getBlogEntry(blog, id);
+        } catch (BlogServiceException e) {
+          throw new ServletException(e);
+        }
 
         if (blogEntry != null) {
           if (submit.equalsIgnoreCase("Remove")) {
             try {
               service.removeBlogEntry(blogEntry);
-            } catch (BlogException be) {
+            } catch (BlogServiceException be) {
               throw new ServletException(be);
             }
           }

@@ -766,9 +766,9 @@ public class BlogEntry extends PageBasedContent {
 //  /**
 //   * Stores this BlogEntry.
 //   *
-//   * @throws BlogException if the blog entry cannot be stored
+//   * @throws BlogServiceException if the blog entry cannot be stored
 //   */
-//  public synchronized void store() throws BlogException {
+//  public synchronized void store() throws BlogServiceException {
 //    try {
 //      log.debug("Storing " + getTitle() + " (" + getId() + ")");
 //      DAOFactory factory = DAOFactory.getConfiguredFactory();
@@ -781,24 +781,24 @@ public class BlogEntry extends PageBasedContent {
 //        getBlog().getEventDispatcher().fireBlogEntryEvent(event);
 //      }
 //    } catch (PersistenceException pe) {
-//      throw new BlogException(pe.getMessage());
+//      throw new BlogServiceException(pe.getMessage());
 //    }
 //  }
 
 //  /**
 //   * Removes this blog entry from the filing system.
 //   *
-//   * @throws BlogException if the file backing this blog entry
+//   * @throws BlogServiceException if the file backing this blog entry
 //   *                       cannot be deleted
 //   */
-//  public synchronized void remove() throws BlogException {
+//  public synchronized void remove() throws BlogServiceException {
 //    try {
 //      log.debug("Removing " + getTitle() + " (" + getId() + ")");
 //      DAOFactory factory = DAOFactory.getConfiguredFactory();
 //      BlogEntryDAO dao = factory.getBlogEntryDAO();
 //      dao.removeBlogEntry(this);
 //    } catch (PersistenceException pe) {
-//      throw new BlogException(pe.getMessage());
+//      throw new BlogServiceException(pe.getMessage());
 //    }
 //  }
 

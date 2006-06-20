@@ -71,7 +71,11 @@ public class RemoveEmailAddressAction extends Action {
     String email = request.getParameter("email");
 
     BlogService service = new BlogService();
-    blogEntry = service.getBlogEntry(blog, entry);
+    try {
+      blogEntry = service.getBlogEntry(blog, entry);
+    } catch (BlogServiceException e) {
+      throw new ServletException(e);
+    }
     if (blogEntry == null) {
       return new NotFoundView();
     }
@@ -91,7 +95,7 @@ public class RemoveEmailAddressAction extends Action {
 
       try {
         service.putBlogEntry(blogEntry);
-      } catch (BlogException be) {
+      } catch (BlogServiceException be) {
         log.error(be.getMessage(), be);
         throw new ServletException(be);
       }

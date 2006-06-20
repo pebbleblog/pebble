@@ -73,10 +73,16 @@ public class ViewDailyBlogAction extends Action {
     }
 
     BlogService service = new BlogService();
+    List<BlogEntry> blogEntries;
+    try {
+      blogEntries = service.getBlogEntries(blog, Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day));
+    } catch (BlogServiceException e) {
+      throw new ServletException(e);
+    }
 
     getModel().put(Constants.MONTHLY_BLOG, daily.getMonthlyBlog());
     getModel().put(Constants.DAILY_BLOG, daily);
-    getModel().put(Constants.BLOG_ENTRIES, filter(blog, service.getBlogEntries(blog, Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day))));
+    getModel().put(Constants.BLOG_ENTRIES, filter(blog, blogEntries));
     getModel().put("displayMode", "day");
 
     // put the previous and next days in the model for navigation purposes

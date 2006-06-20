@@ -33,10 +33,7 @@ package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.util.SecurityUtils;
-import net.sourceforge.pebble.domain.MonthlyBlog;
-import net.sourceforge.pebble.domain.Blog;
-import net.sourceforge.pebble.domain.BlogService;
-import net.sourceforge.pebble.domain.BlogEntry;
+import net.sourceforge.pebble.domain.*;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.NotFoundView;
 import net.sourceforge.pebble.web.view.impl.BlogMonthlyView;
@@ -77,7 +74,12 @@ public class ViewMonthlyBlogAction extends Action {
 
     BlogService service = new BlogService();
 
-    List<BlogEntry> blogEntries = service.getBlogEntries(blog, Integer.parseInt(year), Integer.parseInt(month));
+    List<BlogEntry> blogEntries = null;
+    try {
+      blogEntries = service.getBlogEntries(blog, Integer.parseInt(year), Integer.parseInt(month));
+    } catch (BlogServiceException e) {
+      throw new ServletException(e);
+    }
     getModel().put(Constants.BLOG_ENTRIES, filter(blog, blogEntries));
     getModel().put("displayMode", "month");
     getModel().put(Constants.MONTHLY_BLOG, monthly);

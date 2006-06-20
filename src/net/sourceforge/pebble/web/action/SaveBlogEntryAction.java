@@ -85,7 +85,7 @@ public class SaveBlogEntryAction extends SecureAction {
     }
   }
 
-  private View previewBlogEntry(HttpServletRequest request) {
+  private View previewBlogEntry(HttpServletRequest request) throws ServletException {
     BlogEntry blogEntry = getBlogEntry(request);
 
     populateBlogEntry(blogEntry, request);
@@ -98,7 +98,7 @@ public class SaveBlogEntryAction extends SecureAction {
     return new BlogEntryFormView();
   }
 
-  private View saveBlogEntry(HttpServletRequest request) {
+  private View saveBlogEntry(HttpServletRequest request) throws ServletException {
     BlogEntry blogEntry = getBlogEntry(request);
 
     populateBlogEntry(blogEntry, request);
@@ -117,7 +117,7 @@ public class SaveBlogEntryAction extends SecureAction {
         service.putBlogEntry(blogEntry);
         getModel().put(Constants.BLOG_ENTRY_KEY, blogEntry);
         return new RedirectView(blogEntry.getLocalPermalink());
-      } catch (BlogException be) {
+      } catch (BlogServiceException be) {
         log.error(be.getMessage(), be);
         be.printStackTrace();
         return new BlogEntryFormView();
@@ -125,14 +125,18 @@ public class SaveBlogEntryAction extends SecureAction {
     }
   }
 
-  private BlogEntry getBlogEntry(HttpServletRequest request) {
+  private BlogEntry getBlogEntry(HttpServletRequest request) throws ServletException {
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
     String id = request.getParameter("entry");
     String persistent = request.getParameter("persistent");
 
     if (persistent != null && persistent.equalsIgnoreCase("true")) {
       BlogService service = new BlogService();
-      return service.getBlogEntry(blog, id);
+      try {
+        return service.getBlogEntry(blog, id);
+      } catch (BlogServiceException e) {
+        throw new ServletException(e);
+      }
     } else {
       return new BlogEntry(blog);
     }

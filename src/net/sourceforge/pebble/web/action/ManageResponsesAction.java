@@ -84,21 +84,21 @@ public class ManageResponsesAction extends SecureAction {
           try {
             ber.setApproved();
             service.putBlogEntry(ber.getBlogEntry());
-          } catch (BlogException be) {
+          } catch (BlogServiceException be) {
             log.error("Error updating state for response", be);
           }
         } else if (submit.equalsIgnoreCase("Reject")) {
           try {
             ber.setRejected();
             service.putBlogEntry(ber.getBlogEntry());
-          } catch (BlogException be) {
+          } catch (BlogServiceException be) {
             log.error("Error updating state for response", be);
           }
         } else if (submit.equalsIgnoreCase("Remove")) {
           try {
             ber.getBlogEntry().removeResponse(ber);
             service.putBlogEntry(ber.getBlogEntry());
-          } catch (BlogException be) {
+          } catch (BlogServiceException be) {
             log.error("Error updating state for response", be);
           }
         }
@@ -124,14 +124,19 @@ public class ManageResponsesAction extends SecureAction {
     return new String[]{Constants.BLOG_CONTRIBUTOR_ROLE};
   }
 
-  private Response getBlogEntryResponse(Blog blog, String guid) {
+  private Response getBlogEntryResponse(Blog blog, String guid) throws ServletException {
     // response key is of the form type/blogEntryId/responseId
     String type = guid.substring(0, 1);
     String blogEntryId = guid.substring(2, guid.indexOf("/", 2));
     String responseId = guid.substring(guid.lastIndexOf("/")+1);
 
     BlogService service = new BlogService();
-    BlogEntry blogEntry = service.getBlogEntry(blog, blogEntryId);
+    BlogEntry blogEntry = null;
+    try {
+      blogEntry = service.getBlogEntry(blog, blogEntryId);
+    } catch (BlogServiceException e) {
+      throw new ServletException(e);
+    }
     if (blogEntry == null) {
       return null;
     }

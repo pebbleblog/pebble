@@ -34,6 +34,7 @@ package net.sourceforge.pebble.permalink;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.domain.BlogEntry;
 import net.sourceforge.pebble.domain.BlogService;
+import net.sourceforge.pebble.domain.BlogServiceException;
 import net.sourceforge.pebble.api.permalink.PermalinkProviderSupport;
 
 import java.text.DateFormat;
@@ -103,7 +104,11 @@ public class DefaultPermalinkProvider extends PermalinkProviderSupport {
   public BlogEntry getBlogEntry(String uri) {
     Blog blog = getBlog();
     BlogService service = new BlogService();
-    return service.getBlogEntry(blog, uri.substring(12, 25));
+    try {
+      return service.getBlogEntry(blog, uri.substring(12, 25));
+    } catch (BlogServiceException e) {
+      return null;
+    }
   }
 
 }

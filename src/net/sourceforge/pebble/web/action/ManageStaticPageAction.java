@@ -37,7 +37,6 @@ import net.sourceforge.pebble.web.view.ForwardView;
 import net.sourceforge.pebble.web.view.NotFoundView;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.RedirectView;
-import net.sourceforge.pebble.web.view.impl.PublishBlogEntryView;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -69,7 +68,12 @@ public class ManageStaticPageAction extends SecureAction {
     String submit = request.getParameter("submit");
 
     BlogService service = new BlogService();
-    StaticPage staticPage = service.getStaticPageById(blog, id);
+    StaticPage staticPage = null;
+    try {
+      staticPage = service.getStaticPageById(blog, id);
+    } catch (BlogServiceException e) {
+      throw new ServletException(e);
+    }
 
     if (staticPage == null) {
       return new NotFoundView();
@@ -82,7 +86,7 @@ public class ManageStaticPageAction extends SecureAction {
         service.removeStaticPage(staticPage);
 
         return new RedirectView(blog.getUrl() + "viewStaticPages.secureaction");
-      } catch (BlogException be) {
+      } catch (BlogServiceException be) {
         throw new ServletException(be);
       }
     }

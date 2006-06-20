@@ -41,7 +41,7 @@ import junit.framework.TestCase;
 public class SearchExceptionTest extends TestCase {
 
   /**
-   * Tests that a BlogException can be correctly instantiated.
+   * Tests that a BlogServiceException can be correctly instantiated.
    */
   public void testConstruction() {
     SearchException exception = new SearchException("A nasty error message");

@@ -31,10 +31,7 @@
  */
 package net.sourceforge.pebble.permalink;
 
-import net.sourceforge.pebble.domain.Blog;
-import net.sourceforge.pebble.domain.BlogEntry;
-import net.sourceforge.pebble.domain.BlogService;
-import net.sourceforge.pebble.domain.DailyBlog;
+import net.sourceforge.pebble.domain.*;
 import net.sourceforge.pebble.api.permalink.PermalinkProviderSupport;
 
 import java.text.DateFormat;
@@ -76,9 +73,13 @@ public class TitlePermalinkProvider extends PermalinkProviderSupport {
       List entries = dailyBlog.getBlogEntries();
       int count = 0;
       for (int i = entries.size()-1; i > entries.indexOf(blogEntry.getId()); i--) {
-        BlogEntry entry = service.getBlogEntry(getBlog(), (String)entries.get(i));
-        if (entry.getTitle().equals(blogEntry.getTitle())) {
-          count++;
+        try {
+          BlogEntry entry = service.getBlogEntry(getBlog(), (String)entries.get(i));
+          if (entry.getTitle().equals(blogEntry.getTitle())) {
+            count++;
+          }
+        } catch (BlogServiceException e) {
+          // do nothing
         }
       }
 
@@ -157,11 +158,15 @@ public class TitlePermalinkProvider extends PermalinkProviderSupport {
 
     Iterator it = dailyBlog.getBlogEntries().iterator();
     while (it.hasNext()) {
-      BlogEntry blogEntry = service.getBlogEntry(getBlog(), (String)it.next());
-      // use the local permalink, just in case the entry has been aggregated
-      // and an original permalink assigned
-      if (blogEntry.getLocalPermalink().endsWith(uri)) {
-        return blogEntry;
+      try {
+        BlogEntry blogEntry = service.getBlogEntry(getBlog(), (String)it.next());
+        // use the local permalink, just in case the entry has been aggregated
+        // and an original permalink assigned
+        if (blogEntry.getLocalPermalink().endsWith(uri)) {
+          return blogEntry;
+        }
+      } catch (BlogServiceException e) {
+        // do nothing
       }
     }
 

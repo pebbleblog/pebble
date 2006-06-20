@@ -175,7 +175,12 @@ public class BloggerAPIHandler extends AbstractAPIHandler {
     postid = getPostId(postid);
     authenticate(blog, username, password);
     BlogService service = new BlogService();
-    BlogEntry entry = service.getBlogEntry(blog, postid);
+    BlogEntry entry = null;
+    try {
+      entry = service.getBlogEntry(blog, postid);
+    } catch (BlogServiceException e) {
+      throw new XmlRpcException(0, "Blog entry with ID of " + postid + " was not found.");
+    }
 
     if (entry != null) {
       return adaptBlogEntry(entry);
@@ -217,7 +222,7 @@ public class BloggerAPIHandler extends AbstractAPIHandler {
       service.putBlogEntry(blogEntry);
 
       return formatPostId(blogid, blogEntry.getId());
-    } catch (BlogException be) {
+    } catch (BlogServiceException be) {
       throw new XmlRpcException(0, be.getMessage());
     }
   }
@@ -260,7 +265,7 @@ public class BloggerAPIHandler extends AbstractAPIHandler {
       }
 
       return true;
-    } catch (BlogException be) {
+    } catch (BlogServiceException be) {
       throw new XmlRpcException(0, be.getMessage());
     }
   }
@@ -298,7 +303,7 @@ public class BloggerAPIHandler extends AbstractAPIHandler {
       } else {
         throw new XmlRpcException(0, "Blog entry with ID of " + postid + " was not found.");
       }
-    } catch (BlogException be) {
+    } catch (BlogServiceException be) {
       throw new XmlRpcException(0, be.getMessage());
     }
   }
@@ -458,7 +463,7 @@ public class BloggerAPIHandler extends AbstractAPIHandler {
       }
 
       return false;
-    } catch (BlogException be) {
+    } catch (BlogServiceException be) {
       throw new XmlRpcException(0, be.getMessage());
     }
   }

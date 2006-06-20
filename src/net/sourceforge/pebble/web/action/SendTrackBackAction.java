@@ -35,6 +35,7 @@ import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.domain.BlogEntry;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.domain.BlogService;
+import net.sourceforge.pebble.domain.BlogServiceException;
 import net.sourceforge.pebble.web.view.NotFoundView;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.impl.TrackBackFormView;
@@ -78,7 +79,11 @@ public class SendTrackBackAction extends SecureAction {
     BlogService service = new BlogService();
     BlogEntry blogEntry = null;
     if (entryId != null) {
-      blogEntry = service.getBlogEntry(blog, entryId);
+      try {
+        blogEntry = service.getBlogEntry(blog, entryId);
+      } catch (BlogServiceException e) {
+        throw new ServletException(e);
+      }
     }
 
     if (blogEntry == null) {

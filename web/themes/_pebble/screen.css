@@ -85,7 +85,7 @@ a:link {
   color: black;
 }
 a:visited {
-  color: gray;
+  color: #404040;
 }
 
 #blogName {

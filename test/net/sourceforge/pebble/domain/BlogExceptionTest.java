@@ -31,21 +31,21 @@
  */
 package net.sourceforge.pebble.domain;
 
-import junit.framework.TestCase;
-
 /**
- * Tests for the BlogException class.
+ * Tests for the BlogServiceException class.
  *
  * @author    Simon Brown
  */
-public class BlogExceptionTest extends TestCase {
+public class BlogExceptionTest extends SingleBlogTestCase {
 
   /**
-   * Tests that a BlogException can be correctly instantiated.
+   * Tests that a BlogServiceException can be correctly instantiated.
    */
   public void testConstruction() {
-    BlogException exception = new BlogException("A nasty error message");
+    assertEquals(0, blog.getMessages().size());
+    BlogServiceException exception = new BlogServiceException(blog, "A nasty error message");
     assertEquals("A nasty error message", exception.getMessage());
+    assertEquals(1, blog.getMessages().size());
   }
 
 }

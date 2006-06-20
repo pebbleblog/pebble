@@ -209,7 +209,12 @@ public class MetaWeblogAPIHandler extends AbstractAPIHandler {
     postid = getPostId(postid);
     authenticate(blog, username, password);
     BlogService service = new BlogService();
-    BlogEntry entry = service.getBlogEntry(blog, postid);
+    BlogEntry entry = null;
+    try {
+      entry = service.getBlogEntry(blog, postid);
+    } catch (BlogServiceException e) {
+      throw new XmlRpcException(0, "Blog entry with ID of " + postid + " could not be loaded");
+    }
 
     if (entry != null) {
       return adaptBlogEntry(entry);
@@ -255,7 +260,7 @@ public class MetaWeblogAPIHandler extends AbstractAPIHandler {
       service.putBlogEntry(entry);
 
       return formatPostId(blogid, entry.getId());
-    } catch (BlogException be) {
+    } catch (BlogServiceException be) {
       throw new XmlRpcException(0, be.getMessage());
     }
   }
@@ -296,7 +301,7 @@ public class MetaWeblogAPIHandler extends AbstractAPIHandler {
       }
 
       return true;
-    } catch (BlogException be) {
+    } catch (BlogServiceException be) {
       throw new XmlRpcException(0, be.getMessage());
     }
   }

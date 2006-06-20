@@ -70,7 +70,12 @@ public class PublishBlogEntryAction extends SecureAction {
     String publishDate = request.getParameter("publishDate");
 
     BlogService service = new BlogService();
-    BlogEntry blogEntry = service.getBlogEntry(blog, id);
+    BlogEntry blogEntry = null;
+    try {
+      blogEntry = service.getBlogEntry(blog, id);
+    } catch (BlogServiceException e) {
+      throw new ServletException(e);
+    }
 
     if (blogEntry == null) {
       return new NotFoundView();
@@ -86,7 +91,7 @@ public class PublishBlogEntryAction extends SecureAction {
         try {
           blogEntry.setPublished(true);
           service.putBlogEntry(blogEntry);
-        } catch (BlogException be) {
+        } catch (BlogServiceException be) {
           log.error(be);
         }
       } else {
@@ -115,7 +120,7 @@ public class PublishBlogEntryAction extends SecureAction {
           blogEntry.setPublished(true);
           log.info("Putting blog entry dated " + blogEntry.getDate());
           service.putBlogEntry(blogEntry);
-        } catch (BlogException be) {
+        } catch (BlogServiceException be) {
           log.error(be);
         }
       }
@@ -123,7 +128,7 @@ public class PublishBlogEntryAction extends SecureAction {
       blogEntry.setPublished(false);
       try {
         service.putBlogEntry(blogEntry);
-      } catch (BlogException be) {
+      } catch (BlogServiceException be) {
         log.error(be);
       }
     }

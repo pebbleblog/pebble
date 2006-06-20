@@ -33,7 +33,6 @@ package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.domain.*;
-import net.sourceforge.pebble.web.view.ForwardView;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.RedirectView;
 
@@ -62,11 +61,16 @@ public class RemoveStaticPagesAction extends SecureAction {
 
     if (ids != null) {
       for (String id : ids) {
-        StaticPage staticPage = service.getStaticPageById(blog, id);
+        StaticPage staticPage = null;
+        try {
+          staticPage = service.getStaticPageById(blog, id);
+        } catch (BlogServiceException e) {
+          throw new ServletException(e);
+        }
         if (staticPage != null) {
           try {
             service.removeStaticPage(staticPage);
-          } catch (BlogException be) {
+          } catch (BlogServiceException be) {
             throw new ServletException(be);
           }
         }

@@ -17,5 +17,12 @@
     <p>
       There are currently no implementations distributed with Pebble.
     </p>
+
+    <div class="subsubtitle">Configuring blog listeners</div>
+    <p>
+      To configure the blog listeners used by your blog, modify the list on the <a href="viewPlugins.secureaction#blogListeners">Plugins</a> page. Your blog is using the
+      following blog listeners.
+    </p>
+    <pre class="codeSample"><c:forEach var="listener" items="${blog.eventListenerList.blogListeners}">${listener.class.name}<br /></c:forEach></pre>
   </div>
 </div>

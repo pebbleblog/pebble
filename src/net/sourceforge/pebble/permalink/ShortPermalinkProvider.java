@@ -34,6 +34,7 @@ package net.sourceforge.pebble.permalink;
 import net.sourceforge.pebble.domain.BlogEntry;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.domain.BlogService;
+import net.sourceforge.pebble.domain.BlogServiceException;
 import net.sourceforge.pebble.api.permalink.PermalinkProviderSupport;
 
 
@@ -82,7 +83,11 @@ public class ShortPermalinkProvider extends PermalinkProviderSupport {
     // and use it to find the correct blog entry
     Blog blog = getBlog();
     BlogService service = new BlogService();
-    return service.getBlogEntry(blog, uri.substring(1, 14));
+    try {
+      return service.getBlogEntry(blog, uri.substring(1, 14));
+    } catch (BlogServiceException e) {
+      return null;
+    }
   }
 
 }

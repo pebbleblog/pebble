@@ -35,6 +35,7 @@ import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.domain.BlogService;
 import net.sourceforge.pebble.domain.StaticPage;
+import net.sourceforge.pebble.domain.BlogServiceException;
 import net.sourceforge.pebble.web.view.NotFoundView;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.impl.StaticPageFormView;
@@ -61,7 +62,12 @@ public class EditStaticPageAction extends SecureAction {
   public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
     BlogService service = new BlogService();
-    StaticPage staticPage = service.getStaticPageById(blog, request.getParameter("page"));
+    StaticPage staticPage = null;
+    try {
+      staticPage = service.getStaticPageById(blog, request.getParameter("page"));
+    } catch (BlogServiceException e) {
+      throw new ServletException(e);
+    }
 
     if (staticPage == null) {
       return new NotFoundView();

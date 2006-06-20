@@ -33,6 +33,7 @@ package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.impl.HelpPageView;
+import net.sourceforge.pebble.Constants;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -43,7 +44,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author    Simon Brown
  */
-public class ViewHelpAction extends Action {
+public class ViewHelpAction extends SecureAction {
 
   /**
    * Peforms the processing associated with this action.
@@ -54,8 +55,21 @@ public class ViewHelpAction extends Action {
    */
   public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
     String name = request.getParameter("name");
+    if (!name.matches("\\w*")) {
+      name = "index";
+    }
 
     return new HelpPageView(name);
+  }
+
+  /**
+   * Gets a list of all roles that are allowed to access this action.
+   *
+   * @return  an array of Strings representing role names
+   * @param request
+   */
+  public String[] getRoles(HttpServletRequest request) {
+    return new String[]{Constants.BLOG_OWNER_ROLE, Constants.BLOG_CONTRIBUTOR_ROLE, Constants.PEBBLE_ADMIN_ROLE};
   }
 
 }

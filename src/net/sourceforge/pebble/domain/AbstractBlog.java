@@ -188,9 +188,9 @@ public abstract class AbstractBlog extends TimePeriod {
   /**
    * Stores the properties associated with this blog.
    *
-   * @throws BlogException    if the properties can't be stored
+   * @throws BlogServiceException    if the properties can't be stored
    */
-  public void storeProperties() throws BlogException {
+  public void storeProperties() throws BlogServiceException {
     try {
       FileOutputStream fout = new FileOutputStream(new File(getRoot(), BLOG_PROPERTIES_FILE));
       properties.store(fout, "Properties for " + getName());
@@ -198,7 +198,6 @@ public abstract class AbstractBlog extends TimePeriod {
       fout.close();
     } catch (IOException ioe) {
       log.error(ioe);
-      throw new BlogException("Properties could not be saved : " + ioe.getMessage());
     }
   }
 

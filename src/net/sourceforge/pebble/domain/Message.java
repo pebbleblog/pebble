@@ -64,4 +64,23 @@ public class Message {
     this.text = text;
   }
 
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    final Message message = (Message) o;
+
+    if (!date.equals(message.date)) return false;
+    if (text != null ? !text.equals(message.text) : message.text != null) return false;
+
+    return true;
+  }
+
+  public int hashCode() {
+    int result;
+    result = date.hashCode();
+    result = 29 * result + (text != null ? text.hashCode() : 0);
+    return result;
+  }
+
 }

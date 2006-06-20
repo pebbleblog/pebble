@@ -1,12 +1,10 @@
 package net.sourceforge.pebble.decorator;
 
-import net.sourceforge.pebble.domain.BlogEntry;
+import net.sourceforge.pebble.api.decorator.ContentDecoratorContext;
+import net.sourceforge.pebble.api.decorator.ContentDecoratorSupport;
 import net.sourceforge.pebble.domain.Comment;
 import net.sourceforge.pebble.domain.TrackBack;
-import net.sourceforge.pebble.api.decorator.ContentDecoratorSupport;
-import net.sourceforge.pebble.api.decorator.ContentDecoratorContext;
 
-import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -22,26 +20,23 @@ public class NoFollowDecorator extends ContentDecoratorSupport {
   private static Pattern HTML_LINK_PATTERN = Pattern.compile("<a.*?href=.*?>", Pattern.CASE_INSENSITIVE);
 
   /**
-   * Decorates the specified blog entry.
+   * Decorates the specified comment.
+   *
+   * @param context the context in which the decoration is running
+   * @param comment the comment to be decorated
+   */
+  public void decorate(ContentDecoratorContext context, Comment comment) {
+    comment.setBody(addNoFollowLinks(comment.getBody()));
+  }
+
+  /**
+   * Decorates the specified TrackBack.
    *
    * @param context   the context in which the decoration is running
-   * @param blogEntry the blog entry to be decorated
+   * @param trackBack the TrackBack to be decorated
    */
-  public void decorate(ContentDecoratorContext context, BlogEntry blogEntry) {
-    // only apply in detail mode
-    if (context.getView() == ContentDecoratorContext.DETAIL_VIEW) {
-      Iterator it = blogEntry.getComments().iterator();
-      while (it.hasNext()) {
-        Comment comment = (Comment)it.next();
-        comment.setBody(addNoFollowLinks(comment.getBody()));
-      }
-
-      it = blogEntry.getTrackBacks().iterator();
-      while (it.hasNext()) {
-        TrackBack trackBack = (TrackBack)it.next();
-        trackBack.setExcerpt(addNoFollowLinks(trackBack.getExcerpt()));
-      }
-    }
+  public void decorate(ContentDecoratorContext context, TrackBack trackBack) {
+    trackBack.setExcerpt(addNoFollowLinks(trackBack.getExcerpt()));
   }
 
   /**
@@ -69,14 +64,17 @@ public class NoFollowDecorator extends ContentDecoratorSupport {
       int startOfRelIndex = link.indexOf("rel=\"");
       if (startOfRelIndex == -1) {
         // no rel link, add one
-        buf.append(link.substring(0, link.length() - 1) + " rel=\"nofollow\">");
+        buf.append(link.substring(0, link.length() - 1));
+        buf.append(" rel=\"nofollow\">");
       } else {
         int endOfRelIndex = link.indexOf("\"", startOfRelIndex+5);
         String rel = link.substring(startOfRelIndex+5, endOfRelIndex);
         rel = rel.toLowerCase();
         if (rel.indexOf("nofollow") == -1) {
           // rel exists, but without nofollow
-          buf.append(link.substring(0, endOfRelIndex) + " nofollow" + link.substring(endOfRelIndex));
+          buf.append(link.substring(0, endOfRelIndex));
+          buf.append(" nofollow");
+          buf.append(link.substring(endOfRelIndex));
         } else {
           // nofollow exists
           buf.append(link);

@@ -35,6 +35,7 @@
               <li><a href="./help/themes.html">Themes</a></li>
               <li><a href="./help/multiuserBlogs.html">Multi-user Blogs</a></li>
               <li><a href="./help/privateBlogs.html">Private Blogs</a></li>
+              <li><a href="./help/delicious.html">del.icio.us</a></li>
 <%--
               <li><a href="team-blogs.html">Multi-contributor and Team Blogs</a></li>
 --%>

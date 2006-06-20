@@ -31,14 +31,14 @@
  */
 package net.sourceforge.pebble.domain;
 
+import net.sourceforge.pebble.api.event.blogentry.BlogEntryEvent;
+import net.sourceforge.pebble.api.event.comment.CommentEvent;
+import net.sourceforge.pebble.api.event.trackback.TrackBackEvent;
 import net.sourceforge.pebble.comparator.PageBasedContentByTitleComparator;
 import net.sourceforge.pebble.dao.BlogEntryDAO;
 import net.sourceforge.pebble.dao.DAOFactory;
 import net.sourceforge.pebble.dao.PersistenceException;
 import net.sourceforge.pebble.dao.StaticPageDAO;
-import net.sourceforge.pebble.api.event.blogentry.BlogEntryEvent;
-import net.sourceforge.pebble.api.event.comment.CommentEvent;
-import net.sourceforge.pebble.api.event.trackback.TrackBackEvent;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -47,6 +47,12 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Service that encompasses all functionality related to getting, putting
+ * and removing blog entries and static pages.
+ *
+ * @author    Simon Brown
+ */
 public class BlogService {
 
   private static final Log log = LogFactory.getLog(BlogService.class);
@@ -57,7 +63,7 @@ public class BlogService {
    * @param blogEntryId   the id of the blog entry
    * @return  a BlogEntry instance, or null if the entry couldn't be found
    */
-  public BlogEntry getBlogEntry(Blog blog, String blogEntryId) {
+  public BlogEntry getBlogEntry(Blog blog, String blogEntryId) throws BlogServiceException {
     BlogEntryDAO dao = DAOFactory.getConfiguredFactory().getBlogEntryDAO();
     BlogEntry blogEntry = null;
     try {
@@ -67,19 +73,19 @@ public class BlogService {
         blogEntry.setEventsEnabled(true);
         blogEntry.setPersistent(true);
       }
-    } catch (PersistenceException e) {
-      e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+    } catch (PersistenceException pe) {
+      throw new BlogServiceException(blog, pe);
     }
     return blogEntry;
   }
 
-  public List<BlogEntry> getBlogEntries(Blog blog, int year, int month, int day) {
+  public List<BlogEntry> getBlogEntries(Blog blog, int year, int month, int day) throws BlogServiceException {
     DailyBlog dailyBlog = blog.getBlogForDay(year, month, day);
     List<String> blogEntryIds = dailyBlog.getBlogEntries();
     return getBlogEntries(blog, blogEntryIds);
   }
 
-  public List<BlogEntry> getBlogEntries(Blog blog, int year, int month) {
+  public List<BlogEntry> getBlogEntries(Blog blog, int year, int month) throws BlogServiceException {
     MonthlyBlog monthlyBlog = blog.getBlogForMonth(year, month);
     List<String> blogEntryIds = monthlyBlog.getBlogEntries();
     return getBlogEntries(blog, blogEntryIds);
@@ -90,7 +96,7 @@ public class BlogService {
    *
    * @return  a List of BlogEntry objects
    */
-  public List<BlogEntry> getBlogEntries(Blog blog) {
+  public List<BlogEntry> getBlogEntries(Blog blog) throws BlogServiceException {
     BlogEntryDAO dao = DAOFactory.getConfiguredFactory().getBlogEntryDAO();
     List<BlogEntry> blogEntries;
     try {
@@ -99,15 +105,14 @@ public class BlogService {
         blogEntry.setPersistent(true);
       }
 
-    } catch (PersistenceException e) {
-      e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-      blogEntries = new ArrayList<BlogEntry>();
+    } catch (PersistenceException pe) {
+      throw new BlogServiceException(blog, pe);
     }
 
     return blogEntries;
   }
 
-  private List<BlogEntry> getBlogEntries(Blog blog, List<String> blogEntryIds) {
+  private List<BlogEntry> getBlogEntries(Blog blog, List<String> blogEntryIds) throws BlogServiceException {
     List<BlogEntry> blogEntries = new ArrayList<BlogEntry>();
 
     for (String blogEntryId : blogEntryIds) {
@@ -121,7 +126,7 @@ public class BlogService {
   /**
    * Puts the blog entry with the specified id.
    */
-  public void putBlogEntry(BlogEntry blogEntry) throws BlogException {
+  public void putBlogEntry(BlogEntry blogEntry) throws BlogServiceException {
     DAOFactory factory = DAOFactory.getConfiguredFactory();
     BlogEntryDAO dao = factory.getBlogEntryDAO();
     Blog blog = blogEntry.getBlog();
@@ -161,7 +166,7 @@ public class BlogService {
 
         blogEntry.setPersistent(true);
       } catch (PersistenceException pe) {
-        pe.printStackTrace();
+        throw new BlogServiceException(blog, pe);
       } finally {
         blogEntry.clearPropertyChangeEvents();
         blogEntry.clearEvents();
@@ -173,7 +178,7 @@ public class BlogService {
   /**
    * Removes this blog entry.
    */
-  public void removeBlogEntry(BlogEntry blogEntry) throws BlogException {
+  public void removeBlogEntry(BlogEntry blogEntry) throws BlogServiceException {
     try {
       DAOFactory factory = DAOFactory.getConfiguredFactory();
       BlogEntryDAO dao = factory.getBlogEntryDAO();
@@ -193,7 +198,7 @@ public class BlogService {
 
       blogEntry.getBlog().getEventDispatcher().fireEvents(blogEntry);
     } catch (PersistenceException pe) {
-      pe.printStackTrace();
+      throw new BlogServiceException(blogEntry.getBlog(), pe);
     }
   }
 
@@ -203,7 +208,7 @@ public class BlogService {
    * @param responseId    the id of the response
    * @return  a response instance, or null if the entry couldn't be found
    */
-  public Response getResponse(Blog blog, String responseId) {
+  public Response getResponse(Blog blog, String responseId) throws BlogServiceException {
     String blogEntryId = responseId.substring(responseId.indexOf("/")+1, responseId.lastIndexOf("/"));
     BlogEntry blogEntry = getBlogEntry(blog, blogEntryId);
     if (blogEntry != null) {
@@ -219,14 +224,14 @@ public class BlogService {
    * @param blog    the Blog
    * @return  a list of BlogEntry instances
    */
-  public List<StaticPage> getStaticPages(Blog blog) {
+  public List<StaticPage> getStaticPages(Blog blog) throws BlogServiceException {
     List<StaticPage> staticPages = new ArrayList<StaticPage>();
     try {
       DAOFactory factory = DAOFactory.getConfiguredFactory();
       StaticPageDAO dao = factory.getStaticPageDAO();
       staticPages.addAll(dao.loadStaticPages(blog));
-    } catch (PersistenceException e) {
-      e.printStackTrace();
+    } catch (PersistenceException pe) {
+      throw new BlogServiceException(blog, pe);
     }
 
     Collections.sort(staticPages, new PageBasedContentByTitleComparator());
@@ -241,7 +246,7 @@ public class BlogService {
    * @param blog    the Blog
    * @return  a Page instance, or null if the page couldn't be found
    */
-  public StaticPage getStaticPageById(Blog blog, String pageId) {
+  public StaticPage getStaticPageById(Blog blog, String pageId) throws BlogServiceException {
     try {
       DAOFactory factory = DAOFactory.getConfiguredFactory();
       StaticPageDAO dao = factory.getStaticPageDAO();
@@ -252,9 +257,8 @@ public class BlogService {
       }
 
       return staticPage;
-    } catch (PersistenceException e) {
-      e.printStackTrace();
-      return null;
+    } catch (PersistenceException pe) {
+      throw new BlogServiceException(blog, pe);
     }
   }
 
@@ -265,7 +269,7 @@ public class BlogService {
    * @param blog    the Blog
    * @return  a StaticPage instance, or null if the page couldn't be found
    */
-  public StaticPage getStaticPageByName(Blog blog, String name) {
+  public StaticPage getStaticPageByName(Blog blog, String name) throws BlogServiceException {
     String id = blog.getStaticPageIndex().getStaticPage(name);
     return getStaticPageById(blog, id);
   }
@@ -273,7 +277,7 @@ public class BlogService {
   /**
    * Puts the static page.
    */
-  public void putStaticPage(StaticPage staticPage) throws BlogException {
+  public void putStaticPage(StaticPage staticPage) throws BlogServiceException {
     DAOFactory factory = DAOFactory.getConfiguredFactory();
     StaticPageDAO dao = factory.getStaticPageDAO();
     Blog blog = staticPage.getBlog();
@@ -296,7 +300,7 @@ public class BlogService {
         staticPage.getBlog().getSearchIndex().index(staticPage);
         staticPage.getBlog().getStaticPageIndex().index(staticPage);
       } catch (PersistenceException pe) {
-        pe.printStackTrace();
+        throw new BlogServiceException(blog, pe);
       }
     }
   }
@@ -304,7 +308,7 @@ public class BlogService {
   /**
    * Removes a static page.
    */
-  public void removeStaticPage(StaticPage staticPage) throws BlogException {
+  public void removeStaticPage(StaticPage staticPage) throws BlogServiceException {
     try {
       DAOFactory factory = DAOFactory.getConfiguredFactory();
       StaticPageDAO dao = factory.getStaticPageDAO();
@@ -314,6 +318,7 @@ public class BlogService {
       staticPage.getBlog().getStaticPageIndex().unindex(staticPage);
 
     } catch (PersistenceException pe) {
+      throw new BlogServiceException(staticPage.getBlog(), pe);
     }
   }
 

@@ -1,0 +1,79 @@
+<div class="contentItem">
+  <div class="title">Content Decorators</div>
+  <div class="subtitle">&nbsp;</div>
+
+  <div class="contentItemBody">
+    <p>
+      Content Decorators are a type of Pebble plugin that provides a way to change the way that
+      blog entries, static pages, comments and TrackBacks are displayed in the HTML pages of your blog and the XML newsfeeds that are
+      generated. The following decorators are included in the distribution, and those marked with a (*) are configured by default.
+    </p>
+
+    <p>
+      <b>net.sourceforge.pebble.decorator.RadeoxDecorator</b> (*)<br />
+      Renders content inside blog entries and static pages between <code>&lt;wiki&gt;</code>...<code>&lt;/wiki&gt;</code> tags using the Radeox library.
+      Internal style wiki links (e.g. <code>[aboutme]</code>) link to the static page with the same name. If the static page doesn't exist, the link lets you create the page.
+    </p>
+
+    <p>
+      <b>net.sourceforge.pebble.decorator.HtmlDecorator</b> (*)<br />
+      Filters the HTML inside comments and TrackBacks to use only a limited, safe subset of HTML.
+    </p>
+
+    <p>
+      <b>net.sourceforge.pebble.decorator.EscapeMarkupDecorator</b> (*)<br />
+      Escapes some XML/HTML markup between <code>&lt;escape&gt;</code>...<code>&lt;/escape&gt;</code> tags. This is useful where you
+      would like to post large fragments of HTML, JSP, XML or Java code.
+      In doing so, any &lt; or &gt; characters will be automatically escaped to &amp;lt; and &amp;gt; respectively.
+    </p>
+
+    <p>
+      <b>net.sourceforge.pebble.decorator.RelativeUriDecorator</b> (*)<br />
+      Replaces relative URIs with absolute URLs so that they are rendered properly in browsers and newsreaders.
+      For example, a link to <code>./images/someimage.jpg</code> would be transformed to <code>${blog.url}images/someimage.jpg</code>.
+    </p>
+
+    <p>
+      <b>net.sourceforge.pebble.decorator.ReadMoreDecorator</b> (*)<br />
+      Adds a "Read more..." link to blog entries in the following cases.
+    </p>
+    <ul>
+      <li>The blog entry excerpt is not empty and the page being displayed is a summary page (i.e. home, month or day page).</li>
+      <li>The blog entry is aggregated (i.e. the original permalink has been specified).</li>
+    </ul>
+
+    <p>
+      <b>net.sourceforge.pebble.decorator.BlogTagsDecorator</b> (*)<br />
+      Adds links from your blog entry back to your tags, for those tags associated with the blog entry.
+    </p>
+
+    <p>
+      <b>net.sourceforge.pebble.decorator.TechnoratiTagsDecorator</b><br />
+      Adds links from your blog entry back to tags on <a href="http://technorati.com/tags/">Technorati</a>, for those tags associated with the blog entry.
+    </p>
+
+    <p>
+      <b>net.sourceforge.pebble.decorator.BlogCategoriesDecorator</b><br />
+      Adds links from your blog entry back to your categories, for those categories associated with the blog entry.
+    </p>
+
+    <p>
+      <b>net.sourceforge.pebble.decorator.NoFollowDecorator</b><br />
+      Provides support for the <a href="http://www.google.com/googleblog/2005/01/preventing-comment-spam.html">nofollow initiative</a> by modifying all links in comments and TrackBacks.
+    </p>
+
+    <p>
+      <b>net.sourceforge.pebble.decorator.DisableResponseDecorator</b><br />
+      Disables comments and TrackBacks for the blog entry. This is useful if you are worried about spam when you don't have access to your blog. Needs to be used
+      in conjunction with the DisableResponseListener (for comments and TrackBacks).
+    </p>
+
+    <div class="subsubtitle">Configuring content decorators</div>
+    <p>
+      To configure the decorators that your blog uses, modify the list of decorators on the <a href="viewPlugins.secureaction#contentDecorators">Plugins</a> page. Your blog is using the
+      following blog listeners.
+    </p>
+    <pre class="codeSample"><c:forEach var="decorator" items="${blog.contentDecoratorChain.contentDecorators}">${decorator.class.name}<br /></c:forEach></pre>
+    </p>
+  </div>
+</div>

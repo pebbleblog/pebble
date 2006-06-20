@@ -76,7 +76,11 @@ public class SaveCommentAction extends AbstractCommentAction {
     String submitType = request.getParameter("submit");
 
     BlogService service = new BlogService();
-    blogEntry = service.getBlogEntry(blog, entry);
+    try {
+      blogEntry = service.getBlogEntry(blog, entry);
+    } catch (BlogServiceException e) {
+      throw new ServletException(e);
+    }
     if (blogEntry == null) {
       // just send back a 404 - this is probably somebody looking for a way
       // to send comment spam ;-)
@@ -115,7 +119,7 @@ public class SaveCommentAction extends AbstractCommentAction {
         try {
           saveComment(request, response, blogEntry, comment);
           return new CommentConfirmationView();
-        } catch (BlogException be) {
+        } catch (BlogServiceException be) {
           log.error(be.getMessage(), be);
           throw new ServletException(be);
         }
