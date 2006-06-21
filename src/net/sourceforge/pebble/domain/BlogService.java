@@ -74,7 +74,6 @@ public class BlogService {
     Element element = cache.get(compositeKey);
     if (element != null) {
       blogEntry = (BlogEntry)element.getValue();
-      blogEntry = (BlogEntry)blogEntry.clone();
     } else {
       BlogEntryDAO dao = DAOFactory.getConfiguredFactory().getBlogEntryDAO();
       try {
@@ -91,6 +90,7 @@ public class BlogService {
     }
 
     if (blogEntry != null) {
+      blogEntry = (BlogEntry)blogEntry.clone();
       blogEntry.setEventsEnabled(true);
       blogEntry.setPersistent(true);
     }

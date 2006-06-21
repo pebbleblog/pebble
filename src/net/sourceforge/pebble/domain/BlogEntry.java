@@ -835,6 +835,7 @@ public class BlogEntry extends PageBasedContent {
     entry.setOriginalPermalink(getOriginalPermalink());
     entry.setCommentsEnabled(commentsEnabled);
     entry.setTrackBacksEnabled(trackBacksEnabled);
+
     if (attachment != null) {
       entry.setAttachment((Attachment)attachment.clone());
     }
