@@ -92,6 +92,8 @@ public class PublishBlogEntryActionTest extends SecureActionTestCase {
     request.setParameter("publishDate", "as-is");
     request.setParameter("submit", "Publish");
     View view = action.process(request, response);
+
+    blogEntry = service.getBlogEntry(blog, blogEntry.getId());
     assertTrue(blogEntry.isPublished());
     assertEquals(new Date(100000), blogEntry.getDate());
 

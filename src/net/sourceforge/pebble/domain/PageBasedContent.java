@@ -275,12 +275,6 @@ public abstract class PageBasedContent extends Content {
     return this.blog;
   }
 
-  public abstract String getGuid();
-
-  public int hashCode() {
-    return getGuid().hashCode();
-  }
-
   /**
    * Gets a string representation of this object.
    *

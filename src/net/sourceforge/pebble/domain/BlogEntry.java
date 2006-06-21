@@ -861,11 +861,12 @@ public class BlogEntry extends PageBasedContent {
    */
   public Object clone() {
     BlogEntry entry = new BlogEntry(getBlog());
-    entry.setEventsEnabled(false);
+    entry.setEventsEnabled(areEventsEnabled());
     entry.setPersistent(isPersistent());
+    entry.setPublished(isPublished());
     entry.setTitle(getTitle());
     entry.setSubtitle(getSubtitle());
-    entry.setExcerpt(excerpt);
+    entry.setExcerpt(getExcerpt());
     entry.setBody(getBody());
     entry.setDate(getDate());
     entry.setState(getState());
@@ -888,13 +889,13 @@ public class BlogEntry extends PageBasedContent {
     // also copy the comments
     it = comments.iterator();
     while (it.hasNext()) {
-      entry.comments.add((Comment)((Comment)it.next()).clone());
+      entry.comments.add(((Comment)it.next()).clone());
     }
 
     // and TrackBacks
     it = trackBacks.iterator();
     while (it.hasNext()) {
-      entry.trackBacks.add((TrackBack)((TrackBack)it.next()).clone());
+      entry.trackBacks.add(((TrackBack)it.next()).clone());
     }
 
     return entry;
@@ -936,6 +937,10 @@ public class BlogEntry extends PageBasedContent {
         addEvent(new BlogEntryEvent(this, BlogEntryEvent.BLOG_ENTRY_UNPUBLISHED));
       }
     }
+  }
+
+  public String toString() {
+    return getGuid() + ":" + super.hashCode();
   }
 
 }
