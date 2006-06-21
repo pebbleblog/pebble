@@ -39,6 +39,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
+import java.io.Serializable;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -48,7 +49,7 @@ import org.apache.commons.logging.LogFactory;
  *
  * @author    Simon Brown
  */
-public abstract class Content implements Permalinkable, Cloneable {
+public abstract class Content implements Permalinkable, Cloneable, Serializable {
 
   private static final Log log = LogFactory.getLog(Content.class);
 

@@ -23,24 +23,6 @@
   </tag>
 
   <tag>
-    <name>theme</name>
-    <tag-class>net.sourceforge.pebble.web.tagext.GetThemeTag</tag-class>
-    <body-content>empty</body-content>
-    <description>
-      Determines the URI to the current theme and outputs it to the page.
-    </description>
-  </tag>
-
-  <tag>
-    <name>categoryFilter</name>
-    <tag-class>net.sourceforge.pebble.web.tagext.CategoryFilterTag</tag-class>
-    <body-content>empty</body-content>
-    <description>
-      Creates a dropdown list with which to filter the blog entries by category.
-    </description>
-  </tag>
-
-  <tag>
     <name>select</name>
     <tag-class>net.sourceforge.pebble.web.tagext.SelectTag</tag-class>
     <body-content>empty</body-content>

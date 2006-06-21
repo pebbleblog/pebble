@@ -50,7 +50,7 @@ import java.util.*;
 public class MockHttpServletRequest implements HttpServletRequest {
 
   private Properties headers = new Properties();
-  private Properties parameters = new Properties();
+  private HashMap parameters = new HashMap();
   private HashMap attributes = new HashMap();
 
   private HttpSession session = new MockHttpSession();
@@ -223,19 +223,23 @@ public class MockHttpServletRequest implements HttpServletRequest {
   }
 
   public void setParameter(String name, String value) {
-    parameters.setProperty(name, value);
+    parameters.put(name, value);
+  }
+
+  public void setParameter(String name, String value[]) {
+    parameters.put(name, value);
   }
 
   public String getParameter(String s) {
-    return parameters.getProperty(s);
+    return (String)parameters.get(s);
   }
 
   public Enumeration getParameterNames() {
-    return parameters.keys();
+    return Collections.enumeration(parameters.keySet());
   }
 
   public String[] getParameterValues(String s) {
-    return new String[] {getParameter(s)};
+    return (String[])parameters.get(s);
   }
 
   public Map getParameterMap() {

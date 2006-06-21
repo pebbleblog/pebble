@@ -11,8 +11,4 @@
     <property name="authenticationManager"><ref bean="authenticationManager"/></property>
   </bean>
 
-  <bean id="pebbleApiHandler" class="net.sourceforge.pebble.webservice.PebbleAPIHandler">
-    <property name="authenticationManager"><ref bean="authenticationManager"/></property>
-  </bean>
-
 </beans>

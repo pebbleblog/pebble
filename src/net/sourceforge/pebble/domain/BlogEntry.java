@@ -763,45 +763,6 @@ public class BlogEntry extends PageBasedContent {
     }
   }
 
-//  /**
-//   * Stores this BlogEntry.
-//   *
-//   * @throws BlogServiceException if the blog entry cannot be stored
-//   */
-//  public synchronized void store() throws BlogServiceException {
-//    try {
-//      log.debug("Storing " + getTitle() + " (" + getId() + ")");
-//      DAOFactory factory = DAOFactory.getConfiguredFactory();
-//      BlogEntryDAO dao = factory.getBlogEntryDAO();
-//      dao.storeBlogEntry(this);
-//
-//      if (areEventsEnabled() && isDirty()) {
-//        BlogEntryEvent event = new BlogEntryEvent(this, getPropertyChangeEvents());
-//        clearPropertyChangeEvents();
-//        getBlog().getEventDispatcher().fireBlogEntryEvent(event);
-//      }
-//    } catch (PersistenceException pe) {
-//      throw new BlogServiceException(pe.getMessage());
-//    }
-//  }
-
-//  /**
-//   * Removes this blog entry from the filing system.
-//   *
-//   * @throws BlogServiceException if the file backing this blog entry
-//   *                       cannot be deleted
-//   */
-//  public synchronized void remove() throws BlogServiceException {
-//    try {
-//      log.debug("Removing " + getTitle() + " (" + getId() + ")");
-//      DAOFactory factory = DAOFactory.getConfiguredFactory();
-//      BlogEntryDAO dao = factory.getBlogEntryDAO();
-//      dao.removeBlogEntry(this);
-//    } catch (PersistenceException pe) {
-//      throw new BlogServiceException(pe.getMessage());
-//    }
-//  }
-
   /**
    * Returns the blog entry that was posted before this one.
    *
@@ -861,7 +822,7 @@ public class BlogEntry extends PageBasedContent {
    */
   public Object clone() {
     BlogEntry entry = new BlogEntry(getBlog());
-    entry.setEventsEnabled(areEventsEnabled());
+    entry.setEventsEnabled(false);
     entry.setPersistent(isPersistent());
     entry.setPublished(isPublished());
     entry.setTitle(getTitle());
@@ -889,13 +850,22 @@ public class BlogEntry extends PageBasedContent {
     // also copy the comments
     it = comments.iterator();
     while (it.hasNext()) {
-      entry.comments.add(((Comment)it.next()).clone());
+      Comment comment = (Comment)it.next();
+      Comment clonedComment = (Comment)comment.clone();
+      clonedComment.setBlogEntry(entry);
+      if (clonedComment.getParent() != null) {
+        clonedComment.setParent(entry.getComment(clonedComment.getParent().getId()));
+      }
+      entry.comments.add(clonedComment);
     }
 
     // and TrackBacks
     it = trackBacks.iterator();
     while (it.hasNext()) {
-      entry.trackBacks.add(((TrackBack)it.next()).clone());
+      TrackBack trackBack = (TrackBack)it.next();
+      TrackBack clonedTrackBack = (TrackBack)trackBack.clone();
+      clonedTrackBack.setBlogEntry(entry);
+      entry.trackBacks.add(clonedTrackBack);
     }
 
     return entry;

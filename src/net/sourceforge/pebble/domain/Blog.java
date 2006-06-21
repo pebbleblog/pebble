@@ -50,10 +50,12 @@ import net.sourceforge.pebble.decorator.ContentDecoratorChain;
 import net.sourceforge.pebble.decorator.HideUnapprovedResponsesDecorator;
 import net.sourceforge.pebble.event.DefaultEventDispatcher;
 import net.sourceforge.pebble.event.EventListenerList;
+import net.sourceforge.pebble.event.blog.CacheListener;
 import net.sourceforge.pebble.index.*;
 import net.sourceforge.pebble.logging.AbstractLogger;
 import net.sourceforge.pebble.logging.CombinedLogFormatLogger;
 import net.sourceforge.pebble.permalink.DefaultPermalinkProvider;
+import net.sf.ehcache.Cache;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
@@ -118,6 +120,8 @@ public class Blog extends AbstractBlog {
   private TagIndex tagIndex;
   private CategoryIndex categoryIndex;
   private StaticPageIndex staticPageIndex;
+
+  private Cache blogEntryCache;
 
   /**
    * Creates a new Blog instance, based at the specified location.
@@ -237,6 +241,8 @@ public class Blog extends AbstractBlog {
         }
       }
     }
+
+    eventListenerList.addBlogListener(new CacheListener());
   }
 
   /**
@@ -1438,6 +1444,14 @@ public class Blog extends AbstractBlog {
 
   public CommentConfirmationStrategy getCommentConfirmationStrategy() {
     return commentConfirmationStrategy;
+  }
+
+  public Cache getBlogEntryCache() {
+    return blogEntryCache;
+  }
+
+  public void setBlogEntryCache(Cache blogEntryCache) {
+    this.blogEntryCache = blogEntryCache;
   }
 
 }

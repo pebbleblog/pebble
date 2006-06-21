@@ -71,16 +71,6 @@
           <td>Determines the URI to the current theme and outputs it to the page.</td>
         </tr>
 
-        <tr class="itemBodyOdd">
-          <td valign="top">categoryFilter</td>
-          <td>
-          Creates a dropdown list with which to filter the blog entries by category. This can be used as follows.
-          <pre>&lt;form method="get" action="changeCategory.action"&gt;
-  &lt;pebble:categoryFilter /&gt;&nbsp;&lt;input type="submit" value="Change Category" /&gt;
-&lt;/form&gt;</pre>
-          </td>
-        </tr>
-
         <tr class="itemBodyEven">
           <td valign="top">categories</td>
           <td>Iterates over all categories defined for the blog, exposing each in turn under the request-scoped attribute called <code>category</code>. See <code>/themes/default/jsp/template.jsp</code> for an example of how to use this.</td>

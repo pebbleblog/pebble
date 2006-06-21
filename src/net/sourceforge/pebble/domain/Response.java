@@ -189,6 +189,15 @@ public abstract class Response extends Content {
   }
 
   /**
+   * Sets the owning blog entry.
+   *
+   * @param blogEntry   the owning BlogEntry instance
+   */
+  void setBlogEntry(BlogEntry blogEntry) {
+    this.blogEntry = blogEntry;
+  }
+
+  /**
    * Gets the spam score.
    *
    * @return  an int

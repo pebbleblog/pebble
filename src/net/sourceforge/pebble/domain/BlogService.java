@@ -31,6 +31,8 @@
  */
 package net.sourceforge.pebble.domain;
 
+import net.sf.ehcache.Cache;
+import net.sf.ehcache.Element;
 import net.sourceforge.pebble.api.event.blogentry.BlogEntryEvent;
 import net.sourceforge.pebble.api.event.comment.CommentEvent;
 import net.sourceforge.pebble.api.event.trackback.TrackBackEvent;
@@ -39,9 +41,6 @@ import net.sourceforge.pebble.dao.BlogEntryDAO;
 import net.sourceforge.pebble.dao.DAOFactory;
 import net.sourceforge.pebble.dao.PersistenceException;
 import net.sourceforge.pebble.dao.StaticPageDAO;
-import net.sf.ehcache.Cache;
-import net.sf.ehcache.CacheManager;
-import net.sf.ehcache.Element;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -49,7 +48,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.net.URL;
 
 /**
  * Service that encompasses all functionality related to getting, putting
@@ -61,14 +59,6 @@ public class BlogService {
 
   private static final Log log = LogFactory.getLog(BlogService.class);
 
-  private static Cache cache;
-
-  static {
-    URL url = BlogService.class.getResource("/ehcache.xml");
-    CacheManager manager = new CacheManager(url);
-    cache = manager.getCache("blogEntriesCache");
-  }
-
   /**
    * Gets the blog entry with the specified id.
    *
@@ -78,23 +68,19 @@ public class BlogService {
   public BlogEntry getBlogEntry(Blog blog, String blogEntryId) throws BlogServiceException {
     String compositeKey = blog.getId() + "/" + blogEntryId;
     BlogEntry blogEntry = null;
+    Cache cache = blog.getBlogEntryCache();
 
     // is the blog entry already in the cache?
     Element element = cache.get(compositeKey);
     if (element != null) {
-      log.info("Loading " + compositeKey + " from cache");
-      blogEntry = (BlogEntry)element.getObjectValue();
+      blogEntry = (BlogEntry)element.getValue();
       blogEntry = (BlogEntry)blogEntry.clone();
     } else {
-      log.info("Loading " + compositeKey + " from disk");
       BlogEntryDAO dao = DAOFactory.getConfiguredFactory().getBlogEntryDAO();
       try {
         blogEntry = dao.loadBlogEntry(blog, blogEntryId);
 
         if (blogEntry != null) {
-          blogEntry.setEventsEnabled(true);
-          blogEntry.setPersistent(true);
-
           // place in the cache for faster lookup next time
           element = new Element(compositeKey, blogEntry);
           cache.put(element);
@@ -104,7 +90,11 @@ public class BlogService {
       }
     }
 
-    log.info("Returning " + blogEntry);
+    if (blogEntry != null) {
+      blogEntry.setEventsEnabled(true);
+      blogEntry.setPersistent(true);
+    }
+
     return blogEntry;
   }
 
@@ -159,6 +149,7 @@ public class BlogService {
     DAOFactory factory = DAOFactory.getConfiguredFactory();
     BlogEntryDAO dao = factory.getBlogEntryDAO();
     Blog blog = blogEntry.getBlog();
+    Cache cache = blog.getBlogEntryCache();
     String compositeKey = blog.getId() + "/" + blogEntry.getId();
 
     synchronized (blog) {
@@ -186,7 +177,6 @@ public class BlogService {
             if (blogEntry.isDirty()) {
               blogEntry.insertEvent(new BlogEntryEvent(blogEntry, blogEntry.getPropertyChangeEvents()));
             }
-            cache.remove(compositeKey);
           }
 
           blogEntry.getBlog().getEventDispatcher().fireEvents(blogEntry);
@@ -211,6 +201,9 @@ public class BlogService {
    * Removes this blog entry.
    */
   public void removeBlogEntry(BlogEntry blogEntry) throws BlogServiceException {
+    Blog blog = blogEntry.getBlog();
+    Cache cache = blog.getBlogEntryCache();
+
     try {
       DAOFactory factory = DAOFactory.getConfiguredFactory();
       BlogEntryDAO dao = factory.getBlogEntryDAO();

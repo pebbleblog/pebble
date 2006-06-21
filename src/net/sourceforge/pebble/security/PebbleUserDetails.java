@@ -37,15 +37,6 @@ public class PebbleUserDetails extends User {
   }
 
   /**
-   * Sets the name.
-   *
-   * @param name  a String
-   */
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  /**
    * Gets the e-mail address.
    *
    * @return  a String
@@ -55,30 +46,12 @@ public class PebbleUserDetails extends User {
   }
 
   /**
-   * Sets the e-mail address.
-   *
-   * @param emailAddress  a String
-   */
-  public void setEmailAddress(String emailAddress) {
-    this.emailAddress = emailAddress;
-  }
-
-  /**
    * Gets the website.
    *
    * @return  a String
    */
   public String getWebsite() {
     return website;
-  }
-
-  /**
-   * Sets the name.
-   *
-   * @param website  a String
-   */
-  public void setWebsite(String website) {
-    this.website = website;
   }
 
 }

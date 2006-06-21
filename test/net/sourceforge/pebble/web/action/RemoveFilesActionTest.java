@@ -64,7 +64,7 @@ public class RemoveFilesActionTest extends SecureActionTestCase {
     writer.close();
 
     request.setParameter("path", "/");
-    request.setParameter("name", "afile.txt");
+    request.setParameter("name", new String[]{"afile.txt"});
     request.setParameter("type", FileMetaData.BLOG_FILE);
 
     View view = action.process(request, response);
@@ -79,7 +79,7 @@ public class RemoveFilesActionTest extends SecureActionTestCase {
    */
   public void testDeleteFileReturnsForbiddenWheOutsideOfRoot() throws Exception {
     request.setParameter("path", "/");
-    request.setParameter("name", "../afile.txt");
+    request.setParameter("name", new String[]{"../afile.txt"});
     request.setParameter("type", FileMetaData.BLOG_FILE);
 
     View view = action.process(request, response);

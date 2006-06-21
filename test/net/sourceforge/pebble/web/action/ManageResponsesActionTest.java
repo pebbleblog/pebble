@@ -32,6 +32,9 @@
 package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
+import net.sourceforge.pebble.domain.BlogEntry;
+import net.sourceforge.pebble.domain.BlogService;
+import net.sourceforge.pebble.domain.Comment;
 
 /**
  * Tests for the ManageResponsesAction class.
