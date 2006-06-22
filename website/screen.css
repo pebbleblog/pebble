@@ -1,5 +1,5 @@
 body {
-  font-family: Lucida Grande, Verdana, Tahoma, Arial, sans-serif;
+  font-family: Lucida Grande, Tahoma, Verdana, Arial, sans-serif;
   font-size: 13px;
   background: gray url('images/background.jpg') repeat-x top left;
   color : black;
@@ -85,7 +85,7 @@ a:link {
   color: black;
 }
 a:visited {
-  color: gray;
+  color: #404040;
 }
 
 #blogName {
