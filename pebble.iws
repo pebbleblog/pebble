@@ -204,10 +204,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="build.xml" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="build.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/build.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="293" column="9" selection-start="9570" selection-end="9570" vertical-scroll-proportion="0.33333334">
+            <state line="332" column="155" selection-start="11030" selection-end="11030" vertical-scroll-proportion="0.85130113">
               <folding />
             </state>
           </provider>
@@ -231,10 +231,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="index.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/website/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="128" column="84" selection-start="6056" selection-end="6056" vertical-scroll-proportion="0.13754646">
+            <state line="34" column="0" selection-start="1486" selection-end="1486" vertical-scroll-proportion="0.5055762">
               <folding />
             </state>
           </provider>
@@ -1116,13 +1116,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/website/installation.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="0" selection-start="1487" selection-end="1487" vertical-scroll-proportion="0.5204461">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/web/themes/orange/screen.css">
       <provider selected="true" editor-type-id="text-editor">
         <state line="6" column="97" selection-start="226" selection-end="226" vertical-scroll-proportion="0.08759124">
@@ -1137,13 +1130,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/website/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="128" column="84" selection-start="6056" selection-end="6056" vertical-scroll-proportion="0.13754646">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/changelog.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state line="28" column="14" selection-start="1250" selection-end="1250" vertical-scroll-proportion="0.4163569">
@@ -1153,7 +1139,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/build.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="293" column="9" selection-start="9570" selection-end="9570" vertical-scroll-proportion="0.33333334">
+        <state line="332" column="155" selection-start="11030" selection-end="11030" vertical-scroll-proportion="0.85130113">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/website/installation.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="35" column="0" selection-start="1487" selection-end="1487" vertical-scroll-proportion="0.5204461">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/website/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="34" column="0" selection-start="1486" selection-end="1486" vertical-scroll-proportion="0.5055762">
           <folding />
         </state>
       </provider>

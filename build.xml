@@ -328,9 +328,9 @@
     <delete file="web/WEB-INF/generated_web.xml"/>
   </target>
 
-  <target name="publish-dev-build" depends="dist">
+  <target name="nightlybuild" depends="dist">
     <loadproperties srcFile="${user.home}/sourceforge.properties"/>
-    <scp file="${dist.dir}/${project.name}-${build.version}.zip" todir="${sourceforge.username}@shell.sf.net:/home/groups/p/pe/pebble/htdocs/pebble-dev.zip" password="${sourceforge.password}"/>
+    <scp file="${dist.dir}/${project.name}-${build.version}.zip" todir="${sourceforge.username}@shell.sf.net:/home/groups/p/pe/pebble/htdocs/pebble-nightly.zip" password="${sourceforge.password}"/>
   </target>
 
 </project>
