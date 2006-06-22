@@ -59,14 +59,14 @@
   <c:if test="${not empty deliciousUsername}">
   <delicious:recentPosts var="deliciousPosts" username="${deliciousUsername}" password="${deliciousPassword}" count="3" />
   <div class="sidebarItem">
-    <div class="sidebarItemTitle"><span>del.icio.us</span></div>
+    <div class="sidebarItemTitle"><span>del.icio.us <a href="http://del.icio.us/rss/${deliciousUsername}" style="border: 0px;"><img src="common/images/feed-icon-10x10.png" alt="RSS feed" border="0" /></a></span></div>
     <ul>
     <c:forEach var="post" items="${deliciousPosts}">
       <li><a href="${post.href}">${post.description}</a><br /><c:if test="${not empty post.extended}">${post.extended}<br /></c:if></li>
     </c:forEach>
     </ul>
     <br />
-    <a href="http://del.icio.us/${deliciousUsername}">del.icio.us</a> <a href="http://del.icio.us/rss/${deliciousUsername}" style="border: 0px;"><img src="common/images/feed-icon-10x10.png" alt="RSS feed" border="0" /></a>
+    <a href="http://del.icio.us/${deliciousUsername}"><fmt:message key="common.readMore" /></a>
     <br /><br />
   </div>
   </c:if>

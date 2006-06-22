@@ -77,14 +77,14 @@ public class ViewLogAction extends SecureAction {
       SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy", blog.getLocale());
       dateFormat.setTimeZone(blog.getTimeZone());
       logPeriod = dateFormat.format(cal.getTime());
-    } else if (year != null && year.length() > 0 &&
-        month != null && month.length() > 0) {
-      cal.set(Calendar.YEAR, Integer.parseInt(year));
-      cal.set(Calendar.MONTH, Integer.parseInt(month)-1);
-      log = blog.getLogger().getLogFile(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH)+1);
-      SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM yyyy", blog.getLocale());
-      dateFormat.setTimeZone(blog.getTimeZone());
-      logPeriod = dateFormat.format(cal.getTime());
+//    } else if (year != null && year.length() > 0 &&
+//        month != null && month.length() > 0) {
+//      cal.set(Calendar.YEAR, Integer.parseInt(year));
+//      cal.set(Calendar.MONTH, Integer.parseInt(month)-1);
+//      log = blog.getLogger().getLogFile(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH)+1);
+//      SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM yyyy", blog.getLocale());
+//      dateFormat.setTimeZone(blog.getTimeZone());
+//      logPeriod = dateFormat.format(cal.getTime());
     } else {
       // get the log for today
       log = blog.getLogger().getLogFile();

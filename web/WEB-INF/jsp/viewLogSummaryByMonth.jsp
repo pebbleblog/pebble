@@ -8,17 +8,21 @@
   <div class="subtitle">&nbsp;</div>
 
   <div class="contentItemBody">
+    <%--
     You can also see a <a href="viewLogSummary.secureaction?year=${year}" title="See statistics for this year">log summary for <fmt:formatDate value="${logSummary.date}" type="date" pattern="yyyy"/></a>.
     <br /><br />
+    --%>
     <table width="99%" cellspacing="0" cellpadding="4">
 
       <thead>
       <tr>
         <td><b>Total for <fmt:formatDate value="${logSummary.date}" pattern="MMMM yyyy" /></b></td>
         <td align="right">
+          <%--
           <a href="viewLog.secureaction?year=${year}&month=${month}" title="See log file for month">Log</a> |
           <a href="viewReferers.secureaction?year=${year}&month=${month}" title="See referers for month">Referers</a> |
           <a href="viewRequests.secureaction?year=${year}&month=${month}" title="See requests for month">Requests</a>
+          --%>
         </td>
         <td align="right"><b><fmt:formatNumber value="${logSummary.totalRequests}"/></b></td>
       </tr>

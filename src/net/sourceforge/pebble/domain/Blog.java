@@ -768,6 +768,17 @@ public class Blog extends AbstractBlog {
    * @return a List containing the most recent blog entries
    */
   public List getRecentPublishedBlogEntries() {
+    return getRecentPublishedBlogEntries(getRecentBlogEntriesOnHomePage());
+  }
+
+  /**
+   * Gets the most recent published blog entries, the number of which
+   * is specified
+   *
+   * @param number    the number of blog entries to get
+   * @return a List containing the most recent blog entries
+   */
+  public List getRecentPublishedBlogEntries(int number) {
     BlogService service = new BlogService();
     List<String> blogEntryIds = blogEntryIndex.getPublishedBlogEntries();
     List blogEntries = new ArrayList();

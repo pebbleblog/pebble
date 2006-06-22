@@ -75,10 +75,10 @@ public class ViewLogSummaryAction extends SecureAction {
       cal.set(Calendar.MONTH, Integer.parseInt(month)-1);
       logSummary = blog.getLogger().getLogSummary(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH)+1);
       view = new LogSummaryByMonthView();
-    } else if (year != null && year.length() > 0) {
-      cal.set(Calendar.YEAR, Integer.parseInt(year));
-      logSummary = blog.getLogger().getLogSummary(cal.get(Calendar.YEAR));
-      view = new LogSummaryByYearView();
+//    } else if (year != null && year.length() > 0) {
+//      cal.set(Calendar.YEAR, Integer.parseInt(year));
+//      logSummary = blog.getLogger().getLogSummary(cal.get(Calendar.YEAR));
+//      view = new LogSummaryByYearView();
     } else {
       // get the log for this month
       logSummary = blog.getLogger().getLogSummary(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH)+1);

@@ -44,7 +44,7 @@ public class ContentDecoratorContext {
 
   public static final int HTML_PAGE = 0;
   public static final int NEWS_FEED = 1;
-  public static final int DESKTOP_UI = 2;
+  public static final int XML_RPC = 2;
   public static final int EMAIL = 4;
 
   private int view = 0;
