@@ -251,10 +251,12 @@ public class MultiBlogBloggerAPIHandlerTest extends MultiBlogTestCase {
       blog1.addCategory(new Category("/aCategory", "A Category"));
 
       boolean result = handler.addCategory("appkey", "blog1/" + entry.getId(), "username", "password", "/aCategory");
+      entry = service.getBlogEntry(blog1, entry.getId());
       assertTrue("Category wasn't added", result);
       assertTrue(entry.inCategory(blog1.getCategory("aCategory")));
 
       result = handler.addCategory("appkey", "blog1/" + entry.getId(), "username", "password", "/aNonExistentCategory");
+      entry = service.getBlogEntry(blog1, entry.getId());
       assertFalse("Category was added", result);
     } catch (Exception e) {
       e.printStackTrace();

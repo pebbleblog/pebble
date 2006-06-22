@@ -70,6 +70,7 @@ public class SaveCommentActionTest extends SingleBlogActionTestCase {
     View view = action.process(request, response);
     assertTrue(view instanceof CommentConfirmationView);
 
+    blogEntry = service.getBlogEntry(blog, blogEntry.getId());
     assertEquals(1, blogEntry.getComments().size());
 
     Comment comment = blogEntry.getComments().get(0);

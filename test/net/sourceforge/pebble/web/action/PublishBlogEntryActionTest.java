@@ -67,6 +67,7 @@ public class PublishBlogEntryActionTest extends SecureActionTestCase {
     request.setParameter("submit", "Publish");
     View view = action.process(request, response);
 
+    blogEntry = (BlogEntry)blog.getRecentBlogEntries(1).get(0);
     assertTrue(blogEntry.isPublished());
     assertEquals(new Date().getTime(), blogEntry.getDate().getTime(), 1000);
     assertTrue(view instanceof RedirectView);
@@ -122,13 +123,13 @@ public class PublishBlogEntryActionTest extends SecureActionTestCase {
     request.setParameter("submit", "Publish");
     View view = action.process(request, response);
 
-    blogEntry = service.getBlogEntry(blog, blogEntry.getId());
+    blogEntry = (BlogEntry)blog.getRecentBlogEntries(1).get(0);
     assertTrue(blogEntry.isPublished());
     assertEquals(new Date().getTime(), blogEntry.getDate().getTime(), 1000);
 
     // check that the original comment has been unindexed
     assertFalse(blog.getResponseIndex().getApprovedResponses().contains(commentId));
-    assertTrue(blog.getResponseIndex().getApprovedResponses().contains(comment.getGuid()));
+    assertTrue(blog.getResponseIndex().getApprovedResponses().contains(blogEntry.getComments().get(0).getGuid()));
   }
 
   public void testUnpublishBlogEntry() throws Exception {

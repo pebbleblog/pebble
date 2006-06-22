@@ -308,6 +308,7 @@ public class MultiBlogMetaWeblogAPIHandlerTest extends MultiBlogTestCase {
       boolean result = handler.editPost("blog1/" + entry.getId(), "username", "password", struct, true);
 
       assertTrue(result);
+      entry = service.getBlogEntry(blog1, entry.getId());
       assertEquals("Title", entry.getTitle());
       assertEquals("<p>Content</p>", entry.getBody());
       assertEquals("username", entry.getAuthor());

@@ -311,6 +311,7 @@ public class SingleBlogMetaWeblogAPIHandlerTest extends SingleBlogTestCase {
       boolean result = handler.editPost("default/" + entry.getId(), "username", "password", struct, true);
 
       assertTrue(result);
+      entry = service.getBlogEntry(blog, entry.getId());
       assertEquals("Title", entry.getTitle());
       assertEquals("<p>Content</p>", entry.getBody());
       assertEquals("username", entry.getAuthor());

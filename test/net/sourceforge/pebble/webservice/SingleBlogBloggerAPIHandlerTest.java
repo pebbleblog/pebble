@@ -330,6 +330,7 @@ public class SingleBlogBloggerAPIHandlerTest extends SingleBlogTestCase {
 
       boolean result = handler.editPost("appkey", "default/" + entry.getId(), "username", "password", "<title>Title</title><p>Content</p>", true);
 
+      entry = service.getBlogEntry(blog, entry.getId());
       assertTrue(result);
       assertEquals("Title", entry.getTitle());
       assertEquals("<p>Content</p>", entry.getBody());
@@ -450,6 +451,8 @@ public class SingleBlogBloggerAPIHandlerTest extends SingleBlogTestCase {
       blog.addCategory(new Category("/aCategory", "A Category"));
 
       boolean result = handler.addCategory("appkey", "default/" + entry.getId(), "username", "password", "/aCategory");
+
+      entry = service.getBlogEntry(blog, entry.getId());
       assertTrue("Category wasn't added", result);
       assertTrue(entry.inCategory(blog.getCategory("aCategory")));
 
