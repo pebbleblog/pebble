@@ -9,6 +9,7 @@ import org.apache.commons.logging.LogFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
@@ -44,6 +45,41 @@ public abstract class AbstractCommentAction extends Action {
     return comment;
   }
 
+  protected void copyCommentToSession(HttpSession session, Comment comment) {
+    session.setAttribute("comment.blogEntry", comment.getBlogEntry().getId());
+    session.setAttribute("comment.author", comment.getAuthor());
+    session.setAttribute("comment.email", comment.getEmail());
+    session.setAttribute("comment.website", comment.getWebsite());
+    session.setAttribute("comment.ipAddress", comment.getIpAddress());
+    session.setAttribute("comment.title", comment.getTitle());
+    session.setAttribute("comment.body", comment.getBody());
+    if (comment.getParent() != null) {
+      session.setAttribute("comment.parent", comment.getParent().getId());
+    }
+  }
+
+  protected Comment createComment(HttpSession session, BlogEntry blogEntry) {
+    String author = (String)session.getAttribute("comment.author");
+    String email = (String)session.getAttribute("comment.email");
+    String website = (String)session.getAttribute("comment.website");
+    String ipAddress = (String)session.getAttribute("comment.ipAddress");
+    String title = (String)session.getAttribute("comment.title");
+    String body = (String)session.getAttribute("comment.body");
+
+    Comment comment = blogEntry.createComment(title, body, author, email, website, ipAddress);
+
+    // are we replying to an existing comment?
+    Long parent = (Long)session.getAttribute("comment.parent");
+    if (parent != null) {
+      Comment parentComment = blogEntry.getComment(parent);
+      if (parentComment != null) {
+        comment.setParent(parentComment);
+      }
+    }
+
+    return comment;
+  }
+
   protected ValidationContext validateComment(Comment comment) {
     ValidationContext context = new ValidationContext();
     MailUtils.validate(comment.getEmail(), context);
@@ -59,7 +95,7 @@ public abstract class AbstractCommentAction extends Action {
     service.putBlogEntry(blogEntry);
 
     // remember me functionality
-    String rememberMe = request.getParameter("rememberMe");
+    String rememberMe = (String)request.getSession().getAttribute("rememberMe");
     if (rememberMe != null && rememberMe.equals("true")) {
       CookieUtils.addCookie(response, "rememberMe", "true", CookieUtils.ONE_MONTH);
       CookieUtils.addCookie(response, "rememberMe.author", encode(comment.getAuthor(), blog.getCharacterEncoding()), CookieUtils.ONE_MONTH);

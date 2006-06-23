@@ -5,9 +5,7 @@
 
   <div class="contentItemBody">
     <form action="confirmComment.action" method="post" accept-charset="${blog.characterEncoding}">
-      <input type="hidden" name="entry" value="${blogEntry.id}" />
-      <input type="hidden" name="rememberMe" value="${rememberMe}" />
-
+      
       <p>
         Please enter the word to confirm your comment.
         <br />

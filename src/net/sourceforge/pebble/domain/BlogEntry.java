@@ -600,6 +600,7 @@ public class BlogEntry extends PageBasedContent {
       } else {
         comments.add(comment);
       }
+      comment.setBlogEntry(this);
 
       if (areEventsEnabled()) {
         addEvent(new CommentEvent(comment, CommentEvent.COMMENT_ADDED));
@@ -854,13 +855,13 @@ public class BlogEntry extends PageBasedContent {
     entry.setTags(tags);
 
     // also copy the comments
-    it = comments.iterator();
+    it = getComments().iterator();
     while (it.hasNext()) {
       Comment comment = (Comment)it.next();
       Comment clonedComment = (Comment)comment.clone();
       clonedComment.setBlogEntry(entry);
-      if (clonedComment.getParent() != null) {
-        clonedComment.setParent(entry.getComment(clonedComment.getParent().getId()));
+      if (comment.getParent() != null) {
+        clonedComment.setParent(entry.getComment(comment.getParent().getId()));
       }
       entry.comments.add(clonedComment);
     }

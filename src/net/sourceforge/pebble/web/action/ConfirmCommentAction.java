@@ -37,7 +37,7 @@ public class ConfirmCommentAction extends AbstractCommentAction {
     BlogEntry blogEntry = null;
     Comment comment = null;
 
-    String entry = request.getParameter("entry");
+    String entry = (String)request.getSession().getAttribute("comment.blogEntry");
     BlogService service = new BlogService();
     try {
       blogEntry = service.getBlogEntry(blog, entry);
@@ -52,7 +52,7 @@ public class ConfirmCommentAction extends AbstractCommentAction {
       return new CommentConfirmationView();
     }
 
-    comment = (Comment)request.getSession().getAttribute(Constants.COMMENT_KEY);
+    comment = createComment(request.getSession(), blogEntry);
 
     ContentDecoratorContext decoratorContext = new ContentDecoratorContext();
     decoratorContext.setView(ContentDecoratorContext.DETAIL_VIEW);
@@ -69,6 +69,7 @@ public class ConfirmCommentAction extends AbstractCommentAction {
     if (strategy.confirmComment(request, comment)) {
       try {
         saveComment(request, response, blogEntry, comment);
+        request.getSession().removeAttribute(Constants.COMMENT_KEY);
         return new CommentConfirmationView();
       } catch (BlogServiceException be) {
         log.error(be.getMessage(), be);
@@ -76,7 +77,6 @@ public class ConfirmCommentAction extends AbstractCommentAction {
       }
     } else {
       // try again!
-      request.getSession().setAttribute(Constants.COMMENT_KEY, comment);
       strategy.setupConfirmation(request, comment);
       return new ConfirmCommentView();
     }

@@ -525,6 +525,31 @@ public class BlogEntryTest extends SingleBlogTestCase {
     assertNull(clonedBlogEntry.getAttachment());
   }
 
+  public void testTopLevelCommentsClonedProperly() {
+    Comment comment = blogEntry.createComment("Title", "Body", "Author", "me@somedomain.com", "http://www.google.com", "127.0.0.1");
+    blogEntry.addComment(comment);
+
+    BlogEntry clonedBlogEntry = (BlogEntry)blogEntry.clone();
+    Comment clonedComment = clonedBlogEntry.getComments().get(0);
+    assertSame(clonedBlogEntry, clonedComment.getBlogEntry());
+
+  }
+
+  public void testNestedCommentsClonedProperly() {
+    Comment comment1 = blogEntry.createComment("Title", "Body", "Author", "me@somedomain.com", "http://www.google.com", "127.0.0.1");
+    blogEntry.addComment(comment1);
+    Comment comment2 = blogEntry.createComment("Title", "Body", "Author", "me@somedomain.com", "http://www.google.com", "127.0.0.1");
+    comment2.setParent(comment1);
+    blogEntry.addComment(comment2);
+
+    BlogEntry clonedBlogEntry = (BlogEntry)blogEntry.clone();
+    Comment clonedComment1 = clonedBlogEntry.getComments().get(0);
+    Comment clonedComment2 = clonedBlogEntry.getComments().get(1);
+    assertSame(clonedComment1, clonedComment2.getParent());
+    assertSame(clonedBlogEntry, clonedComment1.getBlogEntry());
+    assertSame(clonedBlogEntry, clonedComment2.getBlogEntry());
+  }
+
 // todo
 //  public void testValidationForStaticPage() {
 //    blogEntry.setType(BlogEntry.STATIC_PAGE);

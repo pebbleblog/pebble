@@ -330,12 +330,6 @@ public class Comment extends Response {
   public Object clone() {
     Comment comment = new Comment(title, body, author, email, website, ipAddress, date, getState(), blogEntry);
     comment.setParent(parent);
-    Iterator it = getComments().iterator();
-    while (it.hasNext()) {
-      Comment nestedComment = (Comment)it.next();
-      comment.addComment((Comment)nestedComment.clone());
-    }
-
     return comment;
   }
 

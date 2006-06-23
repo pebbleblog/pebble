@@ -31,10 +31,6 @@ public class ResponseIndex {
   public ResponseIndex(Blog blog) {
     this.blog = blog;
 
-//    File indexes = new File(blog.getIndexesDirectory());
-//    if (!indexes.exists()) {
-//      indexes.mkdir();
-//    }
     approvedResponses = readIndex(State.APPROVED);
     pendingResponses = readIndex(State.PENDING);
     rejectedResponses = readIndex(State.REJECTED);

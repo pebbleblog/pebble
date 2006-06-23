@@ -47,6 +47,7 @@ import org.apache.commons.logging.LogFactory;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.ResourceBundle;
 
 /**
@@ -107,19 +108,20 @@ public class SaveCommentAction extends AbstractCommentAction {
     getModel().put("rememberMe", rememberMe);
     getModel().put(Constants.BLOG_ENTRY_KEY, blogEntry);
     getModel().put(Constants.COMMENT_KEY, comment);
+    request.getSession().setAttribute("rememberMe", request.getParameter("rememberMe"));
 
     if (submitType == null || submitType.equalsIgnoreCase(previewButton) || context.hasErrors()) {
       return new CommentFormView();
     } else {
       CommentConfirmationStrategy strategy = blog.getCommentConfirmationStrategy();
       if (strategy.confirmationRequired(request, comment)) {
-        Comment clonedComment = (Comment)comment.clone();
-        request.getSession().setAttribute(Constants.COMMENT_KEY, clonedComment);
+        copyCommentToSession(request.getSession(), comment);
         strategy.setupConfirmation(request, comment);
         return new ConfirmCommentView();
       } else {
         try {
           saveComment(request, response, blogEntry, comment);
+          request.getSession().removeAttribute(Constants.COMMENT_KEY);
           return new CommentConfirmationView();
         } catch (BlogServiceException be) {
           log.error(be.getMessage(), be);

@@ -250,6 +250,7 @@ public class CommentTest extends SingleBlogTestCase {
     assertEquals(comment.getDate(), clonedComment.getDate());
     assertEquals(comment.getId(), clonedComment.getId());
     assertEquals(comment.getState(), clonedComment.getState());
+    assertEquals(comment.getParent(), clonedComment.getParent());
     assertEquals(comment.getBlogEntry(), clonedComment.getBlogEntry());
   }
 
