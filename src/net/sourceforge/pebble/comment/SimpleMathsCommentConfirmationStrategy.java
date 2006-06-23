@@ -47,6 +47,7 @@ public class SimpleMathsCommentConfirmationStrategy extends AbstractCommentConfi
 
   private static final String ARGUMENT1 = "SimpleMathsCommentConfirmationStrategyArg1";
   private static final String ARGUMENT2 = "SimpleMathsCommentConfirmationStrategyArg2";
+  private static final String OPERATOR = "SimpleMathsCommentConfirmationStrategyOperator";
   private static final String ANSWER = "SimpleMathsCommentConfirmationStrategyAnswer";
 
   /**
@@ -59,9 +60,24 @@ public class SimpleMathsCommentConfirmationStrategy extends AbstractCommentConfi
     Random r = new Random();
     int arg1 = r.nextInt(10) + 1;
     int arg2 = r.nextInt(10) + 1;
+    int op = r.nextInt(3);
     request.getSession().setAttribute(ARGUMENT1, arg1);
     request.getSession().setAttribute(ARGUMENT2, arg2);
-    request.getSession().setAttribute(ANSWER, arg1 + arg2);
+
+    switch (op) {
+      case 0 :
+        request.getSession().setAttribute(OPERATOR, "+");
+        request.getSession().setAttribute(ANSWER, arg1 + arg2);
+        break;
+      case 1 :
+        request.getSession().setAttribute(OPERATOR, "-");
+        request.getSession().setAttribute(ANSWER, arg1 - arg2);
+        break;
+      case 2 :
+        request.getSession().setAttribute(OPERATOR, "*");
+        request.getSession().setAttribute(ANSWER, arg1 * arg2);
+        break;
+  }
   }
 
   /**

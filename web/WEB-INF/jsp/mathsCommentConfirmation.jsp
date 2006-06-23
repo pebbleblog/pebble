@@ -15,7 +15,7 @@
       <table width="99%">
 
         <tr>
-          <td>${SimpleMathsCommentConfirmationStrategyArg1} + ${SimpleMathsCommentConfirmationStrategyArg2} = <input type="text" name="answer" /></td>
+          <td>${SimpleMathsCommentConfirmationStrategyArg1} ${SimpleMathsCommentConfirmationStrategyOperator} ${SimpleMathsCommentConfirmationStrategyArg2} = <input type="text" name="answer" /></td>
         </tr>
 
         <tr>

@@ -41,15 +41,14 @@ public abstract class AbstractCommentConfirmationStrategy implements CommentConf
       CommentListener listener2 = new LinkSpamListener();
       CommentListener listener3 = new ContentSpamListener();
       CommentListener listener4 = new SpamScoreListener();
-      Comment clonedComment = (Comment)comment.clone();
-      CommentEvent event = new CommentEvent(clonedComment, CommentEvent.COMMENT_ADDED);
+      CommentEvent event = new CommentEvent(comment, CommentEvent.COMMENT_ADDED);
 
       listener1.commentAdded(event);
       listener2.commentAdded(event);
       listener3.commentAdded(event);
       listener4.commentAdded(event);
 
-      return !clonedComment.isApproved();
+      return !comment.isApproved();
     }
   }
 

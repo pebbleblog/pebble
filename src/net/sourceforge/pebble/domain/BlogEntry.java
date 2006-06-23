@@ -591,7 +591,12 @@ public class BlogEntry extends PageBasedContent {
       return;
     } else {
       if (comment.getParent() != null) {
-        comment.getParent().addComment(comment);
+        Comment parent = getComment(comment.getParent().getId());
+        if (parent != null) {
+          parent.addComment(comment);
+        } else {
+          comments.add(comment);
+        }
       } else {
         comments.add(comment);
       }
