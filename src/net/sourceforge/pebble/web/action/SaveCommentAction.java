@@ -114,9 +114,12 @@ public class SaveCommentAction extends AbstractCommentAction {
       return new CommentFormView();
     } else {
       CommentConfirmationStrategy strategy = blog.getCommentConfirmationStrategy();
-      if (strategy.confirmationRequired(request, comment)) {
-        copyCommentToSession(request.getSession(), comment);
-        strategy.setupConfirmation(request, comment);
+
+      Comment clonedComment = (Comment)comment.clone();
+      request.getSession().setAttribute(Constants.COMMENT_KEY, comment);
+
+      if (strategy.confirmationRequired(request, clonedComment)) {
+        strategy.setupConfirmation(request, clonedComment);
         return new ConfirmCommentView();
       } else {
         try {

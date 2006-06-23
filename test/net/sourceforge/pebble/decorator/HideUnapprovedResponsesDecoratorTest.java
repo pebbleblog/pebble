@@ -117,4 +117,25 @@ public class HideUnapprovedResponsesDecoratorTest extends SingleBlogTestCase {
     assertEquals(1, blogEntry.getTrackBacks().size());
   }
 
+  public void testUnapprovedNestedResponsesRemovedWhenNotLoggedIn() throws Exception {
+    BlogEntry blogEntry = new BlogEntry(blog);
+    Comment comment1 = blogEntry.createComment("title", "body", "author", "email", "website", "127.0.0.1");
+    comment1.setPending();
+    blogEntry.addComment(comment1);
+
+    Comment comment2 = blogEntry.createComment("title", "body", "author", "email", "website", "127.0.0.1");
+    comment2.setPending();
+    comment2.setParent(comment1);
+    blogEntry.addComment(comment2);
+
+    SecurityUtils.runAsAnonymous();
+
+    blogEntry = (BlogEntry)blogEntry.clone();
+
+    ContentDecoratorContext context = new ContentDecoratorContext();
+    decorator.decorate(context, blogEntry);
+    assertEquals(0, blogEntry.getComments().size());
+    assertEquals(0, blogEntry.getTrackBacks().size());
+  }
+
 }

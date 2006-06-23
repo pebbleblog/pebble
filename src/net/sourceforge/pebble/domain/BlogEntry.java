@@ -859,20 +859,16 @@ public class BlogEntry extends PageBasedContent {
     while (it.hasNext()) {
       Comment comment = (Comment)it.next();
       Comment clonedComment = (Comment)comment.clone();
-      clonedComment.setBlogEntry(entry);
-      if (comment.getParent() != null) {
-        clonedComment.setParent(entry.getComment(comment.getParent().getId()));
-      }
-      entry.comments.add(clonedComment);
+      entry.addComment(clonedComment);
     }
 
     // and TrackBacks
-    it = trackBacks.iterator();
+    it = getTrackBacks().iterator();
     while (it.hasNext()) {
       TrackBack trackBack = (TrackBack)it.next();
       TrackBack clonedTrackBack = (TrackBack)trackBack.clone();
       clonedTrackBack.setBlogEntry(entry);
-      entry.trackBacks.add(clonedTrackBack);
+      entry.addTrackBack(clonedTrackBack);
     }
 
     return entry;

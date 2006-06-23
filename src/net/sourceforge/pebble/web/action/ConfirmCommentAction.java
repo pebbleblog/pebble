@@ -37,7 +37,9 @@ public class ConfirmCommentAction extends AbstractCommentAction {
     BlogEntry blogEntry = null;
     Comment comment = null;
 
-    String entry = (String)request.getSession().getAttribute("comment.blogEntry");
+    comment = (Comment)request.getSession().getAttribute(Constants.COMMENT_KEY);
+    String entry = comment.getBlogEntry().getId();
+
     BlogService service = new BlogService();
     try {
       blogEntry = service.getBlogEntry(blog, entry);
@@ -52,8 +54,6 @@ public class ConfirmCommentAction extends AbstractCommentAction {
       return new CommentConfirmationView();
     }
 
-    comment = createComment(request.getSession(), blogEntry);
-
     ContentDecoratorContext decoratorContext = new ContentDecoratorContext();
     decoratorContext.setView(ContentDecoratorContext.DETAIL_VIEW);
     decoratorContext.setMedia(ContentDecoratorContext.HTML_PAGE);
@@ -66,7 +66,10 @@ public class ConfirmCommentAction extends AbstractCommentAction {
     getModel().put(Constants.COMMENT_KEY, comment);
 
     CommentConfirmationStrategy strategy = blog.getCommentConfirmationStrategy();
-    if (strategy.confirmComment(request, comment)) {
+
+    Comment clonedComment = (Comment)comment.clone();
+
+    if (strategy.confirmComment(request, clonedComment)) {
       try {
         saveComment(request, response, blogEntry, comment);
         request.getSession().removeAttribute(Constants.COMMENT_KEY);
@@ -77,7 +80,7 @@ public class ConfirmCommentAction extends AbstractCommentAction {
       }
     } else {
       // try again!
-      strategy.setupConfirmation(request, comment);
+      strategy.setupConfirmation(request, clonedComment);
       return new ConfirmCommentView();
     }
   }
