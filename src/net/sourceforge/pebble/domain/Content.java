@@ -63,13 +63,13 @@ public abstract class Content implements Permalinkable, Cloneable, Serializable 
   private boolean eventsEnabled = false;
 
   /** the class responsible for managing property change events */
-  protected PropertyChangeSupport propertyChangeSupport;
+  protected transient PropertyChangeSupport propertyChangeSupport;
 
   /** the collection of properties that have changed since the last store */
-  private ArrayList propertyChangeEvents;
+  private transient ArrayList propertyChangeEvents;
 
   /** the collection of PebbleEvent instances that have been initiated */
-  private List<PebbleEvent> events = new ArrayList<PebbleEvent>();
+  private transient List<PebbleEvent> events = new ArrayList<PebbleEvent>();
 
   /**
    * Default, no args constructor.

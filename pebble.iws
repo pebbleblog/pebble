@@ -168,19 +168,55 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="AbstractCommentConfirmationStrategy.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="AbstractCommentConfirmationStrategy.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/api/comment/AbstractCommentConfirmationStrategy.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="22" selection-start="742" selection-end="742" vertical-scroll-proportion="0.408">
+            <state line="19" column="22" selection-start="742" selection-end="742" vertical-scroll-proportion="0.38734177">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DeleteRejectedListener.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/event/response/DeleteRejectedListener.java">
+      <file leaf-file-name="State.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/domain/State.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="118" column="0" selection-start="3747" selection-end="3747" vertical-scroll-proportion="1.5692308">
+            <state line="40" column="43" selection-start="1761" selection-end="1761" vertical-scroll-proportion="0.31707317">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Comment.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/domain/Comment.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="80" column="32" selection-start="2979" selection-end="2979" vertical-scroll-proportion="0.91392404">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ManageResponsesAction.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/action/ManageResponsesAction.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="98" column="0" selection-start="3889" selection-end="3889" vertical-scroll-proportion="0.502439">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Response.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/domain/Response.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="69" column="41" selection-start="2648" selection-end="2648" vertical-scroll-proportion="0.9170732">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Content.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/domain/Content.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="118" column="20" selection-start="4317" selection-end="4317" vertical-scroll-proportion="0.9170732">
               <folding />
             </state>
           </provider>
@@ -189,7 +225,7 @@
       <file leaf-file-name="CaptchaService.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/comment/CaptchaService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="45" selection-start="502" selection-end="502" vertical-scroll-proportion="0.7410256">
+            <state line="17" column="45" selection-start="502" selection-end="502" vertical-scroll-proportion="0.70487803">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -200,7 +236,7 @@
       <file leaf-file-name="ImageCaptchaCommentConfirmationStrategy.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/comment/ImageCaptchaCommentConfirmationStrategy.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="49" column="56" selection-start="1609" selection-end="1609" vertical-scroll-proportion="1.5435897">
+            <state line="49" column="56" selection-start="1609" selection-end="1609" vertical-scroll-proportion="1.4682927">
               <folding />
             </state>
           </provider>
@@ -220,46 +256,10 @@
       <file leaf-file-name="NoOpCommentConfirmationStrategy.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/comment/NoOpCommentConfirmationStrategy.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="43" column="65" selection-start="1979" selection-end="1979" vertical-scroll-proportion="0.55641025">
+            <state line="43" column="65" selection-start="1979" selection-end="1979" vertical-scroll-proportion="0.52926826">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="imageCaptchaCommentConfirmation.jsp" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/imageCaptchaCommentConfirmation.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="0" selection-start="331" selection-end="331" vertical-scroll-proportion="0.34871796">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="defaultCommentConfirmation.jsp" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/defaultCommentConfirmation.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="0" selection-start="331" selection-end="331" vertical-scroll-proportion="0.34871796">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="commentConfirmation.jsp" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/commentConfirmation.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="mathsCommentConfirmation.jsp" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/mathsCommentConfirmation.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="0" selection-start="331" selection-end="331" vertical-scroll-proportion="0.36266667">
-              <folding />
             </state>
           </provider>
         </entry>
@@ -875,7 +875,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-4" y="-4" width="1408" height="1024" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="CVS" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.33" order="12" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.53630364" order="7" />
@@ -888,7 +888,7 @@
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.33" order="9" />
       <window_info id="Favorites" active="false" anchor="right" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.32991803" order="5" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.22418879" order="1" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="true" weight="0.47544643" order="2" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="true" weight="0.47544643" order="2" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.25" order="2" />
       <window_info id="File View" active="false" anchor="right" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.33" order="4" />
       <window_info id="Clover" active="false" anchor="left" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.32153392" order="3" />
@@ -985,41 +985,6 @@
     </buildFile>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/event/response/ContentSpamListener.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="108" column="21" selection-start="4967" selection-end="4967" vertical-scroll-proportion="0.36881188">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/comment/SimpleMathsCommentConfirmationStrategy.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="45" column="13" selection-start="1981" selection-end="1981" vertical-scroll-proportion="0.2272175">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/action/SaveCommentAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="115" column="72" selection-start="5068" selection-end="5068" vertical-scroll-proportion="0.66950184">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/action/ConfirmCommentAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="70" column="16" selection-start="2725" selection-end="2725" vertical-scroll-proportion="0.8055893">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/imageCaptchaCommentConfirmation.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="0" selection-start="331" selection-end="331" vertical-scroll-proportion="0.34871796">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/defaultCommentConfirmation.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state line="8" column="0" selection-start="331" selection-end="331" vertical-scroll-proportion="0.34871796">
@@ -1043,14 +1008,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/event/response/DeleteRejectedListener.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="118" column="0" selection-start="3747" selection-end="3747" vertical-scroll-proportion="1.5692308">
+        <state line="118" column="0" selection-start="3747" selection-end="3747" vertical-scroll-proportion="1.4926829">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/comment/CaptchaService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="45" selection-start="502" selection-end="502" vertical-scroll-proportion="0.7410256">
+        <state line="17" column="45" selection-start="502" selection-end="502" vertical-scroll-proportion="0.70487803">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1066,7 +1031,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/comment/ImageCaptchaCommentConfirmationStrategy.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="49" column="56" selection-start="1609" selection-end="1609" vertical-scroll-proportion="1.5435897">
+        <state line="49" column="56" selection-start="1609" selection-end="1609" vertical-scroll-proportion="1.4682927">
           <folding />
         </state>
       </provider>
@@ -1082,7 +1047,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/comment/NoOpCommentConfirmationStrategy.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="43" column="65" selection-start="1979" selection-end="1979" vertical-scroll-proportion="0.55641025">
+        <state line="43" column="65" selection-start="1979" selection-end="1979" vertical-scroll-proportion="0.52926826">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1091,7 +1056,42 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/api/comment/AbstractCommentConfirmationStrategy.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="22" selection-start="742" selection-end="742" vertical-scroll-proportion="0.408">
+        <state line="19" column="22" selection-start="742" selection-end="742" vertical-scroll-proportion="0.38734177">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/domain/State.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="40" column="43" selection-start="1761" selection-end="1761" vertical-scroll-proportion="0.31707317">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/domain/Content.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="118" column="20" selection-start="4317" selection-end="4317" vertical-scroll-proportion="0.9170732">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/domain/Response.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="69" column="41" selection-start="2648" selection-end="2648" vertical-scroll-proportion="0.9170732">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/domain/Comment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="80" column="32" selection-start="2979" selection-end="2979" vertical-scroll-proportion="0.91392404">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/action/ManageResponsesAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="98" column="0" selection-start="3889" selection-end="3889" vertical-scroll-proportion="0.502439">
           <folding />
         </state>
       </provider>

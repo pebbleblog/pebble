@@ -31,12 +31,14 @@
  */
 package net.sourceforge.pebble.domain;
 
+import java.io.Serializable;
+
 /**
  * Represents a state.
  *
  * @author    Simon Brown
  */
-public class State {
+public class State implements Serializable {
 
   public static final State APPROVED = new State("approved");
   public static final State REJECTED = new State("rejected");

@@ -96,7 +96,6 @@ public class ManageResponsesAction extends SecureAction {
           }
         } else if (submit.equalsIgnoreCase("Remove")) {
           try {
-            log.info("Removing response from " + ber.getBlogEntry());
             ber.getBlogEntry().removeResponse(ber);
             service.putBlogEntry(ber.getBlogEntry());
           } catch (BlogServiceException be) {
