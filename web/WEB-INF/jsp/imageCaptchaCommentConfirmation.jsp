@@ -9,21 +9,19 @@
       <input type="hidden" name="rememberMe" value="${rememberMe}" />
 
       <p>
-        Please complete this simple maths question to confirm your comment.
+        Please enter the word to confirm your comment.
+        <br />
+        <img src="${pageContext.request.contextPath}/jcaptcha" alt="Image captcha" />
+        <br />
+        <input type="text" name="j_captcha_response" value="">
       </p>
 
       <table width="99%">
-
-        <tr>
-          <td>${SimpleMathsCommentConfirmationStrategyArg1} + ${SimpleMathsCommentConfirmationStrategyArg2} = <input type="text" name="answer" /></td>
-        </tr>
-
         <tr>
           <td align="right">
             <input name="submit" type="submit" value="Confirm Comment" />
           </td>
         </tr>
-
       </table>
     </form>
   </div>

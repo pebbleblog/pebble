@@ -140,6 +140,12 @@
     <jsp-file>/index.jsp</jsp-file>
   </servlet>
 
+  <servlet>
+    <servlet-name>jcaptcha</servlet-name>
+    <servlet-class>net.sourceforge.pebble.comment.ImageCaptchaServlet</servlet-class>
+    <load-on-startup>0</load-on-startup>
+  </servlet>
+
   <servlet-mapping>
     <servlet-name>HttpController</servlet-name>
     <url-pattern>*.action</url-pattern>
@@ -158,6 +164,11 @@
   <servlet-mapping>
     <servlet-name>index.jsp</servlet-name>
     <url-pattern>/index.html</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>jcaptcha</servlet-name>
+    <url-pattern>/jcaptcha</url-pattern>
   </servlet-mapping>
 
   <session-config>

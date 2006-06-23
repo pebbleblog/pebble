@@ -52,7 +52,7 @@ public class ConfirmCommentAction extends AbstractCommentAction {
       return new CommentConfirmationView();
     }
 
-    comment = createComment(request, blogEntry);
+    comment = (Comment)request.getSession().getAttribute(Constants.COMMENT_KEY);
 
     ContentDecoratorContext decoratorContext = new ContentDecoratorContext();
     decoratorContext.setView(ContentDecoratorContext.DETAIL_VIEW);
@@ -76,6 +76,7 @@ public class ConfirmCommentAction extends AbstractCommentAction {
       }
     } else {
       // try again!
+      request.getSession().setAttribute(Constants.COMMENT_KEY, comment);
       strategy.setupConfirmation(request, comment);
       return new ConfirmCommentView();
     }

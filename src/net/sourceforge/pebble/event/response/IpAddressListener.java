@@ -66,13 +66,13 @@ public class IpAddressListener extends BlogEntryResponseListenerSupport {
     PluginProperties props = response.getBlogEntry().getBlog().getPluginProperties();
 
     if (isListed(response, props.getProperty(BLACKLIST_KEY))) {
-      log.debug(response.getTitle() + " marked as pending : IP address " + response.getIpAddress() + " is on blacklist");
+      log.info(response.getTitle() + " marked as pending : IP address " + response.getIpAddress() + " is on blacklist");
       response.setPending();
       response.incrementSpamScore();
     } else if (isListed(response, props.getProperty(WHITELIST_KEY))) {
       // do nothing
     } else {
-      log.debug(response.getTitle() + " marked as pending : IP address " + response.getIpAddress() + " not on blacklist or whitelist");
+      log.info(response.getTitle() + " marked as pending : IP address " + response.getIpAddress() + " not on blacklist or whitelist");
       response.setPending();
     }
   }

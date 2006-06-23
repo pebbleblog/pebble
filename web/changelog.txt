@@ -1,6 +1,9 @@
 Version 2.0.0-M3 - in progress
 ------------------------------
-Added a TidyListener to ensure blog entry excerpts and bodies are valid XHTML.
+Reinstated the static pages feature.
+Added response (comment and TrackBack) specific feeds.
+Added blog entry caching to improve performance.
+Minor bug fixes.
 
 Version 2.0.0-M2 - 31st May 2006
 --------------------------------

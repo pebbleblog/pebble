@@ -53,7 +53,7 @@ public class ContentSpamListener extends BlogEntryResponseListenerSupport {
   private static final Log log = LogFactory.getLog(ContentSpamListener.class);
 
   /** the default regex list */
-  public static final String DEFAULT_REGEX_LIST = "cialis, viagra, poker, casino, xanax, holdem, hold-em, hold em, sex, craps, fuck, shit, teenage, phentermine, blackjack, roulette, gambling, pharmacy, carisoprodol, pills, penis, penis enlargement, anal, hentai, anime, vicodin, massage, nude, ejaculation, porn, gay, naked, girl, teens, babe, masturbating, squirt, incest, fetish, discount, cheap, interesdting, Anonymous, h1, levitra, government, grants, loan, &\\#.*;, kasino, slots, play, bingo, mortgage, baccarat";
+  public static final String DEFAULT_REGEX_LIST = "cialis, viagra, poker, casino, xanax, holdem, hold-em, hold em, sex, craps, fuck, shit, teenage, phentermine, blackjack, roulette, gambling, pharmacy, carisoprodol, pills, penis, penis enlargement, anal, hentai, anime, vicodin, massage, nude, ejaculation, porn, gay, naked, girl, teens, babe, masturbating, squirt, incest, fetish, discount, cheap, interesdting, levitra, government, grants, loan, &\\#.*;, kasino, slots, play, bingo, mortgage, baccarat";
   
   /** the default threshold for the number of content matches */
   public static final int DEFAULT_THRESHOLD = 0;
@@ -91,22 +91,22 @@ public class ContentSpamListener extends BlogEntryResponseListenerSupport {
 
     // check each of the fields in turn
     if (!contentWithinThreshold(response.getTitle(), regexes, threshold)) {
-      log.debug(response.getTitle() + " marked as pending : threshold for title exceeded");
+      log.info(response.getTitle() + " marked as pending : threshold for title exceeded");
       response.setPending();
       response.incrementSpamScore();
     }
     if (!contentWithinThreshold(response.getSourceName(), regexes, threshold)) {
-      log.debug(response.getTitle() + " marked as pending : threshold for source name exceeded");
+      log.info(response.getTitle() + " marked as pending : threshold for source name exceeded");
       response.setPending();
       response.incrementSpamScore();
     }
     if (!contentWithinThreshold(response.getSourceLink(), regexes, threshold)) {
-      log.debug(response.getTitle() + " marked as pending : threshold for source link exceeded");
+      log.info(response.getTitle() + " marked as pending : threshold for source link exceeded");
       response.setPending();
       response.incrementSpamScore();
     }
     if (!contentWithinThreshold(response.getContent(), regexes, threshold)) {
-      log.debug(response.getTitle() + " marked as pending : threshold for content exceeded");
+      log.info(response.getTitle() + " marked as pending : threshold for content exceeded");
       response.setPending();
       response.incrementSpamScore();
     }

@@ -31,8 +31,8 @@
  */
 package net.sourceforge.pebble.comment;
 
-import net.sourceforge.pebble.domain.Comment;
 import net.sourceforge.pebble.api.comment.AbstractCommentConfirmationStrategy;
+import net.sourceforge.pebble.domain.Comment;
 
 import javax.servlet.http.HttpServletRequest;
 
