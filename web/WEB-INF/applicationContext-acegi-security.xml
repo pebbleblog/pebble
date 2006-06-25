@@ -15,6 +15,9 @@
       </value>
     </property>
   </bean>
+  <!--
+        /**/*.xml=httpSessionContextIntegrationFilter,basicProcessingFilter,exceptionTranslationFilter,filterInvocationInterceptor
+  -->
 
    <!-- ======================== AUTHENTICATION ======================= -->
 
@@ -101,6 +104,15 @@
         <ref bean="roleVoter"/>
       </list>
     </property>
+  </bean>
+
+  <bean id="basicProcessingFilter" class="org.acegisecurity.ui.basicauth.BasicProcessingFilter">
+    <property name="authenticationManager"><ref bean="authenticationManager"/></property>
+    <property name="authenticationEntryPoint"><ref bean="authenticationEntryPoint"/></property>
+  </bean>
+
+  <bean id="authenticationEntryPoint" class="org.acegisecurity.ui.basicauth.BasicProcessingFilterEntryPoint">
+    <property name="realmName"><value>Newsfeed</value></property>
   </bean>
 
   <!-- Note the order that entries are placed against the objectDefinitionSource is critical.
