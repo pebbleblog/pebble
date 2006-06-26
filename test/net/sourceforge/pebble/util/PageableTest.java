@@ -149,4 +149,42 @@ public class PageableTest extends TestCase {
     assertEquals(list.subList(15, 30), pageable.getListForPage());
   }
 
+  public void testGetMinPageRange() {
+    pageable = new Pageable(list);
+    pageable.setPageSize(2);
+
+    pageable.setPage(1);
+    assertEquals(1, pageable.getMinPageRange());
+    pageable.setPage(2);
+    assertEquals(1, pageable.getMinPageRange());
+    pageable.setPage(9);
+    assertEquals(1, pageable.getMinPageRange());
+    pageable.setPage(10);
+    assertEquals(1, pageable.getMinPageRange());
+    pageable.setPage(11);
+    assertEquals(1, pageable.getMinPageRange());
+    pageable.setPage(12);
+    assertEquals(2, pageable.getMinPageRange());
+    pageable.setPage(13);
+    assertEquals(3, pageable.getMinPageRange());
+  }
+
+  public void testGetMaxPageRange() {
+    pageable = new Pageable(list);
+    pageable.setPageSize(2);
+
+    pageable.setPage(15);
+    assertEquals(15, pageable.getMaxPageRange());
+    pageable.setPage(14);
+    assertEquals(15, pageable.getMaxPageRange());
+    pageable.setPage(6);
+    assertEquals(15, pageable.getMaxPageRange());
+    pageable.setPage(5);
+    assertEquals(15, pageable.getMaxPageRange());
+    pageable.setPage(4);
+    assertEquals(14, pageable.getMaxPageRange());
+    pageable.setPage(3);
+    assertEquals(13, pageable.getMaxPageRange());
+  }
+
 }

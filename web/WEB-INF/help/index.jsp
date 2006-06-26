@@ -52,6 +52,7 @@
               <li><a href="./help/blogListeners.html">Blog Listeners</a></li>
               <li><a href="./help/blogEntryListeners.html">Blog Entry Listeners</a></li>
               <li><a href="./help/commentListeners.html">Comment Listeners</a></li>
+              <li><a href="./help/commentConfirmationStrategies.html">Comment Confirmation Strategies</a></li>
               <li><a href="./help/trackbackListeners.html">TrackBack Listeners</a></li>
             </ol>
             <div class="subsubtitle">Extending Pebble</div>

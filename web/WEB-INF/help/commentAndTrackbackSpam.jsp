@@ -1,12 +1,14 @@
 <div class="contentItem">
-  <div class="title">Comment amd TrackBack Spam</div>
+  <div class="title">Comment and TrackBack Spam</div>
   <div class="subtitle">&nbsp;</div>
 
   <div class="contentItemBody">
     <p>
       Unfortunately comment and TrackBack spam is a real problem on the Internet today and during the course of running a public blog, you'll
       probably come across it at some point. Out of the box, Pebble is configured with a number of <a href="./help/commentListeners.html">Comment Listeners</a> and
-      <a href="./help/trackbackListeners.html">TrackBack Listeners</a> to help you fight comment and TrackBack spam.
+      <a href="./help/trackbackListeners.html">TrackBack Listeners</a> to help you fight comment and TrackBack spam. Additionally, you
+      can configure a <a href="./help/commentConfirmationStrategies.html">Comment Confirmation Strategy</a> to ask readers to confirm their
+      comments by means of clicking a button or through some other kind of CAPTCHA.
     </p>
 
     <a name="moderation"></a><div class="subsubtitle">Comment and TrackBack moderation</div>

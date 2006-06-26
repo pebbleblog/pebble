@@ -44,7 +44,7 @@ public class ResetThemeAction extends SecureAction {
    * @param request
    */
   public String[] getRoles(HttpServletRequest request) {
-    return new String[]{Constants.BLOG_OWNER_ROLE};
+    return new String[]{Constants.BLOG_OWNER_ROLE, Constants.PEBBLE_ADMIN_ROLE};
   }
 
 }

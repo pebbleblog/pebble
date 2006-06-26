@@ -4,7 +4,7 @@
   <div class="subtitle">&nbsp;</div>
 
   <div class="contentItemBody">
-    <form action="confirmComment.action" method="post" accept-charset="${blog.characterEncoding}">
+    <form name="commentConfirmationForm" action="confirmComment.action" method="post" accept-charset="${blog.characterEncoding}">
 
       <p>
         Please complete this simple maths question to confirm your comment.
@@ -13,7 +13,7 @@
       <table width="99%">
 
         <tr>
-          <td>${SimpleMathsCommentConfirmationStrategyArg1} ${SimpleMathsCommentConfirmationStrategyOperator} ${SimpleMathsCommentConfirmationStrategyArg2} = <input type="text" name="answer" /></td>
+          <td>${SimpleMathsCommentConfirmationStrategyArg1} ${SimpleMathsCommentConfirmationStrategyOperator} ${SimpleMathsCommentConfirmationStrategyArg2} = <input type="text" name="answer" size="4" /></td>
         </tr>
 
         <tr>
@@ -27,3 +27,11 @@
   </div>
 
 </div>
+
+<script type="text/javascript">
+window.onload = function()
+{
+  document.commentConfirmationForm.answer.focus();
+}
+</script>
+

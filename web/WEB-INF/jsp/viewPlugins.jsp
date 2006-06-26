@@ -34,6 +34,7 @@
       <textarea name="commentListeners" rows="10" cols="60">${blog.commentListeners}</textarea>
       <br /><br />
 
+      <a name="commentConfirmationStrategy"></a>
       Comment Confirmation Strategy
       <br />
       <input type="text" name="commentConfirmationStrategy" size="60" value="${blog.commentConfirmationStrategyName}" />

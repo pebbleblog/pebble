@@ -9,6 +9,7 @@ import net.sourceforge.pebble.event.response.IpAddressListener;
 import net.sourceforge.pebble.event.response.ContentSpamListener;
 import net.sourceforge.pebble.event.response.SpamScoreListener;
 import net.sourceforge.pebble.event.response.LinkSpamListener;
+import net.sourceforge.pebble.PluginProperties;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -18,6 +19,9 @@ import javax.servlet.http.HttpServletRequest;
  * @author    Simon Brown
  */
 public abstract class AbstractCommentConfirmationStrategy implements CommentConfirmationStrategy {
+
+  /** the name of the required override property */
+  public static final String REQUIRED_KEY = "CommentConfirmationStrategy.required";
 
   /**
    * Called to determine whether confirmation is required. This default
@@ -30,6 +34,9 @@ public abstract class AbstractCommentConfirmationStrategy implements CommentConf
    * @return true if the comment should be confirmed, false otherwise
    */
   public boolean confirmationRequired(HttpServletRequest request, Comment comment) {
+    PluginProperties props = comment.getBlogEntry().getBlog().getPluginProperties();
+    String required = props.getProperty(REQUIRED_KEY);
+
     Blog blog = comment.getBlogEntry().getBlog();
     boolean authorisedUser = (SecurityUtils.isUserAuthorisedForBlogAsBlogContributor(blog) || SecurityUtils.isUserAuthorisedForBlogAsBlogOwner(blog));
     if (authorisedUser) {
@@ -48,7 +55,7 @@ public abstract class AbstractCommentConfirmationStrategy implements CommentConf
       listener3.commentAdded(event);
       listener4.commentAdded(event);
 
-      return !comment.isApproved();
+      return (required != null && required.equalsIgnoreCase("true")) || !comment.isApproved();
     }
   }
 
