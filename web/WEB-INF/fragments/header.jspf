@@ -16,6 +16,10 @@
 --%>
     <base href="${blog.url}" />
     <meta http-equiv="Content-Type" content="text/html; charset=${blog.characterEncoding}"/>
+    <meta name="description" CONTENT="${blog.name}" />
+    <meta name="abstract" CONTENT="${blog.description}" />
+    <meta name="author" CONTENT="${blog.author}" />
+    <meta name="generator" CONTENT="Pebble (http://pebble.sourceforge.net)" />
     <title><c:choose><c:when test="${empty title}">${blog.name}</c:when><c:otherwise>${title} - ${blog.name}</c:otherwise></c:choose></title>
     <link rel="alternate" type="application/rss+xml" title="RSS" href="${blog.url}rss.xml" />
     <link rel="alternate" type="application/rdf+xml" title="RDF" href="${blog.url}rdf.xml" />
