@@ -104,6 +104,15 @@ public final class SecurityUtils {
   }
 
   /**
+   * Determines whether this user is a blog publisher.
+   *
+   * @return  true if the user is a blog publisher, false otherwise
+   */
+  public static boolean isBlogPublisher() {
+    return isUserInRole(Constants.BLOG_PUBLISHER_ROLE);
+  }
+
+  /**
    * Determines whether this user is a blog contributor.
    *
    * @return  true if the user is a blog contributor, false otherwise
@@ -114,6 +123,11 @@ public final class SecurityUtils {
 
   public static void runAsBlogOwner() {
     Authentication auth = new TestingAuthenticationToken("username", "password", new GrantedAuthority[] {new GrantedAuthorityImpl(Constants.BLOG_OWNER_ROLE)});
+    SecurityContextHolder.getContext().setAuthentication(auth);
+  }
+
+  public static void runAsBlogPublisher() {
+    Authentication auth = new TestingAuthenticationToken("username", "password", new GrantedAuthority[] {new GrantedAuthorityImpl(Constants.BLOG_PUBLISHER_ROLE)});
     SecurityContextHolder.getContext().setAuthentication(auth);
   }
 
@@ -132,9 +146,20 @@ public final class SecurityUtils {
     return isBlogOwner() && blog.isUserInRole(Constants.BLOG_OWNER_ROLE, currentUser);
   }
 
+  public static boolean isUserAuthorisedForBlogAsBlogPublisher(Blog blog) {
+    String currentUser = SecurityUtils.getUsername();
+    return isBlogPublisher() && blog.isUserInRole(Constants.BLOG_PUBLISHER_ROLE, currentUser);
+  }
+
   public static boolean isUserAuthorisedForBlogAsBlogContributor(Blog blog) {
     String currentUser = SecurityUtils.getUsername();
     return isBlogContributor() && blog.isUserInRole(Constants.BLOG_CONTRIBUTOR_ROLE, currentUser);
+  }
+
+  public static boolean isUserAuthorisedForBlog(Blog blog) {
+    return isUserAuthorisedForBlogAsBlogOwner(blog) ||
+        isUserAuthorisedForBlogAsBlogPublisher(blog) ||
+        isUserAuthorisedForBlogAsBlogContributor(blog);
   }
 
   public static boolean isUserAuthenticated() {

@@ -4,8 +4,8 @@
     <a href="./help/index.html" target="_blank">Help</a>
   </div>
 
-  <div class="title">About this blog</div>
-  <div class="subtitle">&nbsp;</div>
+  <h1>About this blog</h1>
+  <h2>&nbsp;</h2>
 
   <div class="contentItemBody" style="overflow: auto">
 

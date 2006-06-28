@@ -1,6 +1,6 @@
 <div class="contentItem">
-  <div class="title">Tags and tagging</div>
-  <div class="subtitle">&nbsp;</div>
+  <h1>Tags and tagging</h1>
+  <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
     <p>
@@ -15,7 +15,7 @@
     </div>
     </p>
 
-    <div class="subsubtitle">Category tagging</div>
+    <h3>Category tagging</h3>
     <p>
     Pebble also allows you to add tags to categories, again
     by specifying a space separated list of tags when you edit the category. Thereafter, whenever a blog entry is placed into
@@ -24,7 +24,7 @@
     will inherit all of the tags from its parent(s).
     </p>
 
-    <div class="subsubtitle">Tagcloud</div>
+    <h3>Tagcloud</h3>
     <p>
     Like other blogging tools, Pebble automatically generates and maintains a tagcloud for your blog, which you can
     see by clicking the <a href="./tags/">Tags</a> link in the sidebar.
@@ -42,7 +42,7 @@
       a list of all blog entries using that tag.
     </p>
 
-    <div class="subsubtitle">Tag-based feeds</div>
+    <h3>Tag-based feeds</h3>
     <p>
       Each tag has an associated RSS/Atom feed, allowing readers to subscribe to only those tags they are interested in.
       <c:if test="${not empty blog.tags}">
@@ -55,7 +55,7 @@
       </c:if>
     </p>
 
-    <div class="subsubtitle">Problems?</div>
+    <h3>Problems?</h3>
     <p>
       If your tagcloud doesn't seem to be accurately reflecting how you've tagged your blog entries, you might need
       to <a href="utilities.secureaction?action=buildIndexes">reindex your blog</a>.

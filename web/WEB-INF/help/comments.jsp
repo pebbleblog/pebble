@@ -1,6 +1,6 @@
 <div class="contentItem">
-  <div class="title">Comments</div>
-  <div class="subtitle">&nbsp;</div>
+  <h1>Comments</h1>
+  <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
     <p>
@@ -10,12 +10,12 @@
     </p>
 
 
-    <div class="subsubtitle">Removing comments</div>
+    <h3>Removing comments</h3>
     <p>
       If for any reason you want to remove a comment, just check the checkbox next to it and click the "Remove" button at the bottom of the page. The e-mail and IP address of the comment author are not published on your blog, only logged in users can see this information.
     </p>
 
-    <div class="subsubtitle">E-mail notifications</div>
+    <h3>E-mail notifications</h3>
     <p>
       Pebble can be configured to create an e-mail notification when new comments are added, sending it to the blog owner and
       anybody that has left a comment for that blog entry and specified their e-mail address. To encourage further
@@ -36,7 +36,7 @@
       not receive any more e-mails when further comments are added.
     </p>
 
-    <div class="subsubtitle">Comment moderation and spam</div>
+    <h3>Comment moderation and spam</h3>
     <p>
       For more information about how to deal with comment spam, please see <a href="./help/responseSpam.html">Comment and TrackBack Spam</a>.
     </p>

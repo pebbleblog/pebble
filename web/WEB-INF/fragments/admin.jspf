@@ -43,30 +43,30 @@
   </li>
   </pebble:isBlogContributor>
 
-  <pebble:isBlogOwner>
-  <li><b>Blog</b>
-  <br />
-  <a href="viewBlogProperties.secureaction" title="Manage your blog properties">Properties</a> |
-  <a href="viewPlugins.secureaction" title="Manage your plugins">Plugins</a> |
-  <a href="aboutBlog.secureaction" title="About this blog">About</a>
-  <br />
-  <a href="viewMessages.secureaction">Messages (${blog.numberOfMessages})</a> |
-  <a href="utilities.secureaction" title="Maintenance and upgrade utilities">Utilities</a> |
-  <a href="theme/" title="Manage and edit the files in your theme">Theme</a>
-  </li>
+    <pebble:isBlogOwner>
+    <li><b>Blog</b>
+    <br />
+    <a href="viewBlogProperties.secureaction" title="Manage your blog properties">Properties</a> |
+    <a href="viewPlugins.secureaction" title="Manage your plugins">Plugins</a> |
+    <a href="aboutBlog.secureaction" title="About this blog">About</a>
+    <br />
+    <a href="viewMessages.secureaction">Messages (${blog.numberOfMessages})</a> |
+    <a href="utilities.secureaction" title="Maintenance and upgrade utilities">Utilities</a> |
+    <a href="theme/" title="Manage and edit the files in your theme">Theme</a>
+    </li>
+    </pebble:isBlogOwner>
 
-  <li><b>Logs</b>
-  <br />
-  <a href="viewReferers.secureaction" title="View referers for today">Referers</a> (<a href="viewReferers.secureaction?filter=false" title="View referers for today, unfiltered">unfiltered</a>) |
-  <a href="viewRequests.secureaction" title="View requests for today">Requests</a>
-  <br />
-  <a href="viewLog.secureaction" title="View log for today">Log</a> |
-  <a href="viewLogSummary.secureaction" title="View log summary for this month">Log summary</a>
-  <br />
-  <a href="viewRefererFilters.secureaction" title="View referer filters">Referer filters</a> |
-  <a href="zipDirectory.secureaction?type=blogData&amp;path=/logs" title="Export logs as ZIP file">ZIP file</a>
-  </li>
-  </pebble:isBlogOwner>
+    <pebble:isAuthorisedForBlog>
+    <li><b>Logs</b>
+    <br />
+    <a href="viewReferers.secureaction" title="View referers for today">Referers</a> (<a href="viewReferers.secureaction?filter=false" title="View referers for today, unfiltered">unfiltered</a>) |
+    <a href="viewRequests.secureaction" title="View requests for today">Requests</a>
+    <br />
+    <a href="viewLog.secureaction" title="View log for today">Log</a> |
+    <a href="viewLogSummary.secureaction" title="View log summary for this month">Log summary</a> |
+    <a href="viewRefererFilters.secureaction" title="View referer filters">Referer filters</a>
+    </li>
+    </pebble:isAuthorisedForBlog>
 
   <c:if test="${blogManager.multiBlog}">
   <pebble:isPebbleAdmin>
@@ -78,7 +78,7 @@
   </pebble:isPebbleAdmin>
   </c:if>
 
-  <li><pebble:isBlogOwnerOrContributor><a href="./help/index.html" title="Help">Help</a> | </pebble:isBlogOwnerOrContributor><a href="${pageContext.request.contextPath}/logout.action?redirectUrl=${blog.url}"><fmt:message key="common.logout" /></a></li>
+  <li><pebble:isAuthorisedForBlog><a href="./help/index.html" title="Help">Help</a> | </pebble:isAuthorisedForBlog><a href="${pageContext.request.contextPath}/logout.action?redirectUrl=${blog.url}"><fmt:message key="common.logout" /></a></li>
 
   </ul>
 </pebble:isAuthenticated>

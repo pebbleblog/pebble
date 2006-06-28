@@ -111,9 +111,9 @@ public class ManageBlogEntryAction extends SecureAction {
 
     if (submit != null) {
       if (submit.equalsIgnoreCase("Publish")) {
-        return new String[]{Constants.BLOG_OWNER_ROLE};
+        return new String[]{Constants.BLOG_PUBLISHER_ROLE};
       } else if (submit.equalsIgnoreCase("Unpublish")) {
-        return new String[]{Constants.BLOG_OWNER_ROLE};
+        return new String[]{Constants.BLOG_PUBLISHER_ROLE};
       } else if (submit.equalsIgnoreCase("Remove")) {
         return new String[]{Constants.BLOG_CONTRIBUTOR_ROLE};
       } else if (submit.equalsIgnoreCase("Edit")) {

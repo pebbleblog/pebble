@@ -1,6 +1,6 @@
 <div class="contentItem">
-  <div class="title">Plugins</div>
-  <div class="subtitle">&nbsp;</div>
+  <h1>Plugins</h1>
+  <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
     <p>
@@ -33,13 +33,13 @@
       names. Where more than a single class name can be specified, classes are called in the order they are listed.
     </p>
 
-    <a name="properties"></a><div class="subsubtitle">Plugin properties</div>
+    <a name="properties"></a><h3>Plugin properties</h3>
     <p>
       At the bottom of the plugins page is a textarea into which plugin properties can be entered. These are
       user configurable and vary from plugin to plugin. Each property is a name=value pair on a new line.
     </p>
 
-    <div class="subsubtitle">Current configuration</div>
+    <h3>Current configuration</h3>
     <p>
       To see the list of plugins and properties that are currently active for your blog, open the <a href="aboutBlog.secureaction">About</a> page.
     </p>

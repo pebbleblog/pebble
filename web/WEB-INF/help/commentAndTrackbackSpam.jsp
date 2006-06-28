@@ -1,6 +1,6 @@
 <div class="contentItem">
-  <div class="title">Comment and TrackBack Spam</div>
-  <div class="subtitle">&nbsp;</div>
+  <h1>Comment and TrackBack Spam</h1>
+  <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
     <p>
@@ -11,7 +11,7 @@
       comments by means of clicking a button or through some other kind of CAPTCHA.
     </p>
 
-    <a name="moderation"></a><div class="subsubtitle">Comment and TrackBack moderation</div>
+    <a name="moderation"></a><h3>Comment and TrackBack moderation</h3>
     <p>
       Comments and TrackBacks in Pebble can have one of three statuses - approved, pending or rejected. By default, all new comments and TrackBacks have
       a status of approved, which means that they will be immediately published on your blog.
@@ -35,7 +35,7 @@
       and click the appropriate button at the bottom of the page.
     </p>
 
-    <a name="listeners"></a><div class="subsubtitle">Fighting spam with Comment and TrackBack Listeners</div>
+    <a name="listeners"></a><h3>Fighting spam with Comment and TrackBack Listeners</h3>
     <p>
       Pebble contains some pre-built <a href="./help/commentListeners.html">Comment Listeners</a> and
       <a href="./help/trackbackListeners.html">TrackBack Listeners</a> that can help in the fight against spam.

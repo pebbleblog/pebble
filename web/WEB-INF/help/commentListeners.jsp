@@ -1,6 +1,6 @@
 <div class="contentItem">
-  <div class="title">Comment Listeners</div>
-  <div class="subtitle">&nbsp;</div>
+  <h1>Comment Listeners</h1>
+  <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
     <p>
@@ -77,7 +77,7 @@
       Deletes new comments, effectively disabling the ability for readers to leave comments.
     </p>
 
-    <div class="subsubtitle">Configuring comment listeners</div>
+    <h3>Configuring comment listeners</h3>
     <p>
       To configure the comment listeners used by your blog, simply modify the list on the <a href="viewPlugins.secureaction#commentListeners">Plugins</a> page. Your blog is using the
       following comment listeners.

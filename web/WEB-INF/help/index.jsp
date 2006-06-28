@@ -1,6 +1,6 @@
 <div class="contentItem">
-  <div class="title">Help</div>
-  <div class="subtitle">&nbsp;</div>
+  <h1>Help</h1>
+  <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
     <p>
@@ -14,7 +14,7 @@
       <tr>
         <td width="50%" valign="top" align="left">
           <p>
-            <div class="subsubtitle">Using Pebble</div>
+            <h3>Using Pebble</h3>
             <ol>
               <li><a href="./help/configuration.html">Configuring your blog</a></li>
               <li><a href="./help/blogEntries.html">Blog Entries</a></li>
@@ -44,7 +44,7 @@
         </td>
         <td width="50%" valign="top">
           <p>
-            <div class="subsubtitle">Plugins</div>
+            <h3>Plugins</h3>
             <ol>
               <li><a href="./help/plugins.html">Plugins</a></li>
               <li><a href="./help/decorators.html">Decorators</a></li>
@@ -55,7 +55,7 @@
               <li><a href="./help/commentConfirmationStrategies.html">Comment Confirmation Strategies</a></li>
               <li><a href="./help/trackbackListeners.html">TrackBack Listeners</a></li>
             </ol>
-            <div class="subsubtitle">Extending Pebble</div>
+            <h3>Extending Pebble</h3>
             <ol>
               <li><a href="./help/developers.html">Developer Notes</a></li>
               <li>Custom tag reference</li>

@@ -1,6 +1,6 @@
 <div class="contentItem">
-  <div class="title">XML-RPC Update Pings</div>
-  <div class="subtitle">&nbsp;</div>
+  <h1>XML-RPC Update Pings</h1>
+  <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
     <p>

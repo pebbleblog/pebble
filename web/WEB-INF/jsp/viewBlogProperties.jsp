@@ -4,8 +4,8 @@
     <a href="./help/configuration.html" target="_blank">Help</a>
   </div>
 
-  <div class="title">Blog properties</div>
-  <div class="subtitle">&nbsp;</div>
+  <h1>Blog properties</h1>
+  <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
     <form name="propertiesForm" action="saveBlogProperties.secureaction" method="POST" accept-charset="${blog.characterEncoding}">
@@ -144,6 +144,15 @@
         </td>
         <td>
           <input type="text" name="blogOwners" size="40" value="${blog.blogOwners}">
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          Blog publishers
+        </td>
+        <td>
+          <input type="text" name="blogPublishers" size="40" value="${blog.blogPublishers}">
         </td>
       </tr>
 

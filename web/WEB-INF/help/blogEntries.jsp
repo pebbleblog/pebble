@@ -1,13 +1,13 @@
 <div class="contentItem">
-  <div class="title">Blog Entries</div>
-  <div class="subtitle">&nbsp;</div>
+  <h1>Blog Entries</h1>
+  <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
     <p>
     A blog entry is typically something like a short article, piece of news, insight, opinion and so on. From a technical perspective, blog entries in Pebble are just short pieces of HTML that represent the content that you wish to publish. This can be anything from a simple piece of text to an elaborate collection of text, images, tables, etc. In addition to this, Pebble stores other pieces of information alongside your blog entries such as a title, the date/time of publication, author and so on.
     </p>
 
-    <div class="subsubtitle">Adding a blog entry</div>
+    <h3>Adding a blog entry</h3>
     <p>
       To add a new blog entry, click the <a href="addBlogEntry.secureaction#form">New blog entry</a> and fill in the form.
       When you've finished writing the entry, clicking the "Preview" button will show you what your new entry will look like. If necessary, you can make further changes and preview them.
@@ -18,17 +18,17 @@
       The body of a blog entry is just a XHTML or HTML fragment, meaning that you can use any XHTML or HTML tags you like for markup and formatting. Common examples include using bold and italics. Also, you can include other elements such as hyperlinks and <a href="./help/images.html">images</a>.
     </p>
 
-    <div class="subsubtitle">Excerpts</div>
+    <h3>Excerpts</h3>
     <p>
     For long entries, you may not want the full content showing up on the summary (home, month or day view) pages, although still be visible via the permalinked page. For this reason, Pebble blog entries can be given excerpts. Typically these are shorter than blog entry bodies and, if populated, are displayed on the summary pages with a link to "Read more..." via the permalink. Excerpts are optional.
     </p>
 
-    <div class="subsubtitle">Edit and removing blog entries</div>
+    <h3>Edit and removing blog entries</h3>
     <p>
       Blog entries can be edited at any time after they have been saved, by clicking the "Edit" button next to the entry you want to edit. Likewise if you want to remove a blog entry.
     </p>
 
-    <div class="subsubtitle">Publishing/unpublishing blog entries</div>
+    <h3>Publishing/unpublishing blog entries</h3>
     <p>
       By default, all blog entries start out life as unpublished, or draft.
       To publish an entry, click the "Publish" button next to the entry you want to publish. This will take you to a page where
@@ -36,18 +36,18 @@
       Take care when modifying the date/time associated with blog entries that have previously been published because doing so may alter the permalink. Only blog owners can publish/unpublish blog entries.
     </p>
 
-    <div class="subsubtitle">Aggregating content</div>
+    <h3>Aggregating content</h3>
     <p>
       If you also write content for an existing blog, you may want to publish/mirror that content on your Pebble blog, but still refer readers back to the original version. Pebble provides a simple way to achieve this by allowing you to store the original permalink alongside your blog content. By doing this, any content will show up on your Pebble blog, but the permalink will point always to the original content. When adding a new blog entry, simply enter the existing permalink into the "Original permalink" field.
       The value you enter in this field will become the permalink for your blog entry. This means that when the entry shows up in a news aggregator, readers will be directed to the original version rather than the copy you have entered into Pebble.
     </p>
 
-    <div class="subsubtitle">Comments and TrackBacks</div>
+    <h3>Comments and TrackBacks</h3>
     <p>
       Responses can be disabled on a per blog entry basis, and this is useful should you want to direct responses to another location (e.g. an online forum) or simply not allow readers to leave comments for that entry.
     </p>
 
-    <a name="attachments"></a><div class="subsubtitle">Attachments</div>
+    <a name="attachments"></a><h3>Attachments</h3>
     <p>
     In a similar way to e-mail messages, you can "attach" a single file to a blog entry, and this can either be a file from your own blog
     or a file anywhere on the Internet. By attaching a file, readers of your blog will see an additional "Attachment" link from which

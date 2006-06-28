@@ -1,6 +1,6 @@
 <div class="contentItem">
-  <div class="title">Categories</div>
-  <div class="subtitle">&nbsp;</div>
+  <h1>Categories</h1>
+  <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
     <p>
@@ -22,12 +22,12 @@
       To add a new category, click <a href="addCategory.secureaction">New category</a>.
     </p>
 
-    <div class="subsubtitle">Tagging</div>
+    <h3>Tagging</h3>
     <p>
       See <a href="./help/tags.html">Tags</a> for more information on how categories can be tagged.
     </p>
 
-    <div class="subsubtitle">Category-based feeds</div>
+    <h3>Category-based feeds</h3>
     <p>
       Each category has an associated RSS/Atom feed, allowing readers to subscribe to only those categories they are interested in.
       <c:if test="${not empty blog.rootCategory.subCategories}">
@@ -40,7 +40,7 @@
       </c:if>
     </p>
 
-    <div class="subsubtitle">Problems?</div>
+    <h3>Problems?</h3>
     <p>
       If your category statistics don't seem to be accurately reflecting how you've categorised your blog entries, you might need
       to <a href="utilities.secureaction?action=buildIndexes">reindex your blog</a>.

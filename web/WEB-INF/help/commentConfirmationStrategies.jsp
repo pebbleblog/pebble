@@ -1,6 +1,6 @@
 <div class="contentItem">
-  <div class="title">Comment Confirmation Strategies</div>
-  <div class="subtitle">&nbsp;</div>
+  <h1>Comment Confirmation Strategies</h1>
+  <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
     <p>
@@ -9,7 +9,7 @@
       strategy for asking readers to confirm their comments by means of clicking a button or through some other kind of CAPTCHA.
     </p>
 
-    <div class="subsubtitle">Comment confirmation process</div>
+    <h3>Comment confirmation process</h3>
     <p>
       Comment confirmation fits into the overall process of leaving a comment as follows.
     </p>
@@ -58,7 +58,7 @@
       detection to the set of configured comment listeners and not ask readers to confirm their comments.
     </p>
 
-    <div class="subsubtitle">Configuring the comment confirmation strategy</div>
+    <h3>Configuring the comment confirmation strategy</h3>
     <p>
       To configure the comment confirmation strategy used by your blog, simply modify the entry on the <a href="viewPlugins.secureaction#commentConfirmationStrategy">Plugins</a> page. Your blog is using the
       following strategy.

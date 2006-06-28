@@ -11,8 +11,8 @@
 <%@ include file="/WEB-INF/fragments/header.jspf" %>
 
 <div id="subscriptions">
-  <a href="rss.xml"><fmt:message key="newsfeed.rss" /></a> <a href="rss.xml" style="border: 0px;"><img src="common/images/feed-icon-16x16.png" alt="RSS feed" border="0" /></a> |
-  <a href="atom.xml"><fmt:message key="newsfeed.atom" /></a> <a href="atom.xml" style="border: 0px;"><img src="common/images/feed-icon-16x16.png" alt="Atom feed" border="0" /></a>
+  <a href="${blog.url}rss.xml"><fmt:message key="newsfeed.rss" /></a> <a href="${blog.url}rss.xml" style="border: 0px;"><img src="common/images/feed-icon-16x16.png" alt="RSS feed" border="0" /></a> |
+  <a href="${blog.url}atom.xml"><fmt:message key="newsfeed.atom" /></a> <a href="${blog.url}atom.xml" style="border: 0px;"><img src="common/images/feed-icon-16x16.png" alt="Atom feed" border="0" /></a>
 </div>
 
 <%-- only show the search box on normal single-blog pages, not multi-blog pages --%>

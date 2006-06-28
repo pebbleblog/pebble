@@ -32,8 +32,8 @@ window.onload = function()
     <a href="./help/blogEntries.html" target="_blank">Help</a>
   </div>
 
-  <div class="title">Blog entry</div>
-  <div class="subtitle">&nbsp;</div>
+  <h1>Blog entry</h1>
+  <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
     <form name="editBlogEntry" action="saveBlogEntry.secureaction#preview" method="POST" accept-charset="${blog.characterEncoding}">

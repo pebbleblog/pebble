@@ -14,8 +14,8 @@
     <a href="./help/staticPages.html" target="_blank">Help</a>
   </div>
 
-  <div class="title">Static page</div>
-  <div class="subtitle">&nbsp;</div>
+  <h1>Static page</h1>
+  <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
     <form name="editStaticPage" action="saveStaticPage.secureaction#preview" method="POST" accept-charset="${blog.characterEncoding}">

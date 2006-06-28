@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Pebble</title>
+    <link rel="stylesheet" href="screen.css" type="text/css" media="screen" />
+  </head>
+
+  <body>
+
+    <div id="container">
+
+      <div id="header">
+        <div id="blogName"><span>Pebble</span></div>
+        <div id="blogDescription"><span>A lightweight, open source, Java EE blogging tool</span></div>
+      </div>
+
+      <div id="linearNavigationLinks">
+        <a href="http://sourceforge.net/projects/pebble/">SourceForge.net project page</a> |
+        <a href="index.html">Home</a> |
+        <a href="http://lists.sourceforge.net/mailman/listinfo/pebble-user/">pebble-users mailing list</a>
+      </div>
+
+      <div id="sidebar">
+      </div>
+
+      <div id="content">
+
+        <div class="contentItem published">
+          <h1>Upgrading</h1>
+          <h2>What if I have an existing Pebble blog?</h2>
+
+          <div class="contentItemBody">
+            <p>
+            If you're upgrading from a previous (1.x) version of Pebble, you'll need to follow these instructions.
+            </p>
+
+            <h3>Directory structure</h3>
+            <p>
+            Pebble 2.0 introduces a new directory structure for the storage of its data so, if you are upgrading from a previous version, you'll need to restructure your directories very slightly. Pebble will automatically create this structure if the data directory specified in the configuration doesn't exist.
+            </p>
+
+            <p>
+            The following diagrams show the directory structure when Pebble is hosting a single blog, in Pebble 1.x and Pebble 2.x respectively. You will need to restructure your existing directories to match this new layout.
+            </p>
+
+            <table width="99%">
+              <tr>
+                <td valign="top">
+                  <pre class="codeSample">- <b>Blog directory</b>
+|-- blog.properties
+|-- 2006
+|-- files
+|-- images
+|-- ...</pre>
+                </td>
+                <td valign="top">
+                  <pre class="codeSample">- Pebble data directory
+|-- blogs
+| |-- <b>default</b>
+|   |-- blog.properties
+|   |-- 2006
+|   |-- files
+|   |-- images
+|   |-- ...
+|-- realm
+  |-- {username1}.properties
+  |-- {usernameN}.properties</pre>
+                </td>
+              </tr>
+            </table>
+
+            <p>
+              The following diagrams show the directory structure when Pebble is hosting more than a single blog, in Pebble 1.x and Pebble 2.x respectively. You will need to restructure your existing directories to match this new layout.
+            </p>
+
+            <table width="99%">
+              <tr>
+                <td valign="top">
+                  <pre class="codeSample">- Blog directory
+|-- blog.properties
+|-- <b>blog1</b>
+| |-- blog.properties
+| |-- 2006
+| |-- files
+| |-- images
+| |-- ...
+|-- <b>blogN</b>
+| |-- blog.properties
+| |-- 2006
+| |-- files
+| |-- images
+| |-- ...</pre>
+                </td>
+                <td valign="top">
+                  <pre class="codeSample">- Pebble data directory
+|-- blogs
+| |-- blog.properties
+| |-- <b>blog1</b>
+|   |-- blog.properties
+|   |-- 2006
+|   |-- files
+|   |-- images
+|   |-- ...
+| |-- <b>blogN</b>
+|   |-- blog.properties
+|   |-- 2006
+|   |-- files
+|   |-- images
+|   |-- ...
+|-- realm
+  |-- {username1}.properties
+  |-- {usernameN}.properties</pre>
+                </td>
+              </tr>
+            </table>
+
+            <h3>Themes</h3>
+            <p>
+            The way Pebble themes are implemented has been simplified and Pebble 1.x themes are not compatible. For this reason, the following steps should be followed before starting up Pebble.
+            </p>
+
+            <ul>
+              <li>Reset theme to default : open up <code>blog.properties</code> for each blog and remove the line that starts <code>theme=</code></li>
+              <li>Remove the backup theme : remove the directory called <code>theme</code> underneath each blog</li>
+            </ul>
+
+            <h3>Plugins</h3>
+            <p>
+            The names for the plugins have changed and the easiest way to correct these is to open up the <code>blog.properties</code> file for each blog and remove the lines that start with the following.
+            </p>
+
+            <ul>
+              <li><code>blogEntryDecorators=</code></li>
+              <li><code>blogEntryListeners=</code></li>
+              <li><code>commentListeners=</code></li>
+              <li><code>trackBackListeners=</code></li>
+              <li><code>permalinkProviderName=</code></li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+
+      <div id="footer">
+        Pebble is written and maintained by <a href="http://www.simongbrown.com/blog/">Simon Brown</a>
+      </div>
+
+    </div>
+  </body>
+</html>

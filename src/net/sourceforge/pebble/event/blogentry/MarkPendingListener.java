@@ -69,7 +69,7 @@ public class MarkPendingListener extends BlogEntryListenerSupport {
    * @param event a BlogEntryEvent instance
    */
   public void blogEntryChanged(BlogEntryEvent event) {
-    if (!SecurityUtils.isBlogOwner()) {
+    if (!SecurityUtils.isBlogPublisher()) {
 
       // mark the entry as unpublished if one of the following properties
       // has changed

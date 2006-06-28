@@ -1,6 +1,6 @@
 <div class="contentItem">
-  <div class="title">Referers</div>
-  <div class="subtitle">&nbsp;</div>
+  <h1>Referers</h1>
+  <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
     <p>
@@ -8,7 +8,7 @@
       To see your referers for the current day, click <a href="viewReferers.secureaction">Referers</a>.
     <p>
 
-    <div class="subsubtitle">Referer Filters</div>
+    <h3>Referer Filters</h3>
     <p>
       Referers can be very useful indicators, but it is possible for them to be spoofed as any arbitrary URL. The reasons for doing this include companies trying to get free advertising by getting their URLs onto your website or trying to get better rankings in the search engines. After all, the more pages that reference their websites, the higher up the ranks their websites will appear in places like Google.
       While this is generally harmless, it can be annoying and can skew your statistics. Also, the links are often of an adult nature or simply unrelated to your blog. For this reason, Pebble allows you to filter specific referers from showing in your list. The <a href="viewRefererFilters.secureaction">Referers filters</a> page lets

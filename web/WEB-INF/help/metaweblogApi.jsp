@@ -1,13 +1,13 @@
 <div class="contentItem">
-  <div class="title">MetaWeblog API</div>
-  <div class="subtitle">&nbsp;</div>
+  <h1>MetaWeblog API</h1>
+  <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
     <p>
       Pebble has a comprehensive web-based administration interface but it also supports the MetaWeblog API for managing your blog content via compatible blogging clients. Examples here include MarsEdit, ecto, w.bloggar and others.
     </p>
 
-    <div class="subsubtitle">Configuration</div>
+    <h3>Configuration</h3>
     <p>
       When configuring a blogging client, you will typically be asked for the following information.
     </p>
@@ -20,7 +20,7 @@
       <li>Blog ID : ${blog.id}</li>
     </ul>
 
-    <div class="subsubtitle">Uploading images and files</div>
+    <h3>Uploading images and files</h3>
     <p>
       With the MetaWeblog API you can upload images and other files to your blog.
       By default, any files you upload will be stored underneath <a href="./images/">Images</a>.

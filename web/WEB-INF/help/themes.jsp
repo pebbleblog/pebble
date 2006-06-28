@@ -1,6 +1,6 @@
 <div class="contentItem">
-  <div class="title">Themes</div>
-  <div class="subtitle">&nbsp;</div>
+  <h1>Themes</h1>
+  <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
     <p>
@@ -8,7 +8,7 @@
     <pebble:isPebbleAdmin>All themes can be found in the <code>themes</code> directory underneath <code>${pebbleContext.webApplicationRoot}</code>.</pebble:isPebbleAdmin>
     </p>
 
-    <div class="subsubtitle">Editing your own theme</div>
+    <h3>Editing your own theme</h3>
     <p>
       Each blog has its own custom theme that can be edited by the owner of that blog. The name of your editable theme is ${blog.editableTheme.name}, which was automatically created by Pebble the first time your blog started up. To edit your custom theme, click <a href="./theme/">Theme</a>.
       From this page you can edit the CSS and JSP files that your theme contains.

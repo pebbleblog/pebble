@@ -4,8 +4,8 @@
     <a href="./help/trackbacks.html" target="_blank">Help</a>
   </div>
 
-  <div class="title">Send a TrackBack</div>
-  <div class="subtitle">&nbsp;</div>
+  <h1>Send a TrackBack</h1>
+  <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
     <form name="trackBackForm" action="sendTrackBack.secureaction" method="post" accept-charset="${blog.characterEncoding}">

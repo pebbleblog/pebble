@@ -2,8 +2,8 @@
 
 <div class="contentItem">
 
-  <div class="title"><fmt:message key="error.errorTitle" /></div>
-  <div class="subtitle">&nbsp;</div>
+  <h1><fmt:message key="error.errorTitle" /></h1>
+  <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
     <fmt:message key="error.error" />

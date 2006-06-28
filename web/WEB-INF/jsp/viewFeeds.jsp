@@ -1,6 +1,6 @@
 <div class="contentItem">
-  <div class="title"><fmt:message key="newsfeed.feedsTitle" /></div>
-  <div class="subtitle">&nbsp;</div>
+  <h1><fmt:message key="newsfeed.feedsTitle" /></h1>
+  <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
     <table width="99%" cellspacing="0" cellpadding="8">
@@ -37,7 +37,7 @@
 
     </table>
 
-    <pebble:isBlogOwnerOrContributor>
+    <pebble:isAuthorisedForBlog>
     <br />
     <div style="text-align: center">
     <a href="http://www.feedvalidator.org/check.cgi?url=${blog.url}rss.xml"><img src="${pageContext.request.contextPath}/common/images/valid-rss.png" alt="[Valid RSS]" title="Validate my RSS feed" width="88" height="31" border="0" /></a>
@@ -46,7 +46,7 @@
     &nbsp;
     <a href="http://www.feedvalidator.org/check.cgi?url=${blog.url}atom.xml"><img src="${pageContext.request.contextPath}/common/images/valid-atom.png" alt="[Valid Atom]" title="Validate my Atom feed" width="88" height="31" border="0" /></a>
     </div>
-    </pebble:isBlogOwnerOrContributor>
+    </pebble:isAuthorisedForBlog>
   </div>
 
 </div>

@@ -1,6 +1,6 @@
 <div class="contentItem">
-  <div class="title"><fmt:message key="comment.addComment" /></div>
-  <div class="subtitle">&nbsp;</div>
+  <h1><fmt:message key="comment.addComment" /></h1>
+  <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
     <a name="form"></a>

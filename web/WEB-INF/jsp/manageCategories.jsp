@@ -4,8 +4,8 @@
     <a href="./help/categories.html" target="_blank">Help</a>
   </div>
 
-  <div class="title">Categories</div>
-  <div class="subtitle">&nbsp;</div>
+  <h1>Categories</h1>
+  <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
     <form name="categoriesForm" method="post" action="removeCategories.secureaction">

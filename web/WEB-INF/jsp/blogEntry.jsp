@@ -13,8 +13,8 @@
   <%@ include file="/WEB-INF/fragments/blogEntryLinks.jspf" %>
 
   <a name="a${blogEntry.id}"></a>
-  <div class="title"><a href="${blogEntry.permalink}">${blogEntry.title}</a></div>
-  <div class="subtitle">${blogEntry.subtitle}</div>
+  <h1><a href="${blogEntry.permalink}">${blogEntry.title}</a></h1>
+  <h2>${blogEntry.subtitle}</h2>
 
   <div class="contentItemBody">
     <c:choose>

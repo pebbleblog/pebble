@@ -53,7 +53,7 @@ public class DefaultSecurityRealm implements SecurityRealm {
       realm.mkdir();
       log.info("*** Creating default user (username/password)");
       log.info("*** Don't forget to delete this user in a production deployment!");
-      putUser("username", "password", "Default User", "username@domain.com", "http://www.domain.com", new String[] {Constants.BLOG_OWNER_ROLE, Constants.BLOG_CONTRIBUTOR_ROLE, Constants.PEBBLE_ADMIN_ROLE});
+      putUser("username", "password", "Default User", "username@domain.com", "http://www.domain.com", new String[] {Constants.BLOG_OWNER_ROLE, Constants.BLOG_PUBLISHER_ROLE, Constants.BLOG_CONTRIBUTOR_ROLE, Constants.PEBBLE_ADMIN_ROLE});
     }
 
     File user = getFileForUser(username);

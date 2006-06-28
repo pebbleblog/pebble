@@ -4,8 +4,8 @@
     <a href="./help/logs.html" target="_blank">Help</a>
   </div>
 
-  <div class="title">Log summary for <fmt:formatDate value="${logSummary.date}" pattern="MMMM yyyy" /></div>
-  <div class="subtitle">&nbsp;</div>
+  <h1>Log summary for <fmt:formatDate value="${logSummary.date}" pattern="MMMM yyyy" /></h1>
+  <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
     <%--

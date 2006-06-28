@@ -1,6 +1,6 @@
 <div class="contentItem">
-  <div class="title">Blog Entry Listeners</div>
-  <div class="subtitle">&nbsp;</div>
+  <h1>Blog Entry Listeners</h1>
+  <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
     <p>
@@ -33,7 +33,7 @@
       <li>Original permalink</li>
     </ul>
 
-    <div class="subsubtitle">Configuring blog entry listeners</div>
+    <h3>Configuring blog entry listeners</h3>
     <p>
       To configure the blog entry listeners used by your blog, modify the list on the <a href="viewPlugins.secureaction#blogEntryListeners">Plugins</a> page. Your blog is using the
       following blog entry listeners.

@@ -1,7 +1,7 @@
 <div class="contentItem">
 
-  <div class="title"><fmt:message key="error.notEnoughSpaceTitle" /></div>
-  <div class="subtitle">&nbsp;</div>
+  <h1><fmt:message key="error.notEnoughSpaceTitle" /></h1>
+  <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
     <fmt:message key="error.notEnoughSpace" />

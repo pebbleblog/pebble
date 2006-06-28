@@ -1,6 +1,6 @@
 <div class="contentItem">
-  <div class="title">Frequently Asked Questions</div>
-  <div class="subtitle">&nbsp;</div>
+  <h1>Frequently Asked Questions</h1>
+  <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
     <b>Configuration</b><br />

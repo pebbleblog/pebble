@@ -99,13 +99,7 @@ public class ManageBlogEntriesAction extends SecureAction {
     String submit = request.getParameter("submit");
 
     if (submit != null) {
-      if (submit.equalsIgnoreCase("Approve")) {
-        return new String[]{Constants.BLOG_OWNER_ROLE};
-      } else if (submit.equalsIgnoreCase("Reject")) {
-        return new String[]{Constants.BLOG_OWNER_ROLE};
-      } else if (submit.equalsIgnoreCase("Remove")) {
-        return new String[]{Constants.BLOG_CONTRIBUTOR_ROLE};
-      } else if (submit.equalsIgnoreCase("Edit")) {
+      if (submit.equalsIgnoreCase("Remove")) {
         return new String[]{Constants.BLOG_CONTRIBUTOR_ROLE};
       }
     }

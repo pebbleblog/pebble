@@ -4,8 +4,8 @@
     <a href="./help/logs.html" target="_blank">Help</a>
   </div>
 
-  <div class="title">Requests for <c:out value="${logPeriod}"/></div>
-  <div class="subtitle">Total : <fmt:formatNumber value="${totalRequests}"/></div>
+  <h1>Requests for <c:out value="${logPeriod}"/></h1>
+  <h2>Total : <fmt:formatNumber value="${totalRequests}"/></h2>
 
   <div class="contentItemBody">
     <table width="99%" cellspacing="0" cellpadding="4">

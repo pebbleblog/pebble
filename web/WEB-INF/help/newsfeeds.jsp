@@ -1,6 +1,6 @@
 <div class="contentItem">
-  <div class="title">Newsfeeds</div>
-  <div class="subtitle">RSS and Atom</div>
+  <h1>Newsfeeds</h1>
+  <h2>RSS and Atom</h2>
 
   <div class="contentItemBody">
     <p>
@@ -16,7 +16,7 @@
       With the default theme, links to these feeds are shown at the top of page.
     </p>
 
-    <div class="subsubtitle">Category and tag specific newsfeeds</div>
+    <h3>Category and tag specific newsfeeds</h3>
     <p>
       Pebble can also generate newsfeeds that are specific to a particular category or tag. See <a href="./help/categories.html">Categories</a> or <a href="./help/tags.html">Tags</a> for more information.
     </p>

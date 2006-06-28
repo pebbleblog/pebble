@@ -1,6 +1,6 @@
 <div class="contentItem">
-  <div class="title">Images</div>
-  <div class="subtitle">&nbsp;</div>
+  <h1>Images</h1>
+  <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
     <p>
@@ -21,7 +21,7 @@
 
     <%--
     <p>
-      <div class="subsubtitle">Quotas</div>
+      <h3>Quotas</h3>
       Although more relevant to team and multi-user blogs, quotas can be enforced to restrict how much disk space each blog has to store images and arbitrary files. By default, the maximum size of file that can be uploaded is 2048KB and quotas are not enabled.
       To modify these values, open the <code>/WEB-INF/classes/pebble.properties</code> file and edit the <code>blog.uploadFileSize</code> and <code>blog.uploadFileQuota</code> properties. You will need to restart Pebble for these changes to take effect. When quotas are enabled, all of the stored images, files and files in your theme count toward this.
     </p>

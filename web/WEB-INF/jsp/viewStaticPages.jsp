@@ -4,8 +4,8 @@
     <a href="./help/staticPages.html" target="_blank">Help</a>
   </div>
 
-  <div class="title">Static pages</div>
-  <div class="subtitle">&nbsp;</div>
+  <h1>Static pages</h1>
+  <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
     <form name="staticPagesForm" method="post" action="removeStaticPages.secureaction">

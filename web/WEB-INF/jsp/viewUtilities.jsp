@@ -1,6 +1,6 @@
 <div class="contentItem">
-  <div class="title">Utilities</div>
-  <div class="subtitle">&nbsp;</div>
+  <h1>Utilities</h1>
+  <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
     <p>
@@ -22,6 +22,7 @@
         <a href="exportBlog.secureaction?flavor=rdf" title="Export blog as RDF 1.0">RDF</a> or
         <a href="exportBlog.secureaction?flavor=atom" title="Export blog as Atom 1.0">Atom</a>.
       </li>
+      <li><a href="zipDirectory.secureaction?type=blogData&amp;path=/logs" title="Export logs as ZIP file">Export logs</a> : export your logs as a ZIP file</li>
     </ul>
   </div>
 

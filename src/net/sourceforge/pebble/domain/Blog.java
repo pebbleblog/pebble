@@ -66,6 +66,7 @@ public class Blog extends AbstractBlog {
 
   public static final String EMAIL_KEY = "email";
   public static final String BLOG_OWNERS_KEY = "blogOwners";
+  public static final String BLOG_PUBLISHERS_KEY = "blogPublishers";
   public static final String BLOG_CONTRIBUTORS_KEY = "blogContributors";
   public static final String PRIVATE_KEY = "private";
   public static final String LUCENE_ANALYZER_KEY = "luceneAnalyzer";
@@ -470,6 +471,16 @@ public class Blog extends AbstractBlog {
   }
 
   /**
+   * Gets a comma separated list of the users that are blog publishers
+   * for this blog.
+   *
+   * @return  a String containng a comma separated list of user names
+   */
+  public String getBlogPublishers() {
+    return properties.getProperty(BLOG_PUBLISHERS_KEY);
+  }
+
+  /**
    * Gets a comma separated list of the users that are blog contributors
    * for this blog.
    *
@@ -510,6 +521,8 @@ public class Blog extends AbstractBlog {
 
     if (roleName.equals(Constants.BLOG_OWNER_ROLE)) {
       commaSeparatedUsers = properties.getProperty(BLOG_OWNERS_KEY);
+    } else if (roleName.equals(Constants.BLOG_PUBLISHER_ROLE)) {
+      commaSeparatedUsers = properties.getProperty(BLOG_PUBLISHERS_KEY);
     } else if (roleName.equals(Constants.BLOG_CONTRIBUTOR_ROLE)) {
       commaSeparatedUsers = properties.getProperty(BLOG_CONTRIBUTORS_KEY);
     }

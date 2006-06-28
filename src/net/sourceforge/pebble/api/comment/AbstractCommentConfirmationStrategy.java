@@ -38,8 +38,7 @@ public abstract class AbstractCommentConfirmationStrategy implements CommentConf
     String required = props.getProperty(REQUIRED_KEY);
 
     Blog blog = comment.getBlogEntry().getBlog();
-    boolean authorisedUser = (SecurityUtils.isUserAuthorisedForBlogAsBlogContributor(blog) || SecurityUtils.isUserAuthorisedForBlogAsBlogOwner(blog));
-    if (authorisedUser) {
+    if (SecurityUtils.isUserAuthorisedForBlog(blog)) {
       return false;
     } else {
       // run a subset of the default comment listeners to figure out whether

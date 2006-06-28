@@ -1,7 +1,7 @@
 <div class="contentItem">
 
-  <div class="title">Blogs</div>
-  <div class="subtitle">&nbsp;</div>
+  <h1>Blogs</h1>
+  <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
     <table width="99%" cellspacing="0" cellpadding="4">

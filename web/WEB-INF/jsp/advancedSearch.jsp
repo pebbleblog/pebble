@@ -1,7 +1,7 @@
 <div class="contentItem">
 
-  <div class="title"><fmt:message key="search.advancedSearch" /></div>
-  <div class="subtitle">&nbsp;</div>
+  <h1><fmt:message key="search.advancedSearch" /></h1>
+  <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
     <form method="post" action="advancedSearch.action" accept-charset="${blog.characterEncoding}">

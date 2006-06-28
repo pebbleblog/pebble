@@ -4,8 +4,8 @@
     <a href="${parent.url}">Back to ${file.path}</a>
   </div>
 
-  <div class="title">${file.name}</div>
-  <div class="subtitle">&nbsp;</div>
+  <h1>${file.name}</h1>
+  <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
     <form name="editFile" action="saveFile.secureaction" method="POST">

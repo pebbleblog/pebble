@@ -1,6 +1,6 @@
 <div class="contentItem">
-  <div class="title">Blog Listeners</div>
-  <div class="subtitle">&nbsp;</div>
+  <h1>Blog Listeners</h1>
+  <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
     <p>
@@ -18,7 +18,7 @@
       There are currently no implementations distributed with Pebble.
     </p>
 
-    <div class="subsubtitle">Configuring blog listeners</div>
+    <h3>Configuring blog listeners</h3>
     <p>
       To configure the blog listeners used by your blog, modify the list on the <a href="viewPlugins.secureaction#blogListeners">Plugins</a> page. Your blog is using the
       following blog listeners.

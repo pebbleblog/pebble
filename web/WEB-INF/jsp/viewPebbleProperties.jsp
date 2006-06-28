@@ -4,8 +4,8 @@
     <a href="./help/configuration.html" target="_blank">Help</a>
   </div>
 
-  <div class="title">Pebble properties</div>
-  <div class="subtitle">&nbsp;</div>
+  <h1>Pebble properties</h1>
+  <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
     <form name="propertiesForm" action="savePebbleProperties.secureaction" method="POST" accept-charset="${blog.characterEncoding}">

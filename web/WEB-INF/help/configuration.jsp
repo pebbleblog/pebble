@@ -1,6 +1,6 @@
 <div class="contentItem">
-  <div class="title">Configuring your blog</div>
-  <div class="subtitle">&nbsp;</div>
+  <h1>Configuring your blog</h1>
+  <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
     <p>
@@ -8,7 +8,7 @@
       To edit the properties, just change the values and click the "Save Properties" button when done. The following table describes each of the properties.
     </p>
 
-    <div class="subsubtitle">General blog properties</div>
+    <h3>General blog properties</h3>
     <p>
       <table border="0">
         <tr><td width="33%" valign="top">Name</td><td valign="top">The name of your blog.</td></tr>
@@ -22,7 +22,7 @@
       </table>
     </p>
 
-    <div class="subsubtitle">Internationalization and localization</div>
+    <h3>Internationalization and localization</h3>
     <p>
       <table border="0">
         <tr><td width="33%" valign="top">Country</td><td valign="top">The country in which you reside, as a two letter ISO code.</td></tr>
@@ -32,7 +32,7 @@
       </table>
     </p>
 
-    <div class="subsubtitle">Security</div>
+    <h3>Security</h3>
     <p>
       <table border="0">
         <tr><td width="33%" valign="top">Blog owners</td><td valign="top">A comma separated list of usernames for those users that are blog owners for this blog. This is used when Pebble runs in multi-user mode.</td></tr>
@@ -40,7 +40,7 @@
       </table>
     </p>
 
-    <div class="subsubtitle">Multi-blog properties (available when Pebble is hosting more than a single blog)</div>
+    <h3>Multi-blog properties (available when Pebble is hosting more than a single blog)</h3>
     <p>
       <table border="0">
         <tr><td width="33%" valign="top">Public/Private blog</td><td valign="top">Enables or disables aggregation of this blog in both the multi-blog home page and feeds.</td></tr>

@@ -1,6 +1,6 @@
 <div class="contentItem">
-  <div class="title">Private Blogs</div>
-  <div class="subtitle">&nbsp;</div>
+  <h1>Private Blogs</h1>
+  <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
     <p>

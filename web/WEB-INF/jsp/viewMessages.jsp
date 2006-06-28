@@ -1,6 +1,6 @@
 <div class="contentItem">
-  <div class="title">Messages</div>
-  <div class="subtitle">&nbsp;</div>
+  <h1>Messages</h1>
+  <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
     <table width="99%" class="small" style="text-align: left;">

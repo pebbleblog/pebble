@@ -8,7 +8,7 @@
     <!-- the location where your Pebble data is stored, default is ${user.home}/pebble -->
     <property name="dataDirectory" value="${user.home}/pebble"/>
 
-    <!-- the URL where your blog is hosted, default is auto-discover at runtime -->
+    <!-- the URL (starting http:// or https://) where your blog is hosted, default is auto-discover at runtime -->
     <property name="url" value=""/>
 
     <!-- a flag to indicate whether Pebble is running in multi-blog mode, default is false -->

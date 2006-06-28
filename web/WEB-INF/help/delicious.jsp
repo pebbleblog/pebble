@@ -1,6 +1,6 @@
 <div class="contentItem">
-  <div class="title">del.icio.us</div>
-  <div class="subtitle">&nbsp;</div>
+  <h1>del.icio.us</h1>
+  <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
     <p>

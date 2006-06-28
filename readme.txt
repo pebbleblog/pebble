@@ -1,5 +1,5 @@
-Pebble 2.0.0-M3 -
--------------------------------
+Pebble 2.0.0-M3 - 29th June 2006
+--------------------------------
 The prerequisites are as follows.
 
  - Java 5.0

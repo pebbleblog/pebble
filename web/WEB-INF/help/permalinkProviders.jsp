@@ -1,6 +1,6 @@
 <div class="contentItem">
-  <div class="title">Permalink Providers</div>
-  <div class="subtitle">&nbsp;</div>
+  <h1>Permalink Providers</h1>
+  <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
     <p>

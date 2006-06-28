@@ -42,13 +42,13 @@ window.onload = function()
     </c:choose>
   </div>
 
-  <div class="title">
+  <h1>
     <c:choose>
       <c:when test="${blogEntry.type == 8}">Static page</c:when>
       <c:when test="${blogEntry.type != 8}">Blog entry</c:when>
     </c:choose>
-  </div>
-  <div class="subtitle">&nbsp;</div>
+  </h1>
+  <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
     <form name="editBlogEntry" action="saveBlogEntry.secureaction#preview" method="POST" accept-charset="${blog.characterEncoding}">

@@ -4,14 +4,14 @@
     <a href="./help/comment-and-trackback-spam.html" target="_blank">Help</a>
   </div>
 
-  <div class="title">
+  <h1>
   <c:choose>
     <c:when test="${param.type == 'pending'}">Pending responses</c:when>
     <c:when test="${param.type == 'rejected'}">Rejected responses</c:when>
     <c:otherwise>Approved responses</c:otherwise>
   </c:choose>
-  </div>
-  <div class="subtitle">&nbsp;</div>
+  </h1>
+  <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
     <div align="center">

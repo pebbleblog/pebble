@@ -1,6 +1,6 @@
 <div class="contentItem">
-  <div class="title">TrackBack</div>
-  <div class="subtitle">&nbsp;</div>
+  <h1>TrackBack</h1>
+  <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
     TrackBack sent to ${trackBackUrl}, response code ${trackBackResponseCode}

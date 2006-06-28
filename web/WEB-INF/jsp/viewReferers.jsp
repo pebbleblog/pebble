@@ -4,8 +4,8 @@
     <a href="./help/referers.html" target="_blank">Help</a>
   </div>
 
-  <div class="title">Referers for ${logPeriod}</div>
-  <div class="subtitle">Total : <fmt:formatNumber value="${totalReferers}"/></div>
+  <h1>Referers for ${logPeriod}</h1>
+  <h2>Total : <fmt:formatNumber value="${totalReferers}"/></h2>
 
   <div class="contentItemBody">
     <form name="referersForm" method="post" action="addRefererFilters.secureaction">
@@ -36,7 +36,7 @@
       </c:forEach>
     </table>
 
-    <pebble:isBlogOwnerOrContributor>
+    <pebble:isAuthorisedForBlog>
     <br />
 
     <table width="99%" cellspacing="0" cellpadding="0">
@@ -50,7 +50,7 @@
         </td>
       </tr>
     </table>
-    </pebble:isBlogOwnerOrContributor>
+    </pebble:isAuthorisedForBlog>
 
     </form>
   </div>

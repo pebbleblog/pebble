@@ -80,12 +80,12 @@ public class MarkPendingListenerTest extends SingleBlogTestCase {
   }
 
   /**
-   * Tests the blogEntryChanged() method, when a blog owner changes
+   * Tests the blogEntryChanged() method, when a blog publisher changes
    * the blog entry.
    */
-  public void testBlogEntryChangedByBlogOwner() {
+  public void testBlogEntryChangedByBlogPublisher() {
     blogEntry.setPublished(true);
-    SecurityUtils.runAsBlogOwner();
+    SecurityUtils.runAsBlogPublisher();
 
     List propertyChangeEvents = new ArrayList();
     PropertyChangeEvent pce = new PropertyChangeEvent(blogEntry, BlogEntry.TITLE_PROPERTY, null, null);

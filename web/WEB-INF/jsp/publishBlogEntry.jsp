@@ -4,7 +4,7 @@
     <a href="./help/blogEntries.html" target="_blank">Help</a>
   </div>
 
-  <div class="title">
+  <h1>
     <c:choose>
       <c:when test="${blogEntry.unpublished}">
         Publish blog entry
@@ -13,8 +13,8 @@
         Unpublish blog entry
       </c:when>
     </c:choose>
-  </div>
-  <div class="subtitle">&nbsp;</div>
+  </h1>
+  <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
     <form name="publishBlogEntryForm" action="publishBlogEntry.secureaction" method="POST" accept-charset="${blog.characterEncoding}">

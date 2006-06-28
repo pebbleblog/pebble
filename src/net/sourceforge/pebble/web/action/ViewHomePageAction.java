@@ -80,8 +80,7 @@ public class ViewHomePageAction extends Action {
     } else {
       Blog blog = (Blog)abstractBlog;
       boolean publishedOnly = true;
-      if (SecurityUtils.isUserAuthorisedForBlogAsBlogOwner(blog) ||
-          SecurityUtils.isUserAuthorisedForBlogAsBlogContributor(blog)) {
+      if (SecurityUtils.isUserAuthorisedForBlog(blog)) {
         publishedOnly = false;
       }
 

@@ -6,8 +6,8 @@
   <%@ include file="/WEB-INF/fragments/staticPageLinks.jspf" %>
 
   <a name="a${staticPage.id}"></a>
-  <div class="title"><a href="${staticPage.permalink}">${staticPage.title}</a></div>
-  <div class="subtitle">${staticPage.subtitle}</div>
+  <h1><a href="${staticPage.permalink}">${staticPage.title}</a></h1>
+  <h2>${staticPage.subtitle}</h2>
 
   <div class="contentItemBody">
     <c:out value="${staticPage.body}" escapeXml="false" />

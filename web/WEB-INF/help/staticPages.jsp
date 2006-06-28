@@ -1,6 +1,6 @@
 <div class="contentItem">
-  <div class="title">Static Pages</div>
-  <div class="subtitle">&nbsp;</div>
+  <h1>Static Pages</h1>
+  <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
     <p>
@@ -14,13 +14,13 @@
       The key differences between a blog entry and static page are that static pages simply consist of a title and body, don't have comments/TrackBacks and have a more memorable permalink such as <code>${blog.url}pages/aboutme.html</code>.
     </p>
 
-    <div class="subsubtitle">Adding a static page</div>
+    <h3>Adding a static page</h3>
     <p>
       To add a static page, click the <a href="addStaticPage.secureaction">New static page</a> link after logging in.
       The important form field to fill in is "Name", and it's this that makes up the memorable permalink to the page. The name you give a page must only contain alphanumeric characters, numbers, '-', '_' or '/'. Examples include "aboutme", "articles/SomeArticleName", and so on.
     </p>
 
-    <div class="subsubtitle">Managing static pages</div>
+    <h3>Managing static pages</h3>
     <p>
       To manage your static pages, click the <a href="viewStaticPages.secureaction">Static pages</a> link.
     </p>

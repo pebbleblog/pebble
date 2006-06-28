@@ -151,10 +151,10 @@ public class PublishBlogEntryActionTest extends SecureActionTestCase {
   /**
    * Test that only blog owners can approve comments.
    */
-  public void testDefaultRoleIsBlogOwner() {
+  public void testDefaultRoleIsBlogPublisher() {
     String roles[] = action.getRoles(request);
     assertEquals(1, roles.length);
-    assertEquals(Constants.BLOG_OWNER_ROLE, roles[0]);
+    assertEquals(Constants.BLOG_PUBLISHER_ROLE, roles[0]);
   }
 
 }

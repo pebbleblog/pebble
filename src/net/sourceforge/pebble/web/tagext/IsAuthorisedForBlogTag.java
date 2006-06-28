@@ -41,12 +41,12 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
 /**
- * A custom tag that includes its body content if the current user belongs to
- * the "blog owner" or "blog contributor" role for the blog.
+ * A custom tag that includes its body content if the current is authorised for
+ * the given blog.
  *
  * @author    Simon Brown
  */
-public class IsBlogOwnerOrContributorTag extends TagSupport {
+public class IsAuthorisedForBlogTag extends TagSupport {
 
   /**
    * Implementation from the Tag interface - this is called when the opening tag
@@ -61,8 +61,7 @@ public class IsBlogOwnerOrContributorTag extends TagSupport {
 
     if (abstractBlog instanceof Blog) {
       Blog blog = (Blog)abstractBlog;
-      if (SecurityUtils.isUserAuthorisedForBlogAsBlogOwner(blog) ||
-          SecurityUtils.isUserAuthorisedForBlogAsBlogContributor(blog)) {
+      if (SecurityUtils.isUserAuthorisedForBlog(blog)) {
         return EVAL_BODY_INCLUDE;
       }
     }

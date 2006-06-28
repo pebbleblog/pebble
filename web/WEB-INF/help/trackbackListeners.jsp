@@ -1,6 +1,6 @@
 <div class="contentItem">
-  <div class="title">TrackBack Listeners</div>
-  <div class="subtitle">&nbsp;</div>
+  <h1>TrackBack Listeners</h1>
+  <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
     <p>
@@ -78,7 +78,7 @@
     </p>
 
 
-    <div class="subsubtitle">Configuring TrackBack listeners</div>
+    <h3>Configuring TrackBack listeners</h3>
     <p>
       To configure the TrackBack listeners used by your blog, simply modify the list on the <a href="viewPlugins.secureaction#trackbackListeners">Plugins</a> page. Your blog is using the
       following TrackBack listeners.

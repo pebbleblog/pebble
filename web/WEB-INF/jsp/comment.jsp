@@ -15,9 +15,9 @@
 
   <%@ include file="/WEB-INF/fragments/commentLinks.jspf" %>
 
-  <div class="title">
+  <h1>
     <a name="comment${comment.id}"></a>${comment.title}
-  </div>
+  </h1>
 
   <div class="metadata">
     <c:set var="commentAuthor" scope="page">
@@ -27,9 +27,9 @@
       <c:if test="${empty comment.website}">
         ${comment.author}
       </c:if>
-      <pebble:isBlogOwnerOrContributor>
+      <pebble:isAuthorisedForBlog>
         (<c:out value="${comment.email}" escapeXml="true" default="-" />/<c:out value="${comment.ipAddress}" default="-" />)
-      </pebble:isBlogOwnerOrContributor>
+      </pebble:isAuthorisedForBlog>
     </c:set>
     <fmt:formatDate var="commentDate" scope="page" value="${comment.date}" type="both" dateStyle="long" timeStyle="long"/>
 

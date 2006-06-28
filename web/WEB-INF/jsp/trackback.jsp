@@ -15,16 +15,16 @@
 
   <%@ include file="/WEB-INF/fragments/trackbackLinks.jspf" %>
 
-  <div class="title">
+  <h1>
     <a name="trackback${trackback.id}"></a>${trackback.title}
-  </div>
+  </h1>
 
   <div class="metadata">
     <c:set var="trackbackAuthor" scope="page">
       ${trackback.blogName}
-      <pebble:isBlogOwnerOrContributor>
+      <pebble:isAuthorisedForBlog>
       (${trackback.ipAddress})
-      </pebble:isBlogOwnerOrContributor>
+      </pebble:isAuthorisedForBlog>
     </c:set>
     <fmt:formatDate var="trackbackDate" scope="page" value="${trackback.date}" type="both" dateStyle="long" timeStyle="long"/>
 

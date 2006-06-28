@@ -1,9 +1,9 @@
 <div class="contentItem">
-  <div class="title">Developer Notes</div>
-  <div class="subtitle">&nbsp;</div>
+  <h1>Developer Notes</h1>
+  <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
-    <div class="subsubtitle">Getting the source</div>
+    <h3>Getting the source</h3>
     <p>
       Pebble is an open source project and the source code is freely available from the SourceForge Subversion servers. Assuming
       that you have the Subversion command line tools installed, you
@@ -17,7 +17,7 @@
       All Pebble releases have been tagged using a tag such as <code>v2_0_0</code>.
     </p>
 
-    <div class="subsubtitle">Building</div>
+    <h3>Building</h3>
     <p>
       To build Pebble, open up the <code>setEnv.bat</code> (Windows) or <code>setEnv.sh</code> (UNIX, Linux or Mac OS X) script
       and alter the <code>JAVA_HOME</code> and <code>ANT_HOME</code> environment variables as appropriate for your environment. The

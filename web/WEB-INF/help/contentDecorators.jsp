@@ -1,6 +1,6 @@
 <div class="contentItem">
-  <div class="title">Content Decorators</div>
-  <div class="subtitle">&nbsp;</div>
+  <h1>Content Decorators</h1>
+  <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
     <p>
@@ -68,7 +68,7 @@
       in conjunction with the DisableResponseListener (for comments and TrackBacks).
     </p>
 
-    <div class="subsubtitle">Configuring content decorators</div>
+    <h3>Configuring content decorators</h3>
     <p>
       To configure the decorators that your blog uses, modify the list of decorators on the <a href="viewPlugins.secureaction#contentDecorators">Plugins</a> page. Your blog is using the
       following blog listeners.

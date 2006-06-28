@@ -1,7 +1,7 @@
 <div class="contentItem">
 
-  <div class="title"><fmt:message key="error.fileTooLargeTitle" /></div>
-  <div class="subtitle">&nbsp;</div>
+  <h1><fmt:message key="error.fileTooLargeTitle" /></h1>
+  <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
     <c:set var="fileUploadSize" scope="page">

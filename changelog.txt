@@ -1,8 +1,9 @@
-Version 2.0.0-M3 - in progress
-------------------------------
+Version 2.0.0-M3 - 29th Junw 2006
+---------------------------------
 Reinstated the static pages feature.
 Added response (comment and TrackBack) specific feeds.
 Added blog entry caching to improve performance.
+Added Comment Confirmation Listeners for CAPTCHA support.
 Minor bug fixes.
 
 Version 2.0.0-M2 - 31st May 2006

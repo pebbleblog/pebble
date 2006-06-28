@@ -73,6 +73,15 @@
   </tag>
 
   <tag>
+    <name>isBlogPublisher</name>
+    <tag-class>net.sourceforge.pebble.web.tagext.IsBlogPublisherTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      Includes the body content only if the current user is a blog publisher of the current blog.
+    </description>
+  </tag>
+
+  <tag>
     <name>isBlogContributor</name>
     <tag-class>net.sourceforge.pebble.web.tagext.IsBlogContributorTag</tag-class>
     <body-content>JSP</body-content>
@@ -82,11 +91,11 @@
   </tag>
 
   <tag>
-    <name>isBlogOwnerOrContributor</name>
-    <tag-class>net.sourceforge.pebble.web.tagext.IsBlogOwnerOrContributorTag</tag-class>
+    <name>isAuthorisedForBlog</name>
+    <tag-class>net.sourceforge.pebble.web.tagext.IsAuthorisedForBlogTag</tag-class>
     <body-content>JSP</body-content>
     <description>
-      Includes the body content only if the current user is a blog owner or contributor of the current blog.
+      Includes the body content only if the current user authorised for the current blog.
     </description>
   </tag>
 

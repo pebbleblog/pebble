@@ -265,10 +265,12 @@
     </copy>
 
     <zip destfile="${build.dir}/website.zip" basedir="${website.dir}" />
+  </target>
 
+  <target name="uploadwebsite" depends="website">
     <loadproperties srcFile="${user.home}/sourceforge.properties"/>
     <scp file="${build.dir}/website.zip" todir="${sourceforge.username}@shell.sf.net:/home/groups/p/pe/pebble/htdocs/website.zip" password="${sourceforge.password}"/>
-  </target>
+  </target> 
 
   <target name="release" depends="dist,website">
   </target>
@@ -332,6 +334,16 @@
   <target name="nightlybuild" depends="dist">
     <loadproperties srcFile="${user.home}/sourceforge.properties"/>
     <scp file="${dist.dir}/${project.name}-${build.version}.zip" todir="${sourceforge.username}@shell.sf.net:/home/groups/p/pe/pebble/htdocs/pebble-nightly.zip" password="${sourceforge.password}"/>
+
+    <copy file="website/index.html" tofile="${build.dir}/index.html" />
+    <replace file="${build.dir}/index.html">
+      <replacetoken><![CDATA[<!-- @@nightlyBuild@@ -->]]></replacetoken>
+      <replacevalue><![CDATA[Nightly build : <a href="http://pebble.sourceforge.net/pebble-nightly.zip">@@buildDate@@</a>
+          <br />
+]]></replacevalue>
+    </replace>
+    <replace file="${build.dir}/index.html" token="@@buildDate@@" value="${build.date}" />
+    <scp file="${build.dir}/index.html" todir="${sourceforge.username}@shell.sf.net:/home/groups/p/pe/pebble/htdocs/index.html" password="${sourceforge.password}"/>
   </target>
 
 </project>

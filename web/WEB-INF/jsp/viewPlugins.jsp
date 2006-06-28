@@ -4,8 +4,8 @@
     <a href="./help/plugins.html" target="_blank">Help</a>
   </div>
 
-  <div class="title">Plugins</div>
-  <div class="subtitle">&nbsp;</div>
+  <h1>Plugins</h1>
+  <h2>&nbsp;</h2>
 
   <div class="contentItemBody" style="overflow: auto">
     <form name="pluginsForm" action="savePlugins.secureaction" method="POST" accept-charset="${blog.characterEncoding}">

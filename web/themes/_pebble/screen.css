@@ -106,7 +106,7 @@ a:visited {
   bottom: 20px;
   left: 24px;
 }
-.title {
+h1 {
   font-size: 24px;
   font-weight: normal;
   color : #6e7d8e;
@@ -115,26 +115,29 @@ a:visited {
   padding-bottom: 4px;
   padding-right: 4px;
   padding-left: 30px;
+  margin: 0px;
 }
-.title a:link, .title a:visited {
+h1 a:link, h1 a:visited {
   color : #6e7d8e;
   text-decoration: none;
 }
-.title a:hover {
+h1 a:hover {
   text-decoration: underline;
 }
-.subtitle {
+h2 {
   font-size: 12px;
   font-weight: normal;
   padding-left: 30px;
   padding-top: 4px;
   color: #6e7d8e;
+  margin: 0px;
 }
-.subsubtitle {
+h3 {
   font-size: 12px;
   font-weight: normal;
   padding-top: 4px;
   color: #6e7d8e;
+  margin: 0px;
 }
 .contentItem {
   padding-left: 8px;
@@ -176,7 +179,7 @@ a:visited {
   padding-left: 16px;
   padding-right: 16px;
 }
-.response .title {
+.response h1 {
   font-size: 12px;
   font-weight: normal;
   background: transparent;

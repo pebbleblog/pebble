@@ -4,8 +4,8 @@
     <a href="./help/referers.html" target="_blank">Help</a>
   </div>
 
-  <div class="title">Referer filters</div>
-  <div class="subtitle">&nbsp;</div>
+  <h1>Referer filters</h1>
+  <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
     <form name="newRefererFilterForm" action="addRefererFilters.secureaction" method="post">

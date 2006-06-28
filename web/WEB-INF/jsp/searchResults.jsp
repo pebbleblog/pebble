@@ -1,7 +1,7 @@
 <div class="contentItem">
 
-  <div class="title"><fmt:message key="search.results" /></div>
-  <div class="subtitle">"${searchResults.query}"</div>
+  <h1><fmt:message key="search.results" /></h1>
+  <h2>"${searchResults.query}"</h2>
 
   <div class="contentItemBody">
     <c:choose>
