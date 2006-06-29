@@ -1,4 +1,4 @@
-Version 2.0.0-M3 - 29th Junw 2006
+Version 2.0.0-M3 - 29th June 2006
 ---------------------------------
 Reinstated the static pages feature.
 Added response (comment and TrackBack) specific feeds.
