@@ -31,10 +31,10 @@
  */
 package net.sourceforge.pebble.domain;
 
-import net.sourceforge.pebble.comparator.ResponseByDateComparator;
 import net.sourceforge.pebble.api.event.blogentry.BlogEntryEvent;
 import net.sourceforge.pebble.api.event.comment.CommentEvent;
 import net.sourceforge.pebble.api.event.trackback.TrackBackEvent;
+import net.sourceforge.pebble.comparator.ResponseByDateComparator;
 import net.sourceforge.pebble.web.validation.ValidationContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

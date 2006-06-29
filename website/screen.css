@@ -179,7 +179,7 @@ h3 {
   padding-left: 16px;
   padding-right: 16px;
 }
-.response .title {
+.response h1 {
   font-size: 12px;
   font-weight: normal;
   background: transparent;

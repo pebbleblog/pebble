@@ -78,7 +78,7 @@ public class UpdateNotificationPingsClient {
   public void sendUpdateNotificationPing(Blog blog, String url, String[] sites) {
     try {
       for (String site : sites) {
-        log.debug("Pinging " + site);
+        log.info("Pinging " + site);
         XmlRpcClient xmlrpc = new XmlRpcClient(site);
         Vector params = new Vector();
         params.addElement(blog.getName());
@@ -105,7 +105,7 @@ public class UpdateNotificationPingsClient {
     public void handleResult(Object o, URL url, String method) {
       Hashtable result = (Hashtable)o;
       if (result != null) {
-        log.debug("Result of calling " + method + " at " + url + " was " + result.get("flerror") + ", " + result.get("message"));
+        log.info("Result of calling " + method + " at " + url + " was " + result.get("flerror") + ", " + result.get("message"));
       }
     }
 

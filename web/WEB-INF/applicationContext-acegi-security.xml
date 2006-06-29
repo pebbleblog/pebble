@@ -36,10 +36,16 @@
     <property name="saltSource"><ref bean="saltSource"/></property>
   </bean>
 
+  <!-- this is a default implementation of Acegi's UserDetailsService that plugs into the
+       daoAuthenticationProvider - you don't need this if you are using an alternative
+       UserDetailsService or another AuthenticationProvider -->
   <bean id="pebbleUserDetailsService" class="net.sourceforge.pebble.security.DefaultUserDetailsService">
     <property name="securityRealm"><ref bean="pebbleSecurityRealm"/></property>
   </bean>
 
+  <!-- an implementation of net.sourceforge.pebble.security.SecurityRealm is required
+       to provide detailed user information and manage users
+       it is plugged into other components outside the context of this file -->
   <bean id="pebbleSecurityRealm" class="net.sourceforge.pebble.security.DefaultSecurityRealm">
     <property name="configuration"><ref bean="pebbleConfiguration"/></property>
     <property name="passwordEncoder"><ref local="passwordEncoder"/></property>

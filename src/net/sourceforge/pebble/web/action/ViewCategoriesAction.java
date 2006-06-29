@@ -55,9 +55,6 @@ public class ViewCategoriesAction extends SecureAction {
    * @return the name of the next view
    */
   public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
-    Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
-    getModel().put("categories", blog.getCategories());
-
     return new CategoriesView(true);
   }
 

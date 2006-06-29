@@ -34,6 +34,7 @@ package net.sourceforge.pebble.decorator;
 import net.sourceforge.pebble.domain.Attachment;
 import net.sourceforge.pebble.domain.BlogEntry;
 import net.sourceforge.pebble.domain.SingleBlogTestCase;
+import net.sourceforge.pebble.domain.StaticPage;
 import net.sourceforge.pebble.api.decorator.ContentDecorator;
 import net.sourceforge.pebble.api.decorator.ContentDecoratorContext;
 
@@ -46,12 +47,14 @@ public class RelativeUriDecoratorTest extends SingleBlogTestCase {
 
   private ContentDecorator decorator;
   private BlogEntry blogEntry;
+  private StaticPage staticPage;
   private ContentDecoratorContext context;
 
   protected void setUp() throws Exception {
     super.setUp();
 
     blogEntry = new BlogEntry(blog);
+    staticPage = new StaticPage(blog);
     decorator = new RelativeUriDecorator();
     context = new ContentDecoratorContext();
     decorator.setBlog(blog);
@@ -100,6 +103,28 @@ public class RelativeUriDecoratorTest extends SingleBlogTestCase {
     blogEntry.setAttachment(new Attachment("./files/someimage.jpg", 1024, "image/jpeg"));
     decorator.decorate(context, blogEntry);
     assertEquals("http://www.yourdomain.com/blog/files/someimage.jpg", blogEntry.getAttachment().getUrl());
+
+    blogEntry.setAttachment(new Attachment("http://www.domain.com/files/someimage.jpg", 1024, "image/jpeg"));
+    decorator.decorate(context, blogEntry);
+    assertEquals("http://www.domain.com/files/someimage.jpg", blogEntry.getAttachment().getUrl());
+  }
+
+  /**
+   * Tests that a relative URI pointing to an image is translated, in the body.
+   */
+  public void testImageUriInBodyOfStaticPage() throws Exception {
+    staticPage.setBody("Body - <img src=\"./images/someimage.jpg\">");
+    decorator.decorate(context, staticPage);
+    assertEquals("Body - <img src=\"http://www.yourdomain.com/blog/images/someimage.jpg\">", staticPage.getBody());
+  }
+
+  /**
+   * Tests that a relative URI pointing to a file is translated, in the body.
+   */
+  public void testFileUriInBodyOfStaticPage() throws Exception {
+    staticPage.setBody("Body - <a href=\"./files/someimage.zip\">");
+    decorator.decorate(context, staticPage);
+    assertEquals("Body - <a href=\"http://www.yourdomain.com/blog/files/someimage.zip\">", staticPage.getBody());
   }
 
 }

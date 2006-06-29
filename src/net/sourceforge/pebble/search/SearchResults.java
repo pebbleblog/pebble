@@ -102,10 +102,6 @@ public class SearchResults {
     hits.add(hit);
   }
 
-  public void add(SearchResults results) {
-      hits.addAll(results.getHits());
-  }
-
   /**
    * Gets the number of hits that the query returned.
    *

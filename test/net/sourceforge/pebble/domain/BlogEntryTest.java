@@ -956,4 +956,35 @@ public class BlogEntryTest extends SingleBlogTestCase {
     assertTrue(blogEntry.hasTag("junit"));
   }
 
-}
+  public void testLastModifiedDate() {
+    blogEntry.setDate(new Date(100));
+    blogEntry.addComment(blogEntry.createComment("", "Body", "Author", "me@somedomain.com", "http://www.google.com", "127.0.0.1", new Date(123), State.APPROVED));
+    blogEntry.addComment(blogEntry.createComment("", "Body", "Author", "me@somedomain.com", "http://www.google.com", "127.0.0.1", new Date(456), State.APPROVED));
+    blogEntry.addComment(blogEntry.createComment("", "Body", "Author", "me@somedomain.com", "http://www.google.com", "127.0.0.1", new Date(789), State.APPROVED));
+
+    assertEquals(new Date(789), blogEntry.getLastModified());
+
+    blogEntry.addTrackBack(blogEntry.createTrackBack("Title", "Excerpt", "http://www.somedomain.com", "Some blog", "127.0.0.1", new Date(123), State.APPROVED));
+    blogEntry.addTrackBack(blogEntry.createTrackBack("Title", "Excerpt", "http://www.somedomain.com", "Some blog", "127.0.0.1", new Date(543), State.APPROVED));
+    blogEntry.addTrackBack(blogEntry.createTrackBack("Title", "Excerpt", "http://www.somedomain.com", "Some blog", "127.0.0.1", new Date(987), State.APPROVED));
+
+    assertEquals(new Date(987), blogEntry.getLastModified());
+   }
+
+  public void testRemoveCommentViaRemoveResponse() {
+    Comment comment = blogEntry.createComment("", "Body", "Author", "me@somedomain.com", "http://www.google.com", "127.0.0.1", new Date(123), State.APPROVED);
+    blogEntry.addComment(comment);
+    assertEquals(1, blogEntry.getNumberOfComments());
+    blogEntry.removeResponse(comment);
+    assertEquals(0, blogEntry.getNumberOfComments());
+   }
+
+  public void testRemoveTrackBackViaRemoveResponse() {
+    TrackBack trackBack = blogEntry.createTrackBack("Title", "Excerpt", "http://www.somedomain.com", "Some blog", "127.0.0.1", new Date(123), State.APPROVED);
+    blogEntry.addTrackBack(trackBack);
+    assertEquals(1, blogEntry.getNumberOfTrackBacks());
+    blogEntry.removeResponse(trackBack);
+    assertEquals(0, blogEntry.getNumberOfTrackBacks());
+   }
+
+ }

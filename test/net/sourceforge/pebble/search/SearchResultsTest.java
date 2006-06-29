@@ -87,4 +87,32 @@ public class SearchResultsTest extends TestCase {
     assertEquals(hit2, results.getHits().get(1));
   }
 
+  public void testSortByScore() {
+    SearchHit hit1 = new SearchHit(null, "id1", "alink1", "A Title1", "An excerpt1", new Date(), 0.123f);
+    results.add(hit1);
+    SearchHit hit2 = new SearchHit(null, "id2", "alink2", "A Title2", "An excerpt2", new Date(), 0.456f);
+    results.add(hit2);
+    SearchHit hit3 = new SearchHit(null, "id3", "alink3", "A Title2", "An excerpt2", new Date(), 0.789f);
+    results.add(hit3);
+
+    results.sortByScoreDescending();
+    assertEquals(hit3, results.getHits().get(0));
+    assertEquals(hit2, results.getHits().get(1));
+    assertEquals(hit1, results.getHits().get(2));
+  }
+
+  public void testSortByDate() {
+    SearchHit hit1 = new SearchHit(null, "id1", "alink1", "A Title1", "An excerpt1", new Date(123), 0.123f);
+    results.add(hit1);
+    SearchHit hit2 = new SearchHit(null, "id2", "alink2", "A Title2", "An excerpt2", new Date(456), 0.456f);
+    results.add(hit2);
+    SearchHit hit3 = new SearchHit(null, "id3", "alink3", "A Title2", "An excerpt2", new Date(789), 0.789f);
+    results.add(hit3);
+
+    results.sortByDateDescending();
+    assertEquals(hit3, results.getHits().get(0));
+    assertEquals(hit2, results.getHits().get(1));
+    assertEquals(hit1, results.getHits().get(2));
+  }
+
 }

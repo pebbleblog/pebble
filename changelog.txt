@@ -5,6 +5,10 @@ Added response (comment and TrackBack) specific feeds.
 Added blog entry caching to improve performance.
 Added Comment Confirmation Listeners for CAPTCHA support.
 Minor bug fixes.
+Added multiBlog property to the applicationContext-pebble.xml file.
+Changed configuration of pebbleUserDetailsService and added pebbleSecurityRealm to the applicationContext-acegi-security.xml file.
+Added a ROLE_BLOG_PUBLISHER role that can publish/unpublish blog entries.
+Minor changes to CSS (title, subtitle and subsubtitle -> h1, h2 and h3 respectively).
 
 Version 2.0.0-M2 - 31st May 2006
 --------------------------------

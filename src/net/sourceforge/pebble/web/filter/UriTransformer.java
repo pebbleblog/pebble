@@ -131,11 +131,7 @@ public class UriTransformer {
         if (tag.endsWith("/")) {
           tag = tag.substring(0, tag.length()-1);
         }
-        if (tag.length() == 0) {
-          result = "/viewTags.action";
-        } else {
-          result = "/viewTag.action?tag=" + Tag.encode(tag);
-        }
+        result = "/viewTag.action?tag=" + Tag.encode(tag);
       } else if (uri.equals("/pages/") || uri.equals("/pages")) {
         result = "/viewStaticPage.action?name=index";
       } else if (uri.startsWith("/pages/")) {

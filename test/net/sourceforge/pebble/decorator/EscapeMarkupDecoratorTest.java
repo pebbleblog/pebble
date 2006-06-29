@@ -33,6 +33,7 @@ package net.sourceforge.pebble.decorator;
 
 import net.sourceforge.pebble.domain.BlogEntry;
 import net.sourceforge.pebble.domain.SingleBlogTestCase;
+import net.sourceforge.pebble.domain.StaticPage;
 import net.sourceforge.pebble.api.decorator.ContentDecorator;
 import net.sourceforge.pebble.api.decorator.ContentDecoratorContext;
 
@@ -46,12 +47,14 @@ public class EscapeMarkupDecoratorTest extends SingleBlogTestCase {
   private ContentDecorator decorator;
   private ContentDecoratorContext context;
   private BlogEntry blogEntry;
+  private StaticPage staticPage;
 
   protected void setUp() throws Exception {
     super.setUp();
 
     decorator = new EscapeMarkupDecorator();
     blogEntry = new BlogEntry(blog);
+    staticPage = new StaticPage(blog);
     context = new ContentDecoratorContext();
   }
 
@@ -121,6 +124,40 @@ public class EscapeMarkupDecoratorTest extends SingleBlogTestCase {
     blogEntry.setExcerpt("abc <escape></escape> def");
     decorator.decorate(context, blogEntry);
     assertEquals("abc <escape></escape> def", blogEntry.getExcerpt());
+  }
+
+  /**
+   * Tests that text in the body between <escape> tags is escaped.
+   */
+  public void testEscapeTextInBodyOfStaticPage() throws Exception {
+    staticPage.setBody(null);
+    decorator.decorate(context, staticPage);
+    assertEquals("", staticPage.getBody());
+
+    staticPage.setBody("");
+    decorator.decorate(context, staticPage);
+    assertEquals("", staticPage.getBody());
+
+    staticPage.setBody("Here is some <b>HTML</b>.");
+    decorator.decorate(context, staticPage);
+    assertEquals("Here is some <b>HTML</b>.", staticPage.getBody());
+
+    staticPage.setBody("Here is some <escape><b>escaped HTML</b></escape>.");
+    decorator.decorate(context, staticPage);
+    assertEquals("Here is some &lt;b&gt;escaped HTML&lt;/b&gt;.", staticPage.getBody());
+
+    staticPage.setBody("Here is some <escape><b>escaped HTML</b></escape> and <escape><i>some more</i></escape>.");
+    decorator.decorate(context, staticPage);
+    assertEquals("Here is some &lt;b&gt;escaped HTML&lt;/b&gt; and &lt;i&gt;some more&lt;/i&gt;.", staticPage.getBody());
+
+    staticPage.setBody("Here is some <escape><b>escaped\n" +
+        "HTML</b></escape>.");
+    decorator.decorate(context, staticPage);
+    assertEquals("Here is some &lt;b&gt;escaped\nHTML&lt;/b&gt;.", staticPage.getBody());
+
+    staticPage.setBody("abc <escape></escape> def");
+    decorator.decorate(context, staticPage);
+    assertEquals("abc <escape></escape> def", staticPage.getBody());
   }
 
 }

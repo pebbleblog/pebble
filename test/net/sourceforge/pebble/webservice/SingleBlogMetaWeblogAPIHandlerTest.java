@@ -36,6 +36,7 @@ import net.sourceforge.pebble.domain.*;
 import net.sourceforge.pebble.mock.MockAuthenticationManager;
 import org.acegisecurity.GrantedAuthority;
 import org.acegisecurity.GrantedAuthorityImpl;
+import org.acegisecurity.AuthenticationManager;
 import org.apache.xmlrpc.XmlRpcException;
 
 import java.util.Calendar;
@@ -52,12 +53,18 @@ import java.text.SimpleDateFormat;
 public class SingleBlogMetaWeblogAPIHandlerTest extends SingleBlogTestCase {
 
   private MetaWeblogAPIHandler handler = new MetaWeblogAPIHandler();
+  private AuthenticationManager authenticationManager;
 
   protected void setUp() throws Exception {
     super.setUp();
 
-    handler.setAuthenticationManager(new MockAuthenticationManager(true, new GrantedAuthority[] {new GrantedAuthorityImpl(Constants.BLOG_CONTRIBUTOR_ROLE)}));
+    authenticationManager = new MockAuthenticationManager(true, new GrantedAuthority[] {new GrantedAuthorityImpl(Constants.BLOG_CONTRIBUTOR_ROLE)});
+    handler.setAuthenticationManager(authenticationManager);
     blog.setProperty(Blog.BLOG_CONTRIBUTORS_KEY, "username");
+  }
+
+  public void testConfigured() {
+    assertSame(authenticationManager, handler.getAuthenticationManager());
   }
 
   /**

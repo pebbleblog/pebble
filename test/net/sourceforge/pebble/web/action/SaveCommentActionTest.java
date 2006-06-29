@@ -52,7 +52,7 @@ public class SaveCommentActionTest extends SingleBlogActionTestCase {
     super.setUp();
   }
 
-  public void testProcessAsBlogContributor() throws Exception {
+  public void testProcessAsBlogContributorWhenReplyingToBlogEntry() throws Exception {
     BlogService service = new BlogService();
     BlogEntry blogEntry = new BlogEntry(blog);
     service.putBlogEntry(blogEntry);
@@ -78,6 +78,68 @@ public class SaveCommentActionTest extends SingleBlogActionTestCase {
     assertEquals("Test Body", comment.getBody());
     assertEquals("Test Author", comment.getAuthor());
     assertEquals("http://www.somedomain.com", comment.getWebsite());
+  }
+
+  public void testProcessAsBlogContributorWhenReplyingToComment() throws Exception {
+    BlogService service = new BlogService();
+    BlogEntry blogEntry = new BlogEntry(blog);
+    service.putBlogEntry(blogEntry);
+
+    Comment comment1 = blogEntry.createComment("Title", "Body", "Author", "me@somedomain.com", "http://www.google.com", "127.0.0.1");
+    blogEntry.addComment(comment1);
+    service.putBlogEntry(blogEntry);
+
+    request.setParameter("entry", "" + blogEntry.getId());
+    request.setParameter("parent", "" + comment1.getId());
+    request.setParameter("title", "Test Title");
+    request.setParameter("body", "Test Body");
+    request.setParameter("author", "Test Author");
+    request.setParameter("website", "http://www.somedomain.com");
+    request.setParameter("submit", "Add Comment");
+
+    SecurityUtils.runAsBlogContributor();
+
+    View view = action.process(request, response);
+    assertTrue(view instanceof CommentConfirmationView);
+
+    blogEntry = service.getBlogEntry(blog, blogEntry.getId());
+    assertEquals(2, blogEntry.getComments().size());
+
+    Comment comment2 = blogEntry.getComments().get(1);
+    assertEquals("Test Title", comment2.getTitle());
+    assertEquals("Test Body", comment2.getBody());
+    assertEquals("Test Author", comment2.getAuthor());
+    assertEquals("http://www.somedomain.com", comment2.getWebsite());
+    assertEquals(comment1.getId(), comment2.getParent().getId());
+  }
+
+  public void testProcessAsBlogContributorWhenReplyingToCommentThatDoesntExist() throws Exception {
+    BlogService service = new BlogService();
+    BlogEntry blogEntry = new BlogEntry(blog);
+    service.putBlogEntry(blogEntry);
+
+    request.setParameter("entry", "" + blogEntry.getId());
+    request.setParameter("parent", "123456789");
+    request.setParameter("title", "Test Title");
+    request.setParameter("body", "Test Body");
+    request.setParameter("author", "Test Author");
+    request.setParameter("website", "http://www.somedomain.com");
+    request.setParameter("submit", "Add Comment");
+
+    SecurityUtils.runAsBlogContributor();
+
+    View view = action.process(request, response);
+    assertTrue(view instanceof CommentConfirmationView);
+
+    blogEntry = service.getBlogEntry(blog, blogEntry.getId());
+    assertEquals(1, blogEntry.getComments().size());
+
+    Comment comment = blogEntry.getComments().get(0);
+    assertEquals("Test Title", comment.getTitle());
+    assertEquals("Test Body", comment.getBody());
+    assertEquals("Test Author", comment.getAuthor());
+    assertEquals("http://www.somedomain.com", comment.getWebsite());
+    assertNull(comment.getParent());
   }
 
   public void testProcessAsAnonymousUser() throws Exception {

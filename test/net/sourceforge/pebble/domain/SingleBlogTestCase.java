@@ -60,6 +60,7 @@ public abstract class SingleBlogTestCase extends PebbleTestCase {
     blog.setEditableTheme(theme);
 
     Configuration config = new Configuration();
+    config.setDataDirectory(TEST_BLOG_LOCATION.getAbsolutePath());
     config.setUrl("http://www.yourdomain.com/blog/");
     PebbleContext.getInstance().setConfiguration(config);
 

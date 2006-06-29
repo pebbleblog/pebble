@@ -55,7 +55,7 @@ public class AddCategoryAction extends SecureAction {
    * @return the name of the next view
    */
   public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
-    getModel().put("category", new Category());
+    getModel().put(Constants.CATEGORY_KEY, new Category());
 
     return new ForwardView("/viewCategories.secureaction");
   }

@@ -56,20 +56,29 @@ public class HideUnapprovedResponsesDecoratorTest extends SingleBlogTestCase {
    */
   public void testUnapprovedResponsesRemovedWhenNotLoggedIn() throws Exception {
     BlogEntry blogEntry = new BlogEntry(blog);
-    Comment comment = blogEntry.createComment("title", "body", "author", "email", "website", "127.0.0.1");
-    comment.setPending();
-    blogEntry.addComment(comment);
+    Comment comment1 = blogEntry.createComment("title", "body", "author", "email", "website", "127.0.0.1");
+    comment1.setPending();
+    blogEntry.addComment(comment1);
+    Comment comment2 = blogEntry.createComment("title", "body", "author", "email", "website", "127.0.0.1");
+    comment2.setApproved();
+    blogEntry.addComment(comment2);
 
-    TrackBack trackBack = blogEntry.createTrackBack("title", "excerpt", "url", "blogName", "127.0.0.1");
-    trackBack.setPending();
-    blogEntry.addTrackBack(trackBack);
+    TrackBack trackBack1 = blogEntry.createTrackBack("title", "excerpt", "url", "blogName", "127.0.0.1");
+    trackBack1.setPending();
+    blogEntry.addTrackBack(trackBack1);
+    TrackBack trackBack2 = blogEntry.createTrackBack("title", "excerpt", "url", "blogName", "127.0.0.1");
+    trackBack2.setApproved();
+    blogEntry.addTrackBack(trackBack2);
 
     SecurityUtils.runAsAnonymous();
 
     ContentDecoratorContext context = new ContentDecoratorContext();
     decorator.decorate(context, blogEntry);
-    assertEquals(0, blogEntry.getComments().size());
-    assertEquals(0, blogEntry.getTrackBacks().size());
+    assertEquals(1, blogEntry.getComments().size());
+    assertEquals(1, blogEntry.getTrackBacks().size());
+
+    assertSame(comment2, blogEntry.getComments().get(0));
+    assertSame(trackBack2, blogEntry.getTrackBacks().get(0));
   }
 
   /**

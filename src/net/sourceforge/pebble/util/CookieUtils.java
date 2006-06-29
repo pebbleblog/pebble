@@ -54,9 +54,9 @@ public class CookieUtils {
   public static Cookie getCookie(Cookie cookies[], String name) {
 
     if (cookies != null) {
-      for (int i = 0; i < cookies.length; i++) {
-        if (cookies[i].getName().equals(name)) {
-          return cookies[i];
+      for (Cookie cookie : cookies) {
+        if (cookie.getName().equals(name)) {
+          return cookie;
         }
       }
     }

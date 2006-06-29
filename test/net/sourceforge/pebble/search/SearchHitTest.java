@@ -64,6 +64,8 @@ public class SearchHitTest extends SingleBlogTestCase {
     assertEquals("Some excerpt...", hit.getExcerpt());
     assertEquals(date, hit.getDate());
     assertEquals(0.789f, hit.getScore(), 0);
+    hit.setNumber(10);
+    assertEquals(10, hit.getNumber());
   }
 
 }
