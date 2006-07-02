@@ -962,7 +962,8 @@ public class Blog extends AbstractBlog {
   }
 
   /**
-   * Gets the date that this blog was last updated.
+   * Gets the date that this blog was last updated through the addition
+   * of a blog entry.
    *
    * @return  a Date instance representing the time of the most recent entry
    */
@@ -971,6 +972,22 @@ public class Blog extends AbstractBlog {
     List blogEntries = getRecentBlogEntries(1);
     if (blogEntries.size() == 1) {
       date = ((BlogEntry)blogEntries.get(0)).getDate();
+    }
+
+    return date;
+  }
+
+  /**
+   * Gets the date that this blog was last updated through the addition
+   * of a blog entry or response.
+   *
+   * @return  a Date instance representing the time of the most recent entry
+   */
+  public Date getLastModifiedIncludingResponses() {
+    Date date = new Date(0);
+    List blogEntries = getRecentBlogEntries(1);
+    if (blogEntries.size() == 1) {
+      date = ((BlogEntry)blogEntries.get(0)).getLastModified();
     }
 
     return date;
