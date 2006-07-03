@@ -160,7 +160,7 @@ public class FileMetaDataTest extends TestCase {
     file = new FileMetaData(null, "/");
     file.setSize(123456789);
     assertEquals(123456789, file.getSize());
-    assertEquals(123456789/1024, file.getSizeInKB());
+    assertEquals(123456789/1024, file.getSizeInKB(), 1.0);
   }
 
 }
