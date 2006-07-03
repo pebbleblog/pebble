@@ -159,8 +159,8 @@ public class FileMetaData {
     return this.size;
   }
 
-  public long getSizeInKB() {
-    return (this.size / 1024);
+  public double getSizeInKB() {
+    return (this.size / 1024.0);
   }
 
   public void setSize(long size) {

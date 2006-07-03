@@ -144,13 +144,13 @@ public class  CalendarTag extends TagSupport {
           today.get(Calendar.MONTH) == cal.get(Calendar.MONTH) &&
           today.get(Calendar.DAY_OF_MONTH) == cal.get(Calendar.DAY_OF_MONTH)) {
           out.write("<td class=\"calendarToday\">");
-          if (blog.hasEntries(daily)) {
+          if (daily.hasBlogEntries()) {
             out.write("&nbsp;<a href=\"" + daily.getPermalink() + "\">" + formattedNumber + "</a>&nbsp;");
           } else {
             out.write("&nbsp;" + formattedNumber + "&nbsp;");
           }
         } else {
-          if (blog.hasEntries(daily)) {
+          if (daily.hasBlogEntries()) {
             out.write("<td class=\"calendarDayWithEntries\">");
             out.write("&nbsp;<a href=\"" + daily.getPermalink() + "\">" + formattedNumber + "</a>&nbsp;");
           } else {

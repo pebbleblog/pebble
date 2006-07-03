@@ -100,7 +100,7 @@ public class ViewFilesAction extends AbstractFileAction {
     getModel().put("root", fileManager.getFileMetaData("/"));
 
     if (PebbleContext.getInstance().getConfiguration().getFileUploadQuota() > -1) {
-      getModel().put("currentUsage", new Long(FileManager.getCurrentUsage(blog)));
+      getModel().put("currentUsage", FileManager.getCurrentUsage(blog));
     }
 
     return new FilesView();

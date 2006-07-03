@@ -162,9 +162,8 @@ public class MonthlyBlog extends TimePeriod implements Permalinkable {
   public int getNumberOfBlogEntries() {
     int count = 0;
     DailyBlog days[] = getAllDailyBlogs();
-    List blogEntries = new ArrayList();
     for (DailyBlog day : days) {
-      count += day.getBlogEntries().size();
+      count += day.getNumberOfBlogEntries();
     }
 
     return count;
@@ -255,6 +254,17 @@ public class MonthlyBlog extends TimePeriod implements Permalinkable {
    */
   public boolean before(MonthlyBlog monthlyBlog) {
     return getDate().before(monthlyBlog.getDate());
+  }
+
+  /**
+   * Determines if the this MonthlyBlog is after (in the calendar) the
+   * specified MonthlyBlog.
+   *
+   * @return  true if this instance represents a later month than the
+   *          specified MonthlyBlog instance, false otherwise
+   */
+  public boolean after(MonthlyBlog monthlyBlog) {
+    return getDate().after(monthlyBlog.getDate());
   }
 
   /**

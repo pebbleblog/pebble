@@ -32,6 +32,8 @@
 package net.sourceforge.pebble.domain;
 
 import java.util.Calendar;
+import java.util.List;
+import java.util.LinkedList;
 
 /**
  * Represents a blog at a yearly level. This manages a collection of MonthlyBlog instances.
@@ -162,6 +164,25 @@ public class YearlyBlog extends TimePeriod implements Comparable {
     }
 
     return months;
+  }
+
+  /**
+   * Gets a collection of all MonthlyBlogs, to date and in reverse order.
+   *
+   * @return  a Collection of MonthlyBlog instances
+   */
+  public List<MonthlyBlog> getActiveMonthlyBlogsInReverse() {
+    List<MonthlyBlog> list = new LinkedList<MonthlyBlog>();
+    MonthlyBlog thisMonth = getBlog().getBlogForThisMonth();
+    MonthlyBlog firstMonth = getBlog().getBlogForFirstMonth();
+    for (int i = 12; i >=1; i--) {
+      MonthlyBlog month = getBlogForMonth(i);
+      if (!month.after(thisMonth) && !month.before(firstMonth)) {
+        list.add(month);
+      }
+    }
+
+    return list;
   }
 
   /**

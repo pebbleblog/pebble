@@ -129,8 +129,7 @@ public abstract class UploadFileAction extends AbstractFileAction {
 
               // if it's a theme file, also create a copy in blog.dir/theme
               if (type.equals(FileMetaData.THEME_FILE)) {
-                fileManager = new FileManager(blog, FileMetaData.BLOG_DATA);
-                writeFile(fileManager, "/theme" + path, filename, item);
+                writeFile(new FileManager(blog, FileMetaData.BLOG_DATA), "/theme" + path, filename, item);
               }
               break;
             } else {

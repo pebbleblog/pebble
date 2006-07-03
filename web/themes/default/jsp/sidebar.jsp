@@ -14,6 +14,31 @@
     <br /><br />
   </div>
 
+  <%-- Uncomment this block if you would like to show archives by month.
+  <div class="sidebarItem">
+    <div class="sidebarItemTitle"><span>Archives</span></div>
+    <c:forEach var="year" items="${blog.activeYearlyBlogsInReverse}">
+      <b><fmt:formatDate value="${year.date}" pattern="yyyy"/></b><br />
+      <c:forEach var="month" items="${year.activeMonthlyBlogsInReverse}">
+      <a href="${month.permalink}"><fmt:formatDate value="${month.date}" pattern="MMMM"/></a> (<fmt:formatNumber value="${month.numberOfBlogEntries}" type="number" />)
+      <br />
+      </c:forEach>
+      <br />
+    </c:forEach>
+  </div>
+  --%>
+
+  <c:if test="${not empty blog.rootCategory.subCategories}">
+  <div class="sidebarItem">
+    <div class="sidebarItemTitle"><span><fmt:message key="category.categories" /></span></div>
+    <c:forEach var="category" items="${categories}" begin="1" varStatus="status">
+      <a href="${category.permalink}"><c:out value="${category.name}" escapeXml="true"/></a> (<fmt:formatNumber value="${category.numberOfBlogEntries}" type="number" />)
+      <a href="${category.permalink}rss.xml" style="border: 0px;"><img src="common/images/feed-icon-10x10.png" alt="RSS feed" border="0" /></a>
+      <br />
+    </c:forEach>
+  </div>
+  </c:if>
+
   <c:if test="${not empty tags}">
   <div class="sidebarItem">
     <div class="sidebarItemTitle"><span><fmt:message key="tag.tags" /></span></div>

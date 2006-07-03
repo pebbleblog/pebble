@@ -84,7 +84,7 @@ public class Blog extends AbstractBlog {
   private String id = "default";
 
   /** the collection of YearlyBlog instance that this root blog is managing */
-  private List yearlyBlogs;
+  private List<YearlyBlog> yearlyBlogs;
 
   /** the root category associated with this blog */
   private Category rootCategory;
@@ -171,7 +171,7 @@ public class Blog extends AbstractBlog {
       Class c = Class.forName(getCommentConfirmationStrategyName());
       commentConfirmationStrategy = (CommentConfirmationStrategy)c.newInstance();
     } catch (Exception e) {
-      addMessage(new Message("Could not load comment confirmation strategy \"" + getCommentConfirmationStrategyName() + "\""));
+      error("Could not load comment confirmation strategy \"" + getCommentConfirmationStrategyName() + "\"");
       e.printStackTrace();
       commentConfirmationStrategy = new DefaultCommentConfirmationStrategy();
     }
@@ -196,7 +196,7 @@ public class Blog extends AbstractBlog {
       Constructor cons = c.getConstructor(new Class[] {Blog.class});
       this.logger = (AbstractLogger)cons.newInstance(new Object[] {this});
     } catch (Exception e) {
-      addMessage(new Message("Could not start logger \"" + getLoggerName() + "\""));
+      error("Could not start logger \"" + getLoggerName() + "\"");
       e.printStackTrace();
       this.logger = new CombinedLogFormatLogger(this);
     }
@@ -236,7 +236,7 @@ public class Blog extends AbstractBlog {
             BlogListener listener = (BlogListener)c.newInstance();
             eventListenerList.addBlogListener(listener);
           } catch (Exception e) {
-            addMessage(new Message("Could not start blog listener \"" + classes[i] + "\""));
+            error("Could not start blog listener \"" + classes[i] + "\"");
             log.error("Blog listener " + classes[i] + " could not be registered", e);
           }
         }
@@ -262,7 +262,7 @@ public class Blog extends AbstractBlog {
             BlogEntryListener listener = (BlogEntryListener)c.newInstance();
             eventListenerList.addBlogEntryListener(listener);
           } catch (Exception e) {
-            addMessage(new Message("Could not start blog entry listener \"" + classes[i] + "\""));
+            error("Could not start blog entry listener \"" + classes[i] + "\"");
             log.error("Blog entry listener " + classes[i] + " could not be registered", e);
           }
         }
@@ -292,7 +292,7 @@ public class Blog extends AbstractBlog {
             CommentListener listener = (CommentListener)c.newInstance();
             eventListenerList.addCommentListener(listener);
           } catch (Exception e) {
-            addMessage(new Message("Could not start comment listener \"" + classes[i] + "\""));
+            error("Could not start comment listener \"" + classes[i] + "\"");
             log.error("Comment listener " + classes[i] + " could not be registered", e);
           }
         }
@@ -319,7 +319,7 @@ public class Blog extends AbstractBlog {
             TrackBackListener listener = (TrackBackListener)c.newInstance();
             eventListenerList.addTrackBackListener(listener);
           } catch (Exception e) {
-            addMessage(new Message("Could not start TrackBack listener \"" + classes[i] + "\""));
+            error("Could not start TrackBack listener \"" + classes[i] + "\"");
             log.error("TrackBack listener " + classes[i] + " could not be registered", e);
           }
         }
@@ -349,7 +349,7 @@ public class Blog extends AbstractBlog {
             decorator.setBlog(this);
             decoratorChain.add(decorator);
           } catch (Exception e) {
-            addMessage(new Message("Could not start decorator \"" + classes[i] + "\""));
+            error("Could not start decorator \"" + classes[i] + "\"");
             e.printStackTrace();
             log.error(classes[i] + " could not be started", e);
           }
@@ -599,6 +599,23 @@ public class Blog extends AbstractBlog {
   }
 
   /**
+   * Gets all YearlyBlogs managed by this root blog, in reverse order.
+   *
+   * @return  a Collection of YearlyBlog instances
+   */
+  public List<YearlyBlog> getActiveYearlyBlogsInReverse() {
+    List<YearlyBlog> list = new LinkedList<YearlyBlog>();
+    int thisYear = getBlogForThisYear().getYear();
+    for (YearlyBlog year : yearlyBlogs) {
+      if (year.getYear() <= thisYear) {
+        list.add(year);
+      }
+    }
+    Collections.reverse(list);
+    return list;
+  }
+
+  /**
    * Gets the MonthlyBlog instance representing the first month that
    * contains blog entries.
    *
@@ -608,7 +625,7 @@ public class Blog extends AbstractBlog {
     YearlyBlog year;
 
     if (!yearlyBlogs.isEmpty()) {
-      year = (YearlyBlog)yearlyBlogs.get(0);
+      year = yearlyBlogs.get(0);
     } else {
       year = getBlogForYear(getCalendar().get(Calendar.YEAR));
     }
@@ -735,16 +752,6 @@ public class Blog extends AbstractBlog {
    */
   public int getNumberOfBlogEntries() {
     return blogEntryIndex.getNumberOfBlogEntries();
-  }
-
-  /**
-   * Determines whether there are blog entries for the specified day.
-   *
-   * @param day         a DailyBlog instance
-   * @return  true if there are entries, false otherwise
-   */
-  public boolean hasEntries(DailyBlog day) {
-    return day.hasBlogEntries();
   }
 
   /**
@@ -978,19 +985,17 @@ public class Blog extends AbstractBlog {
   }
 
   /**
-   * Gets the date that this blog was last updated through the addition
-   * of a blog entry or response.
+   * Gets the date of the most recent response.
    *
    * @return  a Date instance representing the time of the most recent entry
    */
-  public Date getLastModifiedIncludingResponses() {
-    Date date = new Date(0);
-    List blogEntries = getRecentBlogEntries(1);
-    if (blogEntries.size() == 1) {
-      date = ((BlogEntry)blogEntries.get(0)).getLastModified();
+  public Date getDateOfLastResponse() {
+    List<Response> responses = this.getRecentApprovedResponses();
+    if (responses != null && responses.size() > 0) {
+      return responses.get(0).getDate();
+    } else {
+      return new Date(0);
     }
-
-    return date;
   }
 
   public BlogEntry getPreviousBlogEntry(BlogEntry blogEntry) {

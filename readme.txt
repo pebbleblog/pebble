@@ -1,4 +1,4 @@
-Pebble 2.0.0-M3 - 29th June 2006
+Pebble 2.0.0
 --------------------------------
 The prerequisites are as follows.
 

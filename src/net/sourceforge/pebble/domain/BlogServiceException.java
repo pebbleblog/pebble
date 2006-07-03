@@ -47,7 +47,7 @@ public class BlogServiceException extends Exception {
   public BlogServiceException(Blog blog, String message) {
     super(message);
 
-    blog.addMessage(new Message(message));
+    blog.error(message);
   }
 
   /**
@@ -59,7 +59,7 @@ public class BlogServiceException extends Exception {
   public BlogServiceException(Blog blog, Exception cause) {
     super(cause);
 
-    blog.addMessage(new Message(cause.getMessage()));
+    blog.error(cause.getMessage());
   }
 
 }

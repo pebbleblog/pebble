@@ -15,7 +15,7 @@
 <description><c:out value="${blog.description}" escapeXml="true"/></description>
 <language>${blog.language}</language>
 <managingEditor><c:out value="${blog.author}" escapeXml="true"/></managingEditor>
-<lastBuildDate><fmt:formatDate value="${blog.lastModifiedIncludingResponses}" pattern="EEE, dd MMM yyyy HH:mm:ss z" timeZone="GMT"/></lastBuildDate>
+<lastBuildDate><fmt:formatDate value="${blog.dateOfLastResponse}" pattern="EEE, dd MMM yyyy HH:mm:ss z" timeZone="GMT"/></lastBuildDate>
   </c:otherwise>
 </c:choose>
   <generator>Pebble (http://pebble.sourceforge.net)</generator>

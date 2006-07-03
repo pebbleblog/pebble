@@ -426,7 +426,7 @@ public class FileManager {
    * @param blog    the blog to check against
    * @return  the number of KB
    */
-  public static long getCurrentUsage(Blog blog) {
+  public static double getCurrentUsage(Blog blog) {
     FileManager imagesFileManager = new FileManager(blog, FileMetaData.BLOG_IMAGE);
     FileManager filesFileManager = new FileManager(blog, FileMetaData.BLOG_FILE);
     FileManager themeFileManager = new FileManager(blog, FileMetaData.THEME_FILE);
@@ -443,7 +443,7 @@ public class FileManager {
    * @param itemSize  the size of the item to be written
    * @return  true if there is enough space or quotas aren't active
    */
-  public static boolean hasEnoughSpace(Blog blog, long itemSize) {
+  public static boolean hasEnoughSpace(Blog blog, double itemSize) {
     long quota = PebbleContext.getInstance().getConfiguration().getFileUploadQuota();
 
     return (quota == -1) || ((quota - getCurrentUsage(blog)) > itemSize);

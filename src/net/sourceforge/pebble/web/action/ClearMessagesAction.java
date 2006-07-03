@@ -1,20 +1,20 @@
 package net.sourceforge.pebble.web.action;
 
-import net.sourceforge.pebble.Constants;
-import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.impl.MessagesView;
+import net.sourceforge.pebble.Constants;
+import net.sourceforge.pebble.domain.Blog;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.ServletException;
 
 /**
- * Allows the user to see all messages for the current blog.
+ * Allows the user to clear all messages for the current blog.
  *
  * @author    Simon Brown
  */
-public class ViewMessagesAction extends SecureAction {
+public class ClearMessagesAction extends SecureAction {
 
   /**
    * Peforms the processing associated with this action.
@@ -25,6 +25,7 @@ public class ViewMessagesAction extends SecureAction {
    */
   public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
+    blog.clearMessages();
     getModel().put("messages", blog.getMessages());
 
     return new MessagesView();

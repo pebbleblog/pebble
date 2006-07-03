@@ -21,13 +21,13 @@
       <c:when test="${type == 'blogData'}">Files</c:when>
     </c:choose>
   </h1>
-  <h2><c:out value="${directory.absolutePath}" /> (<fmt:formatNumber value="${directory.sizeInKB}" type="number" />&nbsp;KB)</h2>
+  <h2><c:out value="${directory.absolutePath}" /> (<fmt:formatNumber value="${directory.sizeInKB}" type="number" minFractionDigits="0" maxFractionDigits="0" />&nbsp;KB)</h2>
 
   <div class="contentItemBody">
   <p>
     <c:if test="${pebbleContext.configuration.fileUploadQuota > -1}">
-      You are using <fmt:formatNumber value="${currentUsage}" type="number" />&nbsp;KB of
-      your <fmt:formatNumber value="${pebbleContext.configuration.fileUploadQuota}" type="number" />&nbsp;KB quota, which is shared between
+      You are using <fmt:formatNumber value="${currentUsage}" type="number" minFractionDigits="0" maxFractionDigits="0" />&nbsp;KB of
+      your <fmt:formatNumber value="${pebbleContext.configuration.fileUploadQuota}" type="number" minFractionDigits="0" maxFractionDigits="0" />&nbsp;KB quota, which is shared between
       all of your images, files and theme.
     </c:if>
   </p>
@@ -60,7 +60,7 @@
             <a href="${aFile.url}">${aFile.name}</a>
           </td>
           <td align="right">
-            <fmt:formatNumber value="${aFile.sizeInKB}" type="number" />&nbsp;KB
+            <fmt:formatNumber value="${aFile.sizeInKB}" type="number" minFractionDigits="2" maxFractionDigits="2" />&nbsp;KB
           </td>
           <td align="right">
             <fmt:formatDate value="${aFile.lastModified}" type="both" dateStyle="short" timeStyle="short" />

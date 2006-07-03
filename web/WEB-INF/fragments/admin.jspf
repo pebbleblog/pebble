@@ -8,12 +8,13 @@
     <input type="password" name="j_password" />
     <br />
     Remember me <input type="checkbox" name="_acegi_security_remember_me" />
-    <input type="submit" value="<fmt:message key="login.button" />" />
+    <input type="submit" value="<fmt:message key='login.button' />" />
   </form>
 </pebble:isNotAuthenticated>
 
 <pebble:isAuthenticated>
   <div class="sidebarItemTitle"><span>Logged in as <authz:authentication operation="username"/></span></div>
+  <div id="adminPanel">
   <ul>
 
   <pebble:isBlogContributor>
@@ -50,7 +51,7 @@
     <a href="viewPlugins.secureaction" title="Manage your plugins">Plugins</a> |
     <a href="aboutBlog.secureaction" title="About this blog">About</a>
     <br />
-    <a href="viewMessages.secureaction">Messages (${blog.numberOfMessages})</a> |
+    <a href="viewMessages.secureaction">Messages (<fmt:formatNumber value="${blog.numberOfMessages}" type="number" />)</a> |
     <a href="utilities.secureaction" title="Maintenance and upgrade utilities">Utilities</a> |
     <a href="theme/" title="Manage and edit the files in your theme">Theme</a>
     </li>
@@ -81,5 +82,6 @@
   <li><pebble:isAuthorisedForBlog><a href="./help/index.html" title="Help">Help</a> | </pebble:isAuthorisedForBlog><a href="${pageContext.request.contextPath}/logout.action?redirectUrl=${blog.url}"><fmt:message key="common.logout" /></a></li>
 
   </ul>
+  </div>
 </pebble:isAuthenticated>
 </div>

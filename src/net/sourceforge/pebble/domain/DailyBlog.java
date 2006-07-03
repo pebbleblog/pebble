@@ -177,6 +177,10 @@ public class DailyBlog extends TimePeriod implements Permalinkable {
     return new ArrayList<String>(blogEntries);
   }
 
+  public int getNumberOfBlogEntries() {
+    return publishedBlogEntries.size();
+  }
+
   public synchronized void addPublishedBlogEntry(String blogEntryId) {
     if (!publishedBlogEntries.contains(blogEntryId)) {
       publishedBlogEntries.add(blogEntryId);

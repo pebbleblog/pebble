@@ -78,12 +78,13 @@ public class UpdateNotificationPingsClient {
   public void sendUpdateNotificationPing(Blog blog, String url, String[] sites) {
     try {
       for (String site : sites) {
-        log.info("Pinging " + site);
+        log.info("Sending XML-RPC ping to " + site);
+        blog.info("Sending XML-RPC ping to " + site);
         XmlRpcClient xmlrpc = new XmlRpcClient(site);
         Vector params = new Vector();
         params.addElement(blog.getName());
         params.addElement(url);
-        xmlrpc.executeAsync(WEBLOGS_METHOD_NAME, params, new UpdateNotificationPingsAsyncCallback());
+        xmlrpc.executeAsync(WEBLOGS_METHOD_NAME, params, new UpdateNotificationPingsAsyncCallback(blog));
       }
     } catch (IOException ioe) {
       log.error(ioe.getMessage(), ioe);
@@ -95,6 +96,12 @@ public class UpdateNotificationPingsClient {
    */
   class UpdateNotificationPingsAsyncCallback implements AsyncCallback {
 
+    private Blog blog;
+
+    public UpdateNotificationPingsAsyncCallback(Blog blog) {
+      this.blog = blog;
+    }
+
     /**
      * Called if the XML-RPC was successful.
      *
@@ -105,7 +112,8 @@ public class UpdateNotificationPingsClient {
     public void handleResult(Object o, URL url, String method) {
       Hashtable result = (Hashtable)o;
       if (result != null) {
-        log.info("Result of calling " + method + " at " + url + " was " + result.get("flerror") + ", " + result.get("message"));
+        log.info("Result of XML-RPC ping to " + method + " at " + url + " was " + result.get("flerror") + ", " + result.get("message"));
+        blog.info("Result of XML-RPC ping to " + method + " at " + url + " was " + result.get("flerror") + ", " + result.get("message"));
       }
     }
 

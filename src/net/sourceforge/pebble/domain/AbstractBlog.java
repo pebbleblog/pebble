@@ -31,6 +31,7 @@
  */
 package net.sourceforge.pebble.domain;
 
+import net.sourceforge.pebble.PebbleContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -39,8 +40,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.*;
-
-import net.sourceforge.pebble.PebbleContext;
 
 public abstract class AbstractBlog extends TimePeriod {
 
@@ -68,7 +67,7 @@ public abstract class AbstractBlog extends TimePeriod {
   public static final String CHARACTER_ENCODING_KEY = "characterEncoding";
   public static final String THEME_KEY = "theme";
 
-  private List<Message> messages = new ArrayList<Message>();
+  private List<Message> messages = new LinkedList<Message>();
 
   /** the properties for this blog */
   protected Properties properties;
@@ -448,8 +447,20 @@ public abstract class AbstractBlog extends TimePeriod {
     return getName();
   }
 
-  public void addMessage(Message message) {
-    messages.add(message);
+  public synchronized void info(String message) {
+    messages.add(new Message(MessageType.INFO, message));
+  }
+
+  public synchronized void warn(String message) {
+    messages.add(new Message(MessageType.WARN, message));
+  }
+
+  public synchronized void error(String message) {
+    messages.add(new Message(MessageType.ERROR, message));
+  }
+
+  public synchronized void clearMessages() {
+    messages.clear();
   }
 
   public List<Message> getMessages() {

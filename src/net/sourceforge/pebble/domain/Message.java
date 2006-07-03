@@ -40,10 +40,12 @@ import java.util.Date;
  */
 public class Message {
 
+  private MessageType type;
   private Date date;
   private String text;
 
-  public Message(String text) {
+  public Message(MessageType type, String text) {
+    this.type = type;
     this.text = text;
     this.date = new Date();
   }
@@ -62,6 +64,10 @@ public class Message {
 
   public void setText(String text) {
     this.text = text;
+  }
+
+  public MessageType getType() {
+    return type;
   }
 
   public boolean equals(Object o) {
