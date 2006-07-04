@@ -59,7 +59,7 @@
         <td valign="top"><b><fmt:message key="comment.body" /></b></td>
         <td>
           <textarea name="body" rows="8" cols="40"><c:out value="${comment.body}"/></textarea>
-          <div class="small"><b>HTML</b> : b, strong, i, blockquote, br, p, pre, a href="", ul, ol, li</div>
+          <div class="small"><b>HTML</b> : b, strong, i, em, blockquote, br, p, pre, a href="", ul, ol, li</div>
         </td>
       </tr>
 

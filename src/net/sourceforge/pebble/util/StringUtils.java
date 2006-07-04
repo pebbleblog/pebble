@@ -47,6 +47,8 @@ public final class StringUtils {
   private static final Pattern CLOSING_STRONG_TAG_PATTERN = Pattern.compile("&lt;/strong&gt;", Pattern.CASE_INSENSITIVE);
   private static final Pattern OPENING_I_TAG_PATTERN = Pattern.compile("&lt;i&gt;", Pattern.CASE_INSENSITIVE);
   private static final Pattern CLOSING_I_TAG_PATTERN = Pattern.compile("&lt;/i&gt;", Pattern.CASE_INSENSITIVE);
+  private static final Pattern OPENING_EM_TAG_PATTERN = Pattern.compile("&lt;em&gt;", Pattern.CASE_INSENSITIVE);
+  private static final Pattern CLOSING_EM_TAG_PATTERN = Pattern.compile("&lt;/em&gt;", Pattern.CASE_INSENSITIVE);
   private static final Pattern OPENING_BLOCKQUOTE_TAG_PATTERN = Pattern.compile("&lt;blockquote&gt;", Pattern.CASE_INSENSITIVE);
   private static final Pattern CLOSING_BLOCKQUOTE_TAG_PATTERN = Pattern.compile("&lt;/blockquote&gt;", Pattern.CASE_INSENSITIVE);
   private static final Pattern BR_TAG_PATTERN = Pattern.compile("&lt;br */*&gt;", Pattern.CASE_INSENSITIVE);
@@ -119,6 +121,8 @@ public final class StringUtils {
     s = replace(s, CLOSING_STRONG_TAG_PATTERN, "</strong>");
     s = replace(s, OPENING_I_TAG_PATTERN, "<i>");
     s = replace(s, CLOSING_I_TAG_PATTERN, "</i>");
+    s = replace(s, OPENING_EM_TAG_PATTERN, "<em>");
+    s = replace(s, CLOSING_EM_TAG_PATTERN, "</em>");
     s = replace(s, OPENING_BLOCKQUOTE_TAG_PATTERN, "<blockquote>");
     s = replace(s, CLOSING_BLOCKQUOTE_TAG_PATTERN, "</blockquote>");
     s = replace(s, BR_TAG_PATTERN, "<br />");
