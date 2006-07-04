@@ -1,3 +1,16 @@
+<c:if test="${blog.richTextEditorForStaticPagesEnabled}">
+  <script type="text/javascript" src="${pageContext.request.contextPath}/FCKeditor/fckeditor.js"></script>
+  <script type="text/javascript">
+  window.onload = function()
+  {
+    var oFCKeditor = new FCKeditor( 'body' ) ;
+    oFCKeditor.BasePath = '${pageContext.request.contextPath}/FCKeditor/' ;
+    oFCKeditor.ToolbarSet = 'StaticPage' ;
+    oFCKeditor.ReplaceTextarea() ;
+  }
+  </script>
+</c:if>
+
 <c:set var="originalStaticPage" scope="request" value="${staticPage}" />
 <c:set var="staticPage" scope="request" value="${previewStaticPage}" />
 <c:set var="displayMode" scope="request" value="preview" />

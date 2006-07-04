@@ -79,6 +79,9 @@ public class Blog extends AbstractBlog {
   public static final String LOGGER_KEY = "logger";
   public static final String PERMALINK_PROVIDER_KEY = "permalinkProviderName";
   public static final String COMMENT_CONFIRMATION_STRATEGY_KEY = "commentConfirmationStrategy";
+  public static final String RICH_TEXT_EDITOR_FOR_BLOG_ENTRIES_ENABLED_KEY = "richTextEditorForBlogEntriesEnabled";
+  public static final String RICH_TEXT_EDITOR_FOR_STATIC_PAGES_ENABLED_KEY = "richTextEditorForStaticPagesEnabled";
+  public static final String RICH_TEXT_EDITOR_FOR_COMMENTS_ENABLED_KEY = "richTextEditorForCommentsEnabled";
 
   /** the ID of this blog */
   private String id = "default";
@@ -406,6 +409,9 @@ public class Blog extends AbstractBlog {
     defaultProperties.setProperty(EVENT_DISPATCHER_KEY, "net.sourceforge.pebble.event.DefaultEventDispatcher");
     defaultProperties.setProperty(LOGGER_KEY, "net.sourceforge.pebble.logging.CombinedLogFormatLogger");
     defaultProperties.setProperty(COMMENT_CONFIRMATION_STRATEGY_KEY, "net.sourceforge.pebble.comment.DefaultCommentConfirmationStrategy");
+    defaultProperties.setProperty(RICH_TEXT_EDITOR_FOR_BLOG_ENTRIES_ENABLED_KEY, "false");
+    defaultProperties.setProperty(RICH_TEXT_EDITOR_FOR_STATIC_PAGES_ENABLED_KEY, "false");
+    defaultProperties.setProperty(RICH_TEXT_EDITOR_FOR_COMMENTS_ENABLED_KEY, "false");
 
     return defaultProperties;
   }
@@ -1498,6 +1504,21 @@ public class Blog extends AbstractBlog {
 
   public void setBlogEntryCache(Cache blogEntryCache) {
     this.blogEntryCache = blogEntryCache;
+  }
+
+  public boolean isRichTextEditorForBlogEntriesEnabled() {
+    String s = getProperty(RICH_TEXT_EDITOR_FOR_BLOG_ENTRIES_ENABLED_KEY);
+    return s != null && s.equalsIgnoreCase("true");
+  }
+
+  public boolean isRichTextEditorForStaticPagesEnabled() {
+    String s = getProperty(RICH_TEXT_EDITOR_FOR_STATIC_PAGES_ENABLED_KEY);
+    return s != null && s.equalsIgnoreCase("true");
+  }
+
+  public boolean isRichTextEditorForCommentsEnabled() {
+    String s = getProperty(RICH_TEXT_EDITOR_FOR_COMMENTS_ENABLED_KEY);
+    return s != null && s.equalsIgnoreCase("true");
   }
 
 }

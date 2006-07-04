@@ -64,6 +64,15 @@
   </tag>
 
   <tag>
+    <name>isPebbleAdmin</name>
+    <tag-class>net.sourceforge.pebble.web.tagext.IsPebbleAdminTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      Includes the body content only if the current user is a Pebble admin user.
+    </description>
+  </tag>
+
+  <tag>
     <name>isBlogOwner</name>
     <tag-class>net.sourceforge.pebble.web.tagext.IsBlogOwnerTag</tag-class>
     <body-content>JSP</body-content>
@@ -96,15 +105,6 @@
     <body-content>JSP</body-content>
     <description>
       Includes the body content only if the current user authorised for the current blog.
-    </description>
-  </tag>
-
-  <tag>
-    <name>isPebbleAdmin</name>
-    <tag-class>net.sourceforge.pebble.web.tagext.IsPebbleAdminTag</tag-class>
-    <body-content>JSP</body-content>
-    <description>
-      Includes the body content only if the current user is a Pebble admin user.
     </description>
   </tag>
 

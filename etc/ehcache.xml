@@ -172,7 +172,7 @@
             eternal="false"
             timeToIdleSeconds="120"
             timeToLiveSeconds="120"
-            overflowToDisk="true"
+            overflowToDisk="false"
             diskPersistent="false"
             diskExpiryThreadIntervalSeconds="120"
             memoryStoreEvictionPolicy="LRU"
@@ -273,10 +273,13 @@
         disk cache, which in this configuration will go to wherever java.io.tmp is
         defined on your system. On a standard Linux system this will be /tmp" -->
 
+    <!-- Cache for blog entries, which is a simple and very small cache where
+         elements have a short time to live. -->
     <cache name="blogEntriesCache"
            maxElementsInMemory="20"
            eternal="false"
            overflowToDisk="false"
+           diskPersistent="false"
            timeToIdleSeconds="30"
            timeToLiveSeconds="60"
            memoryStoreEvictionPolicy="LRU"

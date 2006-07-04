@@ -4,16 +4,16 @@
 
   <div class="contentItemBody">
     <p>
-    This is the online help for Pebble and the pages within here contain lots of information
-    about the many aspects of running your blog. Should you need additional help and support, this
-    is available via the pebble-users@lists.sourceforge.net mailing list. Details on subscribing
-    to this list can be found at <a href="http://lists.sourceforge.net/mailman/listinfo/pebble-user">http://lists.sourceforge.net/mailman/listinfo/pebble-user</a>.
+      This is the online help for Pebble and the pages within here contain lots of information
+      about the many aspects of running your blog. Should you need additional help and support, this
+      is available via the pebble-users@lists.sourceforge.net mailing list. Details on subscribing
+      to this list can be found at <a href="http://lists.sourceforge.net/mailman/listinfo/pebble-user">http://lists.sourceforge.net/mailman/listinfo/pebble-user</a>.
+      Comments and feedback about this documentation are also welcomed.
     </p>
 
     <table width="99%" cellspacing="0" cellpadding="8">
       <tr>
         <td width="50%" valign="top" align="left">
-          <p>
             <h3>Using Pebble</h3>
             <ol>
               <li><a href="./help/configuration.html">Configuring your blog</a></li>
@@ -40,14 +40,12 @@
               <li><a href="team-blogs.html">Multi-contributor and Team Blogs</a></li>
 --%>
             </ol>
-          </p>
         </td>
         <td width="50%" valign="top">
-          <p>
             <h3>Plugins</h3>
             <ol>
               <li><a href="./help/plugins.html">Plugins</a></li>
-              <li><a href="./help/decorators.html">Decorators</a></li>
+              <li><a href="./help/contentDecorators.html">Content Decorators</a></li>
               <li><a href="./help/permalinkProviders.html">Permalink Providers</a></li>
               <li><a href="./help/blogListeners.html">Blog Listeners</a></li>
               <li><a href="./help/blogEntryListeners.html">Blog Entry Listeners</a></li>
@@ -58,24 +56,15 @@
             <h3>Extending Pebble</h3>
             <ol>
               <li><a href="./help/developers.html">Developer Notes</a></li>
-              <li>Custom tag reference</li>
-              <li>Writing blog entry decorators</li>
-              <li>Writing permalink providers</li>
-              <li>Writing blog listeners</li>
-              <li>Writing blog entry listeners</li>
-              <li>Writing comment listeners</li>
-              <li>Writing TrackBack listeners</li>
-<%--
-              <li><a href="custom-tags.html">Custom tag reference</a></li>
-              <li><a href="writing-blog-entry-decorators.html">Writing blog entry decorators</a></li>
-              <li><a href="writing-permalink-providers.html">Writing permalink providers</a></li>
-              <li><a href="writing-blog-listeners.html">Writing blog listeners</a></li>
-              <li><a href="writing-blog-entry-listeners.html">Writing blog entry listeners</a></li>
-              <li><a href="writing-comment-listeners.html">Writing comment listeners</a></li>
-              <li><a href="writing-trackback-listeners.html">Writing TrackBack listeners</a></li>
---%>
+              <li><a href="./help/customTags.html">Custom tag reference</a></li>
+              <li><a href="./help/writingContentDecorators.html">Writing Content Decorators</a></li>
+              <li><a href="./help/writingPermalinkProviders.html">Writing Permalink Providers</a></li>
+              <li><a href="./help/writingBlogListeners.html">Writing Blog Listeners</a></li>
+              <li><a href="./help/writingBlogEntryListeners.html">Writing Blog Entry Listeners</a></li>
+              <li><a href="./help/writingCommentListeners.html">Writing Comment Listeners</a></li>
+              <li><a href="./help/writingCommentConfirmationStrategies.html">Writing Comment Confirmation Strategies</a></li>
+              <li><a href="./help/writingTrackBackListeners.html">Writing TrackBack Listeners</a></li>
             </ol>
-          </p>
         </td>
       </tr>
     </table>

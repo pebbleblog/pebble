@@ -1,3 +1,16 @@
+<c:if test="${blog.richTextEditorForCommentsEnabled}">
+  <script type="text/javascript" src="${pageContext.request.contextPath}/FCKeditor/fckeditor.js"></script>
+  <script type="text/javascript">
+  window.onload = function()
+  {
+    var oFCKeditor = new FCKeditor( 'body' ) ;
+    oFCKeditor.BasePath = '${pageContext.request.contextPath}/FCKeditor/' ;
+    oFCKeditor.ToolbarSet = 'Comment' ;
+    oFCKeditor.ReplaceTextarea() ;
+  }
+  </script>
+</c:if>
+
 <div class="contentItem">
   <h1><fmt:message key="comment.addComment" /></h1>
   <h2>&nbsp;</h2>
@@ -46,7 +59,7 @@
         <td valign="top"><b><fmt:message key="comment.body" /></b></td>
         <td>
           <textarea name="body" rows="8" cols="40"><c:out value="${comment.body}"/></textarea>
-          <div class="small"><b>HTML</b> : b, i, blockquote, br, p, pre, a href="", ul, ol, li</div>
+          <div class="small"><b>HTML</b> : b, strong, i, blockquote, br, p, pre, a href="", ul, ol, li</div>
         </td>
       </tr>
 

@@ -1,20 +1,20 @@
-<%-- uncomment this to enable FCKeditor
-<script type="text/javascript" src="${pageContext.request.contextPath}/FCKeditor/fckeditor.js"></script>
-<script type="text/javascript">
-window.onload = function()
-{
-  var oFCKeditor = new FCKeditor( 'excerpt' ) ;
-  oFCKeditor.BasePath = '${pageContext.request.contextPath}/FCKeditor/' ;
-  oFCKeditor.ToolbarSet = 'Basic' ;
-  oFCKeditor.ReplaceTextarea() ;
+<c:if test="${blog.richTextEditorForBlogEntriesEnabled}">
+  <script type="text/javascript" src="${pageContext.request.contextPath}/FCKeditor/fckeditor.js"></script>
+  <script type="text/javascript">
+  window.onload = function()
+  {
+    var oFCKeditor = new FCKeditor( 'excerpt' ) ;
+    oFCKeditor.BasePath = '${pageContext.request.contextPath}/FCKeditor/' ;
+    oFCKeditor.ToolbarSet = 'BlogEntry' ;
+    oFCKeditor.ReplaceTextarea() ;
 
-  oFCKeditor = new FCKeditor( 'body' ) ;
-  oFCKeditor.BasePath = '${pageContext.request.contextPath}/FCKeditor/' ;
-  oFCKeditor.ToolbarSet = 'Basic' ;
-  oFCKeditor.ReplaceTextarea() ;
-}
-</script>
---%>
+    oFCKeditor = new FCKeditor( 'body' ) ;
+    oFCKeditor.BasePath = '${pageContext.request.contextPath}/FCKeditor/' ;
+    oFCKeditor.ToolbarSet = 'BlogEntry' ;
+    oFCKeditor.ReplaceTextarea() ;
+  }
+  </script>
+</c:if>
 
 <c:set var="originalBlogEntry" scope="request" value="${blogEntry}" />
 <c:set var="blogEntry" scope="request" value="${previewBlogEntry}" />

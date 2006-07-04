@@ -31,8 +31,6 @@
  */
 package net.sourceforge.pebble.api.event.blog;
 
-import net.sourceforge.pebble.api.event.blog.BlogEvent;
-
 /**
  * Implemented by classes wanting to be notified of blog events.
  *

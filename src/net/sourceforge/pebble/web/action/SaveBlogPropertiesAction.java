@@ -80,6 +80,23 @@ public class SaveBlogPropertiesAction extends SecureAction {
         }
       }
 
+      // and now the checkboxes
+      String name = "richTextEditorForBlogEntriesEnabled";
+      String checkbox = request.getParameter(name);
+      if (checkbox == null) {
+        blog.setProperty(name, "false");
+      }
+      name = "richTextEditorForStaticPagesEnabled";
+      checkbox = request.getParameter(name);
+      if (checkbox == null) {
+        blog.setProperty(name, "false");
+      }
+      name = "richTextEditorForCommentsEnabled";
+      checkbox = request.getParameter(name);
+      if (checkbox == null) {
+        blog.setProperty(name, "false");
+      }
+
       try {
         blog.storeProperties();
       } catch (BlogServiceException e) {
