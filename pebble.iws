@@ -168,28 +168,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="blogEntryForm.jsp" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/blogEntryForm.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="19" selection-start="19" selection-end="19" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SaveBlogPropertiesAction.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/action/SaveBlogPropertiesAction.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="83" column="21" selection-start="3379" selection-end="3379" vertical-scroll-proportion="0.13760379">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="staticPageForm.jsp" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/staticPageForm.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="0" selection-start="458" selection-end="458" vertical-scroll-proportion="0.2669082">
+            <state line="43" column="70" selection-start="1584" selection-end="1584" vertical-scroll-proportion="0.48175183">
               <folding />
             </state>
           </provider>
@@ -198,7 +180,7 @@
       <file leaf-file-name="fckeditor.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/FCKeditor/fckeditor.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-3.0652175">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -207,25 +189,25 @@
       <file leaf-file-name="fckconfig.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/FCKeditor/fckconfig.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="120" column="0" selection-start="4249" selection-end="4249" vertical-scroll-proportion="0.90338165">
+            <state line="104" column="23" selection-start="3770" selection-end="3770" vertical-scroll-proportion="0.330855">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Blog.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="changelog.txt" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/changelog.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="18" column="25" selection-start="980" selection-end="980" vertical-scroll-proportion="0.267658">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Blog.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/domain/Blog.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="83" column="58" selection-start="4566" selection-end="4566" vertical-scroll-proportion="0.49275362">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="viewBlogProperties.jsp" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/viewBlogProperties.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="99" column="36" selection-start="2423" selection-end="2423" vertical-scroll-proportion="0.13405797">
+            <state line="413" column="82" selection-start="17368" selection-end="17368" vertical-scroll-proportion="0.84671533">
               <folding />
             </state>
           </provider>
@@ -234,7 +216,7 @@
       <file leaf-file-name="commentForm.jsp" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/commentForm.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="61" column="54" selection-start="2219" selection-end="2219" vertical-scroll-proportion="0.2874396">
+            <state line="61" column="54" selection-start="2219" selection-end="2219" vertical-scroll-proportion="0.124087594">
               <folding />
             </state>
           </provider>
@@ -243,16 +225,34 @@
       <file leaf-file-name="StringUtils.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/util/StringUtils.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="117" column="55" selection-start="5637" selection-end="5637" vertical-scroll-proportion="0.082125604">
+            <state line="117" column="55" selection-start="5637" selection-end="5637" vertical-scroll-proportion="0.01459854">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="sampleslist.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/FCKeditor/_samples/sampleslist.html">
+      <file leaf-file-name="fckplugin.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/FCKeditor/editor/plugins/autogrow/fckplugin.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.059311982">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="fckplugin.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/FCKeditor/editor/plugins/simplecommands/fckplugin.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="fckplugin.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/FCKeditor/editor/plugins/tablecommands/fckplugin.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -477,7 +477,7 @@
         <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
       </PATH_ELEMENT>
       <PATH_ELEMENT>
-        <option name="myItemId" value="PsiDirectory:D:\sandbox\pebble" />
+        <option name="myItemId" value="PsiDirectory:$PROJECT_DIR$" />
         <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
       </PATH_ELEMENT>
     </PATH>
@@ -491,33 +491,11 @@
         <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
       </PATH_ELEMENT>
       <PATH_ELEMENT>
-        <option name="myItemId" value="PsiDirectory:D:\sandbox\pebble" />
+        <option name="myItemId" value="PsiDirectory:$PROJECT_DIR$" />
         <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
       </PATH_ELEMENT>
       <PATH_ELEMENT>
-        <option name="myItemId" value="PsiDirectory:D:\sandbox\pebble\web" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      </PATH_ELEMENT>
-    </PATH>
-    <PATH>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="pebble.ipr" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="pebble" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="PsiDirectory:D:\sandbox\pebble" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="PsiDirectory:D:\sandbox\pebble\web" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="PsiDirectory:D:\sandbox\pebble\web\WEB-INF" />
+        <option name="myItemId" value="PsiDirectory:$PROJECT_DIR$/web" />
         <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
       </PATH_ELEMENT>
     </PATH>
@@ -531,19 +509,15 @@
         <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
       </PATH_ELEMENT>
       <PATH_ELEMENT>
-        <option name="myItemId" value="PsiDirectory:D:\sandbox\pebble" />
+        <option name="myItemId" value="PsiDirectory:$PROJECT_DIR$" />
         <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
       </PATH_ELEMENT>
       <PATH_ELEMENT>
-        <option name="myItemId" value="PsiDirectory:D:\sandbox\pebble\web" />
+        <option name="myItemId" value="PsiDirectory:$PROJECT_DIR$/web" />
         <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
       </PATH_ELEMENT>
       <PATH_ELEMENT>
-        <option name="myItemId" value="PsiDirectory:D:\sandbox\pebble\web\WEB-INF" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="PsiDirectory:D:\sandbox\pebble\web\WEB-INF\jsp" />
+        <option name="myItemId" value="PsiDirectory:$PROJECT_DIR$/web/FCKeditor" />
         <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
       </PATH_ELEMENT>
     </PATH>
@@ -557,11 +531,253 @@
         <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
       </PATH_ELEMENT>
       <PATH_ELEMENT>
-        <option name="myItemId" value="PsiDirectory:D:\sandbox\pebble" />
+        <option name="myItemId" value="PsiDirectory:$PROJECT_DIR$" />
         <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
       </PATH_ELEMENT>
       <PATH_ELEMENT>
-        <option name="myItemId" value="PsiDirectory:D:\sandbox\pebble\etc" />
+        <option name="myItemId" value="PsiDirectory:$PROJECT_DIR$/web" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:$PROJECT_DIR$/web/FCKeditor" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:$PROJECT_DIR$/web/FCKeditor/editor" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+    </PATH>
+    <PATH>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="pebble.ipr" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="pebble" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:$PROJECT_DIR$" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:$PROJECT_DIR$/web" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:$PROJECT_DIR$/web/FCKeditor" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:$PROJECT_DIR$/web/FCKeditor/editor" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:$PROJECT_DIR$/web/FCKeditor/editor/skins" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+    </PATH>
+    <PATH>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="pebble.ipr" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="pebble" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:$PROJECT_DIR$" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:$PROJECT_DIR$/web" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:$PROJECT_DIR$/web/FCKeditor" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:$PROJECT_DIR$/web/FCKeditor/editor" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:$PROJECT_DIR$/web/FCKeditor/editor/plugins" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+    </PATH>
+    <PATH>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="pebble.ipr" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="pebble" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:$PROJECT_DIR$" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:$PROJECT_DIR$/web" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:$PROJECT_DIR$/web/FCKeditor" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:$PROJECT_DIR$/web/FCKeditor/editor" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:$PROJECT_DIR$/web/FCKeditor/editor/images" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+    </PATH>
+    <PATH>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="pebble.ipr" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="pebble" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:$PROJECT_DIR$" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:$PROJECT_DIR$/web" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:$PROJECT_DIR$/web/FCKeditor" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:$PROJECT_DIR$/web/FCKeditor/editor" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:$PROJECT_DIR$/web/FCKeditor/editor/images" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:$PROJECT_DIR$/web/FCKeditor/editor/images/smiley" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+    </PATH>
+    <PATH>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="pebble.ipr" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="pebble" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:$PROJECT_DIR$" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:$PROJECT_DIR$/web" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:$PROJECT_DIR$/web/FCKeditor" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:$PROJECT_DIR$/web/FCKeditor/editor" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:$PROJECT_DIR$/web/FCKeditor/editor/filemanager" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+    </PATH>
+    <PATH>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="pebble.ipr" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="pebble" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:$PROJECT_DIR$" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:$PROJECT_DIR$/web" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:$PROJECT_DIR$/web/FCKeditor" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:$PROJECT_DIR$/web/FCKeditor/editor" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:$PROJECT_DIR$/web/FCKeditor/editor/filemanager" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:$PROJECT_DIR$/web/FCKeditor/editor/filemanager/browser" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:$PROJECT_DIR$/web/FCKeditor/editor/filemanager/browser/default" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+    </PATH>
+    <PATH>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="pebble.ipr" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="pebble" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:$PROJECT_DIR$" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:$PROJECT_DIR$/web" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:$PROJECT_DIR$/web/FCKeditor" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:$PROJECT_DIR$/web/FCKeditor/editor" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:$PROJECT_DIR$/web/FCKeditor/editor/filemanager" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:$PROJECT_DIR$/web/FCKeditor/editor/filemanager/browser" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:$PROJECT_DIR$/web/FCKeditor/editor/filemanager/browser/default" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:$PROJECT_DIR$/web/FCKeditor/editor/filemanager/browser/default/connectors" />
         <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
       </PATH_ELEMENT>
     </PATH>
@@ -654,6 +870,13 @@
       <RunnerSettings RunnerId="Run" />
       <ConfigurationWrapper RunnerId="Run" />
     </tempConfiguration>
+    <configuration selected="false" default="true" type="Remote" factoryName="Remote">
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" value="javadebug" />
+      <option name="HOST" value="localhost" />
+      <option name="PORT" value="5005" />
+    </configuration>
     <configuration selected="false" default="true" type="JUnit" factoryName="JUnit">
       <module name="" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -670,22 +893,6 @@
         <value defaultName="wholeProject" />
       </option>
     </configuration>
-    <configuration selected="false" default="true" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <module name="" />
-    </configuration>
-    <configuration selected="false" default="true" type="Remote" factoryName="Remote">
-      <option name="USE_SOCKET_TRANSPORT" value="true" />
-      <option name="SERVER_MODE" value="false" />
-      <option name="SHMEM_ADDRESS" value="javadebug" />
-      <option name="HOST" value="localhost" />
-      <option name="PORT" value="5005" />
-    </configuration>
     <configuration selected="false" default="true" type="Applet" factoryName="Applet">
       <module name="" />
       <option name="MAIN_CLASS_NAME" />
@@ -697,6 +904,15 @@
       <option name="VM_PARAMETERS" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
+    </configuration>
+    <configuration selected="false" default="true" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <module name="" />
     </configuration>
     <configuration selected="false" default="false" name="Unit Tests" type="JUnit" factoryName="JUnit">
       <module name="pebble" />
@@ -750,7 +966,7 @@
     <option name="USER" value="" />
     <option name="PASSWORD" value="" />
     <option name="PROCESS_UNRESOLVED" value="false" />
-    <configuration useDefault="true">C:\Documents and Settings\SBrown\Application Data\Subversion</configuration>
+    <configuration useDefault="true">$PROJECT_DIR$/../../../.subversion</configuration>
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -767,12 +983,12 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-4" y="-4" width="1408" height="1024" extended-state="6" />
+    <frame x="1" y="22" width="1680" height="969" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="CVS" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.33" order="12" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.53630364" order="7" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="docked" type="docked" visible="true" weight="0.35471976" order="0" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="docked" type="docked" visible="true" weight="0.3345588" order="0" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.54241073" order="1" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.25" order="1" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.375" order="8" />
@@ -878,27 +1094,6 @@
     </buildFile>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/event/blog/CacheListener.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="41" selection-start="749" selection-end="749" vertical-scroll-proportion="0.42348754">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/etc/pebble.tld">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="0" selection-start="262" selection-end="262" vertical-scroll-proportion="0.18149467">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/FCKeditor/fckstyles.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="12" selection-start="1620" selection-end="1620" vertical-scroll-proportion="0.94780546">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/web/FCKeditor/fcktemplates.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="98" column="10" selection-start="2731" selection-end="2731" vertical-scroll-proportion="0.95966786">
@@ -906,51 +1101,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/FCKeditor/fckeditor.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-3.0652175">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/FCKeditor/_samples/sampleslist.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.059311982">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/web/WEB-INF/help/index.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state line="61" column="24" selection-start="3636" selection-end="3636" vertical-scroll-proportion="0.7330918">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/staticPageForm.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="0" selection-start="458" selection-end="458" vertical-scroll-proportion="0.2669082">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/commentForm.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="61" column="54" selection-start="2219" selection-end="2219" vertical-scroll-proportion="0.2874396">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/util/StringUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="117" column="55" selection-start="5637" selection-end="5637" vertical-scroll-proportion="0.082125604">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/FCKeditor/fckconfig.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="120" column="0" selection-start="4249" selection-end="4249" vertical-scroll-proportion="0.90338165">
           <folding />
         </state>
       </provider>
@@ -964,21 +1117,84 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/action/SaveBlogPropertiesAction.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="83" column="21" selection-start="3379" selection-end="3379" vertical-scroll-proportion="0.13760379">
+        <state line="83" column="21" selection-start="3379" selection-end="3379" vertical-scroll-proportion="0.28467155">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/viewBlogProperties.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="99" column="36" selection-start="2423" selection-end="2423" vertical-scroll-proportion="0.13405797">
+        <state line="99" column="36" selection-start="2423" selection-end="2423" vertical-scroll-proportion="0.01459854">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/commentForm.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="61" column="54" selection-start="2219" selection-end="2219" vertical-scroll-proportion="0.124087594">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/util/StringUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="117" column="55" selection-start="5637" selection-end="5637" vertical-scroll-proportion="0.01459854">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/FCKeditor/editor/plugins/autogrow/fckplugin.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/FCKeditor/editor/plugins/simplecommands/fckplugin.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/FCKeditor/editor/plugins/tablecommands/fckplugin.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/domain/Blog.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="83" column="58" selection-start="4566" selection-end="4566" vertical-scroll-proportion="0.49275362">
+        <state line="413" column="82" selection-start="17368" selection-end="17368" vertical-scroll-proportion="0.84671533">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/FCKeditor/fckeditor.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/staticPageForm.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="43" column="70" selection-start="1584" selection-end="1584" vertical-scroll-proportion="0.48175183">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/FCKeditor/fckconfig.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="104" column="23" selection-start="3770" selection-end="3770" vertical-scroll-proportion="0.330855">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/changelog.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="25" selection-start="980" selection-end="980" vertical-scroll-proportion="0.267658">
           <folding />
         </state>
       </provider>

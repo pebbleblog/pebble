@@ -411,7 +411,7 @@ public class Blog extends AbstractBlog {
     defaultProperties.setProperty(COMMENT_CONFIRMATION_STRATEGY_KEY, "net.sourceforge.pebble.comment.DefaultCommentConfirmationStrategy");
     defaultProperties.setProperty(RICH_TEXT_EDITOR_FOR_BLOG_ENTRIES_ENABLED_KEY, "false");
     defaultProperties.setProperty(RICH_TEXT_EDITOR_FOR_STATIC_PAGES_ENABLED_KEY, "false");
-    defaultProperties.setProperty(RICH_TEXT_EDITOR_FOR_COMMENTS_ENABLED_KEY, "false");
+    defaultProperties.setProperty(RICH_TEXT_EDITOR_FOR_COMMENTS_ENABLED_KEY, "true");
 
     return defaultProperties;
   }
@@ -1437,7 +1437,7 @@ public class Blog extends AbstractBlog {
 
   public void reindex() {
     log.info("Reindexing blog with ID " + getId());
-    
+
     blogEntryIndex.clear();
     responseIndex.clear();
     tagIndex.clear();
