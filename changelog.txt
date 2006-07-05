@@ -1,10 +1,11 @@
-Version 2.0.0
----------------------------------
+Version 2.0.0 - coming July 2006
+--------------------------------
 Fixed "page not found" error when uploading files to theme.
 Fixed problem with last modified date on response feeds.
 Added category list into the sidebar of the default theme.
 Added an "archive by month" list into the sidebar of the default theme (commented out).
 Integrated FCKeditor (rich text editor) for blog entries, static pages and comments.
+Added net.sourceforge.pebble.event.response.MarkApprovedListener for automatic approval of responses.
 
 Version 2.0.0-M3 - 29th June 2006
 ---------------------------------

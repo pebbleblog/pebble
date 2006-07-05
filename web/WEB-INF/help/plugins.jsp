@@ -8,12 +8,13 @@
     </p>
 
     <ul>
-      <li><a href="./help/blogEntryDecorators.html">Blog entry decorators</a></li>
-      <li><a href="./help/permalinkProviders.html">Permalink providers</a></li>
-      <li><a href="./help/blogListeners.html">Blog listeners</a></li>
-      <li><a href="./help/blogEntryListeners.html">Blog entry listeners</a></li>
-      <li><a href="./help/commentListeners.html">Comment listeners</a></li>
-      <li><a href="./help/trackbackListeners.html">TrackBack listeners</a></li>
+      <li><a href="./help/contentDecorators.html">Content Decorators</a></li>
+      <li><a href="./help/permalinkProviders.html">Permalink Providers</a></li>
+      <li><a href="./help/blogListeners.html">Blog Listeners</a></li>
+      <li><a href="./help/blogEntryListeners.html">Blog Entry Listeners</a></li>
+      <li><a href="./help/commentListeners.html">Comment Listeners</a></li>
+      <li><a href="./help/commentConfirmationStrategies.html">Comment Confirmaton Strategies</a></li>
+      <li><a href="./help/trackbackListeners.html">TrackBack Listeners</a></li>
     </ul>
 
     <p>

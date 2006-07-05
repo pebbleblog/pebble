@@ -7,7 +7,7 @@
   <h1>About this blog</h1>
   <h2>&nbsp;</h2>
 
-  <div class="contentItemBody" style="overflow: auto">
+  <div class="contentItemBody">
 
     <table width="99%" cellpadding="4" cellspacing="0" class="small">
 
@@ -134,15 +134,6 @@
         </td>
       </tr>
 
-<%--
-      <tr class="even">
-        <td colspan="2">
-          <b>Properties</b><br />
-          <pre>${blog.pluginProperties.propertiesAsString}</pre>
-        </td>
-      </tr>
---%>
-
     <tr class="odd">
       <td colspan="2">
         <b>Lucene Analyzer</b><br />
@@ -154,6 +145,13 @@
       <td colspan="2">
         <b>Logger</b><br />
         ${blog.logger.class.name}
+      </td>
+    </tr>
+
+    <tr class="odd">
+      <td colspan="2">
+        <b>Properties</b><br />
+        <pre style="overflow: auto">${blog.pluginProperties.propertiesAsString}</pre>
       </td>
     </tr>
 

@@ -45,6 +45,7 @@ public class StringUtilsTest extends TestCase {
     assertEquals("Here is some text", StringUtils.transformHTML("Here is some text"));
     assertEquals("Here is a &lt; symbol", StringUtils.transformHTML("Here is a < symbol"));
     assertEquals("Here is a &gt; symbol", StringUtils.transformHTML("Here is a > symbol"));
+    assertEquals("Here is a &amp; symbol", StringUtils.transformHTML("Here is a & symbol"));
     assertEquals("&lt;a href=\"http://www.google.com\"&gt;Google&lt;/a&gt;", StringUtils.transformHTML("<a href=\"http://www.google.com\">Google</a>"));
   }
 
@@ -56,7 +57,9 @@ public class StringUtilsTest extends TestCase {
     assertEquals("Here is a &gt; symbol", StringUtils.transformToHTMLSubset("Here is a &amp;gt; symbol"));
     assertEquals("Here is a &gt; symbol", StringUtils.transformToHTMLSubset("Here is a &gt; symbol"));
     assertEquals("Here is a <b> tag", StringUtils.transformToHTMLSubset("Here is a &lt;b&gt; tag"));
+    assertEquals("Here is a <strong> tag", StringUtils.transformToHTMLSubset("Here is a &lt;strong&gt; tag"));
     assertEquals("Here is a <i> tag", StringUtils.transformToHTMLSubset("Here is a &lt;i&gt; tag"));
+    assertEquals("Here is a <em> tag", StringUtils.transformToHTMLSubset("Here is a &lt;em&gt; tag"));
     assertEquals("Here is a <p> tag", StringUtils.transformToHTMLSubset("Here is a &lt;p&gt; tag"));
     assertEquals("Here is a </p> tag", StringUtils.transformToHTMLSubset("Here is a &lt;/p&gt; tag"));
     assertEquals("Here is a <br /> tag", StringUtils.transformToHTMLSubset("Here is a &lt;br&gt; tag"));

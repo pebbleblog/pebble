@@ -73,6 +73,11 @@
     </p>
 
     <p>
+      <b>net.sourceforge.pebble.event.response.MarkApprovedListener</b><br/>
+      Marks all new comments with a status of approved so that they appear on your blog immediately. This is useful for internal blogs where you aren't worried about spam and don't need TrackBacks to be approved before being published.
+    </p>
+
+    <p>
       <b>net.sourceforge.pebble.event.response.DisableResponseListener</b><br/>
       Deletes new comments, effectively disabling the ability for readers to leave comments.
     </p>

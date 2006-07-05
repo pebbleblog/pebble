@@ -19,6 +19,7 @@
         <tr><td width="33%" valign="top">Theme</td><td valign="top">The name of the theme to be used.</td></tr>
         <tr><td width="33%" valign="top">Recent blog entries</td><td valign="top">The number of recent blog entries to show on the home page.</td></tr>
         <tr><td width="33%" valign="top">Recent responses</td><td valign="top">The number of recent comments/TrackBacks to show on all pages.</td></tr>
+        <tr><td width="33%" valign="top">Rich text editor</td><td valign="top">Whether you would like the rich text editor (FCKeditor) enabled for blog entries, static pages or comments. By default, only comments have this enabled.</td></tr>
       </table>
     </p>
 

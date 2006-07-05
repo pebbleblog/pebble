@@ -115,7 +115,7 @@ FCKConfig.ToolbarSets["StaticPage"] = [
 ] ;
 
 FCKConfig.ToolbarSets["Comment"] = [
-    ['Bold','Italic',],
+    ['Bold','Italic'],
     ['OrderedList','UnorderedList','-','Outdent','Indent'],
     ['Link','Unlink'],
     ['Source']
