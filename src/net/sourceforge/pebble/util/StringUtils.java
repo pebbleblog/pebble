@@ -153,6 +153,7 @@ public final class StringUtils {
     s = s.replaceAll("&amp;lt;", "&lt;");
     s = s.replaceAll("&amp;gt;", "&gt;");
     s = s.replaceAll("&amp;#", "&#");
+    s = s.replaceAll("&amp;nbsp;", "&nbsp;");
 
     return s;
   }
