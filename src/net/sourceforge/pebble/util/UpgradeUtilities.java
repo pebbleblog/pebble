@@ -19,6 +19,7 @@ public class UpgradeUtilities {
     log.info("Upgrading blog from " + version + " to " + PebbleContext.getInstance().getBuildVersion());
     if (version == null) {
       Utilities.restructureBlogToGMT(blog);
+      Utilities.buildIndexes(blog);
     }
   }
 
