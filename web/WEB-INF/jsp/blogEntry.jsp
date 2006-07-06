@@ -51,7 +51,7 @@
         <c:when test="${not empty blogEntry.user.website}"><c:set var="author" value='<a href="${blogEntry.user.website}">${blogEntry.user.name}</a>'/></c:when>
         <c:otherwise><c:set var="author" value="${blogEntry.user.name}"/></c:otherwise>
       </c:choose>
-      <fmt:formatDate var="blogEntryDate" scope="page" value="${blogEntry.date}" type="both" dateStyle="long" timeStyle="short"/>
+      <fmt:formatDate var="blogEntryDate" scope="page" value="${blogEntry.date}" timeZone="${blogEntry.timeZoneId}" type="both" dateStyle="long" timeStyle="long"/>
       <fmt:message key="blogentry.from">
         <fmt:param value="${author}"/>
         <fmt:param>

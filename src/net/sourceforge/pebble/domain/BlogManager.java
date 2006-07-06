@@ -32,11 +32,12 @@
 package net.sourceforge.pebble.domain;
 
 import net.sourceforge.pebble.PebbleContext;
+import net.sourceforge.pebble.util.UpgradeUtilities;
 import net.sourceforge.pebble.comparator.BlogByLastModifiedDateComparator;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import java.io.File;
+import java.io.*;
 import java.util.*;
 
 /**
@@ -160,6 +161,35 @@ public class BlogManager {
 
     blog.start();
     blogs.put(blog.getId(), blog);
+
+    // which version are we at?
+    File versionFile = new File(blogDir, "pebble.version");
+    String blogVersion = null;
+    String currentVersion = PebbleContext.getInstance().getBuildVersion();
+    try {
+      if (versionFile.exists()) {
+        BufferedReader reader = new BufferedReader(new FileReader(versionFile));
+        blogVersion = reader.readLine();
+        reader.close();
+      }
+    } catch (Exception e) {
+      log.error(e);
+    }
+
+    try {
+      if (blogVersion == null || !blogVersion.equals(currentVersion)) {
+        UpgradeUtilities.upgradeBlog(blog, blogVersion);
+
+        BufferedWriter writer = new BufferedWriter(new FileWriter(versionFile));
+        writer.write(currentVersion);
+        writer.close();
+
+        // now that the upgrade is complete, reload the blog
+        reloadBlog(blog);
+      }
+    } catch (Exception e) {
+      log.error(e);
+    }
   }
 
   public void addBlog(String blogId) {

@@ -102,6 +102,9 @@ public class BlogEntry extends PageBasedContent {
   /** the attachment for this blog entry, if applicable */
   private Attachment attachment;
 
+  /** the timezone that this entry was posted in */
+  private String timeZoneId;
+
   /**
    * Creates a new blog entry.
    *
@@ -836,6 +839,7 @@ public class BlogEntry extends PageBasedContent {
     entry.setExcerpt(getExcerpt());
     entry.setBody(getBody());
     entry.setDate(getDate());
+    entry.setTimeZoneId(timeZoneId);
     entry.setState(getState());
     entry.setAuthor(getAuthor());
     entry.setOriginalPermalink(getOriginalPermalink());
@@ -914,6 +918,22 @@ public class BlogEntry extends PageBasedContent {
 
   public String toString() {
     return getGuid() + ":" + super.hashCode();
+  }
+
+  public TimeZone getTimeZone() {
+    return TimeZone.getTimeZone(getTimeZoneId());
+  }
+
+  public String getTimeZoneId() {
+    if (this.timeZoneId != null) {
+      return timeZoneId;
+    } else {
+      return getBlog().getTimeZoneId();
+    }
+  }
+
+  public void setTimeZoneId(String timeZoneId) {
+    this.timeZoneId = timeZoneId;
   }
 
 }

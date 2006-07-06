@@ -75,6 +75,10 @@ public class UtilitiesAction extends SecureAction {
     } else if (action.equalsIgnoreCase("convertCategories")) {
       Utilities.convertCategories(blog);
       return new ForwardView("/reloadBlog.secureaction");
+    } else if (action.equalsIgnoreCase("restructureBlogToGMT")) {
+      Utilities.restructureBlogToGMT(blog);
+      Utilities.buildIndexes(blog);
+      return new ForwardView("/reloadBlog.secureaction");
     } else if (action.equalsIgnoreCase("moveBlogEntriesFromCategory")) {
       Category from = blog.getCategory(request.getParameter("from"));
       Category to = blog.getCategory(request.getParameter("to"));

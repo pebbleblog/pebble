@@ -160,6 +160,14 @@
       </c:if>
 
       <tr>
+        <td>
+          <b>Time zone</b>
+        </td>
+        <td>
+          <pebble:select name="timeZone" items="${timeZones}" selected="${blogEntry.timeZoneId}" />
+        </td>
+      </tr>
+      <tr>
         <td valign="top"><br /><b>Attachment</b></td>
         <td></td>
       </tr>

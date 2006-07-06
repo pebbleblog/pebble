@@ -31,7 +31,7 @@
         (<c:out value="${comment.email}" escapeXml="true" default="-" />/<c:out value="${comment.ipAddress}" default="-" />)
       </pebble:isAuthorisedForBlog>
     </c:set>
-    <fmt:formatDate var="commentDate" scope="page" value="${comment.date}" type="both" dateStyle="long" timeStyle="long"/>
+    <fmt:formatDate var="commentDate" scope="page" value="${comment.date}" timeZone="${blogEntry.timeZoneId}" type="both" dateStyle="long" timeStyle="long"/>
 
     <fmt:message key="comment.from">
       <fmt:param>

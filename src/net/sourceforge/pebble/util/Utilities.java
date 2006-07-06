@@ -33,7 +33,7 @@ package net.sourceforge.pebble.util;
 
 import net.sourceforge.pebble.dao.CategoryDAO;
 import net.sourceforge.pebble.dao.DAOFactory;
-import net.sourceforge.pebble.dao.file.FileDAOFactory;
+import net.sourceforge.pebble.dao.file.*;
 import net.sourceforge.pebble.domain.*;
 import net.sourceforge.pebble.api.event.comment.CommentEvent;
 import net.sourceforge.pebble.api.event.trackback.TrackBackEvent;
@@ -43,9 +43,7 @@ import org.apache.commons.logging.LogFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Properties;
+import java.util.*;
 
 /**
  * Utilities for the current blog, such as those useful for moving
@@ -209,7 +207,41 @@ public class Utilities {
       }
     }
   }
-  
+
+  /**
+   * Moves blog entries from one category to another.
+   *
+   * @param blog    a Blog instance
+   */
+  public static void restructureBlogToGMT(Blog blog) {
+    TimeZone gmt = TimeZone.getTimeZone("GMT");
+    FileBlogEntryDAO dao = new FileBlogEntryDAO();
+    File root = new File(blog.getRoot());
+    File years[] = root.listFiles(new FourDigitFilenameFilter());
+    for (File year : years) {
+      File months[] = year.listFiles(new TwoDigitFilenameFilter());
+      for (File month : months) {
+        File days[] = month.listFiles(new TwoDigitFilenameFilter());
+        for (File day : days) {
+          File blogEntryFiles[] = day.listFiles(new BlogEntryFilenameFilter());
+          for (File blogEntryFile : blogEntryFiles) {
+            String filename = blogEntryFile.getName();
+            String id = filename.substring(0, filename.indexOf('.'));
+            File oldFile = blogEntryFile;
+            File newDirectory = new File(dao.getPath(blog, id, gmt));
+            File newFile = new File(newDirectory, filename);
+
+            if (!oldFile.equals(newFile)) {
+              log.info("Moving " + id + " to " + newFile.getAbsolutePath() + " from " + oldFile.getAbsolutePath());
+              newDirectory.mkdirs();
+              oldFile.renameTo(newFile);
+            }
+          }
+        }
+      }
+    }
+  }
+
   public static void main(String[] args) throws Exception {
     if (args.length != 2) {
       System.out.println("Usage : pebble.util.Utilities %1 %2");

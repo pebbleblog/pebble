@@ -473,6 +473,7 @@ public class BlogEntryTest extends SingleBlogTestCase {
     blogEntry.setPersistent(true);
     blogEntry.setCommentsEnabled(false);
     blogEntry.setTrackBacksEnabled(false);
+    blogEntry.setTimeZoneId("Europe/Paris");
 
     Category category1 = blog.getCategory("/testCategory1");
     Category category2 = blog.getCategory("/testCategory2");
@@ -496,6 +497,7 @@ public class BlogEntryTest extends SingleBlogTestCase {
     assertFalse(clonedBlogEntry.isCommentsEnabled());
     assertFalse(clonedBlogEntry.isTrackBacksEnabled());
     assertNull(clonedBlogEntry.getAttachment());
+    assertEquals(blogEntry.getTimeZoneId(), clonedBlogEntry.getTimeZoneId());
   }
 
   /**

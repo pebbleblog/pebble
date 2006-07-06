@@ -8,9 +8,6 @@ import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-import org.xml.sax.ErrorHandler;
-import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -27,41 +24,15 @@ import java.util.*;
 
 public class FileBlogEntryDAO implements BlogEntryDAO {
 
+  /** timezone to use for calculating paths on disk, etc */
+  private static final TimeZone GMT = TimeZone.getTimeZone("GMT");
+
   /**
    * the log used by this class
    */
   private static Log log = LogFactory.getLog(FileBlogEntryDAO.class);
 
-  private DocumentBuilder builder;
-
   public FileBlogEntryDAO() {
-    try {
-      DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-      factory.setValidating(false);
-      factory.setNamespaceAware(true);
-      factory.setIgnoringElementContentWhitespace(true);
-      factory.setIgnoringComments(true);
-      builder = factory.newDocumentBuilder();
-      builder.setErrorHandler(new ErrorHandler() {
-        public void warning(SAXParseException e) throws SAXException {
-          log.warn(e);
-          throw e;
-        }
-
-        public void error(SAXParseException e) throws SAXException {
-          log.error(e);
-          throw e;
-        }
-
-        public void fatalError(SAXParseException e) throws SAXException {
-          log.fatal(e);
-          throw e;
-        }
-      });
-
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
   }
 
   /** the date/time format used when persisting dates */
@@ -78,7 +49,7 @@ public class FileBlogEntryDAO implements BlogEntryDAO {
    *          if the specified blog entry cannot be loaded
    */
   public BlogEntry loadBlogEntry(Blog blog, String blogEntryId) throws PersistenceException {
-    File path = new File(getPath(blog, blogEntryId));
+    File path = new File(getPath(blog, blogEntryId, GMT));
     File file = new File(path, blogEntryId + ".xml");
     return loadBlogEntry(blog, file);
   }
@@ -151,7 +122,7 @@ public class FileBlogEntryDAO implements BlogEntryDAO {
    * @throws PersistenceException if something goes wrong storing the entry
    */
   public void storeBlogEntry(BlogEntry blogEntry) throws PersistenceException {
-    File outputDir = new File(getPath(blogEntry.getBlog(), blogEntry.getId()));
+    File outputDir = new File(getPath(blogEntry.getBlog(), blogEntry.getId(), GMT));
     if (!outputDir.exists()) {
       outputDir.mkdirs();
     }
@@ -190,6 +161,7 @@ public class FileBlogEntryDAO implements BlogEntryDAO {
       Element categoryNode;
       Element tagsNode = doc.createElement("tags");
       Element dateNode = doc.createElement("date");
+      Element timeZoneNode = doc.createElement("timeZone");
       Element stateNode = doc.createElement("state");
       Element authorNode = doc.createElement("author");
       Element staticNameNode = doc.createElement("staticName");
@@ -202,6 +174,7 @@ public class FileBlogEntryDAO implements BlogEntryDAO {
       root.appendChild(excerptNode);
       root.appendChild(bodyNode);
       root.appendChild(dateNode);
+      root.appendChild(timeZoneNode);
       root.appendChild(stateNode);
       root.appendChild(authorNode);
       root.appendChild(staticNameNode);
@@ -245,8 +218,10 @@ public class FileBlogEntryDAO implements BlogEntryDAO {
       }
 
       SimpleDateFormat sdf = new SimpleDateFormat(NEW_PERSISTENT_DATETIME_FORMAT, Locale.ENGLISH);
-      sdf.setTimeZone(blogEntry.getBlog().getTimeZone());
+      sdf.setTimeZone(GMT);
       dateNode.appendChild(doc.createTextNode(sdf.format(blogEntry.getDate())));
+
+      timeZoneNode.appendChild(doc.createTextNode(blogEntry.getTimeZoneId()));
 
       stateNode.appendChild(createTextNode(doc, blogEntry.getState().getName()));
 
@@ -347,7 +322,7 @@ public class FileBlogEntryDAO implements BlogEntryDAO {
     websiteNode.appendChild(createTextNode(doc, comment.getWebsite()));
     ipAddressNode.appendChild(createTextNode(doc, comment.getIpAddress()));
     SimpleDateFormat sdf = new SimpleDateFormat(NEW_PERSISTENT_DATETIME_FORMAT, Locale.ENGLISH);
-    sdf.setTimeZone(comment.getBlogEntry().getBlog().getTimeZone());
+    sdf.setTimeZone(GMT);
     dateNode.appendChild(createTextNode(doc, sdf.format(comment.getDate())));
     stateNode.appendChild(createTextNode(doc, comment.getState().getName()));
 
@@ -407,7 +382,7 @@ public class FileBlogEntryDAO implements BlogEntryDAO {
     blogNameNode.appendChild(createTextNode(doc, trackBack.getBlogName()));
     ipAddressNode.appendChild(createTextNode(doc, trackBack.getIpAddress()));
     SimpleDateFormat sdf = new SimpleDateFormat(NEW_PERSISTENT_DATETIME_FORMAT, Locale.ENGLISH);
-    sdf.setTimeZone(trackBack.getBlogEntry().getBlog().getTimeZone());
+    sdf.setTimeZone(GMT);
     dateNode.appendChild(doc.createTextNode(sdf.format(trackBack.getDate())));
     stateNode.appendChild(createTextNode(doc, trackBack.getState().getName()));
   }
@@ -419,7 +394,7 @@ public class FileBlogEntryDAO implements BlogEntryDAO {
    * @throws PersistenceException if something goes wrong removing the entry
    */
   public void removeBlogEntry(BlogEntry blogEntry) throws PersistenceException {
-    File path = new File(getPath(blogEntry.getBlog(), blogEntry.getId()));
+    File path = new File(getPath(blogEntry.getBlog(), blogEntry.getId(), GMT));
     File file = new File(path, blogEntry.getId() + ".xml");
     log.debug("Removing " + blogEntry.getGuid());
 
@@ -437,13 +412,13 @@ public class FileBlogEntryDAO implements BlogEntryDAO {
    * @param blogEntryId   the ID of the blog entry
    * @return  a String of the form blogroot/yyyy/MM/dd
    */
-  private String getPath(Blog blog, String blogEntryId) {
+  public String getPath(Blog blog, String blogEntryId, TimeZone timeZone) {
     DateFormat year = new SimpleDateFormat("yyyy");
-    year.setTimeZone(blog.getTimeZone());
+    year.setTimeZone(timeZone);
     DateFormat month = new SimpleDateFormat("MM");
-    month.setTimeZone(blog.getTimeZone());
+    month.setTimeZone(timeZone);
     DateFormat day = new SimpleDateFormat("dd");
-    day.setTimeZone(blog.getTimeZone());
+    day.setTimeZone(timeZone);
 
     long dateInMillis = Long.parseLong(blogEntryId);
     Date date = new Date(dateInMillis);

@@ -154,6 +154,7 @@ public class SaveBlogEntryAction extends SecureAction {
     String trackBacksEnabled = request.getParameter("trackBacksEnabled");
     String category[] = request.getParameterValues("category");
     String author = SecurityUtils.getUsername();
+    String timeZone = request.getParameter("timeZone");
 
     // the date can only set on those entries that have not yet been persisted
     if (!blogEntry.isPersistent()) {
@@ -180,6 +181,7 @@ public class SaveBlogEntryAction extends SecureAction {
       }
     }
 
+    blogEntry.setTimeZoneId(timeZone);
     blogEntry.setTitle(title);
     blogEntry.setSubtitle(subtitle);
     blogEntry.setBody(body);

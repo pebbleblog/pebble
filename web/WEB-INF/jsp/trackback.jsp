@@ -26,7 +26,7 @@
       (${trackback.ipAddress})
       </pebble:isAuthorisedForBlog>
     </c:set>
-    <fmt:formatDate var="trackbackDate" scope="page" value="${trackback.date}" type="both" dateStyle="long" timeStyle="long"/>
+    <fmt:formatDate var="trackbackDate" scope="page" value="${trackback.date}" timeZone="${blogEntry.timeZoneId}" type="both" dateStyle="long" timeStyle="long"/>
 
     <fmt:message key="trackback.from">
       <fmt:param>

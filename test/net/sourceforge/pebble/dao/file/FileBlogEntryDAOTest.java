@@ -86,6 +86,7 @@ public class FileBlogEntryDAOTest extends SingleBlogTestCase {
     assertEquals("<p>Blog entry excerpt.</p>", blogEntry.getExcerpt());
     assertEquals("<p>Blog entry body.</p>", blogEntry.getBody());
     assertEquals(1081203335000L, blogEntry.getDate().getTime());
+    assertEquals("Europe/Paris", blogEntry.getTimeZoneId());
     assertTrue(blogEntry.isUnpublished());
     assertEquals("simon", blogEntry.getAuthor());
     assertTrue(blogEntry.isCommentsEnabled());

@@ -36,6 +36,10 @@ import net.sourceforge.pebble.domain.BlogEntry;
 import net.sourceforge.pebble.api.decorator.ContentDecoratorContext;
 import net.sourceforge.pebble.web.view.HtmlView;
 
+import java.util.List;
+import java.util.Arrays;
+import java.util.Collections;
+
 /**
  * Represents the blog entry form.
  *
@@ -55,6 +59,10 @@ public class BlogEntryFormView extends HtmlView {
     context.setMedia(ContentDecoratorContext.HTML_PAGE);
     blogEntry.getBlog().getContentDecoratorChain().decorate(context, previewBlogEntry);
     getModel().put("previewBlogEntry", previewBlogEntry);
+
+    List timeZones = Arrays.asList(java.util.TimeZone.getAvailableIDs());
+    Collections.sort(timeZones);
+    getModel().put("timeZones", timeZones);
   }
 
   /**

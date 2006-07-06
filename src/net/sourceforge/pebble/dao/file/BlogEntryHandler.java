@@ -40,6 +40,7 @@ public class BlogEntryHandler extends DefaultHandler {
   private static final int STATE = 18;
   private static final int TAGS = 19;
   private static final int SUBTITLE = 20;
+  private static final int TIME_ZONE = 21;
 
   private static final int IN_BLOG_ENTRY = 100;
   private static final int IN_COMMENT = 101;
@@ -120,6 +121,8 @@ public class BlogEntryHandler extends DefaultHandler {
       elementStatus = BODY;
     } else if (name.equals("date")) {
       elementStatus = DATE;
+    } else if (name.equals("timeZone")) {
+      elementStatus = TIME_ZONE;
     } else if (name.equals("author")) {
       elementStatus = AUTHOR;
     } else if (name.equals("originalPermalink")) {
@@ -184,6 +187,9 @@ public class BlogEntryHandler extends DefaultHandler {
           break;
         case DATE :
           blogEntry.setDate(getDate(elementContent.toString()));
+          break;
+        case TIME_ZONE :
+          blogEntry.setTimeZoneId(elementContent.toString());
           break;
         case STATE :
           if (elementContent.toString().equals(State.UNPUBLISHED.getName())) {
