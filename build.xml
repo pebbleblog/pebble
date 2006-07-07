@@ -227,7 +227,9 @@
 -->
 
     <zip zipfile="${dist.dir}/${project.name}-${build.version}.zip">
-      <fileset dir="${build.dir}/${project.name}-${build.version}"/>
+      <fileset dir="${build.dir}">
+        <include name="${project.name}-${build.version}/**"/>
+      </fileset>
     </zip>
   </target>
 
