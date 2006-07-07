@@ -81,7 +81,7 @@ public class Configuration {
   public void setSecureUrl(String s) {
     this.secureUrl = s;
 
-    if (secureUrl != null && !(url.length() == 0) && !secureUrl.endsWith("/")) {
+    if (secureUrl != null && !(secureUrl.length() == 0) && !secureUrl.endsWith("/")) {
       secureUrl += "/";
     }
   }
