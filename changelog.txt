@@ -6,8 +6,10 @@ Added category list into the sidebar of the default theme.
 Added an "archive by month" list into the sidebar of the default theme (commented out).
 Integrated FCKeditor (rich text editor) for blog entries, static pages and comments.
 Added net.sourceforge.pebble.event.response.MarkApprovedListener for automatic approval of responses.
-Time zone fixes and enhancements - all blog entries now stored in GMT and blog entries can be assigned time zones individually.
-Added auto-upggrade feature.
+Fixed problem where changing timezone causes Pebble to crash (all blog entries now stored in a yyyy/mm/dd hierarchy based on GMT).
+Added auto-upgrade utility.
+Added secureUrl to applicationContext-pebble.xml for secure login.
+Upgraded Acegi to 1.0.1 and the changed authenticationProcessingFilter bean to be an instance of net.sourceforge.pebble.security.AuthenticationProcessingFilter.
 
 Version 2.0.0-M3 - 29th June 2006
 ---------------------------------

@@ -4,16 +4,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-<%--  
-    <c:choose>
-    <c:when test="${request.secure}">
-    <base href="${blog.url}" />
-    </c:when>
-    <c:otherwise>
-    <base href="https://localhost:8443/blog/" />
-    </c:otherwise>
-    </c:choose>
---%>
+
     <base href="${blog.url}" />
     <meta http-equiv="Content-Type" content="text/html; charset=${blog.characterEncoding}"/>
     <meta name="description" content="${blog.name}" />
@@ -25,33 +16,8 @@
     <link rel="alternate" type="application/rdf+xml" title="RDF" href="${blog.url}rdf.xml" />
     <link rel="alternate" type="application/atom+xml" title="Atom" href="${blog.url}atom.xml" />
 
-<%--
-    <c:choose>
-      <c:when test="${not empty param.embeddedCss}">
-        <style>
-        <c:import url="${param.embeddedCss}" />
-        </style>
-      </c:when>
-      <c:otherwise>
-        <link rel="stylesheet" href="themes/${blog.theme}/theme.css" type="text/css" />
-      </c:otherwise>
-    </c:choose>
-
-    <c:choose>
-      <c:when test="${not empty param.embedJavaScript}">
-        <script type="text/javascript">
-        <%@ include file="/pebble.js" %>
-        </script>
-      </c:when>
-      <c:otherwise>
-        <script type="text/javascript" src="${pageContext.request.contextPath}/pebble.js">
-        </script>
-      </c:otherwise>
-    </c:choose>
---%>
-
-  <link rel="stylesheet" href="themes/${blog.theme}/screen.css" type="text/css" media="screen" />
-  <link rel="stylesheet" href="themes/_pebble/print.css" type="text/css" media="print" />
+    <link rel="stylesheet" href="themes/${blog.theme}/screen.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="themes/_pebble/print.css" type="text/css" media="print" />
     <script type="text/javascript" src="${pageContext.request.contextPath}/pebble.js">
     </script>
   </head>

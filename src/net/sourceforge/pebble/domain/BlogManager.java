@@ -162,7 +162,7 @@ public class BlogManager {
     blog.start();
     blogs.put(blog.getId(), blog);
 
-    // which version are we at?
+    // which version are we at and do we need to upgrade?
     File versionFile = new File(blogDir, "pebble.version");
     String blogVersion = null;
     String currentVersion = PebbleContext.getInstance().getBuildVersion();
@@ -178,7 +178,7 @@ public class BlogManager {
 
     try {
       if (blogVersion == null || !blogVersion.equals(currentVersion)) {
-        UpgradeUtilities.upgradeBlog(blog, blogVersion);
+        UpgradeUtilities.upgradeBlog(blog, blogVersion, currentVersion);
 
         BufferedWriter writer = new BufferedWriter(new FileWriter(versionFile));
         writer.write(currentVersion);

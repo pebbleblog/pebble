@@ -99,7 +99,7 @@ FCKConfig.ToolbarSets["Basic"] = [
 
 // start of Pebble specific toolbar sets
 FCKConfig.ToolbarSets["BlogEntry"] = [
-    ['Bold','Italic','Underline','StrikeThrough','-','Subscript','Superscript'],
+    ['Bold','Italic','Underline','StrikeThrough'],
     ['OrderedList','UnorderedList','-','Outdent','Indent'],
     ['JustifyLeft','JustifyCenter','JustifyRight','JustifyFull'],
     ['Link','Unlink'],
@@ -107,7 +107,7 @@ FCKConfig.ToolbarSets["BlogEntry"] = [
 ] ;
 
 FCKConfig.ToolbarSets["StaticPage"] = [
-    ['Bold','Italic','Underline','StrikeThrough','-','Subscript','Superscript'],
+    ['Bold','Italic','Underline','StrikeThrough'],
     ['OrderedList','UnorderedList','-','Outdent','Indent'],
     ['JustifyLeft','JustifyCenter','JustifyRight','JustifyFull'],
     ['Link','Unlink'],

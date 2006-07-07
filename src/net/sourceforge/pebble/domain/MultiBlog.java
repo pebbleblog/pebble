@@ -98,6 +98,15 @@ public class MultiBlog extends AbstractBlog {
   }
 
   /**
+   * Gets the relative URL where this blog is deployed.
+   *
+   * @return a URL as a String
+   */
+  public String getRelativeUrl() {
+    return "/";
+  }
+
+  /**
    * Gets the date that this blog was last updated.
    *
    * @return  a Date instance representing the time of the most recent entry

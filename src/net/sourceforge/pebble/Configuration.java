@@ -48,6 +48,7 @@ public class Configuration {
 
   private String dataDirectory = "${user.home}/pebble";
   private String url;
+  private String secureUrl;
   private boolean multiBlog = false;
   private String smtpHost = "java:comp/env/mail/Session";
   private long fileUploadSize = 2048;
@@ -66,6 +67,22 @@ public class Configuration {
 
     if (url != null && !(url.length() == 0) && !url.endsWith("/")) {
       url += "/";
+    }
+  }
+
+  public String getSecureUrl() {
+    if (secureUrl != null && secureUrl.length() > 0) {
+      return secureUrl;
+    } else {
+      return url;
+    }
+  }
+
+  public void setSecureUrl(String s) {
+    this.secureUrl = s;
+
+    if (secureUrl != null && !(url.length() == 0) && !secureUrl.endsWith("/")) {
+      secureUrl += "/";
     }
   }
 

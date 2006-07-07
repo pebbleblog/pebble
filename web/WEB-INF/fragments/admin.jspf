@@ -2,7 +2,8 @@
 <pebble:isNotAuthenticated>
   <div class="sidebarItemTitle"><span>Login</span></div>
   <br />
-  <form name="loginForm" method="post" action="${pageContext.request.contextPath}/j_acegi_security_check">
+  <form name="loginForm" method="post" action="${pebbleContext.configuration.secureUrl}j_acegi_security_check">
+    <input type="hidden" name="redirectUrl" value="${blog.relativeUrl}"/>
     <input type="text" name="j_username" />
     <br />
     <input type="password" name="j_password" />

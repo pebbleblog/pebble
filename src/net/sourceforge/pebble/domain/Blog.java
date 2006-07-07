@@ -31,8 +31,10 @@
  */
 package net.sourceforge.pebble.domain;
 
+import net.sf.ehcache.Cache;
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.PluginProperties;
+import net.sourceforge.pebble.PebbleContext;
 import net.sourceforge.pebble.api.comment.CommentConfirmationStrategy;
 import net.sourceforge.pebble.api.decorator.ContentDecorator;
 import net.sourceforge.pebble.api.event.EventDispatcher;
@@ -55,7 +57,8 @@ import net.sourceforge.pebble.index.*;
 import net.sourceforge.pebble.logging.AbstractLogger;
 import net.sourceforge.pebble.logging.CombinedLogFormatLogger;
 import net.sourceforge.pebble.permalink.DefaultPermalinkProvider;
-import net.sf.ehcache.Cache;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
@@ -63,6 +66,8 @@ import java.lang.reflect.Constructor;
 import java.util.*;
 
 public class Blog extends AbstractBlog {
+
+  private static final Log log = LogFactory.getLog(Blog.class);
 
   public static final String EMAIL_KEY = "email";
   public static final String BLOG_OWNERS_KEY = "blogOwners";
@@ -432,6 +437,36 @@ public class Blog extends AbstractBlog {
    */
   public void setId(String id) {
     this.id = id;
+  }
+
+  /**
+   * Gets the URL where this blog is deployed.
+   *
+   * @return  a URL as a String
+   */
+  public String getUrl() {
+    String url = PebbleContext.getInstance().getConfiguration().getUrl();
+
+    if (url == null || url.length() == 0) {
+      return "";
+    } else if (BlogManager.getInstance().isMultiBlog()) {
+      return url + getId() + "/";
+    } else {
+      return url;
+    }
+  }
+
+  /**
+   * Gets the relative URL where this blog is deployed.
+   *
+   * @return  a URL as a String
+   */
+  public String getRelativeUrl() {
+    if (BlogManager.getInstance().isMultiBlog()) {
+      return "/" + getId() + "/";
+    } else {
+      return "/";
+    }
   }
 
   /**

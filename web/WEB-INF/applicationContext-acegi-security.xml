@@ -90,7 +90,7 @@
     <property name="authenticationEntryPoint"><ref local="authenticationProcessingFilterEntryPoint"/></property>
   </bean>
 
-  <bean id="authenticationProcessingFilter" class="org.acegisecurity.ui.webapp.AuthenticationProcessingFilter">
+  <bean id="authenticationProcessingFilter" class="net.sourceforge.pebble.security.AuthenticationProcessingFilter">
     <property name="authenticationManager"><ref bean="authenticationManager"/></property>
     <property name="authenticationFailureUrl"><value>/loginPage.action?error=true</value></property>
     <property name="defaultTargetUrl"><value>/</value></property>

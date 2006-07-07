@@ -32,6 +32,7 @@
 package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
+import net.sourceforge.pebble.util.Utilities;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.domain.BlogServiceException;
 import net.sourceforge.pebble.web.view.ForwardView;
@@ -57,22 +58,7 @@ public class ResetPluginsAction extends SecureAction {
    */
   public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
-
-    try {
-      blog.removeProperty(Blog.PERMALINK_PROVIDER_KEY);
-      blog.removeProperty(Blog.CONTENT_DECORATORS_KEY);
-      blog.removeProperty(Blog.BLOG_LISTENERS_KEY);
-      blog.removeProperty(Blog.BLOG_ENTRY_LISTENERS_KEY);
-      blog.removeProperty(Blog.COMMENT_LISTENERS_KEY);
-      blog.removeProperty(Blog.COMMENT_CONFIRMATION_STRATEGY_KEY);
-      blog.removeProperty(Blog.TRACKBACK_LISTENERS_KEY);
-      blog.removeProperty(Blog.LUCENE_ANALYZER_KEY);
-      blog.removeProperty(Blog.LOGGER_KEY);
-      blog.storeProperties();
-    } catch (BlogServiceException e) {
-      e.printStackTrace();
-    }
-
+    Utilities.resetPlugins(blog);
     return new ForwardView("/reloadBlog.secureaction");
   }
 

@@ -88,11 +88,6 @@ public class TransformingFilter implements Filter {
       internalUri = transformer.getUri(externalUri, (MultiBlog)blog);
     }
 
-    if (internalUri.equals("/viewHomePage.action")) {
-      HttpServletRequest httpRequest = (HttpServletRequest)request;
-      httpRequest.getSession().setAttribute(AbstractProcessingFilter.ACEGI_SECURITY_TARGET_URL_KEY, blog.getUrl());
-    }
-
     request.setAttribute(Constants.INTERNAL_URI, internalUri);
 
     log.debug(externalUri + " -> " + internalUri);

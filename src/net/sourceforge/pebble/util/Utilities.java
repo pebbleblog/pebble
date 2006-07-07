@@ -62,6 +62,7 @@ public class Utilities {
    * @param blog    a Blog instance
    */
   public static void buildIndexes(Blog blog) {
+    log.info("Reindexing blog");
     blog.reindex();
   }
 
@@ -209,11 +210,46 @@ public class Utilities {
   }
 
   /**
+   * Resets the theme of a blog to "default".
+   */
+  public static void resetTheme(Blog blog) {
+    log.info("Resetting theme to default");
+    try {
+      blog.removeProperty(Blog.THEME_KEY);
+      blog.storeProperties();
+    } catch (BlogServiceException e) {
+      e.printStackTrace();
+    }
+  }
+
+  /**
+   * Resets the plugins back to their defaults.
+   */
+  public static void resetPlugins(Blog blog) {
+    log.info("Resetting plugins to the default configuration");
+    try {
+      blog.removeProperty(Blog.PERMALINK_PROVIDER_KEY);
+      blog.removeProperty(Blog.CONTENT_DECORATORS_KEY);
+      blog.removeProperty(Blog.BLOG_LISTENERS_KEY);
+      blog.removeProperty(Blog.BLOG_ENTRY_LISTENERS_KEY);
+      blog.removeProperty(Blog.COMMENT_LISTENERS_KEY);
+      blog.removeProperty(Blog.COMMENT_CONFIRMATION_STRATEGY_KEY);
+      blog.removeProperty(Blog.TRACKBACK_LISTENERS_KEY);
+      blog.removeProperty(Blog.LUCENE_ANALYZER_KEY);
+      blog.removeProperty(Blog.LOGGER_KEY);
+      blog.storeProperties();
+    } catch (BlogServiceException e) {
+      e.printStackTrace();
+    }
+  }
+
+  /**
    * Moves blog entries from one category to another.
    *
    * @param blog    a Blog instance
    */
   public static void restructureBlogToGMT(Blog blog) {
+    log.info("Restructuring blog entries into GMT directory hierarchy");
     TimeZone gmt = TimeZone.getTimeZone("GMT");
     FileBlogEntryDAO dao = new FileBlogEntryDAO();
     File root = new File(blog.getRoot());

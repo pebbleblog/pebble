@@ -1,6 +1,5 @@
 package net.sourceforge.pebble.util;
 
-import net.sourceforge.pebble.PebbleContext;
 import net.sourceforge.pebble.domain.Blog;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -15,10 +14,12 @@ public class UpgradeUtilities {
   /** the logger used by this action */
   private static final Log log = LogFactory.getLog(UpgradeUtilities.class);
 
-  public static void upgradeBlog(Blog blog, String version) throws Exception {
-    log.info("Upgrading blog from " + version + " to " + PebbleContext.getInstance().getBuildVersion());
-    if (version == null) {
+  public static void upgradeBlog(Blog blog, String fromVersion, String toVersion) throws Exception {
+    log.info("Upgrading blog from " + fromVersion + " to " + toVersion);
+    if (fromVersion == null) {
       Utilities.restructureBlogToGMT(blog);
+      Utilities.resetTheme(blog);
+      Utilities.resetPlugins(blog);
       Utilities.buildIndexes(blog);
     }
   }

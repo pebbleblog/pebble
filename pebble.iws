@@ -171,7 +171,7 @@
       <file leaf-file-name="viewUtilities.jsp" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/viewUtilities.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="25" column="0" selection-start="1875" selection-end="1875" vertical-scroll-proportion="0.37174723">
+            <state line="25" column="0" selection-start="1875" selection-end="1875" vertical-scroll-proportion="0.51328504">
               <folding />
             </state>
           </provider>
@@ -180,7 +180,7 @@
       <file leaf-file-name="BlogManager.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/domain/BlogManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="190" column="0" selection-start="5963" selection-end="5963" vertical-scroll-proportion="0.01459854">
+            <state line="190" column="0" selection-start="6005" selection-end="6005" vertical-scroll-proportion="0.020166073">
               <folding />
             </state>
           </provider>
@@ -189,7 +189,7 @@
       <file leaf-file-name="Utilities.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/util/Utilities.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="53" column="13" selection-start="2301" selection-end="2301" vertical-scroll-proportion="0.01459854">
+            <state line="53" column="13" selection-start="2301" selection-end="2301" vertical-scroll-proportion="0.020531401">
               <folding />
             </state>
           </provider>
@@ -198,7 +198,7 @@
       <file leaf-file-name="UpgradeUtilities.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/util/UpgradeUtilities.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="21" column="33" selection-start="721" selection-end="721" vertical-scroll-proportion="0.26277372">
+            <state line="23" column="0" selection-start="743" selection-end="743" vertical-scroll-proportion="0.42348754">
               <folding />
             </state>
           </provider>
@@ -207,7 +207,7 @@
       <file leaf-file-name="PreProcessingFilter.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/filter/PreProcessingFilter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="145" column="40" selection-start="5644" selection-end="5644" vertical-scroll-proportion="0.810219">
+            <state line="145" column="40" selection-start="5644" selection-end="5644" vertical-scroll-proportion="0.718599">
               <folding />
             </state>
           </provider>
@@ -216,7 +216,7 @@
       <file leaf-file-name="UtilitiesAction.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/action/UtilitiesAction.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="80" column="0" selection-start="3557" selection-end="3557" vertical-scroll-proportion="0.5839416">
+            <state line="80" column="0" selection-start="3557" selection-end="3557" vertical-scroll-proportion="0.4614472">
               <folding />
             </state>
           </provider>
@@ -225,7 +225,7 @@
       <file leaf-file-name="1081203335000.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test/1081203335000.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="22" selection-start="291" selection-end="291" vertical-scroll-proportion="0.10218978">
+            <state line="7" column="22" selection-start="291" selection-end="291" vertical-scroll-proportion="0.020166073">
               <folding />
             </state>
           </provider>
@@ -234,7 +234,7 @@
       <file leaf-file-name="FileBlogEntryDAOTest.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test/net/sourceforge/pebble/dao/file/FileBlogEntryDAOTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="88" column="24" selection-start="3515" selection-end="3515" vertical-scroll-proportion="0.02189781">
+            <state line="88" column="24" selection-start="3515" selection-end="3515" vertical-scroll-proportion="0.020166073">
               <folding />
             </state>
           </provider>
@@ -243,7 +243,7 @@
       <file leaf-file-name="BlogEntryTest.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test/net/sourceforge/pebble/domain/BlogEntryTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="499" column="77" selection-start="18273" selection-end="18273" vertical-scroll-proportion="0.014869888">
+            <state line="499" column="77" selection-start="18273" selection-end="18273" vertical-scroll-proportion="0.020531401">
               <folding />
             </state>
           </provider>
@@ -252,7 +252,7 @@
       <file leaf-file-name="BlogEntryHandler.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/dao/file/BlogEntryHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="191" column="59" selection-start="6945" selection-end="6945" vertical-scroll-proportion="0.014869888">
+            <state line="191" column="59" selection-start="6945" selection-end="6945" vertical-scroll-proportion="0.020531401">
               <folding />
             </state>
           </provider>
@@ -556,6 +556,31 @@
       <RunnerSettings RunnerId="Run" />
       <ConfigurationWrapper RunnerId="Run" />
     </tempConfiguration>
+    <configuration selected="false" default="true" type="JUnit" factoryName="JUnit">
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ADDITIONAL_CLASS_PATH" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="wholeProject" />
+      </option>
+    </configuration>
+    <configuration selected="false" default="true" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <module name="" />
+    </configuration>
     <configuration selected="false" default="true" type="Remote" factoryName="Remote">
       <option name="USE_SOCKET_TRANSPORT" value="true" />
       <option name="SERVER_MODE" value="false" />
@@ -574,31 +599,6 @@
       <option name="VM_PARAMETERS" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
-    </configuration>
-    <configuration selected="false" default="true" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <module name="" />
-    </configuration>
-    <configuration selected="false" default="true" type="JUnit" factoryName="JUnit">
-      <module name="" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="METHOD_NAME" />
-      <option name="TEST_OBJECT" value="class" />
-      <option name="VM_PARAMETERS" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ADDITIONAL_CLASS_PATH" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="wholeProject" />
-      </option>
     </configuration>
     <configuration selected="true" default="false" name="Unit Tests" type="JUnit" factoryName="JUnit">
       <module name="pebble" />
@@ -652,7 +652,7 @@
     <option name="USER" value="" />
     <option name="PASSWORD" value="" />
     <option name="PROCESS_UNRESOLVED" value="false" />
-    <configuration useDefault="true">$PROJECT_DIR$/../../../.subversion</configuration>
+    <configuration useDefault="true">C:\Documents and Settings\SBrown\Application Data\Subversion</configuration>
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -669,12 +669,12 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="1" y="22" width="1680" height="969" extended-state="6" />
+    <frame x="-4" y="-4" width="1408" height="1024" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="CVS" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.33" order="12" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.53630364" order="7" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="docked" type="docked" visible="true" weight="0.3345588" order="0" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="docked" type="docked" visible="true" weight="0.3399705" order="0" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.54241073" order="1" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.25" order="1" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.375" order="8" />
@@ -817,70 +817,70 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/viewUtilities.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="0" selection-start="1875" selection-end="1875" vertical-scroll-proportion="0.37174723">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/util/Utilities.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="53" column="13" selection-start="2301" selection-end="2301" vertical-scroll-proportion="0.01459854">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/filter/PreProcessingFilter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="145" column="40" selection-start="5644" selection-end="5644" vertical-scroll-proportion="0.810219">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/action/UtilitiesAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="80" column="0" selection-start="3557" selection-end="3557" vertical-scroll-proportion="0.5839416">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/1081203335000.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="22" selection-start="291" selection-end="291" vertical-scroll-proportion="0.10218978">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/net/sourceforge/pebble/dao/file/FileBlogEntryDAOTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="88" column="24" selection-start="3515" selection-end="3515" vertical-scroll-proportion="0.02189781">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/net/sourceforge/pebble/domain/BlogEntryTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="499" column="77" selection-start="18273" selection-end="18273" vertical-scroll-proportion="0.014869888">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/dao/file/BlogEntryHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="191" column="59" selection-start="6945" selection-end="6945" vertical-scroll-proportion="0.014869888">
+        <state line="25" column="0" selection-start="1875" selection-end="1875" vertical-scroll-proportion="0.51328504">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/domain/BlogManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="190" column="0" selection-start="5963" selection-end="5963" vertical-scroll-proportion="0.01459854">
+        <state line="190" column="0" selection-start="6005" selection-end="6005" vertical-scroll-proportion="0.020166073">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/util/Utilities.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="53" column="13" selection-start="2301" selection-end="2301" vertical-scroll-proportion="0.020531401">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/filter/PreProcessingFilter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="145" column="40" selection-start="5644" selection-end="5644" vertical-scroll-proportion="0.718599">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/action/UtilitiesAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="80" column="0" selection-start="3557" selection-end="3557" vertical-scroll-proportion="0.4614472">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/1081203335000.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="22" selection-start="291" selection-end="291" vertical-scroll-proportion="0.020166073">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/net/sourceforge/pebble/dao/file/FileBlogEntryDAOTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="88" column="24" selection-start="3515" selection-end="3515" vertical-scroll-proportion="0.020166073">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/net/sourceforge/pebble/domain/BlogEntryTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="499" column="77" selection-start="18273" selection-end="18273" vertical-scroll-proportion="0.020531401">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/dao/file/BlogEntryHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="191" column="59" selection-start="6945" selection-end="6945" vertical-scroll-proportion="0.020531401">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/util/UpgradeUtilities.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="33" selection-start="721" selection-end="721" vertical-scroll-proportion="0.26277372">
+        <state line="23" column="0" selection-start="743" selection-end="743" vertical-scroll-proportion="0.42348754">
           <folding />
         </state>
       </provider>

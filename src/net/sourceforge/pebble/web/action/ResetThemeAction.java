@@ -5,6 +5,7 @@ import net.sourceforge.pebble.web.view.ForwardView;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.domain.BlogServiceException;
 import net.sourceforge.pebble.Constants;
+import net.sourceforge.pebble.util.Utilities;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,14 +27,7 @@ public class ResetThemeAction extends SecureAction {
    */
   public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
-
-    try {
-      blog.removeProperty(Blog.THEME_KEY);
-      blog.storeProperties();
-    } catch (BlogServiceException e) {
-      e.printStackTrace();
-    }
-
+    Utilities.resetTheme(blog);
     return new ForwardView("/reloadBlog.secureaction");
   }
 

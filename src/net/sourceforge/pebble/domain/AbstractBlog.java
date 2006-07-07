@@ -31,7 +31,6 @@
  */
 package net.sourceforge.pebble.domain;
 
-import net.sourceforge.pebble.PebbleContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -47,7 +46,7 @@ public abstract class AbstractBlog extends TimePeriod {
   public static final String BLOG_PROPERTIES_FILE = "blog.properties";
 
   /** the log used by this class */
-  protected static Log log = LogFactory.getLog(AbstractBlog.class);
+  private static Log log = LogFactory.getLog(AbstractBlog.class);
 
   /** the filesystem root of this blog */
   private String root;
@@ -241,17 +240,14 @@ public abstract class AbstractBlog extends TimePeriod {
    *
    * @return  a URL as a String
    */
-  public String getUrl() {
-    String url = PebbleContext.getInstance().getConfiguration().getUrl();
+  public abstract String getUrl();
 
-    if (url == null || url.length() == 0) {
-      return "";
-    } else if (BlogManager.getInstance().isMultiBlog()) {
-      return url + getId() + "/";
-    } else {
-      return url;
-    }
-  }
+  /**
+   * Gets the relative URL where this blog is deployed.
+   *
+   * @return  a URL as a String
+   */
+  public abstract String getRelativeUrl();
 
   /**
    * Gets the domain name where this blog is deployed.

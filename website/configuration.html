@@ -38,6 +38,7 @@
             <ul>
               <li>Data directory (dataDirectory) : the location where your Pebble data is stored. The default is <code>${user.home}/pebble</code>, and this directory is created automatically if it doesn't exist.</li>
               <li>URL (url) : the URL (starting http:// or https://) where your blog is hosted. The default value is blank, which means "auto-discover at runtime".</li>
+              <li>Secure URL (secureUrl) : the secure URL (starting https://), which should only be set if you intend to use secure login.</li>
               <li>Multi-blog (multiBlog) : a flag to indicate whether Pebble is running in multi-blog mode, default is false.</li>
               <li>SMTP host (smtpHost) : the name/IP address of the server through which e-mail is sent, or a JNDI name starting <code>java:/comp/env</code> pointing to a preconfigured javax.mail.Session instance. The default is <code>java:comp/env/mail/Session</code>.</li>
             </ul>
