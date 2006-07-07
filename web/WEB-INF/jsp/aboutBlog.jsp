@@ -147,15 +147,18 @@
         ${blog.logger.class.name}
       </td>
     </tr>
+    </table>
 
+    <div style="overflow: auto;">
+    <table width="99%" cellpadding="4" cellspacing="0" class="small">
     <tr class="odd">
-      <td colspan="2">
-        <b>Properties</b><br />
-        <pre style="overflow: auto">${blog.pluginProperties.propertiesAsString}</pre>
+      <td>
+        <b>Properties</b><pre>${blog.pluginProperties.propertiesAsString}</pre>
       </td>
     </tr>
-
     </table>
+    </div>
+
   </div>
 
 </div>
