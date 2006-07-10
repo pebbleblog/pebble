@@ -32,10 +32,7 @@
 package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
-import net.sourceforge.pebble.domain.BlogEntry;
-import net.sourceforge.pebble.domain.Blog;
-import net.sourceforge.pebble.domain.TrackBack;
-import net.sourceforge.pebble.domain.BlogService;
+import net.sourceforge.pebble.domain.*;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.impl.TrackBackResponseView;
 import org.apache.commons.logging.Log;
@@ -68,6 +65,7 @@ public class AddTrackBackAction extends Action {
       BlogEntry blogEntry = null;
 
       String entry = request.getParameter("entry");
+      String token = request.getParameter("token");
       String title = request.getParameter("title");
       String excerpt = request.getParameter("excerpt");
       String url = request.getParameter("url");
@@ -78,6 +76,10 @@ public class AddTrackBackAction extends Action {
         getModel().put("errorCode", new Integer(1));
         getModel().put("message", "The URL (permalink) must be specified for TrackBacks");
         return new TrackBackResponseView();
+      } else if (!TrackBackTokenManager.getInstance().isValid(token)) {
+        getModel().put("errorCode", new Integer(1));
+        getModel().put("message", "The token has expired or is invalid");
+        return new TrackBackResponseView();
       } else {
         BlogService service = new BlogService();
         blogEntry = service.getBlogEntry(blog, entry);
@@ -87,6 +89,7 @@ public class AddTrackBackAction extends Action {
           TrackBack trackBack = blogEntry.createTrackBack(title, excerpt, url, blogName, ipAddress);
           blogEntry.addTrackBack(trackBack);
           service.putBlogEntry(blogEntry);
+          TrackBackTokenManager.getInstance().expire(token);
 
           getModel().put("errorCode", new Integer(0));
           return new TrackBackResponseView();

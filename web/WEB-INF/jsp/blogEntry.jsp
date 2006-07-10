@@ -102,7 +102,7 @@
     <a href="replyToBlogEntry.action?entry=${blogEntry.id}"><fmt:message key="comment.addComment"/></a><br /><br />
   </c:if>
   <c:if test="${blogEntry.trackBacksEnabled}">
-    <fmt:message key="trackback.url"/> <a href="${blog.url}addTrackBack.action?entry=${blogEntry.id}">${blog.url}addTrackBack.action?entry=${blogEntry.id}</a><br />
+    <a href="generateTrackBackLink.action?entry=${blogEntry.id}">TrackBack</a><br />
   </c:if>
   <pebble:isBlogContributor>
     <a href="sendTrackBack.secureaction?entry=${blogEntry.id}">Send TrackBack</a>

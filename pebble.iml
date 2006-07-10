@@ -230,15 +230,6 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/acegi-security-1.0.0-RC2.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
           <root url="jar://$APPLICATION_HOME_DIR$/plugins/clover-idea5-1.0.7/lib/clover-idea5.jar!/" />
         </CLASSES>
         <JAVADOC />
@@ -272,6 +263,15 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/acegi-security-1.0.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
     <orderEntryProperties />
   </component>
   <component name="WebModuleBuildComponent">
@@ -291,8 +291,8 @@
     </containerElement>
     <containerElement type="library" level="module">
       <attribute name="method" value="1" />
-      <attribute name="URI" value="/WEB-INF/lib/acegi-security-1.0.0-RC2.jar" />
-      <url>jar://$MODULE_DIR$/lib/acegi-security-1.0.0-RC2.jar!/</url>
+      <attribute name="URI" value="/WEB-INF/lib/acegi-security-1.0.1.jar" />
+      <url>jar://$MODULE_DIR$/lib/acegi-security-1.0.1.jar!/</url>
     </containerElement>
     <containerElement type="library" level="module">
       <attribute name="method" value="1" />
