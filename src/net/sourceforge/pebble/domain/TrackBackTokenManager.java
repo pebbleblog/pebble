@@ -1,6 +1,7 @@
 package net.sourceforge.pebble.domain;
 
-import net.sourceforge.pebble.api.event.trackback.TrackBackEvent;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import java.util.*;
 
@@ -11,6 +12,8 @@ import java.util.*;
  * @author    Simon Brown
  */
 public class TrackBackTokenManager {
+
+  private static final Log log = LogFactory.getLog(TrackBackTokenManager.class);
 
   private static final TrackBackTokenManager instance = new TrackBackTokenManager();
   private static final long TIME_TO_LIVE = 1000 * 60 * 10; // 10 minutes
