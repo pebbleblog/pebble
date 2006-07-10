@@ -56,7 +56,7 @@ public class ConfirmTrackBackAction extends AbstractTrackBackAction {
     }
     getModel().put(Constants.BLOG_ENTRY_KEY, blogEntry);
 
-    TrackBackConfirmationStrategy strategy = new DefaultTrackBackConfirmationStrategy();
+    TrackBackConfirmationStrategy strategy = blog.getTrackBackConfirmationStrategy();
 
     if (strategy.confirm(request)) {
       generateTrackBackLink(blogEntry);

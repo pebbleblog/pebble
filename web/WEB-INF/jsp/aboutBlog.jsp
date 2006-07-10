@@ -136,12 +136,19 @@
 
     <tr class="odd">
       <td colspan="2">
+        <b>TrackBack Confirmation Strategy</b><br />
+          ${blog.trackBackConfirmationStrategy.class.name}
+      </td>
+    </tr>
+
+    <tr class="even">
+      <td colspan="2">
         <b>Lucene Analyzer</b><br />
         ${blog.luceneAnalyzer}
       </td>
     </tr>
 
-    <tr class="even">
+    <tr class="odd">
       <td colspan="2">
         <b>Logger</b><br />
         ${blog.logger.class.name}

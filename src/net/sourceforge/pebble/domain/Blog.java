@@ -33,8 +33,8 @@ package net.sourceforge.pebble.domain;
 
 import net.sf.ehcache.Cache;
 import net.sourceforge.pebble.Constants;
-import net.sourceforge.pebble.PluginProperties;
 import net.sourceforge.pebble.PebbleContext;
+import net.sourceforge.pebble.PluginProperties;
 import net.sourceforge.pebble.api.comment.CommentConfirmationStrategy;
 import net.sourceforge.pebble.api.decorator.ContentDecorator;
 import net.sourceforge.pebble.api.event.EventDispatcher;
@@ -44,6 +44,7 @@ import net.sourceforge.pebble.api.event.blogentry.BlogEntryListener;
 import net.sourceforge.pebble.api.event.comment.CommentListener;
 import net.sourceforge.pebble.api.event.trackback.TrackBackListener;
 import net.sourceforge.pebble.api.permalink.PermalinkProvider;
+import net.sourceforge.pebble.api.trackback.TrackBackConfirmationStrategy;
 import net.sourceforge.pebble.comment.DefaultCommentConfirmationStrategy;
 import net.sourceforge.pebble.dao.CategoryDAO;
 import net.sourceforge.pebble.dao.DAOFactory;
@@ -57,6 +58,7 @@ import net.sourceforge.pebble.index.*;
 import net.sourceforge.pebble.logging.AbstractLogger;
 import net.sourceforge.pebble.logging.CombinedLogFormatLogger;
 import net.sourceforge.pebble.permalink.DefaultPermalinkProvider;
+import net.sourceforge.pebble.trackback.DefaultTrackBackConfirmationStrategy;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -84,6 +86,7 @@ public class Blog extends AbstractBlog {
   public static final String LOGGER_KEY = "logger";
   public static final String PERMALINK_PROVIDER_KEY = "permalinkProviderName";
   public static final String COMMENT_CONFIRMATION_STRATEGY_KEY = "commentConfirmationStrategy";
+  public static final String TRACKBACK_CONFIRMATION_STRATEGY_KEY = "trackBackConfirmationStrategy";
   public static final String RICH_TEXT_EDITOR_FOR_BLOG_ENTRIES_ENABLED_KEY = "richTextEditorForBlogEntriesEnabled";
   public static final String RICH_TEXT_EDITOR_FOR_STATIC_PAGES_ENABLED_KEY = "richTextEditorForStaticPagesEnabled";
   public static final String RICH_TEXT_EDITOR_FOR_COMMENTS_ENABLED_KEY = "richTextEditorForCommentsEnabled";
@@ -113,6 +116,7 @@ public class Blog extends AbstractBlog {
   private ContentDecoratorChain decoratorChain;
 
   private CommentConfirmationStrategy commentConfirmationStrategy;
+  private TrackBackConfirmationStrategy trackBackConfirmationStrategy;
 
   /** the event dispatcher */
   private EventDispatcher eventDispatcher;
@@ -182,6 +186,15 @@ public class Blog extends AbstractBlog {
       error("Could not load comment confirmation strategy \"" + getCommentConfirmationStrategyName() + "\"");
       e.printStackTrace();
       commentConfirmationStrategy = new DefaultCommentConfirmationStrategy();
+    }
+
+    try {
+      Class c = Class.forName(getTrackBackConfirmationStrategyName());
+      trackBackConfirmationStrategy = (TrackBackConfirmationStrategy)c.newInstance();
+    } catch (Exception e) {
+      error("Could not load TrackBack confirmation strategy \"" + getTrackBackConfirmationStrategyName() + "\"");
+      e.printStackTrace();
+      trackBackConfirmationStrategy = new DefaultTrackBackConfirmationStrategy();
     }
 
     initLogger();
@@ -414,6 +427,7 @@ public class Blog extends AbstractBlog {
     defaultProperties.setProperty(EVENT_DISPATCHER_KEY, "net.sourceforge.pebble.event.DefaultEventDispatcher");
     defaultProperties.setProperty(LOGGER_KEY, "net.sourceforge.pebble.logging.CombinedLogFormatLogger");
     defaultProperties.setProperty(COMMENT_CONFIRMATION_STRATEGY_KEY, "net.sourceforge.pebble.comment.DefaultCommentConfirmationStrategy");
+    defaultProperties.setProperty(TRACKBACK_CONFIRMATION_STRATEGY_KEY, "net.sourceforge.pebble.trackback.DefaultTrackBackConfirmationStrategy");
     defaultProperties.setProperty(RICH_TEXT_EDITOR_FOR_BLOG_ENTRIES_ENABLED_KEY, "false");
     defaultProperties.setProperty(RICH_TEXT_EDITOR_FOR_STATIC_PAGES_ENABLED_KEY, "false");
     defaultProperties.setProperty(RICH_TEXT_EDITOR_FOR_COMMENTS_ENABLED_KEY, "true");
@@ -1531,6 +1545,14 @@ public class Blog extends AbstractBlog {
 
   public CommentConfirmationStrategy getCommentConfirmationStrategy() {
     return commentConfirmationStrategy;
+  }
+
+  public String getTrackBackConfirmationStrategyName() {
+    return getProperty(TRACKBACK_CONFIRMATION_STRATEGY_KEY);
+  }
+
+  public TrackBackConfirmationStrategy getTrackBackConfirmationStrategy() {
+    return trackBackConfirmationStrategy;
   }
 
   public Cache getBlogEntryCache() {

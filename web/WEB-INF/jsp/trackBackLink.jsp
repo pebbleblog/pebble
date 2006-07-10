@@ -5,7 +5,7 @@
 
   <div class="contentItemBody">
     <p>
-      Here is your TrackBack link for ${blogEntry.title}. Please note, this link will expire in 10 minutes
+      Here is your TrackBack link for <a href="${blogEntry.permalink}">${blogEntry.title}</a>. Please note, this link will expire in 10 minutes
       and is only valid for a single use.
     </p>
 

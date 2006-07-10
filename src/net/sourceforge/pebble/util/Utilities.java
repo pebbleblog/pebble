@@ -235,6 +235,7 @@ public class Utilities {
       blog.removeProperty(Blog.COMMENT_LISTENERS_KEY);
       blog.removeProperty(Blog.COMMENT_CONFIRMATION_STRATEGY_KEY);
       blog.removeProperty(Blog.TRACKBACK_LISTENERS_KEY);
+      blog.removeProperty(Blog.TRACKBACK_CONFIRMATION_STRATEGY_KEY);
       blog.removeProperty(Blog.LUCENE_ANALYZER_KEY);
       blog.removeProperty(Blog.LOGGER_KEY);
       blog.storeProperties();

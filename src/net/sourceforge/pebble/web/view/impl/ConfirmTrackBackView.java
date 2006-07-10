@@ -3,7 +3,6 @@ package net.sourceforge.pebble.web.view.impl;
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.api.trackback.TrackBackConfirmationStrategy;
 import net.sourceforge.pebble.domain.Blog;
-import net.sourceforge.pebble.trackback.DefaultTrackBackConfirmationStrategy;
 import net.sourceforge.pebble.web.view.HtmlView;
 
 /**
@@ -29,7 +28,7 @@ public class ConfirmTrackBackView extends HtmlView {
    */
   public String getUri() {
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
-    TrackBackConfirmationStrategy strategy = new DefaultTrackBackConfirmationStrategy();
+    TrackBackConfirmationStrategy strategy = blog.getTrackBackConfirmationStrategy();
     return strategy.getUri();
   }
 

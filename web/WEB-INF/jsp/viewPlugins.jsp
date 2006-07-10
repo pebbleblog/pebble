@@ -46,6 +46,12 @@
       <textarea name="trackBackListeners" rows="10" cols="60">${blog.trackBackListeners}</textarea>
       <br /><br />
 
+      <a name="trackBackConfirmationStrategy"></a>
+      TrackBack Confirmation Strategy
+      <br />
+      <input type="text" name="trackBackConfirmationStrategy" size="60" value="${blog.trackBackConfirmationStrategyName}" />
+      <br /><br />
+
       <a name="properties"></a>
       Properties (<span class="help"><a href="./help/plugins.html#properties" target="_blank">Help</a></span>)
       <br />

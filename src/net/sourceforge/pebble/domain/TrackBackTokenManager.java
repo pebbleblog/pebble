@@ -13,12 +13,26 @@ import java.util.*;
 public class TrackBackTokenManager {
 
   private static final TrackBackTokenManager instance = new TrackBackTokenManager();
-  private static final long TEN_MINUTES = 1000 * 60 * 10;
+  private static final long TIME_TO_LIVE = 1000 * 60 * 10; // 10 minutes
 
   private Random random = new Random();
   private Map<String,Date> tokens = new HashMap<String,Date>();
 
   private TrackBackTokenManager() {
+    TimerTask task = new TimerTask() {
+      public void run() {
+        synchronized (TrackBackTokenManager.this) {
+          for (String token : tokens.keySet()) {
+            if (!isValid(token)) {
+              expire(token);
+            }
+          }
+        }
+      }
+    };
+
+    Timer timer = new Timer();
+    timer.schedule(task, 2 * TIME_TO_LIVE);
   }
 
   public static TrackBackTokenManager getInstance() {
@@ -36,7 +50,7 @@ public class TrackBackTokenManager {
       return false;
     } else {
       Date date = tokens.get(token);
-      return (date != null) && (new Date().getTime() - date.getTime() <= TEN_MINUTES);
+      return (date != null) && (new Date().getTime() - date.getTime() <= TIME_TO_LIVE);
     }
   }
 

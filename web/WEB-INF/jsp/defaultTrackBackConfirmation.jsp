@@ -6,7 +6,7 @@
   <div class="contentItemBody">
     <form action="confirmTrackBack.action" method="post" accept-charset="${blog.characterEncoding}">
       <p>
-        Please confirm that you would like to generate a TrackBack link for ${blogEntry.title}.
+        Please confirm that you would like to generate a TrackBack link for <a href="${blogEntry.permalink}">${blogEntry.title}</a>.
       </p>
 
       <table width="99%">
