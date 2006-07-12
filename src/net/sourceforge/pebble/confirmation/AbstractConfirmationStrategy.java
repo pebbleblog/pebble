@@ -12,6 +12,7 @@ import net.sourceforge.pebble.event.response.ContentSpamListener;
 import net.sourceforge.pebble.event.response.SpamScoreListener;
 import net.sourceforge.pebble.event.response.LinkSpamListener;
 import net.sourceforge.pebble.PluginProperties;
+import net.sourceforge.pebble.Constants;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -67,7 +68,8 @@ public abstract class AbstractConfirmationStrategy implements CommentConfirmatio
    * @return true if the comment should be confirmed, false otherwise
    */
   public boolean confirmationRequired(HttpServletRequest request) {
-    return true;
+    Blog blog = (Blog)request.getAttribute(Constants.BLOG_KEY);
+    return !SecurityUtils.isUserAuthorisedForBlog(blog);
   }
 
 }
