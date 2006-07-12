@@ -158,7 +158,7 @@
 
     <div style="overflow: auto;">
     <table width="99%" cellpadding="4" cellspacing="0" class="small">
-    <tr class="odd">
+    <tr class="even">
       <td>
         <b>Properties</b><pre>${blog.pluginProperties.propertiesAsString}</pre>
       </td>

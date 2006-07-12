@@ -1,10 +1,12 @@
-package net.sourceforge.pebble.api.comment;
+package net.sourceforge.pebble.confirmation;
 
 import net.sourceforge.pebble.domain.Comment;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.util.SecurityUtils;
 import net.sourceforge.pebble.api.event.comment.CommentListener;
 import net.sourceforge.pebble.api.event.comment.CommentEvent;
+import net.sourceforge.pebble.api.comment.CommentConfirmationStrategy;
+import net.sourceforge.pebble.api.trackback.TrackBackConfirmationStrategy;
 import net.sourceforge.pebble.event.response.IpAddressListener;
 import net.sourceforge.pebble.event.response.ContentSpamListener;
 import net.sourceforge.pebble.event.response.SpamScoreListener;
@@ -14,11 +16,11 @@ import net.sourceforge.pebble.PluginProperties;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Starting point for CommentConfirmationStrategy implementations.
+ * Starting point for ConfirmationStrategy implementations.
  *
  * @author    Simon Brown
  */
-public abstract class AbstractCommentConfirmationStrategy implements CommentConfirmationStrategy {
+public abstract class AbstractConfirmationStrategy implements CommentConfirmationStrategy, TrackBackConfirmationStrategy {
 
   /** the name of the required override property */
   public static final String REQUIRED_KEY = "CommentConfirmationStrategy.required";
@@ -59,12 +61,13 @@ public abstract class AbstractCommentConfirmationStrategy implements CommentConf
   }
 
   /**
-   * Called before showing the confirmation page.
+   * Called to determine whether confirmation is required.
    *
    * @param request the HttpServletRequest used in the confirmation
-   * @param comment the Comment being confirmed
+   * @return true if the comment should be confirmed, false otherwise
    */
-  public void setupConfirmation(HttpServletRequest request, Comment comment) {
+  public boolean confirmationRequired(HttpServletRequest request) {
+    return true;
   }
 
 }

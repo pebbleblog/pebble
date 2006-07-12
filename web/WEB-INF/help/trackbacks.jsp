@@ -4,8 +4,8 @@
 
   <div class="contentItemBody">
     <p>
-      TrackBacks (<a href="http://www.movabletype.org/trackback/beginners/">definition</a>) are another mechanism for visitors to leave feedback on your blog. Where comments are responses that are left on your blog, TrackBacks  are effectively links back to responses that somebody has written on their website.
-      As with comments, the number of TrackBacks that have been received for a particular blog entry is shown underneath the entry. Clicking the "TrackBacks[x]" link will take you to the TrackBacks for that blog entry.
+      TrackBacks are another mechanism for visitors to leave feedback on your blog. Where comments are responses that are left on your blog, TrackBacks  are effectively links back to responses that somebody has written on their website.
+      As with comments, the number of TrackBacks that have been received for a particular blog entry is shown underneath the entry. Clicking the "Responses[x]" link will take you to the TrackBacks for that blog entry.
     </p>
 
     <h3>Removing TrackBacks</h3>

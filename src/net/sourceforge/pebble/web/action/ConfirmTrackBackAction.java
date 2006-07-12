@@ -3,7 +3,6 @@ package net.sourceforge.pebble.web.action;
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.api.trackback.TrackBackConfirmationStrategy;
 import net.sourceforge.pebble.domain.*;
-import net.sourceforge.pebble.trackback.DefaultTrackBackConfirmationStrategy;
 import net.sourceforge.pebble.web.view.NotFoundView;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.impl.ConfirmTrackBackView;
@@ -58,7 +57,7 @@ public class ConfirmTrackBackAction extends AbstractTrackBackAction {
 
     TrackBackConfirmationStrategy strategy = blog.getTrackBackConfirmationStrategy();
 
-    if (strategy.confirm(request)) {
+    if (strategy.isConfirmed(request)) {
       generateTrackBackLink(blogEntry);
       request.getSession().removeAttribute(BLOG_ENTRY_ID);
       return new TrackBackLinkView();

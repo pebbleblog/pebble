@@ -1,4 +1,4 @@
-package net.sourceforge.pebble.comment;
+package net.sourceforge.pebble.confirmation;
 
 import com.octo.captcha.service.CaptchaServiceException;
 import com.sun.image.codec.jpeg.JPEGCodec;

@@ -1,6 +1,7 @@
 package net.sourceforge.pebble.api.trackback;
 
 import net.sourceforge.pebble.domain.Comment;
+import net.sourceforge.pebble.confirmation.ConfirmationStrategy;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -10,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
  *
  * @author    Simon Brown
  */
-public interface TrackBackConfirmationStrategy {
+public interface TrackBackConfirmationStrategy extends ConfirmationStrategy {
 
   /**
    * Called to determine whether confirmation is required.
@@ -19,28 +20,5 @@ public interface TrackBackConfirmationStrategy {
    * @return  true if the comment should be confirmed, false otherwise
    */
   public boolean confirmationRequired(HttpServletRequest request);
-
-  /**
-   * Called before showing the confirmation page.
-   *
-   * @param request   the HttpServletRequest used in the confirmation
-   */
-  public void setupConfirmation(HttpServletRequest request);
-
-  /**
-   * Gets the URI of the confirmation page.
-   *
-   * @return  a URI, relative to the web application root.
-   */
-  public String getUri();
-
-  /**
-   * Called to confirm a comment.
-   *
-   * @param request   the HttpServletRequest used in the confirmation
-   * @return  true if the comment has been successfully confirmed,
-   *          false otherwise
-   */
-  public boolean confirm(HttpServletRequest request);
 
 }

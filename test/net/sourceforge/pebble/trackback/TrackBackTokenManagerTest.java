@@ -29,28 +29,46 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package net.sourceforge.pebble.api.comment;
+package net.sourceforge.pebble.trackback;
 
-import net.sourceforge.pebble.domain.Comment;
-import net.sourceforge.pebble.confirmation.ConfirmationStrategy;
-
-import javax.servlet.http.HttpServletRequest;
+import junit.framework.TestCase;
 
 /**
- * Represents an abstraction of the various ways in which comments
- * can be confirmed.
+ * Tests for the TrackBackTokenManager class.
  *
  * @author    Simon Brown
  */
-public interface CommentConfirmationStrategy extends ConfirmationStrategy {
+public class TrackBackTokenManagerTest extends TestCase {
 
-  /**
-   * Called to determine whether confirmation is required.
-   *
-   * @param request   the HttpServletRequest used in the confirmation
-   * @param comment   the Comment being confirmed
-   * @return  true if the comment should be confirmed, false otherwise
-   */
-  public boolean confirmationRequired(HttpServletRequest request, Comment comment);
+  private TrackBackTokenManager manager = TrackBackTokenManager.getInstance();
+
+  public void testGenerateToken() {
+    String token1 = manager.generateToken();
+    String token2 = manager.generateToken();
+    String token3 = manager.generateToken();
+
+    assertFalse(token1.equals(token2));
+    assertFalse(token1.equals(token3));
+    assertFalse(token2.equals(token3));
+  }
+
+  public void testIsValid() {
+    assertFalse(manager.isValid(null));
+    assertFalse(manager.isValid(""));
+
+    // tokens are numeric, so this token won't be valid
+    assertFalse(manager.isValid("atoken"));
+
+    assertFalse(manager.isValid("123456789"));
+
+    String token = manager.generateToken();
+    assertTrue(manager.isValid(token));
+  }
+
+  public void testExpire() {
+    String token = manager.generateToken();
+    manager.expire(token);
+    assertFalse(manager.isValid(token));
+  }
 
 }

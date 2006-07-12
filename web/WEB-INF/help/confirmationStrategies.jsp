@@ -1,17 +1,17 @@
 <div class="contentItem">
-  <h1>Comment Confirmation Strategies</h1>
+  <h1>Confirmation Strategies</h1>
   <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
     <p>
-      Comment Confirmation Strategies are a type of Pebble plugin that can be used to better assert that somebody
-      leaving a comment is human, as opposed to an automated comment spam agent. It does this by providing a pluggable
-      strategy for asking readers to confirm their comments by means of clicking a button or through some other kind of CAPTCHA.
+      Confirmation Strategies are a type of Pebble plugin that can be used to better assert that somebody
+      leaving a comment or trying to send a TrackBack is human, as opposed to an automated comment spam agent. It does this by providing a pluggable
+      strategy for asking readers to confirm their action by means of clicking a button or through some other kind of CAPTCHA.
     </p>
 
-    <h3>Comment confirmation process</h3>
+    <h3>Confirmation process for comments</h3>
     <p>
-      Comment confirmation fits into the overall process of leaving a comment as follows.
+      Confirmation fits into the overall process of leaving a comment as follows.
     </p>
 
     <ol>
@@ -31,29 +31,41 @@
       To override the functionality outlined in step 2.2, add a <a href="viewPlugins.secureaction#properties">plugin property</a> called <code>CommentConfirmationStrategy.required</code> and set the value to <code>true</code>.
     </p>
 
+    <h3>Confirmation process for TrackBacks</h3>
+    <p>
+      Confirmation fits into the overall process of sending a TrackBack as follows.
+    </p>
+
+    <ol>
+      <li>The reader finds the blog entry they want to send a TrackBack and clicks the TrackBack link.</li>
+      <li>If Pebble determines that confirmation is required, the reader will be redirected to a page where they will be asked to confirm that they want to generate a TrackBack link, using the strategy configured for the blog.</li>
+      <li>Only successful confirmation will result in the generation of a single use TrackBack link that the reader can use to send a TrackBack to the blog entry.</li>
+    </ol>
+
+    <h3>Prebuilt confirmation strategies</h3>
     <p>
       The following comment confirmation strategies are included with the Pebble distribution.
     </p>
 
     <p>
-      <b>net.sourceforge.pebble.comment.DefaultCommentConfirmationStrategy</b><br/>
-      Asks the reader to confirm their comment by clicking a button. This is the simplest strategy but also
-      one that comment spammers can easily work around.
+      <b>net.sourceforge.pebble.confirmation.DefaultConfirmationStrategy</b><br/>
+      Asks the reader to confirm their action by clicking a button. This is the simplest strategy but also
+      one that automated spambots can easily work around.
     </p>
 
     <p>
-      <b>net.sourceforge.pebble.comment.SimpleMathsCommentConfirmationStrategy</b><br/>
-      Asks the reader to confirm their comment by answering a simple maths question based on the
+      <b>net.sourceforge.pebble.confirmation.SimpleMathsConfirmationStrategy</b><br/>
+      Asks the reader to confirm their action by answering a simple maths question based on the
       addition, subtraction or multiplication of two numbers between 1 and 10.
     </p>
 
     <p>
-      <b>net.sourceforge.pebble.comment.ImageCaptchaCommentConfirmationStrategy</b><br/>
-      Asks the reader to confirm their comment by entering the text they see in a distorted image.
+      <b>net.sourceforge.pebble.confirmation.ImageCaptchaConfirmationStrategy</b><br/>
+      Asks the reader to confirm their action by entering the text they see in a distorted image.
     </p>
 
     <p>
-      <b>net.sourceforge.pebble.comment.NoOpCommentConfirmationStrategy</b><br/>
+      <b>net.sourceforge.pebble.confirmation.NoOpConfirmationStrategy</b><br/>
       A strategy that doesn't require comments to be confirmed. Use this if you want to leave comment spam
       detection to the set of configured comment listeners and not ask readers to confirm their comments.
     </p>
@@ -64,5 +76,12 @@
       following strategy.
     </p>
     <pre class="codeSample">${blog.commentConfirmationStrategy.class.name}</pre>
+
+    <h3>Configuring the TrackBack confirmation strategy</h3>
+    <p>
+      To configure the TrackBack confirmation strategy used by your blog, simply modify the entry on the <a href="viewPlugins.secureaction#trackBackConfirmationStrategy">Plugins</a> page. Your blog is using the
+      following strategy.
+    </p>
+    <pre class="codeSample">${blog.trackBackConfirmationStrategy.class.name}</pre>
   </div>
 </div>

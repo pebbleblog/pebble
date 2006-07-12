@@ -1,7 +1,7 @@
 package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.domain.BlogEntry;
-import net.sourceforge.pebble.domain.TrackBackTokenManager;
+import net.sourceforge.pebble.trackback.TrackBackTokenManager;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -18,7 +18,7 @@ public abstract class AbstractTrackBackAction extends Action {
   private static Log log = LogFactory.getLog(AbstractTrackBackAction.class);
 
   protected void generateTrackBackLink(BlogEntry blogEntry) {
-    String token = TrackBackTokenManager.getInstance().generateToken(blogEntry);
+    String token = TrackBackTokenManager.getInstance().generateToken();
 
     StringBuffer link = new StringBuffer();
     link.append(blogEntry.getBlog().getUrl());

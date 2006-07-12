@@ -29,29 +29,51 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package net.sourceforge.pebble.comment;
-
-import net.sourceforge.pebble.api.comment.AbstractCommentConfirmationStrategy;
-import net.sourceforge.pebble.domain.Comment;
+package net.sourceforge.pebble.confirmation;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Random;
 
 /**
- * No-op implementation that doesn't require confirmation to be performed.
+ * Simple maths confirmation strategy that asks the user to add/subtract/multiply
+ * two random numbers together.
  *
  * @author    Simon Brown
  */
-public class NoOpCommentConfirmationStrategy extends AbstractCommentConfirmationStrategy {
+public class SimpleMathsConfirmationStrategy extends AbstractConfirmationStrategy {
+
+  private static final String ARGUMENT1 = "SimpleMathsConfirmationStrategyArg1";
+  private static final String ARGUMENT2 = "SimpleMathsConfirmationStrategyArg2";
+  private static final String OPERATOR = "SimpleMathsConfirmationStrategyOperator";
+  private static final String ANSWER = "SimpleMathsConfirmationStrategyAnswer";
 
   /**
-   * Called to determine whether confirmation is required.
+   * Called before showing the confirmation page.
    *
    * @param request the HttpServletRequest used in the confirmation
-   * @param comment the Comment being confirmed
-   * @return true if the comment should be confirmed, false otherwise
    */
-  public boolean confirmationRequired(HttpServletRequest request, Comment comment) {
-    return false;
+  public void setupConfirmation(HttpServletRequest request) {
+    Random r = new Random();
+    int arg1 = r.nextInt(10) + 1;
+    int arg2 = r.nextInt(10) + 1;
+    int op = r.nextInt(3);
+    request.getSession().setAttribute(ARGUMENT1, arg1);
+    request.getSession().setAttribute(ARGUMENT2, arg2);
+
+    switch (op) {
+      case 0 :
+        request.getSession().setAttribute(OPERATOR, "+");
+        request.getSession().setAttribute(ANSWER, arg1 + arg2);
+        break;
+      case 1 :
+        request.getSession().setAttribute(OPERATOR, "-");
+        request.getSession().setAttribute(ANSWER, arg1 - arg2);
+        break;
+      case 2 :
+        request.getSession().setAttribute(OPERATOR, "*");
+        request.getSession().setAttribute(ANSWER, arg1 * arg2);
+        break;
+  }
   }
 
   /**
@@ -60,19 +82,20 @@ public class NoOpCommentConfirmationStrategy extends AbstractCommentConfirmation
    * @return a URI, relative to the web application root.
    */
   public String getUri() {
-    return null;
+    return "/WEB-INF/jsp/confirmation/maths.jsp";
   }
 
   /**
-   * Called to confirm a comment.
+   * Called to determine whether confirmation was successful.
    *
-   * @param request the HttpServletRequest used in the confirmation
-   * @param comment the Comment being confirmed
-   * @return true if the comment has been successfully confirmed,
-   *         false otherwise
+   * @param request   the HttpServletRequest used in the confirmation
+   * @return  true if the confirmation was successful, false otherwise
    */
-  public boolean confirmComment(HttpServletRequest request, Comment comment) {
-    return true;
+  public boolean isConfirmed(HttpServletRequest request) {
+    Integer answer = (Integer)request.getSession().getAttribute(ANSWER);
+    String userAnswer = request.getParameter("answer");
+
+    return answer.toString().equals(userAnswer);
   }
 
 }

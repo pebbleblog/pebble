@@ -35,6 +35,7 @@ import net.sf.ehcache.Cache;
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.PebbleContext;
 import net.sourceforge.pebble.PluginProperties;
+import net.sourceforge.pebble.confirmation.DefaultConfirmationStrategy;
 import net.sourceforge.pebble.api.comment.CommentConfirmationStrategy;
 import net.sourceforge.pebble.api.decorator.ContentDecorator;
 import net.sourceforge.pebble.api.event.EventDispatcher;
@@ -45,7 +46,6 @@ import net.sourceforge.pebble.api.event.comment.CommentListener;
 import net.sourceforge.pebble.api.event.trackback.TrackBackListener;
 import net.sourceforge.pebble.api.permalink.PermalinkProvider;
 import net.sourceforge.pebble.api.trackback.TrackBackConfirmationStrategy;
-import net.sourceforge.pebble.comment.DefaultCommentConfirmationStrategy;
 import net.sourceforge.pebble.dao.CategoryDAO;
 import net.sourceforge.pebble.dao.DAOFactory;
 import net.sourceforge.pebble.dao.PersistenceException;
@@ -58,7 +58,6 @@ import net.sourceforge.pebble.index.*;
 import net.sourceforge.pebble.logging.AbstractLogger;
 import net.sourceforge.pebble.logging.CombinedLogFormatLogger;
 import net.sourceforge.pebble.permalink.DefaultPermalinkProvider;
-import net.sourceforge.pebble.trackback.DefaultTrackBackConfirmationStrategy;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -185,7 +184,7 @@ public class Blog extends AbstractBlog {
     } catch (Exception e) {
       error("Could not load comment confirmation strategy \"" + getCommentConfirmationStrategyName() + "\"");
       e.printStackTrace();
-      commentConfirmationStrategy = new DefaultCommentConfirmationStrategy();
+      commentConfirmationStrategy = new DefaultConfirmationStrategy();
     }
 
     try {
@@ -194,7 +193,7 @@ public class Blog extends AbstractBlog {
     } catch (Exception e) {
       error("Could not load TrackBack confirmation strategy \"" + getTrackBackConfirmationStrategyName() + "\"");
       e.printStackTrace();
-      trackBackConfirmationStrategy = new DefaultTrackBackConfirmationStrategy();
+      trackBackConfirmationStrategy = new DefaultConfirmationStrategy();
     }
 
     initLogger();
@@ -426,8 +425,8 @@ public class Blog extends AbstractBlog {
     defaultProperties.setProperty(PERMALINK_PROVIDER_KEY, "net.sourceforge.pebble.permalink.DefaultPermalinkProvider");
     defaultProperties.setProperty(EVENT_DISPATCHER_KEY, "net.sourceforge.pebble.event.DefaultEventDispatcher");
     defaultProperties.setProperty(LOGGER_KEY, "net.sourceforge.pebble.logging.CombinedLogFormatLogger");
-    defaultProperties.setProperty(COMMENT_CONFIRMATION_STRATEGY_KEY, "net.sourceforge.pebble.comment.DefaultCommentConfirmationStrategy");
-    defaultProperties.setProperty(TRACKBACK_CONFIRMATION_STRATEGY_KEY, "net.sourceforge.pebble.trackback.DefaultTrackBackConfirmationStrategy");
+    defaultProperties.setProperty(COMMENT_CONFIRMATION_STRATEGY_KEY, "net.sourceforge.pebble.confirmation.DefaultConfirmationStrategy");
+    defaultProperties.setProperty(TRACKBACK_CONFIRMATION_STRATEGY_KEY, "net.sourceforge.pebble.confirmation.DefaultConfirmationStrategy");
     defaultProperties.setProperty(RICH_TEXT_EDITOR_FOR_BLOG_ENTRIES_ENABLED_KEY, "false");
     defaultProperties.setProperty(RICH_TEXT_EDITOR_FOR_STATIC_PAGES_ENABLED_KEY, "false");
     defaultProperties.setProperty(RICH_TEXT_EDITOR_FOR_COMMENTS_ENABLED_KEY, "true");

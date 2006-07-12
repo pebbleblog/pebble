@@ -29,40 +29,37 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package net.sourceforge.pebble.comment;
-
-import net.sourceforge.pebble.api.comment.AbstractCommentConfirmationStrategy;
-import net.sourceforge.pebble.domain.Comment;
+package net.sourceforge.pebble.confirmation;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Default implementation that just asks the user to click a button to confirm
- * their comment.
+ * Represents an abstraction of the various ways that confirmations can happen.
  *
  * @author    Simon Brown
  */
-public class DefaultCommentConfirmationStrategy extends AbstractCommentConfirmationStrategy {
+public interface ConfirmationStrategy {
+
+  /**
+   * Called before showing the confirmation page.
+   *
+   * @param request   the HttpServletRequest used in the confirmation
+   */
+  public void setupConfirmation(HttpServletRequest request);
 
   /**
    * Gets the URI of the confirmation page.
    *
-   * @return a URI, relative to the web application root.
+   * @return  a URI, relative to the web application root.
    */
-  public String getUri() {
-    return "/WEB-INF/jsp/defaultCommentConfirmation.jsp";
-  }
+  public String getUri();
 
   /**
-   * Called to confirm a comment.
+   * Called to determine whether confirmation was successful.
    *
-   * @param request the HttpServletRequest used in the confirmation
-   * @param comment the Comment being confirmed
-   * @return true if the comment has been successfully confirmed,
-   *         false otherwise
+   * @param request   the HttpServletRequest used in the confirmation
+   * @return  true if the confirmation was successful, false otherwise
    */
-  public boolean confirmComment(HttpServletRequest request, Comment comment) {
-    return true;
-  }
+  public boolean isConfirmed(HttpServletRequest request);
 
 }

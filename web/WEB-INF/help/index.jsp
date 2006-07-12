@@ -50,8 +50,8 @@
               <li><a href="./help/blogListeners.html">Blog Listeners</a></li>
               <li><a href="./help/blogEntryListeners.html">Blog Entry Listeners</a></li>
               <li><a href="./help/commentListeners.html">Comment Listeners</a></li>
-              <li><a href="./help/commentConfirmationStrategies.html">Comment Confirmation Strategies</a></li>
               <li><a href="./help/trackbackListeners.html">TrackBack Listeners</a></li>
+              <li><a href="./help/confirmationStrategies.html">Confirmation Strategies</a></li>
             </ol>
             <h3>Extending Pebble</h3>
             <ol>
@@ -62,7 +62,7 @@
               <li><a href="./help/writingBlogListeners.html">Writing Blog Listeners</a></li>
               <li><a href="./help/writingBlogEntryListeners.html">Writing Blog Entry Listeners</a></li>
               <li><a href="./help/writingCommentListeners.html">Writing Comment Listeners</a></li>
-              <li><a href="./help/writingCommentConfirmationStrategies.html">Writing Comment Confirmation Strategies</a></li>
+              <li><a href="./help/writingConfirmationStrategies.html">Writing Confirmation Strategies</a></li>
               <li><a href="./help/writingTrackBackListeners.html">Writing TrackBack Listeners</a></li>
             </ol>
         </td>

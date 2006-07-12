@@ -69,7 +69,7 @@ public class ConfirmCommentAction extends AbstractCommentAction {
 
     Comment clonedComment = (Comment)comment.clone();
 
-    if (strategy.confirmComment(request, clonedComment)) {
+    if (strategy.isConfirmed(request)) {
       try {
         saveComment(request, response, blogEntry, comment);
         request.getSession().removeAttribute(Constants.COMMENT_KEY);
@@ -80,7 +80,7 @@ public class ConfirmCommentAction extends AbstractCommentAction {
       }
     } else {
       // try again!
-      strategy.setupConfirmation(request, clonedComment);
+      strategy.setupConfirmation(request);
       return new ConfirmCommentView();
     }
   }

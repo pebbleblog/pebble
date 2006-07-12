@@ -1,4 +1,4 @@
-package net.sourceforge.pebble.comment;
+package net.sourceforge.pebble.confirmation;
 
 import com.octo.captcha.service.image.DefaultManageableImageCaptchaService;
 import com.octo.captcha.service.image.ImageCaptchaService;

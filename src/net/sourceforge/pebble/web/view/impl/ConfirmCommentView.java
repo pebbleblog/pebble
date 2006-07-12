@@ -13,6 +13,13 @@ import net.sourceforge.pebble.api.comment.CommentConfirmationStrategy;
 public class ConfirmCommentView extends HtmlView {
 
   /**
+   * Prepares the view for presentation.
+   */
+  public void prepare() {
+    getModel().put("confirmationAction", "confirmComment.action");
+  }
+
+  /**
    * Gets the title of this view.
    *
    * @return the title as a String

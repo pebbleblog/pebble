@@ -142,7 +142,7 @@
 
   <servlet>
     <servlet-name>jcaptcha</servlet-name>
-    <servlet-class>net.sourceforge.pebble.comment.ImageCaptchaServlet</servlet-class>
+    <servlet-class>net.sourceforge.pebble.confirmation.ImageCaptchaServlet</servlet-class>
     <load-on-startup>0</load-on-startup>
   </servlet>
 

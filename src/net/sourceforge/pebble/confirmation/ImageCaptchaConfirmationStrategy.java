@@ -29,28 +29,57 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package net.sourceforge.pebble.api.comment;
+package net.sourceforge.pebble.confirmation;
 
-import net.sourceforge.pebble.domain.Comment;
-import net.sourceforge.pebble.confirmation.ConfirmationStrategy;
+import com.octo.captcha.service.CaptchaServiceException;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Represents an abstraction of the various ways in which comments
- * can be confirmed.
+ * Image captcha comment confirmation strategy.
  *
  * @author    Simon Brown
  */
-public interface CommentConfirmationStrategy extends ConfirmationStrategy {
+public class ImageCaptchaConfirmationStrategy extends AbstractConfirmationStrategy {
+
+  /** the log used by this class */
+  private static final Log log = LogFactory.getLog(ImageCaptchaConfirmationStrategy.class);
 
   /**
-   * Called to determine whether confirmation is required.
+   * Called before showing the confirmation page.
+   *
+   * @param request the HttpServletRequest used in the confirmation
+   */
+  public void setupConfirmation(HttpServletRequest request) {
+  }
+
+  /**
+   * Gets the URI of the confirmation page.
+   *
+   * @return a URI, relative to the web application root.
+   */
+  public String getUri() {
+    return "/WEB-INF/jsp/confirmation/imageCaptcha.jsp";
+  }
+
+  /**
+   * Called to determine whether confirmation was successful.
    *
    * @param request   the HttpServletRequest used in the confirmation
-   * @param comment   the Comment being confirmed
-   * @return  true if the comment should be confirmed, false otherwise
+   * @return  true if the confirmation was successful, false otherwise
    */
-  public boolean confirmationRequired(HttpServletRequest request, Comment comment);
+  public boolean isConfirmed(HttpServletRequest request) {
+    String captchaId = request.getSession().getId();
+    String response = request.getParameter("j_captcha_response");
+    try {
+      return CaptchaService.getInstance().validateResponseForID(captchaId, response);
+    } catch (CaptchaServiceException e) {
+      ImageCaptchaConfirmationStrategy.log.error(e);
+    }
+
+    return false;
+  }
 
 }

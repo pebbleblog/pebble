@@ -13,6 +13,13 @@ import net.sourceforge.pebble.web.view.HtmlView;
 public class ConfirmTrackBackView extends HtmlView {
 
   /**
+   * Prepares the view for presentation.
+   */
+  public void prepare() {
+    getModel().put("confirmationAction", "confirmTrackBack.action");
+  }
+
+  /**
    * Gets the title of this view.
    *
    * @return the title as a String

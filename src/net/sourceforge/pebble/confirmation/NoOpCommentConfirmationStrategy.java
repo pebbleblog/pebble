@@ -29,28 +29,65 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package net.sourceforge.pebble.api.comment;
+package net.sourceforge.pebble.confirmation;
 
 import net.sourceforge.pebble.domain.Comment;
-import net.sourceforge.pebble.confirmation.ConfirmationStrategy;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Represents an abstraction of the various ways in which comments
- * can be confirmed.
+ * No-op implementation that doesn't require confirmation to be performed.
  *
  * @author    Simon Brown
  */
-public interface CommentConfirmationStrategy extends ConfirmationStrategy {
+public class NoOpCommentConfirmationStrategy extends AbstractConfirmationStrategy {
 
   /**
    * Called to determine whether confirmation is required.
    *
-   * @param request   the HttpServletRequest used in the confirmation
-   * @param comment   the Comment being confirmed
-   * @return  true if the comment should be confirmed, false otherwise
+   * @param request the HttpServletRequest used in the confirmation
+   * @param comment the Comment being confirmed
+   * @return true if the comment should be confirmed, false otherwise
    */
-  public boolean confirmationRequired(HttpServletRequest request, Comment comment);
+  public boolean confirmationRequired(HttpServletRequest request, Comment comment) {
+    return false;
+  }
+
+  /**
+   * Called to determine whether confirmation is required.
+   *
+   * @param request the HttpServletRequest used in the confirmation
+   * @return true if the comment should be confirmed, false otherwise
+   */
+  public boolean confirmationRequired(HttpServletRequest request) {
+    return false;
+  }
+
+  /**
+   * Called before showing the confirmation page.
+   *
+   * @param request the HttpServletRequest used in the confirmation
+   */
+  public void setupConfirmation(HttpServletRequest request) {
+  }
+
+  /**
+   * Gets the URI of the confirmation page.
+   *
+   * @return a URI, relative to the web application root.
+   */
+  public String getUri() {
+    return null;
+  }
+
+  /**
+   * Called to determine whether confirmation was successful.
+   *
+   * @param request   the HttpServletRequest used in the confirmation
+   * @return  true if the confirmation was successful, false otherwise
+   */
+  public boolean isConfirmed(HttpServletRequest request) {
+    return true;
+  }
 
 }

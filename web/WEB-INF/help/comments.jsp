@@ -5,7 +5,7 @@
   <div class="contentItemBody">
     <p>
       Pebble allows visitors to leave comments on your blog entries and although comments are enabled for new blog entries by default, they can be disabled so that comments can't be left.
-      The number of comments for any blog entry is shown underneath the blog entry itself along with a "Comments[x]" link that takes you to the comments for that entry.
+      The number of comments for any blog entry is shown underneath the blog entry itself along with a "Responses[x]" link that takes you to the comments for that entry.
       Pebble supports nested comments for threads of conversation and allows readers to preview their comments before posting them to your blog.
     </p>
 
