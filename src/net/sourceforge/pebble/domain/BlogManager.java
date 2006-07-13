@@ -103,25 +103,29 @@ public class BlogManager {
    */
   public void startBlogs() {
     File dataDirectory = new File(PebbleContext.getInstance().getConfiguration().getDataDirectory());
+    File blogsDirectory = getBlogsDirectory();
+    File defaultBlog = new File(blogsDirectory, DEFAULT_BLOG);
+
     if (!dataDirectory.exists()) {
       log.info("Pebble data directory does not exist - creating");
       dataDirectory.mkdirs();
-
-      File blogsDirectory = getBlogsDirectory();
       blogsDirectory.mkdir();
-
-      File defaultBlog = new File(blogsDirectory, DEFAULT_BLOG);
       defaultBlog.mkdir();
     }
 
-    // find all directories and set them up as blogs
-    File files[] = getBlogsDirectory().listFiles();
-    if (files != null) {
-      for (File file : files) {
-        if (file.isDirectory()) {
-          startBlog(file.getAbsolutePath(), file.getName());
+    if (isMultiBlog()) {
+      // find all directories and set them up as blogs
+      File files[] = getBlogsDirectory().listFiles();
+      if (files != null) {
+        for (File file : files) {
+          if (file.isDirectory()) {
+            startBlog(file.getAbsolutePath(), file.getName());
+          }
         }
       }
+    } else {
+      // start the default blog only
+      startBlog(defaultBlog.getAbsolutePath(), DEFAULT_BLOG);      
     }
   }
 
