@@ -65,7 +65,7 @@ public final class SecurityUtils {
   }
 
   public static PebbleUserDetails getUserDetails() {
-    SecurityRealm realm = PebbleContext.getInstance().getSecurityRealm();
+    SecurityRealm realm = PebbleContext.getInstance().getConfiguration().getSecurityRealm();
     return realm.getUser(getUsername());
   }
 

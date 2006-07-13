@@ -70,24 +70,27 @@
       <tr class="odd">
         <td valign="top"><b>XML-RPC Details</b></td>
         <td>
-          ${pebbleContext.configuration.url}xmlrpc/
-          (handler is blogger or metaWeblog, blog id is ${blog.id})
+          URL : ${pebbleContext.configuration.url}xmlrpc/
+          <br />
+          Handler : blogger or metaWeblog
+          <br />
+          Blog ID : ${blog.id}
         </td>
       </tr>
 
       <tr class="even">
         <td colspan="2">
-          <b>Content Decorators</b><br />
-          <c:forEach var="decorator" items="${blog.contentDecoratorChain.contentDecorators}">
-            ${decorator.class.name}<br />
-          </c:forEach>
+          <b>Permalink Provider</b><br />
+            ${blog.permalinkProvider.class.name}
         </td>
       </tr>
 
       <tr class="odd">
         <td colspan="2">
-          <b>Permalink Provider</b><br />
-          ${blog.permalinkProvider.class.name}
+          <b>Content Decorators</b><br />
+          <c:forEach var="decorator" items="${blog.contentDecoratorChain.contentDecorators}">
+            ${decorator.class.name}<br />
+          </c:forEach>
         </td>
       </tr>
 

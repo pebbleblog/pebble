@@ -39,9 +39,11 @@
           <br /><br />
           <a href="installation.html">Installation</a><br />
           <a href="configuration.html">Configuration</a><br />
-          <a href="upgrading.html">Upgrading</a><br />
           <a href="security.html">Security</a><br />
           <a href="screenshots.html">Screenshots</a><br />
+          <br />
+          <a href="upgrading2x.html">Upgrading from 2.x</a><br />
+          <a href="upgrading1x.html">Upgrading from 1.x</a><br />
         </div>
 
         <div class="sidebarItem">
@@ -127,7 +129,8 @@
 
             <h3><a name="content"></a>Content</h3>
             <ul>
-              <li>Posting and management of content through your web browser or Blogger/MetaWeblog API compatible tools.</li>
+              <li>Posting and management of content through your web browser, including rich text editor support.</li>
+              <li>Blogger and MetaWeblog API interface included for posting content via compatible tools.</li>
               <li>Categorisation of content into multiple hierarchical categories.</li>
               <li>Tagging of content and a generation of a tagcloud.</li>
               <li>RSS enclosures for distrbuting files or podcasting.</li>
@@ -140,7 +143,8 @@
             <ul>
               <li>Reader responses, in the form of threaded comments and MovableType TrackBacks.</li>
               <li>E-mail notifications when new responses are received.</li>
-              <li>Pluggable moderation and spam detection, with bulk response management features.</li>
+              <li>Pluggable moderation, spam detection and CAPTCHA support.</li>
+              <li>Bulk response management features to approve/reject/remove comments and TrackBacks.</li>
             </ul>
 
             <h3><a name="admin"></a>Web-based Adminstration</h3>
@@ -214,13 +218,13 @@
 
             <h3><a name="plugins"></a>Plugin APIs</h3>
             <ul>
-              <li>Content Decorators let you customize how blog entries are displayed.</li>
               <li>Permalink Providers let you customize the format of your permalinks.</li>
+              <li>Content Decorators let you customize how blog entries are displayed.</li>
+              <li>Blog Listeners let you write Java code that is called when your blog starts up and shuts down.</li>
               <li>Blog Entry Listeners let you write Java code that is called when blog entries are added, removed, published and unpublished.</li>
               <li>Comment Listeners let you write Java code that is called when comments are added, removed, approved and rejected.</li>
-              <li>Comment Confirmation Strategies let you plugin different strategies for readers to confirm their comments, such as CAPTCHAs.</li>
               <li>TrackBack Listeners let you write Java code that is called when TrackBacks are added, removed, approved and rejected.</li>
-              <li>Blog Listeners let you write Java code that is called when your blog starts up and shuts down.</li>
+              <li>Confirmation Strategies let you plugin different strategies for readers to confirm their comments/TrackBacks, such as CAPTCHAs.</li>
             </ul>
 
           </div>

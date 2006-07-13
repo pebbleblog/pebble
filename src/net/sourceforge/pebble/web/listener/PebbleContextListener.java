@@ -66,12 +66,10 @@ public class PebbleContextListener implements ServletContextListener {
 
     ApplicationContext applicationContext = WebApplicationContextUtils.getRequiredWebApplicationContext(event.getServletContext());
     Configuration config = (Configuration)applicationContext.getBean("pebbleConfiguration");
-    SecurityRealm realm = (SecurityRealm)applicationContext.getBean("pebbleSecurityRealm");
 
     DAOFactory.setConfiguredFactory(config.getDaoFactory());
     PebbleContext ctx = PebbleContext.getInstance();
     ctx.setConfiguration(config);
-    ctx.setSecurityRealm(realm);
     ctx.setWebApplicationRoot(event.getServletContext().getRealPath("/"));
 
     BlogManager.getInstance().setMultiBlog(config.isMultiBlog());

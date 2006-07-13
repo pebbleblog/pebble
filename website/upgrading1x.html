@@ -27,12 +27,12 @@
       <div id="content">
 
         <div class="contentItem published">
-          <h1>Upgrading</h1>
-          <h2>What if I have an existing Pebble blog?</h2>
+          <h1>Upgrading from Pebble 1.x</h1>
+          <h2>&nbsp;</h2>
 
           <div class="contentItemBody">
             <p>
-            If you're upgrading from a previous (1.x) version of Pebble, you'll need to follow these instructions.
+            If you're upgrading from a previous 1.x version of Pebble, you'll need to follow these instructions.
             </p>
 
             <h3>Directory structure</h3>
@@ -121,21 +121,7 @@
             </p>
 
             <ul>
-              <li>Reset theme to default : open up <code>blog.properties</code> for each blog and remove the line that starts <code>theme=</code></li>
               <li>Remove the backup theme : remove the directory called <code>theme</code> underneath each blog</li>
-            </ul>
-
-            <h3>Plugins</h3>
-            <p>
-            The names for the plugins have changed and the easiest way to correct these is to call <code>resetPlugins.secureaction</code> after logging in to your blog. Alternatively, open up the <code>blog.properties</code> file for each blog and remove the lines that start with the following.
-            </p>
-
-            <ul>
-              <li><code>blogEntryDecorators=</code></li>
-              <li><code>blogEntryListeners=</code></li>
-              <li><code>commentListeners=</code></li>
-              <li><code>trackBackListeners=</code></li>
-              <li><code>permalinkProviderName=</code></li>
             </ul>
           </div>
         </div>

@@ -7,8 +7,9 @@ Added an "archive by month" list into the sidebar of the default theme (commente
 Integrated FCKeditor (rich text editor) for blog entries, static pages and comments.
 Added net.sourceforge.pebble.event.response.MarkApprovedListener for automatic approval of responses.
 Fixed problem where changing timezone causes Pebble to crash (all blog entries now stored in a yyyy/mm/dd hierarchy based on GMT).
-Added auto-upgrade utility.
+Added auto-upgrade utility - this restructures blog data into GMT and reset the theme and plugins back to their default values.
 Added secureUrl to applicationContext-pebble.xml for secure login.
+Added reference to pebbleSecurityRealm (via securityRealm bean) to applicationContext-pebble.xml file.
 Upgraded Acegi to 1.0.1 and the changed authenticationProcessingFilter bean to be an instance of net.sourceforge.pebble.security.AuthenticationProcessingFilter.
 Changed the package name for Comment Confirmation Strategy implementations to net.sourceforge.pebble.confirmation.
 TrackBack links now need to be generated, are single use and expire after 10 minutes.

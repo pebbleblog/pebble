@@ -33,6 +33,7 @@ package net.sourceforge.pebble;
 
 import net.sourceforge.pebble.dao.DAOFactory;
 import net.sourceforge.pebble.dao.file.FileDAOFactory;
+import net.sourceforge.pebble.security.SecurityRealm;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -54,6 +55,7 @@ public class Configuration {
   private long fileUploadSize = 2048;
   private long fileUploadQuota = -1;
   private DAOFactory daoFactory = new FileDAOFactory();
+  private SecurityRealm securityRealm;
 
   public Configuration() {
   }
@@ -132,6 +134,14 @@ public class Configuration {
 
   public void setMultiBlog(boolean multiBlog) {
     this.multiBlog = multiBlog;
+  }
+
+  public SecurityRealm getSecurityRealm() {
+    return securityRealm;
+  }
+
+  public void setSecurityRealm(SecurityRealm securityRealm) {
+    this.securityRealm = securityRealm;
   }
 
   /**

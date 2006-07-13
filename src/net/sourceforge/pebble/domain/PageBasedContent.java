@@ -194,7 +194,7 @@ public abstract class PageBasedContent extends Content {
    */
   public PebbleUserDetails getUser() {
     if (this.user == null) {
-      SecurityRealm realm = PebbleContext.getInstance().getSecurityRealm();
+      SecurityRealm realm = PebbleContext.getInstance().getConfiguration().getSecurityRealm();
       this.user = realm.getUser(getAuthor());
     }
 

@@ -41,6 +41,7 @@
               <li>Secure URL (secureUrl) : the secure URL (starting https://), which should only be set if you intend to use secure login.</li>
               <li>Multi-blog (multiBlog) : a flag to indicate whether Pebble is running in multi-blog mode, default is false.</li>
               <li>SMTP host (smtpHost) : the name/IP address of the server through which e-mail is sent, or a JNDI name starting <code>java:/comp/env</code> pointing to a preconfigured javax.mail.Session instance. The default is <code>java:comp/env/mail/Session</code>.</li>
+              <li>Security realm (securityRealm) : the SecurityRealm implementation being used, default implementation is file based and uses <code>${dataDirectory}/realm</code> for storing information.</li>
             </ul>
 
             <h3>E-mail notifications</h3>

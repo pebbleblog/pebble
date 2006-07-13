@@ -53,8 +53,6 @@ public class PebbleContext {
 
   private Configuration configuration;
 
-  private SecurityRealm securityRealm;
-
   private String buildVersion;
   private String buildDate;
 
@@ -133,14 +131,6 @@ public class PebbleContext {
 
   public void setConfiguration(Configuration configuration) {
     this.configuration = configuration;
-  }
-
-  public SecurityRealm getSecurityRealm() {
-    return securityRealm;
-  }
-
-  public void setSecurityRealm(SecurityRealm securityRealm) {
-    this.securityRealm = securityRealm;
   }
 
   /**

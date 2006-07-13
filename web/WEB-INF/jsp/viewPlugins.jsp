@@ -10,6 +10,12 @@
   <div class="contentItemBody" style="overflow: auto">
     <form name="pluginsForm" action="savePlugins.secureaction" method="POST" accept-charset="${blog.characterEncoding}">
 
+      <a name="permalinkProvider"></a>
+      Permalink Provider (<span class="help"><a href="./help/permalinkProviders.html" target="_blank">Help</a></span>)
+      <br />
+      <input type="text" name="permalinkProviderName" size="60" value="${blog.permalinkProviderName}" />
+      <br /><br />
+
       <a name="contentDecorators"></a>
       Content Decorators (<span class="help"><a href="./help/contentDecorators.html" target="_blank">Help</a></span>)
       <br />
@@ -56,12 +62,6 @@
       Properties (<span class="help"><a href="./help/plugins.html#properties" target="_blank">Help</a></span>)
       <br />
       <textarea name="pluginProperties" rows="32" cols="60">${pluginProperties}</textarea>
-      <br /><br />
-
-      <a name="permalinkProvider"></a>
-      Permalink Provider (<span class="help"><a href="./help/permalinkProviders.html" target="_blank">Help</a></span>)
-      <br />
-      <input type="text" name="permalinkProviderName" size="60" value="${blog.permalinkProviderName}" />
       <br /><br />
 
       Lucene Analyzer
