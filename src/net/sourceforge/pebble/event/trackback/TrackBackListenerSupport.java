@@ -29,7 +29,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package net.sourceforge.pebble.api.event.trackback;
+package net.sourceforge.pebble.event.trackback;
 
 import net.sourceforge.pebble.api.event.trackback.TrackBackEvent;
 import net.sourceforge.pebble.api.event.trackback.TrackBackListener;

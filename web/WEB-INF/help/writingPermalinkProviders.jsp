@@ -9,7 +9,7 @@
     </p>
 
     <p>
-    A partial implementation is also available to subclass, called <a href="../javadoc/pebble/permalink/PermalinkProviderSupport.html">net.sourceforge.pebble.api.permalink.PermalinkProviderSupport</a>.
+    A partial implementation is also available to subclass, called <a href="../javadoc/pebble/permalink/PermalinkProviderSupport.html">net.sourceforge.pebble.permalink.PermalinkProviderSupport</a>.
     </p>
 
     <p>

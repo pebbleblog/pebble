@@ -21,11 +21,14 @@ public abstract class AbstractTrackBackAction extends Action {
     String token = TrackBackTokenManager.getInstance().generateToken();
 
     StringBuffer link = new StringBuffer();
-    link.append(blogEntry.getBlog().getUrl());
-    link.append("addTrackBack.action?entry=");
-    link.append(blogEntry.getId());
-    link.append("&token=");
-    link.append(token);
+    link.append(blogEntry.getTrackBackLink());
+
+    if (blogEntry.getBlog().getTrackBackConfirmationStrategy().confirmationRequired(blogEntry.getBlog())) {
+      link.append("&token=");
+      link.append(token);
+
+      getModel().put("trackBackLinkExpires", "true");
+    }
 
     getModel().put("trackBackLink", link);
   }

@@ -31,28 +31,54 @@
  */
 package net.sourceforge.pebble.confirmation;
 
+import net.sourceforge.pebble.domain.Comment;
+import net.sourceforge.pebble.domain.Blog;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Represents an abstraction of the various ways that confirmations can happen.
+ * No-op implementation that doesn't require confirmation to be performed.
  *
  * @author    Simon Brown
  */
-public interface ConfirmationStrategy {
+public class NoOpConfirmationStrategy extends AbstractConfirmationStrategy {
+
+  /**
+   * Called to determine whether confirmation is required.
+   *
+   * @param comment the Comment being confirmed
+   * @return true if the comment should be confirmed, false otherwise
+   */
+  public boolean confirmationRequired(Comment comment) {
+    return false;
+  }
+
+  /**
+   * Called to determine whether confirmation is required.
+   *
+   * @param blog    the owning Blog
+   * @return true if the confirmation is required, false otherwise
+   */
+  public boolean confirmationRequired(Blog blog) {
+    return false;
+  }
 
   /**
    * Called before showing the confirmation page.
    *
-   * @param request   the HttpServletRequest used in the confirmation
+   * @param request the HttpServletRequest used in the confirmation
    */
-  public void setupConfirmation(HttpServletRequest request);
+  public void setupConfirmation(HttpServletRequest request) {
+  }
 
   /**
    * Gets the URI of the confirmation page.
    *
-   * @return  a URI, relative to the web application root.
+   * @return a URI, relative to the web application root.
    */
-  public String getUri();
+  public String getUri() {
+    return null;
+  }
 
   /**
    * Called to determine whether confirmation was successful.
@@ -60,6 +86,8 @@ public interface ConfirmationStrategy {
    * @param request   the HttpServletRequest used in the confirmation
    * @return  true if the confirmation was successful, false otherwise
    */
-  public boolean isConfirmed(HttpServletRequest request);
+  public boolean isConfirmed(HttpServletRequest request) {
+    return true;
+  }
 
 }

@@ -465,6 +465,18 @@ public class BlogEntry extends PageBasedContent {
   }
 
   /**
+   * Gets the link that blogs can send TrackBacks too.
+    */
+  public String getTrackBackLink() {
+    StringBuffer link = new StringBuffer();
+    link.append(getBlog().getUrl());
+    link.append("addTrackBack.action?entry=");
+    link.append(getId());
+
+    return link.toString();
+  }
+
+  /**
    * Gets a list of all comments and TrackBacks.
    *
    * @return  a List of all Response instances

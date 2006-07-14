@@ -29,57 +29,49 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package net.sourceforge.pebble.api.event.blogentry;
+package net.sourceforge.pebble.event.comment;
 
-import net.sourceforge.pebble.api.event.blogentry.BlogEntryEvent;
-import net.sourceforge.pebble.api.event.blogentry.BlogEntryListener;
+import net.sourceforge.pebble.api.event.comment.CommentEvent;
+import net.sourceforge.pebble.api.event.comment.CommentListener;
 
 /**
- * Starting point for implementation of BlogEntryListener that
+ * Starting point for implementation of CommentListener that
  * provides no-op methods.
  *
  * @author Simon Brown
  */
-public abstract class BlogEntryListenerSupport implements BlogEntryListener {
+public abstract class CommentListenerSupport implements CommentListener {
 
   /**
-   * Called when a blog entry has been added.
+   * Called when a comment has been added.
    *
-   * @param event   a BlogEntryEvent instance
+   * @param event   a CommentEvent instance
    */
-  public void blogEntryAdded(BlogEntryEvent event) {
+  public void commentAdded(CommentEvent event) {
   }
 
   /**
-   * Called when a blog entry has been removed.
+   * Called when a comment has been removed.
    *
-   * @param event   a BlogEntryEvent instance
+   * @param event   a CommentEvent instance
    */
-  public void blogEntryRemoved(BlogEntryEvent event) {
+  public void commentRemoved(CommentEvent event) {
   }
 
   /**
-   * Called when a blog entry has been changed.
+   * Called when a comment has been approved.
    *
-   * @param event a BlogEntryEvent instance
+   * @param event   a CommentEvent instance
    */
-  public void blogEntryChanged(BlogEntryEvent event) {
+  public void commentApproved(CommentEvent event) {
   }
 
   /**
-   * Called when a blog entry has been published.
+   * Called when a comment has been rejected.
    *
-   * @param event a BlogEntryEvent instance
+   * @param event   a CommentEvent instance
    */
-  public void blogEntryPublished(BlogEntryEvent event) {
-  }
-
-  /**
-   * Called when a blog entry has been unpublished.
-   *
-   * @param event a BlogEntryEvent instance
-   */
-  public void blogEntryUnpublished(BlogEntryEvent event) {
+  public void commentRejected(CommentEvent event) {
   }
 
 }

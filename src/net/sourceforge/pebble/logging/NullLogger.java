@@ -47,7 +47,7 @@ public class NullLogger extends AbstractLogger {
 
   /**
    * Creates a new instance associated with the specified blog.
-   *
+   *                                                 
    * @param blog    a Blog instance
    */
   public NullLogger(Blog blog) {

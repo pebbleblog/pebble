@@ -35,7 +35,6 @@ import net.sourceforge.pebble.domain.BlogEntry;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.domain.BlogService;
 import net.sourceforge.pebble.domain.BlogServiceException;
-import net.sourceforge.pebble.api.permalink.PermalinkProviderSupport;
 
 
 /**

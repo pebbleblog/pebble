@@ -35,7 +35,6 @@ import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.domain.Comment;
 import net.sourceforge.pebble.api.decorator.ContentDecoratorContext;
 import net.sourceforge.pebble.api.event.comment.CommentEvent;
-import net.sourceforge.pebble.api.event.comment.CommentListenerSupport;
 import net.sourceforge.pebble.util.MailUtils;
 
 import javax.mail.Session;

@@ -64,10 +64,12 @@
       Asks the reader to confirm their action by entering the text they see in a distorted image.
     </p>
 
+    <a name="noOpConfirmationStrategy"></a>
     <p>
       <b>net.sourceforge.pebble.confirmation.NoOpConfirmationStrategy</b><br/>
-      A strategy that doesn't require comments to be confirmed. Use this if you want to leave comment spam
-      detection to the set of configured comment listeners and not ask readers to confirm their comments.
+      A strategy that doesn't require comments/TrackBacks to be confirmed. Use this if you want to leave comment/TrackBack spam
+      detection to the set of configured comment listeners instead of introducing a manual step in the process. Also use this strategy
+      if you intend to enable TrackBack Auto-Discovery.
     </p>
 
     <h3>Configuring the comment confirmation strategy</h3>

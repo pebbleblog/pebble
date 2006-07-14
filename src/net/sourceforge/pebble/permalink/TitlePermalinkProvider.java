@@ -32,7 +32,6 @@
 package net.sourceforge.pebble.permalink;
 
 import net.sourceforge.pebble.domain.*;
-import net.sourceforge.pebble.api.permalink.PermalinkProviderSupport;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

@@ -5,8 +5,8 @@
 
   <div class="contentItemBody">
     <p>
-      Here is your TrackBack link for <a href="${blogEntry.permalink}">${blogEntry.title}</a>. Please note, this link will expire in 10 minutes
-      and is only valid for a single use.
+      Here is your TrackBack link for <a href="${blogEntry.permalink}">${blogEntry.title}</a>. <c:if test="${trackBackLinkExpires}">Please note, this link will expire in 10 minutes
+      and is only valid for a single use.</c:if>
     </p>
 
     <pre class="small">${trackBackLink}</pre>

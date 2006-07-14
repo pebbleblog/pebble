@@ -68,6 +68,13 @@
       in conjunction with the DisableResponseListener (for comments and TrackBacks).
     </p>
 
+    <a name="trackBackAutoDisovery"></a>
+    <p>
+      <b>net.sourceforge.pebble.decorator.TrackBackAutoDiscoveryDecorator</b><br />
+      Generates TrackBack Auto-Discovery links for blog entries. See the <a href="http://www.sixapart.com/pronet/docs/trackback_spec">TrackBack Technical Specification</a> for more details. To use this,
+      you also need to configure the TrackBack Confirmation Strategy of your blog to be the <a href="./help/confirmationStrategies.html#noOpConfirmationStrategy">NoOpConfirmationStrategy</a>.
+    </p>
+
     <h3>Configuring content decorators</h3>
     <p>
       To configure the decorators that your blog uses, modify the list of decorators on the <a href="viewPlugins.secureaction#contentDecorators">Plugins</a> page. Your blog is using the

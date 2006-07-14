@@ -36,7 +36,8 @@ import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.PebbleContext;
 import net.sourceforge.pebble.PluginProperties;
 import net.sourceforge.pebble.confirmation.DefaultConfirmationStrategy;
-import net.sourceforge.pebble.api.comment.CommentConfirmationStrategy;
+import net.sourceforge.pebble.api.confirmation.CommentConfirmationStrategy;
+import net.sourceforge.pebble.api.confirmation.TrackBackConfirmationStrategy;
 import net.sourceforge.pebble.api.decorator.ContentDecorator;
 import net.sourceforge.pebble.api.event.EventDispatcher;
 import net.sourceforge.pebble.api.event.blog.BlogEvent;
@@ -45,7 +46,6 @@ import net.sourceforge.pebble.api.event.blogentry.BlogEntryListener;
 import net.sourceforge.pebble.api.event.comment.CommentListener;
 import net.sourceforge.pebble.api.event.trackback.TrackBackListener;
 import net.sourceforge.pebble.api.permalink.PermalinkProvider;
-import net.sourceforge.pebble.api.trackback.TrackBackConfirmationStrategy;
 import net.sourceforge.pebble.dao.CategoryDAO;
 import net.sourceforge.pebble.dao.DAOFactory;
 import net.sourceforge.pebble.dao.PersistenceException;
@@ -151,6 +151,7 @@ public class Blog extends AbstractBlog {
       Class c = Class.forName(getPermalinkProviderName());
       setPermalinkProvider((PermalinkProvider)c.newInstance());
     } catch (Exception e) {
+      error("Could not load permalink provider \"" + getPermalinkProviderName() + "\"");
       e.printStackTrace();
       setPermalinkProvider(new DefaultPermalinkProvider());
     }

@@ -1,7 +1,7 @@
 package net.sourceforge.pebble.web.view.impl;
 
 import net.sourceforge.pebble.Constants;
-import net.sourceforge.pebble.api.trackback.TrackBackConfirmationStrategy;
+import net.sourceforge.pebble.api.confirmation.TrackBackConfirmationStrategy;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.web.view.HtmlView;
 

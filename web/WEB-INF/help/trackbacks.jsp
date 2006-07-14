@@ -18,13 +18,18 @@
       In addition to receiving TrackBacks, Pebble can also send a TrackBack to another TrackBack-enabled blog. To send a TrackBack, go to the permalinked page for the blog entry that you wish to send the TrackBack from and click the "Send TrackBack" link.
     </p>
 
-    </p>
+    <p>
       If a blog supports TrackBacks, it will provide you with a URL to which they should be sent. In addition to a link back to your blog entry, a short excerpt describing/summarizing your blog entry is sent and can be edited as necessary before being sent.
     </p>
 
     <h3>TrackBack moderation and spam</h3>
     <p>
       For more information about how to deal with TrackBack spam, please see <a href="./help/responseSpam.html">Comment and TrackBack Spam</a>.
+    </p>
+
+    <h3>TrackBack Auto-Discovery</h3>
+    <p>
+      Pebble supports TrackBack Auto-Discovery. See <a href="./help/contentDecorators.html#trackBackAutoDisovery">TrackBackAutoDiscoveryDecorator</a> for more details.
     </p>
   </div>
 </div>

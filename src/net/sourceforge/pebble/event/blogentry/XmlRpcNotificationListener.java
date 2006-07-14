@@ -35,7 +35,6 @@ import net.sourceforge.pebble.domain.BlogEntry;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.webservice.UpdateNotificationPingsClient;
 import net.sourceforge.pebble.api.event.blogentry.BlogEntryEvent;
-import net.sourceforge.pebble.api.event.blogentry.BlogEntryListenerSupport;
 
 /**
  * Sends XML-RPC pings to websites when a blog entry is added.

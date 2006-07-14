@@ -29,28 +29,48 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package net.sourceforge.pebble.api.comment;
+package net.sourceforge.pebble.decorator;
 
-import net.sourceforge.pebble.domain.Comment;
-import net.sourceforge.pebble.confirmation.ConfirmationStrategy;
-
-import javax.servlet.http.HttpServletRequest;
+import net.sourceforge.pebble.api.decorator.ContentDecoratorContext;
+import net.sourceforge.pebble.domain.BlogEntry;
 
 /**
- * Represents an abstraction of the various ways in which comments
- * can be confirmed.
+ * Generates TrackBack Auto-Discovery links for blog entries. See
+ * http://www.sixapart.com/pronet/docs/trackback_spec for more details.
  *
- * @author    Simon Brown
+ * @author Simon Brown
  */
-public interface CommentConfirmationStrategy extends ConfirmationStrategy {
+public class TrackBackAutoDiscoveryDecorator extends ContentDecoratorSupport {
 
   /**
-   * Called to determine whether confirmation is required.
+   * Decorates the specified blog entry.
    *
-   * @param request   the HttpServletRequest used in the confirmation
-   * @param comment   the Comment being confirmed
-   * @return  true if the comment should be confirmed, false otherwise
+   * @param context   the context in which the decoration is running
+   * @param blogEntry the blog entry to be decorated
    */
-  public boolean confirmationRequired(HttpServletRequest request, Comment comment);
+  public void decorate(ContentDecoratorContext context, BlogEntry blogEntry) {
+    StringBuffer html = new StringBuffer();
+    html.append("\n<!--\n");
+    html.append("<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"\n");
+    html.append("         xmlns:dc=\"http://purl.org/dc/elements/1.1/\"\n");
+    html.append("         xmlns:trackback=\"http://madskills.com/public/xml/rss/module/trackback/\">\n");
+    html.append("<rdf:Description\n");
+    html.append("    rdf:about=\"");
+    html.append(blogEntry.getLocalPermalink());
+    html.append("\"\n");
+    html.append("    dc:identifier=\"");
+    html.append(blogEntry.getLocalPermalink());
+    html.append("\"\n");
+    html.append("    dc:title=\"");
+    html.append(blogEntry.getTitle());
+    html.append("\"\n");
+    html.append("    trackback:ping=\"");
+    html.append(blogEntry.getTrackBackLink());
+    html.append("\" />\n");
+    html.append("</rdf:RDF>\n");
+    html.append("-->");
+
+    blogEntry.setBody(blogEntry.getBody() + html);
+  }
 
 }

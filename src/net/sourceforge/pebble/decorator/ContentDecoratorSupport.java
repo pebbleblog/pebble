@@ -29,10 +29,11 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package net.sourceforge.pebble.api.decorator;
+package net.sourceforge.pebble.decorator;
 
 import net.sourceforge.pebble.domain.*;
 import net.sourceforge.pebble.api.decorator.ContentDecorator;
+import net.sourceforge.pebble.api.decorator.ContentDecoratorContext;
 
 /**
  * Starting point for BlogEntryDecorator implementations to extend.

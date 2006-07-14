@@ -3,7 +3,6 @@ package net.sourceforge.pebble.decorator;
 import net.sourceforge.pebble.domain.BlogEntry;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.domain.StaticPage;
-import net.sourceforge.pebble.api.decorator.ContentDecoratorSupport;
 import net.sourceforge.pebble.api.decorator.ContentDecoratorContext;
 import org.radeox.api.engine.RenderEngine;
 import org.radeox.api.engine.WikiRenderEngine;

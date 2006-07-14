@@ -4,7 +4,6 @@ import net.sourceforge.pebble.domain.BlogEntry;
 import net.sourceforge.pebble.domain.Comment;
 import net.sourceforge.pebble.domain.TrackBack;
 import net.sourceforge.pebble.util.SecurityUtils;
-import net.sourceforge.pebble.api.decorator.ContentDecoratorSupport;
 import net.sourceforge.pebble.api.decorator.ContentDecoratorContext;
 
 import java.util.List;

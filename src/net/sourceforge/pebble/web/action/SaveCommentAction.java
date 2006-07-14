@@ -32,7 +32,7 @@
 package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
-import net.sourceforge.pebble.api.comment.CommentConfirmationStrategy;
+import net.sourceforge.pebble.api.confirmation.CommentConfirmationStrategy;
 import net.sourceforge.pebble.api.decorator.ContentDecoratorContext;
 import net.sourceforge.pebble.domain.*;
 import net.sourceforge.pebble.web.validation.ValidationContext;
@@ -47,7 +47,6 @@ import org.apache.commons.logging.LogFactory;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.util.ResourceBundle;
 
 /**
@@ -118,7 +117,7 @@ public class SaveCommentAction extends AbstractCommentAction {
       Comment clonedComment = (Comment)comment.clone();
       request.getSession().setAttribute(Constants.COMMENT_KEY, comment);
 
-      if (strategy.confirmationRequired(request, clonedComment)) {
+      if (strategy.confirmationRequired(clonedComment)) {
         strategy.setupConfirmation(request);
         return new ConfirmCommentView();
       } else {

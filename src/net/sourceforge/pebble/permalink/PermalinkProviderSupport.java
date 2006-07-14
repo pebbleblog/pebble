@@ -29,7 +29,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package net.sourceforge.pebble.api.permalink;
+package net.sourceforge.pebble.permalink;
 
 import net.sourceforge.pebble.domain.DailyBlog;
 import net.sourceforge.pebble.domain.MonthlyBlog;

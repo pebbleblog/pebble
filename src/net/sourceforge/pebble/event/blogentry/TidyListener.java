@@ -33,7 +33,6 @@ package net.sourceforge.pebble.event.blogentry;
 
 import net.sourceforge.pebble.domain.BlogEntry;
 import net.sourceforge.pebble.api.event.blogentry.BlogEntryEvent;
-import net.sourceforge.pebble.api.event.blogentry.BlogEntryListenerSupport;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;

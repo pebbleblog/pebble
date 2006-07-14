@@ -2,7 +2,6 @@ package net.sourceforge.pebble.decorator;
 
 import net.sourceforge.pebble.domain.BlogEntry;
 import net.sourceforge.pebble.domain.Tag;
-import net.sourceforge.pebble.api.decorator.ContentDecoratorSupport;
 import net.sourceforge.pebble.api.decorator.ContentDecoratorContext;
 
 import java.util.Iterator;

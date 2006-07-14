@@ -35,7 +35,6 @@ import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.domain.TrackBack;
 import net.sourceforge.pebble.util.MailUtils;
 import net.sourceforge.pebble.api.event.trackback.TrackBackEvent;
-import net.sourceforge.pebble.api.event.trackback.TrackBackListenerSupport;
 
 import java.text.SimpleDateFormat;
 import java.util.Collection;

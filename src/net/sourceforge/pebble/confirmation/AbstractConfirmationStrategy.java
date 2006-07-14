@@ -1,20 +1,17 @@
 package net.sourceforge.pebble.confirmation;
 
-import net.sourceforge.pebble.domain.Comment;
-import net.sourceforge.pebble.domain.Blog;
-import net.sourceforge.pebble.util.SecurityUtils;
-import net.sourceforge.pebble.api.event.comment.CommentListener;
-import net.sourceforge.pebble.api.event.comment.CommentEvent;
-import net.sourceforge.pebble.api.comment.CommentConfirmationStrategy;
-import net.sourceforge.pebble.api.trackback.TrackBackConfirmationStrategy;
-import net.sourceforge.pebble.event.response.IpAddressListener;
-import net.sourceforge.pebble.event.response.ContentSpamListener;
-import net.sourceforge.pebble.event.response.SpamScoreListener;
-import net.sourceforge.pebble.event.response.LinkSpamListener;
 import net.sourceforge.pebble.PluginProperties;
-import net.sourceforge.pebble.Constants;
-
-import javax.servlet.http.HttpServletRequest;
+import net.sourceforge.pebble.api.event.comment.CommentEvent;
+import net.sourceforge.pebble.api.event.comment.CommentListener;
+import net.sourceforge.pebble.api.confirmation.CommentConfirmationStrategy;
+import net.sourceforge.pebble.api.confirmation.TrackBackConfirmationStrategy;
+import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.domain.Comment;
+import net.sourceforge.pebble.event.response.ContentSpamListener;
+import net.sourceforge.pebble.event.response.IpAddressListener;
+import net.sourceforge.pebble.event.response.LinkSpamListener;
+import net.sourceforge.pebble.event.response.SpamScoreListener;
+import net.sourceforge.pebble.util.SecurityUtils;
 
 /**
  * Starting point for ConfirmationStrategy implementations.
@@ -32,11 +29,10 @@ public abstract class AbstractConfirmationStrategy implements CommentConfirmatio
    * it runs the default set of comment listeners to determine
    * whether the comment is spam. If so, true is returned.
    *
-   * @param request the HttpServletRequest used in the confirmation
    * @param comment the Comment being confirmed
    * @return true if the comment should be confirmed, false otherwise
    */
-  public boolean confirmationRequired(HttpServletRequest request, Comment comment) {
+  public boolean confirmationRequired(Comment comment) {
     PluginProperties props = comment.getBlogEntry().getBlog().getPluginProperties();
     String required = props.getProperty(REQUIRED_KEY);
 
@@ -64,11 +60,10 @@ public abstract class AbstractConfirmationStrategy implements CommentConfirmatio
   /**
    * Called to determine whether confirmation is required.
    *
-   * @param request the HttpServletRequest used in the confirmation
-   * @return true if the comment should be confirmed, false otherwise
+   * @param blog    the owning Blog
+   * @return true if the confirmation is required, false otherwise
    */
-  public boolean confirmationRequired(HttpServletRequest request) {
-    Blog blog = (Blog)request.getAttribute(Constants.BLOG_KEY);
+  public boolean confirmationRequired(Blog blog) {
     return !SecurityUtils.isUserAuthorisedForBlog(blog);
   }
 

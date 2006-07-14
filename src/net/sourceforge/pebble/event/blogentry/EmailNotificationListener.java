@@ -35,7 +35,6 @@ import net.sourceforge.pebble.domain.BlogEntry;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.api.decorator.ContentDecoratorContext;
 import net.sourceforge.pebble.api.event.blogentry.BlogEntryEvent;
-import net.sourceforge.pebble.api.event.blogentry.BlogEntryListenerSupport;
 import net.sourceforge.pebble.util.MailUtils;
 
 import java.text.SimpleDateFormat;

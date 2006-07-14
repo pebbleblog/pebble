@@ -1,5 +1,5 @@
-Version 2.0.0-RC1 - coming July 2006
-------------------------------------
+Version 2.0.0-RC1 - 17th July 2006
+----------------------------------
 Fixed "page not found" error when uploading files to theme.
 Fixed problem with last modified date on response feeds.
 Added category list into the sidebar of the default theme.
@@ -13,7 +13,8 @@ Added reference to pebbleSecurityRealm (via securityRealm bean) to applicationCo
 Upgraded Acegi to 1.0.1 and the changed authenticationProcessingFilter bean to be an instance of net.sourceforge.pebble.security.AuthenticationProcessingFilter.
 Changed the package name for Comment Confirmation Strategy implementations to net.sourceforge.pebble.confirmation.
 TrackBack links now need to be generated, are single use and expire after 10 minutes.
-Enhanced the confirmation strategy concept to be applicable to TrackBack link generation. 
+Enhanced the confirmation strategy concept to be applicable to TrackBack link generation.
+Added a TrackBackAutoDiscoveryDecorator to support publication of TrackBack links for auto-discovery by supported clients.
 
 Version 2.0.0-M3 - 29th June 2006
 ---------------------------------
