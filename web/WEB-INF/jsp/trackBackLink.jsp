@@ -10,10 +10,6 @@
     </p>
 
     <pre class="small">${trackBackLink}</pre>
-
-    <p>
-
-    </p>
   </div>
 
 </div>

@@ -108,7 +108,7 @@ public class SaveBlogPropertiesAction extends SecureAction {
       String newTimeZone = blog.getProperty(Blog.TIMEZONE_KEY);
 
       if (!currentTimeZone.equals(newTimeZone)) {
-        return new ForwardView("/reloadBlog.secureaction");
+        return new ForwardView("/reindexBlog.secureaction");
       }
 
     }

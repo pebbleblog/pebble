@@ -137,6 +137,7 @@
         </td>
         <td>
           <pebble:select name="timeZone" items="${timeZones}" selected="${blog.timeZoneId}" />
+          <div class="small">(changing this will reindex your blog, which may take a while)</div>
         </td>
       </tr>
 
