@@ -7,6 +7,8 @@ body {
   margin: 48px 32px 32px 32px;
 }
 #container {
+  width: 800px;
+  margin: auto;
   background: white;
   border: black solid 1px;
 }
@@ -173,6 +175,7 @@ h3 {
   padding-bottom: 8px;
   padding-left: 16px;
   padding-right: 16px;
+  margin-bottom: 4px;
 }
 .response h1 {
   font-size: 12px;
@@ -194,15 +197,17 @@ h3 {
 .approved {
 }
 .pending {
+  background: transparent url('images/pending.gif') no-repeat top left;
   border: solid orange 1px;
 }
 .rejected {
+  background: transparent url('images/rejected.gif') no-repeat top left;
   border: solid red 1px;
 }
 .published {
 }
 .unpublished {
-  background: white url('images/draft.jpg') no-repeat top left;
+  background: white url('images/draft.gif') no-repeat top left;
 }
 blockquote {
   border-left: solid #E0E0E0 4px;
