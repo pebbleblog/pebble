@@ -177,19 +177,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="screen.css" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="screen.css" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/web/themes/default/screen.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="179" column="0" selection-start="3094" selection-end="3094" vertical-scroll-proportion="0.37956205">
+            <state line="22" column="8" selection-start="528" selection-end="528" vertical-scroll-proportion="0.3211679">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="screen.css" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="screen.css" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/themes/pebble/screen.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="181" column="0" selection-start="3211" selection-end="3211" vertical-scroll-proportion="0.5985401">
+            <state line="15" column="0" selection-start="307" selection-end="374" vertical-scroll-proportion="0.2189781">
               <folding />
             </state>
           </provider>
@@ -977,13 +977,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/etc/resources.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="29" selection-start="121" selection-end="121" vertical-scroll-proportion="0.014869888">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/etc/resources_hi_IN.properties">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
@@ -1035,16 +1028,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/themes/default/screen.css">
+    <entry file="file://$PROJECT_DIR$/etc/resources.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="179" column="0" selection-start="3094" selection-end="3094" vertical-scroll-proportion="0.37956205">
+        <state line="4" column="29" selection-start="121" selection-end="121" vertical-scroll-proportion="0.014869888">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/web/themes/pebble/screen.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="181" column="0" selection-start="3211" selection-end="3211" vertical-scroll-proportion="0.5985401">
+        <state line="15" column="0" selection-start="307" selection-end="374" vertical-scroll-proportion="0.2189781">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/themes/default/screen.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="22" column="8" selection-start="528" selection-end="528" vertical-scroll-proportion="0.3211679">
           <folding />
         </state>
       </provider>
