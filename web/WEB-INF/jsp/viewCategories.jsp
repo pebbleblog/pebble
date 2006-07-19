@@ -1,6 +1,6 @@
 <div class="contentItem">
 
-  <h1>Categories</h1>
+  <h1><fmt:message key="category.categories" /></h1>
   <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
@@ -14,10 +14,9 @@
               <tr class="odd">
           </c:otherwise>
         </c:choose>
-        <td><a href="${aCategory.permalink}">${aCategory.name}</a></td>
+        <td><a href="${aCategory.permalink}">${aCategory.name}</a> (<fmt:formatNumber value="${aCategory.numberOfBlogEntries}" type="number" />)</td>
         <td align="right" class="small">
-          <a href="${aCategory.permalink}rss.xml"><fmt:message key="newsfeed.rss" /></a> <a href="${aCategory.permalink}rss.xml" style="border: 0px;"><img src="common/images/feed-icon-16x16.png" alt="RSS feed" border="0" /></a> |
-          <a href="${aCategory.permalink}atom.xml"><fmt:message key="newsfeed.atom" /></a> <a href="${aCategory.permalink}atom.xml" style="border: 0px;"><img src="common/images/feed-icon-16x16.png" alt="Atom feed" border="0" /></a>
+          <a href="${aCategory.permalink}rss.xml"><fmt:message key="newsfeed.rss" /></a> <a href="${aCategory.permalink}rss.xml" style="border: 0px;"><img src="common/images/feed-icon-16x16.png" alt="RSS feed" border="0" /></a>
         </td>
       </tr>
       </c:forEach>

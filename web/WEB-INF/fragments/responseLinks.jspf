@@ -1,7 +1,7 @@
 <div class="contentItemLinks">
   <c:choose>
     <c:when test="${blogEntry.numberOfResponses > 0}">
-      <a href="${blogEntry.permalink}#responses">Responses[<fmt:formatNumber value="${blogEntry.numberOfResponses}"/>]</a>
+      <a href="${blogEntry.permalink}#responses"><fmt:message key="blogentry.responses" />[<fmt:formatNumber value="${blogEntry.numberOfResponses}"/>]</a>
       <a href="responses/rss.xml?entry=${blogEntry.id}"><img src="common/images/feed-icon-10x10.png" alt="RSS feed for responses to this blog entry" border="0" /></a>
     </c:when>
     <c:when test="${blogEntry.commentsEnabled}">

@@ -6,7 +6,7 @@
   <%@ include file="/WEB-INF/fragments/admin.jspf" %>
 
   <div class="sidebarItem">
-    <div class="sidebarItemTitle"><span>Navigate</span></div>
+    <div class="sidebarItemTitle"><span><fmt:message key="sidebar.navigate" /></span></div>
     <pebble:calendar/>
     <a href="./categories/"><fmt:message key="category.categories" /></a> |
     <a href="./tags/"><fmt:message key="tag.tags" /></a> |

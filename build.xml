@@ -253,9 +253,9 @@
   </target>
 
   <target name="website">
-    <copy file="web/themes/default/screen.css" tofile="${website.dir}/screen.css" />
+    <copy file="web/themes/pebble/screen.css" tofile="${website.dir}/screen.css" />
     <copy todir="${website.dir}/images">
-      <fileset dir="web/themes/default/images">
+      <fileset dir="web/themes/pebble/images">
         <include name="*.gif"/>
         <include name="*.jpg"/>
         <include name="*.png"/>

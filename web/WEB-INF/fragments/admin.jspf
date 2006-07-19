@@ -1,6 +1,6 @@
 <div class="sidebarItem">
 <pebble:isNotAuthenticated>
-  <div class="sidebarItemTitle"><span>Login</span></div>
+  <div class="sidebarItemTitle"><span><fmt:message key='login.login' /></span></div>
   <br />
   <form name="loginForm" method="post" action="${pebbleContext.configuration.secureUrl}j_acegi_security_check">
     <input type="hidden" name="redirectUrl" value="${blog.relativeUrl}"/>
@@ -8,7 +8,7 @@
     <br />
     <input type="password" name="j_password" />
     <br />
-    Remember me <input type="checkbox" name="_acegi_security_remember_me" />
+    <fmt:message key='login.rememberMe' /><input type="checkbox" name="_acegi_security_remember_me" />
     <input type="submit" value="<fmt:message key='login.button' />" />
   </form>
 </pebble:isNotAuthenticated>
