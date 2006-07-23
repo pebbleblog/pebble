@@ -1,13 +1,13 @@
 <div class="contentItem">
 
-  <h1>Confirm</h1>
+  <h1><fmt:message key="confirmation.confirm" /></h1>
   <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
     <form action="${confirmationAction}" method="post" accept-charset="${blog.characterEncoding}">
       
       <p>
-        Please enter the word you see in the image.
+        <fmt:message key="confirmation.imageCaptchaMessafe" />
         <br />
         <img src="${pageContext.request.contextPath}/jcaptcha" alt="Image captcha" />
         <br />
@@ -17,7 +17,7 @@
       <table width="99%">
         <tr>
           <td align="right">
-            <input name="submit" type="submit" value="Confirm" />
+            <input name="submit" type="submit" value="<fmt:message key='confirmation.confirm' />" />
           </td>
         </tr>
       </table>

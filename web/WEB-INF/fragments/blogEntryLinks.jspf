@@ -29,5 +29,12 @@
     </form>
     </pebble:isAuthorisedForBlog>
 
+    <pebble:isBlogContributor>
+      <form action="sendTrackBack.secureaction" method="post">
+        <input type="hidden" name="entry" value="${blogEntry.id}" />
+          <input type="submit" value="Send TrackBack" />
+      </form>
+    </pebble:isBlogContributor>
+
   </c:if>
 </div>

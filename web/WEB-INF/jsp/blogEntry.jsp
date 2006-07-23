@@ -99,14 +99,11 @@
 <div align="center">
   <br />
   <c:if test="${blogEntry.commentsEnabled}">
-    <a href="replyToBlogEntry.action?entry=${blogEntry.id}"><fmt:message key="comment.addComment"/></a><br /><br />
+    <a href="replyToBlogEntry.action?entry=${blogEntry.id}"><fmt:message key="comment.addComment"/></a>
   </c:if>
   <c:if test="${blogEntry.trackBacksEnabled}">
-    <a href="generateTrackBackLink.action?entry=${blogEntry.id}">TrackBack</a><br />
+    <a href="generateTrackBackLink.action?entry=${blogEntry.id}"><fmt:message key="trackback.sendTrackBack"/></a>
   </c:if>
-  <pebble:isBlogContributor>
-    <a href="sendTrackBack.secureaction?entry=${blogEntry.id}">Send TrackBack</a>
-  </pebble:isBlogContributor>
 </div>
 
   </c:if>
