@@ -139,35 +139,35 @@ public class BlogTest extends SingleBlogTestCase {
   }
 
   /**
-   * Tests that we can get a specific YearlyBlog instance.
+   * Tests that we can get a specific Year instance.
    */
    public void testGetBlogForYear() {
    Calendar cal = blog.getCalendar();
-   YearlyBlog yearlyBlog = blog.getBlogForYear(cal.get(Calendar.YEAR));
-   assertNotNull(yearlyBlog);
-   assertEquals(cal.get(Calendar.YEAR), yearlyBlog.getYear());
+   Year year = blog.getBlogForYear(cal.get(Calendar.YEAR));
+   assertNotNull(year);
+   assertEquals(cal.get(Calendar.YEAR), year.getYear());
    }
 
    /**
-    * Tests that we can get a previous YearlyBlog instance.
+    * Tests that we can get a previous Year instance.
     */
    public void testGetBlogForPreviousYear() {
    Calendar cal = blog.getCalendar();
-   YearlyBlog yearlyBlog = blog.getBlogForYear(cal.get(Calendar.YEAR));
-   yearlyBlog = blog.getBlogForPreviousYear(yearlyBlog);
-   assertNotNull(yearlyBlog);
-   assertEquals(cal.get(Calendar.YEAR)-1, yearlyBlog.getYear());
+   Year year = blog.getBlogForYear(cal.get(Calendar.YEAR));
+   year = blog.getBlogForPreviousYear(year);
+   assertNotNull(year);
+   assertEquals(cal.get(Calendar.YEAR)-1, year.getYear());
    }
 
    /**
-    * Tests that we can get a next YearlyBlog instance.
+    * Tests that we can get a next Year instance.
     */
    public void testGetBlogForNextYear() {
    Calendar cal = blog.getCalendar();
-   YearlyBlog yearlyBlog = blog.getBlogForYear(cal.get(Calendar.YEAR));
-   yearlyBlog = blog.getBlogForNextYear(yearlyBlog);
-   assertNotNull(yearlyBlog);
-   assertEquals(cal.get(Calendar.YEAR)+1, yearlyBlog.getYear());
+   Year year = blog.getBlogForYear(cal.get(Calendar.YEAR));
+   year = blog.getBlogForNextYear(year);
+   assertNotNull(year);
+   assertEquals(cal.get(Calendar.YEAR)+1, year.getYear());
    }
 
   /**

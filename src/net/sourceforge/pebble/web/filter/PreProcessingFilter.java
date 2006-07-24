@@ -139,7 +139,7 @@ public class PreProcessingFilter implements Filter {
       httpRequest.setAttribute(Constants.CATEGORIES, b.getCategories());
       httpRequest.setAttribute(Constants.TAGS, b.getTags());
       httpRequest.setAttribute(Constants.PLUGIN_PROPERTIES, b.getPluginProperties());
-      httpRequest.setAttribute(Constants.ARCHIVES, b.getActiveYearlyBlogsInReverse());
+      httpRequest.setAttribute(Constants.ARCHIVES, b.getArchives());
     }
 
     // change the character encoding so that we can successfully get

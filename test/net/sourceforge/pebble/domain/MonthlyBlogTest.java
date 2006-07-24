@@ -103,8 +103,8 @@ public class MonthlyBlogTest extends SingleBlogTestCase {
    * Tests that we can compare monthly blogs.
    */
   public void testBefore() {
-    YearlyBlog yearlyBlog2002 = new YearlyBlog(blog, 2002);
-    YearlyBlog yearlyBlog2003 = new YearlyBlog(blog, 2003);
+    Year yearlyBlog2002 = new Year(blog, 2002);
+    Year yearlyBlog2003 = new Year(blog, 2003);
     MonthlyBlog monthlyBlog1 = new MonthlyBlog(yearlyBlog2003, 6);
     MonthlyBlog monthlyBlog2 = new MonthlyBlog(yearlyBlog2003, 7);
     assertTrue(monthlyBlog1.before(monthlyBlog2));

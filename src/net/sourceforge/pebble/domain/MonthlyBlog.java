@@ -41,8 +41,8 @@ import java.util.*;
  */
 public class MonthlyBlog extends TimePeriod implements Permalinkable {
 
-  /** the parent, YearlyBlog instance */
-  private YearlyBlog yearlyBlog;
+  /** the parent, Year instance */
+  private Year year;
 
   /** an integer representing the month that this MonthlyBlog is for */
   private int month;
@@ -54,15 +54,15 @@ public class MonthlyBlog extends TimePeriod implements Permalinkable {
   private int lastDayInMonth;
 
   /**
-   * Creates a new MonthlyBlog based upon the specified YearlyBlog and month.
+   * Creates a new MonthlyBlog based upon the specified Year and month.
    *
-   * @param yearlyBlog    the owning YearlyBlog instance
+   * @param year    the owning Year instance
    * @param month         the month as an int
    */
-  MonthlyBlog(YearlyBlog yearlyBlog, int month) {
-    super(yearlyBlog.getBlog());
+  MonthlyBlog(Year year, int month) {
+    super(year.getBlog());
 
-    this.yearlyBlog = yearlyBlog;
+    this.year = year;
     this.month = month;
     setDate(getCalendar().getTime());
 
@@ -82,7 +82,7 @@ public class MonthlyBlog extends TimePeriod implements Permalinkable {
     // (this is used in determining whether another MonthlyBlog is
     // before or after this one)
     Calendar cal = getBlog().getCalendar();
-    cal.set(Calendar.YEAR, yearlyBlog.getYear());
+    cal.set(Calendar.YEAR, year.getYear());
     cal.set(Calendar.MONTH, month - 1);
     cal.set(Calendar.DAY_OF_MONTH, 1);
     cal.set(Calendar.HOUR_OF_DAY, 0);
@@ -94,12 +94,12 @@ public class MonthlyBlog extends TimePeriod implements Permalinkable {
   }
 
   /**
-   * Gets a reference to the parent YearlyBlog instance.
+   * Gets a reference to the parent Year instance.
    *
-   * @return  a YearlyBlog instance
+   * @return  a Year instance
    */
-  public YearlyBlog getYearlyBlog() {
-    return yearlyBlog;
+  public Year getYearlyBlog() {
+    return year;
   }
 
   /**
@@ -233,7 +233,7 @@ public class MonthlyBlog extends TimePeriod implements Permalinkable {
    * @return    a MonthlyBlog instance
    */
   public MonthlyBlog getPreviousMonth() {
-    return yearlyBlog.getBlogForPreviousMonth(this);
+    return year.getBlogForPreviousMonth(this);
   }
 
   /**
@@ -242,7 +242,7 @@ public class MonthlyBlog extends TimePeriod implements Permalinkable {
    * @return    a MonthlyBlog instance
    */
   public MonthlyBlog getNextMonth() {
-    return yearlyBlog.getBlogForNextMonth(this);
+    return year.getBlogForNextMonth(this);
   }
 
   /**
@@ -278,7 +278,7 @@ public class MonthlyBlog extends TimePeriod implements Permalinkable {
     if (dailyBlog.getDay() > 1) {
       return this.getBlogForDay(dailyBlog.getDay() - 1);
     } else {
-      return yearlyBlog.getBlogForPreviousMonth(this).getBlogForLastDay();
+      return year.getBlogForPreviousMonth(this).getBlogForLastDay();
     }
   }
 
@@ -293,7 +293,7 @@ public class MonthlyBlog extends TimePeriod implements Permalinkable {
     if (dailyBlog.getDay() < lastDayInMonth) {
       return this.getBlogForDay(dailyBlog.getDay() + 1);
     } else {
-      return yearlyBlog.getBlogForNextMonth(this).getBlogForFirstDay();
+      return year.getBlogForNextMonth(this).getBlogForFirstDay();
     }
   }
 

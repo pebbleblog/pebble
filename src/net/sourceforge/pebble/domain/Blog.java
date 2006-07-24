@@ -93,8 +93,8 @@ public class Blog extends AbstractBlog {
   /** the ID of this blog */
   private String id = "default";
 
-  /** the collection of YearlyBlog instance that this root blog is managing */
-  private List<YearlyBlog> yearlyBlogs;
+  /** the collection of Year instance that this root blog is managing */
+  private List<Year> years;
 
   /** the root category associated with this blog */
   private Category rootCategory;
@@ -167,7 +167,7 @@ public class Blog extends AbstractBlog {
 
     refererFilterManager = new RefererFilterManager(this);
     pluginProperties = new PluginProperties(this);
-    yearlyBlogs = new ArrayList();
+    years = new ArrayList();
 
     // create the various indexes for this blog
     searchIndex = new SearchIndex(this);
@@ -610,36 +610,36 @@ public class Blog extends AbstractBlog {
   }
 
   /**
-   * Gets the YearlyBlog instance for the specified year.
+   * Gets the Year instance for the specified year.
    *
    * @param year    the year as an int (e.g. 2003)
-   * @return    a YearlyBlog instance
+   * @return    a Year instance
    */
-  public YearlyBlog getBlogForYear(int year) {
-    Iterator it = yearlyBlogs.iterator();
-    YearlyBlog yearlyBlog;
+  public Year getBlogForYear(int year) {
+    Iterator it = years.iterator();
+    Year yearlyBlog;
     while (it.hasNext()) {
-      yearlyBlog = (YearlyBlog)it.next();
+      yearlyBlog = (Year)it.next();
       if (yearlyBlog.getYear() == year) {
         return yearlyBlog;
       }
     }
 
-    yearlyBlog = new YearlyBlog(this, year);
+    yearlyBlog = new Year(this, year);
     //if (year > getBlogForToday().getMonthlyBlog().getYearlyBlog().getYear()) {
-      yearlyBlogs.add(yearlyBlog);
-      Collections.sort(yearlyBlogs);
+      years.add(yearlyBlog);
+      Collections.sort(years);
     //}
 
     return yearlyBlog;
   }
 
   /**
-   * Gets the YearlyBlog instance representing this year.
+   * Gets the Year instance representing this year.
    *
-   * @return  a YearlyBlog instance for this year
+   * @return  a Year instance for this year
    */
-  public YearlyBlog getBlogForThisYear() {
+  public Year getBlogForThisYear() {
     Calendar cal = getCalendar();
     return getBlogForYear(cal.get(Calendar.YEAR));
   }
@@ -647,21 +647,21 @@ public class Blog extends AbstractBlog {
   /**
    * Gets all YearlyBlogs managed by this root blog.
    *
-   * @return  a Collection of YearlyBlog instances
+   * @return  a Collection of Year instances
    */
-  public List getYearlyBlogs() {
-    return yearlyBlogs;
+  public List getYears() {
+    return years;
   }
 
   /**
    * Gets all YearlyBlogs managed by this root blog, in reverse order.
    *
-   * @return  a Collection of YearlyBlog instances
+   * @return  a Collection of Year instances
    */
-  public List<YearlyBlog> getActiveYearlyBlogsInReverse() {
-    List<YearlyBlog> list = new LinkedList<YearlyBlog>();
+  public List<Year> getArchives() {
+    List<Year> list = new LinkedList<Year>();
     int thisYear = getBlogForThisYear().getYear();
-    for (YearlyBlog year : yearlyBlogs) {
+    for (Year year : years) {
       if (year.getYear() <= thisYear) {
         list.add(year);
       }
@@ -677,10 +677,10 @@ public class Blog extends AbstractBlog {
    * @return  a MonthlyBlog instance
    */
   public MonthlyBlog getBlogForFirstMonth() {
-    YearlyBlog year;
+    Year year;
 
-    if (!yearlyBlogs.isEmpty()) {
-      year = yearlyBlogs.get(0);
+    if (!years.isEmpty()) {
+      year = years.get(0);
     } else {
       year = getBlogForYear(getCalendar().get(Calendar.YEAR));
     }
@@ -755,25 +755,25 @@ public class Blog extends AbstractBlog {
   }
 
   /**
-   * Given a YearlyBlog, this method returns the YearlyBlog instance
+   * Given a Year, this method returns the Year instance
    * representing the previous year.
    *
-   * @param yearlyBlog    a YearlyBlog instance
-   * @return    a YearlyBlog representing the previous year
+   * @param year    a Year instance
+   * @return    a Year representing the previous year
    */
-  public YearlyBlog getBlogForPreviousYear(YearlyBlog yearlyBlog) {
-    return getBlogForYear(yearlyBlog.getYear() - 1);
+  public Year getBlogForPreviousYear(Year year) {
+    return getBlogForYear(year.getYear() - 1);
   }
 
   /**
-   * Given a YearlyBlog, this method returns the YearlyBlog instance
+   * Given a Year, this method returns the Year instance
    * representing the next year.
    *
-   * @param yearlyBlog    a YearlyBlog instance
-   * @return    a YearlyBlog representing the next year
+   * @param year    a Year instance
+   * @return    a Year representing the next year
    */
-  public YearlyBlog getBlogForNextYear(YearlyBlog yearlyBlog) {
-    return getBlogForYear(yearlyBlog.getYear() + 1);
+  public Year getBlogForNextYear(Year year) {
+    return getBlogForYear(year.getYear() + 1);
   }
 
   /**
@@ -785,12 +785,12 @@ public class Blog extends AbstractBlog {
     List blogEntries = new ArrayList();
     BlogService service = new BlogService();
 
-    for (int year = yearlyBlogs.size()-1; year >= 0; year--) {
-      YearlyBlog yearlyBlog = (YearlyBlog)yearlyBlogs.get(year);
-      MonthlyBlog[] months = yearlyBlog.getMonthlyBlogs();
+    for (int year = years.size()-1; year >= 0; year--) {
+      Year y = (Year)years.get(year);
+      MonthlyBlog[] months = y.getMonthlyBlogs();
       for (int month = 11; month >= 0; month--) {
         try {
-          blogEntries.addAll(service.getBlogEntries(this, yearlyBlog.getYear(), months[month].getMonth()));
+          blogEntries.addAll(service.getBlogEntries(this, y.getYear(), months[month].getMonth()));
         } catch (BlogServiceException e) {
           // do nothing
         }

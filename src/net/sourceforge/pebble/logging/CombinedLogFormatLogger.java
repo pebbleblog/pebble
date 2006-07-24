@@ -31,16 +31,10 @@
  */
 package net.sourceforge.pebble.logging;
 
-import net.sourceforge.pebble.dao.DAOFactory;
-import net.sourceforge.pebble.dao.file.FileDAOFactory;
-import net.sourceforge.pebble.domain.DailyBlog;
-import net.sourceforge.pebble.domain.MonthlyBlog;
 import net.sourceforge.pebble.domain.Blog;
-import net.sourceforge.pebble.domain.YearlyBlog;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;

@@ -40,7 +40,7 @@ import java.util.LinkedList;
  *
  * @author    Simon Brown
  */
-public class YearlyBlog extends TimePeriod implements Comparable {
+public class Year extends TimePeriod implements Comparable {
 
   /** the year that this blog is for */
   private int year;
@@ -49,12 +49,12 @@ public class YearlyBlog extends TimePeriod implements Comparable {
   private MonthlyBlog[] monthlyBlogs;
 
   /**
-   * Creates a new YearlyBlog instance for the specified year.
+   * Creates a new Year instance for the specified year.
    *
-   * @param blog    the Blog on which this YearlyBlog is based
-   * @param year    the year that this YearlyBlog is for
+   * @param blog    the Blog on which this Year is based
+   * @param year    the year that this Year is for
    */
-  public YearlyBlog(Blog blog, int year) {
+  public Year(Blog blog, int year) {
     super(blog);
 
     this.year = year;
@@ -197,7 +197,7 @@ public class YearlyBlog extends TimePeriod implements Comparable {
    *                            from being compared to this Object.
    */
   public int compareTo(Object o) {
-    return this.getYear() - ((YearlyBlog)o).getYear();
+    return this.getYear() - ((Year)o).getYear();
   }
 
   /**

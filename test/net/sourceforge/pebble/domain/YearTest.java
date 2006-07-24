@@ -31,70 +31,67 @@
  */
 package net.sourceforge.pebble.domain;
 
-
-
-
 /**
- * Tests for the YearlyBlog class.
+ * Tests for the Year class.
  *
  * @author    Simon Brown
  */
-public class YearlyBlogTest extends SingleBlogTestCase {
+public class YearTest extends SingleBlogTestCase {
 
-  private YearlyBlog yearlyBlog;
+  private Year year;
 
   protected void setUp() throws Exception {
     super.setUp();
-    yearlyBlog = new YearlyBlog(blog, 2003);
+    year = new Year(blog, 2003);
   }
 
   /**
    * Tests that the root blog is setup correctly.
    */
   public void testGetRootBlog() {
-    assertEquals(blog, yearlyBlog.getBlog());
+    assertEquals(blog, year.getBlog());
   }
 
   /**
    * Tests the getter for the year property.
    */
   public void testGetYear() {
-    assertEquals(2003, yearlyBlog.getYear());
+    assertEquals(2003, year.getYear());
   }
 
   /**
    * Tests that we can get the first month containing blog entries.
    */
   public void testFirstMonth() {
-    assertEquals(1, yearlyBlog.getBlogForFirstMonth().getMonth());
+    assertEquals(1, year.getBlogForFirstMonth().getMonth());
   }
 
   /**
    * Tests that we can get a specific month from a year.
    */
   public void testGetMonth() {
-    MonthlyBlog monthlyBlog = yearlyBlog.getBlogForMonth(1);
-    assertEquals(yearlyBlog, monthlyBlog.getYearlyBlog());
+    MonthlyBlog monthlyBlog = year.getBlogForMonth(1);
+    assertEquals(year, monthlyBlog.getYearlyBlog());
     assertEquals(1, monthlyBlog.getMonth());
 
-    monthlyBlog = yearlyBlog.getBlogForMonth(12);
-    assertEquals(yearlyBlog, monthlyBlog.getYearlyBlog());
+    monthlyBlog = year.getBlogForMonth(12);
+    assertEquals(year, monthlyBlog.getYearlyBlog());
     assertEquals(12, monthlyBlog.getMonth());
 
     try {
-      monthlyBlog = yearlyBlog.getBlogForMonth(-1);
+      monthlyBlog = year.getBlogForMonth(-1);
       fail();
     } catch (IllegalArgumentException iae) {
     }
 
     try {
-      monthlyBlog = yearlyBlog.getBlogForMonth(0);
+      monthlyBlog = year.getBlogForMonth(0);
       fail();
     } catch (IllegalArgumentException iae) {
     }
 
     try {
-      monthlyBlog = yearlyBlog.getBlogForMonth(13);
+      monthlyBlog = year.getBlogForMonth(13);
       fail();
     } catch (IllegalArgumentException iae) {
     }
@@ -104,15 +101,15 @@ public class YearlyBlogTest extends SingleBlogTestCase {
    * Tests that toString() works.
    */
   public void testToString() {
-    assertEquals("2003", yearlyBlog.toString());
+    assertEquals("2003", year.toString());
   }
 
   /**
    * Tests the compareTo method.
    */
   public void testCompareTo() {
-    YearlyBlog y1 = new YearlyBlog(blog, 2004);
-    YearlyBlog y2 = new YearlyBlog(blog, 2005);
+    Year y1 = new Year(blog, 2004);
+    Year y2 = new Year(blog, 2005);
     assertTrue(y1.compareTo(y1) == 0);
     assertTrue(y1.compareTo(y2) < 0);
     assertTrue(y1.compareTo(y2) < 0);
