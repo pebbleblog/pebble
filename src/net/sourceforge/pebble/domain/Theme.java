@@ -95,11 +95,11 @@ public class Theme {
    */
   public void restore() {
     File blogTheme = new File(getBackupThemeDirectory());
-    if (!blogTheme.exists()) {
+    if (!blogTheme.exists() || blogTheme.listFiles().length == 0) {
       copy(TEMPLATE_THEME_NAME);
     }
 
-    log.debug("Restoring " + name + " theme from " + getBackupThemeDirectory());
+    log.info("Restoring " + name + " theme from " + getBackupThemeDirectory());
     copy(blogTheme, getPathToLiveTheme());
   }
 
@@ -116,7 +116,7 @@ public class Theme {
    * @param themeName   the name of the theme to backup
    */
   private void backup(String themeName) {
-    log.debug("Backing up " + themeName + " theme to " + getBackupThemeDirectory());
+    log.info("Backing up " + themeName + " theme to " + getBackupThemeDirectory());
     File liveTheme = new File(pathToLiveThemes, themeName);
     File blogTheme = new File(getBackupThemeDirectory());
     File blogThemeBackup = new File(getBackupThemeDirectory() + ".bak");
@@ -134,7 +134,7 @@ public class Theme {
    * @param themeName   the name of the theme to backup
    */
   private void copy(String themeName) {
-    log.info("Copying up " + themeName + " theme to " + getBackupThemeDirectory());
+    log.info("Copying " + themeName + " theme to " + getBackupThemeDirectory());
     File liveTheme = new File(pathToLiveThemes, themeName);
     File blogTheme = new File(getBackupThemeDirectory());
     File blogThemeBackup = new File(getBackupThemeDirectory() + ".bak");

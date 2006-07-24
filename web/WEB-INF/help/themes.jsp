@@ -10,7 +10,7 @@
 
     <h3>Editing your own theme</h3>
     <p>
-      Each blog has its own custom theme that can be edited by the owner of that blog. The name of your editable theme is ${blog.editableTheme.name}, which was automatically created by Pebble the first time your blog started up. To edit your custom theme, click <a href="./theme/">Theme</a>.
+      Each blog has its own custom theme that can be edited by the owner of that blog. The name of your editable theme is <code>${blog.editableTheme.name}</code>, which was automatically created by Pebble the first time your blog started up. To edit your custom theme, click <a href="./theme/">Theme</a>.
       From this page you can edit the CSS and JSP files that your theme contains.
     </p>
 
@@ -31,6 +31,19 @@
     <ul>
       <li>sidebar.jsp : the sidebar that includes the calendar, recent blog entries, links, etc.</li>
       <li>template.jsp : the main template into which all other content is placed.</li>
+    </ul>
+
+    <h3>Variables</h3>
+    <p>
+      Using the JSP expression language, you have access to the following variables within your own theme.
+    </p>
+    <ul>
+      <li>blog : your blog, an instanceof <a href="">Blog</a></li>
+      <li>pebbleContext : an instanceof <a href="">Blog</a></li>
+      <li>categories : the list of <a href="">Category</a> objects</li>
+      <li>tags : the list of <a href="">Tag</a> objects</li>
+      <li>recentBlogEntries : the list of recent <a href="">BlogEntry</a> objects</li></li>
+      <li>recentResponses : the list of <a href="">Response</a> objects</li></li>
     </ul>
   </div>
 </div>

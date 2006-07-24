@@ -1,3 +1,8 @@
+Version 2.0.0-RC2 - July 2006
+----------------------------------
+Renamed default theme to "pebble" and added a new default theme.
+Moved hardcoded English text in public pages to resource bundles.
+
 Version 2.0.0-RC1 - 17th July 2006
 ----------------------------------
 Fixed "page not found" error when uploading files to theme.

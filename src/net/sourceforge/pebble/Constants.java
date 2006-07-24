@@ -49,6 +49,8 @@ public class Constants {
   public static final String RECENT_RESPONSES = "recentResponses";
   public static final String CATEGORIES = "categories";
   public static final String TAGS = "tags";
+  public static final String PLUGIN_PROPERTIES = "pluginProperties";
+  public static final String ARCHIVES = "archives";
 
   public static final String BLOG_ENTRY_KEY = "blogEntry";
   public static final String STATIC_PAGE_KEY = "staticPage";

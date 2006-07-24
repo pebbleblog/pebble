@@ -15,9 +15,10 @@
   </div>
 
   <%-- Uncomment this block if you would like to show archives by month.
+  --%>
   <div class="sidebarItem">
     <div class="sidebarItemTitle"><span>Archives</span></div>
-    <c:forEach var="year" items="${blog.activeYearlyBlogsInReverse}">
+    <c:forEach var="year" items="${archives}">
       <b><fmt:formatDate value="${year.date}" pattern="yyyy"/></b><br />
       <c:forEach var="month" items="${year.activeMonthlyBlogsInReverse}">
       <a href="${month.permalink}"><fmt:formatDate value="${month.date}" pattern="MMMM"/></a> (<fmt:formatNumber value="${month.numberOfBlogEntries}" type="number" />)
@@ -26,9 +27,8 @@
       <br />
     </c:forEach>
   </div>
-  --%>
 
-  <c:if test="${not empty blog.rootCategory.subCategories}">
+  <c:if test="${not empty categories[0].subCategories}">
   <div class="sidebarItem">
     <div class="sidebarItemTitle"><span><fmt:message key="category.categories" /></span></div>
     <c:forEach var="category" items="${categories}" begin="1" varStatus="status">
@@ -79,8 +79,8 @@
      - delicious.username
      - delicious.password
   --%>
-  <c:set var="deliciousUsername" value='${blog.pluginProperties.properties["delicious.username"]}' />
-  <c:set var="deliciousPassword" value='${blog.pluginProperties.properties["delicious.password"]}' />
+  <c:set var="deliciousUsername" value='${pluginProperties.properties["delicious.username"]}' />
+  <c:set var="deliciousPassword" value='${pluginProperties.properties["delicious.password"]}' />
   <c:if test="${not empty deliciousUsername}">
   <delicious:recentPosts var="deliciousPosts" username="${deliciousUsername}" password="${deliciousPassword}" count="3" />
   <div class="sidebarItem">

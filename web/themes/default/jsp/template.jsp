@@ -4,9 +4,11 @@
 
    - blog
    - pebbleContext
+   - categories
    - tags
    - recentBlogEntries
    - recentResponses
+   - pluginProperties
 --%>
 <%@ include file="/WEB-INF/fragments/header.jspf" %>
 

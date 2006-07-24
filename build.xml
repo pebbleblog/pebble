@@ -5,7 +5,7 @@
   <property name="etc.dir" value="${basedir}/etc"/>
   <property name="src.dir" value="${basedir}/src"/>
   <property name="website.dir" value="${basedir}/website"/>
-  <property name="javadoc.dir" value="${basedir}/javadoc"/>
+  <property name="javadoc.dir" value="${build.dir}/javadoc"/>
   <property name="test.dir" value="${basedir}/test"/>
   <property name="build.dir" value="${basedir}/build"/>
   <property name="classes.dir" value="${build.dir}/classes"/>
@@ -276,6 +276,23 @@
   </target> 
 
   <target name="release" depends="dist,website">
+  </target>
+
+  <target name="javadoc">
+    <javadoc packagenames="net.sourceforge.pebble.*"
+               sourcepath="${src.dir}"
+               defaultexcludes="yes"
+               destdir="${javadoc.dir}"
+               author="true"
+               version="true"
+               use="true"
+               windowtitle="Pebble">
+        <doctitle><![CDATA[<h1>Pebble</h1>]]></doctitle>
+        <bottom><![CDATA[<i>Copyright &#169; 2003-2006, Simon Brown. All Rights Reserved.</i>]]></bottom>
+        <tag name="todo" scope="all" description="To do:"/>
+        <link offline="true" href="http://java.sun.com/products/jdk/1.2/docs/api/" packagelistLoc="C:\tmp"/>
+        <link href="http://developer.java.sun.com/developer/products/xml/docs/api/"/>
+      </javadoc>
   </target>
 
   <target name="jspc" depends="build">

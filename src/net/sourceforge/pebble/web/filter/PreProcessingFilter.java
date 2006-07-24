@@ -133,10 +133,13 @@ public class PreProcessingFilter implements Filter {
     httpRequest.setAttribute(Constants.BLOG_MANAGER, BlogManager.getInstance());
 
     if (blog instanceof Blog) {
-      httpRequest.setAttribute(Constants.RECENT_BLOG_ENTRIES, ((Blog)blog).getRecentPublishedBlogEntries());
-      httpRequest.setAttribute(Constants.RECENT_RESPONSES, ((Blog)blog).getRecentApprovedResponses());
-      httpRequest.setAttribute(Constants.CATEGORIES, ((Blog)blog).getCategories());
-      httpRequest.setAttribute(Constants.TAGS, ((Blog)blog).getTags());
+      Blog b = (Blog)blog;
+      httpRequest.setAttribute(Constants.RECENT_BLOG_ENTRIES, b.getRecentPublishedBlogEntries());
+      httpRequest.setAttribute(Constants.RECENT_RESPONSES, b.getRecentApprovedResponses());
+      httpRequest.setAttribute(Constants.CATEGORIES, b.getCategories());
+      httpRequest.setAttribute(Constants.TAGS, b.getTags());
+      httpRequest.setAttribute(Constants.PLUGIN_PROPERTIES, b.getPluginProperties());
+      httpRequest.setAttribute(Constants.ARCHIVES, b.getActiveYearlyBlogsInReverse());
     }
 
     // change the character encoding so that we can successfully get
