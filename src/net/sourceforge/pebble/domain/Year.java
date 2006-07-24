@@ -171,7 +171,7 @@ public class Year extends TimePeriod implements Comparable {
    *
    * @return  a Collection of Month instances
    */
-  public List<Month> getActiveMonthlyBlogsInReverse() {
+  public List<Month> getArchives() {
     List<Month> list = new LinkedList<Month>();
     Month thisMonth = getBlog().getBlogForThisMonth();
     Month firstMonth = getBlog().getBlogForFirstMonth();

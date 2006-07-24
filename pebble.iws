@@ -168,16 +168,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Day.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/domain/Day.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="42" column="13" selection-start="1860" selection-end="1860" vertical-scroll-proportion="0.20531401">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BlogService.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="BlogService.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/domain/BlogService.java">
           <provider selected="true" editor-type-id="text-editor">
             <state line="128" column="0" selection-start="4906" selection-end="4906" vertical-scroll-proportion="0.62040335">
@@ -186,19 +177,28 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DayComparator.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/comparator/DayComparator.java">
+      <file leaf-file-name="sidebar.jsp" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/web/themes/default/jsp/sidebar.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="43" column="13" selection-start="1835" selection-end="1835" vertical-scroll-proportion="0.2218268">
+            <state line="29" column="16" selection-start="1255" selection-end="1261" vertical-scroll-proportion="0.59541065">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DayComparatorTest.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test/net/sourceforge/pebble/comparator/DayComparatorTest.java">
+      <file leaf-file-name="blogEntryForm.jsp" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/blogEntryForm.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="41" column="13" selection-start="1820" selection-end="1820" vertical-scroll-proportion="0.20166074">
+            <state line="141" column="0" selection-start="4956" selection-end="4956" vertical-scroll-proportion="0.7741546">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Year.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/domain/Year.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="173" column="32" selection-start="5214" selection-end="5214" vertical-scroll-proportion="0.8671412">
               <folding />
             </state>
           </provider>
@@ -1130,27 +1130,6 @@
     </buildFile>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/domain/Blog.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="660" column="31" selection-start="24012" selection-end="24012" vertical-scroll-proportion="0.6474227">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/filter/PreProcessingFilter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="131" column="31" selection-start="4813" selection-end="4813" vertical-scroll-proportion="0.585567">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/domain/Year.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="17" selection-start="1850" selection-end="1854" vertical-scroll-proportion="0.20166074">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/build.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="122" column="24" selection-start="4326" selection-end="4326" vertical-scroll-proportion="0.7801932">
@@ -1161,13 +1140,6 @@
     <entry file="file://$PROJECT_DIR$/test/net/sourceforge/pebble/domain/YearTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="33" column="0" selection-start="1628" selection-end="1628" vertical-scroll-proportion="0.06049822">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/domain/Day.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="13" selection-start="1860" selection-end="1860" vertical-scroll-proportion="0.20531401">
           <folding />
         </state>
       </provider>
@@ -1228,9 +1200,37 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/domain/Day.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="42" column="13" selection-start="1860" selection-end="1860" vertical-scroll-proportion="0.20531401">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/domain/BlogService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="128" column="0" selection-start="4906" selection-end="4906" vertical-scroll-proportion="0.62040335">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/domain/Year.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="173" column="32" selection-start="5214" selection-end="5214" vertical-scroll-proportion="0.8671412">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/blogEntryForm.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="141" column="0" selection-start="4956" selection-end="4956" vertical-scroll-proportion="0.7741546">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/themes/default/jsp/sidebar.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="29" column="16" selection-start="1255" selection-end="1261" vertical-scroll-proportion="0.59541065">
           <folding />
         </state>
       </provider>
