@@ -31,7 +31,7 @@
  */
 package net.sourceforge.pebble.permalink;
 
-import net.sourceforge.pebble.domain.DailyBlog;
+import net.sourceforge.pebble.domain.Day;
 import net.sourceforge.pebble.domain.MonthlyBlog;
 import net.sourceforge.pebble.domain.SingleBlogTestCase;
 import net.sourceforge.pebble.api.permalink.PermalinkProvider;
@@ -91,8 +91,8 @@ public abstract class PermalinkProviderSupportTestCase extends SingleBlogTestCas
    * Tests that a daily blog permalink can be generated.
    */
   public void testGetPermalinkForDailyBlog() {
-    DailyBlog dailyBlog = blog.getBlogForDay(2004, 07, 14);
-    assertEquals("/2004/07/14.html", permalinkProvider.getPermalink(dailyBlog));
+    Day day = blog.getBlogForDay(2004, 07, 14);
+    assertEquals("/2004/07/14.html", permalinkProvider.getPermalink(day));
   }
 
   /**
@@ -110,10 +110,10 @@ public abstract class PermalinkProviderSupportTestCase extends SingleBlogTestCas
    * Tests thet the correct daily blog can be found from a permalink.
    */
   public void testGetDailyBlog() {
-    DailyBlog dailyBlog = permalinkProvider.getDailyBlog("/2004/07/14.html");
-    assertEquals(2004, dailyBlog.getMonthlyBlog().getYearlyBlog().getYear());
-    assertEquals(7, dailyBlog.getMonthlyBlog().getMonth());
-    assertEquals(14, dailyBlog.getDay());
+    Day day = permalinkProvider.getDailyBlog("/2004/07/14.html");
+    assertEquals(2004, day.getMonthlyBlog().getYearlyBlog().getYear());
+    assertEquals(7, day.getMonthlyBlog().getMonth());
+    assertEquals(14, day.getDay());
   }
 
 }

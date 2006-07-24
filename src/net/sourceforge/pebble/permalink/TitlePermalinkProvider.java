@@ -68,8 +68,8 @@ public class TitlePermalinkProvider extends PermalinkProviderSupport {
       return buildPermalink(blogEntry) + ".html";
     } else {
       BlogService service = new BlogService();
-      DailyBlog dailyBlog = getBlog().getBlogForDay(blogEntry.getDate());
-      List entries = dailyBlog.getBlogEntries();
+      Day day = getBlog().getBlogForDay(blogEntry.getDate());
+      List entries = day.getBlogEntries();
       int count = 0;
       for (int i = entries.size()-1; i > entries.indexOf(blogEntry.getId()); i--) {
         try {
@@ -153,9 +153,9 @@ public class TitlePermalinkProvider extends PermalinkProviderSupport {
    */
   public BlogEntry getBlogEntry(String uri) {
     BlogService service = new BlogService();
-    DailyBlog dailyBlog = getDailyBlog(uri);
+    Day day = getDailyBlog(uri);
 
-    Iterator it = dailyBlog.getBlogEntries().iterator();
+    Iterator it = day.getBlogEntries().iterator();
     while (it.hasNext()) {
       try {
         BlogEntry blogEntry = service.getBlogEntry(getBlog(), (String)it.next());

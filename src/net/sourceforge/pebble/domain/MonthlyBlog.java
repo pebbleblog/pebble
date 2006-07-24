@@ -35,7 +35,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
- * Represents a blog at a monthly level. This manages a collection of DailyBlog instances.
+ * Represents a blog at a monthly level. This manages a collection of Day instances.
  *
  * @author    Simon Brown
  */
@@ -47,8 +47,8 @@ public class MonthlyBlog extends TimePeriod implements Permalinkable {
   /** an integer representing the month that this MonthlyBlog is for */
   private int month;
 
-  /** the collection of DailyBlog instances that this blog is managing */
-  private DailyBlog[] dailyBlogs;
+  /** the collection of Day instances that this blog is managing */
+  private Day[] dailyBlogs;
 
   /** the last day in this month */
   private int lastDayInMonth;
@@ -71,9 +71,9 @@ public class MonthlyBlog extends TimePeriod implements Permalinkable {
     this.lastDayInMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
 
     // and load all daily blogs
-    dailyBlogs = new DailyBlog[lastDayInMonth];
+    dailyBlogs = new Day[lastDayInMonth];
     for (int day = 1; day <= lastDayInMonth; day++) {
-      dailyBlogs[day-1] = new DailyBlog(this, day);
+      dailyBlogs[day-1] = new Day(this, day);
     }
   }
 
@@ -146,9 +146,9 @@ public class MonthlyBlog extends TimePeriod implements Permalinkable {
    * @return  a List of BlogEntry instances, reverse ordered by date
    */
   public List<String> getBlogEntries() {
-    DailyBlog days[] = getAllDailyBlogs();
+    Day days[] = getAllDailyBlogs();
     List blogEntries = new ArrayList();
-    for (DailyBlog day : days) {
+    for (Day day : days) {
       blogEntries.addAll(day.getBlogEntries());
     }
     return blogEntries;
@@ -161,8 +161,8 @@ public class MonthlyBlog extends TimePeriod implements Permalinkable {
    */
   public int getNumberOfBlogEntries() {
     int count = 0;
-    DailyBlog days[] = getAllDailyBlogs();
-    for (DailyBlog day : days) {
+    Day days[] = getAllDailyBlogs();
+    for (Day day : days) {
       count += day.getNumberOfBlogEntries();
     }
 
@@ -172,11 +172,11 @@ public class MonthlyBlog extends TimePeriod implements Permalinkable {
   /**
    * Gets an array of all DailyBlogs.
    *
-   * @return  a Collection of DailyBlog instances for all those daily blogs
+   * @return  a Collection of Day instances for all those daily blogs
    *          that have entries (this can return an empty collection)
    */
-  public DailyBlog[] getAllDailyBlogs() {
-    DailyBlog blogs[] = new DailyBlog[dailyBlogs.length];
+  public Day[] getAllDailyBlogs() {
+    Day blogs[] = new Day[dailyBlogs.length];
     for (int day = 0; day < dailyBlogs.length; day++) {
       blogs[day] = getBlogForDay(day + 1);
     }
@@ -185,13 +185,13 @@ public class MonthlyBlog extends TimePeriod implements Permalinkable {
   }
 
   /**
-   * Gets a DailyBlog instance for the specified day. This lazy loads DailyBlog
+   * Gets a Day instance for the specified day. This lazy loads Day
    * instances as needed.
    *
    * @param day   the day as an int (i.e. 1 to 31)
-   * @return  the corresponding DailyBlog instance
+   * @return  the corresponding Day instance
    */
-  public synchronized DailyBlog getBlogForDay(int day) {
+  public synchronized Day getBlogForDay(int day) {
     // some bounds checking
     if (day < 1 || day > lastDayInMonth) {
       throw new IllegalArgumentException("Invalid day of " + day + " specified, should be between 1 and " + lastDayInMonth);
@@ -201,20 +201,20 @@ public class MonthlyBlog extends TimePeriod implements Permalinkable {
   }
 
   /**
-   * Gets a DailyBlog instance for the first day of the month.
+   * Gets a Day instance for the first day of the month.
    *
-   * @return  the DailyBlog instance representing the first day in the month
+   * @return  the Day instance representing the first day in the month
    */
-  public DailyBlog getBlogForFirstDay() {
+  public Day getBlogForFirstDay() {
     return getBlogForDay(1);
   }
 
   /**
-   * Gets a DailyBlog instance for the last day of the month.
+   * Gets a Day instance for the last day of the month.
    *
-   * @return  the DailyBlog instance representing the last day in the month
+   * @return  the Day instance representing the last day in the month
    */
-  public DailyBlog getBlogForLastDay() {
+  public Day getBlogForLastDay() {
     return getBlogForDay(lastDayInMonth);
   }
 
@@ -268,30 +268,30 @@ public class MonthlyBlog extends TimePeriod implements Permalinkable {
   }
 
   /**
-   * Given a DailyBlog, this method returns the DailyBlog instance for the
+   * Given a Day, this method returns the Day instance for the
    * previous day.
    *
-   * @param dailyBlog   a DailyBlog instance
-   * @return  a DailyBlog instance representing the previous day
+   * @param day   a Day instance
+   * @return  a Day instance representing the previous day
    */
-  DailyBlog getBlogForPreviousDay(DailyBlog dailyBlog) {
-    if (dailyBlog.getDay() > 1) {
-      return this.getBlogForDay(dailyBlog.getDay() - 1);
+  Day getBlogForPreviousDay(Day day) {
+    if (day.getDay() > 1) {
+      return this.getBlogForDay(day.getDay() - 1);
     } else {
       return year.getBlogForPreviousMonth(this).getBlogForLastDay();
     }
   }
 
   /**
-   * Given a DailyBlog, this method returns the DailyBlog instance for the
+   * Given a Day, this method returns the Day instance for the
    * next day.
    *
-   * @param dailyBlog   a DailyBlog instance
-   * @return  a DailyBlog instance representing the next day
+   * @param day   a Day instance
+   * @return  a Day instance representing the next day
    */
-  DailyBlog getBlogForNextDay(DailyBlog dailyBlog) {
-    if (dailyBlog.getDay() < lastDayInMonth) {
-      return this.getBlogForDay(dailyBlog.getDay() + 1);
+  Day getBlogForNextDay(Day day) {
+    if (day.getDay() < lastDayInMonth) {
+      return this.getBlogForDay(day.getDay() + 1);
     } else {
       return year.getBlogForNextMonth(this).getBlogForFirstDay();
     }

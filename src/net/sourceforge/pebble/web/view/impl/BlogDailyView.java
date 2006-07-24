@@ -35,7 +35,7 @@ import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.api.decorator.ContentDecoratorContext;
 import net.sourceforge.pebble.comparator.BlogEntryComparator;
 import net.sourceforge.pebble.domain.Blog;
-import net.sourceforge.pebble.domain.DailyBlog;
+import net.sourceforge.pebble.domain.Day;
 import net.sourceforge.pebble.decorator.ContentDecoratorChain;
 import net.sourceforge.pebble.web.view.HtmlView;
 
@@ -68,7 +68,7 @@ public class BlogDailyView extends HtmlView {
    */
   public String getTitle() {
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
-    DailyBlog daily = (DailyBlog)getModel().get(Constants.DAILY_BLOG);
+    Day daily = (Day)getModel().get(Constants.DAILY_BLOG);
     DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.LONG, blog.getLocale());
     dateFormat.setTimeZone(blog.getTimeZone());
     return dateFormat.format(daily.getDate());

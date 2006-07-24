@@ -63,7 +63,7 @@ public class ViewDailyBlogAction extends Action {
     String month = request.getParameter("month");
     String day = request.getParameter("day");
 
-    DailyBlog daily;
+    Day daily;
     if (year != null && year.length() > 0 &&
         month != null && month.length() > 0 &&
         day != null && day.length() > 0) {
@@ -86,9 +86,9 @@ public class ViewDailyBlogAction extends Action {
     getModel().put("displayMode", "day");
 
     // put the previous and next days in the model for navigation purposes
-    DailyBlog firstDay = blog.getBlogForFirstMonth().getBlogForFirstDay();
-    DailyBlog previousDay = daily.getPreviousDay();
-    DailyBlog nextDay = daily.getNextDay();
+    Day firstDay = blog.getBlogForFirstMonth().getBlogForFirstDay();
+    Day previousDay = daily.getPreviousDay();
+    Day nextDay = daily.getNextDay();
 
     if (!previousDay.before(firstDay)) {
       getModel().put("previousDay", previousDay);

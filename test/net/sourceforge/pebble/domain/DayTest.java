@@ -36,24 +36,24 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- * Tests for the DailyBlog class.
+ * Tests for the Day class.
  *
  * @author    Simon Brown
  */
-public class DailyBlogTest extends SingleBlogTestCase {
+public class DayTest extends SingleBlogTestCase {
 
-  private DailyBlog dailyBlog;
+  private Day day;
 
   protected void setUp() throws Exception {
     super.setUp();
-    dailyBlog = blog.getBlogForToday();
+    day = blog.getBlogForToday();
   }
 
   /**
    * Tests that the root blog is setup correctly.
    */
   public void testGetRootBlog() {
-    assertEquals(blog, dailyBlog.getBlog());
+    assertEquals(blog, day.getBlog());
   }
 
   /**
@@ -61,22 +61,22 @@ public class DailyBlogTest extends SingleBlogTestCase {
    */
   public void testGetDay() {
     Calendar cal = blog.getCalendar();
-    assertEquals(cal.get(Calendar.DAY_OF_MONTH), dailyBlog.getDay());
+    assertEquals(cal.get(Calendar.DAY_OF_MONTH), day.getDay());
   }
 
   /**
    * Tests the getter for the monthly blog.
    */
   public void testGetMonthlyBlog() {
-    assertEquals(blog.getBlogForThisMonth(), dailyBlog.getMonthlyBlog());
+    assertEquals(blog.getBlogForThisMonth(), day.getMonthlyBlog());
   }
 
   /**
    * Tests the getter for the date property.
    */
   public void testGetDate() {
-    dailyBlog = blog.getBlogForDay(2003, 4, 7);
-    Date date = dailyBlog.getDate();
+    day = blog.getBlogForDay(2003, 4, 7);
+    Date date = day.getDate();
     Calendar cal = blog.getCalendar();
     cal.setTime(date);
     assertEquals(2003, cal.get(Calendar.YEAR));
@@ -93,23 +93,23 @@ public class DailyBlogTest extends SingleBlogTestCase {
    */
   public void testGetPermalink() {
     String permalink = blog.getUrl() + "2003/04/01.html";
-    dailyBlog = blog.getBlogForDay(2003, 4, 1);
-    assertEquals(permalink, dailyBlog.getPermalink());
+    day = blog.getBlogForDay(2003, 4, 1);
+    assertEquals(permalink, day.getPermalink());
 
     permalink = blog.getUrl() + "2003/04/10.html";
-    dailyBlog = blog.getBlogForDay(2003, 4, 10);
-    assertEquals(permalink, dailyBlog.getPermalink());
+    day = blog.getBlogForDay(2003, 4, 10);
+    assertEquals(permalink, day.getPermalink());
   }
 
 //  /**
 //   * Tests the ability to check for entries.
 //   */
 //  public void testHasEntries() {
-//    assertFalse(dailyBlog.hasBlogEntries());
+//    assertFalse(day.hasBlogEntries());
 //
-//    BlogEntry entry = dailyBlog.createBlogEntry();
-//    dailyBlog.addEntry(entry);
-//    assertTrue(dailyBlog.hasBlogEntries());
+//    BlogEntry entry = day.createBlogEntry();
+//    day.addEntry(entry);
+//    assertTrue(day.hasBlogEntries());
 //  }
 
 //  /**
@@ -117,39 +117,39 @@ public class DailyBlogTest extends SingleBlogTestCase {
 //   */
 //  public void testHasEntriesInCategory() {
 //    Category cat = new Category("testCategory1", "Test Category 1");
-//    assertFalse(dailyBlog.hasBlogEntries(cat));
+//    assertFalse(day.hasBlogEntries(cat));
 //
-//    BlogEntry entry = dailyBlog.createBlogEntry();
-//    dailyBlog.addEntry(entry);
-//    assertFalse(dailyBlog.hasBlogEntries(cat));
+//    BlogEntry entry = day.createBlogEntry();
+//    day.addEntry(entry);
+//    assertFalse(day.hasBlogEntries(cat));
 //
 //    entry.addCategory(cat);
-//    assertTrue(dailyBlog.hasBlogEntries(cat));
+//    assertTrue(day.hasBlogEntries(cat));
 //  }
 
 //  /**
 //   * Tests the ability to get all daily blog entries.
 //   */
 //  public void testGetEntries() {
-//    assertNotNull(dailyBlog.getEntries());
-//    assertTrue(dailyBlog.getEntries().isEmpty());
+//    assertNotNull(day.getEntries());
+//    assertTrue(day.getEntries().isEmpty());
 //
-//    BlogEntry entry = dailyBlog.createBlogEntry();
-//    dailyBlog.addEntry(entry);
-//    assertNotNull(dailyBlog.getEntries());
-//    assertTrue(dailyBlog.getEntries().size() == 1);
-//    assertTrue(dailyBlog.getEntries().contains(entry));
+//    BlogEntry entry = day.createBlogEntry();
+//    day.addEntry(entry);
+//    assertNotNull(day.getEntries());
+//    assertTrue(day.getEntries().size() == 1);
+//    assertTrue(day.getEntries().contains(entry));
 //  }
 
 //  /**
 //   * Tests the ability to create a new blog entry.
 //   */
 //  public void testCreateBlogEntry() {
-//    BlogEntry entry = dailyBlog.createBlogEntry();
+//    BlogEntry entry = day.createBlogEntry();
 //    assertNotNull(entry);
 //
-//    // and check it's not yet been added to the DailyBlog instance
-//    assertFalse(dailyBlog.hasBlogEntries());
+//    // and check it's not yet been added to the Day instance
+//    assertFalse(day.hasBlogEntries());
 //  }
 
 //  /**
@@ -158,19 +158,19 @@ public class DailyBlogTest extends SingleBlogTestCase {
 //  public void testPreviousBlogEntry() {
 //    Calendar cal = blog.getCalendar();
 //    cal.set(Calendar.HOUR_OF_DAY, 2);
-//    BlogEntry entry1 = dailyBlog.createBlogEntry("Title", "Body", cal.getTime());
-//    dailyBlog.addEntry(entry1);
+//    BlogEntry entry1 = day.createBlogEntry("Title", "Body", cal.getTime());
+//    day.addEntry(entry1);
 //    cal.set(Calendar.HOUR_OF_DAY, 3);
-//    BlogEntry entry2 = dailyBlog.createBlogEntry("Title", "Body", cal.getTime());
-//    dailyBlog.addEntry(entry2);
+//    BlogEntry entry2 = day.createBlogEntry("Title", "Body", cal.getTime());
+//    day.addEntry(entry2);
 //    cal.set(Calendar.HOUR_OF_DAY, 4);
-//    BlogEntry entry3 = dailyBlog.createBlogEntry("Title", "Body", cal.getTime());
-//    dailyBlog.addEntry(entry3);
+//    BlogEntry entry3 = day.createBlogEntry("Title", "Body", cal.getTime());
+//    day.addEntry(entry3);
 //
-//    assertNull(dailyBlog.getPreviousBlogEntry(null));
-//    assertNull(dailyBlog.getPreviousBlogEntry(entry1));
-//    assertEquals(entry1, dailyBlog.getPreviousBlogEntry(entry2));
-//    assertEquals(entry2, dailyBlog.getPreviousBlogEntry(entry3));
+//    assertNull(day.getPreviousBlogEntry(null));
+//    assertNull(day.getPreviousBlogEntry(entry1));
+//    assertEquals(entry1, day.getPreviousBlogEntry(entry2));
+//    assertEquals(entry2, day.getPreviousBlogEntry(entry3));
 //  }
 
 //  /**
@@ -179,26 +179,26 @@ public class DailyBlogTest extends SingleBlogTestCase {
 //  public void testNextBlogEntry() {
 //    Calendar cal = blog.getCalendar();
 //    cal.set(Calendar.HOUR_OF_DAY, 2);
-//    BlogEntry entry1 = dailyBlog.createBlogEntry("Title", "Body", cal.getTime());
-//    dailyBlog.addEntry(entry1);
+//    BlogEntry entry1 = day.createBlogEntry("Title", "Body", cal.getTime());
+//    day.addEntry(entry1);
 //    cal.set(Calendar.HOUR_OF_DAY, 3);
-//    BlogEntry entry2 = dailyBlog.createBlogEntry("Title", "Body", cal.getTime());
-//    dailyBlog.addEntry(entry2);
+//    BlogEntry entry2 = day.createBlogEntry("Title", "Body", cal.getTime());
+//    day.addEntry(entry2);
 //    cal.set(Calendar.HOUR_OF_DAY, 4);
-//    BlogEntry entry3 = dailyBlog.createBlogEntry("Title", "Body", cal.getTime());
-//    dailyBlog.addEntry(entry3);
+//    BlogEntry entry3 = day.createBlogEntry("Title", "Body", cal.getTime());
+//    day.addEntry(entry3);
 //
-//    assertNull(dailyBlog.getNextBlogEntry(null));
-//    assertNull(dailyBlog.getNextBlogEntry(entry3));
-//    assertEquals(entry2, dailyBlog.getNextBlogEntry(entry1));
-//    assertEquals(entry3, dailyBlog.getNextBlogEntry(entry2));
+//    assertNull(day.getNextBlogEntry(null));
+//    assertNull(day.getNextBlogEntry(entry3));
+//    assertEquals(entry2, day.getNextBlogEntry(entry1));
+//    assertEquals(entry3, day.getNextBlogEntry(entry2));
 //  }
 
 //  /**
 //   * Tests that blog entries can't be added with the same ID.
 //   */
 //  public void testAddingBlogEntriesWithTheSameId() {
-//    DailyBlog today = blog.getBlogForToday();
+//    Day today = blog.getBlogForToday();
 //    BlogEntry blogEntry1 = today.createBlogEntry();
 //    BlogEntry blogEntry2 = today.createBlogEntry();
 //    BlogEntry blogEntry3 = today.createBlogEntry();
@@ -216,7 +216,7 @@ public class DailyBlogTest extends SingleBlogTestCase {
 //   */
 //  public void testListenersFiredWhenBlogEntryAdded() {
 //    final StringBuffer buf = new StringBuffer("123");
-//    final BlogEntry blogEntry = dailyBlog.createBlogEntry();
+//    final BlogEntry blogEntry = day.createBlogEntry();
 //
 //    BlogEntryListener listener = new BlogEntryListener() {
 //      public void blogEntryAdded(BlogEntryEvent event) {
@@ -242,7 +242,7 @@ public class DailyBlogTest extends SingleBlogTestCase {
 //    };
 //
 //    blog.getEventListenerList().addBlogEntryListener(listener);
-//    dailyBlog.addEntry(blogEntry);
+//    day.addEntry(blogEntry);
 //    assertEquals("321", buf.toString());
 //  }
 
@@ -251,8 +251,8 @@ public class DailyBlogTest extends SingleBlogTestCase {
 //   */
 //  public void testListenersFiredWhenBlogEntryRemoved() {
 //    final StringBuffer buf = new StringBuffer("123");
-//    final BlogEntry blogEntry = dailyBlog.createBlogEntry();
-//    dailyBlog.addEntry(blogEntry);
+//    final BlogEntry blogEntry = day.createBlogEntry();
+//    day.addEntry(blogEntry);
 //
 //    BlogEntryListener listener = new BlogEntryListener() {
 //      public void blogEntryAdded(BlogEntryEvent event) {
@@ -278,7 +278,7 @@ public class DailyBlogTest extends SingleBlogTestCase {
 //    };
 //
 //    blog.getEventListenerList().addBlogEntryListener(listener);
-//    dailyBlog.removeEntry(blogEntry);
+//    day.removeEntry(blogEntry);
 //    assertEquals("321", buf.toString());
 //  }
 
@@ -286,14 +286,14 @@ public class DailyBlogTest extends SingleBlogTestCase {
 //   * Tests that event listeners are enabled after an entry has been added.
 //   */
 //  public void testBlogEntryEventListenersEnabledAfterAddition() {
-//    final BlogEntry blogEntry = dailyBlog.createBlogEntry();
+//    final BlogEntry blogEntry = day.createBlogEntry();
 //    assertFalse(blogEntry.areEventsEnabled());
-//    dailyBlog.addEntry(blogEntry);
+//    day.addEntry(blogEntry);
 //    assertTrue(blogEntry.areEventsEnabled());
 //  }
 
   public void testIntrospection() throws Exception {
-    Introspector.getBeanInfo(DailyBlog.class);
+    Introspector.getBeanInfo(Day.class);
   }
 
 }

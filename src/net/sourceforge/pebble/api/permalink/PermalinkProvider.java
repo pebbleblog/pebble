@@ -107,10 +107,10 @@ public interface PermalinkProvider {
   /**
    * Gets the permalink for a daily blog.
    *
-   * @param dailyBlog   a DailyBlog instance
+   * @param day   a Day instance
    * @return  a URI as a String
    */
-  public String getPermalink(DailyBlog dailyBlog);
+  public String getPermalink(Day day);
 
   /**
    * Determines whether the specified URI is a daily blog permalink.
@@ -125,8 +125,8 @@ public interface PermalinkProvider {
    * Gets the daily blog referred to by the specified URI.
    *
    * @param uri   a relative URI
-   * @return  a DailyBlog instance, or null if one can't be found
+   * @return  a Day instance, or null if one can't be found
    */
-  public DailyBlog getDailyBlog(String uri);
+  public Day getDailyBlog(String uri);
 
 }

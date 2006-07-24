@@ -128,18 +128,18 @@ public class MonthlyBlogTest extends SingleBlogTestCase {
    * Tests that we can get the daily blog for a specific day.
    */
   public void testGetBlogForDay() {
-    DailyBlog dailyBlog = monthlyBlog.getBlogForDay(1);
-    assertNotNull(dailyBlog);
-    assertEquals(1, dailyBlog.getDay());
+    Day day = monthlyBlog.getBlogForDay(1);
+    assertNotNull(day);
+    assertEquals(1, day.getDay());
 
     try {
-      dailyBlog = monthlyBlog.getBlogForDay(-1);
+      day = monthlyBlog.getBlogForDay(-1);
       fail();
     } catch (IllegalArgumentException iae) {
     }
 
     try {
-      dailyBlog = monthlyBlog.getBlogForDay(0);
+      day = monthlyBlog.getBlogForDay(0);
       fail();
     } catch (IllegalArgumentException iae) {
     }
@@ -147,10 +147,10 @@ public class MonthlyBlogTest extends SingleBlogTestCase {
     Calendar cal = blog.getCalendar();
     cal.setTime(monthlyBlog.getDate());
     int maxDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-    dailyBlog = monthlyBlog.getBlogForDay(maxDay - 1);
-    dailyBlog = monthlyBlog.getBlogForDay(maxDay);
+    day = monthlyBlog.getBlogForDay(maxDay - 1);
+    day = monthlyBlog.getBlogForDay(maxDay);
     try {
-      dailyBlog = monthlyBlog.getBlogForDay(maxDay + 1);
+      day = monthlyBlog.getBlogForDay(maxDay + 1);
       fail();
     } catch (IllegalArgumentException iae) {
     }

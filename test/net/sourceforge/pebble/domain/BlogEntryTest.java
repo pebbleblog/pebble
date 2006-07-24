@@ -586,9 +586,9 @@ public class BlogEntryTest extends SingleBlogTestCase {
    */
   public void testGetNextBlogEntry() throws Exception {
     BlogService service = new BlogService();
-    DailyBlog today = blog.getBlogForToday();
-    DailyBlog oneDayAgo = today.getPreviousDay();
-    DailyBlog twoDaysAgo = today.getPreviousDay().getPreviousDay();
+    Day today = blog.getBlogForToday();
+    Day oneDayAgo = today.getPreviousDay();
+    Day twoDaysAgo = today.getPreviousDay().getPreviousDay();
 
     BlogEntry b1 = new BlogEntry(blog);
     b1.setDate(twoDaysAgo.getDate());
@@ -616,9 +616,9 @@ public class BlogEntryTest extends SingleBlogTestCase {
    */
   public void testGetPreviousBlogEntry() throws Exception {
     BlogService service = new BlogService();
-    DailyBlog today = blog.getBlogForToday();
-    DailyBlog oneDayAgo = today.getPreviousDay();
-    DailyBlog twoDaysAgo = today.getPreviousDay().getPreviousDay();
+    Day today = blog.getBlogForToday();
+    Day oneDayAgo = today.getPreviousDay();
+    Day twoDaysAgo = today.getPreviousDay().getPreviousDay();
 
     BlogEntry b1 = new BlogEntry(blog);
     b1.setDate(twoDaysAgo.getDate());

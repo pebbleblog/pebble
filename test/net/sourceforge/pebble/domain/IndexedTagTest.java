@@ -33,8 +33,6 @@ package net.sourceforge.pebble.domain;
 
 import net.sourceforge.pebble.index.IndexedTag;
 
-import java.util.List;
-
 
 /**
  * Tests for the IndexedTag class.
@@ -79,7 +77,7 @@ public class IndexedTagTest extends SingleBlogTestCase {
 //    tag.calculateRank(10);
 //    assertEquals(1, tag.getRank());
 //
-//    DailyBlog today = blog.getBlogForToday();
+//    Day today = blog.getBlogForToday();
 //    BlogEntry blogEntry = today.createBlogEntry();
 //    today.addEntry(blogEntry);
 //    tag.addBlogEntry(blogEntry);

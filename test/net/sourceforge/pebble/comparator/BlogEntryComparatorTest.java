@@ -32,7 +32,7 @@
 package net.sourceforge.pebble.comparator;
 
 import net.sourceforge.pebble.domain.BlogEntry;
-import net.sourceforge.pebble.domain.DailyBlog;
+import net.sourceforge.pebble.domain.Day;
 import net.sourceforge.pebble.domain.SingleBlogTestCase;
 
 import java.util.Calendar;
@@ -46,7 +46,7 @@ public class BlogEntryComparatorTest extends SingleBlogTestCase {
 
   public void testCompare() {
     BlogEntryComparator comp = new BlogEntryComparator();
-    DailyBlog dailyBlog = blog.getBlogForDay(2003, 04, 01);
+    Day day = blog.getBlogForDay(2003, 04, 01);
 
     Calendar cal1 = blog.getCalendar();
     cal1.set(Calendar.HOUR_OF_DAY, 9);

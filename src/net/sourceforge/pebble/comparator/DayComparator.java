@@ -31,30 +31,31 @@
  */
 package net.sourceforge.pebble.comparator;
 
-import net.sourceforge.pebble.domain.DailyBlog;
-import net.sourceforge.pebble.domain.SingleBlogTestCase;
+import net.sourceforge.pebble.domain.Day;
+
+import java.util.Comparator;
 
 /**
- * Tests for the DailyBlogComparator class.
+ * A comparator used to order Day instances, in reverse order
+ * of their date.
  *
  * @author    Simon Brown
  */
-public class DailyBlogComparatorTest extends SingleBlogTestCase {
+public class DayComparator implements Comparator {
 
-  public void testCompare() {
-    DailyBlogComparator comp = new DailyBlogComparator();
-    DailyBlog d1 = blog.getBlogForDay(2003, 04, 01);
-    DailyBlog d2 = blog.getBlogForDay(2003, 04, 01);
-    assertTrue(comp.compare(d1, d2) == 0);
-    assertTrue(comp.compare(d2, d1) == 0);
+  /**
+   * Compares two objects.
+   *
+   * @param o1  object 1
+   * @param o2  object 2
+   * @return  -n, 0 or +n if the date represented by the second daily blog is less than,
+   *          the same as or greater than the first, respectively
+   */
+  public int compare(Object o1, Object o2) {
+    Day b1 = (Day)o1;
+    Day b2 = (Day)o2;
 
-    d2 = blog.getBlogForDay(2003, 03, 31);
-    assertTrue(comp.compare(d1, d2) < 0);
-    assertTrue(comp.compare(d2, d1) > 0);
-
-    d2 = blog.getBlogForDay(2003, 04, 02);
-    assertTrue(comp.compare(d1, d2) > 0);
-    assertTrue(comp.compare(d2, d1) < 0);
+    return b2.getDate().compareTo(b1.getDate());
   }
 
 }

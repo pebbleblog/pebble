@@ -261,12 +261,12 @@ public class UriTransformer {
         result = "/viewBlogEntry.action?entry=" + blogEntry.getId();
       }
     } else if (permalinkProvider.isDailyBlogPermalink(uri)) {
-      DailyBlog dailyBlog = permalinkProvider.getDailyBlog(uri);
-      if (dailyBlog != null) {
+      Day day = permalinkProvider.getDailyBlog(uri);
+      if (day != null) {
         result = "/viewDailyBlog.action";
-        result += "?year=" + dailyBlog.getMonthlyBlog().getYearlyBlog().getYear();
-        result += "&month=" + dailyBlog.getMonthlyBlog().getMonth();
-        result += "&day=" + dailyBlog.getDay();
+        result += "?year=" + day.getMonthlyBlog().getYearlyBlog().getYear();
+        result += "&month=" + day.getMonthlyBlog().getMonth();
+        result += "&day=" + day.getDay();
       }
     } else if (permalinkProvider.isMonthlyBlogPermalink(uri)) {
       MonthlyBlog monthlyBlog = permalinkProvider.getMonthlyBlog(uri);

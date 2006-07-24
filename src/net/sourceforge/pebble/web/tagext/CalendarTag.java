@@ -33,7 +33,7 @@ package net.sourceforge.pebble.web.tagext;
 
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.domain.Blog;
-import net.sourceforge.pebble.domain.DailyBlog;
+import net.sourceforge.pebble.domain.Day;
 import net.sourceforge.pebble.domain.MonthlyBlog;
 
 import javax.servlet.http.HttpServletRequest;
@@ -67,7 +67,7 @@ public class  CalendarTag extends TagSupport {
     Blog blog = (Blog)request.getAttribute(Constants.BLOG_KEY);
     ResourceBundle bundle = ResourceBundle.getBundle("resources", blog.getLocale());
     MonthlyBlog month = (MonthlyBlog)request.getAttribute("monthlyBlog");
-    DailyBlog todaysBlog = blog.getBlogForToday();
+    Day todaysBlog = blog.getBlogForToday();
     Calendar today = blog.getCalendar();
 
     if (month == null) {
@@ -126,7 +126,7 @@ public class  CalendarTag extends TagSupport {
       int count = 0;
       while (it.hasNext()) {
         cal = (Calendar)it.next();
-        DailyBlog daily = blog.getBlogForDay(cal.getTime());
+        Day daily = blog.getBlogForDay(cal.getTime());
 
         String formattedNumber = numberFormatter.format(cal.get(Calendar.DAY_OF_MONTH));
         if (formattedNumber.length() == 1) {

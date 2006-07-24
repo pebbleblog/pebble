@@ -45,7 +45,7 @@ foreach (existing blog entry) {
     Date date;
 
     // create a new Pebble entry, add and store
-    DailyBlog day = blog.getBlogForDay(date);
+    Day day = blog.getBlogForDay(date);
     BlogEntry entry = day.createBlogEntry(title, body, date);
     entry.set...(); // set any other properties
     day.addEntry(entry);

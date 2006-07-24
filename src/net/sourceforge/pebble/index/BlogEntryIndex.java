@@ -3,7 +3,7 @@ package net.sourceforge.pebble.index;
 import net.sourceforge.pebble.comparator.ReverseBlogEntryIdComparator;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.domain.BlogEntry;
-import net.sourceforge.pebble.domain.DailyBlog;
+import net.sourceforge.pebble.domain.Day;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -53,13 +53,13 @@ public class BlogEntryIndex {
    */
   public synchronized void index(List<BlogEntry> blogEntries) {
     for (BlogEntry blogEntry : blogEntries) {
-      DailyBlog dailyBlog = blog.getBlogForDay(blogEntry.getDate());
+      Day day = blog.getBlogForDay(blogEntry.getDate());
       if (blogEntry.isPublished()) {
         publishedIndexEntries.add(blogEntry.getId());
-        dailyBlog.addPublishedBlogEntry(blogEntry.getId());
+        day.addPublishedBlogEntry(blogEntry.getId());
       } else {
         unpublishedIndexEntries.add(blogEntry.getId());
-        dailyBlog.addUnpublishedBlogEntry(blogEntry.getId());
+        day.addUnpublishedBlogEntry(blogEntry.getId());
       }
       indexEntries.add(blogEntry.getId());
     }
@@ -78,14 +78,14 @@ public class BlogEntryIndex {
    * @param blogEntry   a BlogEntry instance
    */
   public synchronized void index(BlogEntry blogEntry) {
-    DailyBlog dailyBlog = blog.getBlogForDay(blogEntry.getDate());
+    Day day = blog.getBlogForDay(blogEntry.getDate());
     if (blogEntry.isPublished()) {
       publishedIndexEntries.add(blogEntry.getId());
-      dailyBlog.addPublishedBlogEntry(blogEntry.getId());
+      day.addPublishedBlogEntry(blogEntry.getId());
       writeIndex(true);
     } else {
       unpublishedIndexEntries.add(blogEntry.getId());
-      dailyBlog.addUnpublishedBlogEntry(blogEntry.getId());
+      day.addUnpublishedBlogEntry(blogEntry.getId());
       writeIndex(false);
     }
     indexEntries.add(blogEntry.getId());
@@ -101,8 +101,8 @@ public class BlogEntryIndex {
    * @param blogEntry   a BlogEntry instance
    */
   public synchronized void unindex(BlogEntry blogEntry) {
-    DailyBlog dailyBlog = blog.getBlogForDay(blogEntry.getDate());
-    dailyBlog.removeBlogEntry(blogEntry);
+    Day day = blog.getBlogForDay(blogEntry.getDate());
+    day.removeBlogEntry(blogEntry);
 
     indexEntries.remove(blogEntry.getId());
     publishedIndexEntries.remove(blogEntry.getId());
@@ -132,14 +132,14 @@ public class BlogEntryIndex {
 
           // and add it to the internal memory structures
           Date date = new Date(Long.parseLong(indexEntry));
-          DailyBlog dailyBlog = blog.getBlogForDay(date);
+          Day day = blog.getBlogForDay(date);
 
           if (published) {
             publishedIndexEntries.add(indexEntry);
-            dailyBlog.addPublishedBlogEntry(indexEntry);
+            day.addPublishedBlogEntry(indexEntry);
           } else {
             unpublishedIndexEntries.add(indexEntry);
-            dailyBlog.addUnpublishedBlogEntry(indexEntry);
+            day.addUnpublishedBlogEntry(indexEntry);
           }
 
           indexEntry = reader.readLine();

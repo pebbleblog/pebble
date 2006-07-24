@@ -696,12 +696,12 @@ public class Blog extends AbstractBlog {
   }
 
   /**
-   * Gets a DailyBlog intance for the specified Date.
+   * Gets a Day intance for the specified Date.
    *
    * @param date    a java.util.Date instance
-   * @return    a DailyBlog instance representing the specified Date
+   * @return    a Day instance representing the specified Date
    */
-  public DailyBlog getBlogForDay(Date date) {
+  public Day getBlogForDay(Date date) {
     Calendar cal = getCalendar();
     cal.setTime(date);
 
@@ -713,23 +713,23 @@ public class Blog extends AbstractBlog {
   }
 
   /**
-   * Gets the DailyBlog instance for today.
+   * Gets the Day instance for today.
    *
-   * @return    a DailyBlog instance
+   * @return    a Day instance
    */
-  public DailyBlog getBlogForToday() {
+  public Day getBlogForToday() {
     return this.getBlogForDay(getCalendar().getTime());
   }
 
   /**
-   * Gets a DailyBlog intance for the specified year, month and day.
+   * Gets a Day intance for the specified year, month and day.
    *
    * @param year    the year as an int
    * @param month   the month as an int
    * @param day     the day as an int
-   * @return    a DailyBlog instance representing the specified year, month and day
+   * @return    a Day instance representing the specified year, month and day
    */
-  public DailyBlog getBlogForDay(int year, int month, int day) {
+  public Day getBlogForDay(int year, int month, int day) {
     return getBlogForMonth(year, month).getBlogForDay(day);
   }
 
@@ -1054,13 +1054,13 @@ public class Blog extends AbstractBlog {
   }
 
   public BlogEntry getPreviousBlogEntry(BlogEntry blogEntry) {
-    DailyBlog firstDailyBlog = getBlogForFirstMonth().getBlogForFirstDay();
-    DailyBlog dailyBlog = getBlogForDay(blogEntry.getDate());
+    Day firstDay = getBlogForFirstMonth().getBlogForFirstDay();
+    Day day = getBlogForDay(blogEntry.getDate());
 
-    String blogEntryId = dailyBlog.getPreviousBlogEntry(blogEntry.getId());
-    while (dailyBlog != firstDailyBlog && blogEntryId == null) {
-      dailyBlog = dailyBlog.getPreviousDay();
-      blogEntryId = dailyBlog.getLastBlogEntry();
+    String blogEntryId = day.getPreviousBlogEntry(blogEntry.getId());
+    while (day != firstDay && blogEntryId == null) {
+      day = day.getPreviousDay();
+      blogEntryId = day.getLastBlogEntry();
     }
 
     if (blogEntryId != null) {
@@ -1077,13 +1077,13 @@ public class Blog extends AbstractBlog {
   }
 
   public BlogEntry getNextBlogEntry(BlogEntry blogEntry) {
-    DailyBlog lastDailyBlog = getBlogForToday();
-    DailyBlog dailyBlog = getBlogForDay(blogEntry.getDate());
+    Day lastDay = getBlogForToday();
+    Day day = getBlogForDay(blogEntry.getDate());
 
-    String blogEntryId = dailyBlog.getNextBlogEntry(blogEntry.getId());
-    while (dailyBlog != lastDailyBlog && blogEntryId == null) {
-      dailyBlog = dailyBlog.getNextDay();
-      blogEntryId = dailyBlog.getFirstBlogEntry();
+    String blogEntryId = day.getNextBlogEntry(blogEntry.getId());
+    while (day != lastDay && blogEntryId == null) {
+      day = day.getNextDay();
+      blogEntryId = day.getFirstBlogEntry();
     }
 
     if (blogEntryId != null) {

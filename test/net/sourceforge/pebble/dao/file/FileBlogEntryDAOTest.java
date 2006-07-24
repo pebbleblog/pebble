@@ -37,7 +37,6 @@ import net.sourceforge.pebble.util.FileUtils;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
-import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 
@@ -72,7 +71,7 @@ public class FileBlogEntryDAOTest extends SingleBlogTestCase {
     destination.mkdirs();
     FileUtils.copyFile(source, new File(destination, "1081203335000.xml"));
 
-    DailyBlog dailyBlog = blog.getBlogForDay(2004, 04, 05);
+    Day day = blog.getBlogForDay(2004, 04, 05);
     Category category1 = new Category("/category1", "Category 1");
     blog.addCategory(category1);
     Category category2 = new Category("/category2", "Category 2");

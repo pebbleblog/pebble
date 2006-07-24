@@ -31,7 +31,7 @@
  */
 package net.sourceforge.pebble.permalink;
 
-import net.sourceforge.pebble.domain.DailyBlog;
+import net.sourceforge.pebble.domain.Day;
 import net.sourceforge.pebble.domain.MonthlyBlog;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.api.permalink.PermalinkProvider;
@@ -116,13 +116,13 @@ public abstract class PermalinkProviderSupport implements PermalinkProvider {
   /**
    * Gets the permalink for a daily blog.
    *
-   * @param dailyBlog a DailyBlog instance
+   * @param day a Day instance
    * @return a URI as a String
    */
-  public String getPermalink(DailyBlog dailyBlog) {
+  public String getPermalink(Day day) {
     SimpleDateFormat format = new SimpleDateFormat("'/'yyyy'/'MM'/'dd'.html'");
     format.setTimeZone(blog.getTimeZone());
-    return format.format(dailyBlog.getDate());
+    return format.format(day.getDate());
   }
 
   /**
@@ -144,9 +144,9 @@ public abstract class PermalinkProviderSupport implements PermalinkProvider {
    * Gets the daily blog referred to by the specified URI.
    *
    * @param uri   a relative URI
-   * @return  a DailyBlog instance, or null if one can't be found
+   * @return  a Day instance, or null if one can't be found
    */
-  public DailyBlog getDailyBlog(String uri) {
+  public Day getDailyBlog(String uri) {
     String year = uri.substring(1, 5);
     String month = uri.substring(6, 8);
     String day = uri.substring(9, 11);

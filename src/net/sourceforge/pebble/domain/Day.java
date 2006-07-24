@@ -40,12 +40,12 @@ import java.util.*;
  *
  * @author    Simon Brown
  */
-public class DailyBlog extends TimePeriod implements Permalinkable {
+public class Day extends TimePeriod implements Permalinkable {
 
   /** the parent, MonthlyBlog instance */
   private MonthlyBlog month;
 
-  /** an integer representing the day that this DailyBlog is for */
+  /** an integer representing the day that this Day is for */
   private int day;
 
   /** the collection of blog entry keys */
@@ -54,12 +54,12 @@ public class DailyBlog extends TimePeriod implements Permalinkable {
   private List<String> unpublishedBlogEntries = new ArrayList<String>();
 
   /**
-   * Creates a new DailyBlog for the specified month and day.
+   * Creates a new Day for the specified month and day.
    *
    * @param month   a MonthlyBlog instance representing the month
    * @param day     an int representing the day
    */
-  DailyBlog(MonthlyBlog month, int day) {
+  Day(MonthlyBlog month, int day) {
     super(month.getBlog());
 
     this.month = month;
@@ -146,7 +146,7 @@ public class DailyBlog extends TimePeriod implements Permalinkable {
   }
 
   /**
-   * Gets the day that this DailyBlog is for.
+   * Gets the day that this Day is for.
    *
    * @return    an int representing the day in the month
    */
@@ -155,7 +155,7 @@ public class DailyBlog extends TimePeriod implements Permalinkable {
   }
 
   /**
-   * Gets the permalink to display all entries for this DailyBlog.
+   * Gets the permalink to display all entries for this Day.
    *
    * @return  an absolute URL
    */
@@ -333,20 +333,20 @@ public class DailyBlog extends TimePeriod implements Permalinkable {
   }
 
   /**
-   * Gets the DailyBlog instance for the previous day.
+   * Gets the Day instance for the previous day.
    *
-   * @return    a DailyBlog instance
+   * @return    a Day instance
    */
-  public DailyBlog getPreviousDay() {
+  public Day getPreviousDay() {
     return month.getBlogForPreviousDay(this);
   }
 
   /**
-   * Gets the DailyBlog instance for the next day.
+   * Gets the Day instance for the next day.
    *
-   * @return    a DailyBlog instance
+   * @return    a Day instance
    */
-  public DailyBlog getNextDay() {
+  public Day getNextDay() {
     return month.getBlogForNextDay(this);
   }
 
@@ -427,14 +427,14 @@ public class DailyBlog extends TimePeriod implements Permalinkable {
   }
 
   /**
-   * Determines if the this DailyBlog is before (in the calendar) the
-   * specified DailyBlog.
+   * Determines if the this Day is before (in the calendar) the
+   * specified Day.
    *
    * @return  true if this instance represents an earlier month than the
-   *          specified DailyBlog instance, false otherwise
+   *          specified Day instance, false otherwise
    */
-  public boolean before(DailyBlog dailyBlog) {
-    return getDate().before(dailyBlog.getDate());
+  public boolean before(Day day) {
+    return getDate().before(day.getDate());
   }
 
 }
