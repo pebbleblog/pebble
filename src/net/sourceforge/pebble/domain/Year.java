@@ -36,7 +36,7 @@ import java.util.List;
 import java.util.LinkedList;
 
 /**
- * Represents a blog at a yearly level. This manages a collection of MonthlyBlog instances.
+ * Represents a blog at a yearly level. This manages a collection of Month instances.
  *
  * @author    Simon Brown
  */
@@ -46,7 +46,7 @@ public class Year extends TimePeriod implements Comparable {
   private int year;
 
   /** a collection of the monthly blogs that this instance is managing */
-  private MonthlyBlog[] monthlyBlogs;
+  private Month[] monthlyBlogs;
 
   /**
    * Creates a new Year instance for the specified year.
@@ -62,14 +62,14 @@ public class Year extends TimePeriod implements Comparable {
   }
 
   /**
-   * Initialises internal data, such as the collection of MonthlyBlog instances.
+   * Initialises internal data, such as the collection of Month instances.
    */
   private void init() {
     setDate(getCalendar().getTime());
-    this.monthlyBlogs = new MonthlyBlog[12];
+    this.monthlyBlogs = new Month[12];
 
     for (int i = 1; i <= 12; i++) {
-      monthlyBlogs[i-1] = new MonthlyBlog(this, i);
+      monthlyBlogs[i-1] = new Month(this, i);
     }
   }
 
@@ -97,13 +97,13 @@ public class Year extends TimePeriod implements Comparable {
   }
 
   /**
-   * Gets the MonthlyBlog for the specified month. Months are lazy
+   * Gets the Month for the specified month. Months are lazy
    * loaded as needed.
    *
    * @param month   the month as an int
-   * @return  a MonthlyBlog instance
+   * @return  a Month instance
    */
-  public synchronized MonthlyBlog getBlogForMonth(int month) {
+  public synchronized Month getBlogForMonth(int month) {
 
     // some bounds checking
     if (month < 1 || month > 12) {
@@ -114,51 +114,51 @@ public class Year extends TimePeriod implements Comparable {
   }
 
   /**
-   * Given a MonthlyBlog, this method returns the MonthlyBlog instance for the
+   * Given a Month, this method returns the Month instance for the
    * previous month.
    *
-   * @param monthlyBlog   a MonthlyBlog instance
-   * @return  a MonthlyBlog instance representing the previous month
+   * @param month   a Month instance
+   * @return  a Month instance representing the previous month
    */
-  MonthlyBlog getBlogForPreviousMonth(MonthlyBlog monthlyBlog) {
-    if (monthlyBlog.getMonth() > 1) {
-      return this.getBlogForMonth(monthlyBlog.getMonth() - 1);
+  Month getBlogForPreviousMonth(Month month) {
+    if (month.getMonth() > 1) {
+      return this.getBlogForMonth(month.getMonth() - 1);
     } else {
       return getBlog().getBlogForPreviousYear(this).getBlogForMonth(12);
     }
   }
 
   /**
-   * Given a MonthlyBlog, this method returns the MonthlyBlog instance for the
+   * Given a Month, this method returns the Month instance for the
    * next month.
    *
-   * @param monthlyBlog   a MonthlyBlog instance
-   * @return  a MonthlyBlog instance representing the next month
+   * @param month   a Month instance
+   * @return  a Month instance representing the next month
    */
-  MonthlyBlog getBlogForNextMonth(MonthlyBlog monthlyBlog) {
-    if (monthlyBlog.getMonth() < 12) {
-      return this.getBlogForMonth(monthlyBlog.getMonth() + 1);
+  Month getBlogForNextMonth(Month month) {
+    if (month.getMonth() < 12) {
+      return this.getBlogForMonth(month.getMonth() + 1);
     } else {
       return getBlog().getBlogForNextYear(this).getBlogForMonth(1);
     }
   }
 
   /**
-   * Gets the first MonthlyBlog that actually contains blog entries.
+   * Gets the first Month that actually contains blog entries.
    *
-   * @return  a MonthlyBlog instance
+   * @return  a Month instance
    */
-  public MonthlyBlog getBlogForFirstMonth() {
+  public Month getBlogForFirstMonth() {
     return getBlogForMonth(1);
   }
 
   /**
    * Gets a collection of all MonthlyBlogs managed by this blog.
    *
-   * @return  a Collection of MonthlyBlog instances
+   * @return  a Collection of Month instances
    */
-  public MonthlyBlog[] getMonthlyBlogs() {
-    MonthlyBlog[] months = new MonthlyBlog[12];
+  public Month[] getMonthlyBlogs() {
+    Month[] months = new Month[12];
     for (int i = 1; i <= 12; i++) {
       months[i-1] = getBlogForMonth(i);
     }
@@ -169,14 +169,14 @@ public class Year extends TimePeriod implements Comparable {
   /**
    * Gets a collection of all MonthlyBlogs, to date and in reverse order.
    *
-   * @return  a Collection of MonthlyBlog instances
+   * @return  a Collection of Month instances
    */
-  public List<MonthlyBlog> getActiveMonthlyBlogsInReverse() {
-    List<MonthlyBlog> list = new LinkedList<MonthlyBlog>();
-    MonthlyBlog thisMonth = getBlog().getBlogForThisMonth();
-    MonthlyBlog firstMonth = getBlog().getBlogForFirstMonth();
+  public List<Month> getActiveMonthlyBlogsInReverse() {
+    List<Month> list = new LinkedList<Month>();
+    Month thisMonth = getBlog().getBlogForThisMonth();
+    Month firstMonth = getBlog().getBlogForFirstMonth();
     for (int i = 12; i >=1; i--) {
-      MonthlyBlog month = getBlogForMonth(i);
+      Month month = getBlogForMonth(i);
       if (!month.after(thisMonth) && !month.before(firstMonth)) {
         list.add(month);
       }

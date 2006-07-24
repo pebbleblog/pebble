@@ -82,10 +82,10 @@ public interface PermalinkProvider {
   /**
    * Gets the permalink for a monthly blog.
    *
-   * @param monthlyBlog   a MonthlyBlog instance
+   * @param month   a Month instance
    * @return  a URI as a String
    */
-  public String getPermalink(MonthlyBlog monthlyBlog);
+  public String getPermalink(Month month);
 
   /**
    * Determines whether the specified URI is a monthly blog permalink.
@@ -100,9 +100,9 @@ public interface PermalinkProvider {
    * Gets the monthly blog referred to by the specified URI.
    *
    * @param uri   a relative URI
-   * @return  a MonthlyBlog instance, or null if one can't be found
+   * @return  a Month instance, or null if one can't be found
    */
-  public MonthlyBlog getMonthlyBlog(String uri);
+  public Month getMonthlyBlog(String uri);
 
   /**
    * Gets the permalink for a daily blog.

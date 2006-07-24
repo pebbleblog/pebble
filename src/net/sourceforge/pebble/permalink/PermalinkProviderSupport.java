@@ -32,7 +32,7 @@
 package net.sourceforge.pebble.permalink;
 
 import net.sourceforge.pebble.domain.Day;
-import net.sourceforge.pebble.domain.MonthlyBlog;
+import net.sourceforge.pebble.domain.Month;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.api.permalink.PermalinkProvider;
 
@@ -76,13 +76,13 @@ public abstract class PermalinkProviderSupport implements PermalinkProvider {
   /**
    * Gets the permalink for a monthly blog.
    *
-   * @param monthlyBlog a MonthlyBlog instance
+   * @param month a Month instance
    * @return a URI as a String
    */
-  public String getPermalink(MonthlyBlog monthlyBlog) {
+  public String getPermalink(Month month) {
     SimpleDateFormat format = new SimpleDateFormat("'/'yyyy'/'MM'.html'");
     format.setTimeZone(blog.getTimeZone());
-    return format.format(monthlyBlog.getDate());
+    return format.format(month.getDate());
   }
 
   /**
@@ -104,9 +104,9 @@ public abstract class PermalinkProviderSupport implements PermalinkProvider {
    * Gets the monthly blog referred to by the specified URI.
    *
    * @param uri   a relative URI
-   * @return  a MonthlyBlog instance, or null if one can't be found
+   * @return  a Month instance, or null if one can't be found
    */
-  public MonthlyBlog getMonthlyBlog(String uri) {
+  public Month getMonthlyBlog(String uri) {
     String year = uri.substring(1, 5);
     String month = uri.substring(6, 8);
 

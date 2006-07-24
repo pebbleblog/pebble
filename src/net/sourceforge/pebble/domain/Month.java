@@ -39,12 +39,12 @@ import java.util.*;
  *
  * @author    Simon Brown
  */
-public class MonthlyBlog extends TimePeriod implements Permalinkable {
+public class Month extends TimePeriod implements Permalinkable {
 
   /** the parent, Year instance */
   private Year year;
 
-  /** an integer representing the month that this MonthlyBlog is for */
+  /** an integer representing the month that this Month is for */
   private int month;
 
   /** the collection of Day instances that this blog is managing */
@@ -54,12 +54,12 @@ public class MonthlyBlog extends TimePeriod implements Permalinkable {
   private int lastDayInMonth;
 
   /**
-   * Creates a new MonthlyBlog based upon the specified Year and month.
+   * Creates a new Month based upon the specified Year and month.
    *
    * @param year    the owning Year instance
    * @param month         the month as an int
    */
-  MonthlyBlog(Year year, int month) {
+  Month(Year year, int month) {
     super(year.getBlog());
 
     this.year = year;
@@ -79,7 +79,7 @@ public class MonthlyBlog extends TimePeriod implements Permalinkable {
 
   private Calendar getCalendar() {
     // set the date corresponding to the 1st of the month
-    // (this is used in determining whether another MonthlyBlog is
+    // (this is used in determining whether another Month is
     // before or after this one)
     Calendar cal = getBlog().getCalendar();
     cal.set(Calendar.YEAR, year.getYear());
@@ -112,7 +112,7 @@ public class MonthlyBlog extends TimePeriod implements Permalinkable {
   }
 
   /**
-   * Gets the permalink to display all entries for this MonthlyBlog.
+   * Gets the permalink to display all entries for this Month.
    *
    * @return  an absolute URL
    */
@@ -228,43 +228,43 @@ public class MonthlyBlog extends TimePeriod implements Permalinkable {
   }
 
   /**
-   * Gets the MonthlyBlog instance for the previous month.
+   * Gets the Month instance for the previous month.
    *
-   * @return    a MonthlyBlog instance
+   * @return    a Month instance
    */
-  public MonthlyBlog getPreviousMonth() {
+  public Month getPreviousMonth() {
     return year.getBlogForPreviousMonth(this);
   }
 
   /**
-   * Gets the MonthlyBlog instance for the next month.
+   * Gets the Month instance for the next month.
    *
-   * @return    a MonthlyBlog instance
+   * @return    a Month instance
    */
-  public MonthlyBlog getNextMonth() {
+  public Month getNextMonth() {
     return year.getBlogForNextMonth(this);
   }
 
   /**
-   * Determines if the this MonthlyBlog is before (in the calendar) the
-   * specified MonthlyBlog.
+   * Determines if the this Month is before (in the calendar) the
+   * specified Month.
    *
    * @return  true if this instance represents an earlier month than the
-   *          specified MonthlyBlog instance, false otherwise
+   *          specified Month instance, false otherwise
    */
-  public boolean before(MonthlyBlog monthlyBlog) {
-    return getDate().before(monthlyBlog.getDate());
+  public boolean before(Month month) {
+    return getDate().before(month.getDate());
   }
 
   /**
-   * Determines if the this MonthlyBlog is after (in the calendar) the
-   * specified MonthlyBlog.
+   * Determines if the this Month is after (in the calendar) the
+   * specified Month.
    *
    * @return  true if this instance represents a later month than the
-   *          specified MonthlyBlog instance, false otherwise
+   *          specified Month instance, false otherwise
    */
-  public boolean after(MonthlyBlog monthlyBlog) {
-    return getDate().after(monthlyBlog.getDate());
+  public boolean after(Month month) {
+    return getDate().after(month.getDate());
   }
 
   /**

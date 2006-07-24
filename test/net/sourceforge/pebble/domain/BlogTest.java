@@ -171,34 +171,34 @@ public class BlogTest extends SingleBlogTestCase {
    }
 
   /**
-   * Tests that we can get the first MonthlyBlog instance.
+   * Tests that we can get the first Month instance.
    */
   public void testGetBlogForFirstMonth() {
-    MonthlyBlog monthlyBlog = blog.getBlogForFirstMonth();
-    assertNotNull(monthlyBlog);
-//    assertEquals(blog.getBlogForFirstYear(), monthlyBlog.getYearlyBlog());
-    assertEquals(1, monthlyBlog.getMonth());
+    Month month = blog.getBlogForFirstMonth();
+    assertNotNull(month);
+//    assertEquals(blog.getBlogForFirstYear(), month.getYearlyBlog());
+    assertEquals(1, month.getMonth());
   }
 
   /**
-   * Tests that we can get a MonthlyBlog instance.
+   * Tests that we can get a Month instance.
    */
   public void testGetBlogForMonth() {
-    MonthlyBlog monthlyBlog = blog.getBlogForMonth(2003, 4);
-    assertNotNull(monthlyBlog);
-    assertEquals(2003, monthlyBlog.getYearlyBlog().getYear());
-    assertEquals(4, monthlyBlog.getMonth());
+    Month month = blog.getBlogForMonth(2003, 4);
+    assertNotNull(month);
+    assertEquals(2003, month.getYearlyBlog().getYear());
+    assertEquals(4, month.getMonth());
   }
 
   /**
-   * Tests that we can get the MonthlyBlog instance for this month.
+   * Tests that we can get the Month instance for this month.
    */
   public void testGetBlogForThisMonth() {
     Calendar cal = blog.getCalendar();
-    MonthlyBlog monthlyBlog = blog.getBlogForThisMonth();
-    assertNotNull(monthlyBlog);
-    assertEquals(cal.get(Calendar.YEAR), monthlyBlog.getYearlyBlog().getYear());
-    assertEquals(cal.get(Calendar.MONTH) + 1, monthlyBlog.getMonth());
+    Month month = blog.getBlogForThisMonth();
+    assertNotNull(month);
+    assertEquals(cal.get(Calendar.YEAR), month.getYearlyBlog().getYear());
+    assertEquals(cal.get(Calendar.MONTH) + 1, month.getMonth());
   }
 
   /**

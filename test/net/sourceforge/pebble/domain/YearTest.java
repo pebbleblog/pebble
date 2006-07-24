@@ -70,28 +70,28 @@ public class YearTest extends SingleBlogTestCase {
    * Tests that we can get a specific month from a year.
    */
   public void testGetMonth() {
-    MonthlyBlog monthlyBlog = year.getBlogForMonth(1);
-    assertEquals(year, monthlyBlog.getYearlyBlog());
-    assertEquals(1, monthlyBlog.getMonth());
+    Month month = year.getBlogForMonth(1);
+    assertEquals(year, month.getYearlyBlog());
+    assertEquals(1, month.getMonth());
 
-    monthlyBlog = year.getBlogForMonth(12);
-    assertEquals(year, monthlyBlog.getYearlyBlog());
-    assertEquals(12, monthlyBlog.getMonth());
+    month = year.getBlogForMonth(12);
+    assertEquals(year, month.getYearlyBlog());
+    assertEquals(12, month.getMonth());
 
     try {
-      monthlyBlog = year.getBlogForMonth(-1);
+      month = year.getBlogForMonth(-1);
       fail();
     } catch (IllegalArgumentException iae) {
     }
 
     try {
-      monthlyBlog = year.getBlogForMonth(0);
+      month = year.getBlogForMonth(0);
       fail();
     } catch (IllegalArgumentException iae) {
     }
 
     try {
-      monthlyBlog = year.getBlogForMonth(13);
+      month = year.getBlogForMonth(13);
       fail();
     } catch (IllegalArgumentException iae) {
     }

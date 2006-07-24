@@ -168,33 +168,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Year.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/domain/Year.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="42" column="17" selection-start="1850" selection-end="1854" vertical-scroll-proportion="0.20166074">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="build.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/build.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="122" column="24" selection-start="4326" selection-end="4326" vertical-scroll-proportion="0.7801932">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="YearTest.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test/net/sourceforge/pebble/domain/YearTest.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="33" column="0" selection-start="1628" selection-end="1628" vertical-scroll-proportion="0.06049822">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="Day.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/domain/Day.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -204,10 +177,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BlogService.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="BlogService.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/domain/BlogService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="102" column="33" selection-start="4039" selection-end="4039" vertical-scroll-proportion="0.21708184">
+            <state line="128" column="0" selection-start="4906" selection-end="4906" vertical-scroll-proportion="0.62040335">
               <folding />
             </state>
           </provider>
@@ -249,10 +222,37 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="importing.html" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="importing.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/WEB-INF/help/importing.html">
           <provider selected="true" editor-type-id="text-editor">
             <state line="47" column="28" selection-start="2372" selection-end="2372" vertical-scroll-proportion="0.42512077">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="navigation.jspf" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/WEB-INF/fragments/navigation.jspf">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Month.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/domain/Month.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="41" column="17" selection-start="1823" selection-end="1823" vertical-scroll-proportion="0.20531401">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MonthTest.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/net/sourceforge/pebble/domain/MonthTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="41" column="13" selection-start="1759" selection-end="1759" vertical-scroll-proportion="0.20166074">
               <folding />
             </state>
           </provider>
@@ -1130,27 +1130,6 @@
     </buildFile>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/web/themes/default/jsp/template.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="21" selection-start="246" selection-end="246" vertical-scroll-proportion="0.35051546">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/Constants.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="52" column="49" selection-start="2419" selection-end="2419" vertical-scroll-proportion="0.748">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/themes/default/jsp/sidebar.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="46" selection-start="877" selection-end="877" vertical-scroll-proportion="0.28865978">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/domain/Blog.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="660" column="31" selection-start="24012" selection-end="24012" vertical-scroll-proportion="0.6474227">
@@ -1193,13 +1172,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/domain/BlogService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="102" column="33" selection-start="4039" selection-end="4039" vertical-scroll-proportion="0.21708184">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/comparator/DayComparator.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="43" column="13" selection-start="1835" selection-end="1835" vertical-scroll-proportion="0.2218268">
@@ -1231,6 +1203,34 @@
     <entry file="file://$PROJECT_DIR$/web/WEB-INF/help/importing.html">
       <provider selected="true" editor-type-id="text-editor">
         <state line="47" column="28" selection-start="2372" selection-end="2372" vertical-scroll-proportion="0.42512077">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/fragments/navigation.jspf">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/domain/Month.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="41" column="17" selection-start="1823" selection-end="1823" vertical-scroll-proportion="0.20531401">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/net/sourceforge/pebble/domain/MonthTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="41" column="13" selection-start="1759" selection-end="1759" vertical-scroll-proportion="0.20166074">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/domain/BlogService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="128" column="0" selection-start="4906" selection-end="4906" vertical-scroll-proportion="0.62040335">
           <folding />
         </state>
       </provider>

@@ -42,8 +42,8 @@ import java.util.*;
  */
 public class Day extends TimePeriod implements Permalinkable {
 
-  /** the parent, MonthlyBlog instance */
-  private MonthlyBlog month;
+  /** the parent, Month instance */
+  private Month month;
 
   /** an integer representing the day that this Day is for */
   private int day;
@@ -56,10 +56,10 @@ public class Day extends TimePeriod implements Permalinkable {
   /**
    * Creates a new Day for the specified month and day.
    *
-   * @param month   a MonthlyBlog instance representing the month
+   * @param month   a Month instance representing the month
    * @param day     an int representing the day
    */
-  Day(MonthlyBlog month, int day) {
+  Day(Month month, int day) {
     super(month.getBlog());
 
     this.month = month;
@@ -137,11 +137,11 @@ public class Day extends TimePeriod implements Permalinkable {
   }
 
   /**
-   * Gets a reference to the parent MonthlyBlog instance.
+   * Gets a reference to the parent Month instance.
    *
-   * @return  a MonthlyBlog instance
+   * @return  a Month instance
    */
-  public MonthlyBlog getMonthlyBlog() {
+  public Month getMonthlyBlog() {
     return month;
   }
 

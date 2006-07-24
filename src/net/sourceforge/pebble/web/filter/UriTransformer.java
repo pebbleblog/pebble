@@ -269,11 +269,11 @@ public class UriTransformer {
         result += "&day=" + day.getDay();
       }
     } else if (permalinkProvider.isMonthlyBlogPermalink(uri)) {
-      MonthlyBlog monthlyBlog = permalinkProvider.getMonthlyBlog(uri);
-      if (monthlyBlog != null) {
+      Month month = permalinkProvider.getMonthlyBlog(uri);
+      if (month != null) {
         result = "/viewMonthlyBlog.action";
-        result += "?year=" + monthlyBlog.getYearlyBlog().getYear();
-        result += "&month=" + monthlyBlog.getMonth();
+        result += "?year=" + month.getYearlyBlog().getYear();
+        result += "&month=" + month.getMonth();
       }
     }
 

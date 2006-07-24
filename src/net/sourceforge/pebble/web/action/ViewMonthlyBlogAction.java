@@ -64,7 +64,7 @@ public class ViewMonthlyBlogAction extends Action {
     String month = request.getParameter("month");
 
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
-    MonthlyBlog monthly;
+    Month monthly;
     if (year != null && year.length() > 0 &&
         month != null && month.length() > 0) {
       monthly = blog.getBlogForMonth(Integer.parseInt(year), Integer.parseInt(month));
@@ -85,9 +85,9 @@ public class ViewMonthlyBlogAction extends Action {
     getModel().put(Constants.MONTHLY_BLOG, monthly);
 
     // put the previous and next months in the model for navigation purposes
-    MonthlyBlog firstMonth = blog.getBlogForFirstMonth();
-    MonthlyBlog previousMonth = monthly.getPreviousMonth();
-    MonthlyBlog nextMonth = monthly.getNextMonth();
+    Month firstMonth = blog.getBlogForFirstMonth();
+    Month previousMonth = monthly.getPreviousMonth();
+    Month nextMonth = monthly.getNextMonth();
 
     if (!previousMonth.before(firstMonth)) {
       getModel().put("previousMonth", previousMonth);

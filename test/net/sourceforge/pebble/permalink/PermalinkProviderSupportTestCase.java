@@ -32,7 +32,7 @@
 package net.sourceforge.pebble.permalink;
 
 import net.sourceforge.pebble.domain.Day;
-import net.sourceforge.pebble.domain.MonthlyBlog;
+import net.sourceforge.pebble.domain.Month;
 import net.sourceforge.pebble.domain.SingleBlogTestCase;
 import net.sourceforge.pebble.api.permalink.PermalinkProvider;
 
@@ -63,8 +63,8 @@ public abstract class PermalinkProviderSupportTestCase extends SingleBlogTestCas
    * Tests that a monthly blog permalink can be generated.
    */
   public void testGetPermalinkForMonthlyBlog() {
-    MonthlyBlog monthlyBlog = blog.getBlogForMonth(2004, 01);
-    assertEquals("/2004/01.html", permalinkProvider.getPermalink(monthlyBlog));
+    Month month = blog.getBlogForMonth(2004, 01);
+    assertEquals("/2004/01.html", permalinkProvider.getPermalink(month));
   }
 
   /**
@@ -82,9 +82,9 @@ public abstract class PermalinkProviderSupportTestCase extends SingleBlogTestCas
    * Tests thet the correct monthly blog can be found from a permalink.
    */
   public void testGetMonthlyBlog() {
-    MonthlyBlog monthlyBlog = permalinkProvider.getMonthlyBlog("/2004/07.html");
-    assertEquals(2004, monthlyBlog.getYearlyBlog().getYear());
-    assertEquals(7, monthlyBlog.getMonth());
+    Month month = permalinkProvider.getMonthlyBlog("/2004/07.html");
+    assertEquals(2004, month.getYearlyBlog().getYear());
+    assertEquals(7, month.getMonth());
   }
 
   /**

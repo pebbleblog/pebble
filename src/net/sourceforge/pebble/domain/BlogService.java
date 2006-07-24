@@ -105,8 +105,8 @@ public class BlogService {
   }
 
   public List<BlogEntry> getBlogEntries(Blog blog, int year, int month) throws BlogServiceException {
-    MonthlyBlog monthlyBlog = blog.getBlogForMonth(year, month);
-    List<String> blogEntryIds = monthlyBlog.getBlogEntries();
+    Month m = blog.getBlogForMonth(year, month);
+    List<String> blogEntryIds = m.getBlogEntries();
     return getBlogEntries(blog, blogEntryIds);
   }
 

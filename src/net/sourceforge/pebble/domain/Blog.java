@@ -671,12 +671,12 @@ public class Blog extends AbstractBlog {
   }
 
   /**
-   * Gets the MonthlyBlog instance representing the first month that
+   * Gets the Month instance representing the first month that
    * contains blog entries.
    *
-   * @return  a MonthlyBlog instance
+   * @return  a Month instance
    */
-  public MonthlyBlog getBlogForFirstMonth() {
+  public Month getBlogForFirstMonth() {
     Year year;
 
     if (!years.isEmpty()) {
@@ -686,7 +686,7 @@ public class Blog extends AbstractBlog {
     }
 
     for (int i = 1; i <= 12; i++) {
-      MonthlyBlog month = year.getBlogForMonth(i);
+      Month month = year.getBlogForMonth(i);
       if (month.hasBlogEntries()) {
         return month;
       }
@@ -734,22 +734,22 @@ public class Blog extends AbstractBlog {
   }
 
   /**
-   * Gets a MonthlyBlog intance for the specified year and month.
+   * Gets a Month intance for the specified year and month.
    *
    * @param year    the year as an int
    * @param month   the month as an int
-   * @return    a MonthlyBlog instance representing the specified year and month
+   * @return    a Month instance representing the specified year and month
    */
-  public MonthlyBlog getBlogForMonth(int year, int month) {
+  public Month getBlogForMonth(int year, int month) {
     return getBlogForYear(year).getBlogForMonth(month);
   }
 
   /**
-   * Gets the MonthlyBlog instance representing this month.
+   * Gets the Month instance representing this month.
    *
-   * @return  a MonthlyBlog instance for this month
+   * @return  a Month instance for this month
    */
-  public MonthlyBlog getBlogForThisMonth() {
+  public Month getBlogForThisMonth() {
     Calendar cal = getCalendar();
     return getBlogForMonth(cal.get(Calendar.YEAR), (cal.get(Calendar.MONTH) + 1));
   }
@@ -787,7 +787,7 @@ public class Blog extends AbstractBlog {
 
     for (int year = years.size()-1; year >= 0; year--) {
       Year y = (Year)years.get(year);
-      MonthlyBlog[] months = y.getMonthlyBlogs();
+      Month[] months = y.getMonthlyBlogs();
       for (int month = 11; month >= 0; month--) {
         try {
           blogEntries.addAll(service.getBlogEntries(this, y.getYear(), months[month].getMonth()));

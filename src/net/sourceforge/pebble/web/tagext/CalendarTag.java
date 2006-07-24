@@ -34,7 +34,7 @@ package net.sourceforge.pebble.web.tagext;
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.domain.Day;
-import net.sourceforge.pebble.domain.MonthlyBlog;
+import net.sourceforge.pebble.domain.Month;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
@@ -66,7 +66,7 @@ public class  CalendarTag extends TagSupport {
     HttpServletRequest request = (HttpServletRequest)pageContext.getRequest();
     Blog blog = (Blog)request.getAttribute(Constants.BLOG_KEY);
     ResourceBundle bundle = ResourceBundle.getBundle("resources", blog.getLocale());
-    MonthlyBlog month = (MonthlyBlog)request.getAttribute("monthlyBlog");
+    Month month = (Month)request.getAttribute("monthlyBlog");
     Day todaysBlog = blog.getBlogForToday();
     Calendar today = blog.getCalendar();
 
@@ -83,7 +83,7 @@ public class  CalendarTag extends TagSupport {
     monthFormatter.setTimeZone(blog.getTimeZone());
     NumberFormat numberFormatter = NumberFormat.getIntegerInstance(blog.getLocale());
 
-    MonthlyBlog firstMonth = blog.getBlogForFirstMonth();
+    Month firstMonth = blog.getBlogForFirstMonth();
 
     try {
       JspWriter out = pageContext.getOut();
@@ -168,8 +168,8 @@ public class  CalendarTag extends TagSupport {
       }
 
       // write out the footer of the calendar
-      MonthlyBlog previous = month.getPreviousMonth();
-      MonthlyBlog next = month.getNextMonth();
+      Month previous = month.getPreviousMonth();
+      Month next = month.getNextMonth();
 
       out.write("<tr>");
       out.write("<td colspan=\"7\" align=\"center\">");
@@ -217,7 +217,7 @@ public class  CalendarTag extends TagSupport {
    * @param month   the month
    * @return  a List of Calendar instances
    */
-  private List getDatesForCompleteWeeks(Blog blog, MonthlyBlog month) {
+  private List getDatesForCompleteWeeks(Blog blog, Month month) {
     List dates = new ArrayList();
     Calendar start = blog.getCalendar();
     start.setTime(month.getBlogForDay(1).getDate());

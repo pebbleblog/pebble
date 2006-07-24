@@ -35,7 +35,7 @@ import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.comparator.BlogEntryComparator;
 import net.sourceforge.pebble.api.decorator.ContentDecoratorContext;
 import net.sourceforge.pebble.domain.Blog;
-import net.sourceforge.pebble.domain.MonthlyBlog;
+import net.sourceforge.pebble.domain.Month;
 import net.sourceforge.pebble.decorator.ContentDecoratorChain;
 import net.sourceforge.pebble.web.view.HtmlView;
 
@@ -68,10 +68,10 @@ public class BlogMonthlyView extends HtmlView {
    */
   public String getTitle() {
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
-    MonthlyBlog monthlyBlog = (MonthlyBlog)getModel().get(Constants.MONTHLY_BLOG);
+    Month month = (Month)getModel().get(Constants.MONTHLY_BLOG);
     SimpleDateFormat sdf = new SimpleDateFormat("MMMM yyyy", blog.getLocale());
     sdf.setTimeZone(blog.getTimeZone());
-    return sdf.format(monthlyBlog.getDate());
+    return sdf.format(month.getDate());
   }
 
   /**
