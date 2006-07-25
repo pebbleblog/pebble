@@ -626,7 +626,7 @@ public class Blog extends AbstractBlog {
     }
 
     y = new Year(this, year);
-    //if (year > getBlogForToday().getMonthlyBlog().getYear().getYear()) {
+    //if (year > getBlogForToday().getMonth().getYear().getYear()) {
       years.add(y);
       Collections.sort(years);
     //}
@@ -787,7 +787,7 @@ public class Blog extends AbstractBlog {
 
     for (int year = years.size()-1; year >= 0; year--) {
       Year y = (Year)years.get(year);
-      Month[] months = y.getMonthlyBlogs();
+      Month[] months = y.getMonths();
       for (int month = 11; month >= 0; month--) {
         try {
           blogEntries.addAll(service.getBlogEntries(this, y.getYear(), months[month].getMonth()));

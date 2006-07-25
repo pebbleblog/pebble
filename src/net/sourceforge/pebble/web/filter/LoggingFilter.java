@@ -92,7 +92,7 @@ public class LoggingFilter implements Filter {
             internalUri.startsWith("/viewBlogEntry.action") ||
             internalUri.startsWith("/viewStaticPage.action") ||
             internalUri.startsWith("/viewDay.action") ||
-            internalUri.startsWith("/viewMonthlyBlog.action") ||
+            internalUri.startsWith("/viewMonth.action") ||
             internalUri.startsWith("/file.action?type=" + FileMetaData.BLOG_FILE) ||
             (internalUri.startsWith("/viewHomePage.action") && blog instanceof Blog)) {
 

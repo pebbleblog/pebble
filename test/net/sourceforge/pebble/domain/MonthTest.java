@@ -105,15 +105,15 @@ public class MonthTest extends SingleBlogTestCase {
   public void testBefore() {
     Year year2002 = new Year(blog, 2002);
     Year year2003 = new Year(blog, 2003);
-    Month monthlyBlog1 = new Month(year2003, 6);
-    Month monthlyBlog2 = new Month(year2003, 7);
-    assertTrue(monthlyBlog1.before(monthlyBlog2));
-    assertFalse(monthlyBlog2.before(monthlyBlog1));
+    Month month1 = new Month(year2003, 6);
+    Month month2 = new Month(year2003, 7);
+    assertTrue(month1.before(month2));
+    assertFalse(month2.before(month1));
 
-    monthlyBlog1 = new Month(year2002, 7);
-    monthlyBlog2 = new Month(year2003, 7);
-    assertTrue(monthlyBlog1.before(monthlyBlog2));
-    assertFalse(monthlyBlog2.before(monthlyBlog1));
+    month1 = new Month(year2002, 7);
+    month2 = new Month(year2003, 7);
+    assertTrue(month1.before(month2));
+    assertFalse(month2.before(month1));
   }
 
   /**

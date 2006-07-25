@@ -66,12 +66,12 @@ public class  CalendarTag extends TagSupport {
     HttpServletRequest request = (HttpServletRequest)pageContext.getRequest();
     Blog blog = (Blog)request.getAttribute(Constants.BLOG_KEY);
     ResourceBundle bundle = ResourceBundle.getBundle("resources", blog.getLocale());
-    Month month = (Month)request.getAttribute("monthlyBlog");
+    Month month = (Month)request.getAttribute("month");
     Day todaysBlog = blog.getBlogForToday();
     Calendar today = blog.getCalendar();
 
     if (month == null) {
-      month = todaysBlog.getMonthlyBlog();
+      month = todaysBlog.getMonth();
     }
 
     Calendar firstDayOfMonth = blog.getCalendar();

@@ -46,7 +46,7 @@ public class Year extends TimePeriod implements Comparable {
   private int year;
 
   /** a collection of the monthly blogs that this instance is managing */
-  private Month[] monthlyBlogs;
+  private Month[] months;
 
   /**
    * Creates a new Year instance for the specified year.
@@ -66,10 +66,10 @@ public class Year extends TimePeriod implements Comparable {
    */
   private void init() {
     setDate(getCalendar().getTime());
-    this.monthlyBlogs = new Month[12];
+    this.months = new Month[12];
 
     for (int i = 1; i <= 12; i++) {
-      monthlyBlogs[i-1] = new Month(this, i);
+      months[i-1] = new Month(this, i);
     }
   }
 
@@ -110,7 +110,7 @@ public class Year extends TimePeriod implements Comparable {
       throw new IllegalArgumentException("Invalid month of " + month + " specified, should be between 1 and 12");
     }
 
-    return monthlyBlogs[month-1];
+    return months[month-1];
   }
 
   /**
@@ -153,11 +153,11 @@ public class Year extends TimePeriod implements Comparable {
   }
 
   /**
-   * Gets a collection of all MonthlyBlogs managed by this blog.
+   * Gets a collection of all Months managed by this blog.
    *
    * @return  a Collection of Month instances
    */
-  public Month[] getMonthlyBlogs() {
+  public Month[] getMonths() {
     Month[] months = new Month[12];
     for (int i = 1; i <= 12; i++) {
       months[i-1] = getBlogForMonth(i);
@@ -167,7 +167,7 @@ public class Year extends TimePeriod implements Comparable {
   }
 
   /**
-   * Gets a collection of all MonthlyBlogs, to date and in reverse order.
+   * Gets a collection of all Months, to date and in reverse order.
    *
    * @return  a Collection of Month instances
    */

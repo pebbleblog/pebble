@@ -62,7 +62,7 @@ public abstract class PermalinkProviderSupportTestCase extends SingleBlogTestCas
   /**
    * Tests that a monthly blog permalink can be generated.
    */
-  public void testGetPermalinkForMonthlyBlog() {
+  public void testGetPermalinkForMonth() {
     Month month = blog.getBlogForMonth(2004, 01);
     assertEquals("/2004/01.html", permalinkProvider.getPermalink(month));
   }
@@ -70,7 +70,7 @@ public abstract class PermalinkProviderSupportTestCase extends SingleBlogTestCas
   /**
    * Tests that a monthly blog permalink is recognised.
    */
-  public void testMonthlyBlogPermalink() {
+  public void testMonthPermalink() {
     assertTrue(permalinkProvider.isMonthPermalink("/2004/01.html"));
     assertFalse(permalinkProvider.isMonthPermalink("/2004/01/01.html"));
     assertFalse(permalinkProvider.isMonthPermalink("/someotherpage.html"));
@@ -81,7 +81,7 @@ public abstract class PermalinkProviderSupportTestCase extends SingleBlogTestCas
   /**
    * Tests thet the correct monthly blog can be found from a permalink.
    */
-  public void testGetMonthlyBlog() {
+  public void testGetMonth() {
     Month month = permalinkProvider.getMonth("/2004/07.html");
     assertEquals(2004, month.getYear().getYear());
     assertEquals(7, month.getMonth());
@@ -111,8 +111,8 @@ public abstract class PermalinkProviderSupportTestCase extends SingleBlogTestCas
    */
   public void testGetDay() {
     Day day = permalinkProvider.getDay("/2004/07/14.html");
-    assertEquals(2004, day.getMonthlyBlog().getYear().getYear());
-    assertEquals(7, day.getMonthlyBlog().getMonth());
+    assertEquals(2004, day.getMonth().getYear().getYear());
+    assertEquals(7, day.getMonth().getMonth());
     assertEquals(14, day.getDay());
   }
 

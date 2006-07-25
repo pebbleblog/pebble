@@ -50,7 +50,7 @@ import java.util.ArrayList;
  *
  * @author    Simon Brown
  */
-public class ViewMonthlyBlogAction extends Action {
+public class ViewMonthAction extends Action {
 
   /**
    * Peforms the processing associated with this action.

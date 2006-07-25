@@ -37,14 +37,14 @@ import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.impl.BlogMonthlyView;
 
 /**
- * Tests for the ViewMonthlyBlogAction class.
+ * Tests for the ViewMonthAction class.
  *
  * @author    Simon Brown
  */
-public class ViewMonthlyBlogActionTest extends SingleBlogActionTestCase {
+public class ViewMonthActionTest extends SingleBlogActionTestCase {
 
   protected void setUp() throws Exception {
-    action = new ViewMonthlyBlogAction();
+    action = new ViewMonthAction();
 
     super.setUp();
   }
@@ -54,7 +54,7 @@ public class ViewMonthlyBlogActionTest extends SingleBlogActionTestCase {
    *
    * @throws Exception
    */
-  public void testViewMonthlyBlog() throws Exception {
+  public void testViewMonth() throws Exception {
     request.setParameter("year", "2006");
     request.setParameter("month", "05");
     View view = action.process(request, response);

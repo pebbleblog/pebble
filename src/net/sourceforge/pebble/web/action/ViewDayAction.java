@@ -80,7 +80,7 @@ public class ViewDayAction extends Action {
       throw new ServletException(e);
     }
 
-    getModel().put(Constants.MONTHLY_BLOG, daily.getMonthlyBlog());
+    getModel().put(Constants.MONTHLY_BLOG, daily.getMonth());
     getModel().put(Constants.DAILY_BLOG, daily);
     getModel().put(Constants.BLOG_ENTRIES, filter(blog, blogEntries));
     getModel().put("displayMode", "day");

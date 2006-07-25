@@ -67,8 +67,8 @@ public class DayTest extends SingleBlogTestCase {
   /**
    * Tests the getter for the monthly blog.
    */
-  public void testGetMonthlyBlog() {
-    assertEquals(blog.getBlogForThisMonth(), day.getMonthlyBlog());
+  public void testGetMonth() {
+    assertEquals(blog.getBlogForThisMonth(), day.getMonth());
   }
 
   /**

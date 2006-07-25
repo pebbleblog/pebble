@@ -83,7 +83,7 @@ public class ViewBlogEntryAction extends Action {
       return new NotFoundView();
     } else {
       getModel().put(Constants.BLOG_ENTRY_KEY, blogEntry);
-      getModel().put("monthlyBlog", blog.getBlogForDay(blogEntry.getDate()).getMonthlyBlog());
+      getModel().put("month", blog.getBlogForDay(blogEntry.getDate()).getMonth());
       getModel().put("displayMode", "detail");
 
       return new BlogEntryView();

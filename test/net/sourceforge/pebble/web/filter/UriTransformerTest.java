@@ -96,7 +96,7 @@ public class UriTransformerTest extends SingleBlogTestCase {
 
   public void testMonthlyUrlForSingleUserBlog() throws Exception {
     // test a url to request a whole month
-    assertEquals("/viewMonthlyBlog.action?year=2003&month=11", transformer.getUri("/2003/11.html", blog));
+    assertEquals("/viewMonth.action?year=2003&month=11", transformer.getUri("/2003/11.html", blog));
   }
 
   public void testDailyUrlForSingleUserBlog() throws Exception {
