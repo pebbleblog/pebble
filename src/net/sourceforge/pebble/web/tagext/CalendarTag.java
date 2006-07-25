@@ -52,7 +52,7 @@ import java.util.*;
  *
  * @author    Simon Brown
  */
-public class  CalendarTag extends TagSupport {
+public class CalendarTag extends TagSupport {
 
   /**
    * Implementation from the Tag interface - this is called when the opening tag
@@ -66,12 +66,12 @@ public class  CalendarTag extends TagSupport {
     HttpServletRequest request = (HttpServletRequest)pageContext.getRequest();
     Blog blog = (Blog)request.getAttribute(Constants.BLOG_KEY);
     ResourceBundle bundle = ResourceBundle.getBundle("resources", blog.getLocale());
-    Month month = (Month)request.getAttribute("month");
-    Day todaysBlog = blog.getBlogForToday();
-    Calendar today = blog.getCalendar();
+    Month month = (Month)request.getAttribute(Constants.MONTHLY_BLOG);
+    Day today = blog.getBlogForToday();
+    Calendar now = blog.getCalendar();
 
     if (month == null) {
-      month = todaysBlog.getMonth();
+      month = today.getMonth();
     }
 
     Calendar firstDayOfMonth = blog.getCalendar();
@@ -106,7 +106,7 @@ public class  CalendarTag extends TagSupport {
       out.write("</td>");
       out.write("</tr>");
 
-      int firstDayOfWeek = today.getFirstDayOfWeek();
+      int firstDayOfWeek = now.getFirstDayOfWeek();
 
       // write out the calendar header
       DateFormatSymbols symbols = new DateFormatSymbols(blog.getLocale());
@@ -140,9 +140,9 @@ public class  CalendarTag extends TagSupport {
         // output padding if the date to display isn't in the month
         if (cal.get(Calendar.MONTH) != firstDayOfMonth.get(Calendar.MONTH)) {
           out.write("<td class=\"calendarDay\">&nbsp;");
-        } else if (today.get(Calendar.YEAR) == cal.get(Calendar.YEAR) &&
-          today.get(Calendar.MONTH) == cal.get(Calendar.MONTH) &&
-          today.get(Calendar.DAY_OF_MONTH) == cal.get(Calendar.DAY_OF_MONTH)) {
+        } else if (now.get(Calendar.YEAR) == cal.get(Calendar.YEAR) &&
+          now.get(Calendar.MONTH) == cal.get(Calendar.MONTH) &&
+          now.get(Calendar.DAY_OF_MONTH) == cal.get(Calendar.DAY_OF_MONTH)) {
           out.write("<td class=\"calendarToday\">");
           if (daily.hasBlogEntries()) {
             out.write("&nbsp;<a href=\"" + daily.getPermalink() + "\">" + formattedNumber + "</a>&nbsp;");
@@ -183,11 +183,11 @@ public class  CalendarTag extends TagSupport {
 
       String todayText = bundle.getString("common.today");
       out.write("&nbsp; | &nbsp;");
-      out.write("<a href=\"" + todaysBlog.getPermalink() + "\">" + todayText + "</a>");
+      out.write("<a href=\"" + today.getPermalink() + "\">" + todayText + "</a>");
       out.write("&nbsp; | &nbsp;");
 
       // only display the next month date if it's not in the future
-      if (next.getDate().after(today.getTime()) || next.before(firstMonth)) {
+      if (next.getDate().after(now.getTime()) || next.before(firstMonth)) {
         out.write(monthFormatter.format(next.getDate()));
       } else {
         out.write("<a href=\"" + next.getPermalink() + "\">" + monthFormatter.format(next.getDate()) + "</a>");

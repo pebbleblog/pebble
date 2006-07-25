@@ -73,7 +73,7 @@ public class ViewStaticPageAction extends Action {
       return new NotFoundView();
     } else {
       getModel().put(Constants.STATIC_PAGE_KEY, staticPage);
-      getModel().put("month", blog.getBlogForThisMonth());
+      getModel().put(Constants.MONTHLY_BLOG, blog.getBlogForThisMonth());
       getModel().put("displayMode", "detail");
 
       return new StaticPageView();

@@ -40,7 +40,7 @@ public class Constants {
 
   public static final String BLOG_KEY = "blog";
   public static final String BLOGS = "blogs";
-  public static final String MONTHLY_BLOG = "month";
+  public static final String MONTHLY_BLOG = "monthlyBlog";
   public static final String DAILY_BLOG = "dailyBlog";
   public static final String BLOG_ENTRIES = "blogEntries";
   public static final String RESPONSES = "responses";

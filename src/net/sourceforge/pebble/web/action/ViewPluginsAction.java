@@ -56,7 +56,7 @@ public class ViewPluginsAction extends SecureAction {
    */
   public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
-    getModel().put("pluginProperties", blog.getPluginProperties().getPropertiesAsString());
+    getModel().put("pluginPropertiesAsString", blog.getPluginProperties().getPropertiesAsString());
 
     return new PluginsView();
   }

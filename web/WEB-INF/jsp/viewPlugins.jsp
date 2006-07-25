@@ -61,7 +61,7 @@
       <a name="properties"></a>
       Properties (<span class="help"><a href="./help/plugins.html#properties" target="_blank">Help</a></span>)
       <br />
-      <textarea name="pluginProperties" rows="32" cols="60">${pluginProperties}</textarea>
+      <textarea name="pluginProperties" rows="32" cols="60">${pluginPropertiesAsString}</textarea>
       <br /><br />
 
       Lucene Analyzer
