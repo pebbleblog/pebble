@@ -168,19 +168,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="themes.jsp" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/WEB-INF/help/themes.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="47" column="117" selection-start="3013" selection-end="3013" vertical-scroll-proportion="1.6371135">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="tags.jsp" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/WEB-INF/help/tags.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="30" column="23" selection-start="1316" selection-end="1316" vertical-scroll-proportion="1.0515463">
+            <state line="30" column="23" selection-start="1316" selection-end="1316" vertical-scroll-proportion="0.615942">
               <folding />
             </state>
           </provider>
@@ -189,7 +180,7 @@
       <file leaf-file-name="customTags.jsp" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/WEB-INF/help/customTags.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="37" column="39" selection-start="1167" selection-end="1167" vertical-scroll-proportion="1.2969072">
+            <state line="37" column="39" selection-start="1167" selection-end="1167" vertical-scroll-proportion="0.75966185">
               <folding />
             </state>
           </provider>
@@ -198,7 +189,7 @@
       <file leaf-file-name="writingPermalinkProviders.jsp" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/WEB-INF/help/writingPermalinkProviders.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="35" column="20" selection-start="1470" selection-end="1470" vertical-scroll-proportion="0.34020618">
+            <state line="35" column="20" selection-start="1470" selection-end="1470" vertical-scroll-proportion="0.19927536">
               <folding />
             </state>
           </provider>
@@ -207,7 +198,7 @@
       <file leaf-file-name="PermalinkProviderSupport.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/permalink/PermalinkProviderSupport.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="143" column="17" selection-start="4592" selection-end="4592" vertical-scroll-proportion="0.972">
+            <state line="143" column="17" selection-start="4592" selection-end="4592" vertical-scroll-proportion="0.57651246">
               <folding />
             </state>
           </provider>
@@ -216,7 +207,7 @@
       <file leaf-file-name="PermalinkProvider.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/api/permalink/PermalinkProvider.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="129" column="18" selection-start="4045" selection-end="4045" vertical-scroll-proportion="1.516">
+            <state line="129" column="18" selection-start="4045" selection-end="4045" vertical-scroll-proportion="0.8991696">
               <folding />
             </state>
           </provider>
@@ -225,16 +216,34 @@
       <file leaf-file-name="build.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/build.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="343" column="30" selection-start="11499" selection-end="11499" vertical-scroll-proportion="0.585567">
+            <state line="343" column="30" selection-start="11499" selection-end="11499" vertical-scroll-proportion="0.34299517">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Month.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Month.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/domain/Month.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="174" column="58" selection-start="5100" selection-end="5100" vertical-scroll-proportion="0.22886598">
+            <state line="174" column="58" selection-start="5094" selection-end="5094" vertical-scroll-proportion="0.13405797">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MonthTest.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/net/sourceforge/pebble/domain/MonthTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="82" column="40" selection-start="2803" selection-end="2803" vertical-scroll-proportion="0.13760379">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Blog.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/domain/Blog.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="633" column="12" selection-start="23367" selection-end="23367" vertical-scroll-proportion="0.28140098">
               <folding />
             </state>
           </provider>
@@ -243,7 +252,7 @@
       <file leaf-file-name="upgrading.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/WEB-INF/help/upgrading.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="134" column="86" selection-start="6538" selection-end="6538" vertical-scroll-proportion="0.585567">
+            <state line="134" column="86" selection-start="6538" selection-end="6538" vertical-scroll-proportion="0.34299517">
               <folding />
             </state>
           </provider>
@@ -627,7 +636,7 @@
     <option name="STATE" value="0" />
   </component>
   <component name="ProjectView">
-    <navigator currentView="ProjectPane" splitterProportion="0.5">
+    <navigator currentView="PackagesPane" splitterProportion="0.5">
       <flattenPackages PackagesPane="false" ProjectPane="false" />
       <showMembers />
       <showModules />
@@ -832,7 +841,7 @@
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="docked" type="docked" visible="true" weight="0.34439528" order="0" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.54241073" order="1" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.25" order="1" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="true" weight="0.375" order="8" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.375" order="8" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.4" order="6" />
       <window_info id="Module Dependencies" active="false" anchor="right" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.33" order="3" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.33" order="9" />
@@ -935,13 +944,6 @@
     </buildFile>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/changelog.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="92" selection-start="1540" selection-end="1540" vertical-scroll-proportion="0.3900966">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/api/confirmation/CommentConfirmationStrategy.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="41" column="17" selection-start="1827" selection-end="1827" vertical-scroll-proportion="0.2218268">
@@ -979,56 +981,70 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/web/WEB-INF/help/tags.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="23" selection-start="1316" selection-end="1316" vertical-scroll-proportion="1.0515463">
+        <state line="30" column="23" selection-start="1316" selection-end="1316" vertical-scroll-proportion="0.615942">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/web/WEB-INF/help/customTags.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="37" column="39" selection-start="1167" selection-end="1167" vertical-scroll-proportion="1.2969072">
+        <state line="37" column="39" selection-start="1167" selection-end="1167" vertical-scroll-proportion="0.75966185">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/web/WEB-INF/help/writingPermalinkProviders.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="20" selection-start="1470" selection-end="1470" vertical-scroll-proportion="0.34020618">
+        <state line="35" column="20" selection-start="1470" selection-end="1470" vertical-scroll-proportion="0.19927536">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/permalink/PermalinkProviderSupport.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="143" column="17" selection-start="4592" selection-end="4592" vertical-scroll-proportion="0.972">
+        <state line="143" column="17" selection-start="4592" selection-end="4592" vertical-scroll-proportion="0.57651246">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/api/permalink/PermalinkProvider.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="129" column="18" selection-start="4045" selection-end="4045" vertical-scroll-proportion="1.516">
+        <state line="129" column="18" selection-start="4045" selection-end="4045" vertical-scroll-proportion="0.8991696">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/build.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="343" column="30" selection-start="11499" selection-end="11499" vertical-scroll-proportion="0.585567">
+        <state line="343" column="30" selection-start="11499" selection-end="11499" vertical-scroll-proportion="0.34299517">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/web/WEB-INF/help/upgrading.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="134" column="86" selection-start="6538" selection-end="6538" vertical-scroll-proportion="0.585567">
+        <state line="134" column="86" selection-start="6538" selection-end="6538" vertical-scroll-proportion="0.34299517">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/domain/Month.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="174" column="58" selection-start="5100" selection-end="5100" vertical-scroll-proportion="0.22886598">
+        <state line="174" column="58" selection-start="5094" selection-end="5094" vertical-scroll-proportion="0.13405797">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/net/sourceforge/pebble/domain/MonthTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="82" column="40" selection-start="2803" selection-end="2803" vertical-scroll-proportion="0.13760379">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/domain/Blog.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="633" column="12" selection-start="23367" selection-end="23367" vertical-scroll-proportion="0.28140098">
           <folding />
         </state>
       </provider>

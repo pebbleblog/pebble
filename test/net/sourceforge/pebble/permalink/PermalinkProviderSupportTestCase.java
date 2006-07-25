@@ -83,7 +83,7 @@ public abstract class PermalinkProviderSupportTestCase extends SingleBlogTestCas
    */
   public void testGetMonthlyBlog() {
     Month month = permalinkProvider.getMonth("/2004/07.html");
-    assertEquals(2004, month.getYearlyBlog().getYear());
+    assertEquals(2004, month.getYear().getYear());
     assertEquals(7, month.getMonth());
   }
 
@@ -111,7 +111,7 @@ public abstract class PermalinkProviderSupportTestCase extends SingleBlogTestCas
    */
   public void testGetDay() {
     Day day = permalinkProvider.getDay("/2004/07/14.html");
-    assertEquals(2004, day.getMonthlyBlog().getYearlyBlog().getYear());
+    assertEquals(2004, day.getMonthlyBlog().getYear().getYear());
     assertEquals(7, day.getMonthlyBlog().getMonth());
     assertEquals(14, day.getDay());
   }

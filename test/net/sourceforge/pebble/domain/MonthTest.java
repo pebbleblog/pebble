@@ -65,8 +65,8 @@ public class MonthTest extends SingleBlogTestCase {
   /**
    * Tests the getter for the yearly blog.
    */
-  public void testGetYearlyBlog() {
-    assertEquals(blog.getBlogForThisYear(), month.getYearlyBlog());
+  public void testGetYear() {
+    assertEquals(blog.getBlogForThisYear(), month.getYear());
   }
 
   /**
@@ -75,12 +75,12 @@ public class MonthTest extends SingleBlogTestCase {
   public void testGetPreviousMonth() {
     month = blog.getBlogForMonth(2003, 7);
     Month previousMonth = month.getPreviousMonth();
-    assertEquals(2003, previousMonth.getYearlyBlog().getYear());
+    assertEquals(2003, previousMonth.getYear().getYear());
     assertEquals(6, previousMonth.getMonth());
 
     month = blog.getBlogForMonth(2003, 1);
     previousMonth = month.getPreviousMonth();
-    assertEquals(2002, previousMonth.getYearlyBlog().getYear());
+    assertEquals(2002, previousMonth.getYear().getYear());
     assertEquals(12, previousMonth.getMonth());
   }
 
@@ -90,12 +90,12 @@ public class MonthTest extends SingleBlogTestCase {
   public void testGetNextMonth() {
     month = blog.getBlogForMonth(2003, 7);
     Month nextMonth = month.getNextMonth();
-    assertEquals(2003, nextMonth.getYearlyBlog().getYear());
+    assertEquals(2003, nextMonth.getYear().getYear());
     assertEquals(8, nextMonth.getMonth());
 
     month = blog.getBlogForMonth(2002, 12);
     nextMonth = month.getNextMonth();
-    assertEquals(2003, nextMonth.getYearlyBlog().getYear());
+    assertEquals(2003, nextMonth.getYear().getYear());
     assertEquals(1, nextMonth.getMonth());
   }
 
@@ -103,15 +103,15 @@ public class MonthTest extends SingleBlogTestCase {
    * Tests that we can compare monthly blogs.
    */
   public void testBefore() {
-    Year yearlyBlog2002 = new Year(blog, 2002);
-    Year yearlyBlog2003 = new Year(blog, 2003);
-    Month monthlyBlog1 = new Month(yearlyBlog2003, 6);
-    Month monthlyBlog2 = new Month(yearlyBlog2003, 7);
+    Year year2002 = new Year(blog, 2002);
+    Year year2003 = new Year(blog, 2003);
+    Month monthlyBlog1 = new Month(year2003, 6);
+    Month monthlyBlog2 = new Month(year2003, 7);
     assertTrue(monthlyBlog1.before(monthlyBlog2));
     assertFalse(monthlyBlog2.before(monthlyBlog1));
 
-    monthlyBlog1 = new Month(yearlyBlog2002, 7);
-    monthlyBlog2 = new Month(yearlyBlog2003, 7);
+    monthlyBlog1 = new Month(year2002, 7);
+    monthlyBlog2 = new Month(year2003, 7);
     assertTrue(monthlyBlog1.before(monthlyBlog2));
     assertFalse(monthlyBlog2.before(monthlyBlog1));
   }

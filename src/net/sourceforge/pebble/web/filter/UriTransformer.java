@@ -264,7 +264,7 @@ public class UriTransformer {
       Day day = permalinkProvider.getDay(uri);
       if (day != null) {
         result = "/viewDay.action";
-        result += "?year=" + day.getMonthlyBlog().getYearlyBlog().getYear();
+        result += "?year=" + day.getMonthlyBlog().getYear().getYear();
         result += "&month=" + day.getMonthlyBlog().getMonth();
         result += "&day=" + day.getDay();
       }
@@ -272,7 +272,7 @@ public class UriTransformer {
       Month month = permalinkProvider.getMonth(uri);
       if (month != null) {
         result = "/viewMonthlyBlog.action";
-        result += "?year=" + month.getYearlyBlog().getYear();
+        result += "?year=" + month.getYear().getYear();
         result += "&month=" + month.getMonth();
       }
     }

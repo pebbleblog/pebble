@@ -125,7 +125,7 @@ public class Day extends TimePeriod implements Permalinkable {
 
     // and set the actual date for this day
     Calendar cal = getBlog().getCalendar();
-    cal.set(Calendar.YEAR, getMonthlyBlog().getYearlyBlog().getYear());
+    cal.set(Calendar.YEAR, getMonthlyBlog().getYear().getYear());
     cal.set(Calendar.MONTH, getMonthlyBlog().getMonth() - 1);
     cal.set(Calendar.DAY_OF_MONTH, getDay());
     cal.set(Calendar.HOUR_OF_DAY, 12);

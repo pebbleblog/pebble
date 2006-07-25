@@ -176,7 +176,7 @@ public class BlogTest extends SingleBlogTestCase {
   public void testGetBlogForFirstMonth() {
     Month month = blog.getBlogForFirstMonth();
     assertNotNull(month);
-//    assertEquals(blog.getBlogForFirstYear(), month.getYearlyBlog());
+//    assertEquals(blog.getBlogForFirstYear(), month.getYear());
     assertEquals(1, month.getMonth());
   }
 
@@ -186,7 +186,7 @@ public class BlogTest extends SingleBlogTestCase {
   public void testGetBlogForMonth() {
     Month month = blog.getBlogForMonth(2003, 4);
     assertNotNull(month);
-    assertEquals(2003, month.getYearlyBlog().getYear());
+    assertEquals(2003, month.getYear().getYear());
     assertEquals(4, month.getMonth());
   }
 
@@ -197,7 +197,7 @@ public class BlogTest extends SingleBlogTestCase {
     Calendar cal = blog.getCalendar();
     Month month = blog.getBlogForThisMonth();
     assertNotNull(month);
-    assertEquals(cal.get(Calendar.YEAR), month.getYearlyBlog().getYear());
+    assertEquals(cal.get(Calendar.YEAR), month.getYear().getYear());
     assertEquals(cal.get(Calendar.MONTH) + 1, month.getMonth());
   }
 
@@ -207,7 +207,7 @@ public class BlogTest extends SingleBlogTestCase {
   public void testGetBlogForDay() {
     Day day = blog.getBlogForDay(2003, 7, 14);
     assertNotNull(day);
-    assertEquals(2003, day.getMonthlyBlog().getYearlyBlog().getYear());
+    assertEquals(2003, day.getMonthlyBlog().getYear().getYear());
     assertEquals(7, day.getMonthlyBlog().getMonth());
     assertEquals(14, day.getDay());
   }
@@ -222,7 +222,7 @@ public class BlogTest extends SingleBlogTestCase {
     cal.set(Calendar.DAY_OF_MONTH, 14);
     Day day = blog.getBlogForDay(cal.getTime());
     assertNotNull(day);
-    assertEquals(2003, day.getMonthlyBlog().getYearlyBlog().getYear());
+    assertEquals(2003, day.getMonthlyBlog().getYear().getYear());
     assertEquals(7, day.getMonthlyBlog().getMonth());
     assertEquals(14, day.getDay());
   }
@@ -234,7 +234,7 @@ public class BlogTest extends SingleBlogTestCase {
     Calendar cal = blog.getCalendar();
     Day day = blog.getBlogForToday();
     assertNotNull(day);
-    assertEquals(cal.get(Calendar.YEAR), day.getMonthlyBlog().getYearlyBlog().getYear());
+    assertEquals(cal.get(Calendar.YEAR), day.getMonthlyBlog().getYear().getYear());
     assertEquals(cal.get(Calendar.MONTH) + 1, day.getMonthlyBlog().getMonth());
     assertEquals(cal.get(Calendar.DAY_OF_MONTH), day.getDay());
   }

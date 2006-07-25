@@ -617,21 +617,21 @@ public class Blog extends AbstractBlog {
    */
   public Year getBlogForYear(int year) {
     Iterator it = years.iterator();
-    Year yearlyBlog;
+    Year y;
     while (it.hasNext()) {
-      yearlyBlog = (Year)it.next();
-      if (yearlyBlog.getYear() == year) {
-        return yearlyBlog;
+      y = (Year)it.next();
+      if (y.getYear() == year) {
+        return y;
       }
     }
 
-    yearlyBlog = new Year(this, year);
-    //if (year > getBlogForToday().getMonthlyBlog().getYearlyBlog().getYear()) {
-      years.add(yearlyBlog);
+    y = new Year(this, year);
+    //if (year > getBlogForToday().getMonthlyBlog().getYear().getYear()) {
+      years.add(y);
       Collections.sort(years);
     //}
 
-    return yearlyBlog;
+    return y;
   }
 
   /**
@@ -645,7 +645,7 @@ public class Blog extends AbstractBlog {
   }
 
   /**
-   * Gets all YearlyBlogs managed by this root blog.
+   * Gets all Years managed by this root blog.
    *
    * @return  a Collection of Year instances
    */
@@ -654,7 +654,7 @@ public class Blog extends AbstractBlog {
   }
 
   /**
-   * Gets all YearlyBlogs managed by this root blog, in reverse order.
+   * Gets all Years managed by this root blog, in reverse order.
    *
    * @return  a Collection of Year instances
    */

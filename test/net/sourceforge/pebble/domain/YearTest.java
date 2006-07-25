@@ -71,11 +71,11 @@ public class YearTest extends SingleBlogTestCase {
    */
   public void testGetMonth() {
     Month month = year.getBlogForMonth(1);
-    assertEquals(year, month.getYearlyBlog());
+    assertEquals(year, month.getYear());
     assertEquals(1, month.getMonth());
 
     month = year.getBlogForMonth(12);
-    assertEquals(year, month.getYearlyBlog());
+    assertEquals(year, month.getYear());
     assertEquals(12, month.getMonth());
 
     try {

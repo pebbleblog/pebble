@@ -98,7 +98,7 @@ public class Month extends TimePeriod implements Permalinkable {
    *
    * @return  a Year instance
    */
-  public Year getYearlyBlog() {
+  public Year getYear() {
     return year;
   }
 
