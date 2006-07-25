@@ -38,12 +38,14 @@
       Using the JSP expression language, you have access to the following variables within your own theme.
     </p>
     <ul>
-      <li>blog : your blog, an instanceof <a href="">Blog</a></li>
-      <li>pebbleContext : an instanceof <a href="">Blog</a></li>
-      <li>categories : the list of <a href="">Category</a> objects</li>
-      <li>tags : the list of <a href="">Tag</a> objects</li>
-      <li>recentBlogEntries : the list of recent <a href="">BlogEntry</a> objects</li></li>
-      <li>recentResponses : the list of <a href="">Response</a> objects</li></li>
+      <li>blog : your blog, an instance of <a href="${pageContext.request.contextPath}/javadoc/net/sourceforge/pebble/domain/Blog.html">Blog</a></li>
+      <li>pebbleContext : an instance of <a href="${pageContext.request.contextPath}/javadoc/net/sourceforge/pebble/PebbleContext.html">PebbleContext</a></li>
+      <li>categories : the list of <a href="${pageContext.request.contextPath}/javadoc/net/sourceforge/pebble/domain/Category.html">Category</a> objects</li>
+      <li>tags : the list of <a href="${pageContext.request.contextPath}/javadoc/net/sourceforge/pebble/domain/Tag.html">Tag</a> objects</li>
+      <li>recentBlogEntries : the list of recent <a href="${pageContext.request.contextPath}/javadoc/net/sourceforge/pebble/domain/BlogEntry.html">BlogEntry</a> objects</li>
+      <li>recentResponses : the list of <a href="${pageContext.request.contextPath}/javadoc/net/sourceforge/pebble/domain/Response.html">Response</a> objects</li>
+      <li>pluginProperties : the <a href="${pageContext.request.contextPath}/javadoc/net/sourceforge/pebble/PluginProperties.html">PluginProperties</a> for your blog</li>
+      <li>archives : a list of <a href="${pageContext.request.contextPath}/javadoc/net/sourceforge/pebble/domain/Year.html">Year</a> objects representing the archives for your blog</li>
     </ul>
   </div>
 </div>

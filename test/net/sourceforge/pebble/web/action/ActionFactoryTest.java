@@ -43,8 +43,8 @@ public class ActionFactoryTest extends TestCase {
   public void testGetAction() {
     ActionFactory factory = new ActionFactory("action.properties");
     try {
-      assertNotNull(factory.getAction("viewDailyBlog"));
-      assertTrue(factory.getAction("viewDailyBlog") instanceof ViewDailyBlogAction);
+      assertNotNull(factory.getAction("viewDay"));
+      assertTrue(factory.getAction("viewDay") instanceof ViewDayAction);
     } catch (ActionNotFoundException e) {
       fail();
     }

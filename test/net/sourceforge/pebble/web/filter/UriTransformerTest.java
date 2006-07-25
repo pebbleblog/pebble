@@ -101,7 +101,7 @@ public class UriTransformerTest extends SingleBlogTestCase {
 
   public void testDailyUrlForSingleUserBlog() throws Exception {
     // test a url to request a whole day
-    assertEquals("/viewDailyBlog.action?year=2003&month=11&day=24", transformer.getUri("/2003/11/24.html", blog));
+    assertEquals("/viewDay.action?year=2003&month=11&day=24", transformer.getUri("/2003/11/24.html", blog));
   }
 
   public void testPermalinkUrlsForSingleUserBlog() throws Exception {
@@ -175,7 +175,7 @@ public class UriTransformerTest extends SingleBlogTestCase {
   }
 
   public void testTodayPage() throws Exception {
-    assertEquals("/viewDailyBlog.action", transformer.getUri("/today.html", blog));
+    assertEquals("/viewDay.action", transformer.getUri("/today.html", blog));
   }
 
   public void testBlogEntryWithDefaultPermalinkProvider() throws Exception {

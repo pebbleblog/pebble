@@ -5,11 +5,11 @@
   <div class="contentItemBody">
     <p>
     <a href="./help/permalinkProviders.html">Permalink Providers</a> are a type of Pebble plugin that allow you to extend the way that
-    permalinks are generated and handled. To write your own peramlink provider, you need to write a Java class that implements the <a href="../javadoc/pebble/permalink/PermalinkProvider.html">net.sourceforge.pebble.api.permalink.PermalinkProvider</a> interface.
+    permalinks are generated and handled. To write your own peramlink provider, you need to write a Java class that implements the <a href="${pageContext.request.contextPath}/javadoc/net/sourceforge/pebble/api/permalink/PermalinkProvider.html">net.sourceforge.pebble.api.permalink.PermalinkProvider</a> interface.
     </p>
 
     <p>
-    A partial implementation is also available to subclass, called <a href="../javadoc/pebble/permalink/PermalinkProviderSupport.html">net.sourceforge.pebble.permalink.PermalinkProviderSupport</a>.
+    A partial implementation is also available to subclass, called <a href="${pageContext.request.contextPath}/javadoc/net/sourceforge/pebble/permalink/PermalinkProviderSupport.html">net.sourceforge.pebble.permalink.PermalinkProviderSupport</a>.
     </p>
 
     <p>

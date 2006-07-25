@@ -153,7 +153,7 @@ public class TitlePermalinkProvider extends PermalinkProviderSupport {
    */
   public BlogEntry getBlogEntry(String uri) {
     BlogService service = new BlogService();
-    Day day = getDailyBlog(uri);
+    Day day = getDay(uri);
 
     Iterator it = day.getBlogEntries().iterator();
     while (it.hasNext()) {

@@ -123,7 +123,7 @@ public class Day extends TimePeriod implements Permalinkable {
    */
   private Calendar getCalendar() {
 
-    // and set the actual date for this daily blog
+    // and set the actual date for this day
     Calendar cal = getBlog().getCalendar();
     cal.set(Calendar.YEAR, getMonthlyBlog().getYearlyBlog().getYear());
     cal.set(Calendar.MONTH, getMonthlyBlog().getMonth() - 1);
@@ -298,7 +298,7 @@ public class Day extends TimePeriod implements Permalinkable {
 //    } else if (!entries.contains(entry)) {
 //      entries.add(entry);
 //      Collections.sort(entries, new BlogEntryComparator());
-//      entry.setDailyBlog(this);
+//      entry.setDay(this);
 //      entry.setType(BlogEntry.PUBLISHED);
 //
 //      // now that the entries have been loaded, enable events
@@ -319,12 +319,12 @@ public class Day extends TimePeriod implements Permalinkable {
 //    if (entry != null) {
 //      getBlog().getEventDispatcher().fireBlogEntryEvent(new BlogEntryEvent(entry, BlogEntryEvent.BLOG_ENTRY_REMOVED));
 //      entries.remove(entry);
-//      entry.setDailyBlog(null);
+//      entry.setDay(null);
 //    }
 //  }
 
   /**
-   * Determines whether this daily blog has entries.
+   * Determines whether this day has entries.
    *
    * @return    true if this blog contains entries, false otherwise
    */

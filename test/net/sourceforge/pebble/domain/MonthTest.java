@@ -117,15 +117,15 @@ public class MonthTest extends SingleBlogTestCase {
   }
 
   /**
-   * Tests that we can get all daily blogs for a month.
+   * Tests that we can get all days for a month.
    */
-  public void testGetAllDailyBlogs() {
+  public void testGetAllDays() {
     month = new Month(blog.getBlogForThisYear(), 1);
-    assertEquals(31, month.getAllDailyBlogs().length);
+    assertEquals(31, month.getAllDays().length);
   }
 
   /**
-   * Tests that we can get the daily blog for a specific day.
+   * Tests that we can get the day for a specific day.
    */
   public void testGetBlogForDay() {
     Day day = month.getBlogForDay(1);

@@ -48,7 +48,7 @@ import java.util.ArrayList;
  *
  * @author    Simon Brown
  */
-public class ViewDailyBlogAction extends Action {
+public class ViewDayAction extends Action {
 
   /**
    * Peforms the processing associated with this action.

@@ -71,46 +71,46 @@ public abstract class PermalinkProviderSupportTestCase extends SingleBlogTestCas
    * Tests that a monthly blog permalink is recognised.
    */
   public void testMonthlyBlogPermalink() {
-    assertTrue(permalinkProvider.isMonthlyBlogPermalink("/2004/01.html"));
-    assertFalse(permalinkProvider.isMonthlyBlogPermalink("/2004/01/01.html"));
-    assertFalse(permalinkProvider.isMonthlyBlogPermalink("/someotherpage.html"));
-    assertFalse(permalinkProvider.isMonthlyBlogPermalink(""));
-    assertFalse(permalinkProvider.isMonthlyBlogPermalink(null));
+    assertTrue(permalinkProvider.isMonthPermalink("/2004/01.html"));
+    assertFalse(permalinkProvider.isMonthPermalink("/2004/01/01.html"));
+    assertFalse(permalinkProvider.isMonthPermalink("/someotherpage.html"));
+    assertFalse(permalinkProvider.isMonthPermalink(""));
+    assertFalse(permalinkProvider.isMonthPermalink(null));
   }
 
   /**
    * Tests thet the correct monthly blog can be found from a permalink.
    */
   public void testGetMonthlyBlog() {
-    Month month = permalinkProvider.getMonthlyBlog("/2004/07.html");
+    Month month = permalinkProvider.getMonth("/2004/07.html");
     assertEquals(2004, month.getYearlyBlog().getYear());
     assertEquals(7, month.getMonth());
   }
 
   /**
-   * Tests that a daily blog permalink can be generated.
+   * Tests that a day permalink can be generated.
    */
-  public void testGetPermalinkForDailyBlog() {
+  public void testGetPermalinkForDay() {
     Day day = blog.getBlogForDay(2004, 07, 14);
     assertEquals("/2004/07/14.html", permalinkProvider.getPermalink(day));
   }
 
   /**
-   * Tests that a daily blog permalink is recognised.
+   * Tests that a day permalink is recognised.
    */
-  public void testDailyBlogPermalink() {
-    assertTrue(permalinkProvider.isDailyBlogPermalink("/2004/01/01.html"));
-    assertFalse(permalinkProvider.isDailyBlogPermalink("/2004/01.html"));
-    assertFalse(permalinkProvider.isDailyBlogPermalink("/someotherpage.html"));
-    assertFalse(permalinkProvider.isDailyBlogPermalink(""));
-    assertFalse(permalinkProvider.isDailyBlogPermalink(null));
+  public void testDayPermalink() {
+    assertTrue(permalinkProvider.isDayPermalink("/2004/01/01.html"));
+    assertFalse(permalinkProvider.isDayPermalink("/2004/01.html"));
+    assertFalse(permalinkProvider.isDayPermalink("/someotherpage.html"));
+    assertFalse(permalinkProvider.isDayPermalink(""));
+    assertFalse(permalinkProvider.isDayPermalink(null));
   }
 
   /**
-   * Tests thet the correct daily blog can be found from a permalink.
+   * Tests thet the correct day can be found from a permalink.
    */
-  public void testGetDailyBlog() {
-    Day day = permalinkProvider.getDailyBlog("/2004/07/14.html");
+  public void testGetDay() {
+    Day day = permalinkProvider.getDay("/2004/07/14.html");
     assertEquals(2004, day.getMonthlyBlog().getYearlyBlog().getYear());
     assertEquals(7, day.getMonthlyBlog().getMonth());
     assertEquals(14, day.getDay());

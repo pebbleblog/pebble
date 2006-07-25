@@ -88,8 +88,8 @@ public class BlogEntryTest extends SingleBlogTestCase {
   /**
    * Tests that the root is setup correctly.
    */
-  public void testDailyBlog() {
-    //assertEquals(dailyBlog, blogEntry.getDailyBlog());
+  public void testDay() {
+    //assertEquals(dailyBlog, blogEntry.getDay());
   }
 
   /**

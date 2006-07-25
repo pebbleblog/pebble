@@ -94,7 +94,7 @@ public interface PermalinkProvider {
    * @return      true if the URI represents a permalink to a monthly blog,
    *              false otherwise
    */
-  public boolean isMonthlyBlogPermalink(String uri);
+  public boolean isMonthPermalink(String uri);
 
   /**
    * Gets the monthly blog referred to by the specified URI.
@@ -102,10 +102,10 @@ public interface PermalinkProvider {
    * @param uri   a relative URI
    * @return  a Month instance, or null if one can't be found
    */
-  public Month getMonthlyBlog(String uri);
+  public Month getMonth(String uri);
 
   /**
-   * Gets the permalink for a daily blog.
+   * Gets the permalink for a day.
    *
    * @param day   a Day instance
    * @return  a URI as a String
@@ -113,20 +113,20 @@ public interface PermalinkProvider {
   public String getPermalink(Day day);
 
   /**
-   * Determines whether the specified URI is a daily blog permalink.
+   * Determines whether the specified URI is a day permalink.
    *
    * @param uri   a relative URI
-   * @return      true if the URI represents a permalink to a daily blog,
+   * @return      true if the URI represents a permalink to a day,
    *              false otherwise
    */
-  public boolean isDailyBlogPermalink(String uri);
+  public boolean isDayPermalink(String uri);
 
   /**
-   * Gets the daily blog referred to by the specified URI.
+   * Gets the day referred to by the specified URI.
    *
    * @param uri   a relative URI
    * @return  a Day instance, or null if one can't be found
    */
-  public Day getDailyBlog(String uri);
+  public Day getDay(String uri);
 
 }

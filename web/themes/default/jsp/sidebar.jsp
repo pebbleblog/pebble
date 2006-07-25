@@ -15,7 +15,6 @@
   </div>
 
   <%-- Uncomment this block if you would like to show archives by month.
-  --%>
   <div class="sidebarItem">
     <div class="sidebarItemTitle"><span>Archives</span></div>
     <table width="99%" cellpadding="0" cellspacing="0">
@@ -37,6 +36,7 @@
       </c:forEach>
     </table>
   </div>
+  --%>
 
   <c:if test="${not empty categories[0].subCategories}">
   <div class="sidebarItem">

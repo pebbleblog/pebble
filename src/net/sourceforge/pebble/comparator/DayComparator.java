@@ -48,7 +48,7 @@ public class DayComparator implements Comparator {
    *
    * @param o1  object 1
    * @param o2  object 2
-   * @return  -n, 0 or +n if the date represented by the second daily blog is less than,
+   * @return  -n, 0 or +n if the date represented by the second day is less than,
    *          the same as or greater than the first, respectively
    */
   public int compare(Object o1, Object o2) {

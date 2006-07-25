@@ -128,7 +128,7 @@ public class DayTest extends SingleBlogTestCase {
 //  }
 
 //  /**
-//   * Tests the ability to get all daily blog entries.
+//   * Tests the ability to get all day entries.
 //   */
 //  public void testGetEntries() {
 //    assertNotNull(day.getEntries());

@@ -4,12 +4,13 @@
   <property name="clover.dir" value="clover"/>
   <property name="etc.dir" value="${basedir}/etc"/>
   <property name="src.dir" value="${basedir}/src"/>
+  <property name="web.dir" value="${basedir}/web"/>
   <property name="website.dir" value="${basedir}/website"/>
-  <property name="javadoc.dir" value="${build.dir}/javadoc"/>
   <property name="test.dir" value="${basedir}/test"/>
   <property name="build.dir" value="${basedir}/build"/>
   <property name="classes.dir" value="${build.dir}/classes"/>
   <property name="bin.dir" value="${basedir}/bin"/>
+  <property name="javadoc.dir" value="${web.dir}/javadoc"/>
   <property name="dist.dir" value="${basedir}/dist"/>
 
   <property environment="env"/>
@@ -26,7 +27,7 @@
   <target name="init">
     <propertyfile file="pebble-build.properties" comment="Build information">
         <entry key="build.date" type="date" value="now" pattern="dd MMMM yyyy HH:mm:ss z"/>
-        <entry key="build.version" value="2.0.0-RC1"/>
+        <entry key="build.version" value="2.0.0-RC2"/>
     </propertyfile>
     <loadproperties srcFile="pebble-build.properties"/>
 
@@ -166,7 +167,7 @@
     <ant dir="webtest" antfile="alltests.xml" />
   </target>
 
-  <target name="dist" depends="clean,init,build,test,website">
+  <target name="dist" depends="clean,init,build,test,javadoc,website">
     <property name="release.dir" value="${build.dir}/${project.name}-${build.version}"/>
     <mkdir dir="${release.dir}"/>
     <mkdir dir="${dist.dir}"/>
@@ -225,13 +226,6 @@
       <fileset dir="${website.dir}"/>
     </copy>
 
-<!--
-    <mkdir dir="${release.dir}/docs/javadoc"/>
-    <copy todir="${release.dir}/docs/javadoc">
-      <fileset dir="${javadoc.dir}"/>
-    </copy>
--->
-
     <zip zipfile="${dist.dir}/${project.name}-${build.version}.zip">
       <fileset dir="${build.dir}">
         <include name="${project.name}-${build.version}/**"/>
@@ -284,7 +278,7 @@
   <target name="release" depends="dist,website">
   </target>
 
-  <target name="javadoc">
+  <target name="javadoc" depends="init">
     <javadoc packagenames="net.sourceforge.pebble.*"
                sourcepath="${src.dir}"
                defaultexcludes="yes"
@@ -295,7 +289,6 @@
                windowtitle="Pebble">
         <doctitle><![CDATA[<h1>Pebble</h1>]]></doctitle>
         <bottom><![CDATA[<i>Copyright &#169; 2003-2006, Simon Brown. All Rights Reserved.</i>]]></bottom>
-        <tag name="todo" scope="all" description="To do:"/>
         <link offline="true" href="http://java.sun.com/products/jdk/1.2/docs/api/" packagelistLoc="C:\tmp"/>
         <link href="http://developer.java.sun.com/developer/products/xml/docs/api/"/>
       </javadoc>
@@ -348,6 +341,7 @@
     <delete dir="${build.dir}"/>
     <delete dir="${dist.dir}"/>
     <delete dir="${clover.dir}"/>
+    <delete dir="${javadoc.dir}"/>
     <delete dir="web/docs"/>
     <delete dir="web/WEB-INF/classes"/>
     <delete dir="web/WEB-INF/lib"/>

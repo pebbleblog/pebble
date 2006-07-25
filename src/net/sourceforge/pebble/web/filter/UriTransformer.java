@@ -187,7 +187,7 @@ public class UriTransformer {
         result = "/feed.action?flavor=atom";
       } else if (uri.equals("/today.html")) {
         // URI of the form /today.html
-        result = "/viewDailyBlog.action";
+        result = "/viewDay.action";
       } else if (uri.equals("/") || uri.equals("/index.jsp") || uri.equals("/index.html")) {
           result = "/viewHomePage.action";
       } else {
@@ -260,16 +260,16 @@ public class UriTransformer {
       if (blogEntry != null) {
         result = "/viewBlogEntry.action?entry=" + blogEntry.getId();
       }
-    } else if (permalinkProvider.isDailyBlogPermalink(uri)) {
-      Day day = permalinkProvider.getDailyBlog(uri);
+    } else if (permalinkProvider.isDayPermalink(uri)) {
+      Day day = permalinkProvider.getDay(uri);
       if (day != null) {
-        result = "/viewDailyBlog.action";
+        result = "/viewDay.action";
         result += "?year=" + day.getMonthlyBlog().getYearlyBlog().getYear();
         result += "&month=" + day.getMonthlyBlog().getMonth();
         result += "&day=" + day.getDay();
       }
-    } else if (permalinkProvider.isMonthlyBlogPermalink(uri)) {
-      Month month = permalinkProvider.getMonthlyBlog(uri);
+    } else if (permalinkProvider.isMonthPermalink(uri)) {
+      Month month = permalinkProvider.getMonth(uri);
       if (month != null) {
         result = "/viewMonthlyBlog.action";
         result += "?year=" + month.getYearlyBlog().getYear();

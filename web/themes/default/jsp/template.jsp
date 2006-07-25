@@ -8,6 +8,7 @@
    - tags
    - recentBlogEntries
    - recentResponses
+   - archives
    - pluginProperties
 --%>
 <%@ include file="/WEB-INF/fragments/header.jspf" %>

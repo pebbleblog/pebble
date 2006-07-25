@@ -70,7 +70,7 @@ public class Month extends TimePeriod implements Permalinkable {
     cal.setTime(getDate());
     this.lastDayInMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
 
-    // and load all daily blogs
+    // and create all days
     dailyBlogs = new Day[lastDayInMonth];
     for (int day = 1; day <= lastDayInMonth; day++) {
       dailyBlogs[day-1] = new Day(this, day);
@@ -146,7 +146,7 @@ public class Month extends TimePeriod implements Permalinkable {
    * @return  a List of BlogEntry instances, reverse ordered by date
    */
   public List<String> getBlogEntries() {
-    Day days[] = getAllDailyBlogs();
+    Day days[] = getAllDays();
     List blogEntries = new ArrayList();
     for (Day day : days) {
       blogEntries.addAll(day.getBlogEntries());
@@ -161,7 +161,7 @@ public class Month extends TimePeriod implements Permalinkable {
    */
   public int getNumberOfBlogEntries() {
     int count = 0;
-    Day days[] = getAllDailyBlogs();
+    Day days[] = getAllDays();
     for (Day day : days) {
       count += day.getNumberOfBlogEntries();
     }
@@ -170,12 +170,12 @@ public class Month extends TimePeriod implements Permalinkable {
   }
 
   /**
-   * Gets an array of all DailyBlogs.
+   * Gets an array of all Days.
    *
-   * @return  a Collection of Day instances for all those daily blogs
+   * @return  a Collection of Day instances for all those days
    *          that have entries (this can return an empty collection)
    */
-  public Day[] getAllDailyBlogs() {
+  public Day[] getAllDays() {
     Day blogs[] = new Day[dailyBlogs.length];
     for (int day = 0; day < dailyBlogs.length; day++) {
       blogs[day] = getBlogForDay(day + 1);

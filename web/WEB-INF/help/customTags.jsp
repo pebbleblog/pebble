@@ -35,7 +35,7 @@
       </tr>
 
       <tr class="even">
-        <td valign="top">isBlogPublisherr</td>
+        <td valign="top">isBlogPublisher</td>
         <td>Includes the body content only if the current user is a blog publisher of the current blog.</td>
       </tr>
 
