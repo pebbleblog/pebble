@@ -38,8 +38,8 @@ import net.sourceforge.pebble.api.event.trackback.TrackBackEvent;
 import net.sourceforge.pebble.api.event.trackback.TrackBackListener;
 
 /**
- * Starting point for implementation of CommentListener that
- * provides no-op methods.
+ * Starting point for implementation of classes that are both comment
+ * and TrackBack listeners. Override the blogEntryResponseX methods.
  *
  * @author Simon Brown
  */

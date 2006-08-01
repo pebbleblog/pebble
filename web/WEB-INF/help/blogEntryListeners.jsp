@@ -11,7 +11,7 @@
 
     <p>
       <b>net.sourceforge.pebble.event.blogentry.XmlRpcNotificationListener</b> (*)<br />
-      Sends an <a href="./help/xmlrpcUpdatePings.html">XML-RPC update notification ping</a> when a blog entry is published.<br /><br />The list of websites can be specified in the <a href="configuration.jsp#xmlrpcNotifications">XML-RPC update notifications</a> section of the blog properties page.
+      Sends an <a href="./help/xmlrpcUpdatePings.html">XML-RPC update notification ping</a> when a blog entry is published.
     </p>
 
     <p>
@@ -20,7 +20,7 @@
      </p>
 
     <p>
-      <b>net.sourceforge.pebble.event.blogentry.MarkPendingListener</b><br />
+      <b>net.sourceforge.pebble.event.blogentry.MarkUnpublishedListenerener</b><br />
       Marks all new and changed blog entries to be unpublished, so that they require approval from the blog owner before being published on the blog. Only the following subset of
       properties, when changed, will cause a blog entry to be marked as unpublished.
     </p>

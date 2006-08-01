@@ -7,7 +7,7 @@
       This is the online help for Pebble and the pages within here contain lots of information
       about the many aspects of running your blog. Should you need additional help and support, this
       is available via the pebble-users@lists.sourceforge.net mailing list. Details on subscribing
-      to this list can be found at <a href="http://lists.sourceforge.net/mailman/listinfo/pebble-user">http://lists.sourceforge.net/mailman/listinfo/pebble-user</a>.
+      to this list can be found <a href="http://lists.sourceforge.net/mailman/listinfo/pebble-user">on SourceForge</a>.
       Comments and feedback about this documentation are also welcomed.
     </p>
 

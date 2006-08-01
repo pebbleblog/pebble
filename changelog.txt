@@ -1,7 +1,9 @@
-Version 2.0.0-RC2 - July 2006
+Version 2.0.0-RC2 - August 2006
 ----------------------------------
 Renamed default theme to "pebble" and added a new default theme.
 Moved hardcoded English text in public pages to resource bundles.
+Added Javadoc to the web application, and links to it from the integrated help.
+Completed initial versions of all help pages.
 
 Version 2.0.0-RC1 - 17th July 2006
 ----------------------------------

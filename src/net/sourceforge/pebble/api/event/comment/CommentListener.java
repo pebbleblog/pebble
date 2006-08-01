@@ -31,8 +31,6 @@
  */
 package net.sourceforge.pebble.api.event.comment;
 
-import net.sourceforge.pebble.api.event.comment.CommentEvent;
-
 /**
  * Implemented by classes wanting to be notified of comment events.
  *

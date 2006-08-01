@@ -31,9 +31,6 @@
  */
 package net.sourceforge.pebble.api.event.trackback;
 
-import net.sourceforge.pebble.api.event.trackback.TrackBackEvent;
-
-
 /**
  * Implemented by classes wanting to be notified of TrackBack events.
  *

@@ -15,7 +15,7 @@
     </ul>
 
     <p>
-      There are currently no implementations distributed with Pebble.
+      There are currently no user configurable implementations distributed with Pebble.
     </p>
 
     <h3>Configuring blog listeners</h3>

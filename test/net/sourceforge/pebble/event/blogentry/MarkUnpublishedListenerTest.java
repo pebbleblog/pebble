@@ -41,13 +41,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Tests for the MarkPendingListener class.
+ * Tests for the MarkUnpublishedListener class.
  *
  * @author Simon Brown
  */
-public class MarkPendingListenerTest extends SingleBlogTestCase {
+public class MarkUnpublishedListenerTest extends SingleBlogTestCase {
 
-  private MarkPendingListener listener;
+  private MarkUnpublishedListener listener;
   private BlogEntry blogEntry;
   private BlogEntryEvent blogEntryEvent;
 
@@ -57,7 +57,7 @@ public class MarkPendingListenerTest extends SingleBlogTestCase {
   protected void setUp() throws Exception {
     super.setUp();
 
-    listener = new MarkPendingListener();
+    listener = new MarkUnpublishedListener();
     blogEntry = new BlogEntry(blog);
     SecurityUtils.runAsBlogContributor();
   }

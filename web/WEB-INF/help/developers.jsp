@@ -14,7 +14,7 @@
 
     <p>
       To checkout a particular version of the codebase, substitute <code>trunk</code> for a specific tag such as <code>tags/v2.0.0-M2</code>.
-      All Pebble releases have been tagged using a tag such as <code>v2_0_0</code>.
+      All Pebble releases have been tagged using a tag such as <code>v2.0.0</code>.
     </p>
 
     <h3>Building</h3>

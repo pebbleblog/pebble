@@ -11,7 +11,7 @@ If you're in a hurry, you can get Pebble and up running in a couple of minutes b
 
  (1) Take the pebble.war file from the distribution and deploy it, by copying it to $TOMCAT_HOME/webapps.
  (2) Restart Tomcat and point your browser to http://localhost:8080/pebble/.
- (3) Start blogging by logging in with username/password.
+ (3) Start blogging by logging in with the default username/password combination of username/password.
 
 For further installation details, please see docs/installation.html in the distribution.
 

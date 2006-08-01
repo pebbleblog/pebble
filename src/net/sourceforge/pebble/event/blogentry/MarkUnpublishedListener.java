@@ -46,10 +46,10 @@ import java.util.List;
  *
  * @author Simon Brown
  */
-public class MarkPendingListener extends BlogEntryListenerSupport {
+public class MarkUnpublishedListener extends BlogEntryListenerSupport {
 
   /** the log used by this class */
-  private static final Log log = LogFactory.getLog(MarkPendingListener.class);
+  private static final Log log = LogFactory.getLog(MarkUnpublishedListener.class);
 
   /**
    * Called when a blog entry has been added.
