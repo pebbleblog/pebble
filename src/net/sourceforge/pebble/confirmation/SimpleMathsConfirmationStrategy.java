@@ -73,7 +73,7 @@ public class SimpleMathsConfirmationStrategy extends AbstractConfirmationStrateg
         request.getSession().setAttribute(OPERATOR, "*");
         request.getSession().setAttribute(ANSWER, arg1 * arg2);
         break;
-  }
+    }
   }
 
   /**

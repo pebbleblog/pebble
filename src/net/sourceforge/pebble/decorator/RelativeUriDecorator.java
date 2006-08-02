@@ -6,8 +6,7 @@ import net.sourceforge.pebble.domain.StaticPage;
 import net.sourceforge.pebble.api.decorator.ContentDecoratorContext;
 
 /**
- * Translates relative URIs in the blog entry body and excerpt into
- * absolute URLs.
+ * Translates relative URIs in blog entries and static pages into absolute URLs.
  * 
  * @author Simon Brown
  */
@@ -20,15 +19,8 @@ public class RelativeUriDecorator extends ContentDecoratorSupport {
    * @param blogEntry the blog entry to be decorated
    */
   public void decorate(ContentDecoratorContext context, BlogEntry blogEntry) {
-    String body = blogEntry.getBody();
-    body = body.replaceAll("\\./images/", getBlog().getUrl() + "images/");
-    body = body.replaceAll("\\./files/", getBlog().getUrl() + "files/");
-    blogEntry.setBody(body);
-
-    String excerpt = blogEntry.getExcerpt();
-    excerpt = excerpt.replaceAll("\\./images/", getBlog().getUrl() + "images/");
-    excerpt = excerpt.replaceAll("\\./files/", getBlog().getUrl() + "files/");
-    blogEntry.setExcerpt(excerpt);
+    blogEntry.setBody(replaceCommonUris(blogEntry.getBody()));
+    blogEntry.setExcerpt(replaceCommonUris(blogEntry.getExcerpt()));
 
     Attachment attachment = blogEntry.getAttachment();
     if (attachment != null) {
@@ -46,9 +38,19 @@ public class RelativeUriDecorator extends ContentDecoratorSupport {
    * @param staticPage the static page to be decorated
    */
   public void decorate(ContentDecoratorContext context, StaticPage staticPage) {
-    String body = staticPage.getBody();
-    body = body.replaceAll("\\./images/", getBlog().getUrl() + "images/");
-    body = body.replaceAll("\\./files/", getBlog().getUrl() + "files/");
-    staticPage.setBody(body);
+    staticPage.setBody(replaceCommonUris(staticPage.getBody()));
   }
+
+  /**
+   * Helper method to replace common relative URIs with their absolute values.
+   *
+   * @param s   the String containing relative URIs
+   * @return    a new String containing absolute URLs
+   */
+  private String replaceCommonUris(String s) {
+    s = s.replaceAll("\\./images/", getBlog().getUrl() + "images/");
+    s = s.replaceAll("\\./files/", getBlog().getUrl() + "files/");
+    return s;
+  }
+
 }

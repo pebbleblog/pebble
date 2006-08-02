@@ -67,6 +67,7 @@ public class BlogService {
    */
   public BlogEntry getBlogEntry(Blog blog, String blogEntryId) throws BlogServiceException {
     String compositeKey = blog.getId() + "/" + blogEntryId;
+    log.debug("Getting blog entry " + compositeKey);
     BlogEntry blogEntry = null;
     Cache cache = blog.getBlogEntryCache();
 

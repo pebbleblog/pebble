@@ -34,7 +34,7 @@ package net.sourceforge.pebble.api.decorator;
 import net.sourceforge.pebble.domain.*;
 
 /**
- * Interface implemented by blog entry decorators. Decorators are created on a
+ * Interface implemented by content decorators. Decorators are created on a
  * per blog basis, meaning that multiple threads can be operating on an
  * instance at any one time.
  *

@@ -56,6 +56,7 @@ public class MultiBlogTest extends MultiBlogTestCase {
 
     BlogService service = new BlogService();
     BlogEntry blogEntry = new BlogEntry(blog1);
+    blogEntry.setPublished(true);
     service.putBlogEntry(blogEntry);
 
     assertEquals(blogEntry.getDate(), blog.getLastModified());

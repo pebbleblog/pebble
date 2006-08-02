@@ -9,6 +9,7 @@
       strategy for asking readers to confirm their action by means of clicking a button or through some other kind of CAPTCHA.
     </p>
 
+    <a name="commentProcess"></a>
     <h3>Confirmation process for comments</h3>
     <p>
       Confirmation fits into the overall process of leaving a comment as follows.
@@ -31,6 +32,7 @@
       To override the functionality outlined in step 2.2, add a <a href="viewPlugins.secureaction#properties">plugin property</a> called <code>CommentConfirmationStrategy.required</code> and set the value to <code>true</code>.
     </p>
 
+    <a name="trackbackProcess"></a>
     <h3>Confirmation process for TrackBacks</h3>
     <p>
       Confirmation fits into the overall process of sending a TrackBack as follows.

@@ -34,4 +34,3 @@ window.onload = function()
   document.confirmationForm.answer.focus();
 }
 </script>
-

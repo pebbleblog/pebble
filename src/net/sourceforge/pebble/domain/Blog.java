@@ -66,6 +66,11 @@ import java.io.File;
 import java.lang.reflect.Constructor;
 import java.util.*;
 
+/**
+ * Represents a blog.
+ *
+ * @author    Simon Brown
+ */
 public class Blog extends AbstractBlog {
 
   private static final Log log = LogFactory.getLog(Blog.class);
@@ -864,10 +869,10 @@ public class Blog extends AbstractBlog {
           blogEntries.add(blogEntry);
         }
       } catch (BlogServiceException e) {
-        // do nothing
+        log.error(e);
       }
 
-      if (blogEntries.size() == getRecentBlogEntriesOnHomePage()) {
+      if (blogEntries.size() == number) {
         break;
       }
     }
@@ -1031,7 +1036,7 @@ public class Blog extends AbstractBlog {
    */
   public Date getLastModified() {
     Date date = new Date(0);
-    List blogEntries = getRecentBlogEntries(1);
+    List blogEntries = getRecentPublishedBlogEntries(1);
     if (blogEntries.size() == 1) {
       date = ((BlogEntry)blogEntries.get(0)).getDate();
     }
