@@ -60,14 +60,14 @@ public class ErrorAction extends Action {
    * @return the name of the next view
    */
   public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
-    Throwable t = (Throwable)request.getAttribute("javax.servlet.jsp.jspException");
-    if (t != null) {
+    Exception e = (Exception)request.getAttribute("exception");
+    if (e != null) {
       log.error("Request URL = " + request.getRequestURL());
       log.error("Request URI = " + request.getRequestURI());
       log.error("Query string = " + request.getQueryString());
-      Enumeration e = request.getHeaderNames();
-      while (e.hasMoreElements()) {
-        String headerName = (String)e.nextElement();
+      Enumeration en = request.getHeaderNames();
+      while (en.hasMoreElements()) {
+        String headerName = (String)en.nextElement();
         log.error(headerName + " = " + request.getHeader("headerName"));
       }
       log.error("Parameters :");
@@ -77,10 +77,9 @@ public class ErrorAction extends Action {
         log.error(" " + name + " = " + request.getParameter(name));
       }
 
-      log.error(t);
-      t.printStackTrace();
+      log.error(e);
 
-      getModel().put("stackTrace", ExceptionUtils.getStackTraceAsString(t));
+      getModel().put("stackTrace", ExceptionUtils.getStackTraceAsString(e));
     }
 
     return new ErrorView();

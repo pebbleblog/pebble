@@ -34,7 +34,7 @@ package net.sourceforge.pebble.web.action;
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.web.model.Model;
 import net.sourceforge.pebble.web.view.View;
-import net.sourceforge.pebble.web.view.impl.BlogMonthlyView;
+import net.sourceforge.pebble.web.view.impl.BlogEntriesByMonthView;
 
 /**
  * Tests for the ViewMonthAction class.
@@ -62,7 +62,7 @@ public class ViewMonthActionTest extends SingleBlogActionTestCase {
     Model model = action.getModel();
     assertEquals(blog.getBlogForMonth(2006, 5), model.get(Constants.MONTHLY_BLOG));
     assertNotNull(model.get(Constants.BLOG_ENTRIES));
-    assertTrue(view instanceof BlogMonthlyView);
+    assertTrue(view instanceof BlogEntriesByMonthView);
   }
 
 }

@@ -36,7 +36,7 @@ import net.sourceforge.pebble.util.SecurityUtils;
 import net.sourceforge.pebble.domain.*;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.NotFoundView;
-import net.sourceforge.pebble.web.view.impl.BlogMonthlyView;
+import net.sourceforge.pebble.web.view.impl.BlogEntriesByMonthView;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -97,7 +97,7 @@ public class ViewMonthAction extends Action {
       getModel().put("nextMonth", nextMonth);
     }
 
-    return new BlogMonthlyView();
+    return new BlogEntriesByMonthView();
   }
 
   private List<BlogEntry> filter(Blog blog, List<BlogEntry> blogEntries) {

@@ -38,7 +38,7 @@ import java.util.List;
  *
  * @author    Simon Brown
  */
-public class Pageable {
+public class Pageable<T> {
 
   /** the default page size */
   public static final int DEFAULT_PAGE_SIZE = 10;
@@ -46,7 +46,7 @@ public class Pageable {
   private static final int PAGE_WINDOW = 10;
 
   /** the list over which this class is paging */
-  private List list;
+  private List<T> list;
 
   /** the page size */
   private int pageSize = DEFAULT_PAGE_SIZE;
@@ -68,7 +68,7 @@ public class Pageable {
    *
    * @param list    a List
    */
-  public Pageable(List list) {
+  public Pageable(List<T> list) {
     this.list = list;
     this.page = 1;
     this.maxPages = 1;
@@ -90,7 +90,7 @@ public class Pageable {
    *
    * @return  a List
    */
-  public List getList() {
+  public List<T> getList() {
     return this.list;
   }
 
@@ -99,7 +99,7 @@ public class Pageable {
    *
    * @return  a List
    */
-  public List getListForPage() {
+  public List<T> getListForPage() {
     return list.subList(startingIndex, endingIndex);
   }
 

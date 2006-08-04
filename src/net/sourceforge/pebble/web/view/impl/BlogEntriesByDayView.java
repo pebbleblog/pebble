@@ -33,27 +33,22 @@ package net.sourceforge.pebble.web.view.impl;
 
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.api.decorator.ContentDecoratorContext;
+import net.sourceforge.pebble.comparator.BlogEntryComparator;
+import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.domain.Day;
 import net.sourceforge.pebble.decorator.ContentDecoratorChain;
 import net.sourceforge.pebble.web.view.HtmlView;
 
+import java.text.DateFormat;
+import java.util.Collections;
 import java.util.List;
 
 /**
- * Represents the home page view of multiple blogs.
+ * Represents the home page view of a simple blog.
  *
  * @author    Simon Brown
  */
-public class MultiBlogHomePageView extends HtmlView {
-
-  public void prepare() {
-    ContentDecoratorContext context = new ContentDecoratorContext();
-    context.setView(ContentDecoratorContext.SUMMARY_VIEW);
-    context.setMedia(ContentDecoratorContext.HTML_PAGE);
-
-    List blogEntries = (List)getModel().get(Constants.BLOG_ENTRIES);
-    ContentDecoratorChain.decorate(context, blogEntries);
-    getModel().put(Constants.BLOG_ENTRIES, blogEntries);
-  }
+public class BlogEntriesByDayView extends BlogEntriesView {
 
   /**
    * Gets the title of this view.
@@ -61,16 +56,11 @@ public class MultiBlogHomePageView extends HtmlView {
    * @return the title as a String
    */
   public String getTitle() {
-    return null;
-  }
-
-  /**
-   * Gets the URI that this view represents.
-   *
-   * @return the URI as a String
-   */
-  public String getUri() {
-    return "/WEB-INF/jsp/blogEntries.jsp";
+    Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
+    Day daily = (Day)getModel().get(Constants.DAILY_BLOG);
+    DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.LONG, blog.getLocale());
+    dateFormat.setTimeZone(blog.getTimeZone());
+    return dateFormat.format(daily.getDate());
 
   }
 

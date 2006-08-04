@@ -188,6 +188,10 @@ public class UriTransformer {
       } else if (uri.equals("/today.html")) {
         // URI of the form /today.html
         result = "/viewDay.action";
+      } else if (uri.startsWith("/blogentries/")) {
+        // view blog entries by page /blogentries/1.html
+        String page = uri.substring(13, uri.length()-5);
+        result = "/viewBlogEntriesByPage.action?page=" + page;
       } else if (uri.equals("/") || uri.equals("/index.jsp") || uri.equals("/index.html")) {
           result = "/viewHomePage.action";
       } else {

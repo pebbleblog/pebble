@@ -4,11 +4,11 @@
   <c:when test="${displayMode == 'detail'}">
   <div id="linearNavigationLinks">
     <c:if test="${not empty blogEntry.previousBlogEntry}">
-      &lt;&lt; <a href="${blogEntry.previousBlogEntry.localPermalink}">${blogEntry.previousBlogEntry.title}</a> |
+      <a href="${blogEntry.previousBlogEntry.localPermalink}">&lt;&lt; ${blogEntry.previousBlogEntry.title}</a> |
     </c:if>
     <a href="${blog.url}"><fmt:message key="common.home" /></a>
     <c:if test="${not empty blogEntry.nextBlogEntry}">
-      | <a href="${blogEntry.nextBlogEntry.localPermalink}">${blogEntry.nextBlogEntry.title}</a> &gt;&gt;
+      | <a href="${blogEntry.nextBlogEntry.localPermalink}">${blogEntry.nextBlogEntry.title} &gt;&gt;</a>
     </c:if>
   </div>
   </c:when>
@@ -16,11 +16,11 @@
   <c:when test="${displayMode == 'month'}">
   <div id="linearNavigationLinks">
     <c:if test="${not empty previousMonth}">
-      &lt;&lt; <a href="${previousMonth.permalink}"><fmt:formatDate value="${previousMonth.date}" pattern="MMMM yyyy"/></a> |
+      <a href="${previousMonth.permalink}">&lt;&lt; <fmt:formatDate value="${previousMonth.date}" pattern="MMMM yyyy"/></a> |
     </c:if>
     <a href="${blog.url}"><fmt:message key="common.home" /></a>
     <c:if test="${not empty nextMonth}">
-      | <a href="${nextMonth.permalink}"><fmt:formatDate value="${nextMonth.date}" pattern="MMMM yyyy"/></a> &gt;&gt;
+      | <a href="${nextMonth.permalink}"><fmt:formatDate value="${nextMonth.date}" pattern="MMMM yyyy"/> &gt;&gt;</a>
     </c:if>
   </div>
   </c:when>
@@ -28,11 +28,23 @@
   <c:when test="${displayMode == 'day'}">
   <div id="linearNavigationLinks">
     <c:if test="${not empty previousDay}">
-      &lt;&lt; <a href="${previousDay.permalink}"><fmt:formatDate value="${previousDay.date}" type="date" dateStyle="long"/></a> |
+      <a href="${previousDay.permalink}">&lt;&lt; <fmt:formatDate value="${previousDay.date}" type="date" dateStyle="long"/></a> |
     </c:if>
     <a href="${blog.url}"><fmt:message key="common.home" /></a>
     <c:if test="${not empty nextDay}">
-      | <a href="${nextDay.permalink}"><fmt:formatDate value="${nextDay.date}" type="date" dateStyle="long"/></a> &gt;&gt;
+      | <a href="${nextDay.permalink}"><fmt:formatDate value="${nextDay.date}" type="date" dateStyle="long"/> &gt;&gt;</a>
+    </c:if>
+  </div>
+  </c:when>
+
+  <c:when test="${displayMode == 'page'}">
+  <div id="linearNavigationLinks">
+    <c:if test="${pageable.page < pageable.maxPageRange}">
+      <a href="blogentries/${pageable.nextPage}.html"><fmt:message key="common.previous" /></a> |
+    </c:if>
+    <a href="${blog.url}"><fmt:message key="common.home" /></a>
+    <c:if test="${pageable.page > pageable.minPageRange}">
+      | <a href="blogentries/${pageable.previousPage}.html"><fmt:message key="common.next" /></a>
     </c:if>
   </div>
   </c:when>

@@ -35,6 +35,7 @@ import net.sf.ehcache.Cache;
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.PebbleContext;
 import net.sourceforge.pebble.PluginProperties;
+import net.sourceforge.pebble.util.Pageable;
 import net.sourceforge.pebble.confirmation.DefaultConfirmationStrategy;
 import net.sourceforge.pebble.api.confirmation.CommentConfirmationStrategy;
 import net.sourceforge.pebble.api.confirmation.TrackBackConfirmationStrategy;
@@ -874,6 +875,29 @@ public class Blog extends AbstractBlog {
 
       if (blogEntries.size() == number) {
         break;
+      }
+    }
+
+    return blogEntries;
+  }
+
+  /**
+   * Gets blog entries for a given list of IDs.
+   *
+   * @param blogEntryIds    the list of blog entry IDs
+   * @return a List containing the blog entries
+   */
+  public List<BlogEntry> getBlogEntries(List<String> blogEntryIds) {
+    BlogService service = new BlogService();
+    List<BlogEntry> blogEntries = new LinkedList<BlogEntry>();
+    for (String blogEntryId : blogEntryIds) {
+      try {
+        BlogEntry blogEntry = service.getBlogEntry(this, blogEntryId);
+        if (blogEntry != null) {
+          blogEntries.add(blogEntry);
+        }
+      } catch (BlogServiceException e) {
+        log.error(e);
       }
     }
 

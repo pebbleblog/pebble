@@ -132,8 +132,7 @@ public class HttpController extends HttpServlet {
           
         }
       } catch (Exception e) {
-        log.error(e.getMessage(), e);
-        e.printStackTrace();
+        request.setAttribute("exception", e);
         throw new ServletException(e);
       }
     }

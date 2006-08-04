@@ -35,7 +35,7 @@ import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.util.SecurityUtils;
 import net.sourceforge.pebble.domain.*;
 import net.sourceforge.pebble.web.view.View;
-import net.sourceforge.pebble.web.view.impl.BlogDailyView;
+import net.sourceforge.pebble.web.view.impl.BlogEntriesByDayView;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -98,7 +98,7 @@ public class ViewDayAction extends Action {
       getModel().put("nextDay", nextDay);
     }
 
-    return new BlogDailyView();
+    return new BlogEntriesByDayView();
   }
 
   private List<BlogEntry> filter(Blog blog, List<BlogEntry> blogEntries) {

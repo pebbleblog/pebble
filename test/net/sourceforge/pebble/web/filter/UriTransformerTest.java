@@ -209,4 +209,8 @@ public class UriTransformerTest extends SingleBlogTestCase {
     assertEquals("/viewBlogEntry.action?entry=" + blogEntry.getId(), transformer.getUri(defaultProvider.getPermalink(blogEntry), blog));
   }
 
+  public void testViewBlogEntriesByPageUrlForSingleUserBlog() throws Exception {
+    assertEquals("/viewBlogEntriesByPage.action?page=1", transformer.getUri("/blogentries/1.html", blog));
+  }
+
 }

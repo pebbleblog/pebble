@@ -2,9 +2,7 @@ package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.NotFoundView;
-import net.sourceforge.pebble.web.view.impl.BlogMonthlyView;
 import net.sourceforge.pebble.web.view.impl.BlogEntryView;
-import net.sourceforge.pebble.web.model.Model;
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.util.SecurityUtils;
 import net.sourceforge.pebble.domain.BlogEntry;

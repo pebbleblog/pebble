@@ -32,34 +32,23 @@
 package net.sourceforge.pebble.web.view.impl;
 
 import net.sourceforge.pebble.Constants;
-import net.sourceforge.pebble.api.decorator.ContentDecoratorContext;
 import net.sourceforge.pebble.comparator.BlogEntryComparator;
+import net.sourceforge.pebble.api.decorator.ContentDecoratorContext;
 import net.sourceforge.pebble.domain.Blog;
-import net.sourceforge.pebble.domain.Day;
+import net.sourceforge.pebble.domain.Month;
 import net.sourceforge.pebble.decorator.ContentDecoratorChain;
 import net.sourceforge.pebble.web.view.HtmlView;
 
-import java.text.DateFormat;
-import java.util.Collections;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Collections;
 
 /**
- * Represents the home page view of a simple blog.
+ * Represents the home page view of a blog.
  *
  * @author    Simon Brown
  */
-public class BlogDailyView extends HtmlView {
-
-  public void prepare() {
-    ContentDecoratorContext context = new ContentDecoratorContext();
-    context.setView(ContentDecoratorContext.SUMMARY_VIEW);
-    context.setMedia(ContentDecoratorContext.HTML_PAGE);
-
-    List blogEntries = (List)getModel().get(Constants.BLOG_ENTRIES);
-    ContentDecoratorChain.decorate(context, blogEntries);
-    Collections.sort(blogEntries, new BlogEntryComparator());
-    getModel().put(Constants.BLOG_ENTRIES, blogEntries);
-  }
+public class BlogEntriesByMonthView extends BlogEntriesView {
 
   /**
    * Gets the title of this view.
@@ -68,21 +57,10 @@ public class BlogDailyView extends HtmlView {
    */
   public String getTitle() {
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
-    Day daily = (Day)getModel().get(Constants.DAILY_BLOG);
-    DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.LONG, blog.getLocale());
-    dateFormat.setTimeZone(blog.getTimeZone());
-    return dateFormat.format(daily.getDate());
-
-  }
-
-  /**
-   * Gets the URI that this view represents.
-   *
-   * @return the URI as a String
-   */
-  public String getUri() {
-    return "/WEB-INF/jsp/blogEntries.jsp";
-
+    Month month = (Month)getModel().get(Constants.MONTHLY_BLOG);
+    SimpleDateFormat sdf = new SimpleDateFormat("MMMM yyyy", blog.getLocale());
+    sdf.setTimeZone(blog.getTimeZone());
+    return sdf.format(month.getDate());
   }
 
 }

@@ -34,7 +34,7 @@ package net.sourceforge.pebble.web.action;
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.web.model.Model;
 import net.sourceforge.pebble.web.view.View;
-import net.sourceforge.pebble.web.view.impl.SingleBlogHomePageView;
+import net.sourceforge.pebble.web.view.impl.BlogEntriesView;
 
 /**
  * Tests for the ViewHomePageAction class.
@@ -44,7 +44,7 @@ import net.sourceforge.pebble.web.view.impl.SingleBlogHomePageView;
 public class ViewHomePageActionTest extends SingleBlogActionTestCase {
 
   protected void setUp() throws Exception {
-    action = new ViewHomePageAction();
+    action = new ViewBlogEntriesByPageAction();
 
     super.setUp();
   }
@@ -59,7 +59,7 @@ public class ViewHomePageActionTest extends SingleBlogActionTestCase {
     Model model = action.getModel();
     assertEquals(blog.getBlogForThisMonth(), model.get(Constants.MONTHLY_BLOG));
     assertEquals(blog.getRecentBlogEntries(), model.get(Constants.BLOG_ENTRIES));
-    assertTrue(view instanceof SingleBlogHomePageView);
+    assertTrue(view instanceof BlogEntriesView);
   }
 
 }

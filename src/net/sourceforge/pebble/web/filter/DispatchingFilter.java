@@ -79,8 +79,6 @@ public class DispatchingFilter implements Filter {
       RequestDispatcher dispatcher = request.getRequestDispatcher(uri);
       dispatcher.forward(request, response);
     } catch (Exception e) {
-      log.error(e.getMessage(), e);
-      e.printStackTrace();
       throw new ServletException(e);
     }
   }
