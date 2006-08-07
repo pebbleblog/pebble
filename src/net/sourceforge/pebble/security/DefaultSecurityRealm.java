@@ -9,11 +9,10 @@ import org.acegisecurity.providers.encoding.PasswordEncoder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.Properties;
+import java.util.Collection;
+import java.util.LinkedList;
 
 /**
  * Implementation of the UserDetailsService that gets authentication
@@ -40,22 +39,46 @@ public class DefaultSecurityRealm implements SecurityRealm {
   private SaltSource saltSource;
 
   /**
+   * Looks up and returns a collection of all users.
+   *
+   * @return  a Collection of PebbleUserDetails objects
+   */
+  public synchronized Collection<PebbleUserDetails> getUsers() {
+    LinkedList<PebbleUserDetails> users = new LinkedList<PebbleUserDetails>();
+    File realm = getFileForRealm();
+    File files[] = realm.listFiles(new FilenameFilter() {
+      /**
+       * Tests if a specified file should be included in a file list.
+       *
+       * @param dir  the directory in which the file was found.
+       * @param name the name of the file.
+       * @return <code>true</code> if and only if the name should be
+       *         included in the file list; <code>false</code> otherwise.
+       */
+      public boolean accept(File dir, String name) {
+        return name.endsWith(".properties");
+      }
+    });
+
+    for (File file : files) {
+      PebbleUserDetails pud = getUser(file.getName().substring(0, file.getName().lastIndexOf(".")));
+      if (pud != null) {
+        users.add(pud);
+      }
+    }
+
+    return users;
+  }
+
+  /**
    * Looks up and returns user details for the given username.
    *
    * @param username the username to find details for
    * @return a PebbleUserDetails instance
    *
    */
-  public PebbleUserDetails getUser(String username) {
+  public synchronized PebbleUserDetails getUser(String username) {
     // create the realm, if it doesn't exist
-    File realm = getFileForRealm();
-    if (!realm.exists()) {
-      realm.mkdir();
-      log.warn("*** Creating default user (username/password)");
-      log.warn("*** Don't forget to delete this user in a production deployment!");
-      putUser("username", "password", "Default User", "username@domain.com", "http://www.domain.com", new String[] {Constants.BLOG_OWNER_ROLE, Constants.BLOG_PUBLISHER_ROLE, Constants.BLOG_CONTRIBUTOR_ROLE, Constants.PEBBLE_ADMIN_ROLE});
-    }
-
     File user = getFileForUser(username);
     if (!user.exists()) {
       return null;
@@ -94,7 +117,7 @@ public class DefaultSecurityRealm implements SecurityRealm {
    * @param roles        an array containing the user's roles
    * @return a populated PebbleUserDetails instance representing the new user
    */
-  public PebbleUserDetails putUser(String username, String password, String name, String emailAddress, String website, String[] roles) {
+  public synchronized PebbleUserDetails putUser(String username, String password, String name, String emailAddress, String website, String[] roles) {
     File user = getFileForUser(username);
 
     String rolesAsString = "";
@@ -133,7 +156,7 @@ public class DefaultSecurityRealm implements SecurityRealm {
    *
    * @param username    the username of the user to remove
    */
-  public void removeUser(String username) {
+  public synchronized void removeUser(String username) {
     File user = getFileForUser(username);
     if (user.exists()) {
       user.delete();
@@ -143,7 +166,16 @@ public class DefaultSecurityRealm implements SecurityRealm {
   protected File getFileForRealm() {
     // find the directory and file corresponding to the user, of the form
     // ${pebbleContext.dataDirectory}/realm/${username}.properties
-    return new File(configuration.getDataDirectory(), DefaultSecurityRealm.REALM_DIRECTORY_NAME);
+    File realm = new File(configuration.getDataDirectory(), DefaultSecurityRealm.REALM_DIRECTORY_NAME);
+
+    if (!realm.exists()) {
+      realm.mkdir();
+      log.warn("*** Creating default user (username/password)");
+      log.warn("*** Don't forget to delete this user in a production deployment!");
+      putUser("username", "password", "Default User", "username@domain.com", "http://www.domain.com", new String[] {Constants.BLOG_OWNER_ROLE, Constants.BLOG_PUBLISHER_ROLE, Constants.BLOG_CONTRIBUTOR_ROLE, Constants.PEBBLE_ADMIN_ROLE});
+    }
+
+    return realm;
   }
 
   protected File getFileForUser(String username) {

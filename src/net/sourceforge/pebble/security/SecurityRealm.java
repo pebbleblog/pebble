@@ -1,11 +1,20 @@
 package net.sourceforge.pebble.security;
 
+import java.util.Collection;
+
 /**
  * Represents a security realm with some basic operations.
  *
  * @author    Simon Brown
  */
 public interface SecurityRealm {
+
+  /**
+   * Looks up and returns a collection of all users.
+   *
+   * @return  a Collection of PebbleUserDetails objects
+   */
+  public Collection<PebbleUserDetails> getUsers();
 
   /**
    * Looks up and returns user details for the given username.

@@ -5,6 +5,7 @@ import org.acegisecurity.GrantedAuthorityImpl;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Collection;
 
 /**
  * A mock SecurityRealm for unit testing.
@@ -14,6 +15,15 @@ import java.util.Map;
 public class MockSecurityRealm implements SecurityRealm {
 
   private Map<String,PebbleUserDetails> users = new HashMap<String,PebbleUserDetails>();
+
+  /**
+   * Looks up and returns a collection of all users.
+   *
+   * @return a Collection of PebbleUserDetails objects
+   */
+  public Collection<PebbleUserDetails> getUsers() {
+    return users.values();
+  }
 
   /**
    * Looks up and returns user details for the given username.
