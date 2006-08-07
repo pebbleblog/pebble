@@ -33,6 +33,7 @@ package net.sourceforge.pebble.comparator;
 
 import net.sourceforge.pebble.domain.SingleBlogTestCase;
 import net.sourceforge.pebble.security.PebbleUserDetails;
+import org.acegisecurity.GrantedAuthorityImpl;
 
 /**
  * Tests for the PebbleUserDetailsComparator class.
@@ -43,8 +44,8 @@ public class PebbleUserDetailsComparatorTest extends SingleBlogTestCase {
 
   public void testCompare() {
     PebbleUserDetailsComparator comp = new PebbleUserDetailsComparator();
-    PebbleUserDetails pud1 = new PebbleUserDetails("username1", "", "", "", "", null);
-    PebbleUserDetails pud2 = new PebbleUserDetails("username2", "", "", "", "", null);
+    PebbleUserDetails pud1 = new PebbleUserDetails("username1", "", "", "", "", new GrantedAuthorityImpl[]{});
+    PebbleUserDetails pud2 = new PebbleUserDetails("username2", "", "", "", "", new GrantedAuthorityImpl[]{});
 
     assertTrue(comp.compare(pud1, pud1) == 0);
     assertTrue(comp.compare(pud1, pud2) < 0);
