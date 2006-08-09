@@ -252,3 +252,11 @@ blockquote {
 #subscriptions {
   display: none;
 }
+thead {
+  text-align: left;
+  background: #6e7d8e;
+  color: white;
+}
+th {
+  font-weight: normal;
+}

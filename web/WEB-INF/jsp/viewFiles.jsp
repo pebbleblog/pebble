@@ -38,6 +38,16 @@
     <input type="hidden" name="path" value="${directory.absolutePath}" />
     <input type="hidden" name="type" value="${type}" />
     <table width="99%" cellspacing="0" cellpadding="4">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Name</th>
+          <th align="right">Size</th>
+          <th align="right">Last modified</th>
+          <th align="right">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
       <c:forEach var="aFile" items="${files}" varStatus="status">
         <c:choose>
           <c:when test="${status.count % 2 == 0}">
@@ -74,6 +84,7 @@
           </td>
         </tr>
       </c:forEach>
+      </tbody>
     </table>
 
     <br />

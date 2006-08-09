@@ -1,4 +1,4 @@
-<div class="contentItem">
+  <div class="contentItem">
 
   <div class="contentItemLinks">
     <a href="./help/comment-and-trackback-spam.html" target="_blank">Help</a>
@@ -32,6 +32,15 @@
     <input type="hidden" name="page" value="${page}" />
 
     <table width="99%" cellspacing="0" cellpadding="4">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Source</th>
+          <th>Summary</th>
+          <th align="right">Date/time</th>
+        </tr>
+      </thead>
+      <tbody>
       <c:forEach var="response" items="${pageable.listForPage}" varStatus="status">
         <c:choose>
           <c:when test="${status.count % 2 == 0}">
@@ -70,6 +79,7 @@
         </td>
       </tr>
       </c:forEach>
+      </tbody>
     </table>
 
     <br />

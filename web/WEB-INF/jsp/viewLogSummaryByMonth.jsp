@@ -16,18 +16,19 @@
 
       <thead>
       <tr>
-        <td><b>Total for <fmt:formatDate value="${logSummary.date}" pattern="MMMM yyyy" /></b></td>
-        <td align="right">
+        <th>Total for <fmt:formatDate value="${logSummary.date}" pattern="MMMM yyyy" /></th>
+        <th align="right">
           <%--
           <a href="viewLog.secureaction?year=${year}&month=${month}" title="See log file for month">Log</a> |
           <a href="viewReferers.secureaction?year=${year}&month=${month}" title="See referers for month">Referers</a> |
           <a href="viewRequests.secureaction?year=${year}&month=${month}" title="See requests for month">Requests</a>
           --%>
-        </td>
-        <td align="right"><b><fmt:formatNumber value="${logSummary.totalRequests}"/></b></td>
+        </th>
+        <th align="right"><fmt:formatNumber value="${logSummary.totalRequests}"/></th>
       </tr>
       </thead>
 
+      <tbody>
       <c:forEach var="logSummaryForDay" items="${logSummary.logSummaries}" varStatus="status">
         <c:choose>
           <c:when test="${status.count % 2 == 0}">
@@ -49,6 +50,7 @@
           </td>
         </tr>
       </c:forEach>
+      </tbody>
 
     </table>
   </div>

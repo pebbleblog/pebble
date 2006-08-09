@@ -9,6 +9,13 @@
 
   <div class="contentItemBody">
     <table width="99%" cellspacing="0" cellpadding="4">
+      <thead>
+        <tr>
+          <th>Resource</th>
+          <th align="right">Count</th>
+        </tr>
+      </thead>
+      <tbody>
       <c:forEach var="aRequest" items="${requests}" varStatus="status">
         <c:choose>
           <c:when test="${status.count % 2 == 0}">
@@ -26,6 +33,7 @@
           </td>
         </tr>
       </c:forEach>
+      </tbody>
     </table>
   </div>
 

@@ -10,6 +10,13 @@
   <div class="contentItemBody">
     <form name="staticPagesForm" method="post" action="removeStaticPages.secureaction">
     <table width="99%" cellspacing="0" cellpadding="4">
+      <thead>
+      <tr>
+        <th>&nbsp;</th>
+        <th>Title</th>
+      </tr>
+      </thead>
+      <tbody>
       <c:forEach var="staticPage" items="${staticPages}" varStatus="status">
         <c:choose>
           <c:when test="${status.count % 2 == 0}">
@@ -25,10 +32,9 @@
         <td>
           <a href="editStaticPage.secureaction?page=${staticPage.id}#form">${staticPage.title}</a>
         </td>
-        <td align="right">
-        </td>
       </tr>
       </c:forEach>
+      </tbody>
     </table>
 
     <br />

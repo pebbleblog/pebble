@@ -14,6 +14,14 @@
         <br />
 
         <table width="99%" cellspacing="0" cellpadding="4">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Title/summary</th>
+              <th align="right">Date/time</th>
+            </tr>
+          </thead>
+          <tbody>
           <c:forEach var="hit" items="${pageable.listForPage}" varStatus="status">
             <c:choose>
               <c:when test="${status.count % 2 == 0}">
@@ -37,6 +45,7 @@
             </td>
           </tr>
           </c:forEach>
+          </tbody>
         </table>
 
         <br />

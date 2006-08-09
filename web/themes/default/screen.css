@@ -382,6 +382,7 @@ blockquote {
   text-decoration: underline;
 }
 thead {
+  text-align: left;
   background: #6e7d8e;
   color: white;
 }

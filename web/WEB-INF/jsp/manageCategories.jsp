@@ -12,13 +12,14 @@
     <table width="99%" cellspacing="0" cellpadding="4">
       <thead>
       <tr>
-        <td>&nbsp;</td>
-        <td><b>Name</b></td>
-        <td><b>ID</b></td>
-        <td><b>Tags</b></td>
-        <td align="right"><b>Blog Entries</b></td>
+        <th>&nbsp;</th>
+        <th>Name</th>
+        <th>ID</th>
+        <th>Tags</th>
+        <th align="right">Blog Entries</th>
       </tr>
       </thead>
+      <tbody>
       <c:forEach var="aCategory" items="${categories}" varStatus="status">
         <c:choose>
           <c:when test="${status.count % 2 == 0}">
@@ -39,6 +40,7 @@
         <td align="right"><fmt:formatNumber value="${aCategory.numberOfBlogEntries}"/></td>
       </tr>
       </c:forEach>
+      </tbody>
     </table>
 
     <br />

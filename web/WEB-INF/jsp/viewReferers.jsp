@@ -13,7 +13,16 @@
     <input type="hidden" name="year" value="${param.year}" />
     <input type="hidden" name="month" value="${param.month}" />
     <input type="hidden" name="day" value="${param.day}" />
+
     <table width="99%" cellspacing="0" cellpadding="4">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Referer</th>
+          <th align="right">Count</th>
+        </tr>
+      </thead>
+      <tbody>
       <c:forEach var="referer" items="${referers}" varStatus="status">
         <c:choose>
           <c:when test="${status.count % 2 == 0}">
@@ -34,6 +43,7 @@
           </td>
         </tr>
       </c:forEach>
+      </tbody>
     </table>
 
     <pebble:isAuthorisedForBlog>
