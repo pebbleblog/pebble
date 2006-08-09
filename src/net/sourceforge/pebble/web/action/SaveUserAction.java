@@ -33,21 +33,29 @@ package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.PebbleContext;
+import net.sourceforge.pebble.domain.AbstractBlog;
 import net.sourceforge.pebble.security.PebbleUserDetails;
+import net.sourceforge.pebble.security.SecurityRealm;
 import net.sourceforge.pebble.web.view.View;
-import net.sourceforge.pebble.web.view.impl.UsersView;
+import net.sourceforge.pebble.web.view.RedirectView;
+import net.sourceforge.pebble.web.view.impl.UserView;
+import net.sourceforge.pebble.web.validation.ValidationContext;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Collection;
 
 /**
- * Displays a list of all users.
+ * Saves user details.
  *
  * @author    Simon Brown
  */
-public class ViewUsersAction extends SecureAction {
+public class SaveUserAction extends SecureAction {
+
+  /** the log used by this class */
+  private static final Log log = LogFactory.getLog(SaveUserAction.class);
 
   /**
    * Peforms the processing associated with this action.
@@ -57,10 +65,39 @@ public class ViewUsersAction extends SecureAction {
    * @return the name of the next view
    */
   public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
-    Collection<PebbleUserDetails> users = PebbleContext.getInstance().getConfiguration().getSecurityRealm().getUsers();
-    getModel().put("users", users);
+    AbstractBlog blog = (AbstractBlog)getModel().get(Constants.BLOG_KEY);
+    String username = request.getParameter("username");
+    String password = request.getParameter("password1");
+    String confirm = request.getParameter("password2");
+    String name = request.getParameter("name");
+    String emailAddress = request.getParameter("emailAddress");
+    String website = request.getParameter("website");
+    String roles[] = request.getParameterValues("role");
+    String newUser = request.getParameter("newUser");
 
-    return new UsersView();
+    SecurityRealm realm = PebbleContext.getInstance().getConfiguration().getSecurityRealm();
+    PebbleUserDetails currentUserDetails = realm.getUser(username);
+    PebbleUserDetails newUserDetails = new PebbleUserDetails(username, password, name, emailAddress, website, roles);
+
+    ValidationContext validationContext = new ValidationContext();
+
+    if (newUser != null && newUser.equals("true") && currentUserDetails != null) {
+      validationContext.addError("A user with this username already exists");          
+    } else if (password == null || password.trim().length() == 0) {
+      validationContext.addError("Password can't be empty");
+    } else if (!password.equals(confirm)) {
+      validationContext.addError("Password and confirmation password must be the same");
+    } else {
+      newUserDetails = new PebbleUserDetails(username, password, name, emailAddress, website, roles);
+      realm.putUser(newUserDetails);
+      return new RedirectView(blog.getUrl() + "viewUsers.secureaction");
+    }
+
+    getModel().put("validationContext", validationContext);
+    getModel().put("user", newUserDetails);
+    getModel().put("newUser", newUser);
+
+    return new UserView();
   }
 
   /**

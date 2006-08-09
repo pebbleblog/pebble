@@ -32,22 +32,20 @@
 package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
-import net.sourceforge.pebble.PebbleContext;
 import net.sourceforge.pebble.security.PebbleUserDetails;
 import net.sourceforge.pebble.web.view.View;
-import net.sourceforge.pebble.web.view.impl.UsersView;
+import net.sourceforge.pebble.web.view.impl.UserView;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Collection;
 
 /**
- * Displays a list of all users.
+ * Adds a new user.
  *
  * @author    Simon Brown
  */
-public class ViewUsersAction extends SecureAction {
+public class AddUserAction extends SecureAction {
 
   /**
    * Peforms the processing associated with this action.
@@ -57,10 +55,10 @@ public class ViewUsersAction extends SecureAction {
    * @return the name of the next view
    */
   public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
-    Collection<PebbleUserDetails> users = PebbleContext.getInstance().getConfiguration().getSecurityRealm().getUsers();
-    getModel().put("users", users);
+    getModel().put("newUser", "true");
+    getModel().put("user", new PebbleUserDetails());
 
-    return new UsersView();
+    return new UserView();
   }
 
   /**

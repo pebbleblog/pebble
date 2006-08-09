@@ -43,7 +43,7 @@ import javax.servlet.jsp.tagext.TagSupport;
  *
  * @author    Simon Brown
  */
-public class IsPebbleAdminTag extends TagSupport {
+public class IsBlogAdminTag extends TagSupport {
 
   /**
    * Implementation from the Tag interface - this is called when the opening tag
@@ -55,7 +55,7 @@ public class IsPebbleAdminTag extends TagSupport {
   public int doStartTag() throws JspException {
     HttpServletRequest request = (HttpServletRequest)pageContext.getRequest();
 
-    if (SecurityUtils.isPebbleAdmin()) {
+    if (SecurityUtils.isBlogAdmin()) {
       return EVAL_BODY_INCLUDE;
     } else {
       return SKIP_BODY;

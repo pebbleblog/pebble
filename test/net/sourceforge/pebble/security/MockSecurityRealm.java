@@ -1,11 +1,8 @@
 package net.sourceforge.pebble.security;
 
-import org.acegisecurity.GrantedAuthority;
-import org.acegisecurity.GrantedAuthorityImpl;
-
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Collection;
 
 /**
  * A mock SecurityRealm for unit testing.
@@ -38,23 +35,13 @@ public class MockSecurityRealm implements SecurityRealm {
   /**
    * Stores a user with the given properties.
    *
-   * @param username     the username
-   * @param password     the password
-   * @param name         the user's name
-   * @param emailAddress the user's e-mail address
-   * @param website      the user's website
-   * @param roles        an array containing the user's roles
+   * @param pud   a PebbleUserDetails instance
    * @return a populated PebbleUserDetails instance representing the new user
    */
-  public PebbleUserDetails putUser(String username, String password, String name, String emailAddress, String website, String[] roles) {
-    GrantedAuthority[] authorities = new GrantedAuthority[roles.length];
-    for (int i = 0; i < roles.length; i++) {
-      authorities[i] = new GrantedAuthorityImpl(roles[i]);
-    }
-    PebbleUserDetails user = new PebbleUserDetails(username, password, name, emailAddress, website, authorities);
-    users.put(username, user);
+  public synchronized PebbleUserDetails putUser(PebbleUserDetails pud) {
+    users.put(pud.getUsername(), pud);
 
-    return user;
+    return pud;
   }
 
   /**

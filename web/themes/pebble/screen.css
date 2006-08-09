@@ -384,3 +384,10 @@ blockquote {
 #subscriptions a:hover {
   text-decoration: underline;
 }
+thead {
+  background: #6e7d8e;
+  color: white;
+}
+th {
+  font-weight: normal;
+}

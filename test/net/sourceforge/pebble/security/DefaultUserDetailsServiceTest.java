@@ -1,11 +1,10 @@
 package net.sourceforge.pebble.security;
 
-import org.acegisecurity.userdetails.UserDetailsService;
-import org.acegisecurity.userdetails.UserDetails;
-import org.acegisecurity.userdetails.UsernameNotFoundException;
-import org.acegisecurity.GrantedAuthority;
 import junit.framework.TestCase;
 import net.sourceforge.pebble.Constants;
+import org.acegisecurity.GrantedAuthority;
+import org.acegisecurity.userdetails.UserDetails;
+import org.acegisecurity.userdetails.UsernameNotFoundException;
 
 /**
  * Tests for the DefaultUserDetails class.
@@ -28,7 +27,8 @@ public class DefaultUserDetailsServiceTest extends TestCase {
   }
 
   public void testLoadByUsername() throws Exception {
-    securityRealm.putUser("username", "password", "name", "emailAddress", "website", new String[]{Constants.BLOG_OWNER_ROLE});
+    PebbleUserDetails pud = new PebbleUserDetails("username", "password", "name", "emailAddress", "website", new String[]{Constants.BLOG_OWNER_ROLE});
+    securityRealm.putUser(pud);
     UserDetails user = service.loadUserByUsername("username");
 
     assertNotNull(user);
@@ -42,7 +42,8 @@ public class DefaultUserDetailsServiceTest extends TestCase {
 
   public void testLoadByUsernameThrowsExceptionWhenUserDoesntExist() throws Exception {
     try {
-      securityRealm.putUser("username", "password", "name", "emailAddress", "website", new String[]{Constants.BLOG_OWNER_ROLE});
+      PebbleUserDetails pud = new PebbleUserDetails("username", "password", "name", "emailAddress", "website", new String[]{Constants.BLOG_OWNER_ROLE});
+      securityRealm.putUser(pud);
       UserDetails user = service.loadUserByUsername("someotherusername");
       fail();
     } catch (UsernameNotFoundException e) {

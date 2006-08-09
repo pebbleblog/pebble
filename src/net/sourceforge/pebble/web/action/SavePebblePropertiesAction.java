@@ -96,7 +96,7 @@ public class SavePebblePropertiesAction extends SecureAction {
    * @param request
    */
   public String[] getRoles(HttpServletRequest request) {
-    return new String[]{Constants.PEBBLE_ADMIN_ROLE};
+    return new String[]{Constants.BLOG_ADMIN_ROLE};
   }
 
 }

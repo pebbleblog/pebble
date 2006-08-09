@@ -25,7 +25,7 @@
       </tr>
 
       <tr class="even">
-        <td valign="top">isPebbleAdmin</td>
+        <td valign="top">isBlogAdmin</td>
         <td>Includes the body content only if the current user is a Pebble admin.</td>
       </tr>
 

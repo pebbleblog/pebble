@@ -2,17 +2,15 @@ package net.sourceforge.pebble.security;
 
 import net.sourceforge.pebble.Configuration;
 import net.sourceforge.pebble.Constants;
-import org.acegisecurity.GrantedAuthority;
-import org.acegisecurity.GrantedAuthorityImpl;
 import org.acegisecurity.providers.dao.SaltSource;
 import org.acegisecurity.providers.encoding.PasswordEncoder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import java.io.*;
-import java.util.Properties;
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.Properties;
 
 /**
  * Implementation of the UserDetailsService that gets authentication
@@ -95,12 +93,8 @@ public class DefaultSecurityRealm implements SecurityRealm {
       String name = props.getProperty(NAME);
       String emailAddress = props.getProperty(EMAIL_ADDRESS);
       String website = props.getProperty(WEBSITE);
-      GrantedAuthority[] authorities = new GrantedAuthority[roles.length];
-      for (int i = 0; i < roles.length; i++) {
-        authorities[i] = new GrantedAuthorityImpl(roles[i].trim());
-      }
 
-      return new PebbleUserDetails(username, password, name, emailAddress, website, authorities);
+      return new PebbleUserDetails(username, password, name, emailAddress, website, roles);
     } catch (IOException ioe) {
       return null;
     }
@@ -109,46 +103,29 @@ public class DefaultSecurityRealm implements SecurityRealm {
   /**
    * Stores a user with the given properties.
    *
-   * @param username     the username
-   * @param password     the password
-   * @param name         the user's name
-   * @param emailAddress the user's e-mail address
-   * @param website      the user's website
-   * @param roles        an array containing the user's roles
+   * @param pud   a PebbleUserDetails instance
    * @return a populated PebbleUserDetails instance representing the new user
    */
-  public synchronized PebbleUserDetails putUser(String username, String password, String name, String emailAddress, String website, String[] roles) {
-    File user = getFileForUser(username);
-
-    String rolesAsString = "";
-    GrantedAuthority[] authorities = new GrantedAuthority[roles.length];
-    for (int i = 0; i < roles.length; i++) {
-      rolesAsString += roles[i];
-      if (i < (roles.length-1)) {
-        rolesAsString += ",";
-      }
-      authorities[i] = new GrantedAuthorityImpl(roles[i]);
-    }
-
-    PebbleUserDetails pud = new PebbleUserDetails(username, password, name, emailAddress, website, authorities);
+  public synchronized PebbleUserDetails putUser(PebbleUserDetails pud) {
+    File user = getFileForUser(pud.getUsername());
 
     Properties props = new Properties();
-    props.setProperty(DefaultSecurityRealm.PASSWORD, passwordEncoder.encodePassword(password, saltSource.getSalt(pud)));
-    props.setProperty(DefaultSecurityRealm.ROLES, rolesAsString);
-    props.setProperty(DefaultSecurityRealm.NAME, name);
-    props.setProperty(DefaultSecurityRealm.EMAIL_ADDRESS, emailAddress);
-    props.setProperty(DefaultSecurityRealm.WEBSITE, website);
+    props.setProperty(DefaultSecurityRealm.PASSWORD, passwordEncoder.encodePassword(pud.getPassword(), saltSource.getSalt(pud)));
+    props.setProperty(DefaultSecurityRealm.ROLES, pud.getRolesAsString());
+    props.setProperty(DefaultSecurityRealm.NAME, pud.getName());
+    props.setProperty(DefaultSecurityRealm.EMAIL_ADDRESS, pud.getEmailAddress());
+    props.setProperty(DefaultSecurityRealm.WEBSITE, pud.getWebsite());
 
     try {
       FileOutputStream out = new FileOutputStream(user);
-      props.store(out, "User : " + username);
+      props.store(out, "User : " + pud.getUsername());
       out.flush();
       out.close();
     } catch (IOException ioe) {
       ioe.printStackTrace();
     }
 
-    return getUser(username);
+    return getUser(pud.getUsername());
   }
 
   /**
@@ -172,7 +149,8 @@ public class DefaultSecurityRealm implements SecurityRealm {
       realm.mkdir();
       log.warn("*** Creating default user (username/password)");
       log.warn("*** Don't forget to delete this user in a production deployment!");
-      putUser("username", "password", "Default User", "username@domain.com", "http://www.domain.com", new String[] {Constants.BLOG_OWNER_ROLE, Constants.BLOG_PUBLISHER_ROLE, Constants.BLOG_CONTRIBUTOR_ROLE, Constants.PEBBLE_ADMIN_ROLE});
+      PebbleUserDetails defaultUser = new PebbleUserDetails("username", "password", "Default User", "username@domain.com", "http://www.domain.com", new String[] {Constants.BLOG_OWNER_ROLE, Constants.BLOG_PUBLISHER_ROLE, Constants.BLOG_CONTRIBUTOR_ROLE, Constants.BLOG_ADMIN_ROLE});
+      putUser(defaultUser);
     }
 
     return realm;

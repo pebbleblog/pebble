@@ -66,7 +66,7 @@ public class Constants {
   public static String FILTERS_APPLIED = "filtersApplied";
   public static String AUTHENTICATED_USER = "authenticatedUser";
 
-  public static String PEBBLE_ADMIN_ROLE = "ROLE_PEBBLE_ADMIN";
+  public static String BLOG_ADMIN_ROLE = "ROLE_BLOG_ADMIN";
   public static String BLOG_OWNER_ROLE = "ROLE_BLOG_OWNER";
   public static String BLOG_PUBLISHER_ROLE = "ROLE_BLOG_PUBLISHER";
   public static String BLOG_CONTRIBUTOR_ROLE = "ROLE_BLOG_CONTRIBUTOR";

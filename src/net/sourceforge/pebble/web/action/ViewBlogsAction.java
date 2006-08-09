@@ -33,7 +33,6 @@ package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.domain.BlogManager;
-import net.sourceforge.pebble.web.view.RedirectView;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.impl.BlogsView;
 
@@ -69,7 +68,7 @@ public class ViewBlogsAction extends SecureAction {
    * @param request
    */
   public String[] getRoles(HttpServletRequest request) {
-    return new String[]{Constants.PEBBLE_ADMIN_ROLE};
+    return new String[]{Constants.BLOG_ADMIN_ROLE};
   }
 
 }

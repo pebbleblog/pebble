@@ -5,6 +5,11 @@
 
   <div class="contentItemBody">
     <table width="99%" cellspacing="0" cellpadding="4">
+      <thead>
+        <th>ID</th>
+        <th>Name</th>
+      </thead>
+      <tbody>
       <c:forEach var="aBlog" items="${blogs}" varStatus="status">
         <c:choose>
           <c:when test="${status.count % 2 == 0}">
@@ -14,9 +19,11 @@
               <tr class="odd">
           </c:otherwise>
         </c:choose>
-        <td><a href="<c:out value="${aBlog.url}"/>" target="_blank">${pageContext.request.contextPath}/<c:out value="${aBlog.id}"/></a></td>
+        <td>${aBlog.id}</td>
+        <td><a href="${aBlog.url}" target="_blank">${aBlog.name}</a></td>
       </tr>
       </c:forEach>
+      </tbody>
     </table>
 
     <p>
@@ -25,7 +32,7 @@
 
     <p>
     <form name="addBlog" action="addBlog.secureaction" method="POST">
-    <b>${pageContext.request.contextPath}/</b>
+    ${blog.url}
     <input name="id" type="text" value="" />
     <input type="submit" value="Add Blog" />
     </form>

@@ -81,7 +81,7 @@ public class LoggingFilter implements Filter {
       Blog blog = (Blog)abstractBlog;
 
       // don't log owner/contributor/admin visits
-      if (!SecurityUtils.isBlogOwner() && !SecurityUtils.isBlogContributor() && !SecurityUtils.isPebbleAdmin()) {
+      if (!SecurityUtils.isBlogOwner() && !SecurityUtils.isBlogContributor() && !SecurityUtils.isBlogAdmin()) {
         // this is the list of URIs that get logged
         if (internalUri.startsWith("/feed.action") ||
             internalUri.startsWith("/responseFeed.action") ||

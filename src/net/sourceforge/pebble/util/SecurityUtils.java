@@ -90,8 +90,8 @@ public final class SecurityUtils {
    *
    * @return  true if the user is a Pebble admin, false otherwise
    */
-  public static boolean isPebbleAdmin() {
-    return isUserInRole(Constants.PEBBLE_ADMIN_ROLE);
+  public static boolean isBlogAdmin() {
+    return isUserInRole(Constants.BLOG_ADMIN_ROLE);
   }
 
   /**

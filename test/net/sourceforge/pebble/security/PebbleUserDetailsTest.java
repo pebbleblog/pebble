@@ -1,15 +1,7 @@
 package net.sourceforge.pebble.security;
 
-import net.sourceforge.pebble.domain.*;
-import net.sourceforge.pebble.api.event.comment.CommentListener;
-import net.sourceforge.pebble.api.event.comment.CommentEvent;
-import net.sourceforge.pebble.Constants;
-
-import java.util.Date;
-import java.util.Calendar;
-
 import junit.framework.TestCase;
-import org.acegisecurity.GrantedAuthorityImpl;
+import net.sourceforge.pebble.Constants;
 import org.acegisecurity.GrantedAuthority;
 
 /**
@@ -22,8 +14,7 @@ public class PebbleUserDetailsTest extends TestCase {
   private PebbleUserDetails user;
 
   protected void setUp() throws Exception {
-    user = new PebbleUserDetails("username", "password", "A user", "emailAddress", "website",
-        new GrantedAuthority[]{new GrantedAuthorityImpl(Constants.BLOG_OWNER_ROLE)});
+    user = new PebbleUserDetails("username", "password", "A user", "emailAddress", "website", new String[] {Constants.BLOG_OWNER_ROLE});
   }
 
   public void testConstruction() {

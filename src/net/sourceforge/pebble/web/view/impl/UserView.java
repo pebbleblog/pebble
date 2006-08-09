@@ -29,48 +29,33 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package net.sourceforge.pebble.web.action;
+package net.sourceforge.pebble.web.view.impl;
 
-import net.sourceforge.pebble.Constants;
-import net.sourceforge.pebble.PebbleContext;
-import net.sourceforge.pebble.security.PebbleUserDetails;
-import net.sourceforge.pebble.web.view.View;
-import net.sourceforge.pebble.web.view.impl.UsersView;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.Collection;
+import net.sourceforge.pebble.web.view.HtmlView;
 
 /**
- * Displays a list of all users.
+ * Represents the page showing user details.
  *
  * @author    Simon Brown
  */
-public class ViewUsersAction extends SecureAction {
+public class UserView extends HtmlView {
 
   /**
-   * Peforms the processing associated with this action.
+   * Gets the title of this view.
    *
-   * @param request  the HttpServletRequest instance
-   * @param response the HttpServletResponse instance
-   * @return the name of the next view
+   * @return the title as a String
    */
-  public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
-    Collection<PebbleUserDetails> users = PebbleContext.getInstance().getConfiguration().getSecurityRealm().getUsers();
-    getModel().put("users", users);
-
-    return new UsersView();
+  public String getTitle() {
+    return "User";
   }
 
   /**
-   * Gets a list of all roles that are allowed to access this action.
+   * Gets the URI that this view represents.
    *
-   * @return  an array of Strings representing role names
-   * @param request
+   * @return the URI as a String
    */
-  public String[] getRoles(HttpServletRequest request) {
-    return new String[]{Constants.BLOG_ADMIN_ROLE};
+  public String getUri() {
+    return "/WEB-INF/jsp/viewUser.jsp";
   }
 
 }

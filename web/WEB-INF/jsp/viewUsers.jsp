@@ -7,6 +7,18 @@
 
     <form name="manageUsersForm" action="manageUsers.secureaction" method="post">
     <table width="99%" cellspacing="0" cellpadding="4">
+      <thead>
+      <tr>
+        <th></th>
+        <th>Username</th>
+        <th>Name</th>
+        <th>Admin</th>
+        <th>Owner</th>
+        <th>Publisher</th>
+        <th>Contributor</th>
+      </tr>
+      </thead>
+      <tbody>
       <c:forEach var="user" items="${users}" varStatus="status">
         <c:choose>
           <c:when test="${status.count % 2 == 0}">
@@ -20,10 +32,15 @@
         <td valign="top" class="small">
           <input type="checkbox" name="user" value="${user.username}" />
         </td>
-        <td><a href="editUser.secureaction?user=${user.username}">${user.username}</a></td>
+        <td><a href="viewUser.secureaction?user=${user.username}">${user.username}</a></td>
         <td>${user.name}</td>
+        <td align="center"><c:if test="${user.blogAdmin}">X</c:if></td>
+        <td align="center"><c:if test="${user.blogOwner}">X</c:if></td>
+        <td align="center"><c:if test="${user.blogPublisher}">X</c:if></td>
+        <td align="center"><c:if test="${user.blogContributor}">X</c:if></td>
       </tr>
       </c:forEach>
+      </tbody>
     </table>
 
     <br />

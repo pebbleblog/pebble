@@ -9,8 +9,10 @@
     <fmt:message key="error.error" />
 
     <br /><br />
+    <a href="javascript:toggleVisibility('stacktrace')"><fmt:message key="common.readMore"/></a>
+    <br /><br />
 
-    <textarea rows="10" cols="60" readonly="true">
+    <textarea id="stacktrace" rows="10" cols="60" readonly="true" style="display: none;">
 ${stackTrace}
 Request URL : ${pageContext.request.requestURL}
 Request URI : ${pageContext.request.requestURI}

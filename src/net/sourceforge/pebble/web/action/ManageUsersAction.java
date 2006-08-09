@@ -35,6 +35,7 @@ import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.PebbleContext;
 import net.sourceforge.pebble.domain.AbstractBlog;
 import net.sourceforge.pebble.security.SecurityRealm;
+import net.sourceforge.pebble.security.PebbleUserDetails;
 import net.sourceforge.pebble.web.view.RedirectView;
 import net.sourceforge.pebble.web.view.View;
 import org.apache.commons.logging.Log;
@@ -71,6 +72,16 @@ public class ManageUsersAction extends SecureAction {
       for (String username : usernames) {
         if (submit.equalsIgnoreCase("Remove")) {
           realm.removeUser(username);
+        } else if (submit.equalsIgnoreCase("Reset Password")) {
+          PebbleUserDetails currentUserDetails = realm.getUser(username);
+          PebbleUserDetails newUserDetails = new PebbleUserDetails(
+              currentUserDetails.getUsername(),
+              "password",
+              currentUserDetails.getName(),
+              currentUserDetails.getEmailAddress(),
+              currentUserDetails.getWebsite(),
+              currentUserDetails.getRoles());
+          realm.putUser(newUserDetails);
         }
       }
     }
@@ -85,7 +96,7 @@ public class ManageUsersAction extends SecureAction {
    * @param request
    */
   public String[] getRoles(HttpServletRequest request) {
-    return new String[]{Constants.PEBBLE_ADMIN_ROLE};
+    return new String[]{Constants.BLOG_ADMIN_ROLE};
   }
 
 }

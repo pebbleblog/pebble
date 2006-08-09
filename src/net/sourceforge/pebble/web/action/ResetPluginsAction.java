@@ -34,7 +34,6 @@ package net.sourceforge.pebble.web.action;
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.util.Utilities;
 import net.sourceforge.pebble.domain.Blog;
-import net.sourceforge.pebble.domain.BlogServiceException;
 import net.sourceforge.pebble.web.view.ForwardView;
 import net.sourceforge.pebble.web.view.View;
 
@@ -69,7 +68,7 @@ public class ResetPluginsAction extends SecureAction {
    * @param request
    */
   public String[] getRoles(HttpServletRequest request) {
-    return new String[]{Constants.BLOG_OWNER_ROLE, Constants.PEBBLE_ADMIN_ROLE};
+    return new String[]{Constants.BLOG_OWNER_ROLE, Constants.BLOG_ADMIN_ROLE};
   }
 
 }

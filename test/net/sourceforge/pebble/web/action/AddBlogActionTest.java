@@ -1,6 +1,5 @@
 package net.sourceforge.pebble.web.action;
 
-import net.sourceforge.pebble.domain.FileMetaData;
 import net.sourceforge.pebble.Constants;
 
 /**
@@ -23,7 +22,7 @@ public class AddBlogActionTest extends SecureActionTestCase {
     String roles[] = action.getRoles(request);
 
     assertEquals(1, roles.length);
-    assertEquals(Constants.PEBBLE_ADMIN_ROLE, roles[0]);
+    assertEquals(Constants.BLOG_ADMIN_ROLE, roles[0]);
   }
 
 }

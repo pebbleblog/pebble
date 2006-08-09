@@ -70,19 +70,18 @@
     </li>
     </pebble:isAuthorisedForBlog>
 
-  <pebble:isPebbleAdmin>
-    <li><b>Pebble</b>
+  <pebble:isBlogAdmin>
+    <li><b>Administration</b>
     <br />
     <c:if test="${blogManager.multiBlog}">
     <a href="${pageContext.request.contextPath}/viewPebbleProperties.secureaction" title="Manage Pebble properties">Properties</a> |
     <a href="${pageContext.request.contextPath}/viewBlogs.secureaction" title="View blogs">Blogs</a>
     </c:if>
-<%--
     <br />
+    <a href="${pageContext.request.contextPath}/addUser.secureaction" title="Add user">Add user</a> |
     <a href="${pageContext.request.contextPath}/viewUsers.secureaction" title="View users">Users</a>
---%>
     </li>
-  </pebble:isPebbleAdmin>
+  </pebble:isBlogAdmin>
 
   <li><pebble:isAuthorisedForBlog><a href="./help/index.html" title="Help">Help</a> | </pebble:isAuthorisedForBlog><a href="${pageContext.request.contextPath}/logout.action?redirectUrl=${blog.url}"><fmt:message key="common.logout" /></a></li>
 

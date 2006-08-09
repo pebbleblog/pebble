@@ -5,7 +5,7 @@
   <div class="contentItemBody">
     <p>
     Pebble supports the notion of themes so that you can personalize the look and feel of your blog. By default, your blog will use the standard Pebble theme called "default" and you can change this in the <a href="viewBlogProperties.secureaction">Blog properties</a> page.
-    <pebble:isPebbleAdmin>All themes can be found in the <code>themes</code> directory underneath <code>${pebbleContext.webApplicationRoot}</code>.</pebble:isPebbleAdmin>
+    <pebble:isBlogAdmin>All themes can be found in the <code>themes</code> directory underneath <code>${pebbleContext.webApplicationRoot}</code>.</pebble:isBlogAdmin>
     </p>
 
     <h3>Editing your own theme</h3>

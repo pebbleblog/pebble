@@ -64,11 +64,11 @@
   </tag>
 
   <tag>
-    <name>isPebbleAdmin</name>
-    <tag-class>net.sourceforge.pebble.web.tagext.IsPebbleAdminTag</tag-class>
+    <name>isBlogAdmin</name>
+    <tag-class>net.sourceforge.pebble.web.tagext.IsBlogAdminTag</tag-class>
     <body-content>JSP</body-content>
     <description>
-      Includes the body content only if the current user is a Pebble admin user.
+      Includes the body content only if the current user is a blog admin user.
     </description>
   </tag>
 
