@@ -29,53 +29,24 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package net.sourceforge.pebble.web.action;
+package net.sourceforge.pebble.comparator;
 
-import net.sourceforge.pebble.Constants;
-import net.sourceforge.pebble.PebbleContext;
-import net.sourceforge.pebble.security.PebbleUserDetails;
-import net.sourceforge.pebble.security.SecurityRealmException;
-import net.sourceforge.pebble.web.view.View;
-import net.sourceforge.pebble.web.view.impl.UsersView;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.Collection;
+import net.sourceforge.pebble.domain.MultiBlogTestCase;
 
 /**
- * Displays a list of all users.
+ * Tests for the BlogByIdComparator class.
  *
  * @author    Simon Brown
  */
-public class ViewUsersAction extends SecureAction {
+public class BlogByIdComparatorTest extends MultiBlogTestCase {
 
-  /**
-   * Peforms the processing associated with this action.
-   *
-   * @param request  the HttpServletRequest instance
-   * @param response the HttpServletResponse instance
-   * @return the name of the next view
-   */
-  public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
-    try {
-      Collection<PebbleUserDetails> users = PebbleContext.getInstance().getConfiguration().getSecurityRealm().getUsers();
-      getModel().put("users", users);
+  public void testCompare() {
+    BlogByIdComparator comp = new BlogByIdComparator();
 
-      return new UsersView();
-    } catch (SecurityRealmException e) {
-      throw new ServletException(e);
-    }
-  }
-
-  /**
-   * Gets a list of all roles that are allowed to access this action.
-   *
-   * @return  an array of Strings representing role names
-   * @param request
-   */
-  public String[] getRoles(HttpServletRequest request) {
-    return new String[]{Constants.BLOG_ADMIN_ROLE};
+    assertTrue(comp.compare(blog1, blog1) == 0);
+    assertTrue(comp.compare(blog1, blog2) != 0);
+    assertTrue(comp.compare(blog1, blog2) < 0);
+    assertTrue(comp.compare(blog2, blog1) > 0);
   }
 
 }

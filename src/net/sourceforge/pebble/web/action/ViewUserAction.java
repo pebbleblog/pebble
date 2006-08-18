@@ -33,6 +33,7 @@ package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.PebbleContext;
+import net.sourceforge.pebble.security.SecurityRealmException;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.impl.UserView;
 
@@ -55,10 +56,14 @@ public class ViewUserAction extends SecureAction {
    * @return the name of the next view
    */
   public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
-    String username = request.getParameter("user");
-    getModel().put("user", PebbleContext.getInstance().getConfiguration().getSecurityRealm().getUser(username));
+    try {
+      String username = request.getParameter("user");
+      getModel().put("user", PebbleContext.getInstance().getConfiguration().getSecurityRealm().getUser(username));
 
-    return new UserView();
+      return new UserView();
+    } catch (SecurityRealmException e) {
+      throw new ServletException(e);
+    }
   }
 
   /**

@@ -1,19 +1,12 @@
 package net.sourceforge.pebble.security;
 
-import junit.framework.TestCase;
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.PebbleContext;
-import net.sourceforge.pebble.util.FileUtils;
 import net.sourceforge.pebble.domain.SingleBlogTestCase;
-import org.acegisecurity.userdetails.UserDetails;
-import org.acegisecurity.userdetails.UsernameNotFoundException;
 import org.acegisecurity.GrantedAuthority;
-import org.acegisecurity.providers.encoding.PlaintextPasswordEncoder;
-import org.acegisecurity.providers.encoding.PasswordEncoder;
 import org.acegisecurity.providers.dao.salt.ReflectionSaltSource;
-import org.acegisecurity.providers.dao.SaltSource;
-
-import java.io.File;
+import org.acegisecurity.providers.encoding.PasswordEncoder;
+import org.acegisecurity.providers.encoding.PlaintextPasswordEncoder;
 
 /**
  * Tests for the DefaultSecurityRealm class.
@@ -37,7 +30,14 @@ public class DefaultSecurityRealmTest extends SingleBlogTestCase {
     saltSource = new ReflectionSaltSource();
     saltSource.setUserPropertyToUse("getUsername");
     realm.setSaltSource(saltSource);
-    realm.getUser("username");
+
+    realm.init();
+  }
+
+  protected void tearDown() throws Exception {
+    super.tearDown();
+
+    realm.removeUser("username");
   }
 
   public void testConfigured() {
@@ -45,20 +45,14 @@ public class DefaultSecurityRealmTest extends SingleBlogTestCase {
     assertSame(saltSource, realm.getSaltSource());
   }
 
-  public void testSecurityRealmCreatedIfItDoesntExist() {
-    FileUtils.deleteFile(new File(realm.getConfiguration().getDataDirectory(), "realm"));
-    realm.getUser("username");
-    assertNotNull(realm.getUser("username"));
-  }
-
   public void testGetUser() throws Exception {
-    PebbleUserDetails pud = new PebbleUserDetails("username", "password", "name", "emailAddress", "website", new String[]{Constants.BLOG_OWNER_ROLE});
-    realm.putUser(pud);
-    PebbleUserDetails user = realm.getUser("username");
+    PebbleUserDetails pud = new PebbleUserDetails("testuser", "password", "name", "emailAddress", "website", new String[]{Constants.BLOG_OWNER_ROLE});
+    realm.createUser(pud);
+    PebbleUserDetails user = realm.getUser("testuser");
 
     assertNotNull(user);
-    assertEquals("username", user.getUsername());
-    assertEquals("password{username}", user.getPassword());
+    assertEquals("testuser", user.getUsername());
+    assertEquals("password{testuser}", user.getPassword());
     assertEquals("name", user.getName());
     assertEquals("emailAddress", user.getEmailAddress());
     assertEquals("website", user.getWebsite());
@@ -73,19 +67,19 @@ public class DefaultSecurityRealmTest extends SingleBlogTestCase {
     assertNull(user);
   }
 
-  public void testRemoveUser() {
-    PebbleUserDetails pud = new PebbleUserDetails("username", "password", "name", "emailAddress", "website", new String[]{Constants.BLOG_OWNER_ROLE});
-    realm.putUser(pud);
+  public void testRemoveUser() throws Exception {
+    PebbleUserDetails pud = new PebbleUserDetails("testuser", "password", "name", "emailAddress", "website", new String[]{Constants.BLOG_OWNER_ROLE});
+    realm.createUser(pud);
 
-    PebbleUserDetails user = realm.getUser("username");
+    PebbleUserDetails user = realm.getUser("testuser");
     assertNotNull(user);
 
-    realm.removeUser("username");
-    user = realm.getUser("username");
+    realm.removeUser("testuser");
+    user = realm.getUser("testuser");
     assertNull(user);
   }
 
-  public void testRemoveUserThatDoesntExists() {
+  public void testRemoveUserThatDoesntExists() throws Exception {
     PebbleUserDetails user = realm.getUser("someotherusername");
     assertNull(user);
 

@@ -36,6 +36,7 @@ import net.sourceforge.pebble.PebbleContext;
 import net.sourceforge.pebble.domain.AbstractBlog;
 import net.sourceforge.pebble.security.SecurityRealm;
 import net.sourceforge.pebble.security.PebbleUserDetails;
+import net.sourceforge.pebble.security.SecurityRealmException;
 import net.sourceforge.pebble.web.view.RedirectView;
 import net.sourceforge.pebble.web.view.View;
 import org.apache.commons.logging.Log;
@@ -63,30 +64,34 @@ public class ManageUsersAction extends SecureAction {
    * @return the name of the next view
    */
   public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
-    AbstractBlog blog = (AbstractBlog)getModel().get(Constants.BLOG_KEY);
-    String usernames[] = request.getParameterValues("user");
-    String submit = request.getParameter("submit");
+    try {
+      AbstractBlog blog = (AbstractBlog)getModel().get(Constants.BLOG_KEY);
+      String usernames[] = request.getParameterValues("user");
+      String submit = request.getParameter("submit");
 
-    SecurityRealm realm = PebbleContext.getInstance().getConfiguration().getSecurityRealm();
-    if (usernames != null) {
-      for (String username : usernames) {
-        if (submit.equalsIgnoreCase("Remove")) {
-          realm.removeUser(username);
-        } else if (submit.equalsIgnoreCase("Reset Password")) {
-          PebbleUserDetails currentUserDetails = realm.getUser(username);
-          PebbleUserDetails newUserDetails = new PebbleUserDetails(
-              currentUserDetails.getUsername(),
-              "password",
-              currentUserDetails.getName(),
-              currentUserDetails.getEmailAddress(),
-              currentUserDetails.getWebsite(),
-              currentUserDetails.getRoles());
-          realm.putUser(newUserDetails);
+      SecurityRealm realm = PebbleContext.getInstance().getConfiguration().getSecurityRealm();
+      if (usernames != null) {
+        for (String username : usernames) {
+          if (submit.equalsIgnoreCase("Remove")) {
+            realm.removeUser(username);
+          } else if (submit.equalsIgnoreCase("Reset Password")) {
+            PebbleUserDetails currentUserDetails = realm.getUser(username);
+            PebbleUserDetails newUserDetails = new PebbleUserDetails(
+                currentUserDetails.getUsername(),
+                "password",
+                currentUserDetails.getName(),
+                currentUserDetails.getEmailAddress(),
+                currentUserDetails.getWebsite(),
+                currentUserDetails.getRoles());
+            realm.updateUser(newUserDetails);
+          }
         }
       }
-    }
 
-    return new RedirectView(blog.getUrl() + "viewUsers.secureaction");
+      return new RedirectView(blog.getUrl() + "viewUsers.secureaction");
+    } catch (SecurityRealmException e) {
+      throw new ServletException(e);
+    }
   }
 
   /**

@@ -61,7 +61,7 @@ public class RadeoxDecorator extends ContentDecoratorSupport {
     }
 
     // this pattern says "take the shortest match you can find where there are
-    // one or more characters between escape tags"
+    // one or more characters between wiki tags"
     //  - the match is case insensitive and DOTALL means that newlines are
     //  - considered as a character match
     Pattern p = Pattern.compile(WIKI_START_TAG + ".+?" + WIKI_END_TAG,

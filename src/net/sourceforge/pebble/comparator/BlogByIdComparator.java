@@ -29,53 +29,32 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package net.sourceforge.pebble.web.action;
+package net.sourceforge.pebble.comparator;
 
-import net.sourceforge.pebble.Constants;
-import net.sourceforge.pebble.PebbleContext;
-import net.sourceforge.pebble.security.PebbleUserDetails;
-import net.sourceforge.pebble.security.SecurityRealmException;
-import net.sourceforge.pebble.web.view.View;
-import net.sourceforge.pebble.web.view.impl.UsersView;
+import net.sourceforge.pebble.domain.Blog;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.Collection;
+import java.util.Comparator;
 
 /**
- * Displays a list of all users.
+ * A comparator used to order Blog instances, in order of their IDs.
  *
  * @author    Simon Brown
  */
-public class ViewUsersAction extends SecureAction {
+public class BlogByIdComparator implements Comparator {
 
   /**
-   * Peforms the processing associated with this action.
+   * Compares two objects.
    *
-   * @param request  the HttpServletRequest instance
-   * @param response the HttpServletResponse instance
-   * @return the name of the next view
+   * @param o1  object 1
+   * @param o2  object 2
+   * @return  -n, 0 or +n if the last modified date of the second blog is less
+   *          than, the same as or greater than the first, respectively
    */
-  public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
-    try {
-      Collection<PebbleUserDetails> users = PebbleContext.getInstance().getConfiguration().getSecurityRealm().getUsers();
-      getModel().put("users", users);
+  public int compare(Object o1, Object o2) {
+    Blog b1 = (Blog)o1;
+    Blog b2 = (Blog)o2;
 
-      return new UsersView();
-    } catch (SecurityRealmException e) {
-      throw new ServletException(e);
-    }
-  }
-
-  /**
-   * Gets a list of all roles that are allowed to access this action.
-   *
-   * @return  an array of Strings representing role names
-   * @param request
-   */
-  public String[] getRoles(HttpServletRequest request) {
-    return new String[]{Constants.BLOG_ADMIN_ROLE};
+    return b1.getId().compareTo(b2.getId());
   }
 
 }

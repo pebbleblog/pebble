@@ -13,7 +13,7 @@ import java.util.LinkedList;
 import java.util.Properties;
 
 /**
- * Implementation of the UserDetailsService that gets authentication
+ * Implementation of the SecurityRealm that gets authentication
  * credentials from the blog directory.
  *
  * @author    Simon Brown
@@ -37,11 +37,30 @@ public class DefaultSecurityRealm implements SecurityRealm {
   private SaltSource saltSource;
 
   /**
+   * Creates the underlying security realm upon creation, if necessary.
+   */
+  public void init() {
+    try {
+      File realm = getFileForRealm();
+      if (!realm.exists()) {
+        realm.mkdir();
+        log.warn("*** Creating default user (username/password)");
+        log.warn("*** Don't forget to delete this user in a production deployment!");
+        PebbleUserDetails defaultUser = new PebbleUserDetails("username", "password", "Default User", "username@domain.com", "http://www.domain.com", new String[] {Constants.BLOG_OWNER_ROLE, Constants.BLOG_PUBLISHER_ROLE, Constants.BLOG_CONTRIBUTOR_ROLE, Constants.BLOG_ADMIN_ROLE});
+        createUser(defaultUser);
+      }
+    } catch (SecurityRealmException e) {
+      log.error("Error while creating security realm", e);
+    }
+
+  }
+
+  /**
    * Looks up and returns a collection of all users.
    *
    * @return  a Collection of PebbleUserDetails objects
    */
-  public synchronized Collection<PebbleUserDetails> getUsers() {
+  public synchronized Collection<PebbleUserDetails> getUsers() throws SecurityRealmException {
     LinkedList<PebbleUserDetails> users = new LinkedList<PebbleUserDetails>();
     File realm = getFileForRealm();
     File files[] = realm.listFiles(new FilenameFilter() {
@@ -75,8 +94,7 @@ public class DefaultSecurityRealm implements SecurityRealm {
    * @return a PebbleUserDetails instance
    *
    */
-  public synchronized PebbleUserDetails getUser(String username) {
-    // create the realm, if it doesn't exist
+  public synchronized PebbleUserDetails getUser(String username) throws SecurityRealmException {
     File user = getFileForUser(username);
     if (!user.exists()) {
       return null;
@@ -96,17 +114,29 @@ public class DefaultSecurityRealm implements SecurityRealm {
 
       return new PebbleUserDetails(username, password, name, emailAddress, website, roles);
     } catch (IOException ioe) {
-      return null;
+      throw new SecurityRealmException(ioe);
     }
   }
 
   /**
-   * Stores a user with the given properties.
+   * Creates a new user.
    *
    * @param pud   a PebbleUserDetails instance
-   * @return a populated PebbleUserDetails instance representing the new user
    */
-  public synchronized PebbleUserDetails putUser(PebbleUserDetails pud) {
+  public synchronized void createUser(PebbleUserDetails pud) throws SecurityRealmException {
+    if (getUser(pud.getUsername()) == null) {
+      updateUser(pud);
+    } else {
+      throw new SecurityRealmException("User " + pud.getUsername() + " already exists");
+    }
+  }
+
+  /**
+   * Updates user details.
+   *
+   * @param pud   a PebbleUserDetails instance
+   */
+  public synchronized void updateUser(PebbleUserDetails pud) throws SecurityRealmException {
     File user = getFileForUser(pud.getUsername());
 
     Properties props = new Properties();
@@ -122,10 +152,8 @@ public class DefaultSecurityRealm implements SecurityRealm {
       out.flush();
       out.close();
     } catch (IOException ioe) {
-      ioe.printStackTrace();
+      throw new SecurityRealmException(ioe);
     }
-
-    return getUser(pud.getUsername());
   }
 
   /**
@@ -133,30 +161,24 @@ public class DefaultSecurityRealm implements SecurityRealm {
    *
    * @param username    the username of the user to remove
    */
-  public synchronized void removeUser(String username) {
+  public synchronized void removeUser(String username) throws SecurityRealmException {
     File user = getFileForUser(username);
     if (user.exists()) {
       user.delete();
     }
+
+    if (user.exists()) {
+      throw new SecurityRealmException("User " + username + " could not be deleted");
+    }
   }
 
-  protected File getFileForRealm() {
+  protected File getFileForRealm() throws SecurityRealmException {
     // find the directory and file corresponding to the user, of the form
     // ${pebbleContext.dataDirectory}/realm/${username}.properties
-    File realm = new File(configuration.getDataDirectory(), DefaultSecurityRealm.REALM_DIRECTORY_NAME);
-
-    if (!realm.exists()) {
-      realm.mkdir();
-      log.warn("*** Creating default user (username/password)");
-      log.warn("*** Don't forget to delete this user in a production deployment!");
-      PebbleUserDetails defaultUser = new PebbleUserDetails("username", "password", "Default User", "username@domain.com", "http://www.domain.com", new String[] {Constants.BLOG_OWNER_ROLE, Constants.BLOG_PUBLISHER_ROLE, Constants.BLOG_CONTRIBUTOR_ROLE, Constants.BLOG_ADMIN_ROLE});
-      putUser(defaultUser);
-    }
-
-    return realm;
+    return new File(configuration.getDataDirectory(), DefaultSecurityRealm.REALM_DIRECTORY_NAME);
   }
 
-  protected File getFileForUser(String username) {
+  protected File getFileForUser(String username) throws SecurityRealmException {
     // find the directory and file corresponding to the user, of the form
     // ${pebbleContext.dataDirectory}/realm/${username}.properties
     return new File(getFileForRealm(), username + ".properties");

@@ -6,7 +6,7 @@ import org.acegisecurity.userdetails.UsernameNotFoundException;
 
 /**
  * Implementation of the UserDetailsService that gets authentication
- * credentials from the blog directory.
+ * credentials from a SecurityRealm implementation.
  *
  * @author    Simon Brown
  */
@@ -22,11 +22,15 @@ public class DefaultUserDetailsService implements UserDetailsService {
    * @throws org.acegisecurity.userdetails.UsernameNotFoundException
    */
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    PebbleUserDetails user = securityRealm.getUser(username);
-    if (user == null) {
-      throw new UsernameNotFoundException("A user with username " + username + " does not exist");
-    } else {
-      return user;
+    try {
+      PebbleUserDetails user = securityRealm.getUser(username);
+      if (user == null) {
+        throw new UsernameNotFoundException("A user with username " + username + " does not exist");
+      } else {
+        return user;
+      }
+    } catch (SecurityRealmException e) {
+      throw new UsernameNotFoundException("User details not found", e);
     }
   }
 

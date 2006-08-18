@@ -1,9 +1,11 @@
 package net.sourceforge.pebble.domain;
 
-import net.sourceforge.pebble.security.PebbleUserDetails;
-import net.sourceforge.pebble.security.DefaultUserDetailsService;
-import net.sourceforge.pebble.security.SecurityRealm;
 import net.sourceforge.pebble.PebbleContext;
+import net.sourceforge.pebble.security.PebbleUserDetails;
+import net.sourceforge.pebble.security.SecurityRealm;
+import net.sourceforge.pebble.security.SecurityRealmException;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import java.util.Date;
 
@@ -13,6 +15,8 @@ import java.util.Date;
  * @author Simon Brown
  */
 public abstract class PageBasedContent extends Content {
+
+  private static final Log log = LogFactory.getLog(PageBasedContent.class);
 
   public static final String TITLE_PROPERTY = "title";
   public static final String SUBTITLE_PROPERTY = "subtitle";
@@ -195,7 +199,11 @@ public abstract class PageBasedContent extends Content {
   public PebbleUserDetails getUser() {
     if (this.user == null) {
       SecurityRealm realm = PebbleContext.getInstance().getConfiguration().getSecurityRealm();
-      this.user = realm.getUser(getAuthor());
+      try {
+        this.user = realm.getUser(getAuthor());
+      } catch (SecurityRealmException e) {
+        log.error(e);
+      }
     }
 
     return this.user;

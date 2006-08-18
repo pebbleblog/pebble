@@ -33,15 +33,21 @@ public class MockSecurityRealm implements SecurityRealm {
   }
 
   /**
-   * Stores a user with the given properties.
+   * Creates a new user.
    *
    * @param pud   a PebbleUserDetails instance
-   * @return a populated PebbleUserDetails instance representing the new user
    */
-  public synchronized PebbleUserDetails putUser(PebbleUserDetails pud) {
+  public void createUser(PebbleUserDetails pud) throws SecurityRealmException {
     users.put(pud.getUsername(), pud);
+  }
 
-    return pud;
+  /**
+   * Updates user details.
+   *
+   * @param pud   a PebbleUserDetails instance
+   */
+  public void updateUser(PebbleUserDetails pud) throws SecurityRealmException {
+    users.put(pud.getUsername(), pud);
   }
 
   /**

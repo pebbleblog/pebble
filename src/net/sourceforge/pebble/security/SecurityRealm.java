@@ -14,7 +14,7 @@ public interface SecurityRealm {
    *
    * @return  a Collection of PebbleUserDetails objects
    */
-  public Collection<PebbleUserDetails> getUsers();
+  public Collection<PebbleUserDetails> getUsers() throws SecurityRealmException;
 
   /**
    * Looks up and returns user details for the given username.
@@ -22,21 +22,27 @@ public interface SecurityRealm {
    * @param username    the username to find details for
    * @return  a PebbleUserDetails instance
    */
-  public PebbleUserDetails getUser(String username);
+  public PebbleUserDetails getUser(String username) throws SecurityRealmException;
 
   /**
-   * Stores a user with the given properties.
+   * Creates a new user.
    *
    * @param pud   a PebbleUserDetails instance
-   * @return a populated PebbleUserDetails instance representing the new user
    */
-  public PebbleUserDetails putUser(PebbleUserDetails pud);
+  public void createUser(PebbleUserDetails pud) throws SecurityRealmException;
+
+  /**
+   * Updates user details.
+   *
+   * @param pud   a PebbleUserDetails instance
+   */
+  public void updateUser(PebbleUserDetails pud) throws SecurityRealmException;
 
   /**
    * Removes user details for the given username.
    *
    * @param username    the username of the user to remove
    */
-  public void removeUser(String username);
+  public void removeUser(String username) throws SecurityRealmException;
 
 }

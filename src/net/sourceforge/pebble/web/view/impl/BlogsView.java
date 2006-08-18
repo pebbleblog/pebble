@@ -31,7 +31,11 @@
  */
 package net.sourceforge.pebble.web.view.impl;
 
+import net.sourceforge.pebble.comparator.BlogByIdComparator;
 import net.sourceforge.pebble.web.view.HtmlView;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Represents the page showing a list of blogs (in multi-blog mode).
@@ -39,6 +43,14 @@ import net.sourceforge.pebble.web.view.HtmlView;
  * @author    Simon Brown
  */
 public class BlogsView extends HtmlView {
+
+  /**
+   * Prepares the view for presentation.
+   */
+  public void prepare() {
+    List blogs = (List)getModel().get("blogs");
+    Collections.sort(blogs, new BlogByIdComparator());
+  }
 
   /**
    * Gets the title of this view.

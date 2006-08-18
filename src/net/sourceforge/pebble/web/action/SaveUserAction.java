@@ -36,10 +36,11 @@ import net.sourceforge.pebble.PebbleContext;
 import net.sourceforge.pebble.domain.AbstractBlog;
 import net.sourceforge.pebble.security.PebbleUserDetails;
 import net.sourceforge.pebble.security.SecurityRealm;
-import net.sourceforge.pebble.web.view.View;
-import net.sourceforge.pebble.web.view.RedirectView;
-import net.sourceforge.pebble.web.view.impl.UserView;
+import net.sourceforge.pebble.security.SecurityRealmException;
 import net.sourceforge.pebble.web.validation.ValidationContext;
+import net.sourceforge.pebble.web.view.RedirectView;
+import net.sourceforge.pebble.web.view.View;
+import net.sourceforge.pebble.web.view.impl.UserView;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -65,39 +66,54 @@ public class SaveUserAction extends SecureAction {
    * @return the name of the next view
    */
   public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
-    AbstractBlog blog = (AbstractBlog)getModel().get(Constants.BLOG_KEY);
-    String username = request.getParameter("username");
-    String password = request.getParameter("password1");
-    String confirm = request.getParameter("password2");
-    String name = request.getParameter("name");
-    String emailAddress = request.getParameter("emailAddress");
-    String website = request.getParameter("website");
-    String roles[] = request.getParameterValues("role");
-    String newUser = request.getParameter("newUser");
+    try {
+      AbstractBlog blog = (AbstractBlog)getModel().get(Constants.BLOG_KEY);
+      String username = request.getParameter("username");
+      String password = request.getParameter("password1");
+      String confirm = request.getParameter("password2");
+      String name = request.getParameter("name");
+      String emailAddress = request.getParameter("emailAddress");
+      String website = request.getParameter("website");
+      String roles[] = request.getParameterValues("role");
+      String newUser = request.getParameter("newUser");
 
-    SecurityRealm realm = PebbleContext.getInstance().getConfiguration().getSecurityRealm();
-    PebbleUserDetails currentUserDetails = realm.getUser(username);
-    PebbleUserDetails newUserDetails = new PebbleUserDetails(username, password, name, emailAddress, website, roles);
+      SecurityRealm realm = PebbleContext.getInstance().getConfiguration().getSecurityRealm();
+      PebbleUserDetails currentUserDetails = realm.getUser(username);
+      PebbleUserDetails newUserDetails = new PebbleUserDetails(username, password, name, emailAddress, website, roles);
 
-    ValidationContext validationContext = new ValidationContext();
+      ValidationContext validationContext = new ValidationContext();
 
-    if (newUser != null && newUser.equals("true") && currentUserDetails != null) {
-      validationContext.addError("A user with this username already exists");          
-    } else if (password == null || password.trim().length() == 0) {
-      validationContext.addError("Password can't be empty");
-    } else if (!password.equals(confirm)) {
-      validationContext.addError("Password and confirmation password must be the same");
-    } else {
-      newUserDetails = new PebbleUserDetails(username, password, name, emailAddress, website, roles);
-      realm.putUser(newUserDetails);
-      return new RedirectView(blog.getUrl() + "viewUsers.secureaction");
+      if (newUser.equals("true") && currentUserDetails != null) {
+        validationContext.addError("A user with this username already exists");
+      } else if (username == null || username.trim().length() == 0) {
+        validationContext.addError("Username can't be empty");
+      } else if (password == null || password.trim().length() == 0) {
+        validationContext.addError("Password can't be empty");
+      } else if (!password.equals(confirm)) {
+        validationContext.addError("Password and confirmation password must be the same");
+      } else {
+        newUserDetails = new PebbleUserDetails(username, password, name, emailAddress, website, roles);
+
+        if (newUser.equals("true")) {
+          try {
+            realm.createUser(newUserDetails);
+          } catch (SecurityRealmException sre) {
+            validationContext.addError(sre.getMessage());
+          }
+        } else {
+          realm.updateUser(newUserDetails);
+        }
+        return new RedirectView(blog.getUrl() + "viewUsers.secureaction");
+      }
+
+      getModel().put("validationContext", validationContext);
+      getModel().put("user", newUserDetails);
+      getModel().put("newUser", newUser);
+
+      return new UserView();
+    } catch (SecurityRealmException e) {
+      throw new ServletException(e);
     }
-
-    getModel().put("validationContext", validationContext);
-    getModel().put("user", newUserDetails);
-    getModel().put("newUser", newUser);
-
-    return new UserView();
   }
 
   /**

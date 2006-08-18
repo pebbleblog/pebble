@@ -205,7 +205,7 @@ public final class StringUtils {
     s = s.replaceAll("&lt;", "");
     s = s.replaceAll("&gt;", "");
     s = s.replaceAll("&nbsp;", "");
-    return s.replaceAll("<.*?>", "");
+    return s.replaceAll("(?s)<.*?>", "");
   }
 
 }

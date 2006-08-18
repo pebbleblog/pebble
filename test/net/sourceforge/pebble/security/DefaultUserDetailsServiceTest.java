@@ -28,7 +28,7 @@ public class DefaultUserDetailsServiceTest extends TestCase {
 
   public void testLoadByUsername() throws Exception {
     PebbleUserDetails pud = new PebbleUserDetails("username", "password", "name", "emailAddress", "website", new String[]{Constants.BLOG_OWNER_ROLE});
-    securityRealm.putUser(pud);
+    securityRealm.createUser(pud);
     UserDetails user = service.loadUserByUsername("username");
 
     assertNotNull(user);
@@ -43,7 +43,7 @@ public class DefaultUserDetailsServiceTest extends TestCase {
   public void testLoadByUsernameThrowsExceptionWhenUserDoesntExist() throws Exception {
     try {
       PebbleUserDetails pud = new PebbleUserDetails("username", "password", "name", "emailAddress", "website", new String[]{Constants.BLOG_OWNER_ROLE});
-      securityRealm.putUser(pud);
+      securityRealm.createUser(pud);
       UserDetails user = service.loadUserByUsername("someotherusername");
       fail();
     } catch (UsernameNotFoundException e) {

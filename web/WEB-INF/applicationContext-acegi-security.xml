@@ -46,7 +46,7 @@
   <!-- an implementation of net.sourceforge.pebble.security.SecurityRealm is required
        to provide detailed user information and manage users
        it is plugged into other components outside the context of this file -->
-  <bean id="pebbleSecurityRealm" class="net.sourceforge.pebble.security.DefaultSecurityRealm">
+  <bean id="pebbleSecurityRealm" class="net.sourceforge.pebble.security.DefaultSecurityRealm" init-method="init">
     <property name="configuration"><ref bean="pebbleConfiguration"/></property>
     <property name="passwordEncoder"><ref local="passwordEncoder"/></property>
     <property name="saltSource"><ref bean="saltSource"/></property>

@@ -31,12 +31,14 @@
  */
 package net.sourceforge.pebble.domain;
 
+import net.sourceforge.pebble.PebbleException;
+
 /**
  * The superclass for all blog-related exceptions.
  *
  * @author    Simon Brown
  */
-public class BlogServiceException extends Exception {
+public class BlogServiceException extends PebbleException {
 
   /**
    * Creates a new instance with the specified message.

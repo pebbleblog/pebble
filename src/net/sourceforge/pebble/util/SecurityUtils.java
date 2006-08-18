@@ -36,6 +36,7 @@ import net.sourceforge.pebble.PebbleContext;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.security.PebbleUserDetails;
 import net.sourceforge.pebble.security.SecurityRealm;
+import net.sourceforge.pebble.security.SecurityRealmException;
 import org.acegisecurity.Authentication;
 import org.acegisecurity.GrantedAuthority;
 import org.acegisecurity.GrantedAuthorityImpl;
@@ -46,6 +47,8 @@ import org.acegisecurity.providers.encoding.Md5PasswordEncoder;
 import org.acegisecurity.providers.encoding.PasswordEncoder;
 import org.acegisecurity.providers.encoding.PlaintextPasswordEncoder;
 import org.acegisecurity.providers.encoding.ShaPasswordEncoder;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * A collection of utility methods for security.
@@ -53,6 +56,8 @@ import org.acegisecurity.providers.encoding.ShaPasswordEncoder;
  * @author    Simon Brown
  */
 public final class SecurityUtils {
+
+  private static final Log log = LogFactory.getLog(SecurityUtils.class);
 
   public static String getUsername() {
     SecurityContext ctx = SecurityContextHolder.getContext();
@@ -65,8 +70,13 @@ public final class SecurityUtils {
   }
 
   public static PebbleUserDetails getUserDetails() {
-    SecurityRealm realm = PebbleContext.getInstance().getConfiguration().getSecurityRealm();
-    return realm.getUser(getUsername());
+    try {
+      SecurityRealm realm = PebbleContext.getInstance().getConfiguration().getSecurityRealm();
+      return realm.getUser(getUsername());
+    } catch (SecurityRealmException e) {
+      log.error(e);
+      return null;
+    }
   }
 
   public static boolean isUserInRole(String role) {

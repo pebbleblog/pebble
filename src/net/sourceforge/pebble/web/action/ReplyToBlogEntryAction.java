@@ -113,9 +113,11 @@ public class ReplyToBlogEntryAction extends Action {
     // - the "remember me" cookie
     if (SecurityUtils.isUserAuthenticated()) {
       PebbleUserDetails user = SecurityUtils.getUserDetails();
-      comment.setAuthor(user.getName());
-      comment.setEmail(user.getEmailAddress());
-      comment.setWebsite(user.getWebsite());
+      if (user != null) {
+        comment.setAuthor(user.getName());
+        comment.setEmail(user.getEmailAddress());
+        comment.setWebsite(user.getWebsite());
+      }
     } else {
       try {
         // is "remember me" set?

@@ -31,7 +31,9 @@
  */
 package net.sourceforge.pebble.dao;
 
-public class PersistenceException extends Exception {
+import net.sourceforge.pebble.PebbleException;
+
+public class PersistenceException extends PebbleException {
 
   /**
    * Creates a new instance with the specified message.
