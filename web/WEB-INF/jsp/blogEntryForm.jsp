@@ -80,7 +80,7 @@
         <td valign="top"><b>Original permalink</b></td>
         <td>
           <input type="text" name="originalPermalink" size="60" value="${blogEntry.originalPermalink}">
-          <div class="small">(optional, this will become the permalink for your entry)</div>
+          <div class="small">(optional, absolute URL that will become the permalink for your entry)</div>
         </td>
       </tr>
 

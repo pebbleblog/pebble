@@ -33,6 +33,9 @@ package net.sourceforge.pebble.web.filter;
 
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.PebbleContext;
+import net.sourceforge.pebble.comparator.BlogEntryComparator;
+import net.sourceforge.pebble.decorator.ContentDecoratorChain;
+import net.sourceforge.pebble.api.decorator.ContentDecoratorContext;
 import net.sourceforge.pebble.domain.AbstractBlog;
 import net.sourceforge.pebble.domain.BlogManager;
 import net.sourceforge.pebble.domain.Blog;
@@ -48,6 +51,8 @@ import javax.servlet.jsp.jstl.core.Config;
 import java.io.IOException;
 import java.net.URLDecoder;
 import java.util.Locale;
+import java.util.List;
+import java.util.Collections;
 
 /**
  * A filter respsonsible for setting up common objects.
@@ -134,7 +139,13 @@ public class PreProcessingFilter implements Filter {
 
     if (blog instanceof Blog) {
       Blog b = (Blog)blog;
-      httpRequest.setAttribute(Constants.RECENT_BLOG_ENTRIES, b.getRecentPublishedBlogEntries());
+      ContentDecoratorContext context = new ContentDecoratorContext();
+      context.setView(ContentDecoratorContext.SUMMARY_VIEW);
+      context.setMedia(ContentDecoratorContext.HTML_PAGE);
+      List blogEntries = b.getRecentPublishedBlogEntries();
+      ContentDecoratorChain.decorate(context, blogEntries);
+      Collections.sort(blogEntries, new BlogEntryComparator());
+      httpRequest.setAttribute(Constants.RECENT_BLOG_ENTRIES, blogEntries);
       httpRequest.setAttribute(Constants.RECENT_RESPONSES, b.getRecentApprovedResponses());
       httpRequest.setAttribute(Constants.CATEGORIES, b.getCategories());
       httpRequest.setAttribute(Constants.TAGS, b.getTags());

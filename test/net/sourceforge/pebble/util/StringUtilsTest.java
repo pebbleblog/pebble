@@ -87,6 +87,8 @@ public class StringUtilsTest extends TestCase {
   }
 
   public void testFilterHTML() {
+    assertEquals("Here is some text.", StringUtils.filterHTML("Here is <!-- <rdf>...</rdf> -->some text."));
+    assertEquals("Here is some text.", StringUtils.filterHTML("Here is <!-- <rdf/> -->some text."));
     assertEquals("Here is some text.", StringUtils.filterHTML("<b>Here</b> is <i>some</i> text."));
     assertEquals("Here is a link.", StringUtils.filterHTML("Here is <a href=\"http://www.google.com\">a link</a>."));
     assertEquals("Here is a link.", StringUtils.filterHTML("Here is <a \nhref=\"http://www.google.com\">a link</a>."));

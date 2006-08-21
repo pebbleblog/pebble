@@ -39,7 +39,7 @@
     <h3>Aggregating content</h3>
     <p>
       If you also write content for an existing blog, you may want to publish/mirror that content on your Pebble blog, but still refer readers back to the original version. Pebble provides a simple way to achieve this by allowing you to store the original permalink alongside your blog content. By doing this, any content will show up on your Pebble blog, but the permalink will point always to the original content. When adding a new blog entry, simply enter the existing permalink into the "Original permalink" field.
-      The value you enter in this field will become the permalink for your blog entry. This means that when the entry shows up in a news aggregator, readers will be directed to the original version rather than the copy you have entered into Pebble.
+      The value you enter in this field must be an absolute URL and will become the permalink for your blog entry. This means that when the entry shows up in a news aggregator, readers will be directed to the original version rather than the copy you have entered into Pebble.
     </p>
 
     <h3>Comments and TrackBacks</h3>
