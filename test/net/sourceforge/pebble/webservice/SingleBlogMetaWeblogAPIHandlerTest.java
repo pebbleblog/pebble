@@ -388,9 +388,9 @@ public class SingleBlogMetaWeblogAPIHandlerTest extends SingleBlogTestCase {
       BlogService service = new BlogService();
       BlogEntry entry = service.getBlogEntry(blog, postid.substring("default".length()+1));
 
-      DateFormat format = new SimpleDateFormat("dd/MMMM/yyyy");
+      DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
       format.setTimeZone(blog.getTimeZone());
-      assertEquals("14/July/2004", format.format(entry.getDate()));
+      assertEquals("14/07/2004", format.format(entry.getDate()));
     } catch (Exception e) {
       e.printStackTrace();
       fail();

@@ -46,9 +46,10 @@ import java.util.Calendar;
  */
 public class TrackBackAutoDiscoveryDecoratorTest extends SingleBlogTestCase {
 
-  private static final String DISCOVERY_TEXT;
+  private static final String DISCOVERY_TEXT_START;
+  private static final String DISCOVERY_TEXT_END;
   static {
-    DISCOVERY_TEXT = "\n<!--\n" +
+    DISCOVERY_TEXT_START = "\n<!--\n" +
         "<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"\n" +
         "         xmlns:dc=\"http://purl.org/dc/elements/1.1/\"\n" +
         "         xmlns:trackback=\"http://madskills.com/public/xml/rss/module/trackback/\">\n" +
@@ -56,7 +57,8 @@ public class TrackBackAutoDiscoveryDecoratorTest extends SingleBlogTestCase {
         "    rdf:about=\"http://www.yourdomain.com/blog/2006/07/14/1152860400000.html\"\n" +
         "    dc:identifier=\"http://www.yourdomain.com/blog/2006/07/14/1152860400000.html\"\n" +
         "    dc:title=\"Title\"\n" +
-        "    trackback:ping=\"http://www.yourdomain.com/blog/addTrackBack.action?entry=1152860400000\" />\n" +
+        "    trackback:ping=\"http://www.yourdomain.com/blog/addTrackBack.action?entry=1152860400000&token=";
+    DISCOVERY_TEXT_END = "\" />\n" +
         "</rdf:RDF>\n" +
         "-->";
   }
@@ -89,7 +91,8 @@ public class TrackBackAutoDiscoveryDecoratorTest extends SingleBlogTestCase {
    */
   public void testDecoration() throws Exception {
     decorator.decorate(context, blogEntry);
-    assertEquals("Body" + DISCOVERY_TEXT, blogEntry.getBody());
+    assertTrue(blogEntry.getBody().startsWith("Body" + DISCOVERY_TEXT_START));
+    assertTrue(blogEntry.getBody().endsWith(DISCOVERY_TEXT_END));
   }
 
 }

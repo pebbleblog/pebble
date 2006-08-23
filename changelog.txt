@@ -7,8 +7,10 @@ Completed initial versions of all help pages.
 Fixed incorrect response links (i.e. Responses[x], Add a comment and RSS) in the multi-blog view.
 Enhanced the error page.
 Added page by page navigation of blog entries (starting from the home page and going back in time).
-User management features (for admin users) and modified the SecurityRealm interface.
+Added user management features (for admin users) and modified the SecurityRealm interface.
 Renamed ROLE_PEBBLE_ADMIN to ROLE_BLOG_ADMIN.
+Changed JARs to ensure verification of pebble.war on Glassfish.
+Fixed a bug with TrackBack links being generated without a token for logged in users.
 
 Version 2.0.0-RC1 - 17th July 2006
 ----------------------------------

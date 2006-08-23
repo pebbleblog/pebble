@@ -36,6 +36,7 @@ import net.sourceforge.pebble.api.event.comment.CommentEvent;
 import net.sourceforge.pebble.api.event.trackback.TrackBackEvent;
 import net.sourceforge.pebble.comparator.ResponseByDateComparator;
 import net.sourceforge.pebble.web.validation.ValidationContext;
+import net.sourceforge.pebble.trackback.TrackBackTokenManager;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -472,6 +473,8 @@ public class BlogEntry extends PageBasedContent {
     link.append(getBlog().getUrl());
     link.append("addTrackBack.action?entry=");
     link.append(getId());
+    link.append("&token=");
+    link.append(TrackBackTokenManager.getInstance().generateToken());
 
     return link.toString();
   }

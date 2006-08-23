@@ -77,7 +77,7 @@ public class AddTrackBackAction extends Action {
         getModel().put("errorCode", new Integer(1));
         getModel().put("message", "The URL (permalink) must be specified for TrackBacks");
         return new TrackBackResponseView();
-      } else if (blog.getTrackBackConfirmationStrategy().confirmationRequired(blog) && !TrackBackTokenManager.getInstance().isValid(token)) {
+      } else if (!TrackBackTokenManager.getInstance().isValid(token)) {
         getModel().put("errorCode", new Integer(1));
         getModel().put("message", "The token has expired or is invalid");
         return new TrackBackResponseView();

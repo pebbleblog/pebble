@@ -18,19 +18,8 @@ public abstract class AbstractTrackBackAction extends Action {
   private static Log log = LogFactory.getLog(AbstractTrackBackAction.class);
 
   protected void generateTrackBackLink(BlogEntry blogEntry) {
-    String token = TrackBackTokenManager.getInstance().generateToken();
-
-    StringBuffer link = new StringBuffer();
-    link.append(blogEntry.getTrackBackLink());
-
-    if (blogEntry.getBlog().getTrackBackConfirmationStrategy().confirmationRequired(blogEntry.getBlog())) {
-      link.append("&token=");
-      link.append(token);
-
-      getModel().put("trackBackLinkExpires", "true");
-    }
-
-    getModel().put("trackBackLink", link);
+    getModel().put("trackBackLinkExpires", "true");
+    getModel().put("trackBackLink", blogEntry.getTrackBackLink());
   }
 
 }
