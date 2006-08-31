@@ -168,28 +168,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="AddTrackBackAction.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/action/AddTrackBackAction.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="80" column="17" selection-start="3474" selection-end="3474" vertical-scroll-proportion="0.3657351">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GenerateTrackBackLinkAction.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/action/GenerateTrackBackLinkAction.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="60" column="19" selection-start="2223" selection-end="2223" vertical-scroll-proportion="0.85905224">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="AbstractTrackBackAction.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/action/AbstractTrackBackAction.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="20" column="0" selection-start="642" selection-end="642" vertical-scroll-proportion="0.35115433">
+            <state line="20" column="0" selection-start="642" selection-end="642" vertical-scroll-proportion="0.34282324">
               <folding />
             </state>
           </provider>
@@ -198,25 +180,52 @@
       <file leaf-file-name="changelog.txt" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/changelog.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="85" selection-start="833" selection-end="833" vertical-scroll-proportion="0.24876237">
+            <state line="16" column="23" selection-start="948" selection-end="948" vertical-scroll-proportion="0.32850242">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TrackBackAutoDiscoveryDecoratorTest.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test/net/sourceforge/pebble/decorator/TrackBackAutoDiscoveryDecoratorTest.java">
+      <file leaf-file-name="upgrading2x.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/website/upgrading2x.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="77" column="25" selection-start="3340" selection-end="3340" vertical-scroll-proportion="0.4835966">
+            <state line="34" column="0" selection-start="1119" selection-end="1119" vertical-scroll-proportion="0.30917874">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="build.xml" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="security.html" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/website/security.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="66" column="0" selection-start="2820" selection-end="2820" vertical-scroll-proportion="0.6714976">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="build.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/build.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="76" column="32" selection-start="2685" selection-end="2685" vertical-scroll-proportion="0.77846533">
+            <state line="76" column="32" selection-start="2685" selection-end="2685" vertical-scroll-proportion="0.75966185">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SearchIndexListener.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/index/SearchIndexListener.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="90" column="13" selection-start="3103" selection-end="3103" vertical-scroll-proportion="0.5361803">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SearchIndex.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/index/SearchIndex.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="260" column="13" selection-start="8538" selection-end="8538" vertical-scroll-proportion="0.2218268">
               <folding />
             </state>
           </provider>
@@ -225,34 +234,25 @@
       <file leaf-file-name="TrackBackTokenManager.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/trackback/TrackBackTokenManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="13" selection-start="13" selection-end="13" vertical-scroll-proportion="0.0">
+            <state line="35" column="0" selection-start="1018" selection-end="1018" vertical-scroll-proportion="0.64531434">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TrackBackAutoDiscoveryDecorator.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/decorator/TrackBackAutoDiscoveryDecorator.java">
+      <file leaf-file-name="searchResults.jsp" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/searchResults.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="67" column="37" selection-start="3047" selection-end="3047" vertical-scroll-proportion="0.7436209">
+            <state line="20" column="72" selection-start="752" selection-end="752" vertical-scroll-proportion="0.40332147">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BlogEntry.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/domain/BlogEntry.java">
+      <file leaf-file-name="resources.properties" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/etc/resources.properties">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="477" column="0" selection-start="13408" selection-end="13408" vertical-scroll-proportion="0.48019803">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="applicationContext-acegi-security.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/WEB-INF/applicationContext-acegi-security.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="23" column="0" selection-start="928" selection-end="928" vertical-scroll-proportion="0.4839109">
+            <state line="13" column="28" selection-start="657" selection-end="657" vertical-scroll-proportion="0.2669082">
               <folding />
             </state>
           </provider>
@@ -609,89 +609,7 @@
         <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
       </PATH_ELEMENT>
       <PATH_ELEMENT>
-        <option name="myItemId" value="PsiDirectory:D:\sandbox\pebble\src" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="PsiDirectory:D:\sandbox\pebble\src\net\sourceforge\pebble" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      </PATH_ELEMENT>
-    </PATH>
-    <PATH>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="pebble.ipr" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="pebble" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="PsiDirectory:D:\sandbox\pebble" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="PsiDirectory:D:\sandbox\pebble\src" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="PsiDirectory:D:\sandbox\pebble\src\net\sourceforge\pebble" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="PsiDirectory:D:\sandbox\pebble\src\net\sourceforge\pebble\security" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      </PATH_ELEMENT>
-    </PATH>
-    <PATH>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="pebble.ipr" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="pebble" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="PsiDirectory:D:\sandbox\pebble" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="PsiDirectory:D:\sandbox\pebble\src" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="PsiDirectory:D:\sandbox\pebble\src\net\sourceforge\pebble" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="PsiDirectory:D:\sandbox\pebble\src\net\sourceforge\pebble\domain" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      </PATH_ELEMENT>
-    </PATH>
-    <PATH>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="pebble.ipr" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="pebble" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="PsiDirectory:D:\sandbox\pebble" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="PsiDirectory:D:\sandbox\pebble\src" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="PsiDirectory:D:\sandbox\pebble\src\net\sourceforge\pebble" />
-        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="PsiDirectory:D:\sandbox\pebble\src\net\sourceforge\pebble\comparator" />
+        <option name="myItemId" value="PsiDirectory:D:\sandbox\pebble\etc" />
         <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
       </PATH_ELEMENT>
     </PATH>
@@ -1026,48 +944,6 @@
     </buildFile>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/blogEntryForm.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="82" column="57" selection-start="2967" selection-end="2967" vertical-scroll-proportion="0.6980676">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/website/security.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="72" column="25" selection-start="3155" selection-end="3155" vertical-scroll-proportion="0.56884056">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/util/SecurityUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="168" column="24" selection-start="6509" selection-end="6509" vertical-scroll-proportion="0.34158415">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/confirmation/DefaultConfirmationStrategy.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="40" column="65" selection-start="1863" selection-end="1863" vertical-scroll-proportion="0.20656136">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/confirmation/AbstractConfirmationStrategy.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="66" column="55" selection-start="2836" selection-end="2836" vertical-scroll-proportion="0.9195545">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/applicationContext-acegi-security.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="0" selection-start="928" selection-end="928" vertical-scroll-proportion="0.4839109">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/action/AddTrackBackAction.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="80" column="17" selection-start="3474" selection-end="3474" vertical-scroll-proportion="0.3657351">
@@ -1077,56 +953,98 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/decorator/TrackBackAutoDiscoveryDecorator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="67" column="37" selection-start="3047" selection-end="3047" vertical-scroll-proportion="0.7436209">
+        <state line="67" column="37" selection-start="3047" selection-end="3047" vertical-scroll-proportion="0.7259787">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/domain/BlogEntry.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="477" column="0" selection-start="13408" selection-end="13408" vertical-scroll-proportion="0.48019803">
+        <state line="477" column="0" selection-start="13408" selection-end="13408" vertical-scroll-proportion="0.46859902">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/action/GenerateTrackBackLinkAction.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="60" column="19" selection-start="2223" selection-end="2223" vertical-scroll-proportion="0.85905224">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/action/AbstractTrackBackAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="0" selection-start="642" selection-end="642" vertical-scroll-proportion="0.35115433">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/changelog.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="85" selection-start="833" selection-end="833" vertical-scroll-proportion="0.24876237">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/trackback/TrackBackTokenManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="13" selection-start="13" selection-end="13" vertical-scroll-proportion="0.0">
+        <state line="60" column="19" selection-start="2223" selection-end="2223" vertical-scroll-proportion="0.8386714">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/test/net/sourceforge/pebble/decorator/TrackBackAutoDiscoveryDecoratorTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="77" column="25" selection-start="3340" selection-end="3340" vertical-scroll-proportion="0.4835966">
+        <state line="77" column="25" selection-start="3340" selection-end="3340" vertical-scroll-proportion="0.49584815">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/build.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="76" column="32" selection-start="2685" selection-end="2685" vertical-scroll-proportion="0.77846533">
+        <state line="76" column="32" selection-start="2685" selection-end="2685" vertical-scroll-proportion="0.75966185">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/index/SearchIndexListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="90" column="13" selection-start="3103" selection-end="3103" vertical-scroll-proportion="0.5361803">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/index/SearchIndex.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="260" column="13" selection-start="8538" selection-end="8538" vertical-scroll-proportion="0.2218268">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/trackback/TrackBackTokenManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="35" column="0" selection-start="1018" selection-end="1018" vertical-scroll-proportion="0.64531434">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/searchResults.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="72" selection-start="752" selection-end="752" vertical-scroll-proportion="0.40332147">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/etc/resources.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="28" selection-start="657" selection-end="657" vertical-scroll-proportion="0.2669082">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/action/AbstractTrackBackAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="0" selection-start="642" selection-end="642" vertical-scroll-proportion="0.34282324">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/changelog.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="23" selection-start="948" selection-end="948" vertical-scroll-proportion="0.32850242">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/website/upgrading2x.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="34" column="0" selection-start="1119" selection-end="1119" vertical-scroll-proportion="0.30917874">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/website/security.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="66" column="0" selection-start="2820" selection-end="2820" vertical-scroll-proportion="0.6714976">
           <folding />
         </state>
       </provider>

@@ -1,5 +1,5 @@
-Version 2.0.0-RC2 - August 2006
-----------------------------------
+Version 2.0.0-RC2 - 31st August 2006
+------------------------------------
 Renamed default theme to "pebble" and added a new default theme.
 Moved hardcoded English text in public pages to resource bundles.
 Added Javadoc to the web application, and links to it from the integrated help.
@@ -9,7 +9,7 @@ Enhanced the error page.
 Added page by page navigation of blog entries (starting from the home page and going back in time).
 Added user management features (for admin users) and modified the SecurityRealm interface.
 Renamed ROLE_PEBBLE_ADMIN to ROLE_BLOG_ADMIN.
-Changed JARs to ensure verification of pebble.war on Glassfish.
+Modified JAR dependencies to ensure verification of pebble.war on Glassfish.
 Fixed a bug with TrackBack links being generated without a token for logged in users.
 
 Version 2.0.0-RC1 - 17th July 2006

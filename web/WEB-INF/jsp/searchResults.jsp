@@ -17,8 +17,8 @@
           <thead>
             <tr>
               <th></th>
-              <th>Title/summary</th>
-              <th align="right">Date/time</th>
+              <th><fmt:message key="search.header.titleAndSummary" /></th>
+              <th align="right"><fmt:message key="search.header.dateTime" /></th>
             </tr>
           </thead>
           <tbody>
