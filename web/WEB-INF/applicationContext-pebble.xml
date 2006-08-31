@@ -15,7 +15,7 @@
     <property name="secureUrl" value=""/>
 
     <!-- a flag to indicate whether Pebble is running in multi-blog mode, default is false -->
-    <property name="multiBlog" value="true"/>
+    <property name="multiBlog" value="false"/>
 
     <!-- the name/IP address of the server through which e-mail is sent, or a JNDI name starting java:/comp/env pointing to a preconfigured javax.mail.Session instance -->
     <property name="smtpHost" value="java:comp/env/mail/Session"/>
