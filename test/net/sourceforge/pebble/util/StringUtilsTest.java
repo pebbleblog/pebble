@@ -77,6 +77,7 @@ public class StringUtilsTest extends TestCase {
     assertEquals("Here is a </blockquote> tag", StringUtils.transformToHTMLSubset("Here is a &lt;/blockquote&gt; tag"));
     assertEquals("Here is a <a href=\"mailto:somebody@somedomain.com\">mail link</a>", StringUtils.transformToHTMLSubset("Here is a &lt;a href=\"mailto:somebody@somedomain.com\"&gt;mail link&lt;/a&gt;"));
     assertEquals("Here is a &#8217; character", StringUtils.transformToHTMLSubset("Here is a &amp;#8217; character"));
+    assertEquals("Here is a &quot; symbol", StringUtils.transformToHTMLSubset("Here is a &amp;quot; symbol"));
   }
 
   public void testFilterNewLines() {

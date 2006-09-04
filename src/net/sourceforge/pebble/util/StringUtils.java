@@ -152,8 +152,11 @@ public final class StringUtils {
     // escaped angle brackets
     s = s.replaceAll("&amp;lt;", "&lt;");
     s = s.replaceAll("&amp;gt;", "&gt;");
+
+    // and other "allowed" entities
     s = s.replaceAll("&amp;#", "&#");
     s = s.replaceAll("&amp;nbsp;", "&nbsp;");
+    s = s.replaceAll("&amp;quot;", "&quot;");
 
     return s;
   }
