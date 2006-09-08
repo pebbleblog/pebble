@@ -125,7 +125,7 @@ public class DefaultSecurityRealm implements SecurityRealm {
    */
   public synchronized void createUser(PebbleUserDetails pud) throws SecurityRealmException {
     if (getUser(pud.getUsername()) == null) {
-      updateUser(pud);
+      updateUser(pud, true);
     } else {
       throw new SecurityRealmException("User " + pud.getUsername() + " already exists");
     }
@@ -137,10 +137,24 @@ public class DefaultSecurityRealm implements SecurityRealm {
    * @param pud   a PebbleUserDetails instance
    */
   public synchronized void updateUser(PebbleUserDetails pud) throws SecurityRealmException {
+    updateUser(pud, false);
+  }
+
+  /**
+   * Updates user details, except for the password
+   *
+   * @param pud   a PebbleUserDetails instance
+   */
+  private void updateUser(PebbleUserDetails pud, boolean updatePassword) throws SecurityRealmException {
     File user = getFileForUser(pud.getUsername());
+    PebbleUserDetails currentDetails = getUser(pud.getUsername());
 
     Properties props = new Properties();
-    props.setProperty(DefaultSecurityRealm.PASSWORD, passwordEncoder.encodePassword(pud.getPassword(), saltSource.getSalt(pud)));
+    if (updatePassword) {
+      props.setProperty(DefaultSecurityRealm.PASSWORD, passwordEncoder.encodePassword(pud.getPassword(), saltSource.getSalt(pud)));
+    } else {
+      props.setProperty(DefaultSecurityRealm.PASSWORD, currentDetails.getPassword());
+    }
     props.setProperty(DefaultSecurityRealm.ROLES, pud.getRolesAsString());
     props.setProperty(DefaultSecurityRealm.NAME, pud.getName());
     props.setProperty(DefaultSecurityRealm.EMAIL_ADDRESS, pud.getEmailAddress());
@@ -153,6 +167,21 @@ public class DefaultSecurityRealm implements SecurityRealm {
       out.close();
     } catch (IOException ioe) {
       throw new SecurityRealmException(ioe);
+    }
+  }
+
+  /**
+   * Changes a user's password.
+   *
+   * @param username    the username of the user
+   * @param password    the new password
+   * @throws SecurityRealmException
+   */
+  public synchronized void changePassword(String username, String password) throws SecurityRealmException {
+    PebbleUserDetails pud = getUser(username);
+    if (pud != null) {
+      pud.setPassword(password);
+      updateUser(pud, true);
     }
   }
 

@@ -27,8 +27,9 @@ public class AboutBlogActionTest extends SecureActionTestCase {
    */
   public void testOnlyBlogContributorsHaveAccess() {
     String roles[] = action.getRoles(request);
-    assertEquals(1, roles.length);
-    assertEquals(Constants.BLOG_OWNER_ROLE, roles[0]);
+    assertEquals(2, roles.length);
+    assertEquals(Constants.BLOG_ADMIN_ROLE, roles[0]);
+    assertEquals(Constants.BLOG_OWNER_ROLE, roles[1]);
   }
 
 }

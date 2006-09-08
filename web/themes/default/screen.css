@@ -68,6 +68,9 @@ body {
   padding-top: 8px;
   height: 24px;
 }
+.sidebarItemTitle span a {
+  color: white;
+}
 .sidebarItem ul {
   margin: 0px;
   padding-left: 8px;

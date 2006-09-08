@@ -40,14 +40,6 @@
           </c:otherwise>
         </c:choose>
         <tr>
-          <td valign="top">Password</td>
-          <td><input type="password" name="password1" size="40"/></td>
-        </tr>
-        <tr>
-          <td valign="top">Confirm</td>
-          <td><input type="password" name="password2" size="40"/></td>
-        </tr>
-        <tr>
           <td valign="top">Name</td>
           <td><input type="text" name="name" value="${user.name}" size="40"/></td>
         </tr>

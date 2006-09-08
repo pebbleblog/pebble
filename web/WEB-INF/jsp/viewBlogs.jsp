@@ -8,6 +8,7 @@
       <thead>
         <th>ID</th>
         <th>Name</th>
+        <th>&nbsp;</th>
       </thead>
       <tbody>
       <c:forEach var="aBlog" items="${blogs}" varStatus="status">
@@ -20,7 +21,11 @@
           </c:otherwise>
         </c:choose>
         <td>${aBlog.id}</td>
-        <td><a href="${aBlog.url}" target="_blank">${aBlog.name}</a></td>
+        <td><a href="${aBlog.url}">${aBlog.name}</a></td>
+        <td align="right">
+          <a href="${aBlog.url}viewBlogProperties.secureaction">Properties</a> |
+          <a href="${aBlog.url}viewPlugins.secureaction">Plugins</a>
+        </td>
       </tr>
       </c:forEach>
       </tbody>

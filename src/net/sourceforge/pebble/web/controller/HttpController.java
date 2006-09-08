@@ -165,7 +165,7 @@ public class HttpController extends HttpServlet {
   private boolean isUserInRole(HttpServletRequest request, SecureAction action) {
     String roles[] = action.getRoles(request);
     for (String role : roles) {
-      if (SecurityUtils.isUserInRole(role)) {
+      if (role.equals(Constants.ANY_ROLE) || SecurityUtils.isUserInRole(role)) {
         return true;
       }
     }

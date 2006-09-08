@@ -32,11 +32,20 @@ public interface SecurityRealm {
   public void createUser(PebbleUserDetails pud) throws SecurityRealmException;
 
   /**
-   * Updates user details.
+   * Updates user details, except for the password
    *
    * @param pud   a PebbleUserDetails instance
    */
   public void updateUser(PebbleUserDetails pud) throws SecurityRealmException;
+
+  /**
+   * Changes a user's password.
+   *
+   * @param username    the username of the user
+   * @param password    the new password
+   * @throws SecurityRealmException
+   */
+  public void changePassword(String username, String password) throws SecurityRealmException;
 
   /**
    * Removes user details for the given username.

@@ -99,7 +99,10 @@ public class SavePluginsAction extends SecureAction {
    * @param request
    */
   public String[] getRoles(HttpServletRequest request) {
-    return new String[]{Constants.BLOG_OWNER_ROLE};
+    return new String[]{
+        Constants.BLOG_ADMIN_ROLE,
+        Constants.BLOG_OWNER_ROLE
+    };
   }
 
 }

@@ -51,6 +51,17 @@ public class MockSecurityRealm implements SecurityRealm {
   }
 
   /**
+   * Changes a user's password.
+   *
+   * @param username    the username of the user
+   * @param password    the new password
+   * @throws SecurityRealmException
+   */
+  public void changePassword(String username, String password) throws SecurityRealmException {
+    users.get(username).setPassword(password);
+  }
+
+  /**
    * Removes user details for the given username.
    *
    * @param username the username of the user to remove

@@ -12,6 +12,7 @@
       </c:forEach>
     </table>
 
+    <c:if test="${not empty messages}">
     <form name="messagesForm" action="clearMessages.secureaction" method="POST" accept-charset="${blog.characterEncoding}">
       <table width="99%">
         <tr>
@@ -21,5 +22,7 @@
         </tr>
       </table>
     </form>
+    </c:if>
+
   </div>
 </div>

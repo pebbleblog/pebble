@@ -31,34 +31,35 @@
  */
 package net.sourceforge.pebble.web.action;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import net.sourceforge.pebble.web.view.View;
+import net.sourceforge.pebble.web.view.RedirectView;
+import net.sourceforge.pebble.web.view.ForwardView;
+import net.sourceforge.pebble.web.view.impl.PasswordChangedView;
+import net.sourceforge.pebble.web.view.impl.ChangePasswordView;
+import net.sourceforge.pebble.web.validation.ValidationContext;
+import net.sourceforge.pebble.domain.AbstractBlog;
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.PebbleContext;
-import net.sourceforge.pebble.domain.AbstractBlog;
+import net.sourceforge.pebble.util.SecurityUtils;
 import net.sourceforge.pebble.security.PebbleUserDetails;
 import net.sourceforge.pebble.security.SecurityRealm;
 import net.sourceforge.pebble.security.SecurityRealmException;
-import net.sourceforge.pebble.web.validation.ValidationContext;
-import net.sourceforge.pebble.web.view.RedirectView;
-import net.sourceforge.pebble.web.view.View;
-import net.sourceforge.pebble.web.view.impl.UserView;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.ServletException;
 
 /**
- * Saves user details.
+ * Changes the user's password.
  *
  * @author    Simon Brown
  */
-public class SaveUserAction extends SecureAction {
+public class ChangePasswordAction extends SecureAction {
 
   /** the log used by this class */
-  private static final Log log = LogFactory.getLog(SaveUserAction.class);
-
-  private static final String DEFAULT_PASSWORD = "password";
+  private static final Log log = LogFactory.getLog(ChangePasswordAction.class);
 
   /**
    * Peforms the processing associated with this action.
@@ -69,43 +70,32 @@ public class SaveUserAction extends SecureAction {
    */
   public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
     try {
-      AbstractBlog blog = (AbstractBlog)getModel().get(Constants.BLOG_KEY);
-      String username = request.getParameter("username");
-      String name = request.getParameter("name");
-      String emailAddress = request.getParameter("emailAddress");
-      String website = request.getParameter("website");
-      String roles[] = request.getParameterValues("role");
-      boolean newUser = request.getParameter("newUser").equalsIgnoreCase("true");
-
       SecurityRealm realm = PebbleContext.getInstance().getConfiguration().getSecurityRealm();
-      PebbleUserDetails currentUserDetails = realm.getUser(username);
-      PebbleUserDetails newUserDetails = new PebbleUserDetails(username, DEFAULT_PASSWORD, name, emailAddress, website, roles);
+      PebbleUserDetails currentUserDetails = SecurityUtils.getUserDetails();
+      String password1 = request.getParameter("password1");
+      String password2 = request.getParameter("password2");
+      String submit = request.getParameter("submit");
+
+      if (submit == null || submit.length() == 0) {
+        return new ChangePasswordView();
+      }
 
       ValidationContext validationContext = new ValidationContext();
 
-      if (newUser && currentUserDetails != null) {
-        validationContext.addError("A user with this username already exists");
-      } else if (username == null || username.trim().length() == 0) {
-        validationContext.addError("Username can't be empty");
-      } else {
+      if (password1 == null || password1.length() == 0) {
+        validationContext.addError("Password can not be empty");
+      } else if (!password1.equals(password2)) {
+        validationContext.addError("Passwords do not match");
+      }
 
-        if (newUser) {
-          try {
-            realm.createUser(newUserDetails);
-          } catch (SecurityRealmException sre) {
-            validationContext.addError(sre.getMessage());
-          }
-        } else {
-          realm.updateUser(newUserDetails);
-        }
-        return new RedirectView(blog.getUrl() + "viewUsers.secureaction");
+      if (!validationContext.hasErrors()) {
+          realm.changePassword(currentUserDetails.getUsername(), password1);
+
+          return new PasswordChangedView();
       }
 
       getModel().put("validationContext", validationContext);
-      getModel().put("user", newUserDetails);
-      getModel().put("newUser", newUser);
-
-      return new UserView();
+      return new ChangePasswordView();
     } catch (SecurityRealmException e) {
       throw new ServletException(e);
     }
@@ -118,7 +108,7 @@ public class SaveUserAction extends SecureAction {
    * @param request
    */
   public String[] getRoles(HttpServletRequest request) {
-    return new String[]{Constants.BLOG_ADMIN_ROLE};
+    return new String[]{Constants.ANY_ROLE};
   }
 
 }

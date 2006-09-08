@@ -30,6 +30,14 @@ public class PebbleUserDetails implements UserDetails {
   public PebbleUserDetails() {
   }
 
+  public PebbleUserDetails(String username, String name, String emailAddress, String website, String roles[]) {
+    this.username = username;
+    this.name = name;
+    this.emailAddress = emailAddress;
+    this.website = website;
+    this.grantedAuthories = createGrantedAuthorities(roles);
+  }
+
   public PebbleUserDetails(String username, String password, String name, String emailAddress, String website, String roles[]) {
     this.username = username;
     this.password = password;
@@ -95,8 +103,6 @@ public class PebbleUserDetails implements UserDetails {
   }
 
   public String[] getRoles() {
-    StringBuffer buf = new StringBuffer();
-
     GrantedAuthority[] authorities = getAuthorities();
     String[] roles = new String[authorities.length];
     for (int i = 0; i < authorities.length; i++) {
@@ -159,6 +165,30 @@ public class PebbleUserDetails implements UserDetails {
     } else {
       return new GrantedAuthority[]{};
     }
+  }
+
+  public void setUsername(String username) {
+    this.username = username;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public void setEmailAddress(String emailAddress) {
+    this.emailAddress = emailAddress;
+  }
+
+  public void setWebsite(String website) {
+    this.website = website;
+  }
+
+  public void setGrantedAuthories(GrantedAuthority[] grantedAuthories) {
+    this.grantedAuthories = grantedAuthories;
   }
 
 }

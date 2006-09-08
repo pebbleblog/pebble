@@ -168,64 +168,91 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="applicationContext-pebble.xml" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="SaveUserDetailsAction.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/action/SaveUserDetailsAction.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="77" column="0" selection-start="3327" selection-end="3327" vertical-scroll-proportion="0.51">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AboutBlogActionTest.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/net/sourceforge/pebble/web/action/AboutBlogActionTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="30" column="50" selection-start="859" selection-end="859" vertical-scroll-proportion="0.5840491">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ChangePasswordAction.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/action/ChangePasswordAction.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="72" column="0" selection-start="3136" selection-end="3136" vertical-scroll-proportion="0.50625">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SaveUserAction.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/action/SaveUserAction.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="72" column="0" selection-start="3076" selection-end="3076" vertical-scroll-proportion="0.57375">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="changelog.txt" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/changelog.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="7" column="0" selection-start="298" selection-end="298" vertical-scroll-proportion="0.14875">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="applicationContext-pebble.xml" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/web/WEB-INF/applicationContext-pebble.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="43" selection-start="837" selection-end="837" vertical-scroll-proportion="0.3490338">
+            <state line="20" column="43" selection-start="1057" selection-end="1057" vertical-scroll-proportion="0.425">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="EditStaticPageAction.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/action/EditStaticPageAction.java">
+      <file leaf-file-name="SecurityRealm.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/security/SecurityRealm.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="52" column="0" selection-start="2327" selection-end="2327" vertical-scroll-proportion="0.2218268">
+            <state line="9" column="17" selection-start="185" selection-end="185" vertical-scroll-proportion="0.034355827">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ManageStaticPageAction.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/action/ManageStaticPageAction.java">
+      <file leaf-file-name="DefaultSecurityRealm.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/security/DefaultSecurityRealm.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="108" column="48" selection-start="4210" selection-end="4210" vertical-scroll-proportion="0.8790036">
+            <state line="116" column="13" selection-start="3968" selection-end="3968" vertical-scroll-proportion="0.2125">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ManageBlogEntryActionTest.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test/net/sourceforge/pebble/web/action/ManageBlogEntryActionTest.java">
+      <file leaf-file-name="UserDetailsView.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/view/impl/UserDetailsView.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="103" column="0" selection-start="3771" selection-end="3771" vertical-scroll-proportion="0.9027284">
+            <state line="40" column="13" selection-start="1780" selection-end="1780" vertical-scroll-proportion="0.20858896">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ManageStaticPageActionTest.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test/net/sourceforge/pebble/web/action/ManageStaticPageActionTest.java">
+      <file leaf-file-name="ChangePasswordView.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/view/impl/ChangePasswordView.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="44" column="25" selection-start="1992" selection-end="1992" vertical-scroll-proportion="0.20166074">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="changelog.txt" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/changelog.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="23" selection-start="240" selection-end="240" vertical-scroll-proportion="0.123188406">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ManageBlogEntryAction.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/action/ManageBlogEntryAction.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="102" column="13" selection-start="3989" selection-end="3989" vertical-scroll-proportion="0.37485173">
+            <state line="37" column="0" selection-start="1753" selection-end="1753" vertical-scroll-proportion="0.14601228">
               <folding />
             </state>
           </provider>
@@ -340,7 +367,7 @@
         <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
       </PATH_ELEMENT>
       <PATH_ELEMENT>
-        <option name="myItemId" value="domain" />
+        <option name="myItemId" value="util" />
         <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
       </PATH_ELEMENT>
     </PATH>
@@ -504,8 +531,182 @@
         <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
       </PATH_ELEMENT>
       <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:D:\sandbox\pebble\web" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:D:\sandbox\pebble\web\WEB-INF" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:D:\sandbox\pebble\web\WEB-INF\jsp" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+    </PATH>
+    <PATH>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="pebble.ipr" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="pebble" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:D:\sandbox\pebble" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:D:\sandbox\pebble\web" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:D:\sandbox\pebble\web\WEB-INF" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:D:\sandbox\pebble\web\WEB-INF\help" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+    </PATH>
+    <PATH>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="pebble.ipr" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="pebble" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:D:\sandbox\pebble" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:D:\sandbox\pebble\web" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:D:\sandbox\pebble\web\WEB-INF" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:D:\sandbox\pebble\web\WEB-INF\fragments" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+    </PATH>
+    <PATH>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="pebble.ipr" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="pebble" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:D:\sandbox\pebble" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:D:\sandbox\pebble\web" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:D:\sandbox\pebble\web\themes" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+    </PATH>
+    <PATH>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="pebble.ipr" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="pebble" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:D:\sandbox\pebble" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:D:\sandbox\pebble\web" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:D:\sandbox\pebble\web\themes" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:D:\sandbox\pebble\web\themes\pebble" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+    </PATH>
+    <PATH>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="pebble.ipr" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="pebble" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:D:\sandbox\pebble" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:D:\sandbox\pebble\web" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:D:\sandbox\pebble\web\themes" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:D:\sandbox\pebble\web\themes\default" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+    </PATH>
+    <PATH>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="pebble.ipr" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="pebble" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:D:\sandbox\pebble" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
         <option name="myItemId" value="PsiDirectory:D:\sandbox\pebble\etc" />
         <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+    </PATH>
+    <PATH>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="pebble.ipr" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="pebble" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:D:\sandbox\pebble" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="PsiDirectory:D:\sandbox\pebble\etc" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="Resource Bundle 'resources'" />
+        <option name="myItemType" value="com.intellij.lang.properties.projectView.ResourceBundleNode" />
       </PATH_ELEMENT>
     </PATH>
     <PATH>
@@ -597,7 +798,7 @@
   <component name="RestoreUpdateTree" />
   <component name="RunManager">
     <activeType name="JUnit" />
-    <tempConfiguration selected="true" default="false" name="ManageStaticPageActionTest" type="JUnit" factoryName="JUnit">
+    <tempConfiguration selected="false" default="false" name="ManageStaticPageActionTest" type="JUnit" factoryName="JUnit">
       <module name="pebble" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
@@ -627,13 +828,6 @@
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
     </configuration>
-    <configuration selected="false" default="true" type="Remote" factoryName="Remote">
-      <option name="USE_SOCKET_TRANSPORT" value="true" />
-      <option name="SERVER_MODE" value="false" />
-      <option name="SHMEM_ADDRESS" value="javadebug" />
-      <option name="HOST" value="localhost" />
-      <option name="PORT" value="5005" />
-    </configuration>
     <configuration selected="false" default="true" type="JUnit" factoryName="JUnit">
       <module name="" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -650,6 +844,13 @@
         <value defaultName="wholeProject" />
       </option>
     </configuration>
+    <configuration selected="false" default="true" type="Remote" factoryName="Remote">
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" value="javadebug" />
+      <option name="HOST" value="localhost" />
+      <option name="PORT" value="5005" />
+    </configuration>
     <configuration selected="false" default="true" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" />
       <option name="VM_PARAMETERS" />
@@ -659,7 +860,7 @@
       <option name="ALTERNATIVE_JRE_PATH" />
       <module name="" />
     </configuration>
-    <configuration selected="false" default="false" name="Unit Tests" type="JUnit" factoryName="JUnit">
+    <configuration selected="true" default="false" name="Unit Tests" type="JUnit" factoryName="JUnit">
       <module name="pebble" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" value="" />
@@ -728,12 +929,12 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-4" y="-4" width="1408" height="1024" extended-state="6" />
+    <frame x="0" y="0" width="1400" height="1016" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="CVS" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.33" order="12" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.53630364" order="7" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="docked" type="docked" visible="true" weight="0.37241888" order="0" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="docked" type="docked" visible="true" weight="0.39243323" order="0" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.47433037" order="1" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.25" order="1" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.375" order="8" />
@@ -742,7 +943,7 @@
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.33" order="9" />
       <window_info id="Favorites" active="false" anchor="right" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.32991803" order="5" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.22345133" order="1" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.4732143" order="2" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.47297296" order="2" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.25" order="2" />
       <window_info id="File View" active="false" anchor="right" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.33" order="4" />
       <window_info id="Clover" active="false" anchor="left" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.32153392" order="3" />
@@ -839,107 +1040,107 @@
     </buildFile>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/website/security.html">
+    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/view/impl/PasswordChangedView.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="66" column="0" selection-start="2820" selection-end="2820" vertical-scroll-proportion="0.36956522">
+        <state line="57" column="40" selection-start="2133" selection-end="2133" vertical-scroll-proportion="0.56319016">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/build.xml">
+    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/action/EditUserDetailsAction.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="47" selection-start="1227" selection-end="1227" vertical-scroll-proportion="0.59541065">
+        <state line="59" column="22" selection-start="2540" selection-end="2540" vertical-scroll-proportion="0.45609757">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/index/SearchIndexListener.java">
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/changePassword.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="90" column="13" selection-start="3103" selection-end="3103" vertical-scroll-proportion="0.5219454">
+        <state line="31" column="47" selection-start="931" selection-end="931" vertical-scroll-proportion="0.6311377">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/index/SearchIndex.java">
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/viewUserDetails.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="260" column="13" selection-start="8538" selection-end="8538" vertical-scroll-proportion="0.020166073">
+        <state line="47" column="0" selection-start="1478" selection-end="1478" vertical-scroll-proportion="0.8982036">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/trackback/TrackBackTokenManager.java">
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/viewUser.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="0" selection-start="1018" selection-end="1018" vertical-scroll-proportion="0.020166073">
+        <state line="58" column="0" selection-start="1810" selection-end="1810" vertical-scroll-proportion="0.34610778">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/searchResults.jsp">
+    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/action/SaveUserDetailsAction.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="72" selection-start="752" selection-end="752" vertical-scroll-proportion="0.020531401">
+        <state line="77" column="0" selection-start="3327" selection-end="3327" vertical-scroll-proportion="0.51">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/etc/resources.properties">
+    <entry file="file://$PROJECT_DIR$/test/net/sourceforge/pebble/web/action/AboutBlogActionTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="28" selection-start="657" selection-end="657" vertical-scroll-proportion="0.020531401">
+        <state line="30" column="50" selection-start="859" selection-end="859" vertical-scroll-proportion="0.5840491">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/util/UpgradeUtilities.java">
+    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/view/impl/UserDetailsView.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="13" selection-start="606" selection-end="606" vertical-scroll-proportion="0.33487833">
+        <state line="40" column="13" selection-start="1780" selection-end="1780" vertical-scroll-proportion="0.20858896">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/action/EditStaticPageAction.java">
+    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/view/impl/ChangePasswordView.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="52" column="0" selection-start="2327" selection-end="2327" vertical-scroll-proportion="0.2218268">
+        <state line="37" column="0" selection-start="1753" selection-end="1753" vertical-scroll-proportion="0.14601228">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/net/sourceforge/pebble/web/action/ManageBlogEntryActionTest.java">
+    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/action/ChangePasswordAction.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="103" column="0" selection-start="3771" selection-end="3771" vertical-scroll-proportion="0.9027284">
+        <state line="72" column="0" selection-start="3136" selection-end="3136" vertical-scroll-proportion="0.50625">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/action/ManageBlogEntryAction.java">
+    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/security/SecurityRealm.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="102" column="13" selection-start="3989" selection-end="3989" vertical-scroll-proportion="0.37485173">
+        <state line="9" column="17" selection-start="185" selection-end="185" vertical-scroll-proportion="0.034355827">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/action/ManageStaticPageAction.java">
+    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/security/DefaultSecurityRealm.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="108" column="48" selection-start="4210" selection-end="4210" vertical-scroll-proportion="0.8790036">
+        <state line="116" column="13" selection-start="3968" selection-end="3968" vertical-scroll-proportion="0.2125">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/net/sourceforge/pebble/web/action/ManageStaticPageActionTest.java">
+    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/action/SaveUserAction.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="25" selection-start="1992" selection-end="1992" vertical-scroll-proportion="0.20166074">
+        <state line="72" column="0" selection-start="3076" selection-end="3076" vertical-scroll-proportion="0.57375">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/changelog.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="0" selection-start="298" selection-end="298" vertical-scroll-proportion="0.14875">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/web/WEB-INF/applicationContext-pebble.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="43" selection-start="837" selection-end="837" vertical-scroll-proportion="0.3490338">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/changelog.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="23" selection-start="240" selection-end="240" vertical-scroll-proportion="0.123188406">
+        <state line="20" column="43" selection-start="1057" selection-end="1057" vertical-scroll-proportion="0.425">
           <folding />
         </state>
       </provider>

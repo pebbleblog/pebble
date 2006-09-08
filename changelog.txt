@@ -2,6 +2,7 @@ Version 2.0.0 - September 2006
 ------------------------------
 Fixed problem with &quot; appearing in comments.
 Fixed problem with blog contributors editing/removing static pages.
+Blog admins can modify blog properties and plugins of any blog.
 
 Version 2.0.0-RC2 - 31st August 2006
 ------------------------------------

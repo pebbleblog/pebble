@@ -14,7 +14,7 @@
 </pebble:isNotAuthenticated>
 
 <pebble:isAuthenticated>
-  <div class="sidebarItemTitle"><span>Logged in as <authz:authentication operation="username"/></span></div>
+  <div class="sidebarItemTitle"><span>Logged in as <authz:authentication operation="username"/> - <a href="./help/index.html" title="Help">Help</a></span></div>
   <div id="adminPanel">
   <ul>
 
@@ -83,7 +83,11 @@
     </li>
   </pebble:isBlogAdmin>
 
-  <li><pebble:isAuthorisedForBlog><a href="./help/index.html" title="Help">Help</a> | </pebble:isAuthorisedForBlog><a href="${pageContext.request.contextPath}/logout.action?redirectUrl=${blog.url}"><fmt:message key="common.logout" /></a></li>
+    <li>
+      <a href="editUserDetails.secureaction" title="Edit user details">Edit user details</a> |
+      <a href="changePassword.secureaction" title="Change password">Change password</a><br />
+      <a href="${pageContext.request.contextPath}/logout.action?redirectUrl=${blog.url}"><fmt:message key="common.logout" /></a>
+    </li>
 
   </ul>
   </div>
