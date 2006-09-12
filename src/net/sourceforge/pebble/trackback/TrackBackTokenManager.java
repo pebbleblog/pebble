@@ -32,9 +32,12 @@ public class TrackBackTokenManager {
     TimerTask task = new TimerTask() {
       public void run() {
         synchronized (TrackBackTokenManager.this) {
-          for (String token : tokens.keySet()) {
+          log.debug("Purging expired tokens");
+          Iterator it = tokens.keySet().iterator();
+          while (it.hasNext()) {
+            String token = (String)it.next();
             if (!isValid(token)) {
-              expire(token);
+              it.remove();
             }
           }
         }

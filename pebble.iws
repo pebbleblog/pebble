@@ -168,91 +168,91 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="SaveUserDetailsAction.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/action/SaveUserDetailsAction.java">
+      <file leaf-file-name="configuration.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/website/configuration.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="77" column="0" selection-start="3327" selection-end="3327" vertical-scroll-proportion="0.51">
+            <state line="64" column="74" selection-start="3589" selection-end="3589" vertical-scroll-proportion="0.87560976">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AboutBlogActionTest.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test/net/sourceforge/pebble/web/action/AboutBlogActionTest.java">
+      <file leaf-file-name="viewBlogProperties.jsp" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/viewBlogProperties.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="30" column="50" selection-start="859" selection-end="859" vertical-scroll-proportion="0.5840491">
+            <state line="164" column="114" selection-start="4216" selection-end="4216" vertical-scroll-proportion="0.020731708">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ChangePasswordAction.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/action/ChangePasswordAction.java">
+      <file leaf-file-name="TrackBackTokenManager.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/trackback/TrackBackTokenManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="72" column="0" selection-start="3136" selection-end="3136" vertical-scroll-proportion="0.50625">
+            <state line="19" column="57" selection-start="541" selection-end="541" vertical-scroll-proportion="0.3257485">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SaveUserAction.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/action/SaveUserAction.java">
+      <file leaf-file-name="build.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/build.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="72" column="0" selection-start="3076" selection-end="3076" vertical-scroll-proportion="0.57375">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="changelog.txt" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/changelog.txt">
+      <file leaf-file-name="changelog.txt" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/changelog.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="0" selection-start="298" selection-end="298" vertical-scroll-proportion="0.14875">
+            <state line="10" column="0" selection-start="559" selection-end="559" vertical-scroll-proportion="0.20731707">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="applicationContext-pebble.xml" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/web/WEB-INF/applicationContext-pebble.xml">
+      <file leaf-file-name="resources.properties" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/etc/resources.properties">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="20" column="43" selection-start="1057" selection-end="1057" vertical-scroll-proportion="0.425">
+            <state line="10" column="39" selection-start="455" selection-end="455" vertical-scroll-proportion="0.20731707">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SecurityRealm.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/security/SecurityRealm.java">
+      <file leaf-file-name="trackBackLink.jsp" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/trackBackLink.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="17" selection-start="185" selection-end="185" vertical-scroll-proportion="0.034355827">
+            <state line="9" column="56" selection-start="297" selection-end="297" vertical-scroll-proportion="0.18323353">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DefaultSecurityRealm.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/security/DefaultSecurityRealm.java">
+      <file leaf-file-name="SaveBlogPropertiesAction.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/action/SaveBlogPropertiesAction.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="116" column="13" selection-start="3968" selection-end="3968" vertical-scroll-proportion="0.2125">
+            <state line="106" column="67" selection-start="4227" selection-end="4227" vertical-scroll-proportion="-0.30609757">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UserDetailsView.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/view/impl/UserDetailsView.java">
+      <file leaf-file-name="pebble.tld" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/etc/pebble.tld">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="40" column="13" selection-start="1780" selection-end="1780" vertical-scroll-proportion="0.20858896">
+            <state line="46" column="21" selection-start="1234" selection-end="1234" vertical-scroll-proportion="0.36526945">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ChangePasswordView.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/view/impl/ChangePasswordView.java">
+      <file leaf-file-name="SelectTag.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/tagext/SelectTag.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="37" column="0" selection-start="1753" selection-end="1753" vertical-scroll-proportion="0.14601228">
+            <state line="101" column="12" selection-start="3341" selection-end="3341" vertical-scroll-proportion="0.43536586">
               <folding />
             </state>
           </provider>
@@ -828,6 +828,22 @@
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
     </configuration>
+    <configuration selected="false" default="true" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <module name="" />
+    </configuration>
+    <configuration selected="false" default="true" type="Remote" factoryName="Remote">
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" value="javadebug" />
+      <option name="HOST" value="localhost" />
+      <option name="PORT" value="5005" />
+    </configuration>
     <configuration selected="false" default="true" type="JUnit" factoryName="JUnit">
       <module name="" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -843,22 +859,6 @@
       <option name="TEST_SEARCH_SCOPE">
         <value defaultName="wholeProject" />
       </option>
-    </configuration>
-    <configuration selected="false" default="true" type="Remote" factoryName="Remote">
-      <option name="USE_SOCKET_TRANSPORT" value="true" />
-      <option name="SERVER_MODE" value="false" />
-      <option name="SHMEM_ADDRESS" value="javadebug" />
-      <option name="HOST" value="localhost" />
-      <option name="PORT" value="5005" />
-    </configuration>
-    <configuration selected="false" default="true" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <module name="" />
     </configuration>
     <configuration selected="true" default="false" name="Unit Tests" type="JUnit" factoryName="JUnit">
       <module name="pebble" />
@@ -934,8 +934,8 @@
     <layout>
       <window_info id="CVS" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.33" order="12" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.53630364" order="7" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="docked" type="docked" visible="true" weight="0.39243323" order="0" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.47433037" order="1" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="docked" type="docked" visible="true" weight="0.40430266" order="0" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.4740991" order="1" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.25" order="1" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.375" order="8" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.4" order="6" />
@@ -1040,107 +1040,107 @@
     </buildFile>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/view/impl/PasswordChangedView.java">
+    <entry file="file://$PROJECT_DIR$/etc/secure-action.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="57" column="40" selection-start="2133" selection-end="2133" vertical-scroll-proportion="0.56319016">
+        <state line="43" column="0" selection-start="2659" selection-end="2659" vertical-scroll-proportion="0.5479115">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/action/EditUserDetailsAction.java">
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/viewUsers.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="59" column="22" selection-start="2540" selection-end="2540" vertical-scroll-proportion="0.45609757">
+        <state line="54" column="66" selection-start="1781" selection-end="1781" vertical-scroll-proportion="1.5714285">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/changePassword.jsp">
+    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/action/ViewBlogPropertiesAction.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="47" selection-start="931" selection-end="931" vertical-scroll-proportion="0.6311377">
+        <state line="93" column="66" selection-start="3888" selection-end="3888" vertical-scroll-proportion="1.7015306">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/viewUserDetails.jsp">
+    <entry file="file://$PROJECT_DIR$/test/net/sourceforge/pebble/domain/BlogTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="0" selection-start="1478" selection-end="1478" vertical-scroll-proportion="0.8982036">
+        <state line="257" column="25" selection-start="9109" selection-end="9109" vertical-scroll-proportion="0.41836736">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/viewUser.jsp">
+    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/domain/Blog.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="58" column="0" selection-start="1810" selection-end="1810" vertical-scroll-proportion="0.34610778">
+        <state line="638" column="33" selection-start="23645" selection-end="23645" vertical-scroll-proportion="0.6352041">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/action/SaveUserDetailsAction.java">
+    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/action/SaveBlogPropertiesAction.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="77" column="0" selection-start="3327" selection-end="3327" vertical-scroll-proportion="0.51">
+        <state line="106" column="67" selection-start="4227" selection-end="4227" vertical-scroll-proportion="-0.30609757">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/net/sourceforge/pebble/web/action/AboutBlogActionTest.java">
+    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/tagext/SelectTag.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="50" selection-start="859" selection-end="859" vertical-scroll-proportion="0.5840491">
+        <state line="101" column="12" selection-start="3341" selection-end="3341" vertical-scroll-proportion="0.43536586">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/view/impl/UserDetailsView.java">
+    <entry file="file://$PROJECT_DIR$/etc/pebble.tld">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="40" column="13" selection-start="1780" selection-end="1780" vertical-scroll-proportion="0.20858896">
+        <state line="46" column="21" selection-start="1234" selection-end="1234" vertical-scroll-proportion="0.36526945">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/view/impl/ChangePasswordView.java">
+    <entry file="file://$PROJECT_DIR$/website/configuration.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="37" column="0" selection-start="1753" selection-end="1753" vertical-scroll-proportion="0.14601228">
+        <state line="64" column="74" selection-start="3589" selection-end="3589" vertical-scroll-proportion="0.87560976">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/action/ChangePasswordAction.java">
+    <entry file="file://$PROJECT_DIR$/etc/resources.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="72" column="0" selection-start="3136" selection-end="3136" vertical-scroll-proportion="0.50625">
+        <state line="10" column="39" selection-start="455" selection-end="455" vertical-scroll-proportion="0.20731707">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/security/SecurityRealm.java">
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/trackBackLink.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="17" selection-start="185" selection-end="185" vertical-scroll-proportion="0.034355827">
+        <state line="9" column="56" selection-start="297" selection-end="297" vertical-scroll-proportion="0.18323353">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/security/DefaultSecurityRealm.java">
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/viewBlogProperties.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="116" column="13" selection-start="3968" selection-end="3968" vertical-scroll-proportion="0.2125">
+        <state line="164" column="114" selection-start="4216" selection-end="4216" vertical-scroll-proportion="0.020731708">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/action/SaveUserAction.java">
+    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/trackback/TrackBackTokenManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="72" column="0" selection-start="3076" selection-end="3076" vertical-scroll-proportion="0.57375">
+        <state line="19" column="57" selection-start="541" selection-end="541" vertical-scroll-proportion="0.3257485">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/changelog.txt">
+    <entry file="file://$PROJECT_DIR$/build.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="0" selection-start="298" selection-end="298" vertical-scroll-proportion="0.14875">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/applicationContext-pebble.xml">
+    <entry file="file://$PROJECT_DIR$/changelog.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="43" selection-start="1057" selection-end="1057" vertical-scroll-proportion="0.425">
+        <state line="10" column="0" selection-start="559" selection-end="559" vertical-scroll-proportion="0.20731707">
           <folding />
         </state>
       </provider>

@@ -54,6 +54,12 @@ public class SelectTag extends TagSupport {
   /** the name of the select control */
   private String name;
 
+  /** the size of the select control */
+  private int size = -1;
+
+  /** the multiple attribute */
+  private boolean multiple = false;
+
   /** the name of the property to be used as the displayed label */
   private String label;
 
@@ -76,7 +82,19 @@ public class SelectTag extends TagSupport {
       // write the starting tag of the select control
       out.print("<select name=\"");
       out.print(name);
-      out.print("\">");
+      out.print("\"");
+
+      if (size > 0) {
+        out.print(" size=\"");
+        out.print(size);
+        out.print("\"");
+      }
+
+      if (multiple) {
+        out.print(" multiple=\"true\"");
+      }
+
+      out.print(">");
 
       while (iterator.hasNext()) {
         // get the next JavaBean from the items
@@ -100,8 +118,15 @@ public class SelectTag extends TagSupport {
         out.print(hiddenValue);
         out.print("\"");
 
-        if (selected != null && selected.toString().equals(hiddenValue)) {
-          out.print(" selected=\"true\"");
+        if (selected != null) {
+          if (selected instanceof Collection) {
+            Collection coll = (Collection)selected;
+            if (coll.contains(hiddenValue)) {
+              out.print(" selected=\"true\"");
+            }
+          } else if (selected.toString().equals(hiddenValue)) {
+            out.print(" selected=\"true\"");
+          }
         }
         out.print(">");
 
@@ -149,6 +174,24 @@ public class SelectTag extends TagSupport {
    */
   public void setName(String name) {
     this.name = name;
+  }
+
+  /**
+   * Sets the size of the generated select control.
+   *
+   * @param size    the size
+   */
+  public void setSize(int size) {
+    this.size = size;
+  }
+
+  /**
+   * Sets the multiple attribute on the underlying select control.
+   *
+   * @param   multiple    a boolean
+   */
+  public void setMultiple(boolean multiple) {
+    this.multiple = multiple;
   }
 
   /**

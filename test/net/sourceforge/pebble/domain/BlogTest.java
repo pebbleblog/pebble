@@ -245,7 +245,7 @@ public class BlogTest extends SingleBlogTestCase {
   public void testAssignBlogOwners() {
     blog.setProperty(Blog.BLOG_OWNERS_KEY, "user1");
     assertEquals("user1", blog.getProperty(Blog.BLOG_OWNERS_KEY));
-    assertEquals("user1", blog.getBlogOwners());
+    assertEquals("user1", blog.getBlogOwnersAsString());
 
     Collection users = blog.getUsersInRole(Constants.BLOG_OWNER_ROLE);
     assertEquals(1, users.size());
@@ -253,7 +253,7 @@ public class BlogTest extends SingleBlogTestCase {
 
     blog.setProperty(Blog.BLOG_OWNERS_KEY, "user1,user2");
     assertEquals("user1,user2", blog.getProperty(Blog.BLOG_OWNERS_KEY));
-    assertEquals("user1,user2", blog.getBlogOwners());
+    assertEquals("user1,user2", blog.getBlogOwnersAsString());
 
     users = blog.getUsersInRole(Constants.BLOG_OWNER_ROLE);
     assertEquals(2, users.size());
@@ -266,7 +266,7 @@ public class BlogTest extends SingleBlogTestCase {
    */
   public void testNullBlogOwners() {
     blog.removeProperty(Blog.BLOG_OWNERS_KEY);
-    assertEquals(null, blog.getBlogOwners());
+    assertEquals(null, blog.getBlogOwnersAsString());
 
     Collection users = blog.getUsersInRole(Constants.BLOG_OWNER_ROLE);
     assertEquals(0, users.size());
@@ -297,7 +297,7 @@ public class BlogTest extends SingleBlogTestCase {
   public void testAssignBlogContributors() {
     blog.setProperty(Blog.BLOG_CONTRIBUTORS_KEY, "user1");
     assertEquals("user1", blog.getProperty(Blog.BLOG_CONTRIBUTORS_KEY));
-    assertEquals("user1", blog.getBlogContributors());
+    assertEquals("user1", blog.getBlogContributorsAsString());
 
     Collection users = blog.getUsersInRole(Constants.BLOG_CONTRIBUTOR_ROLE);
     assertEquals(1, users.size());
@@ -305,7 +305,7 @@ public class BlogTest extends SingleBlogTestCase {
 
     blog.setProperty(Blog.BLOG_CONTRIBUTORS_KEY, "user1,user2");
     assertEquals("user1,user2", blog.getProperty(Blog.BLOG_CONTRIBUTORS_KEY));
-    assertEquals("user1,user2", blog.getBlogContributors());
+    assertEquals("user1,user2", blog.getBlogContributorsAsString());
 
     users = blog.getUsersInRole(Constants.BLOG_CONTRIBUTOR_ROLE);
     assertEquals(2, users.size());
@@ -314,7 +314,7 @@ public class BlogTest extends SingleBlogTestCase {
 
     blog.setProperty(Blog.BLOG_CONTRIBUTORS_KEY, "user1, user2");
     assertEquals("user1, user2", blog.getProperty(Blog.BLOG_CONTRIBUTORS_KEY));
-    assertEquals("user1, user2", blog.getBlogContributors());
+    assertEquals("user1, user2", blog.getBlogContributorsAsString());
 
     users = blog.getUsersInRole(Constants.BLOG_CONTRIBUTOR_ROLE);
     assertEquals(2, users.size());
@@ -327,7 +327,7 @@ public class BlogTest extends SingleBlogTestCase {
    */
   public void testNullBlogContributors() {
     blog.removeProperty(Blog.BLOG_CONTRIBUTORS_KEY);
-    assertEquals(null, blog.getBlogContributors());
+    assertEquals(null, blog.getBlogContributorsAsString());
 
     Collection users = blog.getUsersInRole(Constants.BLOG_CONTRIBUTOR_ROLE);
     assertEquals(0, users.size());

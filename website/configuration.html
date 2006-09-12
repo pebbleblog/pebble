@@ -45,7 +45,9 @@
             </ul>
 
             <h3>E-mail notifications</h3>
+            <p>
             To enable e-mal notifications using a JNDI based mail session, you'll need to follow these steps.
+            </p>
             <ol>
               <li>Uncomment the JavaMail resource reference at the bottom of the Pebble <code>web.xml</code> file.</li>
               <li>Ensure the JavaMail libraries are installed into your web/application server.</li>
@@ -55,6 +57,14 @@
             <p>
               See <a href="installation.html">Installation</a> for instructions related to specific web/application servers.
             </p>
+
+            <h3>Logging</h3>
+            <p>
+              Out-of-the-box, Pebble uses log4j (via Jakarta Commons logging) and logs everything from INFO and above to a file called
+              <code>pebble.log</code> in the directory where the web/application server is started from. To alter this, open the
+              <code>WEB-INF/classes/log4j.properties</code> file and edit as appropriate.
+            </p>
+
           </div>
         </div>
 

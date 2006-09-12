@@ -52,48 +52,12 @@
           <input type="button" value="Uncheck All" onclick="uncheckAll(document.manageUsersForm.user)" />
         </td>
         <td align="right">
+          <input type="submit" name="submit" value="Reset Password" />
           <input type="submit" name="submit" value="Remove" />
         </td>
       </tr>
     </table>
     </form>
-
-  <%--
-    <form name="addUser" action="addUser.secureaction" method="post">
-
-      <table width="99%" cellspacing="0" cellpadding="4">
-        <tr>
-          <td valign="top"><b>Username</b></td>
-          <td><input type="text" name="username" value="${newUser.username}"></td>
-        </tr>
-        <tr>
-          <td valign="top"><b>Password</b></td>
-          <td><input type="password" name="password1"></td>
-        </tr>
-        <tr>
-          <td valign="top"><b>Confirm</b></td>
-          <td><input type="password" name="password2"></td>
-        </tr>
-        <tr>
-          <td valign="top"><b>Name</b></td>
-          <td><input type="text" name="name" value="${newUser.name}"></td>
-        </tr>
-        <tr>
-          <td valign="top"><b>E-mail address</b></td>
-          <td><input type="text" name="username" value="${newUser.emailAddress}"></td>
-        </tr>
-        <tr>
-          <td valign="top"><b>Website</b></td>
-          <td><input type="text" name="username" value="${newUser.website}"></td>
-        </tr>
-        <tr>
-          <td colspan="2" align="right">
-            <input type="submit" value="Add User" />
-          </td>
-        </tr>
-      </table>
-    </form>
-    --%>
   </div>
 
 </div>

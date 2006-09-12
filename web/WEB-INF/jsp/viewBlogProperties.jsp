@@ -158,29 +158,29 @@
       </tr>
 
       <tr>
-        <td>
+        <td valign="top">
           Blog owners
         </td>
         <td>
-          <input type="text" name="blogOwners" size="40" value="${blog.blogOwners}">
+          <pebble:select name="blogOwners" items="${users}" selected="${blog.blogOwners}" label="name" value="username" size="5" multiple="true" />
         </td>
       </tr>
 
       <tr>
-        <td>
+        <td valign="top">
           Blog publishers
         </td>
         <td>
-          <input type="text" name="blogPublishers" size="40" value="${blog.blogPublishers}">
+          <pebble:select name="blogPublishers" items="${users}" selected="${blog.blogPublishers}" label="name" value="username" size="5" multiple="true" />
         </td>
       </tr>
 
       <tr>
-        <td>
+        <td valign="top">
           Blog contributors
         </td>
         <td>
-          <input type="text" name="blogContributors" size="40" value="${blog.blogContributors}">
+          <pebble:select name="blogContributors" items="${users}" selected="${blog.blogContributors}" label="name" value="username" size="5" multiple="true" />
         </td>
       </tr>
 

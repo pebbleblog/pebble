@@ -35,7 +35,6 @@ import net.sf.ehcache.Cache;
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.PebbleContext;
 import net.sourceforge.pebble.PluginProperties;
-import net.sourceforge.pebble.util.Pageable;
 import net.sourceforge.pebble.confirmation.DefaultConfirmationStrategy;
 import net.sourceforge.pebble.api.confirmation.CommentConfirmationStrategy;
 import net.sourceforge.pebble.api.confirmation.TrackBackConfirmationStrategy;
@@ -527,8 +526,26 @@ public class Blog extends AbstractBlog {
    *
    * @return  a String containng a comma separated list of user names
    */
-  public String getBlogOwners() {
+  public String getBlogOwnersAsString() {
     return properties.getProperty(BLOG_OWNERS_KEY);
+  }
+
+  /**
+   * Gets a list of the users that are blog owners for this blog.
+   *
+   * @return  a String containng a comma separated list of user names
+   */
+  public List<String> getBlogOwners() {
+    String commaSeparatedUsers = getBlogOwnersAsString();
+    List<String> users = new LinkedList<String>();
+    if (commaSeparatedUsers != null) {
+      StringTokenizer tok = new StringTokenizer(commaSeparatedUsers, ",");
+      while (tok.hasMoreTokens()) {
+        users.add(tok.nextToken().trim());
+      }
+    }
+
+    return users;
   }
 
   /**
@@ -537,8 +554,26 @@ public class Blog extends AbstractBlog {
    *
    * @return  a String containng a comma separated list of user names
    */
-  public String getBlogPublishers() {
+  public String getBlogPublishersAsString() {
     return properties.getProperty(BLOG_PUBLISHERS_KEY);
+  }
+
+  /**
+   * Gets a list of the users that are blog publishers for this blog.
+   *
+   * @return  a String containng a comma separated list of user names
+   */
+  public List<String> getBlogPublishers() {
+    String commaSeparatedUsers = getBlogPublishersAsString();
+    List<String> users = new LinkedList<String>();
+    if (commaSeparatedUsers != null) {
+      StringTokenizer tok = new StringTokenizer(commaSeparatedUsers, ",");
+      while (tok.hasMoreTokens()) {
+        users.add(tok.nextToken().trim());
+      }
+    }
+
+    return users;
   }
 
   /**
@@ -547,8 +582,26 @@ public class Blog extends AbstractBlog {
    *
    * @return  a String containng a comma separated list of user names
    */
-  public String getBlogContributors() {
+  public String getBlogContributorsAsString() {
     return properties.getProperty(BLOG_CONTRIBUTORS_KEY);
+  }
+
+  /**
+   * Gets a list of the users that are blog contributors for this blog.
+   *
+   * @return  a String containng a comma separated list of user names
+   */
+  public List<String> getBlogContributors() {
+    String commaSeparatedUsers = getBlogContributorsAsString();
+    List<String> users = new LinkedList<String>();
+    if (commaSeparatedUsers != null) {
+      StringTokenizer tok = new StringTokenizer(commaSeparatedUsers, ",");
+      while (tok.hasMoreTokens()) {
+        users.add(tok.nextToken().trim());
+      }
+    }
+
+    return users;
   }
 
   /**
@@ -576,23 +629,14 @@ public class Blog extends AbstractBlog {
    * @return  a Collection containng user names as Strings
    */
   public Collection getUsersInRole(String roleName) {
-    Set users = new HashSet();
-    String commaSeparatedUsers = null;
-    StringTokenizer tok = null;
+    List<String> users = new LinkedList<String>();
 
     if (roleName.equals(Constants.BLOG_OWNER_ROLE)) {
-      commaSeparatedUsers = properties.getProperty(BLOG_OWNERS_KEY);
+      users = getBlogOwners();
     } else if (roleName.equals(Constants.BLOG_PUBLISHER_ROLE)) {
-      commaSeparatedUsers = properties.getProperty(BLOG_PUBLISHERS_KEY);
+      users = getBlogPublishers();
     } else if (roleName.equals(Constants.BLOG_CONTRIBUTOR_ROLE)) {
-      commaSeparatedUsers = properties.getProperty(BLOG_CONTRIBUTORS_KEY);
-    }
-
-    if (commaSeparatedUsers != null) {
-      tok = new StringTokenizer(commaSeparatedUsers, ",");
-      while (tok.hasMoreTokens()) {
-        users.add(tok.nextToken().trim());
-      }
+      users = getBlogContributors();
     }
 
     return users;

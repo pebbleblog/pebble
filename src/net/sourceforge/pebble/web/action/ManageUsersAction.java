@@ -35,7 +35,6 @@ import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.PebbleContext;
 import net.sourceforge.pebble.domain.AbstractBlog;
 import net.sourceforge.pebble.security.SecurityRealm;
-import net.sourceforge.pebble.security.PebbleUserDetails;
 import net.sourceforge.pebble.security.SecurityRealmException;
 import net.sourceforge.pebble.web.view.RedirectView;
 import net.sourceforge.pebble.web.view.View;
@@ -75,15 +74,7 @@ public class ManageUsersAction extends SecureAction {
           if (submit.equalsIgnoreCase("Remove")) {
             realm.removeUser(username);
           } else if (submit.equalsIgnoreCase("Reset Password")) {
-            PebbleUserDetails currentUserDetails = realm.getUser(username);
-            PebbleUserDetails newUserDetails = new PebbleUserDetails(
-                currentUserDetails.getUsername(),
-                "password",
-                currentUserDetails.getName(),
-                currentUserDetails.getEmailAddress(),
-                currentUserDetails.getWebsite(),
-                currentUserDetails.getRoles());
-            realm.updateUser(newUserDetails);
+            realm.changePassword(username, "password");
           }
         }
       }

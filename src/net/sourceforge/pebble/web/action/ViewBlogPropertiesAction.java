@@ -32,6 +32,8 @@
 package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
+import net.sourceforge.pebble.PebbleContext;
+import net.sourceforge.pebble.security.SecurityRealmException;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.impl.BlogPropertiesView;
@@ -86,6 +88,11 @@ public class ViewBlogPropertiesAction extends SecureAction {
     Collections.sort(timeZones);
     getModel().put("timeZones", timeZones);
     getModel().put("characterEncodings", Charset.availableCharsets().keySet());
+    try {
+      getModel().put("users", PebbleContext.getInstance().getConfiguration().getSecurityRealm().getUsers());
+    } catch (SecurityRealmException sre) {
+      throw new ServletException("Could not get list of users", sre);
+    }
 
     return new BlogPropertiesView();
   }
