@@ -25,6 +25,6 @@
   &lt;/value&gt;
 &lt;/property&gt;</pre>
 
-    <blockquote><b>Note</b> : In multi-blog mode, all blogs will automatically show up on the multi-blog front page and their content will appear in the combined news feeds. To stop this from occurring you can mark your blog to be private in the <a href="./help/configuration.html">blog properties</a>.</blockquote>
+    <blockquote><b>Note</b> : In multi-blog mode, all blogs will automatically show up on the multi-blog front page and their content will appear in the combined news feeds. To stop this from occurring you can mark your blog not to be aggregated in the <a href="./help/configuration.html">blog properties</a>.</blockquote>
   </div>
 </div>

@@ -39,6 +39,7 @@ package net.sourceforge.pebble;
 public class Constants {
 
   public static final String BLOG_KEY = "blog";
+  public static final String BLOG_TYPE = "blogType";
   public static final String BLOGS = "blogs";
   public static final String MONTHLY_BLOG = "monthlyBlog";
   public static final String DAILY_BLOG = "dailyBlog";

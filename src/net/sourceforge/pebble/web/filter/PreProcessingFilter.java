@@ -151,6 +151,9 @@ public class PreProcessingFilter implements Filter {
       httpRequest.setAttribute(Constants.TAGS, b.getTags());
       httpRequest.setAttribute(Constants.PLUGIN_PROPERTIES, b.getPluginProperties());
       httpRequest.setAttribute(Constants.ARCHIVES, b.getArchives());
+      httpRequest.setAttribute(Constants.BLOG_TYPE, "singleblog");
+    } else {
+      httpRequest.setAttribute(Constants.BLOG_TYPE, "multiblog");
     }
 
     // change the character encoding so that we can successfully get

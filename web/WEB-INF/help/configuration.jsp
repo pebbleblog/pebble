@@ -41,11 +41,14 @@
       </table>
     </p>
 
-    <h3>Multi-blog properties (available when Pebble is hosting more than a single blog)</h3>
+    <c:if test="${blogManager.multiBlog}">
+    <h3>Multi-blog</h3>
     <p>
       <table border="0">
-        <tr><td width="33%" valign="top">Public/Private blog</td><td valign="top">Enables or disables aggregation of this blog in both the multi-blog home page and feeds.</td></tr>
+        <tr><td width="33%" valign="top">Aggregate</td><td valign="top">Specifies whether or not to include the blog and it's content in the <a href="${pageContext.request.contextPath}" target="_blank">aggregated home page</a> and newsfeeds.</td></tr>
       </table>
     </p>
+    </c:if>
+
   </div>
 </div>

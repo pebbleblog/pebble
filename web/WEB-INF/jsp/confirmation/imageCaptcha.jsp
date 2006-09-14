@@ -7,7 +7,7 @@
     <form action="${confirmationAction}" method="post" accept-charset="${blog.characterEncoding}">
       
       <p>
-        <fmt:message key="confirmation.imageCaptchaMessafe" />
+        <fmt:message key="confirmation.imageCaptchaMessage" />
         <br />
         <img src="${pageContext.request.contextPath}/jcaptcha" alt="Image captcha" />
         <br />

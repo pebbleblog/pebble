@@ -8,6 +8,10 @@
   <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
+    <p>
+      The properties on this page are only applicable to this blog (${blog.name}).
+    </p>
+
     <form name="propertiesForm" action="saveBlogProperties.secureaction" method="POST" accept-charset="${blog.characterEncoding}">
     <table>
       <tr>
@@ -188,22 +192,22 @@
       <tr>
         <td colspan="2">
           <br />
-          <b>Multi-user properties</b>
+          <b>Multi-blog</b>
         </td>
       </tr>
 
       <tr>
         <td>
-          Public/Private blog
+          Aggregate
         </td>
         <td>
           &nbsp;
-          Public&nbsp;<input type="radio" name="private" value="false"
+          Yes&nbsp;<input type="radio" name="private" value="false"
             <c:if test="${blog.public}">
               checked="checked"
             </c:if>
           />
-          Private<input type="radio" name="private" value="true"
+          No<input type="radio" name="private" value="true"
             <c:if test="${blog.private}">
               checked="checked"
             </c:if>

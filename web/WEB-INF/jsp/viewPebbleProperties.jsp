@@ -1,13 +1,17 @@
 <div class="contentItem">
 
   <div class="contentItemLinks">
-    <a href="./help/configuration.html" target="_blank">Help</a>
+    <a href="./help/multiBlogConfiguration.html" target="_blank">Help</a>
   </div>
 
   <h1>Pebble properties</h1>
   <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
+    <p>
+      The properties on this page are only applicable to the aggregated view when running in multi-blog mode. Individual blogs have their own properties that can be set separately.
+    </p>
+
     <form name="propertiesForm" action="savePebbleProperties.secureaction" method="POST" accept-charset="${blog.characterEncoding}">
     <table>
       <tr>

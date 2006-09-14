@@ -75,7 +75,9 @@ public class BlogService {
     Element element = cache.get(compositeKey);
     if (element != null) {
       blogEntry = (BlogEntry)element.getValue();
+      log.debug("Got blog entry " + compositeKey + " from cache");
     } else {
+      log.debug("Loading blog entry " + compositeKey + " from disk");
       BlogEntryDAO dao = DAOFactory.getConfiguredFactory().getBlogEntryDAO();
       try {
         blogEntry = dao.loadBlogEntry(blog, blogEntryId);

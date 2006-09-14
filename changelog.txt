@@ -7,6 +7,10 @@ Added ability for users to edit their own user details and change their password
 Added ability for admin users to reset passwords (back to password).
 Simplified configuring blog owners/publishers/contributors on the blog properties page.
 Fixed ConcurrentModificationException thrown when purging TrackBack tokens.
+Fixed logout problem with Firefox.
+Fixed resource bundle item typo in image captcha confirmation page.
+Added Italian translations, contributed by remagio.
+Added Pebble admin online help pages.
 
 Version 2.0.0-RC2 - 31st August 2006
 ------------------------------------

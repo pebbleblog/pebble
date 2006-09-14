@@ -59,7 +59,7 @@ public class LogoutAction extends Action {
     request.getSession().invalidate();
 
     Cookie terminate = new Cookie(TokenBasedRememberMeServices.ACEGI_SECURITY_HASHED_REMEMBER_ME_COOKIE_KEY, null);
-    terminate.setMaxAge(0);
+    terminate.setMaxAge(-1);
     response.addCookie(terminate);
     
     return new RedirectView(redirectUrl);
