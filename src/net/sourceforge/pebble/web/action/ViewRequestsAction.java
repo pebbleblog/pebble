@@ -49,8 +49,7 @@ import java.util.*;
  * Gets the requests for the specified time period.
  *
  * @author    Simon Brown
- */
-public class ViewRequestsAction extends SecureAction {
+ */public class ViewRequestsAction extends SecureAction {
 
   /**
    * Peforms the processing associated with this action.
@@ -122,7 +121,7 @@ public class ViewRequestsAction extends SecureAction {
    * @param request
    */
   public String[] getRoles(HttpServletRequest request) {
-    return new String[]{Constants.BLOG_OWNER_ROLE, Constants.BLOG_PUBLISHER_ROLE, Constants.BLOG_CONTRIBUTOR_ROLE};
+    return new String[]{Constants.BLOG_ADMIN_ROLE, Constants.BLOG_OWNER_ROLE, Constants.BLOG_PUBLISHER_ROLE, Constants.BLOG_CONTRIBUTOR_ROLE};
   }
 
 }

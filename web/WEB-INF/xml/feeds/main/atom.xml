@@ -36,7 +36,6 @@
       <c:otherwise>
         <summary type="html">
           <c:out value="${blogEntry.excerpt}" escapeXml="true"/>
-          &lt;p&gt;&lt;a href="<c:out value="${blogEntry.permalink}"/>"&gt;Read more...&lt;/a&gt;&lt;/p&gt;
         </summary>
       </c:otherwise>
     </c:choose>

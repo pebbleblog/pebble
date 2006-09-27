@@ -10,7 +10,6 @@ body {
   width: 800px;
   margin: auto;
   background: white;
-  border: black solid 1px;
 }
 #header {
   background: white url('images/header.jpg') repeat-x bottom left;
@@ -44,7 +43,7 @@ body {
   font-size: 11px;
 }
 #footer {
-  background: white;
+  background: gray url('images/footer.jpg') no-repeat bottom left;
   clear: both;
   text-align: center;
   font-size: 11px;

@@ -76,8 +76,9 @@ public class AbstractFileActionTest extends SecureActionTestCase {
     request.setParameter("type", FileMetaData.THEME_FILE);
     String roles[] = action.getRoles(request);
 
-    assertEquals(1, roles.length);
-    assertEquals(Constants.BLOG_OWNER_ROLE, roles[0]);
+    assertEquals(2, roles.length);
+    assertEquals(Constants.BLOG_ADMIN_ROLE, roles[0]);
+    assertEquals(Constants.BLOG_OWNER_ROLE, roles[1]);
   }
 
   /**
@@ -87,8 +88,9 @@ public class AbstractFileActionTest extends SecureActionTestCase {
     request.setParameter("type", FileMetaData.BLOG_DATA);
     String roles[] = action.getRoles(request);
 
-    assertEquals(1, roles.length);
-    assertEquals(Constants.BLOG_OWNER_ROLE, roles[0]);
+    assertEquals(2, roles.length);
+    assertEquals(Constants.BLOG_ADMIN_ROLE, roles[0]);
+    assertEquals(Constants.BLOG_OWNER_ROLE, roles[1]);
   }
 
   /**

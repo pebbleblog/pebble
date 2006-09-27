@@ -85,6 +85,15 @@
   </tag>
 
   <tag>
+    <name>isBlogAdminOrBlogOwner</name>
+    <tag-class>net.sourceforge.pebble.web.tagext.IsBlogAdminOrBlogOwnerTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      Includes the body content only if the current user is a blog admin or blog owner user.
+    </description>
+  </tag>
+
+  <tag>
     <name>isBlogOwner</name>
     <tag-class>net.sourceforge.pebble.web.tagext.IsBlogOwnerTag</tag-class>
     <body-content>JSP</body-content>

@@ -34,9 +34,8 @@
                 <li><a href="./help/bloggerApi.html">Blogger API</a></li>
                 <li><a href="./help/metaWeblogApi.html">MetaWeblog API</a></li>
                 <li><a href="./help/themes.html">Themes</a></li>
-                <li><a href="./help/multiuserBlogs.html">Multi-user Blogs</a></li>
-                <li><a href="./help/privateBlogs.html">Private Blogs</a></li>
                 <li><a href="./help/delicious.html">del.icio.us</a></li>
+                <li><a href="./help/securityRoles.html">Security roles</a></li>
 <%--
             <li><a href="team-blogs.html">Multi-contributor and Team Blogs</a></li>
 --%>
@@ -78,6 +77,8 @@
             <h3>Multi-blog Features</h3>
             <ol>
               <li><a href="./help/multiBlogOverview.html">Multi-blog overview</a></li>
+              <li><a href="./help/multiBlogSecurity.html">Multi-blog security</a></li>
+              <li><a href="./help/multiBlogPrivacy.html">Multi-blog privacy</a></li>
             </ol>
         </td>
         </c:if>
@@ -87,6 +88,7 @@
             <ol>
               <li><a href="./help/multiBlogConfiguration.html">Configuring Pebble</a></li>
               <li><a href="./help/managingBlogs.html">Managing Blogs</a></li>
+              <li><a href="./help/managingUsers.html">Managing Users</a></li>
             </ol>
         </td>
         </pebble:isBlogAdmin>

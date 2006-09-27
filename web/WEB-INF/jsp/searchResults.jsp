@@ -59,9 +59,5 @@
           <fmt:message key="search.noResults" />
       </c:otherwise>
     </c:choose>
-
-    <p>
-      <a href="http://www.google.com/search?q=${searchResults.query}"><fmt:message key="search.googleIt" /></a>
-    </p>
   </div>
 </div>

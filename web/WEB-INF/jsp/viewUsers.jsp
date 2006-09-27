@@ -1,5 +1,10 @@
 <div class="contentItem">
 
+
+  <div class="contentItemLinks">
+    <a href="./help/managingUsers.html" target="_blank">Help</a>
+  </div>
+
   <h1>Users</h1>
   <h2>&nbsp;</h2>
 

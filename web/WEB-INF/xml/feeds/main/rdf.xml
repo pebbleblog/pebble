@@ -26,7 +26,6 @@
       <c:otherwise>
         <description>
           <c:out value="${blogEntry.excerpt}" escapeXml="true" />
-          &lt;p&gt;&lt;a href="${blogEntry.permalink}"&gt;Read more...&lt;/a&gt;&lt;/p&gt;
         </description>
       </c:otherwise>
     </c:choose>

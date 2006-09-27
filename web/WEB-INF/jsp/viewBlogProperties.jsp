@@ -166,7 +166,7 @@
           Blog owners
         </td>
         <td>
-          <pebble:select name="blogOwners" items="${users}" selected="${blog.blogOwners}" label="name" value="username" size="5" multiple="true" />
+          <pebble:select name="blogOwners" items="${users}" selected="${blog.blogOwners}" label="name" value="username" size="10" multiple="true" />
         </td>
       </tr>
 
@@ -175,7 +175,7 @@
           Blog publishers
         </td>
         <td>
-          <pebble:select name="blogPublishers" items="${users}" selected="${blog.blogPublishers}" label="name" value="username" size="5" multiple="true" />
+          <pebble:select name="blogPublishers" items="${users}" selected="${blog.blogPublishers}" label="name" value="username" size="10" multiple="true" />
         </td>
       </tr>
 
@@ -184,7 +184,7 @@
           Blog contributors
         </td>
         <td>
-          <pebble:select name="blogContributors" items="${users}" selected="${blog.blogContributors}" label="name" value="username" size="5" multiple="true" />
+          <pebble:select name="blogContributors" items="${users}" selected="${blog.blogContributors}" label="name" value="username" size="10" multiple="true" />
         </td>
       </tr>
 

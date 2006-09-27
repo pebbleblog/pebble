@@ -9,7 +9,6 @@
       blogs that it manages. Likewise, the <a href="${pageContext.request.contextPath}/rss.xml">RSS</a> and <a href="${pageContext.request.contextPath}/atom.xml">Atom</a> feeds
       contain the same N recent blog entries across the blogs that Pebble manages. The number of blog entries
       that are shown can be configured on the <a href="${pageContext.request.contextPath}/viewPebbleProperties.secureaction">Pebble properties</a> page.
-      number of blog entries shown,
     </p>
 
   </div>

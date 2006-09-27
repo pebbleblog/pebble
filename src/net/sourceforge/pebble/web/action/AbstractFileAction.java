@@ -59,9 +59,9 @@ public abstract class AbstractFileAction extends SecureAction {
     } else if (type != null && type.equals(FileMetaData.BLOG_FILE)) {
       return new String[]{Constants.BLOG_CONTRIBUTOR_ROLE};
     } else if (type != null && type.equals(FileMetaData.THEME_FILE)) {
-      return new String[]{Constants.BLOG_OWNER_ROLE};
+      return new String[]{Constants.BLOG_ADMIN_ROLE, Constants.BLOG_OWNER_ROLE};
     } else if (type != null && type.equals(FileMetaData.BLOG_DATA)) {
-      return new String[]{Constants.BLOG_OWNER_ROLE};
+      return new String[]{Constants.BLOG_ADMIN_ROLE, Constants.BLOG_OWNER_ROLE};
     } else {
       return new String[]{};
     }

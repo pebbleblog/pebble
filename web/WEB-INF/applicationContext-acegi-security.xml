@@ -11,7 +11,7 @@
         CONVERT_URL_TO_LOWERCASE_BEFORE_COMPARISON
         PATTERN_TYPE_APACHE_ANT
         /xmlrpc/**=anonymousProcessingFilter
-        /**=httpSessionContextIntegrationFilter,authenticationProcessingFilter,rememberMeProcessingFilter,exceptionTranslationFilter,filterInvocationInterceptor
+        /**=httpSessionContextIntegrationFilter,authenticationProcessingFilter,rememberMeProcessingFilter,exceptionTranslationFilter,privateBlogFilterInvocationInterceptor,filterInvocationInterceptor
       </value>
     </property>
   </bean>
@@ -119,6 +119,13 @@
 
   <bean id="authenticationEntryPoint" class="org.acegisecurity.ui.basicauth.BasicProcessingFilterEntryPoint">
     <property name="realmName"><value>Newsfeed</value></property>
+  </bean>
+
+  <bean id="privateBlogFilterInvocationDefinitionSource" class="net.sourceforge.pebble.security.PrivateBlogFilterInvocationDefinitionSource"/>
+  <bean id="privateBlogFilterInvocationInterceptor" class="org.acegisecurity.intercept.web.FilterSecurityInterceptor">
+    <property name="authenticationManager"><ref bean="authenticationManager"/></property>
+    <property name="accessDecisionManager"><ref local="httpRequestAccessDecisionManager"/></property>
+    <property name="objectDefinitionSource"><ref local="privateBlogFilterInvocationDefinitionSource"/></property>
   </bean>
 
   <!-- Note the order that entries are placed against the objectDefinitionSource is critical.
