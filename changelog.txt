@@ -12,6 +12,7 @@ Fixed resource bundle item typo in image captcha confirmation page.
 Added Italian translations, contributed by remagio.
 Added Pebble admin online help pages.
 Fixed incorrect "Responses" link when blog entry has an original permalink associated with it.
+PEBL-2 : Successful new category creation shows old category list
 
 Version 2.0.0-RC2 - 31st August 2006
 ------------------------------------

@@ -33,6 +33,7 @@ package net.sourceforge.pebble.search;
 
 import net.sourceforge.pebble.comparator.SearchHitByDateComparator;
 import net.sourceforge.pebble.comparator.SearchHitByScoreComparator;
+import net.sourceforge.pebble.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -70,7 +71,7 @@ public class SearchResults {
    * @param s   the original query
    */
   public void setQuery(String s) {
-    this.query = s;
+    this.query = StringUtils.transformHTML(s);
   }
 
   /**

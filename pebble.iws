@@ -168,91 +168,91 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="IsBlogOwnerTag.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/tagext/IsBlogOwnerTag.java">
+      <file leaf-file-name="resources_no.properties" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/etc/resources_no.properties">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="61" column="0" selection-start="2599" selection-end="2599" vertical-scroll-proportion="0.48862275">
+            <state line="13" column="31" selection-start="673" selection-end="673" vertical-scroll-proportion="0.020731708">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="IsBlogAdminTag.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/tagext/IsBlogAdminTag.java">
+      <file leaf-file-name="resources_fi.properties" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/etc/resources_fi.properties">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="57" column="13" selection-start="2409" selection-end="2409" vertical-scroll-proportion="0.46826348">
+            <state line="0" column="27" selection-start="27" selection-end="27" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="IsBlogAdminOrBlogOwnerTag.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/tagext/IsBlogAdminOrBlogOwnerTag.java">
+      <file leaf-file-name="resources_de.properties" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/etc/resources_de.properties">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="44" column="37" selection-start="2067" selection-end="2067" vertical-scroll-proportion="0.14251497">
+            <state line="11" column="0" selection-start="588" selection-end="588" vertical-scroll-proportion="0.020731708">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="rss.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/WEB-INF/xml/feeds/main/rss.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="30" column="0" selection-start="1770" selection-end="1770" vertical-scroll-proportion="0.5707317">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="rdf.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/WEB-INF/xml/feeds/main/rdf.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="28" column="0" selection-start="1470" selection-end="1470" vertical-scroll-proportion="0.5804878">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="atom.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/WEB-INF/xml/feeds/main/atom.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="38" column="0" selection-start="2905" selection-end="2905" vertical-scroll-proportion="0.77804875">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="atom.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/WEB-INF/xml/feeds/responses/atom.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="rss.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/WEB-INF/xml/feeds/responses/rss.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="securityRoles.jsp" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/WEB-INF/help/securityRoles.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="61" column="0" selection-start="2371" selection-end="2371" vertical-scroll-proportion="0.43592814">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="applicationContext-pebble.xml" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="applicationContext-pebble.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/WEB-INF/applicationContext-pebble.xml">
           <provider selected="true" editor-type-id="text-editor">
             <state line="17" column="43" selection-start="837" selection-end="837" vertical-scroll-proportion="0.35243902">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="changelog.txt" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/changelog.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="45" column="7" selection-start="2587" selection-end="2587" vertical-scroll-proportion="0.49756098">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AddCategoryAction.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/action/AddCategoryAction.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="55" column="13" selection-start="2333" selection-end="2333" vertical-scroll-proportion="0.36646706">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SaveCategoryAction.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/action/SaveCategoryAction.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="63" column="0" selection-start="2735" selection-end="2735" vertical-scroll-proportion="0.4479042">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PreProcessingFilter.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/filter/PreProcessingFilter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="151" column="0" selection-start="5906" selection-end="5906" vertical-scroll-proportion="0.46097562">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ViewCategoriesAction.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/action/ViewCategoriesAction.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="59" column="3" selection-start="2577" selection-end="2577" vertical-scroll-proportion="0.4479042">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="changelog.txt" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/changelog.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="9" column="87" selection-start="597" selection-end="597" vertical-scroll-proportion="0.18658537">
               <folding />
             </state>
           </provider>
@@ -888,21 +888,12 @@
       <RunnerSettings RunnerId="Run" />
       <ConfigurationWrapper RunnerId="Run" />
     </tempConfiguration>
-    <configuration selected="false" default="true" type="JUnit" factoryName="JUnit">
-      <module name="" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="METHOD_NAME" />
-      <option name="TEST_OBJECT" value="class" />
-      <option name="VM_PARAMETERS" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ADDITIONAL_CLASS_PATH" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="wholeProject" />
-      </option>
+    <configuration selected="false" default="true" type="Remote" factoryName="Remote">
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" value="javadebug" />
+      <option name="HOST" value="localhost" />
+      <option name="PORT" value="5005" />
     </configuration>
     <configuration selected="false" default="true" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" />
@@ -925,12 +916,21 @@
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
     </configuration>
-    <configuration selected="false" default="true" type="Remote" factoryName="Remote">
-      <option name="USE_SOCKET_TRANSPORT" value="true" />
-      <option name="SERVER_MODE" value="false" />
-      <option name="SHMEM_ADDRESS" value="javadebug" />
-      <option name="HOST" value="localhost" />
-      <option name="PORT" value="5005" />
+    <configuration selected="false" default="true" type="JUnit" factoryName="JUnit">
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ADDITIONAL_CLASS_PATH" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="wholeProject" />
+      </option>
     </configuration>
     <configuration selected="true" default="false" name="Unit Tests" type="JUnit" factoryName="JUnit">
       <module name="pebble" />
@@ -1001,12 +1001,12 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1400" height="1016" extended-state="0" />
+    <frame x="0" y="0" width="1400" height="1016" extended-state="1" />
     <editor active="true" />
     <layout>
       <window_info id="CVS" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.33" order="12" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.53630364" order="7" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="docked" type="docked" visible="true" weight="0.3434718" order="0" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="docked" type="docked" visible="true" weight="0.3486647" order="0" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.4740991" order="1" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.25" order="1" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.375" order="8" />
@@ -1112,100 +1112,58 @@
     </buildFile>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/action/ViewRefererFiltersAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="77" column="0" selection-start="3154" selection-end="3154" vertical-scroll-proportion="0.76707315">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/action/RemoveRefererFiltersAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="79" column="0" selection-start="3235" selection-end="3235" vertical-scroll-proportion="0.85">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/action/AddRefererFiltersAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="90" column="0" selection-start="3699" selection-end="3699" vertical-scroll-proportion="0.8487805">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/fragments/admin.jspf">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="65" column="0" selection-start="3617" selection-end="3617" vertical-scroll-proportion="0.35243902">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/etc/pebble.tld">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="91" column="87" selection-start="2461" selection-end="2461" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/tagext/IsBlogOwnerTag.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="61" column="0" selection-start="2599" selection-end="2599" vertical-scroll-proportion="0.48862275">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/tagext/IsBlogAdminTag.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="57" column="13" selection-start="2409" selection-end="2409" vertical-scroll-proportion="0.46826348">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/tagext/IsBlogAdminOrBlogOwnerTag.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="37" selection-start="2067" selection-end="2067" vertical-scroll-proportion="0.14251497">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/xml/feeds/main/rss.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="0" selection-start="1770" selection-end="1770" vertical-scroll-proportion="0.5707317">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/xml/feeds/main/rdf.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="0" selection-start="1470" selection-end="1470" vertical-scroll-proportion="0.5804878">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/xml/feeds/main/atom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="38" column="0" selection-start="2905" selection-end="2905" vertical-scroll-proportion="0.77804875">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/xml/feeds/responses/atom.xml">
+    <entry file="file://$PROJECT_DIR$/etc/resources_fr.properties">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/xml/feeds/responses/rss.xml">
+    <entry file="file://$PROJECT_DIR$/etc/resources.properties">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/help/securityRoles.jsp">
+    <entry file="file://$PROJECT_DIR$/etc/resources_zh_TW.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="61" column="0" selection-start="2371" selection-end="2371" vertical-scroll-proportion="0.43592814">
+        <state line="10" column="0" selection-start="561" selection-end="561" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/etc/resources_nl.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="0" selection-start="645" selection-end="645" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/etc/resources_ja.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/etc/resources_no.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="31" selection-start="673" selection-end="673" vertical-scroll-proportion="0.020731708">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/etc/resources_fi.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="27" selection-start="27" selection-end="27" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/etc/resources_de.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="0" selection-start="588" selection-end="588" vertical-scroll-proportion="0.020731708">
           <folding />
         </state>
       </provider>
@@ -1213,6 +1171,48 @@
     <entry file="file://$PROJECT_DIR$/web/WEB-INF/applicationContext-pebble.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="17" column="43" selection-start="837" selection-end="837" vertical-scroll-proportion="0.35243902">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/changelog.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="45" column="7" selection-start="2587" selection-end="2587" vertical-scroll-proportion="0.49756098">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/filter/PreProcessingFilter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="151" column="0" selection-start="5906" selection-end="5906" vertical-scroll-proportion="0.46097562">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/action/AddCategoryAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="55" column="13" selection-start="2333" selection-end="2333" vertical-scroll-proportion="0.36646706">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/action/SaveCategoryAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="63" column="0" selection-start="2735" selection-end="2735" vertical-scroll-proportion="0.4479042">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/sourceforge/pebble/web/action/ViewCategoriesAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="59" column="3" selection-start="2577" selection-end="2577" vertical-scroll-proportion="0.4479042">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/changelog.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="87" selection-start="597" selection-end="597" vertical-scroll-proportion="0.18658537">
           <folding />
         </state>
       </provider>

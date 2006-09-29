@@ -19,19 +19,11 @@
       </thead>
       <tbody>
         <tr>
-          <td>Modify user details/change password</td>
-          <td align="center">X</td><td align="center">X</td><td align="center">X</td><td align="center">X</td>
-        </tr>
-        <tr>
-          <td>Manage Pebble properties</td>
+          <td>Manage Pebble properties (multi-blog only)</td>
           <td align="center">X</td><td align="center"> </td><td align="center"> </td><td align="center"> </td>
         </tr>
         <tr>
-          <td>Add blog</td>
-          <td align="center">X</td><td align="center"> </td><td align="center"> </td><td align="center"> </td>
-        </tr>
-        <tr>
-          <td>Add/edit/remove user</td>
+          <td>Add blog (multi-blog only)</td>
           <td align="center">X</td><td align="center"> </td><td align="center"> </td><td align="center"> </td>
         </tr>
         <tr>
@@ -78,6 +70,14 @@
         <tr>
           <td>Approve/Reject/Remove responses</td>
           <td align="center"> </td><td align="center"> </td><td align="center"> </td><td align="center">X</td>
+        </tr>
+        <tr>
+          <td>Modify user details/change password</td>
+          <td align="center">X</td><td align="center">X</td><td align="center">X</td><td align="center">X</td>
+        </tr>
+        <tr>
+          <td>Add/edit/remove user</td>
+          <td align="center">X</td><td align="center"> </td><td align="center"> </td><td align="center"> </td>
         </tr>
       </tbody>
     </table>
