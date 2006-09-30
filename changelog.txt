@@ -1,4 +1,4 @@
-Version 2.0.0 - September 2006
+Version 2.0.0 - October 2006
 ------------------------------
 Fixed problem with &quot; appearing in comments.
 Fixed problem with blog contributors editing/removing static pages.
@@ -8,10 +8,19 @@ Added ability for admin users to reset passwords (back to password).
 Simplified configuration of blog owners/publishers/contributors on the blog properties page.
 Fixed ConcurrentModificationException thrown when purging TrackBack tokens.
 Fixed logout problem with Firefox.
-Fixed resource bundle item typo in image captcha confirmation page.
-Added Italian translations, contributed by remagio.
+Fixed resource bundle (default, en) item typo in image captcha confirmation page.
 Added Pebble admin online help pages.
 Fixed incorrect "Responses" link when blog entry has an original permalink associated with it.
+Simplified Chinese translation, provided by Weiqi Gao.
+Traditional Chinese translation, provided by Kene Lin.
+Dutch translation, provided by Ron Smits.
+Finnish translation, provided by Lasse Koskela.
+French translation, provided by Valentin Crettaz.
+German translation, provided by Sascha Kohlmann and Gabi Lohmann.
+Italian translation, provided by remagio.
+Norwegian translation, provided by Tor Helland.
+Japanese translation, provided by Okura (Pebble JP project).
+Removed potential XSS attack by removing Google link from search results and applying patch from Paolo Perego.
 PEBL-2 : Successful new category creation shows old category list
 
 Version 2.0.0-RC2 - 31st August 2006
