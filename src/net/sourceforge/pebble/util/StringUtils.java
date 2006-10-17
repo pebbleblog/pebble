@@ -149,14 +149,10 @@ public final class StringUtils {
       m = OPENING_A_TAG_PATTERN.matcher(s);
     }
 
-    // escaped angle brackets
+    // escaped angle brackets and other allowed entities
     s = s.replaceAll("&amp;lt;", "&lt;");
     s = s.replaceAll("&amp;gt;", "&gt;");
-
-    // and other "allowed" entities
-    s = s.replaceAll("&amp;#", "&#");
-    s = s.replaceAll("&amp;nbsp;", "&nbsp;");
-    s = s.replaceAll("&amp;quot;", "&quot;");
+    s = s.replaceAll("&amp;(.*);", "&$1;");
 
     return s;
   }

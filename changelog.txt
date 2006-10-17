@@ -21,7 +21,8 @@ Italian translation, provided by remagio.
 Norwegian translation, provided by Tor Helland.
 Japanese translation, provided by Okura (Pebble JP project).
 Removed potential XSS attack by removing Google link from search results and applying patch from Paolo Perego.
-PEBL-2 : Successful new category creation shows old category list
+PEBL-2 : Successful new category creation shows old category list.
+Fixed problem with non-English characters in comments.
 
 Version 2.0.0-RC2 - 31st August 2006
 ------------------------------------

@@ -76,7 +76,11 @@ emailAddress=username@domain.com</pre>
             </p>
 
             <p>
-              [Further details to appear in final 2.0.0 release.]
+              In addition to configuring Acegi's <code>authenticationManager</code> bean, you'll additionally need to
+              provide an implementation of, and configure the <code>pebbleSecurityRealm</code> bean. This needs to
+              implement the <code>net.sourceforge.pebble.security.SecurityRealm</code> interface, which specifies the various
+              CRUD operations on the underlying security realm that are required so that user information can be updated
+              through Pebble's web UI.
             </p>
           </div>
         </div>
