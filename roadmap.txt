@@ -1,0 +1,5 @@
+v2.1
+----
+Automatic private blogs (i.e. private blogs without the need to edit acegi configuration).
+Default settings for new blogs in multi-blog mode.
+Full JSP integration with the FCKeditor image browser.
