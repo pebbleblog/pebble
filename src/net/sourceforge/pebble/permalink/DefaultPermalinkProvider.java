@@ -47,7 +47,7 @@ import java.util.Date;
  */
 public class DefaultPermalinkProvider extends PermalinkProviderSupport {
 
-  /** the regex used to check for a blog entry permalink */
+  /** the regex used to check for a blog entry permalink : /yyyy/mm/dd/blogentryid.html */
   private static final String BLOG_ENTRY_PERMALINK_REGEX = "/\\d\\d\\d\\d/\\d\\d/\\d\\d/\\d*.html";
 
   /**
@@ -104,7 +104,7 @@ public class DefaultPermalinkProvider extends PermalinkProviderSupport {
     Blog blog = getBlog();
     BlogService service = new BlogService();
     try {
-      return service.getBlogEntry(blog, uri.substring(12, 25));
+      return service.getBlogEntry(blog, uri.substring(12, uri.lastIndexOf(".")));
     } catch (BlogServiceException e) {
       return null;
     }

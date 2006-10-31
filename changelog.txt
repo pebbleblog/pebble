@@ -1,5 +1,5 @@
-Version 2.0.0 - October 2006
-------------------------------
+Version 2.0.0 - 1st November 2006
+---------------------------------
 Fixed problem with &quot; appearing in comments.
 Fixed problem with blog contributors editing/removing static pages.
 Blog admins can modify blog properties and plugins of any blog.
@@ -24,6 +24,8 @@ Removed potential XSS attack by removing Google link from search results and app
 PEBL-2 : Successful new category creation shows old category list.
 Fixed problem with non-English characters in comments.
 Added FCKeditor patch to enable more features, from Mark Phippard.
+Fixed problem with blog entries being published in 2001 and earlier.
+Brazillian Portuguese translation, provided by Pedro Bachiega.
 
 Version 2.0.0-RC2 - 31st August 2006
 ------------------------------------

@@ -36,6 +36,7 @@ import net.sourceforge.pebble.domain.BlogService;
 import net.sourceforge.pebble.api.permalink.PermalinkProvider;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 /**
  * Tests for the DefaultPermalinkProvider class.
@@ -76,6 +77,7 @@ public class DefaultPermalinkProviderTest extends PermalinkProviderSupportTestCa
    */
   public void testIsBlogEntryPermalink() {
     assertTrue(permalinkProvider.isBlogEntryPermalink("/2004/01/01/1234567890123.html"));
+    assertTrue(permalinkProvider.isBlogEntryPermalink("/2004/01/01/123456789012.html"));
     assertFalse(permalinkProvider.isBlogEntryPermalink("/1234567890123.html"));
     assertFalse(permalinkProvider.isBlogEntryPermalink("/someotherpage.html"));
     assertFalse(permalinkProvider.isBlogEntryPermalink(""));
@@ -90,6 +92,10 @@ public class DefaultPermalinkProviderTest extends PermalinkProviderSupportTestCa
     BlogEntry blogEntry1 = new BlogEntry(blog);
     BlogEntry blogEntry2 = new BlogEntry(blog);
     service.putBlogEntry(blogEntry1);
+
+    Calendar cal = blog.getCalendar();
+    cal.set(Calendar.YEAR, 2000);
+    blogEntry2.setDate(cal.getTime());
     service.putBlogEntry(blogEntry2);
 
     String uri = permalinkProvider.getPermalink(blogEntry1);

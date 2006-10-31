@@ -127,13 +127,7 @@
       </fileset>
     </copy>
 
-    <copy todir="web/themes/pebble/jsp">
-      <fileset dir="web/themes/default/jsp">
-        <include name="*.jsp"/>
-      </fileset>
-    </copy>
-
-    <copy file="web/themes/pebble/screen.css" tofile="web/themes/orange/screen.css" />
+    <copy file="web/themes/default/screen.css" tofile="web/themes/orange/screen.css" />
     <replace file="web/themes/orange/screen.css" token="#6e7d8e" value="#9b6e50" />
     <copy todir="web/themes/orange/jsp">
       <fileset dir="web/themes/default/jsp">
@@ -256,9 +250,9 @@
   </target>
 
   <target name="website">
-    <copy file="web/themes/pebble/screen.css" tofile="${website.dir}/screen.css" />
+    <copy file="web/themes/default/screen.css" tofile="${website.dir}/screen.css" />
     <copy todir="${website.dir}/images">
-      <fileset dir="web/themes/pebble/images">
+      <fileset dir="web/themes/default/images">
         <include name="*.gif"/>
         <include name="*.jpg"/>
         <include name="*.png"/>
