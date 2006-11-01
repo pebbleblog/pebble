@@ -1,7 +1,7 @@
   <div class="contentItem">
 
   <div class="contentItemLinks">
-    <a href="./help/comment-and-trackback-spam.html" target="_blank">Help</a>
+    <a href="./help/commentAndTrackbackSpam.html" target="_blank">Help</a>
   </div>
 
   <h1>

@@ -26,6 +26,9 @@ Fixed problem with non-English characters in comments.
 Added FCKeditor patch to enable more features, from Mark Phippard.
 Fixed problem with blog entries being published in 2001 and earlier.
 Brazillian Portuguese translation, provided by Pedro Bachiega.
+PEBL-5 : Broken help link on Blog properties page
+PEBL-6 : Broken help link on Approved responses page
+Added unpublished blog entries view.
 
 Version 2.0.0-RC2 - 31st August 2006
 ------------------------------------

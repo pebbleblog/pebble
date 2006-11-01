@@ -33,11 +33,12 @@
       </table>
     </p>
 
-    <h3>Security</h3>
+    <a name="security"></a><h3>Security</h3>
     <p>
       <table border="0">
-        <tr><td width="33%" valign="top">Blog owners</td><td valign="top">A comma separated list of usernames for those users that are blog owners for this blog. This is used when Pebble runs in multi-user mode.</td></tr>
-        <tr><td width="33%" valign="top">Blog contributors</td><td valign="top">A comma separated list of usernames for those users that are blog contributors for this blog. This is used when Pebble runs in multi-user mode.</td></tr>
+        <tr><td width="33%" valign="top">Blog owners</td><td valign="top">A list of usernames for those users that are blog owners for this blog. This is used when Pebble runs in multi-user mode.</td></tr>
+        <tr><td width="33%" valign="top">Blog publishers</td><td valign="top">A list of usernames for those users that are blog publishers for this blog. This is used when Pebble runs in multi-user mode.</td></tr>
+        <tr><td width="33%" valign="top">Blog contributors</td><td valign="top">A list of usernames for those users that are blog contributors for this blog. This is used when Pebble runs in multi-user mode.</td></tr>
       </table>
     </p>
 

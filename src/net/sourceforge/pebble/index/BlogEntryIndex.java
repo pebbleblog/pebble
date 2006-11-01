@@ -198,6 +198,24 @@ public class BlogEntryIndex {
   }
 
   /**
+   * Gets the number of published blog entries for this blog.
+   *
+   * @return  an int
+   */
+  public int getNumberOfPublishedBlogEntries() {
+    return publishedIndexEntries.size();
+  }
+
+  /**
+   * Gets the number of unpublished blog entries for this blog.
+   *
+   * @return  an int
+   */
+  public int getNumberOfUnpublishedBlogEntries() {
+    return unpublishedIndexEntries.size();
+  }
+
+  /**
    * Gets the full list of blog entries.
    *
    * @return  a List of blog entry IDs

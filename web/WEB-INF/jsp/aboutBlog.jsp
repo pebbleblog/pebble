@@ -1,9 +1,5 @@
 <div class="contentItem">
 
-  <div class="contentItemLinks">
-    <a href="./help/index.html" target="_blank">Help</a>
-  </div>
-
   <h1>About this blog</h1>
   <h2>&nbsp;</h2>
 
@@ -14,7 +10,7 @@
     <tr class="odd">
       <td valign="top"><b>Blog entries</b></td>
       <td>
-          <fmt:formatNumber value="${blog.numberOfBlogEntries}"/>
+          <fmt:formatNumber value="${blog.numberOfBlogEntries}"/> (published=<fmt:formatNumber value="${blog.numberOfPublishedBlogEntries}"/>, unpublished=<fmt:formatNumber value="${blog.numberOfUnpublishedBlogEntries}"/>)
       </td>
     </tr>
 

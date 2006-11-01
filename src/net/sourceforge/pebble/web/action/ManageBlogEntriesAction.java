@@ -32,7 +32,10 @@
 package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
-import net.sourceforge.pebble.domain.*;
+import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.domain.BlogEntry;
+import net.sourceforge.pebble.domain.BlogService;
+import net.sourceforge.pebble.domain.BlogServiceException;
 import net.sourceforge.pebble.web.view.RedirectView;
 import net.sourceforge.pebble.web.view.View;
 import org.apache.commons.logging.Log;
@@ -81,12 +84,26 @@ public class ManageBlogEntriesAction extends SecureAction {
             } catch (BlogServiceException be) {
               throw new ServletException(be);
             }
+          } else if (submit.equals("Publish")) {
+            // this publishes the entry as-is (i.e. with the same
+            // date/time it already has)
+            try {
+              blogEntry.setPublished(true);
+              service.putBlogEntry(blogEntry);
+            } catch (BlogServiceException be) {
+              throw new ServletException(be);
+            }
           }
         }
       }
     }
 
-    return new RedirectView(blog.getUrl());
+    String redirectUrl = request.getParameter("redirectUrl");
+    if (redirectUrl != null && redirectUrl.trim().length() > 0) {
+      return new RedirectView(redirectUrl);
+    } else {
+      return new RedirectView(blog.getUrl());
+    }
   }
 
   /**

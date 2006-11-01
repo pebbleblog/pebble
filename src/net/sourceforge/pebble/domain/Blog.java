@@ -842,8 +842,29 @@ public class Blog extends AbstractBlog {
         try {
           blogEntries.addAll(service.getBlogEntries(this, y.getYear(), months[month].getMonth()));
         } catch (BlogServiceException e) {
-          // do nothing
+          log.error(e);
         }
+      }
+    }
+
+    return blogEntries;
+  }
+
+  /**
+   * Gets all unpublished blog entries for this blog.
+   *
+   * @return  a List of BlogEntry objects
+   */
+  public List<BlogEntry> getUnpublishedBlogEntries() {
+    List<BlogEntry> blogEntries = new ArrayList<BlogEntry>();
+    BlogService service = new BlogService();
+
+    List<String> blogEntryIds = blogEntryIndex.getUnpublishedBlogEntries();
+    for (String blogEntryId : blogEntryIds) {
+      try {
+        blogEntries.add(service.getBlogEntry(this, blogEntryId));
+      } catch (BlogServiceException e) {
+        log.error(e);
       }
     }
 
@@ -857,6 +878,24 @@ public class Blog extends AbstractBlog {
    */
   public int getNumberOfBlogEntries() {
     return blogEntryIndex.getNumberOfBlogEntries();
+  }
+
+  /**
+   * Gets the number of published blog entries for this blog.
+   *
+   * @return  an int
+   */
+  public int getNumberOfPublishedBlogEntries() {
+    return blogEntryIndex.getNumberOfPublishedBlogEntries();
+  }
+
+  /**
+   * Gets the number of unpublished blog entries for this blog.
+   *
+   * @return  an int
+   */
+  public int getNumberOfUnpublishedBlogEntries() {
+    return blogEntryIndex.getNumberOfUnpublishedBlogEntries();
   }
 
   /**
@@ -875,7 +914,7 @@ public class Blog extends AbstractBlog {
         BlogEntry blogEntry = service.getBlogEntry(this, blogEntryId);
         blogEntries.add(blogEntry);
       } catch (BlogServiceException e) {
-        // do nothing
+        log.error(e);
       }
 
       if (blogEntries.size() == numberOfEntries) {
@@ -966,7 +1005,7 @@ public class Blog extends AbstractBlog {
           blogEntries.add(blogEntry);
         }
       } catch (BlogServiceException e) {
-        // do nothing
+        log.error(e);
       }
 
       if (blogEntries.size() == getRecentBlogEntriesOnHomePage()) {
@@ -995,7 +1034,7 @@ public class Blog extends AbstractBlog {
           blogEntries.add(blogEntry);
         }
       } catch (BlogServiceException e) {
-        // do nothing
+        log.error(e);
       }
 
       if (blogEntries.size() == getRecentBlogEntriesOnHomePage()) {
@@ -1022,7 +1061,7 @@ public class Blog extends AbstractBlog {
           responses.add(response);
         }
       } catch (BlogServiceException e) {
-        // do nothing
+        log.error(e);
       }
 
       if (responses.size() == getRecentResponsesOnHomePage()) {

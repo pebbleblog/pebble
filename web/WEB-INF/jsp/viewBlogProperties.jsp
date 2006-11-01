@@ -157,7 +157,7 @@
       <tr>
         <td colspan="2">
           <br />
-          <b>Security</b> (<span class="help"><a href="./help/multiuser-blogs.html#security" target="_blank">Help</a></span>)
+          <b>Security</b> (<span class="help"><a href="./help/configuration.html#security" target="_blank">Help</a></span>)
         </td>
       </tr>
 

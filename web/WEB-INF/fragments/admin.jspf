@@ -32,6 +32,8 @@
     <a href="javascript:void(location.href='<c:out value="${blog.url}saveBlogEntry.secureaction"/>?title='+escape(document.title)+'&amp;body=%3Ca+href%3D%22'+escape(document.URL)+'%22%3E'+escape(document.title)+'%3C%2Fa%3E&amp;trackBacksEnabled=true&amp;commentsEnabled=true&amp;submit=Preview#form')" title="Add this bookmarklet to your favourites">Blog this</a>
     --%>
     <br />
+    <a href="viewUnpublishedBlogEntries.secureaction" title="View unpublished blog entries">Unpublished blog entries</a> (<fmt:formatNumber value="${blog.numberOfUnpublishedBlogEntries}"/>)
+    <br />
     <a href="files/" title="Manage files in blog">Files</a> |
     <a href="images/" title="Manage images in blog">Images</a>
     <br />

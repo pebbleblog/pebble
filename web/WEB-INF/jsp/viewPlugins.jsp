@@ -41,7 +41,7 @@
       <br /><br />
 
       <a name="commentConfirmationStrategy"></a>
-      Comment Confirmation Strategy
+      Comment Confirmation Strategy (<span class="help"><a href="./help/confirmationStrategies.html#commentProcess" target="_blank">Help</a></span>)
       <br />
       <input type="text" name="commentConfirmationStrategy" size="60" value="${blog.commentConfirmationStrategyName}" />
       <br /><br />
@@ -53,7 +53,7 @@
       <br /><br />
 
       <a name="trackBackConfirmationStrategy"></a>
-      TrackBack Confirmation Strategy
+      TrackBack Confirmation Strategy (<span class="help"><a href="./help/confirmationStrategies.html#trackbackProcess" target="_blank">Help</a></span>)
       <br />
       <input type="text" name="trackBackConfirmationStrategy" size="60" value="${blog.trackBackConfirmationStrategyName}" />
       <br /><br />
