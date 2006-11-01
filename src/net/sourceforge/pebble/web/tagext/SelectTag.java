@@ -136,7 +136,7 @@ public class SelectTag extends TagSupport {
           // to represent the displayable label
           Method m = o.getClass().getMethod("get" + label.substring(0, 1).toUpperCase() + label.substring(1), new Class[] {});
           out.print(
-              m.invoke(o, new Object[]{}).toString());
+              m.invoke(o, new Object[]{}));
         } else {
           out.print(o.toString());
         }

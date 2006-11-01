@@ -82,7 +82,7 @@ public class PebbleContextListener implements ServletContextListener {
     BlogManager.getInstance().setMultiBlog(config.isMultiBlog());
     BlogManager.getInstance().startBlogs();
 
-    // TODO : when starting blogs, configure any that have been marked as
+    // TODO v2.1 : when starting blogs, configure any that have been marked as
     // private to require authentication
 //    FilterSecurityInterceptor interceptor = (FilterSecurityInterceptor)applicationContext.getBean("privateBlogFilterInvocationInterceptor");
 //    for (Blog blog : (Collection<Blog>)BlogManager.getInstance().getBlogs()) {
