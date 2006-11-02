@@ -154,7 +154,7 @@
       <tr>
         <td valign="top"><b>Date/time</b></td>
         <td>
-          <input type="text" name="date" size="60" value="<fmt:formatDate value="${blogEntry.date}" type="both" dateStyle="medium" timeStyle="short" />">
+          <input type="text" name="date" size="30" value="<fmt:formatDate value="${blogEntry.date}" type="both" dateStyle="medium" timeStyle="short" />"> (can't be in the future)
         </td>
       </tr>
       </c:if>

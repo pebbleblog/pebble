@@ -32,7 +32,7 @@
               <input type="radio" name="publishDate" value="now" />&nbsp;Now
               <br />
               <jsp:useBean id="now" class="java.util.Date" />
-              <input type="radio" name="publishDate" value="custom" />&nbsp;<input type="text" name="date" size="20" value="<fmt:formatDate value="${now}" type="both" dateStyle="medium" timeStyle="short" />" onfocus="publishBlogEntryForm.publishDate[2].checked=true">
+              <input type="radio" name="publishDate" value="custom" />&nbsp;<input type="text" name="date" size="30" value="<fmt:formatDate value="${now}" type="both" dateStyle="medium" timeStyle="short" />" onfocus="publishBlogEntryForm.publishDate[2].checked=true"> (can't be in the future)
             </td>
           </tr>
 
