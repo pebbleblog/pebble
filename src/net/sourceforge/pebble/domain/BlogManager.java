@@ -106,11 +106,9 @@ public class BlogManager {
     File blogsDirectory = getBlogsDirectory();
     File defaultBlog = new File(blogsDirectory, DEFAULT_BLOG);
 
-    if (!dataDirectory.exists()) {
-      log.info("Pebble data directory does not exist - creating");
-      dataDirectory.mkdirs();
-      blogsDirectory.mkdir();
-      defaultBlog.mkdir();
+    if (!blogsDirectory.exists()) {
+      log.info("Pebble blog directory does not exist - creating");
+      defaultBlog.mkdirs();
     }
 
     if (isMultiBlog()) {

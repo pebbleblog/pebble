@@ -43,7 +43,7 @@ public class DefaultSecurityRealm implements SecurityRealm {
     try {
       File realm = getFileForRealm();
       if (!realm.exists()) {
-        realm.mkdir();
+        realm.mkdirs();
         log.warn("*** Creating default user (username/password)");
         log.warn("*** Don't forget to delete this user in a production deployment!");
         PebbleUserDetails defaultUser = new PebbleUserDetails("username", "password", "Default User", "username@domain.com", "http://www.domain.com", new String[] {Constants.BLOG_OWNER_ROLE, Constants.BLOG_PUBLISHER_ROLE, Constants.BLOG_CONTRIBUTOR_ROLE, Constants.BLOG_ADMIN_ROLE});
