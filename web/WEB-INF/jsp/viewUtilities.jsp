@@ -22,6 +22,7 @@
         <a href="exportBlog.secureaction?flavor=rdf" title="Export blog as RDF 1.0">RDF</a> or
         <a href="exportBlog.secureaction?flavor=atom" title="Export blog as Atom 1.0">Atom</a>.
       </li>
+      <li><a href="utilities.secureaction?action=fixHtmlInResponses">Fix HTML in responses</a> : fix any HTML entities that are being incorrectly escaped in comments and TrackBacks.</li>
       <li><a href="zipDirectory.secureaction?type=blogData&amp;path=/logs" title="Export logs as ZIP file">Export logs</a> : export your logs as a ZIP file</li>
     </ul>
   </div>
