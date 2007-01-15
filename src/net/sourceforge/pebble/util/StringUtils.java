@@ -152,7 +152,7 @@ public final class StringUtils {
     // escaped angle brackets and other allowed entities
     s = s.replaceAll("&amp;lt;", "&lt;");
     s = s.replaceAll("&amp;gt;", "&gt;");
-    s = s.replaceAll("&amp;(.*);", "&$1;");
+    s = s.replaceAll("&amp;(.*?);", "&$1;");
 
     return s;
   }

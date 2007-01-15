@@ -79,6 +79,7 @@ public class StringUtilsTest extends TestCase {
     assertEquals("Here is a &#8217; character", StringUtils.transformToHTMLSubset("Here is a &amp;#8217; character"));
     assertEquals("Here is a &quot; symbol", StringUtils.transformToHTMLSubset("Here is a &amp;quot; symbol"));
     assertEquals("&uacute;", StringUtils.transformToHTMLSubset("&amp;uacute;"));
+    assertEquals("see contracts as &quot;fly-by-night&quot; sorts", StringUtils.transformToHTMLSubset("see contracts as &amp;quot;fly-by-night&amp;quot; sorts"));
   }
 
   public void testFilterNewLines() {
