@@ -8,7 +8,7 @@
   <lastBuildDate><fmt:formatDate value="${blog.lastModified}" pattern="EEE, dd MMM yyyy HH:mm:ss z" timeZone="GMT"/></lastBuildDate>
   <generator>Pebble (http://pebble.sourceforge.net)</generator>
   <docs>http://backend.userland.com/rss</docs>
-  <c:if test="${not empty image}">
+  <c:if test="${not empty blog.image}">
   <image>
     <url>${blog.image}</url>
     <title><c:out value="${blog.name}" escapeXml="true"/><c:if test="${not empty category}"> (<c:out value="${category.name}" escapeXml="true"/> category)</c:if></title>
