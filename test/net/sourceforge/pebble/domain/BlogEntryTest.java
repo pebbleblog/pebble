@@ -908,12 +908,12 @@ public class BlogEntryTest extends SingleBlogTestCase {
     blogEntry.setTags("entry+specific+tag");
 
     List tags = blogEntry.getAllTags();
-    assertEquals(blog.getTag("entry+specific+tag"), tags.get(0));
-    assertEquals(blog.getTag("junit"), tags.get(1));
-    assertEquals(blog.getTag("automated+testing"), tags.get(2));
-    assertEquals(blog.getTag("java"), tags.get(3));
-    assertEquals(blog.getTag("apple"), tags.get(4));
-    assertEquals(blog.getTag("myblog"), tags.get(5));
+    assertTrue(tags.contains(blog.getTag("entry+specific+tag")));
+    assertTrue(tags.contains(blog.getTag("junit")));
+    assertTrue(tags.contains(blog.getTag("automated+testing")));
+    assertTrue(tags.contains(blog.getTag("java")));
+    assertTrue(tags.contains(blog.getTag("apple")));
+    assertTrue(tags.contains(blog.getTag("myblog")));
   }
 
   /**
