@@ -1,10 +1,9 @@
 <div class="sidebarItem">
 <pebble:isNotAuthenticated>
-  <div class="sidebarItemTitle"><span><fmt:message key='login.login' /></span></div>
-  <br />
-  <form name="loginForm" method="post" action="${pebbleContext.configuration.secureUrl}j_acegi_security_check">
+  <a href="#" onclick="toggleVisibility('loginForm'); setFocus('j_username')"><div class="sidebarItemTitle"><span><fmt:message key='login.login' /></span></div></a>
+  <form id="loginForm" style="display: none;" name="loginForm" method="post" action="${pebbleContext.configuration.secureUrl}j_acegi_security_check">
     <input type="hidden" name="redirectUrl" value="${blog.relativeUrl}"/>
-    <input type="text" name="j_username" />
+    <input id="j_username" type="text" name="j_username" />
     <br />
     <input type="password" name="j_password" />
     <br />

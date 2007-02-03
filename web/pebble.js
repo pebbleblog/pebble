@@ -49,3 +49,8 @@ function toggleVisibility(elementId) {
         element.style.display = 'none';
     }
 }
+
+function setFocus(elementId) {
+  var element = document.getElementById(elementId);
+  element.focus();
+}
