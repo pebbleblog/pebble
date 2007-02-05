@@ -214,7 +214,7 @@ public class UriTransformerTest extends SingleBlogTestCase {
   }
 
   public void testAboutUrlForSingleUserBlog() throws Exception {
-    assertEquals("/about.action", transformer.getUri("/about.xml", blog));
+    assertEquals("/about.action", transformer.getUri("/about.html", blog));
   }
 
 }
