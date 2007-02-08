@@ -142,16 +142,46 @@
   </form>
 
   <form name="uploadFile" enctype="multipart/form-data" action="${uploadAction}" method="post">
+    <input type="hidden" name="path" value="${directory.absolutePath}" />
     <p>
-      <b>Upload file</b> (files must be less than <fmt:formatNumber value="${pebbleContext.configuration.fileUploadSize}" type="number" />&nbsp;KB)
-      <br /><br />
-      Local Name
-      <input type="hidden" name="path" value="${directory.absolutePath}" />
-      <input name="file" type="file" onChange="populateFilename(this,document.uploadFile.filename)" />
-      <br />
-      Remote Name
-      <input name="filename" type="text" value="" />
-      <input type="submit" value="Upload File" />
+      <b>Upload file</b> (files must be less than <fmt:formatNumber value="${pebbleContext.configuration.fileUploadSize}" type="number" />&nbsp;KB each)
+
+      <table width="99%" cellspacing="0" cellpadding="4">
+        <thead>
+          <tr>
+          <th>
+            Local filename
+          </th>
+          <th>
+            Remote filename
+          </th>
+          </tr>
+        </thead>
+        <tr>
+          <td><input name="file0" type="file" onChange="populateFilename(this,document.uploadFile.filename0)" /></td>
+          <td><input name="filename0" type="text" value="" /></td>
+        </tr>
+        <tr>
+          <td><input name="file1" type="file" onChange="populateFilename(this,document.uploadFile.filename1)" /></td>
+          <td><input name="filename1" type="text" value="" /></td>
+        </tr>
+        <tr>
+          <td><input name="file2" type="file" onChange="populateFilename(this,document.uploadFile.filename2)" /></td>
+          <td><input name="filename2" type="text" value="" /></td>
+        </tr>
+        <tr>
+          <td><input name="file3" type="file" onChange="populateFilename(this,document.uploadFile.filename3)" /></td>
+          <td><input name="filename3" type="text" value="" /></td>
+        </tr>
+        <tr>
+          <td><input name="file4" type="file" onChange="populateFilename(this,document.uploadFile.filename4)" /></td>
+          <td><input name="filename4" type="text" value="" /></td>
+        </tr>
+        <tr>
+          <td align="right" colspan="2"><input type="submit" value="Upload File(s)" /></td>
+        </tr>
+      </table>
+
     </p>
   </form>
 

@@ -45,6 +45,8 @@ import org.apache.commons.fileupload.DiskFileUpload;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUpload;
 import org.apache.commons.fileupload.FileUploadBase;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -60,6 +62,8 @@ import java.util.List;
  */
 public abstract class UploadFileAction extends AbstractFileAction {
 
+  private static final Log log = LogFactory.getLog(UploadFileAction.class);
+
   /**
    * Peforms the processing associated with this action.
    *
@@ -72,7 +76,7 @@ public abstract class UploadFileAction extends AbstractFileAction {
 
     String type = getType();
     String path = "";
-    String filename = "";
+    String[] filenames = new String[10];
 
     FileManager fileManager = new FileManager(blog, type);
 
@@ -97,27 +101,31 @@ public abstract class UploadFileAction extends AbstractFileAction {
         Iterator it = items.iterator();
         while (it.hasNext()) {
           FileItem item = (FileItem)it.next();
-          if (item.isFormField() && item.getFieldName().equals("filename")) {
-            filename = item.getString();
+          if (item.isFormField() && item.getFieldName().startsWith("filename")) {
+            int index = Integer.parseInt(item.getFieldName().substring(item.getFieldName().length()-1));
+            filenames[index] = item.getString();
+            log.debug("index is " + index + ", filename is " + filenames[index]);
           } else if (item.isFormField() && item.getFieldName().equals("path")) {
             path = item.getString();
           }
         }
 
-        // now the actual file
+        // now the actual files
         it = items.iterator();
         while (it.hasNext()) {
           FileItem item = (FileItem)it.next();
 
-          if (!item.isFormField() && item.getSize() > 0) {
+          if (!item.isFormField() && item.getSize() > 0 && item.getFieldName().startsWith("file")) {
+            int index = Integer.parseInt(item.getFieldName().substring(item.getFieldName().length()-1));
+
             // if the filename hasn't been specified, use that from the file
             // being uploaded
-            if (filename == null || filename.length() == 0) {
-              filename = item.getName();
+            if (filenames[index] == null || filenames[index].length() == 0) {
+              filenames[index] = item.getName();
             }
 
             File destinationDirectory = fileManager.getFile(path);
-            File file = new File(destinationDirectory, filename);
+            File file = new File(destinationDirectory, filenames[index]);
             if (!fileManager.isUnderneathRootDirectory(file)) {
               response.setStatus(HttpServletResponse.SC_FORBIDDEN);
               return null;
@@ -125,13 +133,13 @@ public abstract class UploadFileAction extends AbstractFileAction {
 
             long itemSize = item.getSize()/1024;
             if (FileManager.hasEnoughSpace(blog, itemSize)) {
-              writeFile(fileManager, path, filename, item);
+              log.debug("Writing file " + filenames[index] + ", size is " + item.getSize());
+              writeFile(fileManager, path, filenames[index], item);
 
               // if it's a theme file, also create a copy in blog.dir/theme
               if (type.equals(FileMetaData.THEME_FILE)) {
-                writeFile(new FileManager(blog, FileMetaData.BLOG_DATA), "/theme" + path, filename, item);
+                writeFile(new FileManager(blog, FileMetaData.BLOG_DATA), "/theme" + path, filenames[index], item);
               }
-              break;
             } else {
               return new NotEnoughSpaceView();
             }
