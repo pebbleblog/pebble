@@ -1,49 +1,54 @@
 body {
   font-family: Lucida Grande, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
   font-size: 13px;
-  background: gray url('images/background.jpg') repeat-x top left;
+  background: white;
   color : black;
   text-align: left;
-  margin: 48px 32px 32px 32px;
+  margin: 0px 0px 0px 0px;
 }
+a {
+  color: black;
+  text-decoration: underline;
+}
+a:visited {
+  color: #404040;
+}
+
 #container {
-  width: 800px;
-  margin: auto;
-  background: white;
 }
 #header {
-  background: white url('images/header.jpg') repeat-x bottom left;
+  background: #6e7d8e;
   color: black;
   font-weight: normal;
-  height: 200px;
+  height: 80px;
   text-align: left;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 0px;
-  position: relative;
 }
 #content {
   background: white;
-  padding-top: 8px;
+  margin-left: 16px;
+  padding-top: 16px;
   padding-right: 8px;
   padding-bottom: 8px;
   padding-left: 0px;
-  margin-right: 220px;
+  margin-right: 260px;
 }
 #sidebar {
   text-align: center;
   background: white;
+  margin-left: 16px;
+  margin-right: 16px;
   float: right;
   width: 220px;
   padding-left: 8px;
-  padding-top: 0px;
+  padding-top: 16px;
   padding-right: 0px;
   padding-bottom: 32px;
-  margin-top: 8px;
+  margin-top: 0px;
   font-size: 11px;
 }
 #footer {
-  background: gray url('images/footer.jpg') no-repeat bottom left;
+  border-top: white solid 1px;
+  background: white;
   clear: both;
   text-align: center;
   font-size: 11px;
@@ -55,25 +60,29 @@ body {
 }
 .sidebarItem {
   background: white;
+  border-bottom: #e0e0e0 solid 1px;
+  border-top: #e0e0e0 solid 1px;
+  border-left: #e0e0e0 solid 1px;
+  border-right: #e0e0e0 solid 1px;
   margin-bottom: 8px;
 }
 .sidebarItemTitle {
   text-align: left;
   font-size: 12px;
   font-weight: normal;
-  background: white url('images/sidebartitle.jpg') no-repeat left;
+  text-decoration: none;
+  background: #6e7d8e;
   color: white;
   padding-left: 12px;
-  padding-top: 10px;
+  padding-top: 4px;
   padding-bottom: 4px;
-  height: 24px;
 }
 .sidebarItemTitle span a {
   color: white;
 }
 .sidebarItemBody {
-  padding-top: 0px;
-  padding-bottom: 0px;
+  padding-top: 8px;
+  padding-bottom: 8px;
 }
 .sidebarItem ul {
   margin: 0px;
@@ -88,38 +97,29 @@ body {
   list-style-type: none;
 }
 
-a:link {
-  text-decoration: underline;
-  color: black;
-}
-a:visited {
-  color: #404040;
-}
-
 #blogName {
   font-size: 36px;
   color: white;
-  padding-top: 60px;
-  text-align: center;
+  padding-top: 4px;
+  padding-left: 16px;
   font-weight: bold;
 }
 #blogDescription {
   font-size: 16px;
   color: white;
   padding-top: 0px;
-  padding-bottom: 8px;
-  font-weight: normal;
-  text-align: center;
+  padding-left: 18px;
+  padding-bottom: 16px;
+  font-weight: bold;
 }
 h1 {
   font-size: 20px;
-  font-weight: normal;
+  font-weight: bold;
   color : #6e7d8e;
-  background: transparent url('images/bullet.jpg') no-repeat center left;
   padding-top: 4px;
   padding-bottom: 4px;
-  padding-right: 4px;
-  padding-left: 30px;
+  padding-right: 0px;
+  padding-left: 0px;
   margin: 0px;
 }
 h1 a:link, h1 a:visited {
@@ -131,33 +131,36 @@ h1 a:hover {
 }
 h2 {
   font-size: 12px;
-  font-weight: normal;
-  padding-left: 30px;
-  padding-top: 4px;
+  font-weight: bold;
+  padding-top: 0px;
   color: #6e7d8e;
   margin: 0px;
 }
 h3 {
   font-size: 12px;
   font-weight: normal;
-  padding-top: 0px;
+  padding-top: 4px;
   color: #6e7d8e;
   margin: 0px;
 }
 .contentItem {
-  padding-left: 8px;
-  padding-right: 8px;
+  padding-left: 16px;
+  padding-right: 16px;
   padding-top: 8px;
-  padding-bottom: 8px;
+  padding-bottom: 0px;
   margin-bottom: 8px;
   background: white;
+  border-bottom: #e0e0e0 solid 1px;
+  border-top: #e0e0e0 solid 1px;
+  border-left: #e0e0e0 solid 1px;
+  border-right: #e0e0e0 solid 1px;
 }
 .contentItemBody {
   line-height: 1.5;
   padding-top: 8px;
   padding-bottom: 8px;
-  padding-left: 16px;
-  padding-right: 16px;
+  padding-left: 0px;
+  padding-right: 0px;
   text-align: left;
 }
 .contentItemLinks {
@@ -201,6 +204,7 @@ h3 {
   font-size: 11px;
   color: gray;
   line-height: 1.5em;
+  padding-top: 0px;
 }
 .approved {
 }
@@ -314,7 +318,7 @@ blockquote {
   padding: 2px;
 }
 .calendarDayWithEntries {
-  background: #C0C0C0;
+  background: gray;
   text-align: right;
   padding: 2px;
 }
@@ -359,8 +363,9 @@ blockquote {
   overflow: auto;
 }
 #linearNavigationLinks {
-  background: black;
-  padding: 6px;
+  background: gray;
+  border-top: #c0c0c0 solid 1px;
+  padding: 4px;
   color: white;
   text-align: center;
 }
@@ -373,14 +378,14 @@ blockquote {
 }
 #search {
   position: absolute;
-  top: 11px;
+  top: 12px;
   right: 10px;
   color: white;
 }
 #subscriptions {
   position: absolute;
-  top: 11px;
-  left: 10px;
+  top: 40px;
+  right: 10px;
   color: white;
 }
 #subscriptions a {

@@ -11,7 +11,8 @@
         CONVERT_URL_TO_LOWERCASE_BEFORE_COMPARISON
         PATTERN_TYPE_APACHE_ANT
         /xmlrpc/**=anonymousProcessingFilter
-        /**=httpSessionContextIntegrationFilter,authenticationProcessingFilter,rememberMeProcessingFilter,exceptionTranslationFilter,filterInvocationInterceptor
+        /**/*.xml=httpSessionContextIntegrationFilter,basicProcessingFilter,rememberMeProcessingFilter,basicExceptionTranslationFilter,filterInvocationInterceptor
+        /**=httpSessionContextIntegrationFilter,formProcessingFilter,rememberMeProcessingFilter,formExceptionTranslationFilter,filterInvocationInterceptor
       </value>
     </property>
   </bean>
@@ -86,11 +87,7 @@
     <property name="userAttribute"><value>anonymousUser,ROLE_ANONYMOUS</value></property>
   </bean>
 
-  <bean id="exceptionTranslationFilter" class="org.acegisecurity.ui.ExceptionTranslationFilter">
-    <property name="authenticationEntryPoint"><ref local="authenticationProcessingFilterEntryPoint"/></property>
-  </bean>
-
-  <bean id="authenticationProcessingFilter" class="net.sourceforge.pebble.security.AuthenticationProcessingFilter">
+  <bean id="formProcessingFilter" class="net.sourceforge.pebble.security.AuthenticationProcessingFilter">
     <property name="authenticationManager"><ref bean="authenticationManager"/></property>
     <property name="authenticationFailureUrl"><value>/loginPage.action?error=true</value></property>
     <property name="defaultTargetUrl"><value>/</value></property>
@@ -98,9 +95,13 @@
     <property name="rememberMeServices"><ref local="rememberMeServices"/></property>
   </bean>
 
-  <bean id="authenticationProcessingFilterEntryPoint" class="org.acegisecurity.ui.webapp.AuthenticationProcessingFilterEntryPoint">
+  <bean id="formAuthenticationProcessingFilterEntryPoint" class="org.acegisecurity.ui.webapp.AuthenticationProcessingFilterEntryPoint">
     <property name="loginFormUrl"><value>/loginPage.action</value></property>
     <property name="forceHttps"><value>false</value></property>
+  </bean>
+
+  <bean id="formExceptionTranslationFilter" class="org.acegisecurity.ui.ExceptionTranslationFilter">
+    <property name="authenticationEntryPoint"><ref local="formAuthenticationProcessingFilterEntryPoint"/></property>
   </bean>
 
   <bean id="httpRequestAccessDecisionManager" class="org.acegisecurity.vote.AffirmativeBased">
@@ -114,11 +115,15 @@
 
   <bean id="basicProcessingFilter" class="org.acegisecurity.ui.basicauth.BasicProcessingFilter">
     <property name="authenticationManager"><ref bean="authenticationManager"/></property>
-    <property name="authenticationEntryPoint"><ref bean="authenticationEntryPoint"/></property>
+    <property name="authenticationEntryPoint"><ref bean="basicAuthenticationEntryPoint"/></property>
   </bean>
 
-  <bean id="authenticationEntryPoint" class="org.acegisecurity.ui.basicauth.BasicProcessingFilterEntryPoint">
-    <property name="realmName"><value>Newsfeed</value></property>
+  <bean id="basicAuthenticationEntryPoint" class="org.acegisecurity.ui.basicauth.BasicProcessingFilterEntryPoint">
+    <property name="realmName"><value>Secured newsfeeds</value></property>
+  </bean>
+
+  <bean id="basicExceptionTranslationFilter" class="org.acegisecurity.ui.ExceptionTranslationFilter">
+    <property name="authenticationEntryPoint"><ref local="basicAuthenticationEntryPoint"/></property>
   </bean>
 
   <!-- Note the order that entries are placed against the objectDefinitionSource is critical.

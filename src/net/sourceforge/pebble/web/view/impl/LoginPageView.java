@@ -45,6 +45,7 @@ import java.util.ResourceBundle;
 public class LoginPageView extends HtmlView {
 
   public void prepare() {
+    getModel().put("isLoginPage", "true");
   }
 
   /**

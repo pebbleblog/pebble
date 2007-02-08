@@ -136,6 +136,13 @@
       </fileset>
     </copy>
 
+    <copy todir="web/themes/formal/jsp">
+      <fileset dir="web/themes/default/jsp">
+        <include name="sidebar.jsp"/>
+        <include name="template.jsp"/>
+      </fileset>
+    </copy>
+
     <copy todir="web/WEB-INF/classes">
       <fileset dir="${etc.dir}">
         <include name="log4j.properties"/>

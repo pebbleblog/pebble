@@ -1,3 +1,9 @@
+Version 2.0.2 -
+----------------------------------
+Fixed problem with local characters and HTML entities in comments.
+Added ability to get newsfeeds for private blogs via HTTP Basic authentication.
+Tweaks to bundled themes.
+
 Version 2.0.1 - 20th November 2006
 ----------------------------------
 Fixed bug where the default user isn't created upon first startup.

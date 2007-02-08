@@ -104,6 +104,7 @@
   <c:if test="${blogEntry.trackBacksEnabled}">
     <a href="generateTrackBackLink.action?entry=${blogEntry.id}"><fmt:message key="trackback.sendTrackBack"/></a>
   </c:if>
+  <br /><br />
 </div>
 
   </c:if>
