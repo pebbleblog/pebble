@@ -115,7 +115,7 @@ a:visited {
 }
 h1 {
   font-size: 20px;
-  font-weight: normal;
+  font-weight: bold;
   color : #6e7d8e;
   background: transparent url('images/bullet.jpg') no-repeat center left;
   padding-top: 4px;
