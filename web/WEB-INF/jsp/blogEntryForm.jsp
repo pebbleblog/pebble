@@ -5,6 +5,7 @@
   {
     var oFCKeditor = new FCKeditor( 'excerpt' ) ;
     oFCKeditor.BasePath = '${pageContext.request.contextPath}/FCKeditor/' ;
+    oFCKeditor.Config["CustomConfigurationsPath"] = '${pageContext.request.contextPath}/fckconfig_pebble.js';
     oFCKeditor.ToolbarSet = 'BlogEntry' ;
     oFCKeditor.ReplaceTextarea() ;
 

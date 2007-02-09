@@ -10,6 +10,9 @@
 <author>
   <name>${blogEntry.user.name}</name>
 </author>
+<c:if test="${not empty blog.image}">
+<logo>${blog.image}</logo>
+</c:if>
 <subtitle>${blogEntry.truncatedContent}</subtitle>
 <rights>${blogEntry.user.name}</rights>
     </c:when>
@@ -21,6 +24,9 @@
 <author>
   <name>${blog.author}</name>
 </author>
+<c:if test="${not empty blog.image}">
+<logo>${blog.image}</logo>
+</c:if>
 <subtitle>${blog.description}</subtitle>
 <rights>${blog.author}</rights>
     </c:otherwise>

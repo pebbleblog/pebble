@@ -1,5 +1,5 @@
 body {
-  font-family: Lucida Grande, Tahoma, Verdana, Arial, sans-serif;
+  font-family: Trebuchet MS, Lucida Grande, Tahoma, Verdana, Arial, sans-serif;
   font-size: 13px;
   background: gray url('images/background.jpg') repeat-x top left;
   color : black;
@@ -12,7 +12,7 @@ body {
   background: white;
 }
 #header {
-  background: white url('images/header.jpg') repeat-x bottom left;
+  background: white url('images/header.jpg') repeat-x top left;
   color: black;
   font-weight: normal;
   height: 200px;
@@ -55,20 +55,27 @@ body {
 }
 .sidebarItem {
   background: white;
-  border-bottom: white solid 8px;
+  margin-bottom: 8px;
 }
 .sidebarItemTitle {
   text-align: left;
   font-size: 12px;
   font-weight: normal;
-  background: white url('images/sidebartitle.jpg') no-repeat left;
+  background: white url('images/sidebartitle.jpg') no-repeat left top;
   color: white;
   padding-left: 12px;
-  padding-top: 8px;
-  height: 24px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  height: 20px;
 }
 .sidebarItemTitle span a {
   color: white;
+}
+.sidebarItemBody {
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-left: 8px;
+  padding-right: 8px;
 }
 .sidebarItem ul {
   margin: 0px;
@@ -76,8 +83,8 @@ body {
   padding-right: 8px;
 }
 .sidebarItem li {
-  padding-top: 8px;
-  padding-bottom: 8px;
+  padding-top: 4px;
+  padding-bottom: 4px;
   padding-left: 8px;
   padding-right: 8px;
   list-style-type: none;
@@ -92,26 +99,23 @@ a:visited {
 }
 
 #blogName {
-  font-size: 44px;
+  font-size: 36px;
   color: white;
-  padding-top: 8px;
-  position: absolute;
-  top: 90px;
-  left: 20px;
+  padding-top: 70px;
+  text-align: center;
+  font-weight: bold;
 }
 #blogDescription {
   font-size: 16px;
   color: white;
-  padding-top: 8px;
+  padding-top: 0px;
   padding-bottom: 8px;
   font-weight: normal;
-  position: absolute;
-  bottom: 20px;
-  left: 24px;
+  text-align: center;
 }
 h1 {
-  font-size: 24px;
-  font-weight: normal;
+  font-size: 20px;
+  font-weight: bold;
   color : #6e7d8e;
   background: transparent url('images/bullet.jpg') no-repeat center left;
   padding-top: 4px;
@@ -138,7 +142,7 @@ h2 {
 h3 {
   font-size: 12px;
   font-weight: normal;
-  padding-top: 4px;
+  padding-top: 0px;
   color: #6e7d8e;
   margin: 0px;
 }
@@ -156,13 +160,17 @@ h3 {
   padding-bottom: 8px;
   padding-left: 16px;
   padding-right: 16px;
-  text-align: justify;
+  text-align: left;
 }
 .contentItemLinks {
   float: right;
   text-align: right;
   font-size: 11px;
   color: gray;
+}
+.contentItemLinks form {
+  padding: 0px;
+  margin: 0px;
 }
 .contentItemLinks a {
   color: gray;
@@ -193,7 +201,7 @@ h3 {
   line-height: 1.5;
   padding-top: 8px;
   padding-bottom: 8px;
-  text-align: justify;
+  text-align: left;
 }
 .metadata, .metadata a {
   font-size: 11px;
@@ -300,7 +308,8 @@ blockquote {
 }
 
 .calendar {
-  padding: 8px;
+  padding-left: 8px;
+  padding-right: 8px;
 }
 .calendarDayHeader {
   font-weight: bold;

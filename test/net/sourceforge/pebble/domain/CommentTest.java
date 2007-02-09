@@ -121,8 +121,8 @@ public class CommentTest extends SingleBlogTestCase {
     assertEquals(null, comment.getWebsite());
 
     // for security, special HTML characters are removed
-    comment.setWebsite("http://<www.google.com>");
-    assertEquals("http://&lt;www.google.com&gt;", comment.getWebsite());
+    comment.setWebsite("<script>http://www.google.com");
+    assertEquals("http://www.google.com", comment.getWebsite());
 
     // anything websites are also checked for known prefixes and "http://"
     // is prepended if missing

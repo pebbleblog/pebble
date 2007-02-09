@@ -217,7 +217,7 @@ public class Comment extends Response {
    * @param website   the website url
    */
   public void setWebsite(String website) {
-    website = StringUtils.transformHTML(website);
+    website = StringUtils.filterHTML(website);
     if (website == null || website.length() == 0) {
       this.website = null;
     } else if (

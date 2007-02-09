@@ -20,7 +20,7 @@
 </c:choose>
   <generator>Pebble (http://pebble.sourceforge.net)</generator>
   <docs>http://backend.userland.com/rss</docs>
-  <c:if test="${not empty image}">
+  <c:if test="${not empty blog.image}">
   <image>
     <url>${blog.image}</url>
     <title><c:out value="${blog.name}" escapeXml="true"/></title>

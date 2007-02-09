@@ -7,6 +7,9 @@
   <author>
     <name><c:out value="${blog.author}"/></name>
   </author>
+  <c:if test="${not empty blog.image}">
+  <logo>${blog.image}</logo>
+  </c:if>
   <subtitle><c:out value="${blog.description}"/></subtitle>
   <rights><c:out value="${blog.author}"/></rights>
   <generator uri="http://pebble.sourceforge.net" version="<c:out value="${pebbleContext.buildVersion}"/>">Pebble</generator>
