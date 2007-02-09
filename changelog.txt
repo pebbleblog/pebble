@@ -3,6 +3,9 @@ Version 2.0.2 -
 Fixed problem with local characters and HTML entities in comments.
 Added ability to get newsfeeds for private blogs via HTTP Basic authentication.
 Tweaks to bundled themes.
+Added support to upload multiple files at once (in the file browser).
+Fixed problem with ampersand character being escaped in website URLs when adding comments.
+PEBL-8 : Image option in Blog properties does not work
 
 Version 2.0.1 - 20th November 2006
 ----------------------------------
