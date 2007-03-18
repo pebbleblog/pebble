@@ -12,14 +12,12 @@
   </script>
 </c:if>
 
-<div class="contentItem">
-  <h1><fmt:message key="comment.addComment" /></h1>
-  <h2>&nbsp;</h2>
-
+<div class="contentItem" id="commentForm" style="display:none;">
   <div class="contentItemBody">
     <a name="form"></a>
     <form name="commentForm" action="saveComment.action" method="post" accept-charset="${blog.characterEncoding}">
-    <input type="hidden" name="entry" value="<c:out value="${blogEntry.id}"/>" />
+      <input type="hidden" name="blogId" value="<c:out value="${blogEntry.blog.id}"/>" />
+      <input type="hidden" name="entry" value="<c:out value="${blogEntry.id}"/>" />
     <input type="hidden" name="parent" value="<c:out value="${undecoratedComment.parent.id}"/>" />
 
     <table width="99%">
@@ -38,13 +36,16 @@
       </tr>
       </c:if>
 
+      <div id="commentBody"></div>
       <c:if test="${not empty decoratedComment}">
       <tr>
         <td colspan="2">
+<%--
           <c:set var="comment" scope="request" value="${decoratedComment}"/>
           <c:set var="displayMode" scope="request" value="preview" />
           <jsp:include page="comment.jsp" />
           <br />
+--%>
         </td>
       </tr>
       </c:if>
@@ -59,14 +60,14 @@
       <tr>
         <td valign="top"><b><fmt:message key="comment.body" /></b></td>
         <td>
-          <textarea name="body" rows="8" cols="40"><c:out value="${comment.body}"/></textarea>
+          <textarea name="inputBody" rows="8" cols="40"><c:out value="${comment.body}"/></textarea>
           <div class="small"><b>HTML</b> : b, strong, i, em, blockquote, br, p, pre, a href="", ul, ol, li</div>
         </td>
       </tr>
 
       <tr>
         <td valign="top"><b><fmt:message key="comment.name" /></b></td>
-        <td><input type="text" name="author" size="40" value="<c:out value="${comment.author}"/>"/></td>
+        <td><input type="text" id="author" name="author" size="40" value="<c:out value="${comment.author}"/>"/></td>
       </tr>
 
       <tr>
@@ -108,7 +109,7 @@
 
       <tr>
         <td colspan="2" align="right">
-          <input name="submit" type="submit" Value="<fmt:message key="comment.previewButton"/>" />
+          <input name="submit" type="button" Value="<fmt:message key="comment.previewButton"/>" onclick="previewComment(); return false;"/>
           <input name="submit" type="submit" Value="<fmt:message key="comment.addCommentButton"/>" />
         </td>
       </tr>

@@ -36,12 +36,17 @@ import net.sourceforge.pebble.util.StringUtils;
 
 import java.util.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 /**
  * Represents a blog comment.
  *
  * @author    Simon Brown
  */
 public class Comment extends Response {
+
+  private static final Log log = LogFactory.getLog(Comment.class);
 
   /** the body of the comment */
   private String body;
@@ -60,6 +65,10 @@ public class Comment extends Response {
 
   /** the collection of nested comments */
   private List comments = new ArrayList();
+
+  public Comment() {
+    log.debug("cons");
+  }
 
   /**
    * Creates a new comment with the specified properties.
@@ -124,6 +133,7 @@ public class Comment extends Response {
     } else {
       this.title = title;
     }
+    log.debug(title);
   }
 
   /**
@@ -137,6 +147,7 @@ public class Comment extends Response {
     } else {
       this.body = body;
     }
+    log.debug(body);
   }
 
   /**
@@ -169,6 +180,7 @@ public class Comment extends Response {
     } else {
       this.author = author;
     }
+    log.debug(author);
   }
 
   /**
@@ -191,6 +203,7 @@ public class Comment extends Response {
     } else {
       this.email = StringUtils.transformHTML(email);
     }
+    log.debug(email);
   }
 
   /**
@@ -229,6 +242,7 @@ public class Comment extends Response {
     } else {
       this.website = website;
     }
+    log.debug(website);
   }
 
   /**

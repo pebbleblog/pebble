@@ -99,13 +99,16 @@
 <div align="center">
   <br />
   <c:if test="${blogEntry.commentsEnabled}">
-    <a href="replyToBlogEntry.action?entry=${blogEntry.id}"><fmt:message key="comment.addComment"/></a>
+    <a href="replyToBlogEntry.action?entry=${blogEntry.id}" onclick="dwr.util.byId('commentForm').style.display='block'; return false;"><fmt:message key="comment.addComment"/></a> 
+    <button onclick="dwr.util.byId('commentForm').style.display='block'; return false;"><fmt:message key="comment.addComment"/></button>
   </c:if>
   <c:if test="${blogEntry.trackBacksEnabled}">
     <a href="generateTrackBackLink.action?entry=${blogEntry.id}"><fmt:message key="trackback.sendTrackBack"/></a>
   </c:if>
   <br /><br />
 </div>
+
+<jsp:include page="commentForm.jsp"/>
 
   </c:if>
 

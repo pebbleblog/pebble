@@ -31,6 +31,9 @@
  */
 package net.sourceforge.pebble.domain;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import java.util.Calendar;
 import java.util.Date;
 
@@ -40,6 +43,8 @@ import java.util.Date;
  * @author    Simon Brown
  */
 public abstract class Response extends Content {
+
+  private static final Log log = LogFactory.getLog(Response.class);
 
   /** the title */
   protected String title;
@@ -55,6 +60,9 @@ public abstract class Response extends Content {
 
   /** a score used to help identify spam when repsonses are added */
   private int spamScore = 0;
+
+  public Response() {
+  }
 
   /**
    * Creates a new instance with the specified properties.
@@ -116,6 +124,7 @@ public abstract class Response extends Content {
    * @param   title   the title as a String
    */
   public void setTitle(String title) {
+    log.debug(title);
     this.title = title;
   }
 

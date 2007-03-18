@@ -54,3 +54,13 @@ function setFocus(elementId) {
   var element = document.getElementById(elementId);
   element.focus();
 }
+
+function previewComment() {
+  var data = { author:null, email:null, website:null, title:null };
+  dwr.util.getValues(data);
+  data.body = dwr.util.getValue("inputBody");
+  Pebble.preview(dwr.util.getValue("blogId"), data, function(data) {
+    alert(data.body);
+    dwr.util.setValue("commentBody", data.body);
+  });
+}
