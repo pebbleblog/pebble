@@ -64,6 +64,10 @@ public final class StringUtils {
   private static final Pattern CLOSING_LI_TAG_PATTERN = Pattern.compile("&lt;/li&gt;", Pattern.CASE_INSENSITIVE);
   private static final Pattern CLOSING_A_TAG_PATTERN = Pattern.compile("&lt;/a&gt;", Pattern.CASE_INSENSITIVE);
   private static final Pattern OPENING_A_TAG_PATTERN = Pattern.compile("&lt;a href=.*?&gt;", Pattern.CASE_INSENSITIVE);
+  private static final Pattern OPENING_SUP_TAG_PATTERN = Pattern.compile("&lt;sup&gt;", Pattern.CASE_INSENSITIVE);
+  private static final Pattern CLOSING_SUP_TAG_PATTERN = Pattern.compile("&lt;/sup&gt;", Pattern.CASE_INSENSITIVE);
+  private static final Pattern OPENING_SUB_TAG_PATTERN = Pattern.compile("&lt;sub&gt;", Pattern.CASE_INSENSITIVE);
+  private static final Pattern CLOSING_SUB_TAG_PATTERN = Pattern.compile("&lt;/sub&gt;", Pattern.CASE_INSENSITIVE);
 
   /**
    * Filters out characters that have meaning within JSP and HTML, and
@@ -136,6 +140,10 @@ public final class StringUtils {
     s = replace(s, CLOSING_OL_TAG_PATTERN, "</ol>");
     s = replace(s, OPENING_LI_TAG_PATTERN, "<li>");
     s = replace(s, CLOSING_LI_TAG_PATTERN, "</li>");
+    s = replace(s, OPENING_SUP_TAG_PATTERN, "<sup>");
+    s = replace(s, CLOSING_SUP_TAG_PATTERN, "</sup>");
+    s = replace(s, OPENING_SUB_TAG_PATTERN, "<sub>");
+    s = replace(s, CLOSING_SUB_TAG_PATTERN, "</sub>");
 
     // HTTP links
     s = replace(s, CLOSING_A_TAG_PATTERN, "</a>");
