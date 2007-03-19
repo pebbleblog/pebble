@@ -33,10 +33,8 @@ package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.util.SecurityUtils;
-import net.sourceforge.pebble.domain.BlogEntry;
-import net.sourceforge.pebble.domain.Blog;
-import net.sourceforge.pebble.domain.BlogService;
-import net.sourceforge.pebble.domain.BlogServiceException;
+import net.sourceforge.pebble.util.CookieUtils;
+import net.sourceforge.pebble.domain.*;
 import net.sourceforge.pebble.web.view.NotFoundView;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.impl.BlogEntryView;
@@ -44,13 +42,14 @@ import net.sourceforge.pebble.web.view.impl.BlogEntryView;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Cookie;
 
 /**
  * Finds a particular blog entry, ready to be displayed.
  *
  * @author    Simon Brown
  */
-public class ViewBlogEntryAction extends Action {
+public class ViewBlogEntryAction extends AbstractBlogEntryAction {
 
   /**
    * Peforms the processing associated with this action.
@@ -85,6 +84,16 @@ public class ViewBlogEntryAction extends Action {
       getModel().put(Constants.BLOG_ENTRY_KEY, blogEntry);
       getModel().put(Constants.MONTHLY_BLOG, blog.getBlogForDay(blogEntry.getDate()).getMonth());
       getModel().put("displayMode", "detail");
+
+
+      // is "remember me" set?
+      Cookie rememberMe = CookieUtils.getCookie(request.getCookies(), "rememberMe");
+      if (rememberMe != null) {
+        getModel().put("rememberMe", "true");
+      }
+
+      Comment comment = createComment(blog, blogEntry, request);
+      getModel().put("undecoratedComment", comment);
 
       return new BlogEntryView();
     }

@@ -58,9 +58,9 @@ function setFocus(elementId) {
 function previewComment() {
   var data = { author:null, email:null, website:null, title:null };
   dwr.util.getValues(data);
-  data.body = dwr.util.getValue("inputBody");
-  Pebble.preview(dwr.util.getValue("blogId"), data, function(data) {
-    alert(data.body);
-    dwr.util.setValue("commentBody", data.body);
+  data.body = dwr.util.getValue("commentBody");
+  Pebble.previewComment(dwr.util.getValue("blogId"), data, function(data) {
+    dwr.util.setValue("preview.commentBody", data.body, { escapeHtml:false });
   });
+  new Effect.Highlight('preview.commentBody');
 }

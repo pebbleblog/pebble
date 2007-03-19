@@ -7,6 +7,7 @@
 
     <create creator="new" javascript="Pebble">
       <param name="class" value="net.sourceforge.pebble.web.dwr.Comments"/>
+      
     </create>
 
     <convert converter="bean" match="net.sourceforge.pebble.domain.Comment">

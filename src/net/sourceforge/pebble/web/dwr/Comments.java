@@ -42,29 +42,36 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
- * @author Simon Brown
+ * Service interface for DWR.
+ *
+ * @author    Simon Brown
  */
 public class Comments {
 
   private static final Log log = LogFactory.getLog(Comments.class);
 
-  public Comment preview(String blogId, Comment comment) {
-    log.debug("Starting preview");
-    try {
-      Blog blog = BlogManager.getInstance().getBlog(blogId);
+  public Comment previewComment(String blogId, Comment comment) {
+    Blog blog = BlogManager.getInstance().getBlog(blogId);
 
-      ContentDecoratorContext decoratorContext = new ContentDecoratorContext();
-      decoratorContext.setView(ContentDecoratorContext.DETAIL_VIEW);
-      decoratorContext.setMedia(ContentDecoratorContext.HTML_PAGE);
+    ContentDecoratorContext decoratorContext = new ContentDecoratorContext();
+    decoratorContext.setView(ContentDecoratorContext.DETAIL_VIEW);
+    decoratorContext.setMedia(ContentDecoratorContext.HTML_PAGE);
 
-      blog.getContentDecoratorChain().decorate(decoratorContext, comment);
+    blog.getContentDecoratorChain().decorate(decoratorContext, comment);
 
-      log.debug("Done preview");
-      return comment;
-    } catch (Exception e) {
-      e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-      throw new RuntimeException(e);
-    }
+    return comment;
+  }
+
+  public Comment saveComment(String blogId, Comment comment) {
+    Blog blog = BlogManager.getInstance().getBlog(blogId);
+
+    ContentDecoratorContext decoratorContext = new ContentDecoratorContext();
+    decoratorContext.setView(ContentDecoratorContext.DETAIL_VIEW);
+    decoratorContext.setMedia(ContentDecoratorContext.HTML_PAGE);
+
+    blog.getContentDecoratorChain().decorate(decoratorContext, comment);
+
+    return comment;
   }
 
 }

@@ -99,8 +99,7 @@
 <div align="center">
   <br />
   <c:if test="${blogEntry.commentsEnabled}">
-    <a href="replyToBlogEntry.action?entry=${blogEntry.id}" onclick="dwr.util.byId('commentForm').style.display='block'; return false;"><fmt:message key="comment.addComment"/></a> 
-    <button onclick="dwr.util.byId('commentForm').style.display='block'; return false;"><fmt:message key="comment.addComment"/></button>
+    <a href="replyToBlogEntry.action?entry=${blogEntry.id}" onclick="Effect.toggle('commentForm', 'blind'); return false;"><fmt:message key="comment.addComment"/></a> 
   </c:if>
   <c:if test="${blogEntry.trackBacksEnabled}">
     <a href="generateTrackBackLink.action?entry=${blogEntry.id}"><fmt:message key="trackback.sendTrackBack"/></a>
@@ -108,7 +107,7 @@
   <br /><br />
 </div>
 
-<jsp:include page="commentForm.jsp"/>
+<div id="commentForm" style="display:none;"><%@ include file="/WEB-INF/fragments/commentForm.jsp" %></div>
 
   </c:if>
 

@@ -28,7 +28,7 @@ public abstract class AbstractCommentAction extends Action {
     String website = request.getParameter("website");
     String ipAddress = request.getRemoteAddr();
     String title = request.getParameter("title");
-    String body = request.getParameter("body");
+    String body = request.getParameter("commentBody");
 
     Comment comment = blogEntry.createComment(title, body, author, email, website, ipAddress);
 

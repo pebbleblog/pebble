@@ -61,6 +61,9 @@ public abstract class Response extends Content {
   /** a score used to help identify spam when repsonses are added */
   private int spamScore = 0;
 
+  /**
+   * Default, no args constructor.
+   */
   public Response() {
   }
 
