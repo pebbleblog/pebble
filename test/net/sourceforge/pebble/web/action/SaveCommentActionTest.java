@@ -60,7 +60,7 @@ public class SaveCommentActionTest extends SingleBlogActionTestCase {
     request.setParameter("entry", "" + blogEntry.getId());
     request.setParameter("parent", "");
     request.setParameter("title", "Test Title");
-    request.setParameter("body", "Test Body");
+    request.setParameter("commentBody", "Test Body");
     request.setParameter("author", "Test Author");
     request.setParameter("website", "http://www.somedomain.com");
     request.setParameter("submit", "Add Comment");
@@ -92,7 +92,7 @@ public class SaveCommentActionTest extends SingleBlogActionTestCase {
     request.setParameter("entry", "" + blogEntry.getId());
     request.setParameter("parent", "" + comment1.getId());
     request.setParameter("title", "Test Title");
-    request.setParameter("body", "Test Body");
+    request.setParameter("commentBody", "Test Body");
     request.setParameter("author", "Test Author");
     request.setParameter("website", "http://www.somedomain.com");
     request.setParameter("submit", "Add Comment");
@@ -121,7 +121,7 @@ public class SaveCommentActionTest extends SingleBlogActionTestCase {
     request.setParameter("entry", "" + blogEntry.getId());
     request.setParameter("parent", "123456789");
     request.setParameter("title", "Test Title");
-    request.setParameter("body", "Test Body");
+    request.setParameter("commentBody", "Test Body");
     request.setParameter("author", "Test Author");
     request.setParameter("website", "http://www.somedomain.com");
     request.setParameter("submit", "Add Comment");
@@ -150,7 +150,7 @@ public class SaveCommentActionTest extends SingleBlogActionTestCase {
     request.setParameter("entry", "" + blogEntry.getId());
     request.setParameter("parent", "");
     request.setParameter("title", "Test Title");
-    request.setParameter("body", "Test Body");
+    request.setParameter("commentBody", "Test Body");
     request.setParameter("author", "Test Author");
     request.setParameter("website", "http://www.somedomain.com");
     request.setParameter("submit", "Add Comment");
@@ -171,7 +171,7 @@ public class SaveCommentActionTest extends SingleBlogActionTestCase {
     request.setParameter("entry", "" + blogEntry.getId());
     request.setParameter("parent", "");
     request.setParameter("title", "Test Title");
-    request.setParameter("body", "Test Body");
+    request.setParameter("commentBody", "Test Body");
     request.setParameter("author", "Test Author");
     request.setParameter("website", "Test Website");
     request.setParameter("submit", "Add Comment");

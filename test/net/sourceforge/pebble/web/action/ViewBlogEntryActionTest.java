@@ -40,6 +40,7 @@ public class ViewBlogEntryActionTest extends SingleBlogActionTestCase {
     BlogService service = new BlogService();
     service.putBlogEntry(blogEntry1);
 
+    SecurityUtils.runAsUnauthenticated();
     request.setParameter("entry", blogEntry1.getId());
     View view = action.process(request, response);
 

@@ -151,6 +151,10 @@ public final class SecurityUtils {
     SecurityContextHolder.getContext().setAuthentication(auth);
   }
 
+  public static void runAsUnauthenticated() {
+    SecurityContextHolder.getContext().setAuthentication(null);
+  }
+
   public static boolean isUserAuthorisedForBlogAsBlogOwner(Blog blog) {
     String currentUser = SecurityUtils.getUsername();
     return isBlogOwner() && blog.isUserInRole(Constants.BLOG_OWNER_ROLE, currentUser);

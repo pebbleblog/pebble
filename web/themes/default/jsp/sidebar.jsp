@@ -16,5 +16,6 @@
   <%@ include file="/WEB-INF/fragments/sidebar/recent-responses.jspf" %>
 
   <%@ include file="/WEB-INF/fragments/sidebar/delicious.jspf" %>
+  <%@ include file="/WEB-INF/fragments/sidebar/twitter.jspf" %>
 
 </div>
