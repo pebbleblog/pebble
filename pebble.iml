@@ -318,6 +318,24 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/jdom-1.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/rome-0.9.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
     <orderEntryProperties />
   </component>
   <component name="WebModuleBuildComponent">
@@ -402,6 +420,11 @@
       <url>jar://$MODULE_DIR$/lib/jcaptcha-all-1.0-RC3.jar!/</url>
     </containerElement>
     <containerElement type="library" level="module">
+      <attribute name="method" value="1" />
+      <attribute name="URI" value="/WEB-INF/lib/jdom-1.0.jar" />
+      <url>jar://$MODULE_DIR$/lib/jdom-1.0.jar!/</url>
+    </containerElement>
+    <containerElement type="library" level="module">
       <attribute name="method" value="0" />
       <attribute name="URI" value="&lt;N/A&gt;" />
       <url>jar://$MODULE_DIR$/lib/jsp-api.jar!/</url>
@@ -435,6 +458,11 @@
       <attribute name="method" value="0" />
       <attribute name="URI" value="/WEB-INF/lib/radeox-1.0-beta2.jar" />
       <url>jar://$MODULE_DIR$/lib/radeox-1.0-beta2.jar!/</url>
+    </containerElement>
+    <containerElement type="library" level="module">
+      <attribute name="method" value="1" />
+      <attribute name="URI" value="/WEB-INF/lib/rome-0.9.jar" />
+      <url>jar://$MODULE_DIR$/lib/rome-0.9.jar!/</url>
     </containerElement>
     <containerElement type="library" level="module">
       <attribute name="method" value="0" />

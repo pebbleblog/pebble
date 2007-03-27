@@ -147,4 +147,26 @@
     </description>
   </tag>
 
+  <tag>
+    <name>getFeed</name>
+    <tag-class>net.sourceforge.pebble.web.tagext.FeedReaderTag</tag-class>
+    <body-content>empty</body-content>
+    <description>
+      Exposes a variable containing entries from the specified feed.
+    </description>
+
+    <variable>
+      <name-given>feedEntries</name-given>
+      <variable-class>java.util.List</variable-class>
+      <scope>PAGE</scope>
+    </variable>
+
+    <attribute>
+      <name>url</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.String</type>
+    </attribute>
+  </tag>
+
 </taglib>

@@ -227,13 +227,18 @@ public class CommentTest extends SingleBlogTestCase {
     comment.setBody("1234567890 123456789012345678901234567890123456789012345678901234567890");
     assertEquals("1234567890 12345678901234567890...", comment.getTruncatedBody());
 
-    comment.setBody("<p>\n" +
+    comment.setBody("<p>" +
         "You can grab the source for Pebble 1.6 by doing the following:<pre>  cvs -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/pebble login \n" +
         "  cvs -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/pebble checkout -r v1_6_0 pebble</pre>\n" +
         "When prompted for a password, just press enter (there is no password).\n" +
         "</p>");
-    assertEquals("\n" +
-        "You can grab the source for Pebble 1.6 by doing the following:  cvs -d:pserver:anonymous...", comment.getTruncatedBody());
+    assertEquals("You can grab the source for Pebble 1.6 by doing the following:  cvs -d:pserver:anonymous...", comment.getTruncatedBody());
+
+    comment.setBody("<p>" +
+        "123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 " +
+        "123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 " +
+        "123456789 123456789 123456789 123456789 12345678W&uuml;nsche");
+    assertEquals("123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 ...", comment.getTruncatedBody());
   }
 
   /**

@@ -16,6 +16,6 @@
       <div class="odd">
     </c:otherwise>
   </c:choose>
-      <jsp:include page="comment.jsp"/>
+      <jsp:include page="comment.jsp"><jsp:param name="commentIdentifier" value="comment${comment.id}"/></jsp:include>
       </div>
 </c:forEach>

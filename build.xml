@@ -88,11 +88,13 @@
         <include name="dwr-2.0-rc2.jar"/>
         <include name="ehcache-1.2.1RC.jar"/>
         <include name="jcaptcha-all-1.0-RC3.jar"/>
+        <include name="jdom-1.0.jar"/>
         <include name="jstl-1.1.2.jar"/>
         <include name="log4j.jar"/>
         <include name="lucene-1.4.1.jar"/>
         <include name="oro-2.0.8.jar"/>
         <include name="radeox-1.0-beta2.jar"/>
+        <include name="rome-0.9.jar"/>
         <include name="saxpath.jar"/>
         <include name="spring-beans-1.2.8.jar"/>
         <include name="spring-context-1.2.8.jar"/>

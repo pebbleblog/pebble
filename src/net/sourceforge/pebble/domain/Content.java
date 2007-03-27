@@ -53,9 +53,6 @@ public abstract class Content implements Permalinkable, Cloneable, Serializable 
 
   private static final Log log = LogFactory.getLog(Content.class);
 
-  private static final int MAX_CONTENT_LENGTH = 255;
-  private static final int MAX_WORD_LENGTH = 20;
-
   /** the state of the object */
   private State state;
 
@@ -106,31 +103,7 @@ public abstract class Content implements Permalinkable, Cloneable, Serializable 
    * @return    the content of this response as a String
    */
   public String getTruncatedContent() {
-    // filter out HTML
-    String content = StringUtils.filterHTML(getContent());
-
-    // then truncate, if necessary
-    if (content == null) {
-      content = "";
-    } else if (content.length() <= MAX_CONTENT_LENGTH) {
-      // do nothing
-    } else {
-      content = content.substring(0, MAX_CONTENT_LENGTH-3) + "...";
-    }
-
-    // and finally truncate at a "long word", if necessary
-    String words[] = content.split("\\s");
-    for (int i = 0; i < words.length; i++) {
-      if (words[i].length() > MAX_WORD_LENGTH) {
-        // truncate here
-        int index = content.indexOf(words[i]);
-        content = content.substring(0, index+MAX_WORD_LENGTH);
-        content += "...";
-        break;
-      }
-    }
-
-    return content;
+    return StringUtils.truncate(getContent());
   }
 
   /**

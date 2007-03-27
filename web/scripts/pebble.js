@@ -60,7 +60,9 @@ function previewComment() {
   dwr.util.getValues(data);
   data.body = dwr.util.getValue("commentBody");
   Pebble.previewComment(dwr.util.getValue("blogId"), data, function(data) {
-    dwr.util.setValue("preview.commentBody", data.body, { escapeHtml:false });
+    dwr.util.setValue("previewComment.body", data.body, { escapeHtml:false });
+    dwr.util.setValue("previewComment.title", dwr.util.getValue("title"));
+    dwr.util.setValue("previewComment.author", dwr.util.getValue("author"));
   });
-  new Effect.Highlight('preview.commentBody');
+  new Effect.Highlight('previewComment');
 }

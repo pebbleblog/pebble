@@ -69,6 +69,9 @@ public final class StringUtils {
   private static final Pattern OPENING_SUB_TAG_PATTERN = Pattern.compile("&lt;sub&gt;", Pattern.CASE_INSENSITIVE);
   private static final Pattern CLOSING_SUB_TAG_PATTERN = Pattern.compile("&lt;/sub&gt;", Pattern.CASE_INSENSITIVE);
 
+  private static final int MAX_CONTENT_LENGTH = 255;
+  private static final int MAX_WORD_LENGTH = 20;
+
   /**
    * Filters out characters that have meaning within JSP and HTML, and
    * replaces them with "escaped" versions.
@@ -214,6 +217,38 @@ public final class StringUtils {
     s = s.replaceAll("&nbsp;", "");
     s = s.replaceAll("(?s)<!--.*?-->", "");
     return s.replaceAll("(?s)<.*?>", "");
+  }
+
+  public static String truncate(String s) {
+    String content = StringUtils.filterHTML(s);
+
+    // then truncate, if necessary
+    if (content == null) {
+      return "";
+    } else {
+      StringBuffer buf = new StringBuffer();
+
+      String words[] = content.split("\\s");
+      for (int i = 0; i < words.length; i++) {
+        if (buf.length() + words[i].length() > MAX_CONTENT_LENGTH) {
+          // truncate here
+          buf.append("...");
+          return buf.toString();
+        } else if (words[i].length() > MAX_WORD_LENGTH) {
+          // truncate here
+          buf.append(words[i].substring(0, MAX_WORD_LENGTH));
+          buf.append("...");
+          return buf.toString();
+        } else {
+          buf.append(words[i]);
+          if ((i+1) < words.length) {
+            buf.append(" ");
+          }
+        }
+      }
+
+      return buf.toString();
+    }
   }
 
 }
