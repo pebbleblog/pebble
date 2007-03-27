@@ -75,7 +75,15 @@ public class FeedReaderTag extends SimpleTagSupport {
           Iterator it = sf.getEntries().iterator();
           while (it.hasNext()) {
             SyndEntry se = (SyndEntry)it.next();
-            FeedEntry fe = new FeedEntry(se.getLink(), se.getTitle(), se.getDescription().getValue());
+            if (log.isDebugEnabled()) {
+              log.debug(se);
+            }
+
+            FeedEntry fe = new FeedEntry(
+                se.getLink(),
+                se.getTitle(),
+                se.getDescription() != null ? se.getDescription().getValue() : ""
+            );
             entries.add(fe);
           }
 

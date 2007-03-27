@@ -12,6 +12,8 @@ First version of Ajax comment system.
 Added some Scriptaculous effects.
 Added support for sup and sub tags in allowed HTML for comments.
 Fixed problem in blog entry/comment/TrackBack body truncation code to prevent truncation occurring in the middle of a HTML entity.
+Added an "about" property to blogs and a sidebar component that displays this content.
+Added generic feed reader sidebar component.
 
 Version 2.0.1 - 20th November 2006
 ----------------------------------

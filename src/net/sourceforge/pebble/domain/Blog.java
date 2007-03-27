@@ -75,6 +75,7 @@ public class Blog extends AbstractBlog {
 
   private static final Log log = LogFactory.getLog(Blog.class);
 
+  public static final String ABOUT_KEY = "about";
   public static final String EMAIL_KEY = "email";
   public static final String BLOG_OWNERS_KEY = "blogOwners";
   public static final String BLOG_PUBLISHERS_KEY = "blogPublishers";
@@ -486,6 +487,15 @@ public class Blog extends AbstractBlog {
     } else {
       return "/";
     }
+  }
+
+  /**
+   * Gets the about description of this blog.
+   *
+   * @return    a String
+   */
+  public String getAbout() {
+    return properties.getProperty(ABOUT_KEY);
   }
 
   /**

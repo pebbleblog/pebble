@@ -104,6 +104,16 @@ public class Theme {
   }
 
   /**
+   * Restores the theme from the blog.dir to the webapp.
+   */
+  public void restoreToDefault() {
+    File blogTheme = new File(getBackupThemeDirectory());
+    FileUtils.deleteFile(blogTheme);
+    FileUtils.deleteFile(getPathToLiveTheme());
+    restore();
+  }
+
+  /**
    * Backs up the theme from the webapp to the blog.dir.
    */
   public void backup() {

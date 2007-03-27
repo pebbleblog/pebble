@@ -9,7 +9,7 @@
 
   <div class="contentItemBody">
     <p>
-      The properties on this page are only applicable to this blog (${blog.name}).
+      The properties on this page are only applicable to this blog (<a href="${blog.url}">${blog.name}</a>).
     </p>
 
     <form name="propertiesForm" action="saveBlogProperties.secureaction" method="POST" accept-charset="${blog.characterEncoding}">
@@ -35,6 +35,15 @@
         </td>
         <td>
           <input type="text" name="description" size="40" value="${blog.description}">
+        </td>
+      </tr>
+
+      <tr>
+        <td valign="top">
+          About
+        </td>
+        <td>
+          <textarea name="about" rows="8" cols="50">${blog.about}</textarea>
         </td>
       </tr>
 
@@ -162,29 +171,19 @@
       </tr>
 
       <tr>
-        <td valign="top">
-          Blog owners
-        </td>
-        <td>
-          <pebble:select name="blogOwners" items="${users}" selected="${blog.blogOwners}" label="name" value="username" size="10" multiple="true" />
-        </td>
-      </tr>
-
-      <tr>
-        <td valign="top">
-          Blog publishers
-        </td>
-        <td>
-          <pebble:select name="blogPublishers" items="${users}" selected="${blog.blogPublishers}" label="name" value="username" size="10" multiple="true" />
-        </td>
-      </tr>
-
-      <tr>
-        <td valign="top">
-          Blog contributors
-        </td>
-        <td>
-          <pebble:select name="blogContributors" items="${users}" selected="${blog.blogContributors}" label="name" value="username" size="10" multiple="true" />
+        <td colspan="2">
+          <table width="99%">
+            <tr>
+              <td align="center">Blog owners</td>
+              <td align="center">Blog publishers</td>
+              <td align="center">Blog contributors</td>
+            </tr>
+            <tr>
+              <td align="center"><pebble:select name="blogOwners" items="${users}" selected="${blog.blogOwners}" label="name" value="username" size="10" multiple="true" /></td>
+              <td align="center"><pebble:select name="blogPublishers" items="${users}" selected="${blog.blogPublishers}" label="name" value="username" size="10" multiple="true" /></td>
+              <td align="center"><pebble:select name="blogContributors" items="${users}" selected="${blog.blogContributors}" label="name" value="username" size="10" multiple="true" /></td>
+            </tr>
+            </table>
         </td>
       </tr>
 

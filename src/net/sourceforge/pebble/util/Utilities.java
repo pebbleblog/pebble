@@ -223,6 +223,14 @@ public class Utilities {
   }
 
   /**
+   * Blasts the blog specific theme and overwrites it with the default theme.
+   */
+  public static void restoreTheme(Blog blog) {
+    log.info("Restoring theme to default");
+    blog.getEditableTheme().restoreToDefault();
+  }
+
+  /**
    * Resets the plugins back to their defaults.
    */
   public static void resetPlugins(Blog blog) {
