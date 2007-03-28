@@ -22,4 +22,4 @@
 </div>
 </c:if>
 </c:catch>
-<c:if test="${not empty e}">Exception : ${e}</c:if>
+<c:if test="${not empty e}"><!-- Exception with feed URL ${param.url} : ${e} --></c:if>
