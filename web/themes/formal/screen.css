@@ -20,7 +20,7 @@ a:visited {
   background: #6e7d8e;
   color: black;
   font-weight: normal;
-  height: 80px;
+  height: 100px;
   text-align: left;
 }
 #content {
@@ -60,10 +60,10 @@ a:visited {
 }
 .sidebarItem {
   background: white;
-  border-bottom: #e0e0e0 solid 1px;
-  border-top: #e0e0e0 solid 1px;
-  border-left: #e0e0e0 solid 1px;
-  border-right: #e0e0e0 solid 1px;
+  border-bottom: #f0f0f0 solid 1px;
+  border-top: #f0f0f0 solid 1px;
+  border-left: #f0f0f0 solid 1px;
+  border-right: #f0f0f0 solid 1px;
   margin-bottom: 16px;
 }
 .sidebarItemTitle {
@@ -100,14 +100,14 @@ a:visited {
 }
 
 #blogName {
-  font-size: 36px;
+  font-size: 40px;
   color: white;
   padding-top: 4px;
   padding-left: 16px;
-  font-weight: bold;
+  font-weight: normal;
 }
 #blogDescription {
-  font-size: 14px;
+  font-size: 16px;
   color: white;
   padding-top: 0px;
   padding-left: 18px;
@@ -116,7 +116,7 @@ a:visited {
 }
 h1 {
   font-size: 20px;
-  font-weight: bold;
+  font-weight: normal;
   color : #6e7d8e;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -152,10 +152,10 @@ h3 {
   padding-bottom: 0px;
   margin-bottom: 8px;
   background: white;
-  border-bottom: #e0e0e0 solid 1px;
-  border-top: #e0e0e0 solid 1px;
-  border-left: #e0e0e0 solid 1px;
-  border-right: #e0e0e0 solid 1px;
+  border-bottom: #f0f0f0 solid 1px;
+  border-top: #f0f0f0 solid 1px;
+  border-left: #f0f0f0 solid 1px;
+  border-right: #f0f0f0 solid 1px;
 }
 .contentItemBody {
   line-height: 1.5;

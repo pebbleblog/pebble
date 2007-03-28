@@ -12,7 +12,7 @@ body {
   background: white;
 }
 #header {
-  background: white url('images/header.jpg') repeat-x top left;
+  background: white url( 'images/header.jpg' ) repeat-x top left;
   color: black;
   font-weight: normal;
   height: 200px;
@@ -99,23 +99,27 @@ a:visited {
 }
 
 #blogName {
-  font-size: 36px;
+  font-size: 44px;
   color: white;
-  padding-top: 70px;
-  text-align: center;
-  font-weight: bold;
+  padding-top: 8px;
+  position: absolute;
+  top: 90px;
+  left: 20px;
 }
 #blogDescription {
   font-size: 16px;
   color: white;
-  padding-top: 0px;
+  padding-top: 8px;
   padding-bottom: 8px;
   font-weight: normal;
-  text-align: center;
+  position: absolute;
+  bottom: 20px;
+  left: 24px;
 }
+
 h1 {
   font-size: 20px;
-  font-weight: bold;
+  font-weight: normal;
   color : #6e7d8e;
   background: transparent url('images/bullet.jpg') no-repeat center left;
   padding-top: 4px;

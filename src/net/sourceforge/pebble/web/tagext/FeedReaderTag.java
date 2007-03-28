@@ -58,53 +58,74 @@ public class FeedReaderTag extends SimpleTagSupport {
   private static Map<String,Feed> feedCache = new HashMap<String,Feed>();
   private static final Log log = LogFactory.getLog(FeedReaderTag.class);
 
+  static {
+    Timer timer = new Timer();
+    timer.scheduleAtFixedRate(new TimerTask() {
+      public void run() {
+        for (String url : feedCache.keySet()) {
+          try {
+            Feed updatedFeed = getFeed(url);
+            synchronized (feedCache) {
+              feedCache.put(url, updatedFeed);
+            }
+          } catch (Exception e) {
+            log.warn("Couldn't update feed from " + url);
+          }
+        }
+
+      }
+    }, 0, ONE_MINUTE);
+  }
+
   private String url;
 
   public void doTag() throws JspException, IOException {
     try {
-      Feed feed = null;
-
-      synchronized (feedCache) {
-        feed = feedCache.get(url);
-        if (feed == null || System.currentTimeMillis() > (feed.getTimestamp() + ONE_MINUTE)) {
-          log.debug("Refreshing feed from " + url);
-          SyndFeedInput input = new SyndFeedInput();
-          SyndFeed sf = input.build(new XmlReader(new URL(url)));
-
-          List entries = new LinkedList();
-          Iterator it = sf.getEntries().iterator();
-          while (it.hasNext()) {
-            SyndEntry se = (SyndEntry)it.next();
-            if (log.isDebugEnabled()) {
-              log.debug(se);
-            }
-
-            FeedEntry fe = new FeedEntry(
-                se.getLink(),
-                se.getTitle(),
-                se.getDescription() != null ? se.getDescription().getValue() : ""
-            );
-            entries.add(fe);
-          }
-
-          feed = new Feed(url, entries);
-          feedCache.put(url, feed);
-        } else {
-          log.debug("Using cached feed from " + url);
+      Feed feed = feedCache.get(url);
+      if (feed == null) {
+        Feed updatedFeed = getFeed(url);
+        synchronized (feedCache) {
+          feedCache.put(url, updatedFeed);
         }
       }
-
       getJspContext().setAttribute("feedEntries", feed.getEntries());
     } catch (FeedException fe) {
       throw new JspTagException(fe);
     }
   }
 
+  private static Feed getFeed(String url) throws FeedException, IOException {
+    log.debug("Refreshing feed from " + url);
+    SyndFeedInput input = new SyndFeedInput();
+    SyndFeed sf = input.build(new XmlReader(new URL(url)));
+
+    List entries = new LinkedList();
+    Iterator it = sf.getEntries().iterator();
+    while (it.hasNext()) {
+      SyndEntry se = (SyndEntry)it.next();
+      if (log.isDebugEnabled()) {
+        log.debug(se);
+      }
+
+      FeedEntry fe = new FeedEntry(
+          se.getLink(),
+          se.getTitle(),
+          se.getDescription() != null ? se.getDescription().getValue() : ""
+      );
+      entries.add(fe);
+    }
+
+    log.debug("Refreshed feed from " + url);
+
+    Feed feed = new Feed(url, entries);
+    return feed;
+  }
+
   public void setUrl(String url) {
     this.url = url;
   }
 
-  private class Feed {
+  static class Feed {
 
     private String url;
     private List entries;
