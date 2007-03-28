@@ -49,6 +49,12 @@ public class Referer extends CountedUrl {
   /** the prefix for all Google referers */
   private static final String GOOGLE_PREFIX = "http://www.google.";
 
+  /** regular expression to pull out the query from a Google referer */
+  private static final Pattern GOOGLE_IMAGES_QUERY_STRING_PATTERN = Pattern.compile("[?&]prev=[^&]+&*");
+
+  /** the prefix for all Google referers */
+  private static final String GOOGLE_IMAGES_PREFIX = "http://images.google.";
+
   /** regular expression to pull out the query from a Yahoo! referer */
   private static final Pattern YAHOO_QUERY_STRING_PATTERN = Pattern.compile("[?&]p=[^&]+&*");
 
@@ -89,6 +95,12 @@ public class Referer extends CountedUrl {
 
       String query = extractQuery(GOOGLE_QUERY_STRING_PATTERN, url);
       setName("Google : " + query);
+    } else if (url.length() > GOOGLE_IMAGES_PREFIX.length() &&
+        url.substring(0, GOOGLE_IMAGES_PREFIX.length()).equalsIgnoreCase(GOOGLE_IMAGES_PREFIX)) {
+
+      String query = extractQuery(GOOGLE_IMAGES_QUERY_STRING_PATTERN, url);
+      query = extractQuery(GOOGLE_QUERY_STRING_PATTERN, query);
+      setName("Google Images : " + query);
     } else if (url.length() > YAHOO_PREFIX.length() &&
         url.substring(0, YAHOO_PREFIX.length()).equalsIgnoreCase(YAHOO_PREFIX)) {
 

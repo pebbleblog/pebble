@@ -122,6 +122,13 @@ public class RefererTest extends TestCase {
     assertEquals("Google : \"some search term\"", url.getName());
   }
 
+  public void testFriendlyNamesForGoogleImageSearchUrls() {
+    url = new Referer("http://images.google.com/imgres?imgurl=http://www.wingedsheep.com/images/climbing/birdsboro/20060402_JessFav2VV3W2238.jpg&imgrefurl=http://www.wingedsheep.com/tags/outdoor&h=450&w=300&sz=34&hl=en&start=1&tbnid=3YhO1f-n_UmSsM:&tbnh=127&tbnw=85&prev=/images%3Fq%3Dclimbing%2Bbirdsboro%26svnum%3D10%26hl%3Den");
+    assertEquals("Google Images : climbing birdsboro", url.getName());
+    url = new Referer("http://images.google.com/imgres?imgurl=http://www.wingedsheep.com/images/knitting/20060403_ragRugCatScratch.jpg&imgrefurl=http://www.wingedsheep.com/2006/04.html&h=300&w=300&sz=52&hl=en&start=57&tbnid=--uD5ySwWKcHGM:&tbnh=116&tbnw=116&prev=/images%3Fq%3Drag%2Brug%26start%3D40%26ndsp%3D20%26svnum%3D10%26hl%3Den%26sa%3DN");
+    assertEquals("Google Images : rag rug", url.getName());
+  }
+
   public void testFriendlyNamesForYahooSearchUrls() {
     url = new Referer("http://search.yahoo.com");
     assertEquals("Yahoo! : ", url.getName());

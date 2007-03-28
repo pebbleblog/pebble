@@ -210,15 +210,15 @@ public class TagIndex {
       float mean = total / tags.size();
 
       int[] thresholds = new int[10];
-      thresholds[0] = (int)((1.0/6.0) * mean);
-      thresholds[1] = (int)((2.0/6.0) * mean);
-      thresholds[2] = (int)((3.0/6.0) * mean);
-      thresholds[3] = (int)((4.0/6.0) * mean);
-      thresholds[4] = (int)((5.0/6.0) * mean);
-      thresholds[5] = (int)mean;
-      thresholds[6] = (int)(mean + (1.0 * ((maxBlogEntries-mean)/4.0)));
-      thresholds[7] = (int)(mean + (2.0 * ((maxBlogEntries-mean)/4.0)));
-      thresholds[8] = (int)(mean + (3.0 * ((maxBlogEntries-mean)/4.0)));
+      thresholds[0] = (int)Math.round((1.0/6.0) * mean);
+      thresholds[1] = (int)Math.round(((2.0/6.0) * mean));
+      thresholds[2] = (int)Math.round(((3.0/6.0) * mean));
+      thresholds[3] = (int)Math.round(((4.0/6.0) * mean));
+      thresholds[4] = (int)Math.round(((5.0/6.0) * mean));
+      thresholds[5] = (int)Math.round(mean);
+      thresholds[6] = (int)Math.round((mean + (1.0 * ((maxBlogEntries-mean)/4.0))));
+      thresholds[7] = (int)Math.round((mean + (2.0 * ((maxBlogEntries-mean)/4.0))));
+      thresholds[8] = (int)Math.round((mean + (3.0 * ((maxBlogEntries-mean)/4.0))));
       thresholds[9] = maxBlogEntries;
 
       orderedTags = new ArrayList<Tag>();
