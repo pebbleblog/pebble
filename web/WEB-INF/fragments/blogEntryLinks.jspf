@@ -23,6 +23,7 @@
       &nbsp;
       <input type="checkbox" name="confirm" value="true" />
       <input type="submit" name="submit" value="Remove" />
+      <input type="submit" name="submit" value="Clone" />
     </pebble:isBlogContributor>
 
     <pebble:isAuthorisedForBlog>

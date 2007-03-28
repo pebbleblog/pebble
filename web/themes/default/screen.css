@@ -1,10 +1,10 @@
 body {
   font-family: Trebuchet MS, Lucida Grande, Tahoma, Verdana, Arial, sans-serif;
   font-size: 13px;
-  background: gray url('images/background.jpg') repeat-x top left;
+  background: gray;
   color : black;
   text-align: left;
-  margin: 48px 32px 32px 32px;
+  margin: 32px 32px 32px 32px;
 }
 #container {
   width: 800px;
@@ -389,8 +389,8 @@ blockquote {
 }
 #subscriptions {
   position: absolute;
-  top: 11px;
-  left: 10px;
+  top: 8px;
+  right: 8px;
   color: white;
 }
 #subscriptions a {

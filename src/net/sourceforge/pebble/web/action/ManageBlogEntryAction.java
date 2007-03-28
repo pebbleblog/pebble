@@ -85,6 +85,8 @@ public class ManageBlogEntryAction extends SecureAction {
     } else if (submit.equals("Publish") || submit.equals("Unpublish")) {
       getModel().put(Constants.BLOG_ENTRY_KEY, blogEntry);
       return new PublishBlogEntryView();
+    } else if (submit.equals("Clone")) {
+      return new ForwardView("/addBlogEntry.secureaction?entryToClone=" + blogEntry.getId());
     } else if (confirm != null && confirm.equals("true")) {
       if (submit.equalsIgnoreCase("Remove")) {
         try {

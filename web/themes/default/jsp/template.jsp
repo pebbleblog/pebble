@@ -15,15 +15,9 @@
 
 <div id="container">
 
-  <%-- the RSS and Atom links --%>
+  <%-- the RSS/Atom links --%>
   <div id="subscriptions">
-    <a href="${blog.url}rss.xml"><fmt:message key="newsfeed.rss" /></a> <a href="${blog.url}rss.xml" style="border: 0px;"><img src="common/images/feed-icon-16x16.png" alt="RSS feed" border="0" /></a> |
-    <a href="${blog.url}atom.xml"><fmt:message key="newsfeed.atom" /></a> <a href="${blog.url}atom.xml" style="border: 0px;"><img src="common/images/feed-icon-16x16.png" alt="Atom feed" border="0" /></a>
-  </div>
-
-  <%-- the search box --%>
-  <div id="search">
-    <%@ include file="/WEB-INF/fragments/search.jspf" %>
+    <a href="${blog.url}rss.xml"></a> <a href="${blog.url}rss.xml" style="border: 0px;"><img src="common/images/feed-icon-16x16.png" alt="RSS feed" border="0" valign="top" /></a>
   </div>
 
   <%-- the header, containing blog name and description --%>
@@ -53,7 +47,8 @@
     <jsp:include page="/WEB-INF/fragments/sidebar/recent-blogentries.jsp" />
     <jsp:include page="/WEB-INF/fragments/sidebar/recent-responses.jsp" />
 
-    <%-- the following are examples of the feed component
+    <%-- the following is an example of the feed component that
+         lets you aggregate a RSS/RDF/Atom feed into your blog
     <jsp:include page="/WEB-INF/fragments/sidebar/feed.jsp">
       <jsp:param name="name" value="del.icio.us"/>
       <jsp:param name="url" value="http://del.icio.us/rss/simongbrown"/>
