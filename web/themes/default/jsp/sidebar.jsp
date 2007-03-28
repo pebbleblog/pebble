@@ -3,19 +3,22 @@
 --%>
 <div id="sidebar">
 
-  <%@ include file="/WEB-INF/fragments/sidebar/about.jspf" %>
+  <jsp:include page="/WEB-INF/fragments/sidebar/about.jsp"/>
 
-  <%@ include file="/WEB-INF/fragments/sidebar/login-form.jspf" %>
-  <%@ include file="/WEB-INF/fragments/sidebar/admin-panel.jspf" %>
+  <jsp:include page="/WEB-INF/fragments/sidebar/login-form.jsp" />
+  <jsp:include page="/WEB-INF/fragments/sidebar/admin-panel.jsp" />
 
-  <%@ include file="/WEB-INF/fragments/sidebar/navigation.jspf" %>
-  <%@ include file="/WEB-INF/fragments/sidebar/archives-by-month.jspf" %>
+  <jsp:include page="/WEB-INF/fragments/sidebar/navigation.jsp" />
+  <jsp:include page="/WEB-INF/fragments/sidebar/archives-by-month.jsp" />
 
-  <%@ include file="/WEB-INF/fragments/sidebar/categories.jspf" %>
-  <%@ include file="/WEB-INF/fragments/sidebar/tag-cloud.jspf" %>
+  <jsp:include page="/WEB-INF/fragments/sidebar/categories.jsp" />
 
-  <%@ include file="/WEB-INF/fragments/sidebar/recent-blogentries.jspf" %>
-  <%@ include file="/WEB-INF/fragments/sidebar/recent-responses.jspf" %>
+  <jsp:include page="/WEB-INF/fragments/sidebar/tag-cloud.jsp">
+    <jsp:param name="threshold" value="1"/>
+  </jsp:include>
+
+  <jsp:include page="/WEB-INF/fragments/sidebar/recent-blogentries.jsp" />
+  <jsp:include page="/WEB-INF/fragments/sidebar/recent-responses.jsp" />
 
   <%-- the following are examples of the feed component
   <jsp:include page="/WEB-INF/fragments/sidebar/feed.jsp">

@@ -1,9 +1,5 @@
 <pebble:isNotAuthenticated>
 <c:if test="${empty isLoginPage}">
-<script type="text/javascript">
-  //out("<style>#loginForm { display: none; }</style>");
-</script>
-
 <div class="sidebarItem">
   <div class="sidebarItemTitle" onClick="Effect.toggle('loginForm', 'slide'); $('loginForm').j_username.focus(); return false;"><span><fmt:message key='login.login' /></span></div>
   <form id="loginForm" name="loginForm" method="post" action="${pebbleContext.configuration.secureUrl}j_acegi_security_check">
