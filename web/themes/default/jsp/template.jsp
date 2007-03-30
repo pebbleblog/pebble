@@ -41,7 +41,7 @@
     <jsp:include page="/WEB-INF/fragments/sidebar/categories.jsp" />
 
     <jsp:include page="/WEB-INF/fragments/sidebar/tag-cloud.jsp">
-      <jsp:param name="threshold" value="1"/>
+      <jsp:param name="rankThreshold" value="1"/>
     </jsp:include>
 
     <jsp:include page="/WEB-INF/fragments/sidebar/recent-blogentries.jsp" />
@@ -53,8 +53,8 @@
       <jsp:param name="name" value="del.icio.us"/>
       <jsp:param name="url" value="http://del.icio.us/rss/simongbrown"/>
       <jsp:param name="maxEntries" value="3"/>
-      <jsp:param name="truncateDescription" value="true"/>
-      <jsp:param name="showDescription" value="true"/>
+      <jsp:param name="showBody" value="true"/>
+      <jsp:param name="truncateBody" value="true"/>
     </jsp:include>
     --%>
   </div>

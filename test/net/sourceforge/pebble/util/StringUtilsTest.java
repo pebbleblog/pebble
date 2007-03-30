@@ -71,7 +71,7 @@ public class StringUtilsTest extends TestCase {
     assertEquals("Here is a <a href=\"http://www.google.com\">link</a> to Google and another <a href=\"http://www.google.com\">link</a>", StringUtils.transformToHTMLSubset("Here is a &lt;a href=\"http://www.google.com\"&gt;link&lt;/a&gt; to Google and another &lt;a href=\"http://www.google.com\"&gt;link&lt;/a&gt;"));
     assertEquals("Here is a <a href='http://www.google.com'>link</a> to Google", StringUtils.transformToHTMLSubset("Here is a &lt;a href='http://www.google.com'&gt;link&lt;/a&gt; to Google"));
     assertEquals("Here is a <a href='http://www.google.com'>link</a> to Google and another <a href='http://www.google.com'>link</a>", StringUtils.transformToHTMLSubset("Here is a &lt;a href='http://www.google.com'&gt;link&lt;/a&gt; to Google and another &lt;a href='http://www.google.com'&gt;link&lt;/a&gt;"));
-    assertEquals("Here is a <a href=\"http://www.google.com\" target=\"_blank\">link</a> to Google", StringUtils.transformToHTMLSubset("Here is a &lt;a href=\"http://www.google.com\" target=\"_blank\"&gt;link&lt;/a&gt; to Google"));
+    assertEquals("Here is a <a href=\"http://www.google.com\">link</a> to Google", StringUtils.transformToHTMLSubset("Here is a &lt;a href=\"http://www.google.com\" target=\"_blank\"&gt;link&lt;/a&gt; to Google"));
     assertEquals("Here is a &lt;script&gt; tag", StringUtils.transformToHTMLSubset("Here is a &lt;script&gt; tag"));
     assertEquals("Here is a <blockquote> tag", StringUtils.transformToHTMLSubset("Here is a &lt;blockquote&gt; tag"));
     assertEquals("Here is a </blockquote> tag", StringUtils.transformToHTMLSubset("Here is a &lt;/blockquote&gt; tag"));

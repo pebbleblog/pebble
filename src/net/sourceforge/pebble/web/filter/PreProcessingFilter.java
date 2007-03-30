@@ -33,26 +33,21 @@ package net.sourceforge.pebble.web.filter;
 
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.PebbleContext;
+import net.sourceforge.pebble.api.decorator.ContentDecoratorContext;
 import net.sourceforge.pebble.comparator.BlogEntryComparator;
 import net.sourceforge.pebble.decorator.ContentDecoratorChain;
-import net.sourceforge.pebble.api.decorator.ContentDecoratorContext;
-import net.sourceforge.pebble.domain.AbstractBlog;
-import net.sourceforge.pebble.domain.BlogManager;
-import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.domain.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.context.ApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.jstl.core.Config;
 import java.io.IOException;
 import java.net.URLDecoder;
-import java.util.Locale;
-import java.util.List;
 import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * A filter respsonsible for setting up common objects.
@@ -142,11 +137,22 @@ public class PreProcessingFilter implements Filter {
       ContentDecoratorContext context = new ContentDecoratorContext();
       context.setView(ContentDecoratorContext.SUMMARY_VIEW);
       context.setMedia(ContentDecoratorContext.HTML_PAGE);
+
       List blogEntries = b.getRecentPublishedBlogEntries();
       ContentDecoratorChain.decorate(context, blogEntries);
       Collections.sort(blogEntries, new BlogEntryComparator());
       httpRequest.setAttribute(Constants.RECENT_BLOG_ENTRIES, blogEntries);
-      httpRequest.setAttribute(Constants.RECENT_RESPONSES, b.getRecentApprovedResponses());
+
+      List<Response> recentApprovedResponses = b.getRecentApprovedResponses();
+      for (Response r : recentApprovedResponses) {
+        if (r instanceof Comment) {
+          b.getContentDecoratorChain().decorate(context, (Comment)r);
+        } else if (r instanceof TrackBack){
+          b.getContentDecoratorChain().decorate(context, (TrackBack)r);
+        }
+      }
+      httpRequest.setAttribute(Constants.RECENT_RESPONSES, recentApprovedResponses);
+      
       httpRequest.setAttribute(Constants.CATEGORIES, b.getCategories());
       httpRequest.setAttribute(Constants.TAGS, b.getTags());
       httpRequest.setAttribute(Constants.PLUGIN_PROPERTIES, b.getPluginProperties());

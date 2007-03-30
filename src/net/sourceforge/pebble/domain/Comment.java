@@ -67,7 +67,6 @@ public class Comment extends Response {
   private List comments = new ArrayList();
 
   public Comment() {
-    log.debug("cons");
   }
 
   /**
@@ -147,7 +146,6 @@ public class Comment extends Response {
     } else {
       this.body = body;
     }
-    log.debug(body);
   }
 
   /**
@@ -180,7 +178,6 @@ public class Comment extends Response {
     } else {
       this.author = author;
     }
-    log.debug(author);
   }
 
   /**

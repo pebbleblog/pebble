@@ -19,6 +19,10 @@ public class HtmlDecorator extends ContentDecoratorSupport {
    * @param comment the comment to be decorated
    */
   public void decorate(ContentDecoratorContext context, Comment comment) {
+    comment.setAuthor(StringUtils.filterHTML(comment.getAuthor()));
+    comment.setWebsite(StringUtils.filterHTML(comment.getWebsite()));
+    comment.setEmail(StringUtils.filterHTML(comment.getEmail()));
+    comment.setTitle(StringUtils.filterHTML(comment.getTitle()));
     comment.setBody(StringUtils.transformToHTMLSubset(StringUtils.transformHTML(comment.getBody())));
   }
 
@@ -29,6 +33,9 @@ public class HtmlDecorator extends ContentDecoratorSupport {
    * @param trackBack the TrackBack to be decorated
    */
   public void decorate(ContentDecoratorContext context, TrackBack trackBack) {
+    trackBack.setBlogName(StringUtils.filterHTML(trackBack.getBlogName()));
+    trackBack.setUrl(StringUtils.filterHTML(trackBack.getUrl()));
+    trackBack.setTitle(StringUtils.filterHTML(trackBack.getTitle()));
     trackBack.setExcerpt(StringUtils.transformToHTMLSubset(StringUtils.transformHTML(trackBack.getExcerpt())));
   }
 }

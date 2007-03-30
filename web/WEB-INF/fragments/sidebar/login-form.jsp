@@ -14,5 +14,9 @@
     </div>
   </form>
 </div>
+
+<script type="text/javascript">
+  $('loginForm').style.display = 'none';
+</script>
 </c:if>
 </pebble:isNotAuthenticated>

@@ -83,9 +83,9 @@ public class FeedReaderTag extends SimpleTagSupport {
     try {
       Feed feed = feedCache.get(url);
       if (feed == null) {
-        Feed updatedFeed = getFeed(url);
+        feed = getFeed(url);
         synchronized (feedCache) {
-          feedCache.put(url, updatedFeed);
+          feedCache.put(url, feed);
         }
       }
       getJspContext().setAttribute("feedEntries", feed.getEntries());

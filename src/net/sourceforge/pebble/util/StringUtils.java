@@ -148,14 +148,26 @@ public final class StringUtils {
     s = replace(s, OPENING_SUB_TAG_PATTERN, "<sub>");
     s = replace(s, CLOSING_SUB_TAG_PATTERN, "</sub>");
 
-    // HTTP links
+    // HTTP links - remove all attributes other than href
     s = replace(s, CLOSING_A_TAG_PATTERN, "</a>");
     Matcher m = OPENING_A_TAG_PATTERN.matcher(s);
     while (m.find()) {
       int start = m.start();
       int end = m.end();
       String link = s.substring(start, end);
-      link = "<" + link.substring(4, link.length() - 4) + ">";
+      String hrefAttribute = "";
+      int startOfHrefIndex = link.indexOf("href=\"");
+      if (startOfHrefIndex > -1) {
+        int endOfHrefIndex = link.indexOf("\"", startOfHrefIndex+"href=\"".length()); // 6 = href="
+        hrefAttribute = link.substring(startOfHrefIndex, endOfHrefIndex+1);
+      } else {
+        startOfHrefIndex = link.indexOf("href='");
+        if (startOfHrefIndex > -1) {
+          int endOfHrefIndex = link.indexOf("'", startOfHrefIndex+"href='".length()); // 6 = href='
+          hrefAttribute = link.substring(startOfHrefIndex, endOfHrefIndex+1);
+        }
+      }
+      link = "<a " + hrefAttribute + ">";
       s = s.substring(0, start) + link + s.substring(end, s.length());
       m = OPENING_A_TAG_PATTERN.matcher(s);
     }

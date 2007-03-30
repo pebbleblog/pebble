@@ -6,13 +6,10 @@
   <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
-    <fmt:message key="error.error" />
-
-    <br /><br />
-    <a href="javascript:toggleVisibility('stacktrace')"><fmt:message key="common.readMore"/></a>
+    <fmt:message key="error.error" /> <a href="#" id="stacktraceLink" onclick="Effect.Appear('stacktrace', 'blind'); Effect.Fade('stacktraceLink', 'blind'); return false">[...]</a>
     <br /><br />
 
-    <textarea id="stacktrace" rows="10" cols="60" readonly="true" style="display: none;">
+    <textarea id="stacktrace" rows="40" cols="60" readonly="true" style="display: none;">
 ${stackTrace}
 Request URL : ${pageContext.request.requestURL}
 Request URI : ${pageContext.request.requestURI}
