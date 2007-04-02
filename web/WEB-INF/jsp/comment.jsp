@@ -25,7 +25,7 @@
         <a href="<c:out value="${comment.website}" escapeXml="true"/>" target="_blank" title="<c:out value="${comment.website}"/>" rel="nofollow"><c:out value="${comment.author}" escapeXml="true"/></a>
       </c:if>
       <c:if test="${empty comment.website}">
-        <span id="${param.commentIdentifier}.author">${comment.author}</span>
+        ${comment.author}
       </c:if>
       <pebble:isAuthorisedForBlog>
         (<c:out value="${comment.email}" escapeXml="true" default="-" />/<c:out value="${comment.ipAddress}" default="-" />)

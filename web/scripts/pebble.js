@@ -76,7 +76,12 @@ function previewComment() {
   Pebble.previewComment(dwr.util.getValue("blogId"), data, function(data) {
     dwr.util.setValue("previewComment.body", data.body, { escapeHtml:false });
     dwr.util.setValue("previewComment.title", dwr.util.getValue("title"));
-    dwr.util.setValue("previewComment.author", dwr.util.getValue("author"));
+    var author = '';
+    if (dwr.util.getValue("website") != null && dwr.util.getValue("website") != '') {
+      dwr.util.setValue("previewComment.author", "<a href='" + dwr.util.getValue("website") + "'>" + dwr.util.getValue("author") + "</a>",  { escapeHtml:false });
+    } else {
+      dwr.util.setValue("previewComment.author", dwr.util.getValue("author"));
+    }
   });
   new Effect.Highlight('previewComment');
 }

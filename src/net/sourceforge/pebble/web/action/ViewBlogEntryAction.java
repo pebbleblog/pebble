@@ -32,6 +32,7 @@
 package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
+import net.sourceforge.pebble.api.decorator.ContentDecoratorContext;
 import net.sourceforge.pebble.util.SecurityUtils;
 import net.sourceforge.pebble.util.CookieUtils;
 import net.sourceforge.pebble.domain.*;
@@ -92,7 +93,13 @@ public class ViewBlogEntryAction extends AbstractBlogEntryAction {
         getModel().put("rememberMe", "true");
       }
 
+      ContentDecoratorContext decoratorContext = new ContentDecoratorContext();
+      decoratorContext.setView(ContentDecoratorContext.DETAIL_VIEW);
+      decoratorContext.setMedia(ContentDecoratorContext.HTML_PAGE);
       Comment comment = createComment(blog, blogEntry, request);
+      Comment decoratedComment = (Comment)comment.clone();
+      blog.getContentDecoratorChain().decorate(decoratorContext, decoratedComment);
+      getModel().put("decoratedComment", decoratedComment);
       getModel().put("undecoratedComment", comment);
 
       return new BlogEntryView();
