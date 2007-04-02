@@ -51,6 +51,8 @@ import java.io.IOException;
  */
 public abstract class HtmlView extends JspView {
 
+  public static final String SYSTEM_THEME = "_pebble";
+
   private static Log log = LogFactory.getLog(HtmlView.class);
 
   /**
@@ -71,6 +73,16 @@ public abstract class HtmlView extends JspView {
   public abstract String getTitle();
 
   /**
+   * Gets the name of the theme to use.
+   *
+   * @return  the theme name as a String
+   */
+  protected String getTheme() {
+    AbstractBlog blog = (AbstractBlog)getModel().get(Constants.BLOG_KEY);
+    return blog.getTheme();
+  }
+
+  /**
    * Dispatches this view.
    *
    * @param request  the HttpServletRequest instance
@@ -78,11 +90,12 @@ public abstract class HtmlView extends JspView {
    * @param context
    */
   public void dispatch(HttpServletRequest request, HttpServletResponse response, ServletContext context) throws ServletException {
-    AbstractBlog blog = (AbstractBlog)getModel().get(Constants.BLOG_KEY);
+    String theme = getTheme();
+    request.setAttribute(Constants.THEME, theme);
     request.setAttribute(Constants.TITLE_KEY, getTitle());
     log.debug("Content is " + getUri());
     request.setAttribute("content", getUri());
-    String uri = "/themes/" + blog.getTheme() + "/jsp/template.jsp";
+    String uri = "/themes/" + theme + "/template.jsp";
     log.debug("Dispatching to " + uri);
 
     response.setHeader("Cache-Control","no-cache, no-store");

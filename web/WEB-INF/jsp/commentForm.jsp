@@ -8,6 +8,7 @@
     oFCKeditor.Config["CustomConfigurationsPath"] = '${pageContext.request.contextPath}/fckconfig_pebble.js';
     oFCKeditor.ToolbarSet = 'Comment' ;
     oFCKeditor.ReplaceTextarea() ;
+    oFCKeditor.MakeEditable();
   }
   </script>
 </c:if>

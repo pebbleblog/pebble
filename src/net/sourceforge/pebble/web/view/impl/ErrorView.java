@@ -52,6 +52,16 @@ public class ErrorView extends HtmlView {
     return null;
   }
 
+
+  /**
+   * Gets the name of the theme to use.
+   *
+   * @return the theme name as a String
+   */
+  protected String getTheme() {
+    return SYSTEM_THEME;
+  }
+
   /**
    * Gets the URI that this view represents.
    *

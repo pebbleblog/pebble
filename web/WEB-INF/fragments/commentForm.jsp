@@ -17,8 +17,6 @@
   <input type="hidden" name="entry" value="<c:out value="${blogEntry.id}"/>" />
   <input type="hidden" name="parent" value="<c:out value="${undecoratedComment.parent.id}"/>" />
 
-<%-- <div class="response"><div id="preview.commentBody">${decoratedComment.body}</div></div> --%>
-
 <table width="99%">
 
   <c:if test="${not empty validationContext.errors}">
@@ -35,7 +33,6 @@
   </tr>
   </c:if>
 
-<%--  <c:if test="${not empty decoratedComment}"> --%>
   <tr>
     <td colspan="2">
       <c:set var="comment" scope="request" value="${decoratedComment}"/>
@@ -44,7 +41,6 @@
       <br />
     </td>
   </tr>
-<%--  </c:if> --%>
 
   <c:set var="comment" scope="request" value="${undecoratedComment}"/>
 
@@ -57,7 +53,7 @@
     <td valign="top"><b><fmt:message key="comment.body" /></b></td>
     <td>
       <textarea id="commentBody" name="commentBody" rows="8" cols="40"><c:out value="${comment.body}"/></textarea>
-      <div class="small"><b>HTML</b> : b, strong, i, em, blockquote, br, p, pre, a href="", ul, ol, li</div>
+      <div class="small"><b>HTML</b> : b, strong, i, em, blockquote, br, p, pre, a href="", ul, ol, li, sub, sup</div>
     </td>
   </tr>
 

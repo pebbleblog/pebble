@@ -55,10 +55,24 @@ function setFocus(elementId) {
   element.focus();
 }
 
+function showCommentForm() {
+  Effect.Appear('commentFormDiv', 'blind');
+  var oFCKeditor = FCKeditorAPI.GetInstance('commentBody') ;
+  if (oFCKeditor != null) {
+    oFCKeditor.SwitchEditMode();
+    oFCKeditor.SwitchEditMode();
+  }
+}
+
 function previewComment() {
   var data = { author:null, email:null, website:null, title:null };
   dwr.util.getValues(data);
-  data.body = dwr.util.getValue("commentBody");
+  var oFCKeditor = FCKeditorAPI.GetInstance('commentBody') ;
+  if (oFCKeditor != null) {
+    data.body = oFCKeditor.GetHTML();
+  } else {
+    data.body = dwr.util.getValue("commentBody");
+  }
   Pebble.previewComment(dwr.util.getValue("blogId"), data, function(data) {
     dwr.util.setValue("previewComment.body", data.body, { escapeHtml:false });
     dwr.util.setValue("previewComment.title", dwr.util.getValue("title"));
