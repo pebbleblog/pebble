@@ -84,7 +84,6 @@
         <include name="commons-httpclient-3.0-rc3.jar"/>
         <include name="commons-lang-2.1.jar"/>
         <include name="commons-logging-1.0.4.jar"/>
-        <include name="delicious-1.10.jar"/>
         <include name="dwr-2.0-rc2.jar"/>
         <include name="ehcache-1.2.1RC.jar"/>
         <include name="jcaptcha-all-1.0-RC3.jar"/>
