@@ -33,6 +33,7 @@ package net.sourceforge.pebble.web.filter;
 
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.PebbleContext;
+import net.sourceforge.pebble.util.SecurityUtils;
 import net.sourceforge.pebble.api.decorator.ContentDecoratorContext;
 import net.sourceforge.pebble.comparator.BlogEntryComparator;
 import net.sourceforge.pebble.decorator.ContentDecoratorChain;
@@ -85,18 +86,6 @@ public class PreProcessingFilter implements Filter {
 
     HttpServletRequest httpRequest = (HttpServletRequest)request;
 
-    PebbleContext pebbleContext = PebbleContext.getInstance();
-
-    AbstractBlog blog;
-
-    String url = pebbleContext.getConfiguration().getUrl();
-    if (pebbleContext != null && (url == null || url.length() == 0)) {
-      String scheme = httpRequest.getScheme();
-      url = scheme + "://" + httpRequest.getServerName() + ":" + httpRequest.getServerPort() + httpRequest.getContextPath();
-      log.info("Setting Pebble URL to " + url);
-      PebbleContext.getInstance().getConfiguration().setUrl(url);
-    }
-
     // get URI and strip off the context (e.g. /blog)
     String uri = httpRequest.getRequestURI();
     uri = uri.substring(httpRequest.getContextPath().length(), uri.length());
@@ -113,13 +102,8 @@ public class PreProcessingFilter implements Filter {
       String blogName = uri.substring(1, index);
       blogName = URLDecoder.decode(blogName, "UTF-8");
       if (BlogManager.getInstance().hasBlog(blogName)) {
-        blog = BlogManager.getInstance().getBlog(blogName);
         uri = uri.substring(index, uri.length());
-      } else {
-        blog = BlogManager.getInstance().getMultiBlog();
       }
-    } else {
-      blog = BlogManager.getInstance().getBlog();
     }
 
     if (uri == null || uri.trim().equals("")) {
@@ -127,11 +111,9 @@ public class PreProcessingFilter implements Filter {
     }
     log.debug("uri : " + uri);
 
-    httpRequest.setAttribute(Constants.PEBBLE_CONTEXT, pebbleContext);
-    httpRequest.setAttribute(Constants.BLOG_KEY, blog);
     httpRequest.setAttribute(Constants.EXTERNAL_URI, uri);
-    httpRequest.setAttribute(Constants.BLOG_MANAGER, BlogManager.getInstance());
 
+    AbstractBlog blog = (AbstractBlog)request.getAttribute(Constants.BLOG_KEY);
     if (blog instanceof Blog) {
       Blog b = (Blog)blog;
       ContentDecoratorContext context = new ContentDecoratorContext();
@@ -168,6 +150,8 @@ public class PreProcessingFilter implements Filter {
     if (request.getCharacterEncoding() == null) {
       request.setCharacterEncoding(blog.getCharacterEncoding());
     }
+
+    httpRequest.setAttribute(Constants.AUTHENTICATED_USER, SecurityUtils.getUserDetails());
 
     Config.set(request, Config.FMT_LOCALE, blog.getLocale());
     Config.set(request, Config.FMT_FALLBACK_LOCALE, Locale.ENGLISH);

@@ -11,14 +11,11 @@
         CONVERT_URL_TO_LOWERCASE_BEFORE_COMPARISON
         PATTERN_TYPE_APACHE_ANT
         /xmlrpc/**=anonymousProcessingFilter
-        /**/*.xml=httpSessionContextIntegrationFilter,basicProcessingFilter,rememberMeProcessingFilter,basicExceptionTranslationFilter,filterInvocationInterceptor
-        /**=httpSessionContextIntegrationFilter,formProcessingFilter,rememberMeProcessingFilter,formExceptionTranslationFilter,filterInvocationInterceptor
+        /**/*.xml=httpSessionContextIntegrationFilter,basicProcessingFilter,rememberMeProcessingFilter,basicExceptionTranslationFilter,privateBlogInvocationInterceptor,filterInvocationInterceptor
+        /**=httpSessionContextIntegrationFilter,formProcessingFilter,rememberMeProcessingFilter,formExceptionTranslationFilter,privateBlogInvocationInterceptor,filterInvocationInterceptor
       </value>
     </property>
   </bean>
-  <!--
-        /**/*.xml=httpSessionContextIntegrationFilter,basicProcessingFilter,exceptionTranslationFilter,filterInvocationInterceptor
-  -->
 
    <!-- ======================== AUTHENTICATION ======================= -->
 
@@ -143,6 +140,24 @@
         /**/help/**=ROLE_BLOG_OWNER,ROLE_BLOG_PUBLISHER,ROLE_BLOG_CONTRIBUTOR
       </value>
     </property>
+  </bean>
+
+  <!-- ===================== PRIVATE BLOG SECURITY ==================== -->
+
+  <bean id="privateBlogRoleVoter" class="net.sourceforge.pebble.security.PrivateBlogVoter" />
+
+  <bean id="privateBlogAccessDecisionManager" class="org.acegisecurity.vote.AffirmativeBased">
+    <property name="allowIfAllAbstainDecisions"><value>false</value></property>
+    <property name="decisionVoters">
+      <list>
+        <ref bean="privateBlogRoleVoter"/>
+      </list>
+    </property>
+  </bean>
+
+  <bean id="privateBlogInvocationInterceptor" class="net.sourceforge.pebble.security.PrivateBlogSecurityInterceptor">
+    <property name="authenticationManager"><ref bean="authenticationManager"/></property>
+    <property name="accessDecisionManager"><ref local="privateBlogAccessDecisionManager"/></property>
   </bean>
 
 </beans>

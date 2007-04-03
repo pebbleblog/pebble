@@ -1,13 +1,15 @@
 <pebble:isAuthenticated>
 <div class="sidebarItem">
-  <div class="sidebarItemTitle"><span>Logged in as <authz:authentication operation="username"/> - <a href="./help/index.html" title="Help">Help</a></span></div>
+  <div class="sidebarItemTitle"><span>Logged in as ${authenticatedUser.username} - <a href="./help/index.html" title="Help">Help</a></span></div>
   <div class="sidebarItemBody">
     <div id="adminPanel">
     <ul>
 
       <li>
-        <a href="editUserDetails.secureaction" title="Edit user details">Edit user details</a> |
-        <a href="changePassword.secureaction" title="Change password">Change password</a><br />
+        <c:if test="${authenticatedUser.detailsUpdateable == true}">
+          <a href="editUserDetails.secureaction" title="Edit user details">Edit user details</a> |
+          <a href="changePassword.secureaction" title="Change password">Change password</a><br />
+        </c:if>
         <a href="${pageContext.request.contextPath}/logout.action?redirectUrl=${blog.url}"><fmt:message key="common.logout" /></a>
       </li>
 

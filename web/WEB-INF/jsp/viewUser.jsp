@@ -78,6 +78,16 @@
           </td>
         </tr>
         <tr>
+          <td valign="top">
+            Password changeable
+          </td>
+          <td>
+            <input type="checkbox" name="detailsUpdateable" value="true"
+                   <c:if test="${user.detailsUpdateable == true}">checked="true"</c:if>
+            />&nbsp;
+          </td>
+        </tr>
+        <tr>
           <td colspan="2" align="right">
             <input type="submit" value="Save" />
           </td>

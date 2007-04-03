@@ -57,7 +57,7 @@ public class PebbleUserDetailsComparator implements Comparator {
     PebbleUserDetails pud1 = (PebbleUserDetails)o1;
     PebbleUserDetails pud2 = (PebbleUserDetails)o2;
 
-    return pud1.getUsername().compareTo(pud2.getUsername());
+    return pud1.getName().compareTo(pud2.getName());
   }
 
 }

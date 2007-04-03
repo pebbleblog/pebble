@@ -44,8 +44,8 @@ public class PebbleUserDetailsComparatorTest extends SingleBlogTestCase {
 
   public void testCompare() {
     PebbleUserDetailsComparator comp = new PebbleUserDetailsComparator();
-    PebbleUserDetails pud1 = new PebbleUserDetails("username1", "", "", "", "", new String[]{});
-    PebbleUserDetails pud2 = new PebbleUserDetails("username2", "", "", "", "", new String[]{});
+    PebbleUserDetails pud1 = new PebbleUserDetails("username1", "", "User1", "", "", new String[]{}, true);
+    PebbleUserDetails pud2 = new PebbleUserDetails("username2", "", "User2", "", "", new String[]{}, true);
 
     assertTrue(comp.compare(pud1, pud1) == 0);
     assertTrue(comp.compare(pud1, pud2) < 0);

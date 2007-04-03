@@ -31,25 +31,23 @@
  */
 package net.sourceforge.pebble.web.action;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import net.sourceforge.pebble.web.view.View;
-import net.sourceforge.pebble.web.view.RedirectView;
-import net.sourceforge.pebble.web.view.ForwardView;
-import net.sourceforge.pebble.web.view.impl.PasswordChangedView;
-import net.sourceforge.pebble.web.view.impl.ChangePasswordView;
-import net.sourceforge.pebble.web.validation.ValidationContext;
-import net.sourceforge.pebble.domain.AbstractBlog;
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.PebbleContext;
-import net.sourceforge.pebble.util.SecurityUtils;
 import net.sourceforge.pebble.security.PebbleUserDetails;
 import net.sourceforge.pebble.security.SecurityRealm;
 import net.sourceforge.pebble.security.SecurityRealmException;
+import net.sourceforge.pebble.util.SecurityUtils;
+import net.sourceforge.pebble.web.validation.ValidationContext;
+import net.sourceforge.pebble.web.view.View;
+import net.sourceforge.pebble.web.view.impl.ChangePasswordView;
+import net.sourceforge.pebble.web.view.impl.FourZeroThreeView;
+import net.sourceforge.pebble.web.view.impl.PasswordChangedView;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.ServletException;
 
 /**
  * Changes the user's password.
@@ -75,6 +73,11 @@ public class ChangePasswordAction extends SecureAction {
       String password1 = request.getParameter("password1");
       String password2 = request.getParameter("password2");
       String submit = request.getParameter("submit");
+
+      // can the user change their user details?
+      if (!currentUserDetails.isDetailsUpdateable()) {
+        return new FourZeroThreeView();
+      }
 
       if (submit == null || submit.length() == 0) {
         return new ChangePasswordView();

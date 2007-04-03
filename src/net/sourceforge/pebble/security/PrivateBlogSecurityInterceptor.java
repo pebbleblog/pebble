@@ -29,53 +29,21 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package net.sourceforge.pebble.web.action;
+package net.sourceforge.pebble.security;
 
-import net.sourceforge.pebble.util.SecurityUtils;
-import net.sourceforge.pebble.web.view.View;
-import net.sourceforge.pebble.web.view.impl.UserDetailsView;
-import net.sourceforge.pebble.web.view.impl.FourZeroThreeView;
-import net.sourceforge.pebble.Constants;
-import net.sourceforge.pebble.security.PebbleUserDetails;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import org.acegisecurity.intercept.ObjectDefinitionSource;
+import org.acegisecurity.intercept.web.FilterSecurityInterceptor;
 
 /**
- * Displays information about a single user, ready for it to be edited.
+ * Specialised FilterSecurityInterceptor that returns its own type of
+ * ObjectDefinitionSource.
  *
- * @author    Simon Brown
+ * @author Simon Brown
  */
-public class EditUserDetailsAction extends SecureAction {
+public class PrivateBlogSecurityInterceptor extends FilterSecurityInterceptor {
 
-  /**
-   * Peforms the processing associated with this action.
-   *
-   * @param request  the HttpServletRequest instance
-   * @param response the HttpServletResponse instance
-   * @return the name of the next view
-   */
-  public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
-    PebbleUserDetails currentUserDetails = SecurityUtils.getUserDetails();
-    getModel().put("user", currentUserDetails);
-
-    // can the user change their user details?
-    if (!currentUserDetails.isDetailsUpdateable()) {
-      return new FourZeroThreeView();
-    }
-
-    return new UserDetailsView();
-  }
-
-  /**
-   * Gets a list of all roles that are allowed to access this action.
-   *
-   * @return  an array of Strings representing role names
-   * @param request
-   */
-  public String[] getRoles(HttpServletRequest request) {
-    return new String[]{ Constants.ANY_ROLE };
+  public ObjectDefinitionSource obtainObjectDefinitionSource() {
+    return new PrivateBlogFilterInvocationDefinitionSource();
   }
 
 }

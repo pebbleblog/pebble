@@ -34,6 +34,7 @@ package net.sourceforge.pebble.web.action;
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.PebbleContext;
 import net.sourceforge.pebble.security.SecurityRealmException;
+import net.sourceforge.pebble.security.PebbleUserDetails;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.impl.BlogPropertiesView;
@@ -89,12 +90,26 @@ public class ViewBlogPropertiesAction extends SecureAction {
     getModel().put("timeZones", timeZones);
     getModel().put("characterEncodings", Charset.availableCharsets().keySet());
     try {
-      getModel().put("users", PebbleContext.getInstance().getConfiguration().getSecurityRealm().getUsers());
+      getModel().put("blogOwnerUsers", filterUsersByRole(PebbleContext.getInstance().getConfiguration().getSecurityRealm().getUsers(), Constants.BLOG_OWNER_ROLE));
+      getModel().put("blogPublisherUsers", filterUsersByRole(PebbleContext.getInstance().getConfiguration().getSecurityRealm().getUsers(), Constants.BLOG_PUBLISHER_ROLE));
+      getModel().put("blogContributorUsers", filterUsersByRole(PebbleContext.getInstance().getConfiguration().getSecurityRealm().getUsers(), Constants.BLOG_CONTRIBUTOR_ROLE));
+      getModel().put("allUsers", PebbleContext.getInstance().getConfiguration().getSecurityRealm().getUsers());
     } catch (SecurityRealmException sre) {
       throw new ServletException("Could not get list of users", sre);
     }
 
     return new BlogPropertiesView();
+  }
+
+  private List<PebbleUserDetails> filterUsersByRole(Collection<PebbleUserDetails> users, String role) {
+    List<PebbleUserDetails> list = new LinkedList<PebbleUserDetails>();
+    for (PebbleUserDetails user : users) {
+      if (user.isUserInRole(role)) {
+        list.add(user);
+      }
+    }
+
+    return list;
   }
 
   /**

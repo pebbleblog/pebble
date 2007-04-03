@@ -44,6 +44,15 @@ public class FourZeroThreeView extends HtmlView {
   }
 
   /**
+   * Gets the name of the theme to use.
+   *
+   * @return the theme name as a String
+   */
+  protected String getTheme() {
+    return SYSTEM_THEME;
+  }
+
+  /**
    * Gets the title of this view.
    *
    * @return the title as a String

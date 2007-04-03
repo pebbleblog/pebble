@@ -80,6 +80,7 @@ public class Blog extends AbstractBlog {
   public static final String BLOG_OWNERS_KEY = "blogOwners";
   public static final String BLOG_PUBLISHERS_KEY = "blogPublishers";
   public static final String BLOG_CONTRIBUTORS_KEY = "blogContributors";
+  public static final String BLOG_READERS_KEY = "blogReaders";
   public static final String PRIVATE_KEY = "private";
   public static final String LUCENE_ANALYZER_KEY = "luceneAnalyzer";
   public static final String CONTENT_DECORATORS_KEY = "decorators";
@@ -603,6 +604,34 @@ public class Blog extends AbstractBlog {
    */
   public List<String> getBlogContributors() {
     String commaSeparatedUsers = getBlogContributorsAsString();
+    List<String> users = new LinkedList<String>();
+    if (commaSeparatedUsers != null) {
+      StringTokenizer tok = new StringTokenizer(commaSeparatedUsers, ",");
+      while (tok.hasMoreTokens()) {
+        users.add(tok.nextToken().trim());
+      }
+    }
+
+    return users;
+  }
+
+  /**
+   * Gets a comma separated list of the users that are blog readers
+   * for this blog.
+   *
+   * @return  a String containng a comma separated list of user names
+   */
+  public String getBlogReadersAsString() {
+    return properties.getProperty(BLOG_READERS_KEY);
+  }
+
+  /**
+   * Gets a list of the users that are blog readers for this blog.
+   *
+   * @return  a String containng a comma separated list of user names
+   */
+  public List<String> getBlogReaders() {
+    String commaSeparatedUsers = getBlogReadersAsString();
     List<String> users = new LinkedList<String>();
     if (commaSeparatedUsers != null) {
       StringTokenizer tok = new StringTokenizer(commaSeparatedUsers, ",");

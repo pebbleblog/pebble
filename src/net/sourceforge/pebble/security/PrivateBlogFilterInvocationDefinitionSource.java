@@ -31,15 +31,18 @@
  */
 package net.sourceforge.pebble.security;
 
+import net.sourceforge.pebble.Constants;
+import net.sourceforge.pebble.domain.AbstractBlog;
 import net.sourceforge.pebble.domain.Blog;
 import org.acegisecurity.ConfigAttributeDefinition;
-import org.acegisecurity.intercept.web.AbstractFilterInvocationDefinitionSource;
+import org.acegisecurity.intercept.web.FilterInvocation;
+import org.acegisecurity.intercept.web.FilterInvocationDefinitionSource;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import java.util.HashMap;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Iterator;
-import java.util.Map;
+import java.util.List;
 
 /**
  * Bespoke FilterInvocationDefinitionSource that holds a mapping between blog
@@ -51,36 +54,74 @@ import java.util.Map;
  *
  * @author Simon Brown
  */
-public class PrivateBlogFilterInvocationDefinitionSource extends AbstractFilterInvocationDefinitionSource {
+public class PrivateBlogFilterInvocationDefinitionSource implements FilterInvocationDefinitionSource {
 
   private static final Log log = LogFactory.getLog(PrivateBlogFilterInvocationDefinitionSource.class);
-  private Map<String,ConfigAttributeDefinition> mappings = new HashMap<String,ConfigAttributeDefinition>();
 
-  public void addBlog(Blog blog) {
-    ConfigAttributeDefinition cad = new ConfigAttributeDefinition();
 
-    // TODO : associate the following role mappings with the blog to be secured
-    //  - ROLE_BLOG_ADMIN
-    //  - ROLE_BLOG_READER_<blog id>
-    //cad.addConfigAttribute(new SecurityConfig(Constants.BLOG_OWNER_ROLE));
-    mappings.put(blog.getId(), cad);
-  }
+  /**
+   * Accesses the <code>ConfigAttributeDefinition</code> that applies to a given secure object.<P>Returns
+   * <code>null</code> if no <code>ConfigAttribiteDefinition</code> applies.</p>
+   *
+   * @param object the object being secured
+   * @return the <code>ConfigAttributeDefinition</code> that applies to the passed object
+   * @throws IllegalArgumentException if the passed object is not of a type supported by the
+   *                                  <code>ObjectDefinitionSource</code> implementation
+   */
+  public ConfigAttributeDefinition getAttributes(Object object) throws IllegalArgumentException {
+    if ((object == null) || !this.supports(object.getClass())) {
+        throw new IllegalArgumentException("Object must be a FilterInvocation");
+    }
 
-  public void removeBlog(Blog blog) {
-    mappings.remove(blog.getId());
-  }
-
-  public ConfigAttributeDefinition lookupAttributes(String url) {
-    if (url.matches("/.*/.*")) {
-      String blogId = url.substring(1, url.indexOf("/", 1));
-      return mappings.get(blogId);
-    } else {
+    HttpServletRequest request = ((FilterInvocation)object).getHttpRequest();
+    String uri = (String)request.getRequestURI();
+    uri = uri.substring(request.getContextPath().length(), uri.length());
+    if (
+        uri.endsWith("loginPage.action") ||
+        uri.startsWith("/themes/") ||
+        uri.startsWith("/scripts/") ||
+        uri.startsWith("/common/") ||
+        uri.startsWith("/dwr/") ||
+        uri.equals("/robots.txt")
+        ) {
       return null;
     }
+    
+    AbstractBlog ab = (AbstractBlog)((FilterInvocation)object).getHttpRequest().getAttribute(Constants.BLOG_KEY);
+    if (ab instanceof Blog) {
+      Blog blog = (Blog)ab;
+      List<String> blogReaders = blog.getBlogReaders();
+      if (blogReaders != null && blogReaders.size() > 0) {
+        return new PrivateBlogConfigAttributeDefinition(blog);
+      }
+    }
+
+    return null;
   }
 
+  /**
+   * If available, all of the <code>ConfigAttributeDefinition</code>s defined by the implementing class.<P>This
+   * is used by the {@link org.acegisecurity.intercept.AbstractSecurityInterceptor} to perform startup time validation of each
+   * <code>ConfigAttribute</code> configured against it.</p>
+   *
+   * @return an iterator over all the <code>ConfigAttributeDefinition</code>s or <code>null</code> if unsupported
+   */
   public Iterator getConfigAttributeDefinitions() {
-    return mappings.values().iterator();
+    return null;
   }
 
+  /**
+   * Indicates whether the <code>ObjectDefinitionSource</code> implementation is able to provide
+   * <code>ConfigAttributeDefinition</code>s for the indicated secure object type.
+   *
+   * @param clazz the class that is being queried
+   * @return true if the implementation can process the indicated class
+   */
+  public boolean supports(Class clazz) {
+    if (FilterInvocation.class.isAssignableFrom(clazz)) {
+        return true;
+    } else {
+        return false;
+    }
+  }
 }

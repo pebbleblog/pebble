@@ -36,6 +36,7 @@
                 <li><a href="./help/themes.html">Themes</a></li>
                 <li><a href="./help/delicious.html">del.icio.us</a></li>
                 <li><a href="./help/securityRoles.html">Security roles</a></li>
+                <li><a href="./help/privateBlog.html">Private blog</a></li>
 <%--
             <li><a href="team-blogs.html">Multi-contributor and Team Blogs</a></li>
 --%>
@@ -78,7 +79,6 @@
             <ol>
               <li><a href="./help/multiBlogOverview.html">Multi-blog overview</a></li>
               <li><a href="./help/multiBlogSecurity.html">Multi-blog security</a></li>
-              <li><a href="./help/multiBlogPrivacy.html">Multi-blog privacy</a></li>
             </ol>
         </td>
         </c:if>

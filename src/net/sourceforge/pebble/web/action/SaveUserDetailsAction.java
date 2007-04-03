@@ -42,6 +42,7 @@ import net.sourceforge.pebble.web.validation.ValidationContext;
 import net.sourceforge.pebble.web.view.ForwardView;
 import net.sourceforge.pebble.web.view.RedirectView;
 import net.sourceforge.pebble.web.view.View;
+import net.sourceforge.pebble.web.view.impl.FourZeroThreeView;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -73,8 +74,16 @@ public class SaveUserDetailsAction extends SecureAction {
       String name = request.getParameter("name");
       String emailAddress = request.getParameter("emailAddress");
       String website = request.getParameter("website");
+      String detailsUpdateableAsString = request.getParameter("detailsUpdateable");
+      boolean detailsUpdateable = detailsUpdateableAsString != null && detailsUpdateableAsString.equalsIgnoreCase("true");
 
       PebbleUserDetails currentUserDetails = SecurityUtils.getUserDetails();
+
+      // can the user change their user details?
+      if (!currentUserDetails.isDetailsUpdateable()) {
+        return new FourZeroThreeView();
+      }
+
       SecurityRealm realm = PebbleContext.getInstance().getConfiguration().getSecurityRealm();
       PebbleUserDetails newUserDetails;
 
@@ -86,7 +95,8 @@ public class SaveUserDetailsAction extends SecureAction {
           name,
           emailAddress,
           website,
-          currentUserDetails.getRoles());
+          currentUserDetails.getRoles(),
+          detailsUpdateable);
 
           realm.updateUser(newUserDetails);
 

@@ -129,6 +129,16 @@ public class SaveBlogPropertiesAction extends SecureAction {
       }
       blog.setProperty(Blog.BLOG_CONTRIBUTORS_KEY, blogContributors.toString());
 
+      values = request.getParameterValues("blogReaders");
+      StringBuffer blogReaders = new StringBuffer();
+      if (values != null) {
+        for (String value : values) {
+          blogReaders.append(value);
+          blogReaders.append(",");
+        }
+      }
+      blog.setProperty(Blog.BLOG_READERS_KEY, blogReaders.toString());
+
       try {
         blog.storeProperties();
       } catch (BlogServiceException e) {

@@ -176,12 +176,25 @@
             <tr>
               <td align="center">Blog owners</td>
               <td align="center">Blog publishers</td>
-              <td align="center">Blog contributors</td>
             </tr>
             <tr>
-              <td align="center"><pebble:select name="blogOwners" items="${users}" selected="${blog.blogOwners}" label="name" value="username" size="10" multiple="true" /></td>
-              <td align="center"><pebble:select name="blogPublishers" items="${users}" selected="${blog.blogPublishers}" label="name" value="username" size="10" multiple="true" /></td>
-              <td align="center"><pebble:select name="blogContributors" items="${users}" selected="${blog.blogContributors}" label="name" value="username" size="10" multiple="true" /></td>
+              <td align="center"><pebble:select name="blogOwners" items="${blogOwnerUsers}" selected="${blog.blogOwners}" label="name" value="username" size="10" multiple="true" /></td>
+              <td align="center"><pebble:select name="blogPublishers" items="${blogPublisherUsers}" selected="${blog.blogPublishers}" label="name" value="username" size="10" multiple="true" /></td>
+            </tr>
+            </table>
+        </td>
+      </tr>
+
+      <tr>
+        <td colspan="2">
+          <table width="99%">
+            <tr>
+              <td align="center">Blog contributors</td>
+              <td align="center">Blog readers</td>
+            </tr>
+            <tr>
+              <td align="center"><pebble:select name="blogContributors" items="${blogContributorUsers}" selected="${blog.blogContributors}" label="name" value="username" size="10" multiple="true" /></td>
+              <td align="center"><pebble:select name="blogReaders" items="${allUsers}" selected="${blog.blogReaders}" label="name" value="username" size="10" multiple="true" /></td>
             </tr>
             </table>
         </td>

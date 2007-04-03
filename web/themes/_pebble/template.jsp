@@ -32,6 +32,7 @@
   <div id="sidebar">
     <jsp:include page="/WEB-INF/fragments/sidebar/login-form.jsp" />
     <jsp:include page="/WEB-INF/fragments/sidebar/admin-panel.jsp" />
+    <jsp:include page="/WEB-INF/fragments/sidebar/blogs.jsp" />
   </div>
 
   <%-- the main area into which content gets rendered --%>

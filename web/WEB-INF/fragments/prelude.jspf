@@ -4,4 +4,3 @@
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 <%@ taglib uri="http://pebble.sourceforge.net/pebble" prefix="pebble" %>
 <%@ taglib uri="http://acegisecurity.org/authz" prefix="authz" %>
-<%@ taglib uri="http://delicious-java.sf.net" prefix="delicious" %>

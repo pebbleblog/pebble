@@ -14,7 +14,7 @@ public class PebbleUserDetailsTest extends TestCase {
   private PebbleUserDetails user;
 
   protected void setUp() throws Exception {
-    user = new PebbleUserDetails("username", "password", "A user", "emailAddress", "website", new String[] {Constants.BLOG_OWNER_ROLE});
+    user = new PebbleUserDetails("username", "password", "A user", "emailAddress", "website", new String[] {Constants.BLOG_OWNER_ROLE}, true);
   }
 
   public void testConstruction() {

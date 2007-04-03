@@ -15,6 +15,7 @@ Fixed problem in blog entry/comment/TrackBack body truncation code to prevent tr
 Added an "about" property to blogs and a sidebar component that displays this content.
 Added generic feed reader sidebar component.
 Added ability to clone blog entries.
+Added ability to make a blog private, without needing to modify the Acegi configuration.
 
 Version 2.0.1 - 20th November 2006
 ----------------------------------

@@ -27,24 +27,28 @@ public class PebbleUserDetails implements UserDetails {
 
   private GrantedAuthority grantedAuthories[];
 
+  private boolean detailsUpdateable = true;
+
   public PebbleUserDetails() {
   }
 
-  public PebbleUserDetails(String username, String name, String emailAddress, String website, String roles[]) {
+  public PebbleUserDetails(String username, String name, String emailAddress, String website, String roles[], boolean detailsUpdateable) {
     this.username = username;
     this.name = name;
     this.emailAddress = emailAddress;
     this.website = website;
     this.grantedAuthories = createGrantedAuthorities(roles);
+    this.detailsUpdateable = detailsUpdateable;
   }
 
-  public PebbleUserDetails(String username, String password, String name, String emailAddress, String website, String roles[]) {
+  public PebbleUserDetails(String username, String password, String name, String emailAddress, String website, String roles[], boolean detailsUpdateable) {
     this.username = username;
     this.password = password;
     this.name = name;
     this.emailAddress = emailAddress;
     this.website = website;
     this.grantedAuthories = createGrantedAuthorities(roles);
+    this.detailsUpdateable = detailsUpdateable;
   }
 
   public String getUsername() {
@@ -191,4 +195,12 @@ public class PebbleUserDetails implements UserDetails {
     this.grantedAuthories = grantedAuthories;
   }
 
+  public boolean isDetailsUpdateable() {
+    return detailsUpdateable;
+  }
+
+  public void setDetailsUpdateable(boolean detailsUpdateable) {
+    this.detailsUpdateable = detailsUpdateable;
+  }
+  
 }
