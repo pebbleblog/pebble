@@ -34,6 +34,7 @@ package net.sourceforge.pebble.domain;
 import net.sourceforge.pebble.dao.DAOFactory;
 import net.sourceforge.pebble.dao.mock.MockDAOFactory;
 import net.sourceforge.pebble.PebbleContext;
+import net.sourceforge.pebble.security.MockSecurityRealm;
 
 import java.io.File;
 
@@ -53,6 +54,8 @@ public abstract class MultiBlogTestCase extends PebbleTestCase {
 
     PebbleContext.getInstance().getConfiguration().setUrl("http://www.yourdomain.com/blog/");
     BlogManager.getInstance().setMultiBlog(true);
+
+    PebbleContext.getInstance().getConfiguration().setSecurityRealm(new MockSecurityRealm());
 
     // and set up some blogs
     File blogDirectory1 = new File(TEST_BLOG_LOCATION, "blogs/blog1");

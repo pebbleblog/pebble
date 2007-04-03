@@ -33,6 +33,7 @@ package net.sourceforge.pebble.web.filter;
 
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.PebbleContext;
+import net.sourceforge.pebble.security.PebbleUserDetails;
 import net.sourceforge.pebble.util.SecurityUtils;
 import net.sourceforge.pebble.api.decorator.ContentDecoratorContext;
 import net.sourceforge.pebble.comparator.BlogEntryComparator;
@@ -151,7 +152,10 @@ public class PreProcessingFilter implements Filter {
       request.setCharacterEncoding(blog.getCharacterEncoding());
     }
 
-    httpRequest.setAttribute(Constants.AUTHENTICATED_USER, SecurityUtils.getUserDetails());
+    PebbleUserDetails user = SecurityUtils.getUserDetails();
+    if (user != null) {
+      httpRequest.setAttribute(Constants.AUTHENTICATED_USER, user);
+    }
 
     Config.set(request, Config.FMT_LOCALE, blog.getLocale());
     Config.set(request, Config.FMT_FALLBACK_LOCALE, Locale.ENGLISH);

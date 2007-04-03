@@ -34,6 +34,7 @@ package net.sourceforge.pebble.web.filter;
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.domain.MultiBlogTestCase;
 import net.sourceforge.pebble.domain.MultiBlog;
+import net.sourceforge.pebble.domain.BlogManager;
 import net.sourceforge.pebble.mock.MockFilterChain;
 import net.sourceforge.pebble.mock.MockFilterConfig;
 import net.sourceforge.pebble.mock.MockHttpServletRequest;
@@ -70,34 +71,12 @@ public class MultiBlogPreProcessingFilterTest extends MultiBlogTestCase {
   }
 
   /**
-   * Tests that the blog is inserted into request scope, regardless of the URI.
-   *
-   * @throws Exception
-   */
-  public void testBlogInsertedIntoRequestScope() throws Exception {
-    request.setRequestUri("/somecontext");
-    filter.doFilter(request, response, new MockFilterChain());
-    assertTrue(request.getAttribute(Constants.BLOG_KEY) instanceof MultiBlog);
-
-    request.setRequestUri("/somecontext/blog1");
-    filter.doFilter(request, response, new MockFilterChain());
-    assertEquals(blog1, request.getAttribute(Constants.BLOG_KEY));
-
-    request.setRequestUri("/somecontext/rss.xml");
-    filter.doFilter(request, response, new MockFilterChain());
-    assertTrue(request.getAttribute(Constants.BLOG_KEY) instanceof MultiBlog);
-
-    request.setRequestUri("/somecontext/blog1/rss.xml");
-    filter.doFilter(request, response, new MockFilterChain());
-    assertEquals(blog1, request.getAttribute(Constants.BLOG_KEY));
-  }
-
-  /**
    * Tests that the important part of the URI is inserted into request scope.
    *
    * @throws Exception
    */
   public void testUriInsertedIntoRequestScope() throws Exception {
+    request.setAttribute(Constants.BLOG_KEY, BlogManager.getInstance().getMultiBlog());
     request.setRequestUri("/somecontext");
     filter.doFilter(request, response, new MockFilterChain());
     assertEquals("/", request.getAttribute(Constants.EXTERNAL_URI));

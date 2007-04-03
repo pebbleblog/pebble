@@ -69,30 +69,12 @@ public class SingleBlogPreProcessingFilterTest extends SingleBlogTestCase {
   }
 
   /**
-   * Tests that the blog is inserted into request scope, regardless of the URI.
-   *
-   * @throws Exception
-   */
-  public void testBlogInsertedIntoRequestScope() throws Exception {
-    request.setRequestUri("/somecontext");
-    filter.doFilter(request, response, new MockFilterChain());
-    assertEquals(blog, request.getAttribute(Constants.BLOG_KEY));
-
-    request.setRequestUri("/somecontext/rss.xml");
-    filter.doFilter(request, response, new MockFilterChain());
-    assertEquals(blog, request.getAttribute(Constants.BLOG_KEY));
-
-    request.setRequestUri("/somecontext/images/myImage.jpg");
-    filter.doFilter(request, response, new MockFilterChain());
-    assertEquals(blog, request.getAttribute(Constants.BLOG_KEY));
-  }
-
-  /**
    * Tests that the important part of the URI is inserted into request scope.
    *
    * @throws Exception
    */
   public void testUriInsertedIntoRequestScope() throws Exception {
+    request.setAttribute(Constants.BLOG_KEY, blog);
     request.setRequestUri("/somecontext");
     filter.doFilter(request, response, new MockFilterChain());
     assertEquals("/", request.getAttribute(Constants.EXTERNAL_URI));
