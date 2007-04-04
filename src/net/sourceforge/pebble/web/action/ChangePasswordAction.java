@@ -38,9 +38,9 @@ import net.sourceforge.pebble.security.SecurityRealm;
 import net.sourceforge.pebble.security.SecurityRealmException;
 import net.sourceforge.pebble.util.SecurityUtils;
 import net.sourceforge.pebble.web.validation.ValidationContext;
+import net.sourceforge.pebble.web.view.ForbiddenView;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.impl.ChangePasswordView;
-import net.sourceforge.pebble.web.view.impl.FourZeroThreeView;
 import net.sourceforge.pebble.web.view.impl.PasswordChangedView;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -76,7 +76,7 @@ public class ChangePasswordAction extends SecureAction {
 
       // can the user change their user details?
       if (!currentUserDetails.isDetailsUpdateable()) {
-        return new FourZeroThreeView();
+        return new ForbiddenView();
       }
 
       if (submit == null || submit.length() == 0) {

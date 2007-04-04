@@ -109,7 +109,7 @@ public class HttpController extends HttpServlet {
 
     boolean authorised = isAuthorised(request, action);
     if (!authorised) {
-      response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+      response.sendError(HttpServletResponse.SC_FORBIDDEN);
     } else {
       try {
         Model model = new Model();

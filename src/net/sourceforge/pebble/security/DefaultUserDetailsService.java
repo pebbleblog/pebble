@@ -3,6 +3,8 @@ package net.sourceforge.pebble.security;
 import org.acegisecurity.userdetails.UserDetails;
 import org.acegisecurity.userdetails.UserDetailsService;
 import org.acegisecurity.userdetails.UsernameNotFoundException;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * Implementation of the UserDetailsService that gets authentication
@@ -11,6 +13,8 @@ import org.acegisecurity.userdetails.UsernameNotFoundException;
  * @author    Simon Brown
  */
 public class DefaultUserDetailsService implements UserDetailsService {
+
+  private static final Log log = LogFactory.getLog(DefaultUserDetailsService.class);
 
   private SecurityRealm securityRealm;
 

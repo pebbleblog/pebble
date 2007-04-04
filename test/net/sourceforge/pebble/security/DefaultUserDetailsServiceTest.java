@@ -2,9 +2,12 @@ package net.sourceforge.pebble.security;
 
 import junit.framework.TestCase;
 import net.sourceforge.pebble.Constants;
-import org.acegisecurity.GrantedAuthority;
 import org.acegisecurity.userdetails.UserDetails;
 import org.acegisecurity.userdetails.UsernameNotFoundException;
+import org.acegisecurity.GrantedAuthorityImpl;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Tests for the DefaultUserDetails class.
@@ -35,9 +38,10 @@ public class DefaultUserDetailsServiceTest extends TestCase {
     assertEquals("username", user.getUsername());
     assertEquals("password", user.getPassword());
 
-    GrantedAuthority authorities[] = user.getAuthorities();
-    assertEquals(1, authorities.length);
-    assertEquals(Constants.BLOG_OWNER_ROLE, authorities[0].getAuthority());
+    List authorities = Arrays.asList(user.getAuthorities());
+    assertEquals(2, authorities.size());
+    assertTrue(authorities.contains(new GrantedAuthorityImpl(Constants.BLOG_OWNER_ROLE)));
+    assertTrue(authorities.contains(new GrantedAuthorityImpl(Constants.BLOG_READER_ROLE)));
   }
 
   public void testLoadByUsernameThrowsExceptionWhenUserDoesntExist() throws Exception {

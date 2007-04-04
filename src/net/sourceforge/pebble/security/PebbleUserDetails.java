@@ -5,6 +5,9 @@ import org.acegisecurity.GrantedAuthority;
 import org.acegisecurity.GrantedAuthorityImpl;
 import org.acegisecurity.userdetails.UserDetails;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Extension of the Acegi User class that adds additional information
  * such as the user's e-mail address.
@@ -159,16 +162,15 @@ public class PebbleUserDetails implements UserDetails {
   }
 
   private static GrantedAuthority[] createGrantedAuthorities(String roles[]) {
+    Set<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
     if (roles != null) {
-      GrantedAuthority[] authorities = new GrantedAuthority[roles.length];
-      for (int i = 0; i < roles.length; i++) {
-        authorities[i] = new GrantedAuthorityImpl(roles[i].trim());
+      for (String role : roles) {
+        authorities.add(new GrantedAuthorityImpl(role.trim()));
       }
-
-      return authorities;
-    } else {
-      return new GrantedAuthority[]{};
     }
+    authorities.add(new GrantedAuthorityImpl(Constants.BLOG_READER_ROLE));
+
+    return authorities.toArray(new GrantedAuthority[]{});
   }
 
   public void setUsername(String username) {

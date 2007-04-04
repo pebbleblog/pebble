@@ -3,10 +3,13 @@ package net.sourceforge.pebble.security;
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.PebbleContext;
 import net.sourceforge.pebble.domain.SingleBlogTestCase;
-import org.acegisecurity.GrantedAuthority;
 import org.acegisecurity.providers.dao.salt.ReflectionSaltSource;
 import org.acegisecurity.providers.encoding.PasswordEncoder;
 import org.acegisecurity.providers.encoding.PlaintextPasswordEncoder;
+import org.acegisecurity.GrantedAuthorityImpl;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Tests for the DefaultSecurityRealm class.
@@ -57,9 +60,10 @@ public class DefaultSecurityRealmTest extends SingleBlogTestCase {
     assertEquals("emailAddress", user.getEmailAddress());
     assertEquals("website", user.getWebsite());
 
-    GrantedAuthority authorities[] = user.getAuthorities();
-    assertEquals(1, authorities.length);
-    assertEquals(Constants.BLOG_OWNER_ROLE, authorities[0].getAuthority());
+    List authorities = Arrays.asList(user.getAuthorities());
+    assertEquals(2, authorities.size());
+    assertTrue(authorities.contains(new GrantedAuthorityImpl(Constants.BLOG_OWNER_ROLE)));
+    assertTrue(authorities.contains(new GrantedAuthorityImpl(Constants.BLOG_READER_ROLE)));
   }
 
   public void testGetUserWhenUserDoesntExist() throws Exception {
