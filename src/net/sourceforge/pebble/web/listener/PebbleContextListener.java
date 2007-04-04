@@ -31,22 +31,14 @@
  */
 package net.sourceforge.pebble.web.listener;
 
-import net.sourceforge.pebble.PebbleContext;
 import net.sourceforge.pebble.Configuration;
-import net.sourceforge.pebble.security.DefaultUserDetailsService;
-import net.sourceforge.pebble.security.SecurityRealm;
-import net.sourceforge.pebble.security.PrivateBlogFilterInvocationDefinitionSource;
+import net.sourceforge.pebble.PebbleContext;
 import net.sourceforge.pebble.dao.DAOFactory;
-import net.sourceforge.pebble.domain.BlogManager;
-import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.domain.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
-import org.acegisecurity.intercept.web.FilterSecurityInterceptor;
-import org.acegisecurity.intercept.web.FilterInvocationDefinitionMap;
-import org.acegisecurity.ConfigAttributeDefinition;
-import org.acegisecurity.SecurityConfig;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -82,13 +74,42 @@ public class PebbleContextListener implements ServletContextListener {
     BlogManager.getInstance().setMultiBlog(config.isMultiBlog());
     BlogManager.getInstance().startBlogs();
 
-    // TODO v2.1 : when starting blogs, configure any that have been marked as
-    // private to require authentication
-//    FilterSecurityInterceptor interceptor = (FilterSecurityInterceptor)applicationContext.getBean("privateBlogFilterInvocationInterceptor");
-//    for (Blog blog : (Collection<Blog>)BlogManager.getInstance().getBlogs()) {
-//      PrivateBlogFilterInvocationDefinitionSource source = (PrivateBlogFilterInvocationDefinitionSource)interceptor.getObjectDefinitionSource();
-//      source.addBlog(blog);
-//    }
+    // find those blogs with no entries and add a welcome note
+    Collection<Blog> blogs = (Collection<Blog>)BlogManager.getInstance().getBlogs();
+    for (Blog blog : blogs) {
+      try {
+        // and add a default entry, if one doesn't exist
+        if (blog.getNumberOfBlogEntries() == 0) {
+          log.info("Creating 'welcome note' blog entry for " + blog.getId());
+          BlogEntry blogEntry = new BlogEntry(blog);
+          blogEntry.setTitle("Welcome");
+          blogEntry.setBody(
+              "<p>\n" +
+              "Welcome to your new Pebble powered blog. Here are a few suggestions for getting started.\n" +
+              "</p>\n" +
+              "\n" +
+              "<ul>\n" +
+              "<li>Login to see the admin features of your blog. The default username is <code>username</code> and the password is <code>password</code>.</li>\n" +
+              "<li>Modify your <a href=\"viewBlogProperties.secureaction\">blog properties</a></li>\n" +
+              "<li><a href=\"addBlogEntry.secureaction\">Create a new blog entry</a>.</li>\n" +
+              "<li>Give out a link to your <a href=\"./rss.xml\">RSS</a> feed.</li>\n" +
+              "<li>Remove the default user and create your own user on the <a href=\"viewUsers.secureaction\">users page</a>.</li>\n" +
+              "<li>Take a look at the <a href=\"./help/index.html\">online help</a>.</li>\n" +
+              "<li>Delete this blog entry when you're finished with it.</li>\n" +
+              "</ul>\n" +
+              "\n" +
+              "<p>\n" +
+              "Have fun!\n" +
+              "</p>");
+          blogEntry.setAuthor("username");
+          blogEntry.setPublished(true);
+          BlogService service = new BlogService();
+          service.putBlogEntry(blogEntry);
+        }
+      } catch (BlogServiceException e) {
+        log.warn("Could not store 'welcome note' blog entry for " + blog.getId());
+      }
+    }
 
     long endTime = System.currentTimeMillis();
     log.info("Pebble started in " + (endTime-startTime) + "ms");

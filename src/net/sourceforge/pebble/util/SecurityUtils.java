@@ -50,6 +50,8 @@ import org.acegisecurity.providers.encoding.ShaPasswordEncoder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import java.util.List;
+
 /**
  * A collection of utility methods for security.
  *
@@ -227,6 +229,11 @@ public final class SecurityUtils {
   public static boolean isUserAuthorisedForBlogAsBlogContributor(Authentication auth, Blog blog) {
     String currentUser = SecurityUtils.getUsername(auth);
     return isBlogContributor(auth) && blog.isUserInRole(Constants.BLOG_CONTRIBUTOR_ROLE, currentUser);
+  }
+
+  public static boolean isUserAuthorisedForBlogAsBlogReader(Authentication auth, Blog blog) {
+    String currentUser = SecurityUtils.getUsername(auth);
+    return blog.isUserInRole(Constants.BLOG_READER_ROLE, currentUser);
   }
 
   public static boolean isUserAuthorisedForBlog(Blog blog) {

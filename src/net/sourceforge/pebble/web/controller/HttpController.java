@@ -32,9 +32,8 @@
 package net.sourceforge.pebble.web.controller;
 
 import net.sourceforge.pebble.Constants;
-import net.sourceforge.pebble.domain.Blog;
-import net.sourceforge.pebble.domain.BlogManager;
 import net.sourceforge.pebble.domain.AbstractBlog;
+import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.util.SecurityUtils;
 import net.sourceforge.pebble.web.action.Action;
 import net.sourceforge.pebble.web.action.ActionFactory;
@@ -141,14 +140,7 @@ public class HttpController extends HttpServlet {
   private boolean isAuthorised(HttpServletRequest request, Action action) {
     if (action instanceof SecureAction) {
       SecureAction secureAction = (SecureAction)action;
-
-      AbstractBlog blog = (AbstractBlog)request.getAttribute(Constants.BLOG_KEY);
-      if (blog instanceof Blog) {
-        return isUserInRole(request, secureAction) &&
-            isUserAuthorisedForBlog(request, secureAction);
-      } else {
-        return isUserInRole(request, secureAction);
-      }
+      return isUserInRole(request, secureAction);
     } else {
       return true;
     }
@@ -163,22 +155,21 @@ public class HttpController extends HttpServlet {
    * @return  true if the user is in one of the roles, false otherwise
    */
   private boolean isUserInRole(HttpServletRequest request, SecureAction action) {
-    String roles[] = action.getRoles(request);
-    for (String role : roles) {
-      if (role.equals(Constants.ANY_ROLE) || SecurityUtils.isUserInRole(role)) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  private boolean isUserAuthorisedForBlog(HttpServletRequest request, SecureAction action) {
-    Blog rootBlog = (Blog)request.getAttribute(Constants.BLOG_KEY);
+    AbstractBlog ab = (AbstractBlog)request.getAttribute(Constants.BLOG_KEY);
     String currentUser = SecurityUtils.getUsername();
     String roles[] = action.getRoles(request);
-    for (int i = 0; i < roles.length; i++) {
-      if (rootBlog.isUserInRole(roles[i], currentUser)) {
+    for (String role : roles) {
+      if (role.equals(Constants.ANY_ROLE)) {
         return true;
+      } else if (SecurityUtils.isUserInRole(role)) {
+        if (ab instanceof Blog) {
+          Blog blog = (Blog)ab;
+          if (blog.isUserInRole(role, currentUser)) {
+            return true;
+          }
+        } else {
+          return true;
+        }
       }
     }
     return false;

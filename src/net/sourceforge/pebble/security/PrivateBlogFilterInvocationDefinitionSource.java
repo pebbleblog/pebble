@@ -74,10 +74,10 @@ public class PrivateBlogFilterInvocationDefinitionSource implements FilterInvoca
     }
 
     HttpServletRequest request = ((FilterInvocation)object).getHttpRequest();
-    String uri = (String)request.getRequestURI();
-    uri = uri.substring(request.getContextPath().length(), uri.length());
+    String uri = (String)request.getAttribute(Constants.INTERNAL_URI);
     if (
         uri.endsWith("loginPage.action") ||
+        uri.endsWith(".secureaction") ||
         uri.startsWith("/themes/") ||
         uri.startsWith("/scripts/") ||
         uri.startsWith("/common/") ||

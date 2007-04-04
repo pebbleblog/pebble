@@ -73,6 +73,7 @@ public class Constants {
   public static String BLOG_OWNER_ROLE = "ROLE_BLOG_OWNER";
   public static String BLOG_PUBLISHER_ROLE = "ROLE_BLOG_PUBLISHER";
   public static String BLOG_CONTRIBUTOR_ROLE = "ROLE_BLOG_CONTRIBUTOR";
+  public static String BLOG_READER_ROLE = "ROLE_BLOG_READER";
   public static String ANY_ROLE = "*";
 
 }

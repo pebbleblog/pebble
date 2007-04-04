@@ -36,7 +36,7 @@
                 <li><a href="./help/themes.html">Themes</a></li>
                 <li><a href="./help/delicious.html">del.icio.us</a></li>
                 <li><a href="./help/securityRoles.html">Security roles</a></li>
-                <li><a href="./help/privateBlog.html">Private blog</a></li>
+                <li><a href="./help/privateBlogs.html">Private blogs</a></li>
 <%--
             <li><a href="team-blogs.html">Multi-contributor and Team Blogs</a></li>
 --%>

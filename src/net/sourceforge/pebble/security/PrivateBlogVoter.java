@@ -38,8 +38,6 @@ import org.acegisecurity.ConfigAttribute;
 import org.acegisecurity.ConfigAttributeDefinition;
 import org.acegisecurity.vote.AccessDecisionVoter;
 
-import java.util.List;
-
 /**
  * AccessDecisionVoter that votes ACCESS_GRANTED if the user is :
  *  - a blog admin user
@@ -99,7 +97,6 @@ public class PrivateBlogVoter implements AccessDecisionVoter {
    */
   public int vote(Authentication authentication, Object object, ConfigAttributeDefinition config) {
     PrivateBlogConfigAttributeDefinition cad = (PrivateBlogConfigAttributeDefinition)config;
-    String username = authentication.getName();
     Blog blog = cad.getBlog();
 
     if (SecurityUtils.isBlogAdmin(authentication)) {
@@ -108,14 +105,9 @@ public class PrivateBlogVoter implements AccessDecisionVoter {
     } else if (SecurityUtils.isUserAuthorisedForBlog(authentication, blog)) {
       // blog owners/publishers/contributors need access, if they have it
       return ACCESS_GRANTED;
-    } else {
-      // otherwise we look at the list of blog readers
-      List<String> blogReaders = blog.getBlogReaders();
-      if (blogReaders != null && blogReaders.size() > 0) {
-        if (blogReaders.contains(username)) {
-          return ACCESS_GRANTED;
-        }
-      }
+    } else if (SecurityUtils.isUserAuthorisedForBlogAsBlogReader(authentication, blog)) {
+      // the user is an authorised blog reader
+        return ACCESS_GRANTED;
     }
 
     return ACCESS_DENIED;

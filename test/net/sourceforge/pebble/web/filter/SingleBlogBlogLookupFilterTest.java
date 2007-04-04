@@ -39,7 +39,7 @@ import net.sourceforge.pebble.mock.MockFilterChain;
 import net.sourceforge.pebble.Constants;
 
 /**
- * Tests for the PreProcessingFilter class.
+ * Tests for the BlogLookupFilter class.
  *
  * @author    Simon Brown
  */

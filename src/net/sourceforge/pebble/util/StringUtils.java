@@ -69,8 +69,8 @@ public final class StringUtils {
   private static final Pattern OPENING_SUB_TAG_PATTERN = Pattern.compile("&lt;sub&gt;", Pattern.CASE_INSENSITIVE);
   private static final Pattern CLOSING_SUB_TAG_PATTERN = Pattern.compile("&lt;/sub&gt;", Pattern.CASE_INSENSITIVE);
 
-  private static final int MAX_CONTENT_LENGTH = 255;
-  private static final int MAX_WORD_LENGTH = 20;
+  public static final int MAX_CONTENT_LENGTH = 255;
+  public static final int MAX_WORD_LENGTH = 20;
 
   /**
    * Filters out characters that have meaning within JSP and HTML, and
@@ -232,6 +232,10 @@ public final class StringUtils {
   }
 
   public static String truncate(String s) {
+    return truncate(s, MAX_CONTENT_LENGTH);
+  }
+
+  public static String truncate(String s, int maxLength) {
     String content = StringUtils.filterHTML(s);
 
     // then truncate, if necessary
@@ -242,7 +246,7 @@ public final class StringUtils {
 
       String words[] = content.split("\\s");
       for (int i = 0; i < words.length; i++) {
-        if (buf.length() + words[i].length() > MAX_CONTENT_LENGTH) {
+        if (buf.length() + words[i].length() > maxLength) {
           // truncate here
           buf.append("...");
           return buf.toString();

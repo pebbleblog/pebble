@@ -34,50 +34,72 @@
     </p>
 
     <p>
-      <b>net.sourceforge.pebble.decorator.ReadMoreDecorator</b> (*)<br />
+      <b>net.sourceforge.pebble.decorator.ReadMoreDecorator</b> (*)<br/>
       Adds a "Read more..." link to blog entries in the following cases.
     </p>
     <ul>
-      <li>The blog entry excerpt is not empty and the page being displayed is a summary page (i.e. home, month or day page).</li>
+      <li>The blog entry excerpt is not empty and the page being displayed is a summary page (i.e. home, month or day
+        page).
+      </li>
       <li>The blog entry is aggregated (i.e. the original permalink has been specified).</li>
     </ul>
 
     <p>
-      <b>net.sourceforge.pebble.decorator.BlogTagsDecorator</b> (*)<br />
+      <b>net.sourceforge.pebble.decorator.BlogTagsDecorator</b> (*)<br/>
       Adds links from your blog entry back to your tags, for those tags associated with the blog entry.
     </p>
 
     <p>
-      <b>net.sourceforge.pebble.decorator.TechnoratiTagsDecorator</b><br />
-      Adds links from your blog entry back to tags on <a href="http://technorati.com/tags/">Technorati</a>, for those tags associated with the blog entry.
+      <b>net.sourceforge.pebble.decorator.TechnoratiTagsDecorator</b><br/>
+      Adds links from your blog entry back to tags on <a href="http://technorati.com/tags/">Technorati</a>, for those
+      tags associated with the blog entry.
     </p>
 
     <p>
-      <b>net.sourceforge.pebble.decorator.BlogCategoriesDecorator</b><br />
+      <b>net.sourceforge.pebble.decorator.BlogCategoriesDecorator</b><br/>
       Adds links from your blog entry back to your categories, for those categories associated with the blog entry.
     </p>
 
     <p>
-      <b>net.sourceforge.pebble.decorator.NoFollowDecorator</b><br />
-      Provides support for the <a href="http://www.google.com/googleblog/2005/01/preventing-comment-spam.html">nofollow initiative</a> by modifying all links in comments and TrackBacks.
+      <b>net.sourceforge.pebble.decorator.NoFollowDecorator</b><br/>
+      Provides support for the <a href="http://www.google.com/googleblog/2005/01/preventing-comment-spam.html">nofollow
+      initiative</a> by modifying all links in comments and TrackBacks.
     </p>
 
     <p>
-      <b>net.sourceforge.pebble.decorator.DisableResponseDecorator</b><br />
-      Disables comments and TrackBacks for the blog entry. This is useful if you are worried about spam when you don't have access to your blog. Needs to be used
+      <b>net.sourceforge.pebble.decorator.DisableResponseDecorator</b><br/>
+      Disables comments and TrackBacks for the blog entry. This is useful if you are worried about spam when you don't
+      have access to your blog. Needs to be used
       in conjunction with the DisableResponseListener (for comments and TrackBacks).
     </p>
 
     <a name="trackBackAutoDisovery"></a>
+
     <p>
-      <b>net.sourceforge.pebble.decorator.TrackBackAutoDiscoveryDecorator</b><br />
-      Generates TrackBack Auto-Discovery links for blog entries. See the <a href="http://www.sixapart.com/pronet/docs/trackback_spec">TrackBack Technical Specification</a> for more details. To use this,
-      you also need to configure the TrackBack Confirmation Strategy of your blog to be the <a href="./help/confirmationStrategies.html#noOpConfirmationStrategy">NoOpConfirmationStrategy</a>.
+      <b>net.sourceforge.pebble.decorator.TrackBackAutoDiscoveryDecorator</b><br/>
+      Generates TrackBack Auto-Discovery links for blog entries. See the <a
+        href="http://www.sixapart.com/pronet/docs/trackback_spec">TrackBack Technical Specification</a> for more
+      details. To use this,
+      you also need to configure the TrackBack Confirmation Strategy of your blog to be the <a
+        href="./help/confirmationStrategies.html#noOpConfirmationStrategy">NoOpConfirmationStrategy</a>.
+    </p>
+
+    <a name="publishingExcerpts"></a>
+
+    <p>
+      <b>net.sourceforge.pebble.decorator.ExcerptDecorator</b><br/>
+      Automatically creates an excerpt for blog entries if one doesn't already exist.
+      Put this before the ReadMoreDecorator to ensure that "read more" links are also generated.
+      <br /><br />
+      The default maximum content length for truncation of the body is 255 characters, although this
+      can be configured using the <code>ExcerptDecorator.maxLength</code> plugin property.
     </p>
 
     <h3>Configuring content decorators</h3>
+
     <p>
-      To configure the decorators that your blog uses, modify the list of decorators on the <a href="viewPlugins.secureaction#contentDecorators">Plugins</a> page. Your blog is using the
+      To configure the decorators that your blog uses, modify the list of decorators on the <a
+        href="viewPlugins.secureaction#contentDecorators">Plugins</a> page. Your blog is using the
       following blog listeners.
     </p>
     <pre class="codeSample"><c:forEach var="decorator" items="${blog.contentDecoratorChain.contentDecorators}">${decorator.class.name}<br /></c:forEach></pre>

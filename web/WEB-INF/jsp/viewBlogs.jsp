@@ -13,7 +13,11 @@
       <thead>
         <th>ID</th>
         <th>Name</th>
-        <th>&nbsp;</th>
+        <th align="right">O</th>
+        <th align="right">P</th>
+        <th align="right">C</th>
+        <th align="right">R</th>
+        <th align="right">Admin links</th>
       </thead>
       <tbody>
       <c:forEach var="aBlog" items="${blogs}" varStatus="status">
@@ -28,12 +32,28 @@
         <td>${aBlog.id}</td>
         <td><a href="${aBlog.url}">${aBlog.name}</a></td>
         <td align="right">
+          <c:choose><c:when test="${not empty aBlog.blogOwners}">X</c:when><c:otherwise>&nbsp;</c:otherwise></c:choose>
+        </td>
+        <td align="right">
+          <c:choose><c:when test="${not empty aBlog.blogPublishers}">X</c:when><c:otherwise>&nbsp;</c:otherwise></c:choose>
+        </td>
+        <td align="right">
+          <c:choose><c:when test="${not empty aBlog.blogContributors}">X</c:when><c:otherwise>&nbsp;</c:otherwise></c:choose>
+        </td>
+        <td align="right">
+          <c:choose><c:when test="${not empty aBlog.blogReaders}">X</c:when><c:otherwise>&nbsp;</c:otherwise></c:choose>
+        </td>
+        <td align="right">
           <a href="${aBlog.url}viewBlogProperties.secureaction">Properties</a> |
-          <a href="${aBlog.url}viewPlugins.secureaction">Plugins</a> |
-          <a href="${aBlog.url}utilities.secureaction">Utilities</a>
+          <a href="${aBlog.url}viewPlugins.secureaction">Plugins</a>
         </td>
       </tr>
       </c:forEach>
+      <tr>
+        <td colspan="7" align="center">
+          O P C R = whether Owners/Publishers/Contributors/Readers have been explicitly assigned
+        </td>
+      </tr>
       </tbody>
     </table>
 

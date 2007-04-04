@@ -35,7 +35,6 @@ import net.sf.ehcache.Cache;
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.PebbleContext;
 import net.sourceforge.pebble.PluginProperties;
-import net.sourceforge.pebble.confirmation.DefaultConfirmationStrategy;
 import net.sourceforge.pebble.api.confirmation.CommentConfirmationStrategy;
 import net.sourceforge.pebble.api.confirmation.TrackBackConfirmationStrategy;
 import net.sourceforge.pebble.api.decorator.ContentDecorator;
@@ -46,6 +45,7 @@ import net.sourceforge.pebble.api.event.blogentry.BlogEntryListener;
 import net.sourceforge.pebble.api.event.comment.CommentListener;
 import net.sourceforge.pebble.api.event.trackback.TrackBackListener;
 import net.sourceforge.pebble.api.permalink.PermalinkProvider;
+import net.sourceforge.pebble.confirmation.DefaultConfirmationStrategy;
 import net.sourceforge.pebble.dao.CategoryDAO;
 import net.sourceforge.pebble.dao.DAOFactory;
 import net.sourceforge.pebble.dao.PersistenceException;
@@ -676,6 +676,8 @@ public class Blog extends AbstractBlog {
       users = getBlogPublishers();
     } else if (roleName.equals(Constants.BLOG_CONTRIBUTOR_ROLE)) {
       users = getBlogContributors();
+    } else if (roleName.equals(Constants.BLOG_READER_ROLE)) {
+      users = getBlogReaders();
     }
 
     return users;

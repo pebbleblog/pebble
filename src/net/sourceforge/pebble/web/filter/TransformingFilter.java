@@ -32,16 +32,17 @@
 package net.sourceforge.pebble.web.filter;
 
 import net.sourceforge.pebble.Constants;
-import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.domain.AbstractBlog;
+import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.domain.BlogManager;
 import net.sourceforge.pebble.domain.MultiBlog;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.acegisecurity.ui.AbstractProcessingFilter;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.net.URLDecoder;
 
 /**
  * A filter that transforms an incoming URI into an action URI.
@@ -77,20 +78,48 @@ public class TransformingFilter implements Filter {
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
       throws ServletException, IOException {
 
+    HttpServletRequest httpRequest = (HttpServletRequest)request;
     AbstractBlog blog = (AbstractBlog)request.getAttribute(Constants.BLOG_KEY);
-    String externalUri = (String)request.getAttribute(Constants.EXTERNAL_URI);
+
+    // get URI and strip off the context (e.g. /blog)
+    String uri = httpRequest.getRequestURI();
+    uri = uri.substring(httpRequest.getContextPath().length(), uri.length());
+
+    // now we're left with a URI
+    if (BlogManager.getInstance().isMultiBlog()) {
+      if (uri.length() == 0) {
+        uri = "/";
+      }
+      int index = uri.indexOf("/", 1);
+      if (index == -1) {
+        index = uri.length();
+      }
+      String blogName = uri.substring(1, index);
+      blogName = URLDecoder.decode(blogName, "UTF-8");
+      if (BlogManager.getInstance().hasBlog(blogName)) {
+        uri = uri.substring(index, uri.length());
+      }
+    }
+
+    if (uri == null || uri.trim().equals("")) {
+      uri = "/";
+    }
+    log.debug("uri : " + uri);
+
+    httpRequest.setAttribute(Constants.EXTERNAL_URI, uri);
+
     UriTransformer transformer = new UriTransformer();
     String internalUri;
 
     if (blog instanceof Blog) {
-      internalUri = transformer.getUri(externalUri, (Blog)blog);
+      internalUri = transformer.getUri(uri, (Blog)blog);
     } else {
-      internalUri = transformer.getUri(externalUri, (MultiBlog)blog);
+      internalUri = transformer.getUri(uri, (MultiBlog)blog);
     }
 
     request.setAttribute(Constants.INTERNAL_URI, internalUri);
 
-    log.debug(externalUri + " -> " + internalUri);
+    log.debug(uri + " -> " + internalUri);
 
     chain.doFilter(request, response);
   }

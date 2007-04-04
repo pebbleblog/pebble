@@ -74,8 +74,6 @@ public class SaveUserDetailsAction extends SecureAction {
       String name = request.getParameter("name");
       String emailAddress = request.getParameter("emailAddress");
       String website = request.getParameter("website");
-      String detailsUpdateableAsString = request.getParameter("detailsUpdateable");
-      boolean detailsUpdateable = detailsUpdateableAsString != null && detailsUpdateableAsString.equalsIgnoreCase("true");
 
       PebbleUserDetails currentUserDetails = SecurityUtils.getUserDetails();
 
@@ -96,7 +94,7 @@ public class SaveUserDetailsAction extends SecureAction {
           emailAddress,
           website,
           currentUserDetails.getRoles(),
-          detailsUpdateable);
+          currentUserDetails.isDetailsUpdateable());
 
           realm.updateUser(newUserDetails);
 
