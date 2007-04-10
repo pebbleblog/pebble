@@ -21,7 +21,7 @@ public class UpgradeUtilities {
       Utilities.resetTheme(blog);
       Utilities.resetPlugins(blog);
       Utilities.buildIndexes(blog);
-    } else if (toVersion.equals("2.1.0")) {
+    } else if (toVersion.equals("2.1")) {
       Utilities.resetTheme(blog);
     }
   }

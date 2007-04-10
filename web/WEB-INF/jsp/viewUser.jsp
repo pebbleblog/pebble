@@ -79,7 +79,7 @@
         </tr>
         <tr>
           <td valign="top">
-            Password changeable
+            Details/password changeable
           </td>
           <td>
             <input type="checkbox" name="detailsUpdateable" value="true"

@@ -988,6 +988,10 @@ public class Blog extends AbstractBlog {
     List<String> blogEntryIds = blogEntryIndex.getPublishedBlogEntries();
     List blogEntries = new ArrayList();
     for (String blogEntryId : blogEntryIds) {
+      if (blogEntries.size() == number) {
+        break;
+      }
+
       try {
         BlogEntry blogEntry = service.getBlogEntry(this, blogEntryId);
         if (blogEntry != null) {
@@ -995,10 +999,6 @@ public class Blog extends AbstractBlog {
         }
       } catch (BlogServiceException e) {
         log.error(e);
-      }
-
-      if (blogEntries.size() == number) {
-        break;
       }
     }
 

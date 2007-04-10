@@ -77,11 +77,13 @@ public class Pageable<T> {
   }
 
   private void calculatePages() {
-    // calculate how many pages there are
-    if (list.size() % pageSize == 0) {
-      maxPages = list.size() / pageSize;
-    } else {
-      maxPages = (list.size() / pageSize) + 1;
+    if (pageSize > 0) {
+      // calculate how many pages there are
+      if (list.size() % pageSize == 0) {
+        maxPages = list.size() / pageSize;
+      } else {
+        maxPages = (list.size() / pageSize) + 1;
+      }
     }
   }
 
