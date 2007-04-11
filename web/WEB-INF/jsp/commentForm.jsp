@@ -1,5 +1,4 @@
 <c:if test="${blog.richTextEditorForCommentsEnabled}">
-  <script type="text/javascript" src="${pageContext.request.contextPath}/FCKeditor/fckeditor.js"></script>
   <script type="text/javascript">
   window.onload = function()
   {

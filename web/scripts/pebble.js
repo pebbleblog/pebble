@@ -67,7 +67,12 @@ function showCommentForm() {
 function previewComment() {
   var data = { author:null, email:null, website:null, title:null };
   dwr.util.getValues(data);
-  var oFCKeditor = FCKeditorAPI.GetInstance('commentBody') ;
+  var oFCKeditor = null;
+  try {
+    oFCKeditor = FCKeditorAPI.GetInstance('commentBody') ;
+  } catch (error) {
+    // do nothing - FCKeditor isn't available so we'll just use the regular commentBody textarea
+  }
   if (oFCKeditor != null) {
     data.body = oFCKeditor.GetHTML();
   } else {
