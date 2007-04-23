@@ -1,4 +1,4 @@
-Pebble 2.0.0
+Pebble 2.1
 --------------------------------
 The prerequisites are as follows.
 

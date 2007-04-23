@@ -1,7 +1,6 @@
 <project name="pebble" default="build" basedir=".">
 
   <property name="project.name" value="pebble"/>
-  <property name="clover.dir" value="clover"/>
   <property name="etc.dir" value="${basedir}/etc"/>
   <property name="src.dir" value="${basedir}/src"/>
   <property name="web.dir" value="${basedir}/web"/>
@@ -9,6 +8,10 @@
   <property name="test.dir" value="${basedir}/test"/>
   <property name="build.dir" value="${basedir}/build"/>
   <property name="classes.dir" value="${build.dir}/classes"/>
+  <property name="testclasses.dir" value="${build.dir}/test-classes"/>
+  <property name="instrumentedclasses.dir" value="${build.dir}/instrumented-classes"/>
+  <property name="clover.dir" value="${build.dir}/clover"/>
+  <property name="cobertura.dir" value="${build.dir}/cobertura"/>
   <property name="bin.dir" value="${basedir}/bin"/>
   <property name="javadoc.dir" value="${web.dir}/javadoc"/>
   <property name="dist.dir" value="${basedir}/dist"/>
@@ -24,10 +27,20 @@
     <dirset dir="etc"/>
   </path>
 
+  <path id="cobertura.classpath">
+    <fileset dir="lib">
+      <include name="cobertura-1.8.jar"/>
+      <include name="log4j.jar"/>
+      <include name="asm-2.2.1.jar"/>
+      <include name="oro-2.0.8.jar"/>
+    </fileset>
+  </path>
+  <taskdef classpathref="cobertura.classpath" resource="tasks.properties"/>
+
   <target name="init">
     <propertyfile file="pebble-build.properties" comment="Build information">
         <entry key="build.date" type="date" value="now" pattern="dd MMMM yyyy HH:mm:ss z"/>
-        <entry key="build.version" value="2.1"/>
+        <entry key="build.version" value="2.1-rc1"/>
     </propertyfile>
     <loadproperties srcFile="pebble-build.properties"/>
 
@@ -35,6 +48,8 @@
 
     <mkdir dir="${build.dir}"/>
     <mkdir dir="${classes.dir}"/>
+    <mkdir dir="${testclasses.dir}"/>
+    <mkdir dir="${instrumentedclasses.dir}"/>
     <mkdir dir="${classes.dir}/META-INF"/>
     <mkdir dir="${javadoc.dir}"/>
     <mkdir dir="web/WEB-INF/classes"/>
@@ -63,8 +78,11 @@
       </fileset>
     </jar>
 
-    <javac srcdir="${test.dir}" destdir="${classes.dir}" debug="yes">
-      <classpath refid="project.classpath"/>
+    <javac srcdir="${test.dir}" destdir="${testclasses.dir}" debug="yes">
+      <classpath>
+        <pathelement location="${classes.dir}"/>
+        <pathelement path="${project.classpath}"/>
+      </classpath>
     </javac>
 
     <copy todir="web/WEB-INF/lib">
@@ -145,6 +163,8 @@
   <target name="test" depends="build">
     <junit printsummary="withOutAndErr" haltonfailure="yes" fork="yes" forkMode="once" reloading="false">
       <classpath>
+        <pathelement location="${instrumentedclasses.dir}"/>
+        <pathelement location="${testclasses.dir}"/>
         <pathelement location="${classes.dir}"/>
         <pathelement path="${project.classpath}"/>
       </classpath>
@@ -168,26 +188,9 @@
     <mkdir dir="${release.dir}"/>
     <mkdir dir="${dist.dir}"/>
 
-    <!-- copy pebble Ant tasks into the distribution -->
-<!--
-    <mkdir dir="${release.dir}/lib"/>
-    <copy todir="${release.dir}/lib">
-      <fileset dir="${build.dir}">
-        <include name="pebble-${build.version}.jar"/>
-      </fileset>
-      <fileset dir="lib">
-        <include name="xmlrpc-1.2-b1.jar"/>
-      </fileset>
-      <fileset dir=".">
-        <include name="pebble-ant.xml"/>
-      </fileset>
-    </copy>
--->
-
     <!-- copy pebble.war into the distribution -->
     <zip zipfile="${release.dir}/pebble.war">
       <fileset dir="web">
-        <exclude name="themes/orange/"/>
         <exclude name="themes/user-*/"/>
         <exclude name="WEB-INF/tmp/"/>
         <exclude name="WEB-INF/work/"/>
@@ -217,30 +220,53 @@
       <fileset dir="${website.dir}"/>
     </copy>
 
+    <mkdir dir="${release.dir}/src"/>
+    <copy todir="${release.dir}/src">
+      <fileset file=".classpath"/>
+      <fileset file=".project"/>
+      <fileset file="apache-license.txt"/>
+      <fileset file="build.xml"/>
+      <fileset file="changelog.txt"/>
+      <fileset file="license.txt"/>
+      <fileset file="pebble.iml"/>
+      <fileset file="pebble.ipr"/>
+      <fileset file="pebble.iws"/>
+      <fileset file="readme.txt"/>
+      <fileset file="setenv.bat"/>
+      <fileset file="setenv.sh"/>
+    </copy>
+    <mkdir dir="${release.dir}/src/etc"/>
+    <copy todir="${release.dir}/src/etc">
+      <fileset dir="etc"/>
+    </copy>
+    <mkdir dir="${release.dir}/src/lib"/>
+    <copy todir="${release.dir}/src/lib">
+      <fileset dir="lib"/>
+    </copy>
+    <mkdir dir="${release.dir}/src/src"/>
+    <copy todir="${release.dir}/src/src">
+      <fileset dir="src"/>
+    </copy>
+    <mkdir dir="${release.dir}/src/test"/>
+    <copy todir="${release.dir}/src/test">
+      <fileset dir="test"/>
+    </copy>
+    <mkdir dir="${release.dir}/src/web"/>
+    <copy todir="${release.dir}/src/web">
+      <fileset dir="web">
+        <exclude name="themes/user-*/"/>
+        <exclude name="WEB-INF/classes/"/>
+        <exclude name="WEB-INF/lib/"/>
+        <exclude name="WEB-INF/tmp/"/>
+        <exclude name="WEB-INF/work/"/>
+      </fileset>
+    </copy>
+
     <zip zipfile="${dist.dir}/${project.name}-${build.version}.zip">
       <fileset dir="${build.dir}">
         <include name="${project.name}-${build.version}/**"/>
       </fileset>
     </zip>
-  </target>
-
-  <target name="with.clover" depends="init">
-    <taskdef resource="clovertasks" />
-    <typedef resource="clovertypes" />
-
-    <mkdir dir="${clover.dir}"/>
-
-    <clover-setup initstring="${clover.dir}/coverage.db" enabled="true" relative="true" source="1.5">
-      <fileset dir="src"/>
-    </clover-setup>
-  </target>
-
-  <target name="clover.report" depends="with.clover">
-    <clover-report>
-      <current outfile="${clover.dir}" title="Coverage Report for Pebble">
-        <format type="html"/>
-      </current>
-    </clover-report>
   </target>
 
   <target name="website">
@@ -266,6 +292,19 @@
     <scp file="${build.dir}/website.zip" todir="${sourceforge.username}@shell.sf.net:/home/groups/p/pe/pebble/htdocs/website.zip" password="${sourceforge.password}"/>
   </target> 
 
+  <target name="releaseBuild">
+    <loadproperties srcFile="${user.home}/sourceforge.properties"/>
+    <ftp server="upload.sourceforge.net"
+         remotedir="incoming"
+         userid="anonymous"
+         password="${sourceforge.username}@users.sourceforge.net"
+         depends="yes">
+      <fileset dir="${dist.dir}">
+        <include name="${project.name}-${build.version}.zip"/>
+      </fileset>
+    </ftp>
+  </target>
+
   <target name="release" depends="dist,website">
   </target>
 
@@ -283,49 +322,6 @@
         <link offline="true" href="http://java.sun.com/products/jdk/1.2/docs/api/" packagelistLoc="C:\tmp"/>
         <link href="http://developer.java.sun.com/developer/products/xml/docs/api/"/>
       </javadoc>
-  </target>
-
-  <target name="jspc" depends="build">
-    <path id="jspc.classpath">
-      <pathelement location="${env.JAVA_HOME}/lib/tools.jar"/>
-      <fileset dir="${env.TOMCAT_HOME}/server/lib">
-        <include name="*.jar"/>
-      </fileset>
-      <fileset dir="${env.TOMCAT_HOME}/common/lib">
-        <include name="*.jar"/>
-      </fileset>
-    </path>
-    <taskdef classname="org.apache.jasper.JspC" name="jasper2" classpathref="jspc.classpath">
-    </taskdef>
-
-    <jasper2
-             validateXml="false"
-             uriroot="web"
-             webXmlFragment="web/WEB-INF/generated_web.xml"
-             outputDir="web/WEB-INF/src" />
-
-    <javac destdir="web/WEB-INF/classes"
-           optimize="off"
-           debug="on" failonerror="false"
-           srcdir="web/WEB-INF/src"
-           excludes="**/*.smap">
-      <classpath>
-        <pathelement location="web/WEB-INF/classes"/>
-        <fileset dir="web/WEB-INF/lib">
-          <include name="*.jar"/>
-        </fileset>
-        <pathelement location="${env.TOMCAT_HOME}/common/classes"/>
-        <fileset dir="${env.TOMCAT_HOME}/common/lib">
-          <include name="*.jar"/>
-        </fileset>
-        <pathelement location="${env.TOMCAT_HOME}/shared/classes"/>
-        <fileset dir="${env.TOMCAT_HOME}/shared/lib">
-          <include name="*.jar"/>
-        </fileset>
-      </classpath>
-      <include name="**" />
-      <exclude name="tags/**" />
-    </javac>
   </target>
 
   <target name="clean">
@@ -355,6 +351,38 @@
     </replace>
     <replace file="${build.dir}/index.html" token="@@buildDate@@" value="${build.date}" />
     <scp file="${build.dir}/index.html" todir="${sourceforge.username}@shell.sf.net:/home/groups/p/pe/pebble/htdocs/index.html" password="${sourceforge.password}"/>
+  </target>
+
+  <target name="with.clover" depends="init">
+    <taskdef resource="clovertasks" />
+    <typedef resource="clovertypes" />
+
+    <mkdir dir="${clover.dir}"/>
+
+    <clover-setup initstring="${clover.dir}/coverage.db" enabled="true" relative="true" source="1.5">
+      <fileset dir="src"/>
+    </clover-setup>
+  </target>
+
+  <target name="clover.report" depends="with.clover">
+    <clover-report>
+      <current outfile="${clover.dir}" title="Coverage Report for Pebble">
+        <format type="html"/>
+      </current>
+    </clover-report>
+  </target>
+
+  <target name="with.cobertura">
+    <delete file="cobertura.ser"/>
+    <cobertura-instrument todir="${instrumentedclasses.dir}">
+      <fileset dir="${classes.dir}">
+        <include name="**/*.class"/>
+      </fileset>
+    </cobertura-instrument>
+  </target>
+
+  <target name="cobertura.report">
+    <cobertura-report srcdir="${src.dir}" destdir="${cobertura.dir}"/>
   </target>
 
 </project>
