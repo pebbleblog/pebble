@@ -177,7 +177,8 @@ public class BlogTest extends SingleBlogTestCase {
     Month month = blog.getBlogForFirstMonth();
     assertNotNull(month);
 //    assertEquals(blog.getBlogForFirstYear(), month.getYear());
-    assertEquals(1, month.getMonth());
+    Calendar cal = blog.getCalendar();
+    assertEquals(cal.get(Calendar.MONTH)+1, month.getMonth());
   }
 
   /**
@@ -464,6 +465,26 @@ public class BlogTest extends SingleBlogTestCase {
 
     PebbleContext.getInstance().getConfiguration().setUrl("http://www.yourdomain.com:8080/blog");
     assertEquals("www.yourdomain.com", blog.getDomainName());
+  }
+
+  /**
+   * Tests the protocol.
+   */
+  public void testProtocol() {
+    assertEquals("http://", blog.getProtocol());
+  }
+
+  /**
+   * Tests the context.
+   */
+  public void testContext() {
+    assertEquals("/blog/", blog.getContext());
+
+    PebbleContext.getInstance().getConfiguration().setUrl("http://www.yourdomain.com:8080");
+    assertEquals("/", blog.getContext());
+
+    PebbleContext.getInstance().getConfiguration().setUrl("http://www.yourdomain.com:8080/");
+    assertEquals("/", blog.getContext());
   }
 
   /**
