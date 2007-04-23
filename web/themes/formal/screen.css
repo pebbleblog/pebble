@@ -14,7 +14,7 @@ a:visited {
   color: #404040;
 }
 
-#container {
+#body {
 }
 #header {
   background: #6e7d8e;
@@ -368,37 +368,31 @@ blockquote {
   padding: 8px;
   overflow: auto;
 }
-#linearNavigationLinks {
+#linearNavigation {
   background: gray;
   border-top: #c0c0c0 solid 1px;
   padding: 4px;
   color: white;
   text-align: center;
 }
-#linearNavigationLinks a {
+#linearNavigation a {
   color: white;
   text-decoration: none;
 }
-#linearNavigationLinks a:hover {
+#linearNavigation a:hover {
   text-decoration: underline;
 }
-#search {
+#feeds {
   position: absolute;
-  top: 12px;
-  right: 16px;
+  top: 8px;
+  right: 8px;
   color: white;
 }
-#subscriptions {
-  position: absolute;
-  top: 40px;
-  right: 16px;
-  color: white;
-}
-#subscriptions a {
+#feeds a {
   color: white;
   text-decoration: none;
 }
-#subscriptions a:hover {
+#feeds a:hover {
   text-decoration: underline;
 }
 thead {

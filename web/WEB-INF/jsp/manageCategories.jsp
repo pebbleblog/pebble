@@ -60,12 +60,13 @@
 
     <c:if test="${not empty category}">
     <br />
-
+    <h3>Add a category</h3>
+    <br />
     <a name="form"></a>
     <form name="editCategoryForm" action="saveCategory.secureaction" method="post" accept-charset="<c:out value="${blog.characterEncoding}" />">
       <table width="99%">
         <tr>
-          <td valign="top"><b>ID</b></td>
+          <td valign="top">ID</td>
           <td valign="top">
             <c:choose>
               <c:when test="${empty category.id}">
@@ -78,13 +79,13 @@
           </td>
         </tr>
         <tr>
-          <td valign="top"><b>Name</b></td>
+          <td valign="top">Name</td>
           <td valign="top">
             <input type="text" name="name" size="40" value="${category.name}" />
           </td>
         </tr>
         <tr>
-          <td valign="top"><b>Tags</b></td>
+          <td valign="top">Tags</td>
           <td valign="top">
             <input type="text" name="tags" size="40" value="${category.tags}" />
           </td>

@@ -13,7 +13,7 @@
     </p>
 
     <ul>
-      <li>Username : <authz:authentication operation="username"/></li>
+      <li>Username : ${authenticatedUser.username}</li>
       <li>Password : (the same you used to login here)</li>
       <li>XML-API : metaWeblog</li>
       <li>XML-RPC URL : ${pebbleContext.configuration.url}xmlrpc/</li>

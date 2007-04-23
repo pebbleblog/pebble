@@ -55,6 +55,10 @@ function setFocus(elementId) {
   element.focus();
 }
 
+function showComponent(componentName) {
+  Effect.Appear(componentName, 'blind');
+}
+
 function showCommentForm() {
   Effect.Appear('commentFormDiv', 'blind');
   var oFCKeditor = FCKeditorAPI.GetInstance('commentBody') ;

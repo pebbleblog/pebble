@@ -6,11 +6,6 @@ body {
   text-align: left;
   margin: 32px 32px 32px 32px;
 }
-#container {
-  width: 800px;
-  margin: auto;
-  background: white;
-}
 #header {
   background: white url( 'images/header.jpg' ) repeat-x top left;
   color: black;
@@ -21,6 +16,11 @@ body {
   margin-right: auto;
   margin-bottom: 0px;
   position: relative;
+}
+#body {
+  width: 800px;
+  margin: auto;
+  background: white;
 }
 #content {
   background: white;
@@ -368,36 +368,30 @@ blockquote {
   padding: 8px;
   overflow: auto;
 }
-#linearNavigationLinks {
+#linearNavigation {
   background: black;
   padding: 6px;
   color: white;
   text-align: center;
 }
-#linearNavigationLinks a {
+#linearNavigation a {
   color: white;
   text-decoration: none;
 }
-#linearNavigationLinks a:hover {
+#linearNavigation a:hover {
   text-decoration: underline;
 }
-#search {
-  position: absolute;
-  top: 11px;
-  right: 10px;
-  color: white;
-}
-#subscriptions {
+#feeds {
   position: absolute;
   top: 8px;
   right: 8px;
   color: white;
 }
-#subscriptions a {
+#feeds a {
   color: white;
   text-decoration: none;
 }
-#subscriptions a:hover {
+#feeds a:hover {
   text-decoration: underline;
 }
 thead {

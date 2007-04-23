@@ -130,9 +130,8 @@
   </c:if>
 
   <form name="createDirectory" action="createDirectory.secureaction" method="POST">
+    <h3>Create directory</h3>
     <p>
-      <b>Create directory</b>
-      <br /><br />
       Name
       <input type="hidden" name="type" value="${type}" />
       <input type="hidden" name="path" value="${directory.absolutePath}" />
@@ -143,9 +142,8 @@
 
   <form name="uploadFile" enctype="multipart/form-data" action="${uploadAction}" method="post">
     <input type="hidden" name="path" value="${directory.absolutePath}" />
+    <h3>Upload file (files must be less than <fmt:formatNumber value="${pebbleContext.configuration.fileUploadSize}" type="number" />&nbsp;KB each)</h3>
     <p>
-      <b>Upload file</b> (files must be less than <fmt:formatNumber value="${pebbleContext.configuration.fileUploadSize}" type="number" />&nbsp;KB each)
-
       <table width="99%" cellspacing="0" cellpadding="4">
         <thead>
           <tr>
@@ -157,23 +155,23 @@
           </th>
           </tr>
         </thead>
-        <tr>
-          <td><input name="file0" type="file" onChange="populateFilename(this,document.uploadFile.filename0)" /></td>
+        <tr id="file0">
+          <td><input name="file0" type="file" onChange="populateFilename(this,document.uploadFile.filename0); showComponent('file1');" /></td>
           <td><input name="filename0" type="text" value="" /></td>
         </tr>
-        <tr>
-          <td><input name="file1" type="file" onChange="populateFilename(this,document.uploadFile.filename1)" /></td>
+        <tr id="file1">
+          <td><input name="file1" type="file" onChange="populateFilename(this,document.uploadFile.filename1); showComponent('file2');" /></td>
           <td><input name="filename1" type="text" value="" /></td>
         </tr>
-        <tr>
-          <td><input name="file2" type="file" onChange="populateFilename(this,document.uploadFile.filename2)" /></td>
+        <tr id="file2">
+          <td><input name="file2" type="file" onChange="populateFilename(this,document.uploadFile.filename2); showComponent('file3');" /></td>
           <td><input name="filename2" type="text" value="" /></td>
         </tr>
-        <tr>
-          <td><input name="file3" type="file" onChange="populateFilename(this,document.uploadFile.filename3)" /></td>
+        <tr id="file3">
+          <td><input name="file3" type="file" onChange="populateFilename(this,document.uploadFile.filename3); showComponent('file4');" /></td>
           <td><input name="filename3" type="text" value="" /></td>
         </tr>
-        <tr>
+        <tr id="file4">
           <td><input name="file4" type="file" onChange="populateFilename(this,document.uploadFile.filename4)" /></td>
           <td><input name="filename4" type="text" value="" /></td>
         </tr>
@@ -188,3 +186,10 @@
   </div>
 
 </div>
+
+<script type="text/javascript">
+  $('file1').style.display = 'none';
+  $('file2').style.display = 'none';
+  $('file3').style.display = 'none';
+  $('file4').style.display = 'none';
+</script>

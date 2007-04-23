@@ -3,4 +3,5 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 <%@ taglib uri="http://pebble.sourceforge.net/pebble" prefix="pebble" %>
-<%@ taglib uri="http://acegisecurity.org/authz" prefix="authz" %>
+<%@ taglib prefix="sidebar" tagdir="/WEB-INF/tags/sidebar" %>
+<%@ taglib prefix="template" tagdir="/WEB-INF/tags/" %>

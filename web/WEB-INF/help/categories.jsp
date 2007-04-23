@@ -18,8 +18,7 @@
     </p>
 
     <p>
-      To edit the categories defined for your blog, click <a href="viewCategories.secureaction">Categories</a>.
-      To add a new category, click <a href="addCategory.secureaction">New category</a>.
+      To add, edit or remove the categories defined for your blog, click <a href="viewCategories.secureaction">Categories</a>.
     </p>
 
     <h3>Tagging</h3>

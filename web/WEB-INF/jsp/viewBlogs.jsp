@@ -65,9 +65,19 @@
 
     <p>
     <form name="addBlog" action="addBlog.secureaction" method="POST">
-    ${blog.url}
-    <input name="id" type="text" value="" />
-    <input type="submit" value="Add Blog" />
+      <c:choose>
+        <c:when test="${pebbleContext.configuration.virtualHostingEnabled == true}">
+          ${blog.protocol}
+          <input name="id" type="text" value="" />
+          .${blog.domainName}
+          <input type="submit" value="Add Blog" />
+        </c:when>
+        <c:otherwise>
+          ${blog.url}
+          <input name="id" type="text" value="" />
+          <input type="submit" value="Add Blog" />
+        </c:otherwise>
+      </c:choose>
     </form>
     </p>
     </c:when>
