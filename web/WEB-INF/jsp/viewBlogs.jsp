@@ -84,7 +84,7 @@
     <c:otherwise>
     <p>
       Pebble is currently running in single-blog mode. To add more blogs to this Pebble instance, restart Pebble in multi-blog mode. You
-      can do this by setting the <code>multiBlog</code> property to <code>true</code> in the <code>/WEB-INF/applicationContext-pebble.xml</code> file and
+      can do this by setting the <code>multiBlog</code> property to <code>true</code> in the <code>/WEB-INF/pebble.properties</code> file and
       restarting your web/application server.
     </p>
     </c:otherwise>
