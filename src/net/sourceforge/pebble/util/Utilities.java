@@ -225,9 +225,9 @@ public class Utilities {
   /**
    * Blasts the blog specific theme and overwrites it with the default theme.
    */
-  public static void restoreTheme(Blog blog) {
-    log.info("Restoring theme to default");
-    blog.getEditableTheme().restoreToDefault();
+  public static void restoreTheme(Blog blog, String themeName) {
+    log.info("Restoring theme to " + themeName);
+    blog.getEditableTheme().restoreToSpecifiedTheme(themeName);
   }
 
   /**

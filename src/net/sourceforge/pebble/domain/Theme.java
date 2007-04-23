@@ -52,7 +52,7 @@ public class Theme {
   private static Log log = LogFactory.getLog(Theme.class);
 
   /** the name of the theme that should be used as a default */
-  private static final String TEMPLATE_THEME_NAME = "default";
+  public static final String DEFAULT_THEME_NAME = "default";
 
   /** the blog to which this theme belongs */
   private Blog blog;
@@ -94,9 +94,16 @@ public class Theme {
    * Restores the theme from the blog.dir to the webapp.
    */
   public void restore() {
+    restore(DEFAULT_THEME_NAME);
+  }
+
+  /**
+   * Restores the theme from the blog.dir to the webapp.
+   */
+  public void restore(String themeName) {
     File blogTheme = new File(getBackupThemeDirectory());
     if (!blogTheme.exists() || blogTheme.listFiles().length == 0) {
-      copy(TEMPLATE_THEME_NAME);
+      copy(themeName);
     }
 
     log.debug("Restoring " + name + " theme from " + getBackupThemeDirectory());
@@ -106,11 +113,11 @@ public class Theme {
   /**
    * Restores the theme from the blog.dir to the webapp.
    */
-  public void restoreToDefault() {
+  public void restoreToSpecifiedTheme(String themeName) {
     File blogTheme = new File(getBackupThemeDirectory());
     FileUtils.deleteFile(blogTheme);
     FileUtils.deleteFile(getPathToLiveTheme());
-    restore();
+    restore(themeName);
   }
 
   /**

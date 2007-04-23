@@ -180,4 +180,13 @@ public class StaticPageIndex {
     return index.containsKey(name);
   }
 
+  /**
+   * Gets the number of static pages.
+   *
+   * @return  an int
+   */
+  public int getNumberOfStaticPages() {
+    return index.size();
+  }
+
 }

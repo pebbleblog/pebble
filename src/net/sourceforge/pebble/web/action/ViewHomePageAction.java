@@ -33,18 +33,10 @@ package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.web.view.ForwardView;
 import net.sourceforge.pebble.web.view.View;
-import net.sourceforge.pebble.PebbleContext;
-import net.sourceforge.pebble.Constants;
-import net.sourceforge.pebble.comparator.BlogByLastModifiedDateComparator;
-import net.sourceforge.pebble.domain.BlogManager;
-import net.sourceforge.pebble.domain.AbstractBlog;
-import net.sourceforge.pebble.domain.MultiBlog;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
-import java.util.Collections;
 
 /**
  * Finds all blog entries that are to be displayed on the home page.
@@ -63,13 +55,6 @@ public class ViewHomePageAction extends Action {
   public View process(HttpServletRequest request,
                       HttpServletResponse response)
       throws ServletException {
-
-    AbstractBlog abstractBlog = (AbstractBlog)getModel().get(Constants.BLOG_KEY);
-    if (abstractBlog instanceof MultiBlog && PebbleContext.getInstance().getConfiguration().isMultiBlog()) {
-      List blogs = BlogManager.getInstance().getPublicBlogs();
-      Collections.sort(blogs, new BlogByLastModifiedDateComparator());
-      request.setAttribute(Constants.BLOGS, blogs);
-    }
 
     return new ForwardView("/viewBlogEntriesByPage.action?page=1");
   }

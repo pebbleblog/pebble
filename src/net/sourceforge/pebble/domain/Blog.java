@@ -35,6 +35,7 @@ import net.sf.ehcache.Cache;
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.PebbleContext;
 import net.sourceforge.pebble.PluginProperties;
+import net.sourceforge.pebble.Configuration;
 import net.sourceforge.pebble.api.confirmation.CommentConfirmationStrategy;
 import net.sourceforge.pebble.api.confirmation.TrackBackConfirmationStrategy;
 import net.sourceforge.pebble.api.decorator.ContentDecorator;
@@ -466,12 +467,17 @@ public class Blog extends AbstractBlog {
    * @return  a URL as a String
    */
   public String getUrl() {
-    String url = PebbleContext.getInstance().getConfiguration().getUrl();
+    Configuration config = PebbleContext.getInstance().getConfiguration();
+    String url = config.getUrl();
 
     if (url == null || url.length() == 0) {
       return "";
     } else if (BlogManager.getInstance().isMultiBlog()) {
-      return url + getId() + "/";
+      if (config.isVirtualHostingEnabled()) {
+        return url.substring(0, url.indexOf("://")+3) + getId() + "." + url.substring(url.indexOf("://")+3); 
+      } else {
+        return url + getId() + "/";
+      }
     } else {
       return url;
     }
@@ -717,10 +723,8 @@ public class Blog extends AbstractBlog {
     }
 
     y = new Year(this, year);
-    //if (year > getBlogForToday().getMonth().getYear().getYear()) {
-      years.add(y);
-      Collections.sort(years);
-    //}
+    years.add(y);
+    Collections.sort(years);
 
     return y;
   }
@@ -751,9 +755,12 @@ public class Blog extends AbstractBlog {
    */
   public List<Year> getArchives() {
     List<Year> list = new LinkedList<Year>();
+    int firstYear = getBlogForFirstMonth().getYear().getYear();
     int thisYear = getBlogForThisYear().getYear();
+    // only add years that are in range
+    Calendar cal = getCalendar();
     for (Year year : years) {
-      if (year.getYear() <= thisYear) {
+      if (year.getYear() >= firstYear && year.getYear() <= thisYear) {
         list.add(year);
       }
     }
@@ -768,22 +775,23 @@ public class Blog extends AbstractBlog {
    * @return  a Month instance
    */
   public Month getBlogForFirstMonth() {
-    Year year;
-
-    if (!years.isEmpty()) {
-      year = years.get(0);
-    } else {
-      year = getBlogForYear(getCalendar().get(Calendar.YEAR));
+    if (getBlogEntryIndex() == null) {
+      return getBlogForThisMonth();
     }
 
-    for (int i = 1; i <= 12; i++) {
-      Month month = year.getBlogForMonth(i);
-      if (month.hasBlogEntries()) {
-        return month;
-      }
+    List<String> blogEntryIds = getBlogEntryIndex().getBlogEntries();
+    if (blogEntryIds == null || blogEntryIds.isEmpty()) {
+      return getBlogForThisMonth();
     }
 
-    return year.getBlogForFirstMonth();
+    String firstBlogEntryId = blogEntryIds.get(blogEntryIds.size()-1);
+    if (firstBlogEntryId == null) {
+      return getBlogForThisMonth();
+    }
+
+    long dateInMillis = Long.parseLong(firstBlogEntryId);
+    Date date = new Date(dateInMillis);
+    return getBlogForDay(date).getMonth();
   }
 
   /**
@@ -937,6 +945,15 @@ public class Blog extends AbstractBlog {
    */
   public int getNumberOfUnpublishedBlogEntries() {
     return blogEntryIndex.getNumberOfUnpublishedBlogEntries();
+  }
+
+  /**
+   * Gets the number of static pages for this blog.
+   *
+   * @return  an int
+   */
+  public int getNumberOfStaticPages() {
+    return staticPageIndex.getNumberOfStaticPages();
   }
 
   /**
@@ -1317,7 +1334,7 @@ public class Blog extends AbstractBlog {
   /**
    * Gets the list of tags associated with this blog.
    */
-  public List getTags() {
+  public List<Tag> getTags() {
     return tagIndex.getTags();
   }
 

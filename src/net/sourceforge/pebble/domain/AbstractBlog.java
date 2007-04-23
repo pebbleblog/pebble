@@ -40,6 +40,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.*;
 
+import net.sourceforge.pebble.PebbleContext;
+
 public abstract class AbstractBlog extends TimePeriod {
 
   /** the name of the file containing blog properties */
@@ -255,19 +257,32 @@ public abstract class AbstractBlog extends TimePeriod {
    * @return  a domain name as a String
    */
   public String getDomainName() {
-    // and set the domain name
-    String url = getUrl();
-    int index = url.indexOf("://");
-    String domainName = url.substring(index+3);
-    index = domainName.indexOf("/");
-    domainName = domainName.substring(0, index);
+    return PebbleContext.getInstance().getConfiguration().getDomainName();
+  }
 
-    if (domainName.indexOf(":") > -1) {
-      // the domain name still has a port number so remove it
-      domainName = domainName.substring(0, domainName.indexOf(":"));
+  /**
+   * Gets the protocol where this blog is deployed.
+   *
+   * @return  a protocol as a String
+   */
+  public String getProtocol() {
+    String url = PebbleContext.getInstance().getConfiguration().getUrl();
+    return url.substring(0, url.indexOf("://")+3);
+  }
+
+  /**
+   * Gets the context where Pebble is deployed.
+   *
+   * @return    the webapp context
+   */
+  public String getContext() {
+    String url = PebbleContext.getInstance().getConfiguration().getUrl();
+    int index = url.indexOf("/", url.indexOf("://")+3);
+    if (index == -1) {
+      return "/";
+    } else {
+      return url.substring(index);
     }
-
-    return domainName;
   }
 
   /**

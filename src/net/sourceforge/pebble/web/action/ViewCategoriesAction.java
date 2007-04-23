@@ -33,6 +33,7 @@ package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.domain.Category;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.impl.CategoriesView;
 
@@ -56,6 +57,7 @@ public class ViewCategoriesAction extends SecureAction {
    */
   public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
+    getModel().put(Constants.CATEGORY_KEY, new Category());
     getModel().put(Constants.CATEGORIES, blog.getCategories());
     return new CategoriesView(true);
   }

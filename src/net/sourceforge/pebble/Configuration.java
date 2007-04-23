@@ -51,6 +51,7 @@ public class Configuration {
   private String url;
   private String secureUrl;
   private boolean multiBlog = false;
+  private boolean virtualHostingEnabled = false;
   private String smtpHost = "java:comp/env/mail/Session";
   private long fileUploadSize = 2048;
   private long fileUploadQuota = -1;
@@ -70,6 +71,22 @@ public class Configuration {
     if (url != null && !(url.length() == 0) && !url.endsWith("/")) {
       url += "/";
     }
+  }
+
+  public String getDomainName() {
+    // and set the domain name
+    String url = PebbleContext.getInstance().getConfiguration().getUrl();
+    int index = url.indexOf("://");
+    String domainName = url.substring(index+3);
+    index = domainName.indexOf("/");
+    domainName = domainName.substring(0, index);
+
+    if (domainName.indexOf(":") > -1) {
+      // the domain name still has a port number so remove it
+      domainName = domainName.substring(0, domainName.indexOf(":"));
+    }
+
+    return domainName;
   }
 
   public String getSecureUrl() {
@@ -134,6 +151,15 @@ public class Configuration {
 
   public void setMultiBlog(boolean multiBlog) {
     this.multiBlog = multiBlog;
+  }
+
+
+  public boolean isVirtualHostingEnabled() {
+    return virtualHostingEnabled;
+  }
+
+  public void setVirtualHostingEnabled(boolean virtualHostingEnabled) {
+    this.virtualHostingEnabled = virtualHostingEnabled;
   }
 
   public SecurityRealm getSecurityRealm() {

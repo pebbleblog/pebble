@@ -35,8 +35,10 @@ import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.PebbleContext;
 import net.sourceforge.pebble.security.PebbleUserDetails;
 import net.sourceforge.pebble.util.SecurityUtils;
+import net.sourceforge.pebble.util.CookieUtils;
 import net.sourceforge.pebble.api.decorator.ContentDecoratorContext;
 import net.sourceforge.pebble.comparator.BlogEntryComparator;
+import net.sourceforge.pebble.comparator.BlogByLastModifiedDateComparator;
 import net.sourceforge.pebble.decorator.ContentDecoratorChain;
 import net.sourceforge.pebble.domain.*;
 import org.apache.commons.logging.Log;
@@ -44,6 +46,8 @@ import org.apache.commons.logging.LogFactory;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.jstl.core.Config;
 import java.io.IOException;
 import java.net.URLDecoder;
@@ -87,6 +91,17 @@ public class PreProcessingFilter implements Filter {
 
     HttpServletRequest httpRequest = (HttpServletRequest)request;
 
+//    log.info("Session is " + httpRequest.getSession().getId());
+//    HttpServletResponse httpResponse = (HttpServletResponse)response;
+//    Cookie cookie = CookieUtils.getCookie(httpRequest.getCookies(), "JSESSIONID");
+//    if (cookie != null) {
+//      log.info("Domain is " + cookie.getDomain());
+//      log.info("Path is " + cookie.getPath());
+//      cookie.setDomain(".example.com");
+//      cookie.setPath("/");
+//      httpResponse.addCookie(cookie);
+//    }
+
     AbstractBlog blog = (AbstractBlog)request.getAttribute(Constants.BLOG_KEY);
     if (blog instanceof Blog) {
       Blog b = (Blog)blog;
@@ -116,6 +131,14 @@ public class PreProcessingFilter implements Filter {
       httpRequest.setAttribute(Constants.BLOG_TYPE, "singleblog");
     } else {
       httpRequest.setAttribute(Constants.BLOG_TYPE, "multiblog");
+    }
+
+    if (PebbleContext.getInstance().getConfiguration().isMultiBlog()) {
+      httpRequest.setAttribute(Constants.MULTI_BLOG_KEY, BlogManager.getInstance().getMultiBlog());
+      
+      List blogs = BlogManager.getInstance().getPublicBlogs();
+      Collections.sort(blogs, new BlogByLastModifiedDateComparator());
+      httpRequest.setAttribute(Constants.BLOGS, blogs);
     }
 
     // change the character encoding so that we can successfully get

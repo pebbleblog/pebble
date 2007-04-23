@@ -109,7 +109,15 @@ public class BlogLookupFilter implements Filter {
       if (index == -1) {
         index = uri.length();
       }
-      String blogName = uri.substring(1, index);
+
+      String blogName = null;
+      if (pebbleContext.getConfiguration().isVirtualHostingEnabled()) {
+        String serverName = httpRequest.getServerName();
+        blogName = serverName.substring(0, serverName.indexOf("."));
+      } else {
+        blogName = uri.substring(1, index);
+      }
+
       blogName = URLDecoder.decode(blogName, "UTF-8");
       if (BlogManager.getInstance().hasBlog(blogName)) {
         blog = BlogManager.getInstance().getBlog(blogName);

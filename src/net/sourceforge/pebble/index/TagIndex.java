@@ -240,7 +240,7 @@ public class TagIndex {
   /**
    * Gets the list of tags associated with this blog.
    */
-  public List getTags() {
+  public List<Tag> getTags() {
     return new ArrayList<Tag>(orderedTags);
   }
 
