@@ -10,25 +10,25 @@
   <bean id="pebbleConfiguration" class="net.sourceforge.pebble.Configuration">
 
     <!-- the location where your Pebble data is stored, default is ${user.home}/pebble -->
-    <property name="dataDirectory" value="${user.home}/pebble"/>
+    <property name="dataDirectory" value="${dataDirectory}"/>
 
     <!-- the base URL (can start http:// or https://) where your blog is hosted, default is auto-discover at runtime -->
-    <property name="url" value="${pebble.url}"/>
+    <property name="url" value="${url}"/>
 
     <!-- the secure URL (starting https://), which should only be set if you intend to use secure login -->
-    <property name="secureUrl" value="${pebble.secureUrl}"/>
+    <property name="secureUrl" value="${secureUrl}"/>
 
     <!-- a flag to indicate whether Pebble is running in multi-blog mode, default is false -->
-    <property name="multiBlog" value="${pebble.multiBlog}"/>
+    <property name="multiBlog" value="${multiBlog}"/>
 
     <!-- the name/IP address of the server through which e-mail is sent, or a JNDI name starting java:/comp/env pointing to a preconfigured javax.mail.Session instance -->
-    <property name="smtpHost" value="${pebble.smtpHost}"/>
+    <property name="smtpHost" value="${smtpHost}"/>
 
     <!-- the SecurityRealm implementation being used -->
     <property name="securityRealm" ref="pebbleSecurityRealm"/>
 
     <!-- the maximum file upload size in KB -->
-    <property name="fileUploadSize" value="${pebble.fileUploadSize}" />
+    <property name="fileUploadSize" value="${fileUploadSize}" />
 
   </bean>
 
