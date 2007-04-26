@@ -12,7 +12,7 @@
   <div class="sidebarItemTitle" onClick="Effect.toggle('loginForm', 'slide'); $('loginForm').j_username.focus(); return false;"><span><fmt:message key='login.login' /></span></div>
   <form id="loginForm" name="loginForm" method="post" action="${pebbleContext.configuration.secureUrl}j_acegi_security_check">
     <div class="sidebarItemBody">
-    <input type="hidden" name="redirectUrl" value="${blog.url}"/>
+    <input type="hidden" name="redirectUrl" value="${blog.relativeUrl}"/>
       <table>
         <tr>
           <td><fmt:message key="login.username"/></td>
