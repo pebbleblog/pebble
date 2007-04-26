@@ -41,6 +41,14 @@ function uncheckAll(checkboxes) {
   }
 }
 
+function toggleCheckAll(checkbox, checkboxes) {
+  if (checkbox.checked) {
+    checkAll(checkboxes);
+  } else {
+    uncheckAll(checkboxes);
+  }
+}
+
 function toggleVisibility(elementId) {
     var element = document.getElementById(elementId);
     if(element.style.display == 'none') {

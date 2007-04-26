@@ -12,7 +12,7 @@
     <table width="99%" cellspacing="0" cellpadding="4">
       <thead>
       <tr>
-        <th>&nbsp;</th>
+        <th><input type="checkbox" name="allCategories" onclick="toggleCheckAll(document.categoriesForm.allCategories, document.categoriesForm.category)"/></th>
         <th>Name</th>
         <th>ID</th>
         <th>Tags</th>
@@ -47,10 +47,6 @@
 
     <table width="99%" cellspacing="0" cellpadding="0">
       <tr>
-        <td align="left">
-          <input type="button" value="Check All" onclick="checkAll(document.categoriesForm.category)" />
-          <input type="button" value="Uncheck All" onclick="uncheckAll(document.categoriesForm.category)" />
-        </td>
         <td align="right">
           <input type="submit" value="Remove" />
         </td>

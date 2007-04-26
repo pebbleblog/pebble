@@ -34,7 +34,7 @@
     <table width="99%" cellspacing="0" cellpadding="4">
       <thead>
         <tr>
-          <th></th>
+          <th><input type="checkbox" name="allResponses" onclick="toggleCheckAll(document.manageResponsesForm.allResponses, document.manageResponsesForm.response)"/></th>
           <th>Source</th>
           <th>Summary</th>
           <th align="right">Date/time</th>
@@ -86,10 +86,6 @@
 
     <table width="99%" cellspacing="0" cellpadding="0">
       <tr>
-        <td align="left">
-          <input type="button" value="Check All" onclick="checkAll(document.manageResponsesForm.response)" />
-          <input type="button" value="Uncheck All" onclick="uncheckAll(document.manageResponsesForm.response)" />
-        </td>
         <td align="right">
           <c:choose>
             <c:when test="${param.type == 'pending'}">

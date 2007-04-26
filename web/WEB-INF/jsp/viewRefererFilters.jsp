@@ -8,16 +8,28 @@
   <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
+    <p>
+      Referer filters let you exclude specific URLs from your referers list that, for example, you may think are spam.
+      As an example, to exlude all URLs from <code>*.somedomain.com</code>, the expression would be <code>.*\.somedomain\.com.*</code>
+    </p>
+
     <form name="newRefererFilterForm" action="addRefererFilters.secureaction" method="post">
       <b>Filter</b>
       <input type="text" name="expression" size="40" value=""/>
       <input name="submit" type="submit" Value="Add Filter" />
-      <br />
-      <div class="small">(this is a regular expression, such as .*\.somedomain\.com.*)</div>
     </form>
+
+    <br />
 
     <form name="refererFiltersForm" action="removeRefererFilters.secureaction" method="post">
     <table width="99%" cellspacing="0" cellpadding="4">
+      <thead>
+      <tr>
+        <th><input type="checkbox" name="allExpressions" onclick="toggleCheckAll(document.refererFiltersForm.allExpressions, document.refererFiltersForm.expression)"/></th>
+        <th>Filter (regular expression)</th>
+      </tr>
+      </thead>
+      <tbody>
       <c:forEach var="filter" items="${filters}" varStatus="status">
         <c:choose>
           <c:when test="${status.count % 2 == 0}">
@@ -35,16 +47,13 @@
           </td>
         </tr>
       </c:forEach>
+      </tbody>
     </table>
 
     <br />
 
     <table width="99%" cellspacing="0" cellpadding="0">
       <tr>
-        <td align="left">
-          <input type="button" value="Check All" onclick="checkAll(document.refererFiltersForm.expression)" />
-          <input type="button" value="Uncheck All" onclick="uncheckAll(document.refererFiltersForm.expression)" />
-        </td>
         <td align="right">
           <input type="submit" value="Remove" />
         </td>

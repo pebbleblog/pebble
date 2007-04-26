@@ -1,17 +1,12 @@
 package net.sourceforge.pebble.security;
 
 import org.acegisecurity.AuthenticationException;
-import org.acegisecurity.ui.rememberme.TokenBasedRememberMeServices;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Cookie;
 import java.io.IOException;
-
-import net.sourceforge.pebble.util.CookieUtils;
-import net.sourceforge.pebble.PebbleContext;
 
 /**
  * Overidden to redirect the user to the blog that they were trying to log in to.
@@ -31,15 +26,15 @@ public class AuthenticationProcessingFilter extends org.acegisecurity.ui.webapp.
    * @throws IOException
    */
   protected void onPreAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, IOException {
-    PebbleContext context = PebbleContext.getInstance();
-    if (context.getConfiguration().isVirtualHostingEnabled()) {
-      Cookie cookie = CookieUtils.getCookie(request.getCookies(), TokenBasedRememberMeServices.ACEGI_SECURITY_HASHED_REMEMBER_ME_COOKIE_KEY);
-      if (cookie != null) {
-        cookie.setDomain("." + context.getConfiguration().getDomainName());
-        response.addCookie(cookie);
-      }
-    }
-
+//    PebbleContext context = PebbleContext.getInstance();
+//    if (context.getConfiguration().isVirtualHostingEnabled()) {
+//      Cookie cookie = CookieUtils.getCookie(request.getCookies(), TokenBasedRememberMeServices.ACEGI_SECURITY_HASHED_REMEMBER_ME_COOKIE_KEY);
+//      if (cookie != null) {
+//        cookie.setDomain("." + context.getConfiguration().getDomainName());
+//        response.addCookie(cookie);
+//      }
+//    }
+//
     setDefaultTargetUrl(request.getParameter("redirectUrl"));
     super.onPreAuthentication(request, response);
   }

@@ -1,5 +1,5 @@
-Version 2.1 - xxx April 2007
-----------------------------
+Version 2.1-RC1 - 26th April 2007
+---------------------------------
 Fixed problem with local characters and HTML entities in comments.
 Added ability to get newsfeeds for private blogs via HTTP Basic authentication.
 Tweaks to bundled themes.

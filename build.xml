@@ -142,7 +142,7 @@
       </fileset>
     </copy>
 
-    <copy todir="web/themes/formal">
+    <copy todir="web/themes/simple">
       <fileset dir="web/themes/default">
         <include name="template.jsp"/>
       </fileset>

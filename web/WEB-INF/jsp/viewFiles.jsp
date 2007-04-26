@@ -40,7 +40,7 @@
     <table width="99%" cellspacing="0" cellpadding="4">
       <thead>
         <tr>
-          <th></th>
+          <th><input type="checkbox" name="allFiles" onclick="toggleCheckAll(document.filesForm.allFiles, document.filesForm.name)"/></th>
           <th>Name</th>
           <th align="right">Size</th>
           <th align="right">Last modified</th>
@@ -91,10 +91,6 @@
 
     <table width="99%" cellspacing="0" cellpadding="0">
       <tr>
-        <td align="left">
-          <input type="button" value="Check All" onclick="checkAll(document.filesForm.name)" />
-          <input type="button" value="Uncheck All" onclick="uncheckAll(document.filesForm.name)" />
-        </td>
         <td align="right">
           <input type="submit" name="submit" value="Remove" />
         </td>

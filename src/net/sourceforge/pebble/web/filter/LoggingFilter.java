@@ -80,24 +80,21 @@ public class LoggingFilter implements Filter {
     if (abstractBlog instanceof Blog) {
       Blog blog = (Blog)abstractBlog;
 
-      // don't log owner/contributor/admin visits
-      if (!SecurityUtils.isBlogOwner() && !SecurityUtils.isBlogContributor() && !SecurityUtils.isBlogAdmin()) {
-        // this is the list of URIs that get logged
-        if (internalUri.startsWith("/feed.action") ||
-            internalUri.startsWith("/responseFeed.action") ||
-            internalUri.startsWith("/viewCategory.action") ||
-            internalUri.startsWith("/viewTags.action") ||
-            internalUri.startsWith("/viewTag.action") ||
-            internalUri.startsWith("/search.action") ||
-            internalUri.startsWith("/viewBlogEntry.action") ||
-            internalUri.startsWith("/viewStaticPage.action") ||
-            internalUri.startsWith("/viewDay.action") ||
-            internalUri.startsWith("/viewMonth.action") ||
-            internalUri.startsWith("/file.action?type=" + FileMetaData.BLOG_FILE) ||
-            (internalUri.startsWith("/viewHomePage.action") && blog instanceof Blog)) {
+      // this is the list of URIs that get logged
+      if (internalUri.startsWith("/feed.action") ||
+          internalUri.startsWith("/responseFeed.action") ||
+          internalUri.startsWith("/viewCategory.action") ||
+          internalUri.startsWith("/viewTags.action") ||
+          internalUri.startsWith("/viewTag.action") ||
+          internalUri.startsWith("/search.action") ||
+          internalUri.startsWith("/viewBlogEntry.action") ||
+          internalUri.startsWith("/viewStaticPage.action") ||
+          internalUri.startsWith("/viewDay.action") ||
+          internalUri.startsWith("/viewMonth.action") ||
+          internalUri.startsWith("/file.action?type=" + FileMetaData.BLOG_FILE) ||
+          (internalUri.startsWith("/viewHomePage.action") && blog instanceof Blog)) {
 
-          blog.log(httpRequest);
-        }
+        blog.log(httpRequest);
       }
     }
 

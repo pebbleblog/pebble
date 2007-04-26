@@ -17,7 +17,7 @@
     <table width="99%" cellspacing="0" cellpadding="4">
       <thead>
         <tr>
-          <th></th>
+          <th><input type="checkbox" name="allExpressions" onclick="toggleCheckAll(document.referersForm.allExpressions, document.referersForm.expression)"/></th>
           <th>Referer</th>
           <th align="right">Count</th>
         </tr>
@@ -51,10 +51,6 @@
 
     <table width="99%" cellspacing="0" cellpadding="0">
       <tr>
-        <td align="left">
-          <input type="button" value="Check All" onclick="checkAll(document.referersForm.expression)" />
-          <input type="button" value="Uncheck All" onclick="uncheckAll(document.referersForm.expression)" />
-        </td>
         <td align="right">
           <input type="submit" value="Spam" />
         </td>

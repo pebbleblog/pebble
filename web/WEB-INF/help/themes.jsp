@@ -26,7 +26,7 @@
 
     <h3>Editing the template</h3>
     <p>
-      The <code>template.jsp</code> file is a JSP page that contains a mixture of XHTML and makes extensive
+      The <code>template.jsp</code> file is a JSP page that contains XHTML and makes extensive
       use of JSP 2.0 tag files to provide a more component based approach to page composition. Instead of
       seeing lots of JSP includes, you see references to components. Aside from the familiar
       XHTML <code>div</code> and <code>span</code> tags, the other tags fall under two namespaces.

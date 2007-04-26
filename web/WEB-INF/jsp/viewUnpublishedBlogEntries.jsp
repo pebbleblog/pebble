@@ -13,7 +13,7 @@
     <table width="99%" cellspacing="0" cellpadding="4">
       <thead>
       <tr>
-        <th>&nbsp;</th>
+        <th><input type="checkbox" name="allEntries" onclick="toggleCheckAll(document.unpublishedBlogEntriesForm.allEntries, document.unpublishedBlogEntriesForm.entry)"/></th>
         <th>Title</th>
       </tr>
       </thead>
@@ -42,10 +42,6 @@
 
     <table width="99%" cellspacing="0" cellpadding="0">
       <tr>
-        <td align="left">
-          <input type="button" value="Check All" onclick="checkAll(document.unpublishedBlogEntriesForm.entry)" />
-          <input type="button" value="Uncheck All" onclick="uncheckAll(document.unpublishedBlogEntriesForm.entry)" />
-        </td>
         <td align="right">
           <input name="submit" type="submit" value="Publish" />
           <input name="submit" type="submit" value="Remove" />

@@ -12,7 +12,7 @@
     <table width="99%" cellspacing="0" cellpadding="4">
       <thead>
       <tr>
-        <th>&nbsp;</th>
+        <th><input type="checkbox" name="allPages" onclick="toggleCheckAll(document.staticPagesForm.allPages, document.staticPagesForm.page)"/></th>
         <th>Title</th>
       </tr>
       </thead>
@@ -41,10 +41,6 @@
 
     <table width="99%" cellspacing="0" cellpadding="0">
       <tr>
-        <td align="left">
-          <input type="button" value="Check All" onclick="checkAll(document.staticPagesForm.page)" />
-          <input type="button" value="Uncheck All" onclick="uncheckAll(document.staticPagesForm.page)" />
-        </td>
         <td align="right">
           <input type="submit" value="Remove" />
         </td>

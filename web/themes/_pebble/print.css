@@ -243,13 +243,10 @@ blockquote {
   padding: 8px;
   overflow: auto;
 }
-#linearNavigationLinks {
+#linearNavigation {
   display: none;
 }
-#search {
-  display: none;
-}
-#subscriptions {
+#feeds {
   display: none;
 }
 thead {

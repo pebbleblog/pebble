@@ -24,6 +24,7 @@
 
     <link rel="stylesheet" href="themes/${theme}/screen.css" type="text/css" media="screen" />
     <link rel="stylesheet" href="themes/_pebble/print.css" type="text/css" media="print" />
+    <link rel="stylesheet" href="themes/_pebble/handheld.css" type="text/css" media="handheld" />
 
     <script type="text/javascript" src="${pageContext.request.contextPath}/FCKeditor/fckeditor.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/scripts/pebble.js"></script>
