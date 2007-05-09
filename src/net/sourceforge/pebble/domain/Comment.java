@@ -66,6 +66,9 @@ public class Comment extends Response {
   /** the collection of nested comments */
   private List comments = new ArrayList();
 
+  /** a flag to indicate whether the user was authenticated when the comment was left */
+  private boolean authenticated = false;
+
   public Comment() {
   }
 
@@ -341,6 +344,7 @@ public class Comment extends Response {
   public Object clone() {
     Comment comment = new Comment(title, body, author, email, website, ipAddress, date, getState(), blogEntry);
     comment.setParent(parent);
+    comment.setAuthenticated(authenticated);
     return comment;
   }
 
@@ -375,6 +379,14 @@ public class Comment extends Response {
         getBlogEntry().addEvent(new CommentEvent(this, CommentEvent.COMMENT_REJECTED));
       }
     }
+  }
+
+  public boolean isAuthenticated() {
+    return authenticated;
+  }
+
+  public void setAuthenticated(boolean authenticated) {
+    this.authenticated = authenticated;
   }
 
 }

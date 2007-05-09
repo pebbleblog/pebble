@@ -35,7 +35,14 @@
 
     <fmt:message key="comment.from">
       <fmt:param>
-        <span id="${param.commentIdentifier}.author">${commentAuthor}</span>
+        <c:choose>
+        <c:when test="${comment.authenticated}">
+          <span id="${param.commentIdentifier}.author" class="authenticated">${commentAuthor}</span>
+        </c:when>
+        <c:otherwise>
+          <span id="${param.commentIdentifier}.author" class="unauthenticated">${commentAuthor}</span>
+        </c:otherwise>
+        </c:choose>
       </fmt:param>
       <fmt:param value="${commentDate}"/>
     </fmt:message>

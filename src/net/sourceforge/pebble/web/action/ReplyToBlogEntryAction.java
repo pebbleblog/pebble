@@ -53,7 +53,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author    Simon Brown
  */
-public class ReplyToBlogEntryAction extends AbstractBlogEntryAction {
+public class ReplyToBlogEntryAction extends AbstractCommentAction {
 
   /** the log used for this action */
   private static final Log log = LogFactory.getLog(ViewBlogEntryAction.class);
@@ -102,7 +102,7 @@ public class ReplyToBlogEntryAction extends AbstractBlogEntryAction {
       ContentDecoratorContext decoratorContext = new ContentDecoratorContext();
       decoratorContext.setView(ContentDecoratorContext.DETAIL_VIEW);
       decoratorContext.setMedia(ContentDecoratorContext.HTML_PAGE);
-      Comment comment = createComment(blog, blogEntry, request);
+      Comment comment = createBlankComment(blog, blogEntry, request);
       Comment decoratedComment = (Comment)comment.clone();
       blog.getContentDecoratorChain().decorate(decoratorContext, decoratedComment);
       getModel().put("decoratedComment", decoratedComment);

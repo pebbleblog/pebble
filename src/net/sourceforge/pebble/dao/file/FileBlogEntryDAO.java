@@ -305,6 +305,7 @@ public class FileBlogEntryDAO implements BlogEntryDAO {
     Element dateNode = doc.createElement("date");
     Element parentNode = doc.createElement("parent");
     Element stateNode = doc.createElement("state");
+    Element authenticatedNode = doc.createElement("authenticated");
 
     commentNode.appendChild(titleNode);
     commentNode.appendChild(bodyNode);
@@ -314,6 +315,7 @@ public class FileBlogEntryDAO implements BlogEntryDAO {
     commentNode.appendChild(ipAddressNode);
     commentNode.appendChild(dateNode);
     commentNode.appendChild(stateNode);
+    commentNode.appendChild(authenticatedNode);
 
     titleNode.appendChild(createTextNode(doc, comment.getTitle()));
     bodyNode.appendChild(createCDATASection(doc, comment.getBody()));
@@ -325,6 +327,7 @@ public class FileBlogEntryDAO implements BlogEntryDAO {
     sdf.setTimeZone(GMT);
     dateNode.appendChild(createTextNode(doc, sdf.format(comment.getDate())));
     stateNode.appendChild(createTextNode(doc, comment.getState().getName()));
+    authenticatedNode.appendChild(createTextNode(doc, "" + comment.isAuthenticated()));
 
     if (comment.getParent() != null) {
       commentNode.appendChild(parentNode);

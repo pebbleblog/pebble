@@ -35,6 +35,7 @@
 <ipAddress>192.168.0.1</ipAddress>
 <date>05 Apr 2004 23:31:00 BST</date>
 <state>pending</state>
+<authenticated>true</authenticated>
 </comment>
 <trackback>
 <title>TrackBack title 1</title>

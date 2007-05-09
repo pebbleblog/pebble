@@ -15,7 +15,7 @@
 <form id="commentForm" name="commentForm" action="saveComment.action" method="post" accept-charset="${blog.characterEncoding}">
   <input type="hidden" name="blogId" value="<c:out value="${blogEntry.blog.id}"/>" />
   <input type="hidden" name="entry" value="<c:out value="${blogEntry.id}"/>" />
-  <input type="hidden" name="parent" value="<c:out value="${undecoratedComment.parent.id}"/>" />
+  <input type="hidden" name="comment" value="<c:out value="${undecoratedComment.parent.id}"/>" />
 
 <table width="99%">
 
@@ -57,6 +57,7 @@
     </td>
   </tr>
 
+  <pebble:isNotAuthenticated>
   <tr>
     <td valign="top"><b><fmt:message key="comment.name" /></b></td>
     <td><input type="text" id="author" name="author" size="40" value="<c:out value="${comment.author}"/>"/></td>
@@ -73,6 +74,26 @@
     <td valign="top"><b><fmt:message key="comment.website" /></b></td>
     <td><input type="text" name="website" size="40" value="<c:out value="${comment.website}"/>"/></td>
   </tr>
+  </pebble:isNotAuthenticated>
+
+  <pebble:isAuthenticated>
+    <tr>
+      <td valign="top"><b><fmt:message key="comment.name" /></b></td>
+      <td><input type="text" id="author" name="author" size="40" value="<c:out value="${comment.author}"/>" disabled="true" /></td>
+    </tr>
+
+    <tr>
+      <td valign="top"><b><fmt:message key="comment.emailAddress" /></b></td>
+      <td>
+        <input type="text" name="email" size="40" value="<c:out value="${comment.email}"/>" disabled="true" />
+      </td>
+    </tr>
+
+    <tr>
+      <td valign="top"><b><fmt:message key="comment.website" /></b></td>
+      <td><input type="text" name="website" size="40" value="<c:out value="${comment.website}"/>" disabled="true" /></td>
+    </tr>
+  </pebble:isAuthenticated>
 
   <tr>
     <td valign="top"><b><fmt:message key="comment.rememberMe" /></b></td>

@@ -3,15 +3,19 @@ package net.sourceforge.pebble.web.action;
 import net.sourceforge.pebble.domain.*;
 import net.sourceforge.pebble.util.CookieUtils;
 import net.sourceforge.pebble.util.MailUtils;
+import net.sourceforge.pebble.util.SecurityUtils;
 import net.sourceforge.pebble.web.validation.ValidationContext;
+import net.sourceforge.pebble.security.PebbleUserDetails;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Cookie;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.net.URLDecoder;
 
 /**
  * Adds a comment to an existing blog entry.
@@ -32,13 +36,79 @@ public abstract class AbstractCommentAction extends Action {
 
     Comment comment = blogEntry.createComment(title, body, author, email, website, ipAddress);
 
+    // if the user is authenticated, overwrite the author information
+    if (SecurityUtils.isUserAuthenticated()) {
+      PebbleUserDetails user = SecurityUtils.getUserDetails();
+      if (user != null) {
+        comment.setAuthor(user.getName());
+        comment.setEmail(user.getEmailAddress());
+        comment.setWebsite(user.getWebsite());
+        comment.setAuthenticated(true);
+      }
+    }
+
     // are we replying to an existing comment?
-    String parentCommentId = request.getParameter("parent");
+    String parentCommentId = request.getParameter("comment");
     if (parentCommentId != null && parentCommentId.length() > 0) {
       long parent = Long.parseLong(parentCommentId);
       Comment parentComment = blogEntry.getComment(parent);
       if (parentComment != null) {
         comment.setParent(parentComment);
+      }
+    }
+
+    return comment;
+  }
+
+  protected Comment createBlankComment(Blog blog, BlogEntry blogEntry, HttpServletRequest request) {
+    Comment comment = blogEntry.createComment("", "", "", "", "", request.getRemoteAddr());
+
+    // populate the author, email and website from one of :
+    // - the logged in user details
+    // - the "remember me" cookie
+    if (SecurityUtils.isUserAuthenticated()) {
+      PebbleUserDetails user = SecurityUtils.getUserDetails();
+      if (user != null) {
+        comment.setAuthor(user.getName());
+        comment.setEmail(user.getEmailAddress());
+        comment.setWebsite(user.getWebsite());
+        comment.setAuthenticated(true);
+      }
+    } else {
+      try {
+        // is "remember me" set?
+        Cookie rememberMe = CookieUtils.getCookie(request.getCookies(), "rememberMe");
+        if (rememberMe != null) {
+          // remember me has been checked and we're not already previewing a comment
+          // so create a new comment as this will populate the author/email/website
+          Cookie author = CookieUtils.getCookie(request.getCookies(), "rememberMe.author");
+          if (author != null) {
+            comment.setAuthor(URLDecoder.decode(author.getValue(), blog.getCharacterEncoding()));
+          }
+
+          Cookie email = CookieUtils.getCookie(request.getCookies(), "rememberMe.email");
+          if (email != null) {
+            comment.setEmail(URLDecoder.decode(email.getValue(), blog.getCharacterEncoding()));
+          }
+
+          Cookie website = CookieUtils.getCookie(request.getCookies(), "rememberMe.website");
+          if (website != null) {
+            comment.setWebsite(URLDecoder.decode(website.getValue(), blog.getCharacterEncoding()));
+          }
+        }
+      } catch (UnsupportedEncodingException e) {
+        log.error(e);
+      }
+    }
+
+    // are we replying to an existing comment?
+    String parentCommentId = request.getParameter("comment");
+    if (parentCommentId != null && parentCommentId.length() > 0) {
+      long parent = Long.parseLong(parentCommentId);
+      Comment parentComment = blogEntry.getComment(parent);
+      if (parentComment != null) {
+        comment.setParent(parentComment);
+        comment.setTitle(parentComment.getTitle());
       }
     }
 

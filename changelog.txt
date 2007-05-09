@@ -1,3 +1,7 @@
+Version 2.1 - May 2007
+----------------------
+Added a way to determine and differentiate whether the people that leave comments are authenticated.
+
 Version 2.1-RC1 - 26th April 2007
 ---------------------------------
 Fixed problem with local characters and HTML entities in comments.

@@ -41,6 +41,7 @@ public class BlogEntryHandler extends DefaultHandler {
   private static final int TAGS = 19;
   private static final int SUBTITLE = 20;
   private static final int TIME_ZONE = 21;
+  private static final int AUTHENTICATED = 22;
 
   private static final int IN_BLOG_ENTRY = 100;
   private static final int IN_COMMENT = 101;
@@ -67,6 +68,7 @@ public class BlogEntryHandler extends DefaultHandler {
   private Date commentDate;
   private long commentParent = -1;
   private State commentState = State.APPROVED;
+  private boolean commentAuthenticated = false;
 
   private String trackBackTitle;
   private String trackBackExcerpt;
@@ -143,6 +145,8 @@ public class BlogEntryHandler extends DefaultHandler {
       elementStatus = WEBSITE;
     } else if (name.equals("ipAddress")) {
       elementStatus = IP_ADDRESS;
+    } else if (name.equals("authenticated")) {
+      elementStatus = AUTHENTICATED;
     } else if (name.equals("blogName")) {
       elementStatus = BLOG_NAME;
     } else if (name.equals("url")) {
@@ -245,6 +249,7 @@ public class BlogEntryHandler extends DefaultHandler {
       if (commentParent != -1) {
         comment.setParent(blogEntry.getComment(commentParent));
       }
+      comment.setAuthenticated(commentAuthenticated);
       blogEntry.addComment(comment);
       groupStatus = IN_BLOG_ENTRY;
 
@@ -258,6 +263,7 @@ public class BlogEntryHandler extends DefaultHandler {
       commentDate = null;
       commentParent = -1;
       commentState = State.APPROVED;
+      commentAuthenticated = false;
     } else if (groupStatus == IN_COMMENT) {
       switch (elementStatus) {
         case TITLE :
@@ -286,6 +292,9 @@ public class BlogEntryHandler extends DefaultHandler {
           break;
         case STATE :
           commentState = State.getState(elementContent.toString());
+          break;
+        case AUTHENTICATED :
+          commentAuthenticated = Boolean.parseBoolean(elementContent.toString());
           break;
       }
     } else if (groupStatus == IN_TRACKBACK && name.equals("trackback")) {

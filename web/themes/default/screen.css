@@ -402,3 +402,10 @@ thead {
 th {
   font-weight: normal;
 }
+.authenticated {
+  background: transparent url( 'images/authenticated.gif' ) no-repeat center left;
+  padding-left: 12px;
+  font-weight: bold;
+}
+.unauthenticated {
+}

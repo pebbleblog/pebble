@@ -58,7 +58,7 @@ public class SaveCommentActionTest extends SingleBlogActionTestCase {
     service.putBlogEntry(blogEntry);
 
     request.setParameter("entry", "" + blogEntry.getId());
-    request.setParameter("parent", "");
+    request.setParameter("comment", "");
     request.setParameter("title", "Test Title");
     request.setParameter("commentBody", "Test Body");
     request.setParameter("author", "Test Author");
@@ -90,7 +90,7 @@ public class SaveCommentActionTest extends SingleBlogActionTestCase {
     service.putBlogEntry(blogEntry);
 
     request.setParameter("entry", "" + blogEntry.getId());
-    request.setParameter("parent", "" + comment1.getId());
+    request.setParameter("comment", "" + comment1.getId());
     request.setParameter("title", "Test Title");
     request.setParameter("commentBody", "Test Body");
     request.setParameter("author", "Test Author");
@@ -119,7 +119,7 @@ public class SaveCommentActionTest extends SingleBlogActionTestCase {
     service.putBlogEntry(blogEntry);
 
     request.setParameter("entry", "" + blogEntry.getId());
-    request.setParameter("parent", "123456789");
+    request.setParameter("comment", "123456789");
     request.setParameter("title", "Test Title");
     request.setParameter("commentBody", "Test Body");
     request.setParameter("author", "Test Author");
@@ -148,7 +148,7 @@ public class SaveCommentActionTest extends SingleBlogActionTestCase {
     service.putBlogEntry(blogEntry);
 
     request.setParameter("entry", "" + blogEntry.getId());
-    request.setParameter("parent", "");
+    request.setParameter("comment", "");
     request.setParameter("title", "Test Title");
     request.setParameter("commentBody", "Test Body");
     request.setParameter("author", "Test Author");
@@ -169,7 +169,7 @@ public class SaveCommentActionTest extends SingleBlogActionTestCase {
     service.putBlogEntry(blogEntry);
 
     request.setParameter("entry", "" + blogEntry.getId());
-    request.setParameter("parent", "");
+    request.setParameter("comment", "");
     request.setParameter("title", "Test Title");
     request.setParameter("commentBody", "Test Body");
     request.setParameter("author", "Test Author");
