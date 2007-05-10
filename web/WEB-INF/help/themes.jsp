@@ -8,12 +8,13 @@
     <pebble:isBlogAdmin>All themes can be found in the <code>themes</code> directory underneath <code>${pebbleContext.webApplicationRoot}</code>.</pebble:isBlogAdmin>
     </p>
 
-    <h3>Editing your own theme</h3>
-    <p>
-      Each blog has its own custom theme that can be edited by the owner of that blog. The name of your editable theme is <code>${blog.editableTheme.name}</code>, which was automatically created by Pebble the first time your blog started up. To edit your custom theme, click <a href="./theme/">Theme</a>.
-      From this page you can edit the CSS and JSP files that your theme contains.
-    </p>
+    <c:if test="${not pebbleContext.configuration.userThemesEnabled}">
+      <blockquote>
+        Pebble is currently running with user themes disabled so you cannot use or edit your own, blog specific theme.
+      </blockquote>
+    </c:if>
 
+    <h3>Theme structure</h3>
     <p>
       The themes that are distributed with Pebble all follow the same basic layout.
     </p>
@@ -23,6 +24,14 @@
       <li>images : the directory containing images used by the theme.</li>
       <li>template.jsp : the main template (including header, body, footer, sidebar, etc).</li>
     </ul>
+
+    <c:if test="${pebbleContext.configuration.userThemesEnabled}">
+      <h3>Editing your own theme</h3>
+      <p>
+        Each blog has its own custom theme that can be edited by the owner of that blog. The name of your editable theme is <code>${blog.editableTheme.name}</code>, which was automatically created by Pebble the first time your blog started up. To edit your custom theme, click <a href="./theme/">Theme</a>.
+        From this page you can edit the CSS and JSP files that your theme contains.
+      </p>
+    </c:if>
 
     <h3>Editing the template</h3>
     <p>

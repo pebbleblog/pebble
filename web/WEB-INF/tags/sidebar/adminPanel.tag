@@ -51,8 +51,10 @@
       <li><b>Blog</b>
       <br />
       <a href="viewBlogProperties.secureaction" title="Manage your blog properties">Properties</a> |
-      <a href="viewPlugins.secureaction" title="Manage your plugins">Plugins</a> |
-      <a href="theme/" title="Manage and edit the files in your theme">Theme</a>
+      <a href="viewPlugins.secureaction" title="Manage your plugins">Plugins</a>
+      <c:if test="${pebbleContext.configuration.userThemesEnabled}"> 
+        | <a href="theme/" title="Manage and edit the files in your theme">Theme</a>
+      </c:if>
       <br />
       <a href="viewMessages.secureaction">Messages (<fmt:formatNumber value="${blog.numberOfMessages}" type="number" />)</a> |
       <a href="utilities.secureaction" title="Maintenance and upgrade utilities">Utilities</a> |

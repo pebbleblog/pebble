@@ -52,6 +52,7 @@ public class Configuration {
   private String secureUrl;
   private boolean multiBlog = false;
   private boolean virtualHostingEnabled = false;
+  private boolean userThemesEnabled = true;
   private String smtpHost = "java:comp/env/mail/Session";
   private long fileUploadSize = 2048;
   private long fileUploadQuota = -1;
@@ -189,6 +190,25 @@ public class Configuration {
     } else {
       return s;
     }
+  }
+
+  /**
+   * Determines whether user themes are enabled.
+   *
+   * @return    true if user themes are enabled, false otherwise
+   */
+  public boolean isUserThemesEnabled() {
+    return userThemesEnabled;
+  }
+
+  /**
+   * Sets whether user themes are enabled.
+   *
+   * @param userThemesEnabled   true if user themes are enabled,
+   *                            false otherwise
+   */
+  public void setUserThemesEnabled(boolean userThemesEnabled) {
+    this.userThemesEnabled = userThemesEnabled;
   }
 
 }

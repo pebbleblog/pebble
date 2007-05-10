@@ -32,7 +32,9 @@
 package net.sourceforge.pebble.web.view;
 
 import net.sourceforge.pebble.Constants;
+import net.sourceforge.pebble.PebbleContext;
 import net.sourceforge.pebble.domain.AbstractBlog;
+import net.sourceforge.pebble.domain.BlogManager;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -52,6 +54,7 @@ import java.io.IOException;
 public abstract class HtmlView extends JspView {
 
   public static final String SYSTEM_THEME = "_pebble";
+  public static final String DEFAULT_THEME = "default";
 
   private static Log log = LogFactory.getLog(HtmlView.class);
 
@@ -79,7 +82,15 @@ public abstract class HtmlView extends JspView {
    */
   protected String getTheme() {
     AbstractBlog blog = (AbstractBlog)getModel().get(Constants.BLOG_KEY);
-    return blog.getTheme();
+    String theme = blog.getTheme();
+
+    if (PebbleContext.getInstance().getConfiguration().isUserThemesEnabled()) {
+      if (theme != null && !theme.equals(DEFAULT_THEME) && !theme.equals(SYSTEM_THEME)) {
+        return DEFAULT_THEME;
+      }
+    }
+
+    return theme;
   }
 
   /**

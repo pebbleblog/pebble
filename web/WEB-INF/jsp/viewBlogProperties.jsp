@@ -74,6 +74,7 @@
         </td>
       </tr>
 
+      <c:if test="${pebbleContext.configuration.userThemesEnabled}">
       <tr>
         <td>
           Theme
@@ -82,6 +83,7 @@
           <pebble:select name="theme" items="${themes}" selected="${blog.theme}" />
         </td>
       </tr>
+      </c:if>
 
       <tr>
         <td>

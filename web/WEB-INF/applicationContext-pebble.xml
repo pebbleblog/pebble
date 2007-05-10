@@ -30,6 +30,9 @@
     <!-- the maximum file upload size in KB -->
     <property name="fileUploadSize" value="${fileUploadSize}" />
 
+    <!-- a flag to indicate whether user themes are enabled, default is true -->
+    <property name="userThemesEnabled" value="${userThemesEnabled}" />
+
   </bean>
 
 </beans>
