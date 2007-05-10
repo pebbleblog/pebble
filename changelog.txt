@@ -2,6 +2,7 @@ Version 2.1 - 14th May 2007
 ---------------------------
 Added a way to determine and differentiate whether the people that leave comments are authenticated.
 Added a userThemesEnabled property in the pebble.properties file to indicate whether user themes are enabled. Setting this value to false ensures all blogs in a multi-blog installation use the default theme and look consistent. 
+Fixed small problem where comment form wouldn't appear inline when using the basic textarea (i.e. not FCKeditor).
 
 Version 2.1-RC1 - 26th April 2007
 ---------------------------------

@@ -69,7 +69,12 @@ function showComponent(componentName) {
 
 function showCommentForm() {
   Effect.Appear('commentFormDiv', 'blind');
-  var oFCKeditor = FCKeditorAPI.GetInstance('commentBody') ;
+  var oFCKeditor = null;
+  try {
+    oFCKeditor = FCKeditorAPI.GetInstance('commentBody') ;
+  } catch (error) {
+    // do nothing - FCKeditor isn't available so we'll just use the regular commentBody textarea
+  }
   if (oFCKeditor != null) {
     oFCKeditor.SwitchEditMode();
     oFCKeditor.SwitchEditMode();
