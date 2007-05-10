@@ -84,7 +84,7 @@ public abstract class HtmlView extends JspView {
     AbstractBlog blog = (AbstractBlog)getModel().get(Constants.BLOG_KEY);
     String theme = blog.getTheme();
 
-    if (PebbleContext.getInstance().getConfiguration().isUserThemesEnabled()) {
+    if (!PebbleContext.getInstance().getConfiguration().isUserThemesEnabled()) {
       if (theme != null && !theme.equals(DEFAULT_THEME) && !theme.equals(SYSTEM_THEME)) {
         return DEFAULT_THEME;
       }
