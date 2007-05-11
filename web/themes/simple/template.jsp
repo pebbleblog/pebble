@@ -34,9 +34,8 @@
 
     <%-- the sidebar that includes the calendar, recent blog entries, links, etc. --%>
     <div id="sidebar">
-      <sidebar:about/>
-      <sidebar:loginForm/>
       <sidebar:adminPanel/>
+      <sidebar:about/>
       <sidebar:navigation/>
       <sidebar:archivesByMonth/>
       <sidebar:categories/>
@@ -47,6 +46,7 @@
       <%-- the following is an example of the feed component that lets you aggregate a RSS/RDF/Atom feed into your blog
       <sidebar:feed name="del.icio.us" url="http://del.icio.us/rss/simongbrown" maxEntries="3" showBody="true" truncateBody="true"/>
       --%>
+      <sidebar:loginForm/>
     </div>
 
     <%-- the main area into which content gets rendered --%>

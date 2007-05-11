@@ -34,9 +34,9 @@
 
     <%-- the sidebar that includes the calendar, recent blog entries, links, etc. --%>
     <div id="sidebar">
-      <sidebar:loginForm/>
       <sidebar:adminPanel/>
       <sidebar:blogSummary/>
+      <sidebar:loginForm/>
     </div>
 
     <%-- the main area into which content gets rendered --%>
