@@ -60,7 +60,7 @@ public class AddBlogAction extends SecureAction {
     BlogManager blogManager = BlogManager.getInstance();
     String blogId = request.getParameter("id");
 
-    if (blogId != null && blogId.length() > 0 && blogId.matches("\\w*") && blogManager.getBlog(blogId) == null) {
+    if (blogId != null && blogId.length() > 0 && blogId.matches("[\\w-~]*") && blogManager.getBlog(blogId) == null) {
       blogManager.addBlog(blogId);
     }
 

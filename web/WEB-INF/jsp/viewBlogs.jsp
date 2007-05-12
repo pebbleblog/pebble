@@ -60,7 +60,7 @@
     <c:choose>
     <c:when test="${blogManager.multiBlog}">
     <p>
-      To add a new blog, enter the name that will be used to identify this blog underneath this web application (must contain a-zA-Z_0-9 characters only).
+      To add a new blog, enter the name that will be used to identify this blog underneath this web application (must contain a-zA-Z0-9_-~ characters only).
     </p>
 
     <p>
