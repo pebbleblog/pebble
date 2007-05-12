@@ -53,7 +53,6 @@
     <table width="99%" cellspacing="0" cellpadding="0">
       <tr>
         <td align="right">
-          <input type="submit" name="submit" value="Reset Password" />
           <input type="submit" name="submit" value="Remove" />
         </td>
       </tr>

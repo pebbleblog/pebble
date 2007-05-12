@@ -71,6 +71,8 @@ public class SaveUserAction extends SecureAction {
     try {
       AbstractBlog blog = (AbstractBlog)getModel().get(Constants.BLOG_KEY);
       String username = request.getParameter("username");
+      String password1 = request.getParameter("password1");
+      String password2 = request.getParameter("password2");
       String name = request.getParameter("name");
       String emailAddress = request.getParameter("emailAddress");
       String website = request.getParameter("website");
@@ -81,14 +83,16 @@ public class SaveUserAction extends SecureAction {
 
       SecurityRealm realm = PebbleContext.getInstance().getConfiguration().getSecurityRealm();
       PebbleUserDetails currentUserDetails = realm.getUser(username);
-      PebbleUserDetails newUserDetails = new PebbleUserDetails(username, DEFAULT_PASSWORD, name, emailAddress, website, roles, detailsUpdateable);
+      PebbleUserDetails newUserDetails = new PebbleUserDetails(username, password1, name, emailAddress, website, roles, detailsUpdateable);
 
       ValidationContext validationContext = new ValidationContext();
 
       if (newUser && currentUserDetails != null) {
         validationContext.addError("A user with this username already exists");
-      } else if (username == null || username.trim().length() == 0) {
+      } else if (newUser && (username == null || username.trim().length() == 0)) {
         validationContext.addError("Username can't be empty");
+      } else if (password1 != null && password1.length() > 0 && !password1.equals(password2)) {
+        validationContext.addError("Passwords must match");
       } else {
 
         if (newUser) {
@@ -99,6 +103,9 @@ public class SaveUserAction extends SecureAction {
           }
         } else {
           realm.updateUser(newUserDetails);
+          if (password1 != null && password1.length() > 0) {
+            realm.changePassword(username, password1);
+          }
         }
         return new RedirectView(blog.getUrl() + "viewUsers.secureaction");
       }

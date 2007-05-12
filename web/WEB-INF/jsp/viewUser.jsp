@@ -44,6 +44,17 @@
           </c:otherwise>
         </c:choose>
         <tr>
+          <td valign="top">Password</td>
+          <td><input type="password" name="password1" value="" size="40"/></td>
+        </tr>
+        <tr>
+          <td valign="top">Confirm</td>
+          <td><input type="password" name="password2" value="" size="40"/><br />Leave the password fields blank to retain the current password.</td>
+        </tr>
+        <tr>
+          <td colpsan="2">&nbsp;</td>
+        </tr>
+        <tr>
           <td valign="top">Name</td>
           <td><input type="text" name="name" value="${user.name}" size="40"/></td>
         </tr>
