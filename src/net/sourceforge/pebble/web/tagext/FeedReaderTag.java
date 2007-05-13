@@ -62,14 +62,16 @@ public class FeedReaderTag extends SimpleTagSupport {
     Timer timer = new Timer();
     timer.scheduleAtFixedRate(new TimerTask() {
       public void run() {
-        for (String url : feedCache.keySet()) {
-          try {
-            Feed updatedFeed = getFeed(url);
-            synchronized (feedCache) {
-              feedCache.put(url, updatedFeed);
+        if (feedCache != null) {
+          for (String url : feedCache.keySet()) {
+            try {
+              Feed updatedFeed = getFeed(url);
+              synchronized (feedCache) {
+                feedCache.put(url, updatedFeed);
+              }
+            } catch (Exception e) {
+              log.warn("Couldn't update feed from " + url);
             }
-          } catch (Exception e) {
-            log.warn("Couldn't update feed from " + url);
           }
         }
 
