@@ -404,8 +404,7 @@ th {
 }
 .authenticated {
   background: transparent url( 'images/authenticated.gif' ) no-repeat center left;
-  padding-left: 12px;
-  font-weight: bold;
+  padding-left: 10px;
 }
 .unauthenticated {
 }
