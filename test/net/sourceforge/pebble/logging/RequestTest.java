@@ -31,18 +31,23 @@
  */
 package net.sourceforge.pebble.logging;
 
-import junit.framework.TestCase;
+import net.sourceforge.pebble.PebbleContext;
+import net.sourceforge.pebble.domain.BlogEntry;
+import net.sourceforge.pebble.domain.BlogService;
+import net.sourceforge.pebble.domain.SingleBlogTestCase;
 
 /**
  * Tests for the Request class.
  *
  * @author    Simon Brown
  */
-public class RequestTest extends TestCase {
+public class RequestTest extends SingleBlogTestCase {
 
   private Request url;
 
   protected void setUp() throws Exception {
+    super.setUp();
+
     url = new Request("http://www.somedomain.com");
   }
 
@@ -110,34 +115,44 @@ public class RequestTest extends TestCase {
    */
   public void testFriendlyNamesForNewsFeeds() {
     url = new Request("http://...rss.xml");
-    assertEquals("RSS 2.0 feed", url.getName());
+    assertEquals("Feed : RSS 2.0", url.getName());
     url = new Request("http://...rss.xml?category=java");
-    assertEquals("RSS 2.0 feed", url.getName());
+    assertEquals("Feed : RSS 2.0", url.getName());
 
     url = new Request("http://...feed.xml");
-    assertEquals("RSS 2.0 feed", url.getName());
+    assertEquals("Feed : RSS 2.0", url.getName());
     url = new Request("http://...feed.xml?category=java");
-    assertEquals("RSS 2.0 feed", url.getName());
+    assertEquals("Feed : RSS 2.0", url.getName());
 
     url = new Request("http://...feed.action");
-    assertEquals("RSS 2.0 feed", url.getName());
+    assertEquals("Feed : RSS 2.0", url.getName());
     url = new Request("http://...feed.action?category=java");
-    assertEquals("RSS 2.0 feed", url.getName());
+    assertEquals("Feed : RSS 2.0", url.getName());
 
     url = new Request("http://...rdf.xml");
-    assertEquals("RDF 1.0 feed", url.getName());
+    assertEquals("Feed : RDF 1.0", url.getName());
     url = new Request("http://...rdf.xml?category=java");
-    assertEquals("RDF 1.0 feed", url.getName());
+    assertEquals("Feed : RDF 1.0", url.getName());
 
     url = new Request("http://...atom.xml");
-    assertEquals("Atom 1.0 feed", url.getName());
+    assertEquals("Feed : Atom 1.0", url.getName());
     url = new Request("http://...atom.xml?category=java");
-    assertEquals("Atom 1.0 feed", url.getName());
+    assertEquals("Feed : Atom 1.0", url.getName());
 
     url = new Request("http://...rssWithCommentsAndTrackBacks.xml");
-    assertEquals("RSS 2.0 feed, with comments and TrackBacks", url.getName());
+    assertEquals("Feed : RSS 2.0 (with comments and TrackBacks)", url.getName());
     url = new Request("http://...rssWithCommentsAndTrackBacks.xml?category=java");
-    assertEquals("RSS 2.0 feed, with comments and TrackBacks", url.getName());
+    assertEquals("Feed : RSS 2.0 (with comments and TrackBacks)", url.getName());
+  }
+
+  public void testFriendlyNamesForBlogEntries() throws Exception {
+    BlogEntry be = new BlogEntry(blog);
+    be.setTitle("Test blog entry");
+    BlogService service = new BlogService();
+    service.putBlogEntry(be);
+    String permalink = blog.getContext() + be.getPermalink().substring(PebbleContext.getInstance().getConfiguration().getUrl().length());
+    url = new Request(permalink, blog);
+    assertEquals("Blog Entry : Test blog entry", url.getName());
   }
 
 }

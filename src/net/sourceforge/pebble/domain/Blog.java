@@ -54,6 +54,7 @@ import net.sourceforge.pebble.decorator.ContentDecoratorChain;
 import net.sourceforge.pebble.decorator.HideUnapprovedResponsesDecorator;
 import net.sourceforge.pebble.event.DefaultEventDispatcher;
 import net.sourceforge.pebble.event.EventListenerList;
+import net.sourceforge.pebble.event.AuditListener;
 import net.sourceforge.pebble.event.blog.CacheListener;
 import net.sourceforge.pebble.index.*;
 import net.sourceforge.pebble.logging.AbstractLogger;
@@ -303,6 +304,7 @@ public class Blog extends AbstractBlog {
     eventListenerList.addBlogEntryListener(new TagIndexListener());
     eventListenerList.addBlogEntryListener(new CategoryIndexListener());
     eventListenerList.addBlogEntryListener(new SearchIndexListener());
+    eventListenerList.addBlogEntryListener(new AuditListener());
   }
 
   /**
@@ -328,8 +330,8 @@ public class Blog extends AbstractBlog {
       }
     }
 
-    // this is required to keep the response index up to date
     eventListenerList.addCommentListener(new ResponseIndexListener());
+    eventListenerList.addCommentListener(new AuditListener());
   }
 
   /**
@@ -355,8 +357,8 @@ public class Blog extends AbstractBlog {
       }
     }
 
-    // this is required to keep the response index up to date
     eventListenerList.addTrackBackListener(new ResponseIndexListener());
+    eventListenerList.addTrackBackListener(new AuditListener());
   }
 
   /**

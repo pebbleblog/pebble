@@ -31,6 +31,8 @@
  */
 package net.sourceforge.pebble.logging;
 
+import net.sourceforge.pebble.domain.Blog;
+
 /**
  * Represents a visited or referer URL along with a count of how many times
  * that URL has been accessed/referred from.
@@ -51,12 +53,25 @@ public abstract class CountedUrl {
   /** the number of times that the url has been accessed/referred from */
   private int count;
 
+  protected Blog blog;
+
   /**
    * Creates a new CountedUrl representing the specified url.
    *
    * @param url   the url as a String
    */
   public CountedUrl(String url) {
+    setUrl(url);
+    this.count = 1;
+  }
+
+  /**
+   * Creates a new CountedUrl representing the specified url.
+   *
+   * @param url   the url as a String
+   */
+  public CountedUrl(String url, Blog blog) {
+    this.blog = blog;
     setUrl(url);
     this.count = 1;
   }

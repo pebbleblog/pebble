@@ -89,7 +89,7 @@ public class Log {
         refererMap.put(referer.getName(), referer);
       }
 
-      Request request = new Request(logEntry.getRequestUri());
+      Request request = new Request(logEntry.getRequestUri(), blog);
       if (requestMap.containsKey(request.getName())) {
         request = (Request)requestMap.get(request.getName());
         request.incrementCount();

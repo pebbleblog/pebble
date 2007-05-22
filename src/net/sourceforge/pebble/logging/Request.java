@@ -31,6 +31,10 @@
  */
 package net.sourceforge.pebble.logging;
 
+import net.sourceforge.pebble.api.permalink.PermalinkProvider;
+import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.domain.BlogEntry;
+import net.sourceforge.pebble.permalink.DefaultPermalinkProvider;
 
 
 /**
@@ -50,22 +54,55 @@ public class Request extends CountedUrl {
     super(url);
   }
 
+  /**
+   * Creates a new instance representing the specified url.
+   *
+   * @param url     the url as a String
+   * @param blog    the owning Blog
+   */
+  public Request(String url, Blog blog) {
+    super(url, blog);
+  }
+
   protected void setUrl(String url) {
     super.setUrl(url);
 
     if (url == null || url.length() == 0) {
       setName("None");
     } else if (url.indexOf("rss.xml") > -1) {
-      setName("RSS 2.0 feed");
+      setName("Feed : RSS 2.0");
     } else if (url.indexOf("feed.xml") > -1 || url.indexOf("feed.action") > -1) {
-      setName("RSS 2.0 feed");
+      setName("Feed : RSS 2.0");
     } else if (url.indexOf("rssWithCommentsAndTrackBacks.xml") > -1) {
-      setName("RSS 2.0 feed, with comments and TrackBacks");
+      setName("Feed : RSS 2.0 (with comments and TrackBacks)");
     } else if (url.indexOf("rdf.xml") > -1) {
-      setName("RDF 1.0 feed");
+      setName("Feed : RDF 1.0");
     } else if (url.indexOf("atom.xml") > -1) {
-      setName("Atom 1.0 feed");
-    } else {
+      setName("Feed : Atom 1.0");
+    } else if (blog != null) {
+      if (url.equals(blog.getContext())) {
+        setName("Home");
+      } else {
+        PermalinkProvider permalinkProvider = blog.getPermalinkProvider();
+        DefaultPermalinkProvider defaultPermalinkProvider = new DefaultPermalinkProvider();
+        defaultPermalinkProvider.setBlog(permalinkProvider.getBlog());
+        String uri = url.substring(blog.getContext().length()-1);
+
+        if (permalinkProvider.isBlogEntryPermalink(uri)) {
+          BlogEntry blogEntry = permalinkProvider.getBlogEntry(uri);
+          if (blogEntry != null) {
+            setName("Blog Entry : " + blogEntry.getTitle());
+          }
+        } else if (defaultPermalinkProvider.isBlogEntryPermalink(uri)) {
+          BlogEntry blogEntry = defaultPermalinkProvider.getBlogEntry(uri);
+          if (blogEntry != null) {
+            setName("Blog Entry : " + blogEntry.getTitle());
+          }
+        }
+      }
+    }
+
+    if (getName() == null) {
       setName(url);
     }
   }
