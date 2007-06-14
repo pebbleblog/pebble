@@ -28,6 +28,9 @@ public class PebbleUserDetails implements UserDetails {
   /** the website */
   private String website;
 
+  /** the profile */
+  private String profile;
+
   private GrantedAuthority grantedAuthories[];
 
   private boolean detailsUpdateable = true;
@@ -35,21 +38,23 @@ public class PebbleUserDetails implements UserDetails {
   public PebbleUserDetails() {
   }
 
-  public PebbleUserDetails(String username, String name, String emailAddress, String website, String roles[], boolean detailsUpdateable) {
+  public PebbleUserDetails(String username, String name, String emailAddress, String website, String profile, String roles[], boolean detailsUpdateable) {
     this.username = username;
     this.name = name;
     this.emailAddress = emailAddress;
     this.website = website;
+    this.profile = profile;
     this.grantedAuthories = createGrantedAuthorities(roles);
     this.detailsUpdateable = detailsUpdateable;
   }
 
-  public PebbleUserDetails(String username, String password, String name, String emailAddress, String website, String roles[], boolean detailsUpdateable) {
+  public PebbleUserDetails(String username, String password, String name, String emailAddress, String website, String profile, String roles[], boolean detailsUpdateable) {
     this.username = username;
     this.password = password;
     this.name = name;
     this.emailAddress = emailAddress;
     this.website = website;
+    this.profile = profile;
     this.grantedAuthories = createGrantedAuthorities(roles);
     this.detailsUpdateable = detailsUpdateable;
   }
@@ -103,6 +108,15 @@ public class PebbleUserDetails implements UserDetails {
    */
   public String getWebsite() {
     return website;
+  }
+
+  /**
+   * Gets the user's profile.
+   *
+   * @return  a String
+   */
+  public String getProfile() {
+    return this.profile;
   }
 
   public GrantedAuthority[] getAuthorities() {
@@ -191,6 +205,10 @@ public class PebbleUserDetails implements UserDetails {
 
   public void setWebsite(String website) {
     this.website = website;
+  }
+
+  public void setProfile(String profile) {
+    this.profile = profile;
   }
 
   public void setGrantedAuthories(GrantedAuthority[] grantedAuthories) {

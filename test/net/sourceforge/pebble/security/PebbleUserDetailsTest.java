@@ -17,7 +17,7 @@ public class PebbleUserDetailsTest extends TestCase {
   private PebbleUserDetails user;
 
   protected void setUp() throws Exception {
-    user = new PebbleUserDetails("username", "password", "A user", "emailAddress", "website", new String[] {Constants.BLOG_OWNER_ROLE}, true);
+    user = new PebbleUserDetails("username", "password", "A user", "emailAddress", "website", "profile", new String[] {Constants.BLOG_OWNER_ROLE}, true);
   }
 
   public void testConstruction() {
@@ -34,7 +34,7 @@ public class PebbleUserDetailsTest extends TestCase {
   }
 
   public void testConstructionWithNoExplicitRoles() {
-    user = new PebbleUserDetails("username", "password", "A user", "emailAddress", "website", null, true);
+    user = new PebbleUserDetails("username", "password", "A user", "emailAddress", "website", "profile", null, true);
 
     assertEquals("username", user.getUsername());
     assertEquals("password", user.getPassword());

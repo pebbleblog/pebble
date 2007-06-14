@@ -49,7 +49,7 @@ public class DefaultSecurityRealmTest extends SingleBlogTestCase {
   }
 
   public void testGetUser() throws Exception {
-    PebbleUserDetails pud = new PebbleUserDetails("testuser", "password", "name", "emailAddress", "website", new String[]{Constants.BLOG_OWNER_ROLE}, true);
+    PebbleUserDetails pud = new PebbleUserDetails("testuser", "password", "name", "emailAddress", "website", "profile", new String[]{Constants.BLOG_OWNER_ROLE}, true);
     realm.createUser(pud);
     PebbleUserDetails user = realm.getUser("testuser");
 
@@ -59,6 +59,7 @@ public class DefaultSecurityRealmTest extends SingleBlogTestCase {
     assertEquals("name", user.getName());
     assertEquals("emailAddress", user.getEmailAddress());
     assertEquals("website", user.getWebsite());
+    assertEquals("profile", user.getProfile());
 
     List authorities = Arrays.asList(user.getAuthorities());
     assertEquals(2, authorities.size());
@@ -72,7 +73,7 @@ public class DefaultSecurityRealmTest extends SingleBlogTestCase {
   }
 
   public void testRemoveUser() throws Exception {
-    PebbleUserDetails pud = new PebbleUserDetails("testuser", "password", "name", "emailAddress", "website", new String[]{Constants.BLOG_OWNER_ROLE}, true);
+    PebbleUserDetails pud = new PebbleUserDetails("testuser", "password", "name", "emailAddress", "website", "profile", new String[]{Constants.BLOG_OWNER_ROLE}, true);
     realm.createUser(pud);
 
     PebbleUserDetails user = realm.getUser("testuser");

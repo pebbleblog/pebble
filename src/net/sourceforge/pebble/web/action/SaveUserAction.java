@@ -76,6 +76,7 @@ public class SaveUserAction extends SecureAction {
       String name = request.getParameter("name");
       String emailAddress = request.getParameter("emailAddress");
       String website = request.getParameter("website");
+      String profile = request.getParameter("profile");
       String roles[] = request.getParameterValues("role");
       boolean newUser = request.getParameter("newUser").equalsIgnoreCase("true");
       String detailsUpdateableAsString = request.getParameter("detailsUpdateable");
@@ -83,7 +84,7 @@ public class SaveUserAction extends SecureAction {
 
       SecurityRealm realm = PebbleContext.getInstance().getConfiguration().getSecurityRealm();
       PebbleUserDetails currentUserDetails = realm.getUser(username);
-      PebbleUserDetails newUserDetails = new PebbleUserDetails(username, password1, name, emailAddress, website, roles, detailsUpdateable);
+      PebbleUserDetails newUserDetails = new PebbleUserDetails(username, password1, name, emailAddress, website, profile, roles, detailsUpdateable);
 
       ValidationContext validationContext = new ValidationContext();
 

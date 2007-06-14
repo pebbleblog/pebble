@@ -31,6 +31,7 @@ public class DefaultSecurityRealm implements SecurityRealm {
   protected static final String NAME = "name";
   protected static final String EMAIL_ADDRESS = "emailAddress";
   protected static final String WEBSITE = "website";
+  protected static final String PROFILE = "profile";
   protected static final String DETAILS_UPDATEABLE = "detailsUpdateable";
 
   private Configuration configuration;
@@ -49,7 +50,7 @@ public class DefaultSecurityRealm implements SecurityRealm {
         realm.mkdirs();
         log.warn("*** Creating default user (username/password)");
         log.warn("*** Don't forget to delete this user in a production deployment!");
-        PebbleUserDetails defaultUser = new PebbleUserDetails("username", "password", "Default User", "username@domain.com", "http://www.domain.com", new String[] {Constants.BLOG_OWNER_ROLE, Constants.BLOG_PUBLISHER_ROLE, Constants.BLOG_CONTRIBUTOR_ROLE, Constants.BLOG_ADMIN_ROLE}, true);
+        PebbleUserDetails defaultUser = new PebbleUserDetails("username", "password", "Default User", "username@domain.com", "", "http://www.domain.com", new String[] {Constants.BLOG_OWNER_ROLE, Constants.BLOG_PUBLISHER_ROLE, Constants.BLOG_CONTRIBUTOR_ROLE, Constants.BLOG_ADMIN_ROLE}, true);
         createUser(defaultUser);
       }
     } catch (SecurityRealmException e) {
@@ -116,13 +117,14 @@ public class DefaultSecurityRealm implements SecurityRealm {
       String name = props.getProperty(NAME);
       String emailAddress = props.getProperty(EMAIL_ADDRESS);
       String website = props.getProperty(WEBSITE);
+      String profile = props.getProperty(PROFILE);
       String detailsUpdateableAsString = props.getProperty(DETAILS_UPDATEABLE);
       boolean detailsUpdateable = true;
       if (detailsUpdateableAsString != null) {
         detailsUpdateable = detailsUpdateableAsString.equalsIgnoreCase("true");
       }
 
-      return new PebbleUserDetails(username, password, name, emailAddress, website, roles, detailsUpdateable);
+      return new PebbleUserDetails(username, password, name, emailAddress, website, profile, roles, detailsUpdateable);
     } catch (IOException ioe) {
       throw new SecurityRealmException(ioe);
     }
@@ -169,6 +171,7 @@ public class DefaultSecurityRealm implements SecurityRealm {
     props.setProperty(DefaultSecurityRealm.NAME, pud.getName());
     props.setProperty(DefaultSecurityRealm.EMAIL_ADDRESS, pud.getEmailAddress());
     props.setProperty(DefaultSecurityRealm.WEBSITE, pud.getWebsite());
+    props.setProperty(DefaultSecurityRealm.PROFILE, pud.getProfile());
     props.setProperty(DefaultSecurityRealm.DETAILS_UPDATEABLE, "" + pud.isDetailsUpdateable());
 
     try {

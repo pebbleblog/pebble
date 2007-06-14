@@ -138,7 +138,9 @@ public class SaveBlogEntryAction extends SecureAction {
         throw new ServletException(e);
       }
     } else {
-      return new BlogEntry(blog);
+      BlogEntry blogEntry = new BlogEntry(blog);
+      blogEntry.setAuthor(SecurityUtils.getUsername());
+      return blogEntry;
     }
   }
 
@@ -153,7 +155,6 @@ public class SaveBlogEntryAction extends SecureAction {
     String commentsEnabled = request.getParameter("commentsEnabled");
     String trackBacksEnabled = request.getParameter("trackBacksEnabled");
     String category[] = request.getParameterValues("category");
-    String author = SecurityUtils.getUsername();
     String timeZone = request.getParameter("timeZone");
 
     // the date can only set on those entries that have not yet been persisted
@@ -194,7 +195,6 @@ public class SaveBlogEntryAction extends SecureAction {
     }
     blogEntry.setCategories(categories);
     blogEntry.setTags(tags);
-    blogEntry.setAuthor(author);
     blogEntry.setOriginalPermalink(originalPermalink);
     if (commentsEnabled != null && commentsEnabled.equalsIgnoreCase("true")) {
       blogEntry.setCommentsEnabled(true);

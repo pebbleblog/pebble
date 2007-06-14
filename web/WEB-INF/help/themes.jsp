@@ -72,6 +72,7 @@
       </thead>
       <tbody>
         <tr><td valign="top">about</td><td>Displays the "about" information, as set on the <a href="viewBlogProperties.secureaction">blog properties</a> page.</td></tr>
+        <tr><td valign="top">aboutAuthor</td><td>Displays the profile information associated with the author of a blog entry, when viewing that blog entry on its permalinked page.</td></tr>
         <tr><td valign="top">loginForm</td><td>Displays the login form.</td></tr>
         <tr><td valign="top">adminPanel</td><td>Displays the administration links that are available after logging in.</td></tr>
         <tr><td valign="top">navigation</td><td>Displays the basic navigation mechanisms; including the calendar, search and links to category/tag pages.</td></tr>
@@ -89,6 +90,9 @@
           - maxEntries : the maximum number of entries to display from this feed (required)<br />
           - showBody : flag to indicate whether the body of the entry should be displayed (optional, default is true)<br />
           - truncateBody : flag to indicate whether the body of the entry should be truncated (i.e. HTML stripped and truncated to 255 characters max) (optional, default is true)
+        </td></tr>
+        <tr><td valign="top">item</td><td>Generic sidebar item component.<br />
+          - name : the name, displayed in the sidebar item title
         </td></tr>
       </tbody>
     </table>

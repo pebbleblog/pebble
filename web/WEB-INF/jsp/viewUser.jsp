@@ -67,6 +67,10 @@
           <td><input type="text" name="website" value="${user.website}" size="40"/></td>
         </tr>
         <tr>
+          <td valign="top">Profile</td>
+          <td><textarea name="profile" rows="8" cols="40">${user.profile}</textarea></td>
+        </tr>
+        <tr>
           <td valign="top">
             Roles
           </td>
