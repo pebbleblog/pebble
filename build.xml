@@ -40,7 +40,7 @@
   <target name="init">
     <propertyfile file="pebble-build.properties" comment="Build information">
         <entry key="build.date" type="date" value="now" pattern="dd MMMM yyyy HH:mm:ss z"/>
-        <entry key="build.version" value="2.2-head"/>
+        <entry key="build.version" value="2.2"/>
     </propertyfile>
     <loadproperties srcFile="pebble-build.properties"/>
 
@@ -139,6 +139,7 @@
         <include name="*.gif"/>
         <include name="*.jpg"/>
         <include name="*.png"/>
+        <include name="*.ico"/>
       </fileset>
     </copy>
 

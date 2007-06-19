@@ -1,11 +1,12 @@
-Version 2.2 - mid June 
----------------------------
-Added a generic sidebar item (<sidebar:item>).
+Version 2.2 - 21st June 2007
+----------------------------
+Added a generic sidebar item (<sidebar:item/>).
 Blog entry titles are now shown on the requests page, rather than the permalink.
 Key events on blog entries, comments and TrackBacks (addition, removal, etc) are now recorded in an audit log (./pebble-audit.log, configurable in the /WEB-INF/classes/log4j.properties file).
 The original author details of the blog entry are now retained when the blog entry is edited by somebody else.
 Added user maintainable profile information to user details.
-Added an aboutAuthor sidebar component (<sidebar:aboutAuthor/>) that displays the profile information associated with the author of a blog entry, when viewing that blog entry on its permalinked page.
+Added an "about author" sidebar component (<sidebar:aboutAuthor/>) that displays the profile information associated with the author of a blog entry, when viewing that blog entry on its permalinked page.
+Added support for custom favicon.ico files (place a favicon.ico file at <your-theme>/images/favicon.ico).
 
 Version 2.1 - 14th May 2007
 ---------------------------

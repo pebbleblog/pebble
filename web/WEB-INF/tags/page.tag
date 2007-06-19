@@ -26,6 +26,8 @@
     <link rel="stylesheet" href="themes/_pebble/print.css" type="text/css" media="print" />
     <link rel="stylesheet" href="themes/_pebble/handheld.css" type="text/css" media="handheld" />
 
+    <link  rel="shortcut icon" href="/themes/${theme}/images/favicon.ico" type="image/x-icon" />
+
     <script type="text/javascript" src="${pageContext.request.contextPath}/FCKeditor/fckeditor.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/scripts/pebble.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/scripts/prototype.js"></script>

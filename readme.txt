@@ -1,4 +1,4 @@
-Pebble 2.1
+Pebble 2.2
 --------------------------------
 The prerequisites are as follows.
 
