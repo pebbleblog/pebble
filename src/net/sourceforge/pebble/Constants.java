@@ -62,6 +62,7 @@ public class Constants {
   public static final String PEBBLE_PROPERTIES = "pebbleProperties";
   public static final String TITLE_KEY = "title";
   public static final String CATEGORY_KEY = "category";
+  public static final String USER_KEY = "user";
 
   public static final String EXTERNAL_URI = "externalUri";
   public static final String INTERNAL_URI = "internalUri";

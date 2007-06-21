@@ -49,8 +49,9 @@
       <%@ include file="/WEB-INF/fragments/responseLinks.jspf" %>
       <c:choose>
         <c:when test="${not empty blogEntry.user.website}"><c:set var="author" value='<a href="${blogEntry.user.website}">${blogEntry.user.name}</a>'/></c:when>
-        <c:when test="${not empty blogEntry.user}"><c:set var="author" value="${blogEntry.user.name}"/></c:when>
-        <c:otherwise><c:set var="author" value="${blogEntry.author}"/></c:otherwise>
+        <c:when test="${not empty blogEntry.user and not empty blogEntry.user.profile}"><c:set var="author" value='<a href="aboutAuthor.action?user=${blogEntry.user.username}">${blogEntry.user.name}</a>'/></c:when>
+        <c:when test="${not empty blogEntry.user}"><c:set var="author" value='<a href="advancedSearch.action?author=${blogEntry.author}">${blogEntry.user.name}</a>'/></c:when>
+        <c:otherwise><c:set var="author" value='<a href="advancedSearch.action?author=${blogEntry.author}">${blogEntry.author}</a>'/></c:otherwise>
       </c:choose>
       <fmt:formatDate var="blogEntryDate" scope="page" value="${blogEntry.date}" timeZone="${blogEntry.timeZoneId}" type="both" dateStyle="long" timeStyle="long"/>
       <fmt:message key="blogentry.from">

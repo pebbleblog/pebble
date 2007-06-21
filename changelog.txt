@@ -7,6 +7,7 @@ The original author details of the blog entry are now retained when the blog ent
 Added user maintainable profile information to user details.
 Added an "about author" sidebar component (<sidebar:aboutAuthor/>) that displays the profile information associated with the author of a blog entry, when viewing that blog entry on its permalinked page.
 Added support for custom favicon.ico files (place a favicon.ico file at <your-theme>/images/favicon.ico).
+Added an aboutAuthor page that displays profile information for the author of a blog entry. This is the default link used in the "Posted by ..." blog entry metadata if a user doesn't explicitly provide a website in their user details.
 
 Version 2.1 - 14th May 2007
 ---------------------------
