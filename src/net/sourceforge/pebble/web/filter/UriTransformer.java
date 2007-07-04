@@ -56,6 +56,12 @@ public class UriTransformer {
   /** literal used at the start of tag URIs, in regex form */
   private static final String TAGS_REGEX = "\\/tags\\/";
 
+  /** literal used at the start of author URIs */
+  private static final String AUTHORS = "/authors/";
+
+  /** literal used at the start of tag URIs, in regex form */
+  private static final String AUTHORS_REGEX = "\\/authors\\/";
+
   /** the log used by this class */
   private static Log log = LogFactory.getLog(UriTransformer.class);
 
@@ -125,6 +131,18 @@ public class UriTransformer {
         } else {
           result = "/feed.action?tag=" + tag + "&flavor=rss20";
         }
+      } else if (uri.matches(AUTHORS_REGEX + ".*\\/.*xml")) {
+        // URI of the form /authors/username/[rss|rdf|atom].xml
+        int indexOfLastSlash = uri.lastIndexOf("/");
+        String author = uri.substring(AUTHORS.length(), indexOfLastSlash);
+
+        if (uri.endsWith("rdf.xml")) {
+          result = "/feed.action?author=" + author + "&flavor=rdf";
+        } else if (uri.endsWith("atom.xml")) {
+          result = "/feed.action?author=" + author + "&flavor=atom";
+        } else {
+          result = "/feed.action?author=" + author + "&flavor=rss20";
+        }
       } else if (uri.startsWith(TAGS)) {
         // URI of the form /tags/tag/
         String tag = uri.substring(TAGS.length(), uri.length());
@@ -132,6 +150,13 @@ public class UriTransformer {
           tag = tag.substring(0, tag.length()-1);
         }
         result = "/viewTag.action?tag=" + Tag.encode(tag);
+      } else if (uri.startsWith(AUTHORS)) {
+        // URI of the form /authors/usename/
+        String author = uri.substring(AUTHORS.length(), uri.length());
+        if (author.endsWith("/")) {
+          author = author.substring(0, author.length()-1);
+        }
+        result = "/aboutAuthor.action?user=" + author;
       } else if (uri.equals("/pages/") || uri.equals("/pages")) {
         result = "/viewStaticPage.action?name=index";
       } else if (uri.startsWith("/pages/")) {

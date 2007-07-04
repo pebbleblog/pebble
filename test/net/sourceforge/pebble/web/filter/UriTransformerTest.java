@@ -174,6 +174,16 @@ public class UriTransformerTest extends SingleBlogTestCase {
     assertEquals("/feed.action?tag=automated+unit+testing&flavor=atom", transformer.getUri("/tags/automated+unit+testing/atom.xml", blog));
   }
 
+  public void testAuthorPermalink() throws Exception {
+    assertEquals("/aboutAuthor.action?user=sbrown", transformer.getUri("/authors/sbrown/", blog));
+  }
+
+  public void testAuthorNewsFeed() throws Exception {
+    assertEquals("/feed.action?author=sbrown&flavor=rss20", transformer.getUri("/authors/sbrown/rss.xml", blog));
+    assertEquals("/feed.action?author=sbrown&flavor=rdf", transformer.getUri("/authors/sbrown/rdf.xml", blog));
+    assertEquals("/feed.action?author=sbrown&flavor=atom", transformer.getUri("/authors/sbrown/atom.xml", blog));
+  }
+
   public void testTodayPage() throws Exception {
     assertEquals("/viewDay.action", transformer.getUri("/today.html", blog));
   }

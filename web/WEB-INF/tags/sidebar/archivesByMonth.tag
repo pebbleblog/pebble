@@ -21,7 +21,7 @@
           </c:forEach>
           <br />
         </td>
-        <c:if test="${status.count % 2 == 0}">
+        <c:if test="${status.count % 2 == 0 or status.last}">
         </tr>
         </c:if>
       </c:forEach>

@@ -1,8 +1,8 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
   <id>tag:<c:out value="${blog.domainName}"/>,0000-00-00:<c:out value="${blog.id}"/></id>
-  <title><c:choose><c:when test="${not empty category}"><c:out value="${blog.name} - ${category.name} category" escapeXml="true"/></c:when><c:when test="${not empty tag}"><c:out value="${blog.name} - ${tag.name} tag" escapeXml="true"/></c:when><c:otherwise><c:out value="${blog.name}" escapeXml="true"/></c:otherwise></c:choose></title>
-  <link rel="alternate" type="text/html" href="<c:choose><c:when test="${not empty category}">${category.permalink}</c:when><c:when test="${not empty tag}">${tag.permalink}</c:when><c:otherwise>${blog.url}</c:otherwise></c:choose>"/>
-  <link rel="self" type="application/atom+xml" href="<c:choose><c:when test="${not empty category}">${category.permalink}atom.xml</c:when><c:when test="${not empty tag}">${tag.permalink}atom.xml</c:when><c:otherwise>${blog.url}atom.xml</c:otherwise></c:choose>"/>
+  <title><c:choose><c:when test="${not empty category}"><c:out value="${blog.name} - ${category.name} category" escapeXml="true"/></c:when><c:when test="${not empty tag}"><c:out value="${blog.name} - ${tag.name} tag" escapeXml="true"/></c:when><c:when test="${not empty author}">${blog.name} - ${author}</c:when><c:otherwise><c:out value="${blog.name}" escapeXml="true"/></c:otherwise></c:choose></title>
+  <link rel="alternate" type="text/html" href="<c:choose><c:when test="${not empty category}">${category.permalink}</c:when><c:when test="${not empty tag}">${tag.permalink}</c:when><c:when test="${not empty author}">${blog.url}authors/${author}/</c:when><c:otherwise>${blog.url}</c:otherwise></c:choose>"/>
+  <link rel="self" type="application/atom+xml" href="<c:choose><c:when test="${not empty category}">${category.permalink}atom.xml</c:when><c:when test="${not empty tag}">${tag.permalink}atom.xml</c:when><c:when test="${not empty author}">${blog.url}authors/${author}/atom.xml</c:when><c:otherwise>${blog.url}atom.xml</c:otherwise></c:choose>"/>
   <updated><fmt:formatDate value="${blog.lastModified}" pattern="yyyy-MM-dd'T'HH:mm:ssZ" timeZone="${blog.timeZone}"/></updated>
   <author>
     <name><c:out value="${blog.author}"/></name>

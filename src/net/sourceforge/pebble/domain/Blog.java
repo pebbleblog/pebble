@@ -140,6 +140,7 @@ public class Blog extends AbstractBlog {
   private ResponseIndex responseIndex;
   private TagIndex tagIndex;
   private CategoryIndex categoryIndex;
+  private AuthorIndex authorIndex;
   private StaticPageIndex staticPageIndex;
 
   private Cache blogEntryCache;
@@ -184,6 +185,7 @@ public class Blog extends AbstractBlog {
     responseIndex = new ResponseIndex(this);
     tagIndex = new TagIndex(this);
     categoryIndex = new CategoryIndex(this);
+    authorIndex = new AuthorIndex(this);
     staticPageIndex = new StaticPageIndex(this);
 
     decoratorChain = new ContentDecoratorChain(this);
@@ -303,6 +305,7 @@ public class Blog extends AbstractBlog {
     eventListenerList.addBlogEntryListener(new BlogEntryIndexListener());
     eventListenerList.addBlogEntryListener(new TagIndexListener());
     eventListenerList.addBlogEntryListener(new CategoryIndexListener());
+    eventListenerList.addBlogEntryListener(new AuthorIndexListener());
     eventListenerList.addBlogEntryListener(new SearchIndexListener());
     eventListenerList.addBlogEntryListener(new AuditListener());
   }
@@ -1077,6 +1080,35 @@ public class Blog extends AbstractBlog {
   }
 
   /**
+   * Gets the most recent published blog entries for a given category, the
+   * number of which is taken from the recentBlogEntriesOnHomePage property.
+   *
+   * @param   category          a category
+   * @return  a List containing the most recent blog entries
+   */
+  public List getRecentPublishedBlogEntries(String author) {
+    BlogService service = new BlogService();
+    List<String> blogEntryIds = authorIndex.getRecentBlogEntries(author);
+    List blogEntries = new ArrayList();
+    for (String blogEntryId : blogEntryIds) {
+      try {
+        BlogEntry blogEntry = service.getBlogEntry(this, blogEntryId);
+        if (blogEntry != null && blogEntry.isPublished()) {
+          blogEntries.add(blogEntry);
+        }
+      } catch (BlogServiceException e) {
+        log.error(e);
+      }
+
+      if (blogEntries.size() == getRecentBlogEntriesOnHomePage()) {
+        break;
+      }
+    }
+
+    return blogEntries;
+  }
+
+  /**
    * Gets the most recent published blog entries for a given tag, the
    * number of which is taken from the recentBlogEntriesOnHomePage property.
    *
@@ -1405,6 +1437,15 @@ public class Blog extends AbstractBlog {
   }
 
   /**
+   * Gets the author index.
+   *
+   * @return  a AuthorIndex instance
+   */
+  public AuthorIndex getAuthorIndex() {
+    return this.authorIndex;
+  }
+
+  /**
    * Gets the story index.
    *
    * @return  a StaticPageIndex instance
@@ -1663,6 +1704,7 @@ public class Blog extends AbstractBlog {
     responseIndex.clear();
     tagIndex.clear();
     categoryIndex.clear();
+    authorIndex.clear();
     searchIndex.clear();
     staticPageIndex.clear();
 
@@ -1674,6 +1716,7 @@ public class Blog extends AbstractBlog {
       responseIndex.index(blogEntries);
       tagIndex.index(blogEntries);
       categoryIndex.index(blogEntries);
+      authorIndex.index(blogEntries);
       searchIndex.indexBlogEntries(blogEntries);
     } catch (BlogServiceException e) {
       // do nothing

@@ -1,8 +1,8 @@
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://purl.org/rss/1.0/">
 
   <channel rdf:about="${blog.url}">
-    <title><c:choose><c:when test="${not empty category}"><c:out value="${blog.name} - ${category.name} category" escapeXml="true"/></c:when><c:when test="${not empty tag}"><c:out value="${blog.name} - ${tag.name} tag" escapeXml="true"/></c:when><c:otherwise><c:out value="${blog.name}" escapeXml="true"/></c:otherwise></c:choose></title>
-    <link><c:choose><c:when test="${not empty category}">${category.permalink}</c:when><c:when test="${not empty tag}">${tag.permalink}</c:when><c:otherwise>${blog.url}</c:otherwise></c:choose></link>
+    <title><c:choose><c:when test="${not empty category}"><c:out value="${blog.name} - ${category.name} category" escapeXml="true"/></c:when><c:when test="${not empty tag}"><c:out value="${blog.name} - ${tag.name} tag" escapeXml="true"/></c:when><c:when test="${not empty author}">${blog.name} - ${author}</c:when><c:otherwise><c:out value="${blog.name}" escapeXml="true"/></c:otherwise></c:choose></title>
+    <link><c:choose><c:when test="${not empty category}">${category.permalink}</c:when><c:when test="${not empty tag}">${tag.permalink}</c:when><c:when test="${not empty author}">${blog.url}authors/${author}/</c:when><c:otherwise>${blog.url}</c:otherwise></c:choose></link>
     <description><c:out value="${blog.description}" escapeXml="true"/></description>
     <items>
       <rdf:Seq>

@@ -33,6 +33,7 @@ package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.PebbleContext;
+import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.security.PebbleUserDetails;
 import net.sourceforge.pebble.security.SecurityRealm;
 import net.sourceforge.pebble.security.SecurityRealmException;
@@ -63,12 +64,14 @@ public class AboutAuthorAction extends Action {
    * @return the name of the next view
    */
   public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
+    Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
     String username = request.getParameter("user");
     SecurityRealm realm = PebbleContext.getInstance().getConfiguration().getSecurityRealm();
     try {
       PebbleUserDetails user = realm.getUser(username);
       if (user != null) {
         getModel().put(Constants.USER_KEY, user);
+        getModel().put(Constants.BLOG_ENTRIES, blog.getRecentPublishedBlogEntries(username));
         return new AboutAuthorView();
       }
     } catch (SecurityRealmException e) {

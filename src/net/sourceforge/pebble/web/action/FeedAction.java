@@ -92,6 +92,7 @@ public class FeedAction extends Action {
       if (blog instanceof Blog) {
         Tag tag = getTag((Blog)blog, request);
         Category category = getCategory((Blog)blog, request);
+        String author = getAuthor(request);
 
         if (tag != null) {
           blogEntries = ((Blog)blog).getRecentPublishedBlogEntries(tag);
@@ -99,6 +100,9 @@ public class FeedAction extends Action {
         } else if (category != null) {
           blogEntries = ((Blog)blog).getRecentPublishedBlogEntries(category);
           getModel().put("category", category);
+        } else if (author != null) {
+          blogEntries = ((Blog)blog).getRecentPublishedBlogEntries(author);
+          getModel().put("author", author);
         } else {
           blogEntries = ((Blog)blog).getRecentPublishedBlogEntries();
         }
@@ -170,6 +174,16 @@ public class FeedAction extends Action {
     } else {
       return null;
     }
+  }
+
+  /**
+   * Helper method to find a named author from a request parameter.
+   *
+   * @param request   the HTTP request containing the tag parameter
+   * @return  a String username, or null if the author isn't specified
+   */
+  private String getAuthor(HttpServletRequest request) {
+    return request.getParameter("author");
   }
 
 }

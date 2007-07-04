@@ -1,3 +1,11 @@
+Version 2.3 - mid July
+----------------------------
+Removed redundant onClick handler from the login form.
+Fixed missing <tr> tag in the "archives by month" component when the number of months shown was odd.
+Added a "friendly" URL for the aboutAuthor action (/authors/<username/).
+About author page now shows the author's profile and their recent blog entries.
+Added an RSS/Atom feed for individual authors (/authors/<username>/rss.xml|atom.xml).
+
 Version 2.2 - 21st June 2007
 ----------------------------
 Added a generic sidebar item (<sidebar:item/>).
