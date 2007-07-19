@@ -16,10 +16,11 @@
 
   <div id="body">
 
-    <%-- the RSS/Atom links --%>
+    <%-- the RSS/Atom links
     <div id="feeds">
       <template:feeds/>
     </div>
+     --%>
 
     <%-- the header, containing blog name and description --%>
     <div id="header">
@@ -36,6 +37,7 @@
     <div id="sidebar">
       <sidebar:adminPanel/>
       <sidebar:about/>
+      <sidebar:subscriptions/>
       <sidebar:navigation/>
       <sidebar:archivesByMonth/>
       <sidebar:categories/>
