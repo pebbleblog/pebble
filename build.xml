@@ -157,6 +157,7 @@
         <include name="content-types.properties"/>
         <include name="resources*.properties"/>
         <include name="ehcache.xml"/>
+        <include name="propono.properties"/>
       </fileset>
     </copy>
   </target>

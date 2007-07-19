@@ -171,6 +171,12 @@
     <load-on-startup>1</load-on-startup>
   </servlet>
 
+  <servlet>
+      <description>Atom Publishing Protocol Servlet</description>
+      <servlet-name>AtomServlet</servlet-name>
+      <servlet-class>com.sun.syndication.propono.atom.server.AtomServlet</servlet-class>
+  </servlet>
+
   <servlet-mapping>
     <servlet-name>dwr-invoker</servlet-name>
     <url-pattern>/dwr/*</url-pattern>
@@ -199,6 +205,11 @@
   <servlet-mapping>
     <servlet-name>jcaptcha</servlet-name>
     <url-pattern>/jcaptcha</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+      <servlet-name>AtomServlet</servlet-name>
+      <url-pattern>/atom/*</url-pattern>
   </servlet-mapping>
 
   <session-config>
@@ -238,6 +249,7 @@
   </error-page>
 
   <!-- uncomment this if you would like to use a JNDI-based JavaMail Session
+  -->
   <resource-ref>
     <description>
       Resource reference to a factory for javax.mail.Session
@@ -247,6 +259,5 @@
     <res-type>javax.mail.Session</res-type>
     <res-auth>Container</res-auth>
   </resource-ref>
-  -->
 
 </web-app>

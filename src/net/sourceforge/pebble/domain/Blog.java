@@ -55,6 +55,7 @@ import net.sourceforge.pebble.decorator.HideUnapprovedResponsesDecorator;
 import net.sourceforge.pebble.event.DefaultEventDispatcher;
 import net.sourceforge.pebble.event.EventListenerList;
 import net.sourceforge.pebble.event.AuditListener;
+import net.sourceforge.pebble.event.blogentry.EmailSubscriptionListener;
 import net.sourceforge.pebble.event.blog.CacheListener;
 import net.sourceforge.pebble.index.*;
 import net.sourceforge.pebble.logging.AbstractLogger;
@@ -145,6 +146,8 @@ public class Blog extends AbstractBlog {
 
   private Cache blogEntryCache;
 
+  private EmailSubscriptionList emailSubscriptionList;
+
   /**
    * Creates a new Blog instance, based at the specified location.
    *
@@ -207,6 +210,8 @@ public class Blog extends AbstractBlog {
       e.printStackTrace();
       trackBackConfirmationStrategy = new DefaultConfirmationStrategy();
     }
+
+    emailSubscriptionList = new EmailSubscriptionList(this);
 
     initLogger();
     initEventDispatcher();
@@ -308,6 +313,7 @@ public class Blog extends AbstractBlog {
     eventListenerList.addBlogEntryListener(new AuthorIndexListener());
     eventListenerList.addBlogEntryListener(new SearchIndexListener());
     eventListenerList.addBlogEntryListener(new AuditListener());
+    eventListenerList.addBlogEntryListener(new EmailSubscriptionListener());
   }
 
   /**
@@ -1083,7 +1089,7 @@ public class Blog extends AbstractBlog {
    * Gets the most recent published blog entries for a given category, the
    * number of which is taken from the recentBlogEntriesOnHomePage property.
    *
-   * @param   category          a category
+   * @param   author    the author's username
    * @return  a List containing the most recent blog entries
    */
   public List getRecentPublishedBlogEntries(String author) {
@@ -1793,4 +1799,8 @@ public class Blog extends AbstractBlog {
     return s != null && s.equalsIgnoreCase("true");
   }
 
+  public EmailSubscriptionList getEmailSubscriptionList() {
+    return emailSubscriptionList;
+  }
+  
 }
