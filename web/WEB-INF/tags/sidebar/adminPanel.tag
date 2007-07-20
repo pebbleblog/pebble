@@ -11,7 +11,6 @@
   <div class="sidebarItemBody">
     <div id="adminPanel">
 
-      <div class="adminGroup"><a href="#" onclick="showComponent('admin-user'); hideComponent('admin-content'); hideComponent('admin-responses'); hideComponent('admin-blog'); hideComponent('admin-logs'); hideComponent('admin-admin')">User</a></div>
       <div id="admin-user" class="adminLinks">
       <c:if test="${authenticatedUser.detailsUpdateable == true}">
         <a href="editUserDetails.secureaction" title="Edit user details">User details</a> |
@@ -19,10 +18,9 @@
       </c:if>
       <a href="${pebbleContext.configuration.secureUrl}logout.action?redirectUrl=${blog.url}"><fmt:message key="common.logout" /></a>
       </div>
-      <script type="text/javascript">hideComponent('admin-user');</script>
 
       <pebble:isBlogContributor>
-      <div class="adminGroup"><a href="#" onclick="showComponent('admin-content'); hideComponent('admin-user'); hideComponent('admin-responses'); hideComponent('admin-blog'); hideComponent('admin-logs'); hideComponent('admin-admin')">Content</a></div>
+      <div class="adminGroup">Content</div>
       <div id="admin-content" class="adminLinks">
       <a href="addBlogEntry.secureaction#form" title="Add a new entry">New blog entry</a> (<fmt:formatNumber value="${blog.numberOfBlogEntries}"/>)
     <%--    |
@@ -38,20 +36,18 @@
       <a href="files/" title="Manage files in blog">Files</a> |
       <a href="images/" title="Manage images in blog">Images</a>
       </div>
-      <script type="text/javascript">hideComponent('admin-content');</script>
 
-      <div class="adminGroup"><a href="#" onclick="showComponent('admin-responses'); hideComponent('admin-user'); hideComponent('admin-content'); hideComponent('admin-blog'); hideComponent('admin-logs'); hideComponent('admin-admin')">Responses</a></div>
+      <div class="adminGroup">Responses</div>
       <div id="admin-responses" class="adminLinks">
       <a href="viewResponses.secureaction" title="Manage approved responses">Approved (<fmt:formatNumber value="${blog.numberOfApprovedResponses}"/>)</a>
       <br />
       <a href="viewResponses.secureaction?type=pending" title="Manage pending responses">Pending (<fmt:formatNumber value="${blog.numberOfPendingResponses}"/>)</a> |
       <a href="viewResponses.secureaction?type=rejected" title="Manage rejected responses">Rejected (<fmt:formatNumber value="${blog.numberOfRejectedResponses}"/>)</a>
       </div>
-      <script type="text/javascript">hideComponent('admin-responses');</script>
       </pebble:isBlogContributor>
 
       <pebble:isBlogAdminOrBlogOwner>
-      <div class="adminGroup"><a href="#" onclick="showComponent('admin-blog'); hideComponent('admin-user'); hideComponent('admin-content'); hideComponent('admin-responses'); hideComponent('admin-logs'); hideComponent('admin-admin')">Blog</a></div>
+      <div class="adminGroup">Blog</div>
       <div id="admin-blog" class="adminLinks">
       <a href="viewBlogProperties.secureaction" title="Manage your blog properties">Properties</a> |
       <a href="viewPlugins.secureaction" title="Manage your plugins">Plugins</a>
@@ -63,11 +59,10 @@
       <a href="utilities.secureaction" title="Maintenance and upgrade utilities">Utilities</a> |
       <a href="aboutBlog.secureaction" title="About this blog">About</a>
       </div>
-      <script type="text/javascript">hideComponent('admin-blog');</script>
       </pebble:isBlogAdminOrBlogOwner>
 
       <pebble:isAuthorisedForBlog>
-      <div class="adminGroup"><a href="#" onclick="showComponent('admin-logs'); hideComponent('admin-user'); hideComponent('admin-content'); hideComponent('admin-responses'); hideComponent('admin-blog'); hideComponent('admin-admin')">Logs</a></div>
+      <div class="adminGroup">Logs</div>
       <div id="admin-logs" class="adminLinks">
       <a href="viewReferers.secureaction" title="View referers for today">Referers</a> (<a href="viewReferers.secureaction?filter=false" title="View referers for today, unfiltered">unfiltered</a>) |
       <a href="viewRequests.secureaction" title="View requests for today">Requests</a>
@@ -76,11 +71,10 @@
       <a href="viewLogSummary.secureaction" title="View log summary for this month">Log summary</a> |
       <a href="viewRefererFilters.secureaction" title="View referer filters">Referer filters</a>
       </div>
-      <script type="text/javascript">hideComponent('admin-logs');</script>
       </pebble:isAuthorisedForBlog>
 
       <pebble:isBlogAdmin>
-      <div class="adminGroup"><a href="#" onclick="showComponent('admin-admin'); hideComponent('admin-user'); hideComponent('admin-content'); hideComponent('admin-responses'); hideComponent('admin-blog'); hideComponent('admin-logs')">Administration</a></div>
+      <div class="adminGroup">Administration</div>
       <div id="admin-admin" class="adminLinks">
       <c:if test="${blogManager.multiBlog}">
       <a href="${multiBlog.url}viewPebbleProperties.secureaction" title="Manage Pebble properties">Properties</a> |
@@ -90,7 +84,6 @@
       <a href="${multiBlog.url}addUser.secureaction" title="Add user">Add user</a> |
       <a href="${multiBlog.url}viewUsers.secureaction" title="View users">Users</a>
       </div>
-      <script type="text/javascript">hideComponent('admin-admin');</script>
       </pebble:isBlogAdmin>
 
     </div>

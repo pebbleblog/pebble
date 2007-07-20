@@ -1,10 +1,7 @@
 .adminGroup, .adminGroup a {
-  background: #F0F0F0;
+  font-weight: bold;
   padding: 2px;
 }
 .adminLinks {
-  border-left: solid #F0F0F0 1px;
-  border-bottom: solid #F0F0F0 1px;
-  border-right: solid #F0F0F0 1px;
-  padding: 4px;
+  padding-bottom: 4px;
 }
