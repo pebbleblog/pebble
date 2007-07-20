@@ -63,8 +63,14 @@ function setFocus(elementId) {
   element.focus();
 }
 
-function showComponent(componentName) {
-  Effect.Appear(componentName, 'blind');
+function showComponent(elementId) {
+  var element = document.getElementById(elementId);
+  element.style.display = 'block';
+}
+
+function hideComponent(elementId) {
+    var element = document.getElementById(elementId);
+    element.style.display = 'none';
 }
 
 function showCommentForm() {

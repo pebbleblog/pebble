@@ -16,11 +16,11 @@
       <table>
         <tr>
           <td><fmt:message key="login.username"/></td>
-          <td><input id="j_username" name="j_username" type="text" /></td>
+          <td><input id="j_username" name="j_username" type="text" size="16" /></td>
         </tr>
         <tr>
           <td><fmt:message key="login.password"/></td>
-          <td><input type="password" name="j_password" /></td>
+          <td><input type="password" name="j_password" size="16" /></td>
         </tr>
         <tr>
           <td colspan="2" align="center">

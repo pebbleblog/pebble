@@ -16,12 +16,6 @@
 
   <div id="body">
 
-    <%-- the RSS/Atom links
-    <div id="feeds">
-      <template:feeds/>
-    </div>
-     --%>
-
     <%-- the header, containing blog name and description --%>
     <div id="header">
       <div id="blogName"><span>${blog.name}</span></div>
