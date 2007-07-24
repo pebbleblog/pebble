@@ -79,6 +79,15 @@ public class RelativeUriDecoratorTest extends SingleBlogTestCase {
   }
 
   /**
+   * Tests that a relative URI pointing to a blog entry is translated, in the body.
+   */
+  public void testBlogEntryUriInBody() throws Exception {
+    blogEntry.setBody("Body - <a href=\"./2007/01/01/some_title.html\">");
+    decorator.decorate(context, blogEntry);
+    assertEquals("Body - <a href=\"http://www.yourdomain.com/blog/2007/01/01/some_title.html\">", blogEntry.getBody());
+  }
+
+  /**
    * Tests that a relative URI pointing to an image is translated, in the excerpt.
    */
   public void testImageUriInExcerpt() throws Exception {

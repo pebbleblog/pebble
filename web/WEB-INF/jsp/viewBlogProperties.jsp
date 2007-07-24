@@ -43,7 +43,7 @@
           About
         </td>
         <td>
-          <textarea name="about" rows="8" cols="50">${blog.about}</textarea>
+          <textarea name="about" rows="12" cols="50">${blog.about}</textarea>
         </td>
       </tr>
 

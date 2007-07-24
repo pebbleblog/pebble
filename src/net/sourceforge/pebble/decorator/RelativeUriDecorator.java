@@ -48,8 +48,10 @@ public class RelativeUriDecorator extends ContentDecoratorSupport {
    * @return    a new String containing absolute URLs
    */
   private String replaceCommonUris(String s) {
-    s = s.replaceAll("\\./images/", getBlog().getUrl() + "images/");
-    s = s.replaceAll("\\./files/", getBlog().getUrl() + "files/");
+    s = s.replaceAll("href=\"\\./", "href=\"" + getBlog().getUrl());
+    s = s.replaceAll("href='\\./", "href='" + getBlog().getUrl());
+    s = s.replaceAll("src=\"\\./", "src=\"" + getBlog().getUrl());
+    s = s.replaceAll("src='\\./", "src='" + getBlog().getUrl());
     return s;
   }
 

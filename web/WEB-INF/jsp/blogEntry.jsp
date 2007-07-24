@@ -66,6 +66,19 @@
   </div>
 
   <c:if test="${displayMode == 'detail'}">
+
+    <div align="center">
+      <br />
+      <c:if test="${blogEntry.commentsEnabled}">
+        <a href="replyToBlogEntry.action?entry=${blogEntry.id}" onclick="showCommentForm(); return false;"><fmt:message key="comment.addComment"/></a>
+      </c:if>
+      <c:if test="${blogEntry.trackBacksEnabled}">
+        <a href="generateTrackBackLink.action?entry=${blogEntry.id}"><fmt:message key="trackback.sendTrackBack"/></a>
+      </c:if>
+    </div>
+
+    <div id="commentFormDiv" style="display:none;"><%@ include file="/WEB-INF/fragments/commentForm.jsp" %></div>
+
     <pebble:isBlogContributor>
     <c:if test="${blogEntry.numberOfResponses > 0}">
     <form name="responsesForm" method="post" action="manageResponses.secureaction">
@@ -97,19 +110,6 @@
     </form>
     </c:if>
     </pebble:isBlogContributor>
-
-<div align="center">
-  <br />
-  <c:if test="${blogEntry.commentsEnabled}">
-    <a href="replyToBlogEntry.action?entry=${blogEntry.id}" onclick="showCommentForm(); return false;"><fmt:message key="comment.addComment"/></a> 
-  </c:if>
-  <c:if test="${blogEntry.trackBacksEnabled}">
-    <a href="generateTrackBackLink.action?entry=${blogEntry.id}"><fmt:message key="trackback.sendTrackBack"/></a>
-  </c:if>
-  <br /><br />
-</div>
-
-<div id="commentFormDiv" style="display:none;"><%@ include file="/WEB-INF/fragments/commentForm.jsp" %></div>
 
   </c:if>
 

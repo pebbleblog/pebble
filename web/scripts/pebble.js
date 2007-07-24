@@ -73,6 +73,11 @@ function hideComponent(elementId) {
     element.style.display = 'none';
 }
 
+function switchStyle(elementId, style) {
+    var element = document.getElementById(elementId);
+    element.className = style;
+}
+
 function showCommentForm() {
   Effect.Appear('commentFormDiv', 'blind');
   var oFCKeditor = null;

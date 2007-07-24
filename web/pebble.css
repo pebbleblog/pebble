@@ -1,7 +1,13 @@
-.adminGroup, .adminGroup a {
-  font-weight: bold;
+.adminGroup {
+  background: #F0F0F0;
   padding: 2px;
+  text-decoration: underline;
+}
+.adminGroupSelected {
+  background: #C0C0C0;
+  padding: 2px;
+  text-decoration: underline;
 }
 .adminLinks {
-  padding-bottom: 4px;
+  padding: 4px;
 }

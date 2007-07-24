@@ -433,6 +433,7 @@ public class Blog extends AbstractBlog {
         "net.sourceforge.pebble.event.response.LinkSpamListener\r\n" +
         "net.sourceforge.pebble.event.response.ContentSpamListener\r\n" +
         "net.sourceforge.pebble.event.response.SpamScoreListener\r\n" +
+        "net.sourceforge.pebble.event.response.MarkApprovedWhenAuthenticatedListener\r\n" +
         "#net.sourceforge.pebble.event.response.DeleteRejectedListener\r\n" +
         "#net.sourceforge.pebble.event.comment.EmailAuthorNotificationListener");
     defaultProperties.setProperty(TRACKBACK_LISTENERS_KEY,
@@ -440,6 +441,7 @@ public class Blog extends AbstractBlog {
         "net.sourceforge.pebble.event.response.LinkSpamListener\r\n" +
         "net.sourceforge.pebble.event.response.ContentSpamListener\r\n" +
         "net.sourceforge.pebble.event.response.SpamScoreListener\r\n" +
+        "net.sourceforge.pebble.event.response.MarkApprovedWhenAuthenticatedListener\r\n" +
         "#net.sourceforge.pebble.event.response.DeleteRejectedListener\r\n" +
         "#net.sourceforge.pebble.event.trackback.EmailAuthorNotificationListener");
     defaultProperties.setProperty(PERMALINK_PROVIDER_KEY, "net.sourceforge.pebble.permalink.DefaultPermalinkProvider");
