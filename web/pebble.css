@@ -1,12 +1,11 @@
 .adminGroup {
   background: #F0F0F0;
   padding: 2px;
-  text-decoration: underline;
 }
 .adminGroupSelected {
-  background: #C0C0C0;
+  background: #6e7d8e;
   padding: 2px;
-  text-decoration: underline;
+  color: white;
 }
 .adminLinks {
   padding: 4px;

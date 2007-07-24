@@ -7,17 +7,16 @@
 --%>
 <pebble:isAuthenticated>
 <div class="sidebarItem">
-  <div class="sidebarItemTitle"><span>Logged in as ${authenticatedUser.username} | <a href="./help/index.html" title="Help">Help</a></span></div>
+  <div class="sidebarItemTitle"><span> ${authenticatedUser.username} : <a href="${pebbleContext.configuration.secureUrl}logout.action?redirectUrl=${blog.url}">Logout</a> | <a href="./help/index.html" title="Help">Help</a></span></div>
   <div class="sidebarItemBody">
     <div id="adminPanel">
 
-      <div id="admin-user-group" class="adminGroup" onclick="toggleVisibility('admin-user'); hideComponent('admin-content'); hideComponent('admin-responses'); hideComponent('admin-blog'); hideComponent('admin-logs'); hideComponent('admin-admin')" onmouseover="switchStyle('admin-user-group', 'adminGroupSelected');" onmouseout="switchStyle('admin-user-group', 'adminGroup');">User</div>
+      <div id="admin-user-group" class="adminGroup" onclick="toggleVisibility('admin-user'); hideComponent('admin-content'); hideComponent('admin-responses'); hideComponent('admin-blog'); hideComponent('admin-logs'); hideComponent('admin-admin')" onmouseover="switchStyle('admin-user-group', 'adminGroupSelected');" onmouseout="switchStyle('admin-user-group', 'adminGroup');">User Details</div>
       <div id="admin-user" class="adminLinks">
       <c:if test="${authenticatedUser.detailsUpdateable == true}">
         <a href="editUserDetails.secureaction" title="Edit user details">User details</a> |
         <a href="changePassword.secureaction" title="Change password">Change password</a><br />
       </c:if>
-      <a href="${pebbleContext.configuration.secureUrl}logout.action?redirectUrl=${blog.url}"><fmt:message key="common.logout" /></a>
       </div>
       <script type="text/javascript">hideComponent('admin-user');</script>
 
@@ -40,7 +39,7 @@
       </div>
       <script type="text/javascript">hideComponent('admin-content');</script>
 
-      <div id="admin-responses-group" class="adminGroup" onclick="showComponent('admin-responses'); hideComponent('admin-user'); hideComponent('admin-content'); hideComponent('admin-blog'); hideComponent('admin-logs'); hideComponent('admin-admin')" onmouseover="switchStyle('admin-responses-group', 'adminGroupSelected');" onmouseout="switchStyle('admin-responses-group', 'adminGroup');">Responses</div>
+      <div id="admin-responses-group" class="adminGroup" onclick="showComponent('admin-responses'); hideComponent('admin-user'); hideComponent('admin-content'); hideComponent('admin-blog'); hideComponent('admin-logs'); hideComponent('admin-admin')" onmouseover="switchStyle('admin-responses-group', 'adminGroupSelected');" onmouseout="switchStyle('admin-responses-group', 'adminGroup');">Comment and TrackBacks</div>
       <div id="admin-responses" class="adminLinks">
       <a href="viewResponses.secureaction" title="Manage approved responses">Approved (<fmt:formatNumber value="${blog.numberOfApprovedResponses}"/>)</a>
       <br />
@@ -51,7 +50,7 @@
       </pebble:isBlogContributor>
 
       <pebble:isBlogAdminOrBlogOwner>
-      <div id="admin-blog-group" class="adminGroup" onclick="toggleVisibility('admin-blog'); hideComponent('admin-user'); hideComponent('admin-content'); hideComponent('admin-responses'); hideComponent('admin-logs'); hideComponent('admin-admin')" onmouseover="switchStyle('admin-blog-group', 'adminGroupSelected');" onmouseout="switchStyle('admin-blog-group', 'adminGroup');">Blog</div>
+      <div id="admin-blog-group" class="adminGroup" onclick="toggleVisibility('admin-blog'); hideComponent('admin-user'); hideComponent('admin-content'); hideComponent('admin-responses'); hideComponent('admin-logs'); hideComponent('admin-admin')" onmouseover="switchStyle('admin-blog-group', 'adminGroupSelected');" onmouseout="switchStyle('admin-blog-group', 'adminGroup');">Blog configuration and utilities</div>
       <div id="admin-blog" class="adminLinks">
       <a href="viewBlogProperties.secureaction" title="Manage your blog properties">Properties</a> |
       <a href="viewPlugins.secureaction" title="Manage your plugins">Plugins</a>
@@ -67,7 +66,7 @@
       </pebble:isBlogAdminOrBlogOwner>
 
       <pebble:isAuthorisedForBlog>
-      <div id="admin-logs-group" class="adminGroup" onclick="toggleVisibility('admin-logs'); hideComponent('admin-user'); hideComponent('admin-content'); hideComponent('admin-responses'); hideComponent('admin-blog'); hideComponent('admin-admin')" onmouseover="switchStyle('admin-logs-group', 'adminGroupSelected');" onmouseout="switchStyle('admin-logs-group', 'adminGroup');">Logs</div>
+      <div id="admin-logs-group" class="adminGroup" onclick="toggleVisibility('admin-logs'); hideComponent('admin-user'); hideComponent('admin-content'); hideComponent('admin-responses'); hideComponent('admin-blog'); hideComponent('admin-admin')" onmouseover="switchStyle('admin-logs-group', 'adminGroupSelected');" onmouseout="switchStyle('admin-logs-group', 'adminGroup');">Logs, requests and referers</div>
       <div id="admin-logs" class="adminLinks">
       <a href="viewReferers.secureaction" title="View referers for today">Referers</a> (<a href="viewReferers.secureaction?filter=false" title="View referers for today, unfiltered">unfiltered</a>) |
       <a href="viewRequests.secureaction" title="View requests for today">Requests</a>
