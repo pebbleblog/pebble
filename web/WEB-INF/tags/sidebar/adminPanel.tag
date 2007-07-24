@@ -7,18 +7,18 @@
 --%>
 <pebble:isAuthenticated>
 <div class="sidebarItem">
-  <div class="sidebarItemTitle"><span> ${authenticatedUser.username} : <a href="${pebbleContext.configuration.secureUrl}logout.action?redirectUrl=${blog.url}">Logout</a> | <a href="./help/index.html" title="Help">Help</a></span></div>
+  <div class="sidebarItemTitle"><span> ${authenticatedUser.username} : <a href="${pebbleContext.configuration.secureUrl}logout.action?redirectUrl=${blog.url}">Logout</a> <pebble:isAuthorisedForBlog>| <a href="./help/index.html" title="Help">Help</a></pebble:isAuthorisedForBlog></span></div>
   <div class="sidebarItemBody">
     <div id="adminPanel">
 
+      <c:if test="${authenticatedUser.detailsUpdateable == true}">
       <div id="admin-user-group" class="adminGroup" onclick="toggleVisibility('admin-user'); hideComponent('admin-content'); hideComponent('admin-responses'); hideComponent('admin-blog'); hideComponent('admin-logs'); hideComponent('admin-admin')" onmouseover="switchStyle('admin-user-group', 'adminGroupSelected');" onmouseout="switchStyle('admin-user-group', 'adminGroup');">User Details</div>
       <div id="admin-user" class="adminLinks">
-      <c:if test="${authenticatedUser.detailsUpdateable == true}">
         <a href="editUserDetails.secureaction" title="Edit user details">User details</a> |
         <a href="changePassword.secureaction" title="Change password">Change password</a><br />
-      </c:if>
       </div>
       <script type="text/javascript">hideComponent('admin-user');</script>
+      </c:if>
 
       <pebble:isBlogContributor>
       <div id="admin-content-group" class="adminGroup" onclick="toggleVisibility('admin-content'); hideComponent('admin-user'); hideComponent('admin-responses'); hideComponent('admin-blog'); hideComponent('admin-logs'); hideComponent('admin-admin')" onmouseover="switchStyle('admin-content-group', 'adminGroupSelected');" onmouseout="switchStyle('admin-content-group', 'adminGroup');">Content</div>
