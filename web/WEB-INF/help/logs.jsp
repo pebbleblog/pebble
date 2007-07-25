@@ -19,7 +19,7 @@
       Pebble is distributed with the following logging implementations.
       <ul>
         <li><code>net.sourceforge.pebble.logging.CombinedLogFormatLogger</code> : A logger that writes log files in the the <a href="http://httpd.apache.org/docs/logs.html#combined">Combined Log Format</a>. This is the default logger.</li>
-        <li><code>net.sourceforge.pebble.logging.NullLogger</code> : A no-op logger that can be used when Pebble logging isn't required, such as when something like Apache provides the necessary logging already.</li>
+        <li><code>net.sourceforge.pebble.logging.NullLogger</code> : A no-op logger that can be used when Pebble logging isn't required, such as when something like Apache provides the necessary logging already. <b>Pebble will not capture any statistics when this logger is used.</b></li>
       </ul>
       To configure which logger is used by your blog, modify the "Logger" plugin on the <a href="viewPlugins.secureaction#logger">Plugins</a> page.
     </p>

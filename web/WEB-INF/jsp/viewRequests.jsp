@@ -11,7 +11,13 @@
     <table width="99%" cellspacing="0" cellpadding="4">
       <thead>
         <tr>
-          <th>Resource</th>
+          <th>
+            Resource
+            <c:choose>
+              <c:when test="${param.sort eq 'name'}">(<a href="viewRequests.secureaction?year=${param.year}&month=${param.month}&day=${param.day}">sort by count</a>)</c:when>
+              <c:otherwise>(<a href="viewRequests.secureaction?year=${param.year}&month=${param.month}&day=${param.day}&sort=name">sort by name</a>)</c:otherwise>
+            </c:choose>
+          </th>
           <th align="right">Count</th>
         </tr>
       </thead>
@@ -26,7 +32,7 @@
           </c:otherwise>
         </c:choose>
           <td>
-            <a href="<c:out value="${aRequest.url}"/>" title="<c:out value="${aRequest.url}"/>"><c:out value="${aRequest.truncatedName}"/></a>
+            <a href="<c:out value=".${aRequest.url}"/>" title="<c:out value="${aRequest.url}"/>"><c:out value="${aRequest.truncatedName}"/></a>
           </td>
           <td align="right">
             <fmt:formatNumber value="${aRequest.count}"/>

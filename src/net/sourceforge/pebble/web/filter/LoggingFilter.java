@@ -83,15 +83,18 @@ public class LoggingFilter implements Filter {
       // this is the list of URIs that get logged
       if (internalUri.startsWith("/feed.action") ||
           internalUri.startsWith("/responseFeed.action") ||
+          internalUri.startsWith("/viewCategories.action") ||
           internalUri.startsWith("/viewCategory.action") ||
           internalUri.startsWith("/viewTags.action") ||
           internalUri.startsWith("/viewTag.action") ||
           internalUri.startsWith("/search.action") ||
+          internalUri.startsWith("/aboutAuthor.action") ||
           internalUri.startsWith("/viewBlogEntry.action") ||
           internalUri.startsWith("/viewStaticPage.action") ||
           internalUri.startsWith("/viewDay.action") ||
           internalUri.startsWith("/viewMonth.action") ||
           internalUri.startsWith("/file.action?type=" + FileMetaData.BLOG_FILE) ||
+          internalUri.startsWith("/viewBlogEntriesByPage.action") ||
           (internalUri.startsWith("/viewHomePage.action") && blog instanceof Blog)) {
 
         blog.log(httpRequest);

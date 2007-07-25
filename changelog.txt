@@ -6,6 +6,7 @@ Added a "friendly" URL for the aboutAuthor action (/authors/<username/).
 About author page now shows the author's profile and their recent blog entries.
 Added an RSS/Atom feed for individual authors (/authors/<username>/rss.xml|atom.xml).
 Added e-mail subscription functionality, where readers can subscribe to new blog entries via e-mail.
+Added a statistics view, showing a breakdown of the total requests and unique IPs for newsfeeds, page views and file downloads.
 
 Version 2.2 - 21st June 2007
 ----------------------------

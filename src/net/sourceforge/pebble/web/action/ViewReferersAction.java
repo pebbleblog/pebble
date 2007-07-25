@@ -32,7 +32,7 @@
 package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
-import net.sourceforge.pebble.comparator.CountedUrlComparator;
+import net.sourceforge.pebble.comparator.CountedUrlByCountComparator;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.logging.CountedUrl;
 import net.sourceforge.pebble.logging.Log;
@@ -103,7 +103,7 @@ public class ViewReferersAction extends SecureAction {
     if (filter == null || filter.equalsIgnoreCase("true")) {
       referers = blog.getRefererFilterManager().filter(referers);
     }
-    Collections.sort(referers, new CountedUrlComparator());
+    Collections.sort(referers, new CountedUrlByCountComparator());
 
     // now calculate the total number of referers, after filtering spam
     int totalReferers = 0;

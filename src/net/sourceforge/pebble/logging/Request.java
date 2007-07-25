@@ -34,7 +34,12 @@ package net.sourceforge.pebble.logging;
 import net.sourceforge.pebble.api.permalink.PermalinkProvider;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.domain.BlogEntry;
+import net.sourceforge.pebble.domain.Month;
+import net.sourceforge.pebble.domain.Day;
 import net.sourceforge.pebble.permalink.DefaultPermalinkProvider;
+
+import java.text.SimpleDateFormat;
+import java.util.regex.Pattern;
 
 
 /**
@@ -44,6 +49,11 @@ import net.sourceforge.pebble.permalink.DefaultPermalinkProvider;
  * @author    Simon Brown
  */
 public class Request extends CountedUrl {
+
+  private static final Pattern RESPONSES_FEED_REGEX = Pattern.compile("\\/responses\\/.*.xml");
+  private static final Pattern CATEGORY_FEED_REGEX = Pattern.compile("\\/categories\\/.*\\/.*.xml");
+  private static final Pattern TAG_FEED_REGEX = Pattern.compile("\\/tags\\/.*\\/.*.xml");
+  private static final Pattern AUTHOR_FEED_REGEX = Pattern.compile("\\/authors\\/.*\\/.*.xml");
 
   /**
    * Creates a new instance representing the specified url.
@@ -69,35 +79,129 @@ public class Request extends CountedUrl {
 
     if (url == null || url.length() == 0) {
       setName("None");
-    } else if (url.indexOf("rss.xml") > -1) {
-      setName("Feed : RSS 2.0");
-    } else if (url.indexOf("feed.xml") > -1 || url.indexOf("feed.action") > -1) {
-      setName("Feed : RSS 2.0");
-    } else if (url.indexOf("rssWithCommentsAndTrackBacks.xml") > -1) {
-      setName("Feed : RSS 2.0 (with comments and TrackBacks)");
-    } else if (url.indexOf("rdf.xml") > -1) {
-      setName("Feed : RDF 1.0");
-    } else if (url.indexOf("atom.xml") > -1) {
-      setName("Feed : Atom 1.0");
+    } else if (RESPONSES_FEED_REGEX.matcher(url).matches()) {
+      setName("Feed : Responses");
+      setNewsFeed(true);
+    } else if (CATEGORY_FEED_REGEX.matcher(url).matches()) {
+      String categoryName = url.substring("/categories/".length(), url.lastIndexOf("/"));
+      setName("Feed : category=" + categoryName);
+      setNewsFeed(true);
+    } else if (TAG_FEED_REGEX.matcher(url).matches()) {
+      String tagName = url.substring("/tags/".length(), url.lastIndexOf("/"));
+      setName("Feed : tag=" + tagName);
+      setNewsFeed(true);
+    } else if (AUTHOR_FEED_REGEX.matcher(url).matches()) {
+      String authorName = url.substring("/authors/".length(), url.lastIndexOf("/"));
+      setName("Feed : author=" + authorName);
+      setNewsFeed(true);
+    } else if (url.indexOf("rss.xml") > -1 ||
+        url.indexOf("feed.xml") > -1 ||
+        url.indexOf("feed.action") > -1 ||
+        url.indexOf("rdf.xml") > -1 ||
+        url.indexOf("atom.xml") > -1
+        ) {
+      setName("Feed : Blog Entries");
+      setNewsFeed(true);
     } else if (blog != null) {
-      if (url.equals(blog.getContext())) {
+      if (url.equals("/")) {
         setName("Home");
+        setPageView(true);
+      } else if (url.equals("/categories/") || url.equals("/categories")) {
+        setName("Categories");
+        setPageView(true);
+      } else if (url.equals("/tags/") || url.equals("/tags")) {
+        setName("Tags");
+        setPageView(true);
+      } else if (url.equals("/files") || (url.startsWith("/files/") && url.endsWith("/"))) {
+        setName("Files");
+        setPageView(true);
+      } else if (url.startsWith("/categories/")) {
+        String categoryName = url.substring("/categories/".length());
+        if (categoryName.endsWith("/")) {
+          categoryName = categoryName.substring(0, categoryName.length()-1);
+        }
+        setName("Category : " + categoryName);
+        setPageView(true);
+      } else if (url.startsWith("/tags/")) {
+        String tagName = url.substring("/tags/".length());
+        if (tagName.endsWith("/")) {
+          tagName = tagName.substring(0, tagName.length()-1);
+        }
+        setName("Tag : " + tagName);
+        setPageView(true);
+      } else if (url.startsWith("/authors/")) {
+        String authorName = url.substring("/authors/".length());
+        if (authorName.endsWith("/")) {
+          authorName = authorName.substring(0, authorName.length()-1);
+        }
+        setName("Author : " + authorName);
+        setPageView(true);
+      } else if (url.startsWith("/files/")) {
+        String fileName = url.substring("/files/".length());
+        if (fileName.endsWith("/")) {
+          fileName = fileName.substring(0, fileName.length()-1);
+        }
+        setName("File : " + fileName);
+        setFileDownload(true);
+      } else if (url.startsWith("/pages/")) {
+        String pageName = url.substring("/pages/".length());
+        setName("Static Page : " + pageName);
+        setPageView(true);
+      } else if (url.startsWith("/search.action")) {
+        setName("Search");
+        setPageView(true);
+      } else if (url.startsWith("/blogentries/")) {
+        String pageNumber = url.substring("/blogentries/".length());
+        pageNumber = pageNumber.substring(0, pageNumber.indexOf("."));
+        setName("Blog Entries : Page " + pageNumber);
+        setPageView(true);
       } else {
         PermalinkProvider permalinkProvider = blog.getPermalinkProvider();
         DefaultPermalinkProvider defaultPermalinkProvider = new DefaultPermalinkProvider();
         defaultPermalinkProvider.setBlog(permalinkProvider.getBlog());
-        String uri = url.substring(blog.getContext().length()-1);
 
-        if (permalinkProvider.isBlogEntryPermalink(uri)) {
-          BlogEntry blogEntry = permalinkProvider.getBlogEntry(uri);
+        if (permalinkProvider.isBlogEntryPermalink(url)) {
+          BlogEntry blogEntry = permalinkProvider.getBlogEntry(url);
           if (blogEntry != null) {
             setName("Blog Entry : " + blogEntry.getTitle());
+            setPageView(true);
           }
-        } else if (defaultPermalinkProvider.isBlogEntryPermalink(uri)) {
-          BlogEntry blogEntry = defaultPermalinkProvider.getBlogEntry(uri);
+        } else if (defaultPermalinkProvider.isBlogEntryPermalink(url)) {
+          BlogEntry blogEntry = defaultPermalinkProvider.getBlogEntry(url);
           if (blogEntry != null) {
             setName("Blog Entry : " + blogEntry.getTitle());
+            setPageView(true);
           }
+        } else if (permalinkProvider.isMonthPermalink(url)) {
+          Month month = permalinkProvider.getMonth(url);
+          SimpleDateFormat formatter = new SimpleDateFormat("MMMM yyyy");
+          if (month != null) {
+            setName("Month : " + formatter.format(month.getDate()));
+            setPageView(true);
+          }
+        } else if (defaultPermalinkProvider.isMonthPermalink(url)) {
+          Month month = defaultPermalinkProvider.getMonth(url);
+          SimpleDateFormat formatter = new SimpleDateFormat("MMMM yyyy");
+          if (month != null) {
+            setName("Month : " + formatter.format(month.getDate()));
+            setPageView(true);
+          }
+        } else if (permalinkProvider.isDayPermalink(url)) {
+          Day day = permalinkProvider.getDay(url);
+          SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM yyyy");
+          if (day != null) {
+            setName("Day : " + formatter.format(day.getDate()));
+            setPageView(true);
+          }
+        } else if (defaultPermalinkProvider.isDayPermalink(url)) {
+          Day day = defaultPermalinkProvider.getDay(url);
+          SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM yyyy");
+          if (day != null) {
+            setName("Day : " + formatter.format(day.getDate()));
+            setPageView(true);
+          }
+        } else {
+          setPageView(true);
         }
       }
     }

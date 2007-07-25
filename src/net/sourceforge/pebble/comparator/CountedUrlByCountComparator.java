@@ -41,26 +41,23 @@ import java.util.Comparator;
  *
  * @author    Simon Brown
  */
-public class CountedUrlComparator implements Comparator {
+public class CountedUrlByCountComparator implements Comparator<CountedUrl> {
 
   /**
    * Compares two objects.
    *
-   * @param o1  object 1
-   * @param o2  object 2
+   * @param c1  object 1
+   * @param c2  object 2
    * @return  -n, 0 or +n if the count of the second visited URL is less than,
    *          the same as or greater than the first, respectively. However, if
    *          the counts are the same, then -n, 0 or +n is returned if the name
    *          of the first is less than, the same as or greater than the second
    */
-  public int compare(Object o1, Object o2) {
-    CountedUrl r1 = (CountedUrl)o1;
-    CountedUrl r2 = (CountedUrl)o2;
-
-    if (r1.getCount() != r2.getCount()) {
-      return r2.getCount() - r1.getCount();
+  public int compare(CountedUrl c1, CountedUrl c2) {
+    if (c1.getCount() != c2.getCount()) {
+      return c2.getCount() - c1.getCount();
     } else {
-      return r1.getName().compareTo(r2.getName());
+      return c1.getName().compareTo(c2.getName());
     }
   }
 

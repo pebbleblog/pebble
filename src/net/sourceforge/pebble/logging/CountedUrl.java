@@ -33,6 +33,10 @@ package net.sourceforge.pebble.logging;
 
 import net.sourceforge.pebble.domain.Blog;
 
+import java.util.List;
+import java.util.LinkedList;
+import java.util.Collections;
+
 /**
  * Represents a visited or referer URL along with a count of how many times
  * that URL has been accessed/referred from.
@@ -50,8 +54,12 @@ public abstract class CountedUrl {
   /** the displayable name for the URL */
   private String name;
 
-  /** the number of times that the url has been accessed/referred from */
-  private int count;
+  /** the collection of log entries that relate to this url */
+  private List<LogEntry> logEntries = new LinkedList<LogEntry>();
+
+  private boolean newsFeed = false;
+  private boolean pageView = false;
+  private boolean fileDownload = false;
 
   protected Blog blog;
 
@@ -62,7 +70,6 @@ public abstract class CountedUrl {
    */
   public CountedUrl(String url) {
     setUrl(url);
-    this.count = 1;
   }
 
   /**
@@ -73,7 +80,6 @@ public abstract class CountedUrl {
   public CountedUrl(String url, Blog blog) {
     this.blog = blog;
     setUrl(url);
-    this.count = 1;
   }
 
   /**
@@ -129,19 +135,30 @@ public abstract class CountedUrl {
   }
 
   /**
+   * Adds a LogEntry.
+   *
+   * @param logEntry    a LogEntry instance
+   */
+  public void addLogEntry(LogEntry logEntry) {
+    logEntries.add(logEntry);
+  }
+
+  /**
+   * Gets the list of log entries associated with this URL
+   *
+   * @return  a List of LogEntry instances
+   */
+  public List<LogEntry> getLogEntries() {
+    return new LinkedList<LogEntry>(logEntries);
+  }
+
+  /**
    * Gets the count associated with this url.
    *
    * @return    the count as an int
    */
   public int getCount() {
-    return count;
-  }
-
-  /**
-   * Adds one to the count.
-   */
-  public synchronized void incrementCount() {
-    count++;
+    return logEntries.size();
   }
 
   /**
@@ -173,4 +190,28 @@ public abstract class CountedUrl {
     }
   }
 
+  public boolean isNewsFeed() {
+    return newsFeed;
+  }
+
+  public void setNewsFeed(boolean newsFeed) {
+    this.newsFeed = newsFeed;
+  }
+
+  public boolean isPageView() {
+    return pageView;
+  }
+
+  public void setPageView(boolean pageView) {
+    this.pageView = pageView;
+  }
+
+  public boolean isFileDownload() {
+    return fileDownload;
+  }
+
+  public void setFileDownload(boolean fileDownload) {
+    this.fileDownload = fileDownload;
+  }
+  
 }

@@ -32,7 +32,8 @@
 package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
-import net.sourceforge.pebble.comparator.CountedUrlComparator;
+import net.sourceforge.pebble.comparator.CountedUrlByCountComparator;
+import net.sourceforge.pebble.comparator.CountedUrlByNameComparator;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.logging.CountedUrl;
 import net.sourceforge.pebble.logging.Log;
@@ -64,6 +65,10 @@ import java.util.*;
     String year = request.getParameter("year");
     String month = request.getParameter("month");
     String day = request.getParameter("day");
+    String sort = request.getParameter("sort");
+    if (sort == null || sort.trim().equals("")) {
+      sort = "rank";
+    }
 
     Calendar cal = blog.getCalendar();
     Log log = null;
@@ -96,7 +101,12 @@ import java.util.*;
     }
 
     List requests = new ArrayList(log.getRequests());
-    Collections.sort(requests, new CountedUrlComparator());
+
+    if (sort.equals("name")) {
+      Collections.sort(requests, new CountedUrlByNameComparator());
+    } else {
+      Collections.sort(requests, new CountedUrlByCountComparator());
+    }
 
     // now calculate the total number of requests, after filtering spam
     int totalRequests = 0;

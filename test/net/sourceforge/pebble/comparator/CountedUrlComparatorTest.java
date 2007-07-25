@@ -34,16 +34,17 @@ package net.sourceforge.pebble.comparator;
 import junit.framework.TestCase;
 import net.sourceforge.pebble.logging.CountedUrl;
 import net.sourceforge.pebble.logging.Referer;
+import net.sourceforge.pebble.logging.LogEntry;
 
 /**
- * Tests for the CountedUrlComparator class.
+ * Tests for the CountedUrlByCountComparator class.
  *
  * @author    Simon Brown
  */
 public class CountedUrlComparatorTest extends TestCase {
 
   public void testCompare() {
-    CountedUrlComparator comp = new CountedUrlComparator();
+    CountedUrlByCountComparator comp = new CountedUrlByCountComparator();
     CountedUrl c1 = new Referer("http://www.google.com");
     CountedUrl c2 = new Referer("http://www.yahoo.com");
 
@@ -51,12 +52,12 @@ public class CountedUrlComparatorTest extends TestCase {
     assertTrue(comp.compare(c1, c2) < 0);
     assertTrue(comp.compare(c2, c1) > 0);
 
-    c1.incrementCount();
+    c1.addLogEntry(new LogEntry());
     assertTrue(comp.compare(c1, c2) < 0);
     assertTrue(comp.compare(c2, c1) > 0);
 
-    c2.incrementCount();
-    c2.incrementCount();
+    c2.addLogEntry(new LogEntry());
+    c2.addLogEntry(new LogEntry());
     assertTrue(comp.compare(c1, c2) > 0);
     assertTrue(comp.compare(c2, c1) < 0);
   }

@@ -396,8 +396,9 @@ thead {
   background: #6e7d8e;
   color: white;
 }
-th {
+th, th a:link, th a:visited {
   font-weight: normal;
+  color: white;
 }
 .authenticated {
   background: transparent url( 'images/authenticated.gif' ) no-repeat center left;

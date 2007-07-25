@@ -44,6 +44,7 @@ public class RefererTest extends TestCase {
 
   protected void setUp() throws Exception {
     url = new Referer("http://www.somedomain.com");
+    url.addLogEntry(new LogEntry());
   }
 
   public void testConstruction() {
@@ -54,7 +55,7 @@ public class RefererTest extends TestCase {
 
   public void testIncrementingCount() {
     assertEquals(1, url.getCount());
-    url.incrementCount();
+    url.addLogEntry(new LogEntry());
     assertEquals(2, url.getCount());
   }
 

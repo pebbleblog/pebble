@@ -84,18 +84,18 @@ public class Log {
       Referer referer = new Referer(logEntry.getReferer());
       if (refererMap.containsKey(referer.getName())) {
         referer = (Referer)refererMap.get(referer.getName());
-        referer.incrementCount();
       } else {
         refererMap.put(referer.getName(), referer);
       }
+      referer.addLogEntry(logEntry);
 
       Request request = new Request(logEntry.getRequestUri(), blog);
       if (requestMap.containsKey(request.getName())) {
         request = (Request)requestMap.get(request.getName());
-        request.incrementCount();
       } else {
         requestMap.put(request.getName(), request);
       }
+      request.addLogEntry(logEntry);
     }
 
     this.referers = refererMap.values();

@@ -44,7 +44,8 @@
           <td align="right">
             <a href="viewLog.secureaction?year=${year}&month=${month}&day=${status.count}" title="See log file for day">Log</a> |
             <a href="viewReferers.secureaction?year=${year}&month=${month}&day=${status.count}" title="See referers for day">Referers</a> |
-            <a href="viewRequests.secureaction?year=${year}&month=${month}&day=${status.count}" title="See requests for day">Requests</a>
+            <a href="viewRequests.secureaction?year=${year}&month=${month}&day=${status.count}" title="See requests for day">Requests</a> |
+            <a href="viewStatistics.secureaction?year=${year}&month=${month}&day=${status.count}" title="See statistics for day">Statistics</a>
           </td>
           <td align="right"><fmt:formatNumber value="${logSummaryForDay.totalRequests}"/></td>
           </td>

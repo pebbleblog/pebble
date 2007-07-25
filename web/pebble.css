@@ -2,7 +2,7 @@
   background: #F0F0F0;
   padding: 2px;
 }
-.adminGroupSelected {
+.adminGroup:hover {
   background: #6e7d8e;
   padding: 2px;
   color: white;

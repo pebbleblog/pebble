@@ -50,6 +50,7 @@ public class CombinedLogFormatLogger extends AbstractLogger {
 
   private static final String REFERER_HEADER = "Referer";
   private static final String USER_AGENT_HEADER = "User-Agent";
+  private static final int FLUSH_SIZE = 50;
 
   /** the format of the log filenames */
   private SimpleDateFormat filenameFormat = new SimpleDateFormat("'blog-'yyyyMMdd'.log'");
@@ -77,7 +78,11 @@ public class CombinedLogFormatLogger extends AbstractLogger {
     StringBuffer buf = new StringBuffer();
     buf.append(request.getMethod());
     buf.append(" ");
-    buf.append(request.getRequestURI());
+
+    // make the request URI relative to the *blog*, not the webapp context
+    String requestUri = request.getRequestURI();
+    requestUri = requestUri.substring(request.getContextPath().length());
+    buf.append(requestUri);
     if (request.getQueryString() != null) {
       buf.append("?");
       buf.append(request.getQueryString());
@@ -87,7 +92,7 @@ public class CombinedLogFormatLogger extends AbstractLogger {
     entry.setAgent(request.getHeader(USER_AGENT_HEADER));
     entries.add(entry);
 
-    if (entries.size() > 100) {
+    if (entries.size() > FLUSH_SIZE) {
       flush();
     }
   }
