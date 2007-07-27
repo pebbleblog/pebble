@@ -92,7 +92,7 @@ public class EmailNotificationListener extends BlogEntryListenerSupport {
 
     String subject = "[Blog entry-" + blogEntry.getState().getName() + "] " + blogEntry.getTitle();
 
-    String message = "Blog entry posted by " + blogEntry.getAuthor() + " on " + sdf.format(blogEntry.getDate());
+    String message = "Blog entry posted by " + (blogEntry.getUser() != null ? blogEntry.getUser().getName() : blogEntry.getAuthor()) + " on " + sdf.format(blogEntry.getDate());
     message += "\n<br>";
     message += blogEntry.getBody();
     message += "\n<br>";

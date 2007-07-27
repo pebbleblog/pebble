@@ -156,58 +156,44 @@ public class Request extends CountedUrl {
         setName("Blog Entries : Page " + pageNumber);
         setPageView(true);
       } else {
-        PermalinkProvider permalinkProvider = blog.getPermalinkProvider();
-        DefaultPermalinkProvider defaultPermalinkProvider = new DefaultPermalinkProvider();
-        defaultPermalinkProvider.setBlog(permalinkProvider.getBlog());
+        matchOnPermalinkProvider(url, blog.getPermalinkProvider());
 
-        if (permalinkProvider.isBlogEntryPermalink(url)) {
-          BlogEntry blogEntry = permalinkProvider.getBlogEntry(url);
-          if (blogEntry != null) {
-            setName("Blog Entry : " + blogEntry.getTitle());
-            setPageView(true);
-          }
-        } else if (defaultPermalinkProvider.isBlogEntryPermalink(url)) {
-          BlogEntry blogEntry = defaultPermalinkProvider.getBlogEntry(url);
-          if (blogEntry != null) {
-            setName("Blog Entry : " + blogEntry.getTitle());
-            setPageView(true);
-          }
-        } else if (permalinkProvider.isMonthPermalink(url)) {
-          Month month = permalinkProvider.getMonth(url);
-          SimpleDateFormat formatter = new SimpleDateFormat("MMMM yyyy");
-          if (month != null) {
-            setName("Month : " + formatter.format(month.getDate()));
-            setPageView(true);
-          }
-        } else if (defaultPermalinkProvider.isMonthPermalink(url)) {
-          Month month = defaultPermalinkProvider.getMonth(url);
-          SimpleDateFormat formatter = new SimpleDateFormat("MMMM yyyy");
-          if (month != null) {
-            setName("Month : " + formatter.format(month.getDate()));
-            setPageView(true);
-          }
-        } else if (permalinkProvider.isDayPermalink(url)) {
-          Day day = permalinkProvider.getDay(url);
-          SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM yyyy");
-          if (day != null) {
-            setName("Day : " + formatter.format(day.getDate()));
-            setPageView(true);
-          }
-        } else if (defaultPermalinkProvider.isDayPermalink(url)) {
-          Day day = defaultPermalinkProvider.getDay(url);
-          SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM yyyy");
-          if (day != null) {
-            setName("Day : " + formatter.format(day.getDate()));
-            setPageView(true);
-          }
-        } else {
-          setPageView(true);
+        if (getName() == null) {
+          // try with the default permalink provider
+          DefaultPermalinkProvider defaultPermalinkProvider = new DefaultPermalinkProvider();
+          defaultPermalinkProvider.setBlog(blog);
+          matchOnPermalinkProvider(url, defaultPermalinkProvider);
         }
       }
     }
 
     if (getName() == null) {
       setName(url);
+      setPageView(true);
+    }
+  }
+
+  private void matchOnPermalinkProvider(String url, PermalinkProvider permalinkProvider) {
+    if (permalinkProvider.isBlogEntryPermalink(url)) {
+      BlogEntry blogEntry = permalinkProvider.getBlogEntry(url);
+      if (blogEntry != null) {
+        setName("Blog Entry : " + blogEntry.getTitle());
+        setPageView(true);
+      }
+    } else if (permalinkProvider.isMonthPermalink(url)) {
+      Month month = permalinkProvider.getMonth(url);
+      SimpleDateFormat formatter = new SimpleDateFormat("MMMM yyyy");
+      if (month != null) {
+        setName("Month : " + formatter.format(month.getDate()));
+        setPageView(true);
+      }
+    } else if (permalinkProvider.isDayPermalink(url)) {
+      Day day = permalinkProvider.getDay(url);
+      SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM yyyy");
+      if (day != null) {
+        setName("Day : " + formatter.format(day.getDate()));
+        setPageView(true);
+      }
     }
   }
 

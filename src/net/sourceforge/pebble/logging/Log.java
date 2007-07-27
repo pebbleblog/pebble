@@ -46,7 +46,7 @@ public class Log {
   protected Blog blog;
 
   /** the collection of log entries */
-  private Collection logEntries;
+  private Collection<LogEntry> logEntries;
 
   /** the collection of referers */
   private Collection referers;
@@ -60,12 +60,12 @@ public class Log {
    * @param blog          a Blog instance
    * @param entries       a Collection of LogEntry objects
    */
-  Log(Blog blog, Collection entries) {
+  Log(Blog blog, Collection<LogEntry> entries) {
     this.blog = blog;
     this.logEntries = entries;
 
     if (logEntries == null) {
-      logEntries = new ArrayList();
+      logEntries = new ArrayList<LogEntry>();
     }
 
     init();
@@ -107,7 +107,7 @@ public class Log {
    *
    * @return    a collection of LogEntry instances
    */
-  public Collection getLogEntries() {
+  public Collection<LogEntry> getLogEntries() {
     return Collections.unmodifiableCollection(logEntries);
   }
 
@@ -152,7 +152,7 @@ public class Log {
    *
    * @param entries   a Collection of LogEntry instances
    */
-  void addLogEntries(Collection entries) {
+  void addLogEntries(Collection<LogEntry> entries) {
     logEntries.addAll(entries);
   }
 

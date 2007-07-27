@@ -75,6 +75,7 @@
       <a href="viewLogSummary.secureaction" title="View log summary for this month">Log summary</a> |
       <a href="viewStatistics.secureaction" title="View statistics for today">Statistics</a>
       <br />
+      <a href="viewUserAgents.secureaction" title="View user agents for today">User Agents</a> |
       <a href="viewRefererFilters.secureaction" title="View referer filters">Referer filters</a>
       </div>
       <script type="text/javascript">hideComponent('admin-logs');</script>

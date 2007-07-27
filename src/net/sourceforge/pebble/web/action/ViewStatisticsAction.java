@@ -42,14 +42,17 @@ import net.sourceforge.pebble.web.view.impl.StatisticsView;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Gets the statistics for the specified time period.
  *
  * @author    Simon Brown
- */public class ViewStatisticsAction extends SecureAction {
+ */
+public class ViewStatisticsAction extends AbstractLogAction {
 
   /**
    * Peforms the processing associated with this action.
@@ -60,32 +63,7 @@ import java.util.*;
    */
   public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
-
-    String year = request.getParameter("year");
-    String month = request.getParameter("month");
-    String day = request.getParameter("day");
-
-    Calendar cal = blog.getCalendar();
-    Log log = null;
-    String logPeriod = "";
-
-    if (year != null && year.length() > 0 &&
-        month != null && month.length() > 0 &&
-        day != null && day.length() > 0) {
-      cal.set(Calendar.YEAR, Integer.parseInt(year));
-      cal.set(Calendar.MONTH, Integer.parseInt(month)-1);
-      cal.set(Calendar.DAY_OF_MONTH, Integer.parseInt(day));
-      log = blog.getLogger().getLog(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH)+1, cal.get(Calendar.DAY_OF_MONTH));
-      SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy", blog.getLocale());
-      dateFormat.setTimeZone(blog.getTimeZone());
-      logPeriod = dateFormat.format(cal.getTime());
-    } else {
-      // get the log for today
-      log = blog.getLogger().getLog();
-      SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy", blog.getLocale());
-      dateFormat.setTimeZone(blog.getTimeZone());
-      logPeriod = dateFormat.format(cal.getTime());
-    }
+    Log log = getLog(request, response);
 
     Collection<LogEntry> logEntries = log.getLogEntries();
     Collection<Request> requests = log.getRequests();
@@ -120,7 +98,37 @@ import java.util.*;
       }
     }
 
-    getModel().put("logPeriod", logPeriod);
+    // work out requests per hour
+    int[] requestsPerHour = new int[24];
+    int[] requestsForNewsFeedsPerHour = new int[24];
+    Set<String>[] uniqueIpsPerHourAsSet = new Set[24];
+    for (int hour = 0; hour < 24; hour++) {
+      requestsPerHour[hour] = 0;
+      requestsForNewsFeedsPerHour[hour] = 0;
+      uniqueIpsPerHourAsSet[hour] = new HashSet<String>();
+    }                                       
+    for (LogEntry logEntry : log.getLogEntries()) {
+      Calendar logTime = blog.getCalendar();
+      logTime.setTime(logEntry.getDate());
+      int hour = logTime.get(Calendar.HOUR_OF_DAY);
+      requestsPerHour[hour] = requestsPerHour[hour]+1;
+      uniqueIpsPerHourAsSet[hour].add(logEntry.getHost());
+
+      if (logEntry.getRequestUri() != null &&
+          logEntry.getRequestUri().indexOf("rss.xml") > -1 ||
+          logEntry.getRequestUri().indexOf("feed.xml") > -1 ||
+          logEntry.getRequestUri().indexOf("feed.action") > -1 ||
+          logEntry.getRequestUri().indexOf("rdf.xml") > -1 ||
+          logEntry.getRequestUri().indexOf("atom.xml") > -1) {
+        requestsForNewsFeedsPerHour[hour] = requestsForNewsFeedsPerHour[hour]+1;
+      }
+    }
+
+    int[] uniqueIpsPerHour = new int[24];
+    for (int hour = 0; hour < 24; hour++) {
+      uniqueIpsPerHour[hour] = uniqueIpsPerHourAsSet[hour].size();
+    }
+
     getModel().put("totalRequests", log.getTotalLogEntries());
     getModel().put("uniqueIps", uniqueIps.size());
     getModel().put("totalNewsfeedRequests", totalNewsFeedRequests);
@@ -129,18 +137,11 @@ import java.util.*;
     getModel().put("uniqueIpsForPageViews", uniqueIpsForPageViews.size());
     getModel().put("totalFileDownloads", totalFileDownloads);
     getModel().put("uniqueIpsForFileDownloads", uniqueIpsForFileDownloads.size());
+    getModel().put("requestsPerHour", requestsPerHour);
+    getModel().put("requestsForNewsFeedsPerHour", requestsForNewsFeedsPerHour);
+    getModel().put("uniqueIpsPerHour", uniqueIpsPerHour);
 
     return new StatisticsView();
-  }
-
-  /**
-   * Gets a list of all roles that are allowed to access this action.
-   *
-   * @return  an array of Strings representing role names
-   * @param request
-   */
-  public String[] getRoles(HttpServletRequest request) {
-    return new String[]{Constants.BLOG_ADMIN_ROLE, Constants.BLOG_OWNER_ROLE, Constants.BLOG_PUBLISHER_ROLE, Constants.BLOG_CONTRIBUTOR_ROLE};
   }
 
 }

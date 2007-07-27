@@ -79,7 +79,7 @@ public class EmailSubscriptionListener extends BlogEntryListenerSupport {
 
     String subject = "[Blog entry] " + blogEntry.getTitle();
 
-    String message = "Blog entry posted by " + blogEntry.getAuthor() + " on " + sdf.format(blogEntry.getDate());
+    String message = "Blog entry posted by " + (blogEntry.getUser() != null ? blogEntry.getUser().getName() : blogEntry.getAuthor()) + " on " + sdf.format(blogEntry.getDate());
     message += "\n<br>";
     if (blogEntry.getExcerpt() != null && blogEntry.getExcerpt().trim().length() > 0) {
       message += blogEntry.getExcerpt();

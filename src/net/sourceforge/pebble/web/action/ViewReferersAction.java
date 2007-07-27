@@ -42,8 +42,10 @@ import net.sourceforge.pebble.web.view.impl.ReferersView;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Gets the referers for the specified time period. This differs from the
@@ -52,7 +54,7 @@ import java.util.*;
  *
  * @author    Simon Brown
  */
-public class ViewReferersAction extends SecureAction {
+public class ViewReferersAction extends AbstractLogAction {
 
   /**
    * Peforms the processing associated with this action.
@@ -63,42 +65,9 @@ public class ViewReferersAction extends SecureAction {
    */
   public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
+    Log log = getLog(request, response);
 
-    String year = request.getParameter("year");
-    String month = request.getParameter("month");
-    String day = request.getParameter("day");
     String filter = request.getParameter("filter");
-
-    Calendar cal = blog.getCalendar();
-    Log log = null;
-    String logPeriod = "";
-
-    if (year != null && year.length() > 0 &&
-        month != null && month.length() > 0 &&
-        day != null && day.length() > 0) {
-      cal.set(Calendar.YEAR, Integer.parseInt(year));
-      cal.set(Calendar.MONTH, Integer.parseInt(month)-1);
-      cal.set(Calendar.DAY_OF_MONTH, Integer.parseInt(day));
-      log = blog.getLogger().getLog(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH)+1, cal.get(Calendar.DAY_OF_MONTH));
-      SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy", blog.getLocale());
-      dateFormat.setTimeZone(blog.getTimeZone());
-      logPeriod = dateFormat.format(cal.getTime());
-//    } else if (year != null && year.length() > 0 &&
-//               month != null && month.length() > 0) {
-//      cal.set(Calendar.YEAR, Integer.parseInt(year));
-//      cal.set(Calendar.MONTH, Integer.parseInt(month)-1);
-//      log = blog.getLogger().getLog(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH)+1);
-//      SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM yyyy", blog.getLocale());
-//      dateFormat.setTimeZone(blog.getTimeZone());
-//      logPeriod = dateFormat.format(cal.getTime());
-    } else {
-      // get the log for today
-      log = blog.getLogger().getLog();
-      SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy", blog.getLocale());
-      dateFormat.setTimeZone(blog.getTimeZone());
-      logPeriod = dateFormat.format(cal.getTime());
-    }
-
     List referers = new ArrayList(log.getReferers());
     if (filter == null || filter.equalsIgnoreCase("true")) {
       referers = blog.getRefererFilterManager().filter(referers);
@@ -114,21 +83,10 @@ public class ViewReferersAction extends SecureAction {
       totalReferers += url.getCount();
     }
 
-    getModel().put("logPeriod", logPeriod);
     getModel().put("referers", referers);
     getModel().put("totalReferers", new Integer(totalReferers));
 
     return new ReferersView();
-  }
-
-  /**
-   * Gets a list of all roles that are allowed to access this action.
-   *
-   * @return  an array of Strings representing role names
-   * @param request
-   */
-  public String[] getRoles(HttpServletRequest request) {
-    return new String[]{Constants.BLOG_ADMIN_ROLE, Constants.BLOG_OWNER_ROLE, Constants.BLOG_PUBLISHER_ROLE, Constants.BLOG_CONTRIBUTOR_ROLE};
   }
 
 }

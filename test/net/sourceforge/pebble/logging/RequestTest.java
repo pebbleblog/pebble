@@ -32,6 +32,7 @@
 package net.sourceforge.pebble.logging;
 
 import net.sourceforge.pebble.PebbleContext;
+import net.sourceforge.pebble.permalink.TitlePermalinkProvider;
 import net.sourceforge.pebble.domain.BlogEntry;
 import net.sourceforge.pebble.domain.BlogService;
 import net.sourceforge.pebble.domain.SingleBlogTestCase;
@@ -152,6 +153,17 @@ public class RequestTest extends SingleBlogTestCase {
     BlogService service = new BlogService();
     service.putBlogEntry(be);
     String permalink = "/" + be.getPermalink().substring(PebbleContext.getInstance().getConfiguration().getUrl().length());
+    url = new Request(permalink, blog);
+    assertEquals("Blog Entry : Test blog entry", url.getName());
+  }
+
+  public void testFriendlyNamesForBlogEntriesUsingDefaultPermalinkProvider() throws Exception {
+    BlogEntry be = new BlogEntry(blog);
+    be.setTitle("Test blog entry");
+    BlogService service = new BlogService();
+    service.putBlogEntry(be);
+    String permalink = "/" + be.getPermalink().substring(PebbleContext.getInstance().getConfiguration().getUrl().length());
+    blog.setPermalinkProvider(new TitlePermalinkProvider());
     url = new Request(permalink, blog);
     assertEquals("Blog Entry : Test blog entry", url.getName());
   }

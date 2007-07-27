@@ -47,7 +47,7 @@ import java.util.Calendar;
  *
  * @author    Simon Brown
  */
-public class ViewLogAction extends SecureAction {
+public class ViewLogAction extends AbstractLogAction {
 
   /**
    * Peforms the processing associated with this action.
@@ -77,14 +77,6 @@ public class ViewLogAction extends SecureAction {
       SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy", blog.getLocale());
       dateFormat.setTimeZone(blog.getTimeZone());
       logPeriod = dateFormat.format(cal.getTime());
-//    } else if (year != null && year.length() > 0 &&
-//        month != null && month.length() > 0) {
-//      cal.set(Calendar.YEAR, Integer.parseInt(year));
-//      cal.set(Calendar.MONTH, Integer.parseInt(month)-1);
-//      log = blog.getLogger().getLogFile(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH)+1);
-//      SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM yyyy", blog.getLocale());
-//      dateFormat.setTimeZone(blog.getTimeZone());
-//      logPeriod = dateFormat.format(cal.getTime());
     } else {
       // get the log for today
       log = blog.getLogger().getLogFile();
@@ -97,16 +89,6 @@ public class ViewLogAction extends SecureAction {
     getModel().put("log", log.toString());
 
     return new LogView();
-  }
-
-  /**
-   * Gets a list of all roles that are allowed to access this action.
-   *
-   * @return  an array of Strings representing role names
-   * @param request
-   */
-  public String[] getRoles(HttpServletRequest request) {
-    return new String[]{Constants.BLOG_ADMIN_ROLE, Constants.BLOG_OWNER_ROLE, Constants.BLOG_PUBLISHER_ROLE, Constants.BLOG_CONTRIBUTOR_ROLE};
   }
 
 }
