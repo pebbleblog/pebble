@@ -70,6 +70,9 @@ public class ViewUserAgentsAction extends AbstractLogAction {
     });
     for (LogEntry logEntry : log.getLogEntries()) {
       String userAgent = logEntry.getAgent();
+      if (userAgent == null) {
+        userAgent = "";
+      }
       Integer count = userAgents.get(userAgent);
       if (count == null) {
         count = 0;
