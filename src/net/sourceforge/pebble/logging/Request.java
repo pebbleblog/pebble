@@ -152,7 +152,11 @@ public class Request extends CountedUrl {
         setPageView(true);
       } else if (url.startsWith("/blogentries/")) {
         String pageNumber = url.substring("/blogentries/".length());
-        pageNumber = pageNumber.substring(0, pageNumber.indexOf("."));
+        if (pageNumber.indexOf(".") > -1) {
+	        pageNumber = pageNumber.substring(0, pageNumber.indexOf("."));
+		} else {
+			pageNumber = "1";
+		}
         setName("Blog Entries : Page " + pageNumber);
         setPageView(true);
       } else {
