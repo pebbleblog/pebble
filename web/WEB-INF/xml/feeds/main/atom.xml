@@ -3,7 +3,7 @@
   <title><c:choose><c:when test="${not empty category}"><c:out value="${blog.name} - ${category.name} category" escapeXml="true"/></c:when><c:when test="${not empty tag}"><c:out value="${blog.name} - ${tag.name} tag" escapeXml="true"/></c:when><c:when test="${not empty author}">${blog.name} - ${author}</c:when><c:otherwise><c:out value="${blog.name}" escapeXml="true"/></c:otherwise></c:choose></title>
   <link rel="alternate" type="text/html" href="<c:choose><c:when test="${not empty category}">${category.permalink}</c:when><c:when test="${not empty tag}">${tag.permalink}</c:when><c:when test="${not empty author}">${blog.url}authors/${author}/</c:when><c:otherwise>${blog.url}</c:otherwise></c:choose>"/>
   <link rel="self" type="application/atom+xml" href="<c:choose><c:when test="${not empty category}">${category.permalink}atom.xml</c:when><c:when test="${not empty tag}">${tag.permalink}atom.xml</c:when><c:when test="${not empty author}">${blog.url}authors/${author}/atom.xml</c:when><c:otherwise>${blog.url}atom.xml</c:otherwise></c:choose>"/>
-  <updated><fmt:formatDate value="${blog.lastModified}" pattern="yyyy-MM-dd'T'HH:mm:ssZ" timeZone="${blog.timeZone}"/></updated>
+  <updated><fmt:formatDate value="${blog.lastModified}" pattern="yyyy-MM-dd'T'HH:mm:ss'Z'" timeZone="UTC"/></updated>
   <author>
     <name><c:out value="${blog.author}"/></name>
   </author>
@@ -22,8 +22,8 @@
       <name><c:out value="${blogEntry.blog.author}"/></name>
     </author>
     <id>tag:<c:out value="${blogEntry.blog.domainName}"/>,<fmt:formatDate value="${blogEntry.date}" pattern="yyyy-MM-dd" timeZone="UTC"/>:<c:out value="${blogEntry.blog.id}"/>/<c:out value="${blogEntry.id}"/></id>
-    <updated><fmt:formatDate value="${blogEntry.date}" pattern="yyyy-MM-dd'T'HH:mm:ssZ" timeZone="${blog.timeZone}"/></updated>
-    <published><fmt:formatDate value="${blogEntry.date}" pattern="yyyy-MM-dd'T'HH:mm:ssZ" timeZone="${blog.timeZone}"/></published>
+    <updated><fmt:formatDate value="${blogEntry.date}" pattern="yyyy-MM-dd'T'HH:mm:ss'Z'" timeZone="UTC"/></updated>
+    <published><fmt:formatDate value="${blogEntry.date}" pattern="yyyy-MM-dd'T'HH:mm:ss'Z'" timeZone="UTC"/></published>
     <c:forEach var="category" items="${blogEntry.categories}">
     <category term="<c:out value="${category.id}"/>" label="<c:out value="${category.name}"/>" scheme="<c:out value="${category.permalink}"/>" />
     </c:forEach>
