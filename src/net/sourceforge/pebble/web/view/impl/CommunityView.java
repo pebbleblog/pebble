@@ -29,38 +29,40 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package net.sourceforge.pebble.web.tagext;
+package net.sourceforge.pebble.web.view.impl;
 
-import net.sourceforge.pebble.aggregator.NewsFeed;
-import net.sourceforge.pebble.aggregator.NewsFeedCache;
-import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.web.view.HtmlView;
+import net.sourceforge.pebble.api.decorator.ContentDecoratorContext;
 import net.sourceforge.pebble.Constants;
+import net.sourceforge.pebble.comparator.BlogEntryComparator;
+import net.sourceforge.pebble.decorator.ContentDecoratorChain;
 
-import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.tagext.SimpleTagSupport;
-import java.io.IOException;
+import java.util.List;
+import java.util.Collections;
 
 /**
- * 
+ * Represents a page displaying blog entries from the community.
  *
  * @author    Simon Brown
  */
-public class FeedReaderTag extends SimpleTagSupport {
+public class CommunityView extends HtmlView {
 
-  private String url;
-
-  public void doTag() throws JspException, IOException {
-    NewsFeed feed = NewsFeedCache.getInstance().getFeed(url);
-    getJspContext().setAttribute("feedEntries", feed.getEntries());
+  /**
+   * Gets the title of this view.
+   *
+   * @return the title as a String
+   */
+  public String getTitle() {
+    return "Community";
   }
 
-  public void setUrl(String url) {
-    this.url = url;
-
-    if (url != null) {
-      Blog blog = (Blog)getJspContext().getAttribute(Constants.BLOG_KEY);
-      NewsFeedCache.getInstance().addSubscription(blog, url);
-    }
+  /**
+   * Gets the URI that this view represents.
+   *
+   * @return the URI as a String
+   */
+  public String getUri() {
+    return "/WEB-INF/jsp/communityEntries.jsp";
   }
 
 }

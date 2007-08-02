@@ -36,6 +36,8 @@ import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.PebbleContext;
 import net.sourceforge.pebble.PluginProperties;
 import net.sourceforge.pebble.Configuration;
+import net.sourceforge.pebble.aggregator.NewsFeedEntry;
+import net.sourceforge.pebble.aggregator.NewsFeedCache;
 import net.sourceforge.pebble.api.confirmation.CommentConfirmationStrategy;
 import net.sourceforge.pebble.api.confirmation.TrackBackConfirmationStrategy;
 import net.sourceforge.pebble.api.decorator.ContentDecorator;
@@ -57,6 +59,7 @@ import net.sourceforge.pebble.event.EventListenerList;
 import net.sourceforge.pebble.event.AuditListener;
 import net.sourceforge.pebble.event.blogentry.EmailSubscriptionListener;
 import net.sourceforge.pebble.event.blog.CacheListener;
+import net.sourceforge.pebble.event.blog.NewsFeedSubscriptionListener;
 import net.sourceforge.pebble.index.*;
 import net.sourceforge.pebble.logging.AbstractLogger;
 import net.sourceforge.pebble.logging.CombinedLogFormatLogger;
@@ -65,7 +68,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
+import java.io.*;
 import java.lang.reflect.Constructor;
 import java.util.*;
 
@@ -281,6 +284,7 @@ public class Blog extends AbstractBlog {
     }
 
     eventListenerList.addBlogListener(new CacheListener());
+    eventListenerList.addBlogListener(new NewsFeedSubscriptionListener());
   }
 
   /**
@@ -1804,5 +1808,33 @@ public class Blog extends AbstractBlog {
   public EmailSubscriptionList getEmailSubscriptionList() {
     return emailSubscriptionList;
   }
-  
+
+  public List<String> getNewsFeedSubscriptions() {
+    List<String> urls = new LinkedList<String>();
+
+    try {
+      BufferedReader reader = new BufferedReader(new FileReader(new File(getFilesDirectory(), "newsfeed-subscriptions.txt")));
+      String line = reader.readLine();
+      while (line != null) {
+        urls.add(line);
+        line = reader.readLine();
+      }
+    } catch (IOException ioe) {
+      log.info("No newsfeed subscriptions found : " + ioe.getMessage());
+    }
+    return urls;
+  }
+
+  public List<NewsFeedEntry> getNewsFeedEntries() {
+    return NewsFeedCache.getInstance().getNewsFeedEntries(this);
+  }
+
+  public List<NewsFeedEntry> getRecentNewsFeedEntries() {
+    List<NewsFeedEntry> entries = getNewsFeedEntries();
+    if (entries.size() > getRecentBlogEntriesOnHomePage()) {
+      entries = entries.subList(0, getRecentBlogEntriesOnHomePage());
+    }
+    return entries;
+  }
+
 }

@@ -247,12 +247,12 @@ blockquote {
 .tagCloud {
   font-size: 24px;
   line-height: 1.0em;
-  text-align: justify;
+  text-align: center;
 }
 .sidebarTagCloud {
-  font-size: 18px;
+  font-size: 22px;
   line-height: 0.7em;
-  text-align: justify;
+  text-align: center;
 }
 .tagCloud1 {
   font-size: 0.5em;

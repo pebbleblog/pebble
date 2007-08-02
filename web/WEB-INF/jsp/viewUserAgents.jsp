@@ -20,9 +20,38 @@
         </tr>
       </thead>
       <tbody>
-        <c:forEach var="userAgent" items="${userAgents}">
+        <c:forEach var="userAgent" items="${consolidatedUserAgents}" varStatus="status">
           <c:choose>
-            <c:when test="${count % 2 == 0}">
+            <c:when test="${status.count % 2 == 0}">
+              <tr class="even small">
+            </c:when>
+            <c:otherwise>
+                <tr class="odd small">
+            </c:otherwise>
+          </c:choose>
+          <td>${userAgent.key}</td>
+          <td align="right"><fmt:formatNumber value="${userAgent.value}"/></td>
+        </tr>
+        </c:forEach>
+    </tbody>
+    </table>
+
+    <br />
+
+    <h3>Distinct User Agents</h3>
+    <br />
+
+    <table width="99%" cellspacing="0" cellpadding="4">
+      <thead>
+        <tr>
+          <th>User Agent</th>
+          <th align="right">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <c:forEach var="userAgent" items="${userAgents}" varStatus="status">
+          <c:choose>
+            <c:when test="${status.count % 2 == 0}">
               <tr class="even small">
             </c:when>
             <c:otherwise>

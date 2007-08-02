@@ -36,13 +36,14 @@
       --%>
       <sidebar:subscriptions/>
       <sidebar:navigation/>
+      <sidebar:search/>
       <sidebar:archivesByMonth/>
       <sidebar:categories/>
       <sidebar:tagCloud/>
       <sidebar:recentBlogEntries/>
       <sidebar:recentResponses/>
       <sidebar:blogSummary/>
-      <%-- the following is an example of the feed component that lets you aggregate a RSS/RDF/Atom feed into your blog
+      <%-- the following is an example of the feed component that lets you aggregate a RSS/Atom feed into your blog
       <sidebar:feed name="del.icio.us" url="http://del.icio.us/rss/simongbrown" maxEntries="3" showBody="true" truncateBody="true"/>
       --%>
       <sidebar:loginForm/>

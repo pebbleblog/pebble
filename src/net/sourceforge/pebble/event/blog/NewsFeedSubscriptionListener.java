@@ -29,38 +29,40 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package net.sourceforge.pebble.web.tagext;
+package net.sourceforge.pebble.event.blog;
 
-import net.sourceforge.pebble.aggregator.NewsFeed;
-import net.sourceforge.pebble.aggregator.NewsFeedCache;
+import net.sourceforge.pebble.api.event.blog.BlogListener;
+import net.sourceforge.pebble.api.event.blog.BlogEvent;
 import net.sourceforge.pebble.domain.Blog;
-import net.sourceforge.pebble.Constants;
-
-import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.tagext.SimpleTagSupport;
-import java.io.IOException;
+import net.sourceforge.pebble.aggregator.NewsFeedCache;
 
 /**
- * 
+ * Blog listener that subscribes and unsubscribes to newsfeeds on
+ * startup and shutdown respectively.
  *
- * @author    Simon Brown
+ * @author Simon Brown
  */
-public class FeedReaderTag extends SimpleTagSupport {
+public class NewsFeedSubscriptionListener implements BlogListener {
 
-  private String url;
-
-  public void doTag() throws JspException, IOException {
-    NewsFeed feed = NewsFeedCache.getInstance().getFeed(url);
-    getJspContext().setAttribute("feedEntries", feed.getEntries());
-  }
-
-  public void setUrl(String url) {
-    this.url = url;
-
-    if (url != null) {
-      Blog blog = (Blog)getJspContext().getAttribute(Constants.BLOG_KEY);
+  /**
+   * Called when a blog has been started.
+   *
+   * @param event   a BlogEvent instance
+   */
+  public void blogStarted(BlogEvent event) {
+    Blog blog = event.getBlog();
+    for (String url : blog.getNewsFeedSubscriptions()) {
       NewsFeedCache.getInstance().addSubscription(blog, url);
     }
+  }
+
+  /**
+   * Called when a blog has been stopped.
+   *
+   * @param event   a BlogEvent instance
+   */
+  public void blogStopped(BlogEvent event) {
+    NewsFeedCache.getInstance().removeAllSubscriptions(event.getBlog());
   }
 
 }

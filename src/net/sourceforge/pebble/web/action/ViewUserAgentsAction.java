@@ -52,6 +52,17 @@ import java.util.TreeMap;
  */
 public class ViewUserAgentsAction extends AbstractLogAction {
 
+  private static final String MSIE_50 = "MSIE 5.0";
+  private static final String MSIE_60 = "MSIE 6.0";
+  private static final String MSIE_70 = "MSIE 7.0";
+  private static final String FIREFOX_1X = "Firefox/1.";
+  private static final String FIREFOX_2X = "Firefox/2.";
+  private static final String SAFARI = "Safari";
+  private static final String BLOGLINES = "Bloglines";
+  private static final String GOOGLEBOT = "Googlebot";
+  private static final String GOOGLE_FEEDFETCHER = "Feedfetcher-Google";
+  private static final String OTHER = "Other";
+
   /**
    * Peforms the processing associated with this action.
    *
@@ -68,20 +79,56 @@ public class ViewUserAgentsAction extends AbstractLogAction {
         return s1 != null ? s1.compareToIgnoreCase(s2) : -1;
       }
     });
+
+    Map<String, Integer> consolidatedUserAgents = new TreeMap<String, Integer>(new Comparator<String>() {
+      public int compare(String s1, String s2) {
+        return s1 != null ? s1.compareToIgnoreCase(s2) : -1;
+      }
+    });
+
     for (LogEntry logEntry : log.getLogEntries()) {
       String userAgent = logEntry.getAgent();
       if (userAgent == null) {
         userAgent = "";
       }
+
       Integer count = userAgents.get(userAgent);
       if (count == null) {
         count = 0;
       }
       count = count+1;
       userAgents.put(userAgent, count);
+
+      String consolidatedUserAgent = OTHER;
+      if (userAgent.contains(MSIE_50)) {
+        consolidatedUserAgent = MSIE_50;
+      } else if (userAgent.contains(MSIE_60)) {
+        consolidatedUserAgent = MSIE_60;
+      } else if (userAgent.contains(MSIE_70)) {
+        consolidatedUserAgent = MSIE_70;
+      } else if (userAgent.contains(FIREFOX_1X)) {
+        consolidatedUserAgent = FIREFOX_1X;
+      } else if (userAgent.contains(FIREFOX_2X)) {
+        consolidatedUserAgent = FIREFOX_2X;
+      } else if (userAgent.contains(SAFARI)) {
+        consolidatedUserAgent = SAFARI;
+      } else if (userAgent.contains(BLOGLINES)) {
+        consolidatedUserAgent = BLOGLINES;
+      } else if (userAgent.contains(GOOGLEBOT)) {
+        consolidatedUserAgent = GOOGLEBOT;
+      } else if (userAgent.contains(GOOGLE_FEEDFETCHER)) {
+        consolidatedUserAgent = GOOGLE_FEEDFETCHER;
+      }
+      Integer consolidatedCount = consolidatedUserAgents.get(consolidatedUserAgent);
+      if (consolidatedCount == null) {
+        consolidatedCount = 0;
+      }
+      consolidatedCount = consolidatedCount+1;
+      consolidatedUserAgents.put(consolidatedUserAgent, consolidatedCount);
     }
 
     getModel().put("userAgents", userAgents);
+    getModel().put("consolidatedUserAgents", consolidatedUserAgents);
 
     return new UserAgentsView();
   }

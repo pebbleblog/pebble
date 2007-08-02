@@ -198,28 +198,16 @@ public class TagIndex {
     if (tags.size() > 0) {
       // find the maximum
       int maxBlogEntries = 0;
-      int total = 0;
       for (IndexedTag tag : tags.values()) {
-        total += tag.getNumberOfBlogEntries();
         if (tag.getNumberOfBlogEntries() > maxBlogEntries) {
           maxBlogEntries = tag.getNumberOfBlogEntries();
         }
       }
 
-      // calculate the mean (to nearest int)
-      float mean = total / tags.size();
-
       int[] thresholds = new int[10];
-      thresholds[0] = (int)Math.round((1.0/6.0) * mean);
-      thresholds[1] = (int)Math.round(((2.0/6.0) * mean));
-      thresholds[2] = (int)Math.round(((3.0/6.0) * mean));
-      thresholds[3] = (int)Math.round(((4.0/6.0) * mean));
-      thresholds[4] = (int)Math.round(((5.0/6.0) * mean));
-      thresholds[5] = (int)Math.round(mean);
-      thresholds[6] = (int)Math.round((mean + (1.0 * ((maxBlogEntries-mean)/4.0))));
-      thresholds[7] = (int)Math.round((mean + (2.0 * ((maxBlogEntries-mean)/4.0))));
-      thresholds[8] = (int)Math.round((mean + (3.0 * ((maxBlogEntries-mean)/4.0))));
-      thresholds[9] = maxBlogEntries;
+      for (int i = 0; i < 10; i++) {
+        thresholds[i] = (int)Math.round((maxBlogEntries/10.0) * (i+1));
+      }
 
       orderedTags = new ArrayList<Tag>();
 

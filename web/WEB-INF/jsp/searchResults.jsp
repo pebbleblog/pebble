@@ -41,7 +41,8 @@
               ${hit.excerpt}
             </td>
             <td align="right" valign="top" width="15%">
-              <fmt:formatDate value="${hit.date}" type="date" dateStyle="medium" />
+              <fmt:formatDate value="${hit.date}" type="date" dateStyle="medium" /><br />
+              <fmt:formatDate value="${hit.date}" type="time" dateStyle="medium" />
             </td>
           </tr>
           </c:forEach>

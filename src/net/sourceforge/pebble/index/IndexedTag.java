@@ -116,7 +116,7 @@ public class IndexedTag extends Tag {
   void calculateRank(int[] thresholds) {
     for (int i = 0; i < thresholds.length; i++) {
       int numberOfBlogEntries = getNumberOfBlogEntries();
-      if (thresholds[i] >= numberOfBlogEntries) {
+      if (numberOfBlogEntries <= thresholds[i]) {
         this.rank = i+1;
         return;
       }

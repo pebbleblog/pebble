@@ -111,6 +111,10 @@
     <listener-class>net.sourceforge.pebble.web.listener.PebbleContextListener</listener-class>
   </listener>
 
+  <listener>
+    <listener-class>net.sourceforge.pebble.aggregator.NewsFeedContextListener</listener-class>
+  </listener>
+
   <servlet>
     <servlet-name>HttpController</servlet-name>
     <servlet-class>net.sourceforge.pebble.web.controller.HttpController</servlet-class>

@@ -29,39 +29,36 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package net.sourceforge.pebble.web.tagext;
+package net.sourceforge.pebble.web.action;
 
-import net.sourceforge.pebble.util.StringUtils;
+import net.sourceforge.pebble.web.view.View;
+import net.sourceforge.pebble.web.view.impl.CommunityView;
+import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.Constants;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.ServletException;
 
 /**
- * @author Simon Brown
+ * Allows the user to see blog entries from the community.
+ *
+ * @author    Simon Brown
  */
-public class FeedEntry {
+public class ViewCommunityAction extends Action {
 
-  private String url;
-  private String title;
-  private String body;
-
-  public FeedEntry(String url, String title, String body) {
-    this.url = url;
-    this.title = title;
-    this.body = body;
-  }
-
-  public String getUrl() {
-    return url;
-  }
-
-  public String getTitle() {
-    return title;
-  }
-
-  public String getBody() {
-    return body;
-  }
-
-  public String getTruncatedBody() {
-    return StringUtils.truncate(getBody());
+  /**
+   * Peforms the processing associated with this action.
+   *
+   * @param request  the HttpServletRequest instance
+   * @param response the HttpServletResponse instance
+   * @return the name of the next view
+   */
+  public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
+    Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
+    getModel().put("entries", blog.getNewsFeedEntries());
+    
+    return new CommunityView();
   }
 
 }
