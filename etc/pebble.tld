@@ -149,7 +149,7 @@
 
   <tag>
     <name>getFeed</name>
-    <tag-class>net.sourceforge.pebble.web.tagext.FeedReaderTag</tag-class>
+    <tag-class>net.sourceforge.pebble.web.tagext.NewsFeedReaderTag</tag-class>
     <body-content>empty</body-content>
     <description>
       Exposes a variable containing entries from the specified feed.
