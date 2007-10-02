@@ -127,6 +127,7 @@ public class ViewUserAgentsAction extends AbstractLogAction {
       consolidatedUserAgents.put(consolidatedUserAgent, consolidatedCount);
     }
 
+    getModel().put("logAction", "viewUserAgents");
     getModel().put("userAgents", userAgents);
     getModel().put("consolidatedUserAgents", consolidatedUserAgents);
 

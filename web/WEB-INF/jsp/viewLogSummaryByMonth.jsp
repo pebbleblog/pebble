@@ -8,22 +8,18 @@
   <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
-    <%--
-    You can also see a <a href="viewLogSummary.secureaction?year=${year}" title="See statistics for this year">log summary for <fmt:formatDate value="${logSummary.date}" type="date" pattern="yyyy"/></a>.
-    <br /><br />
-    --%>
+
+    <p>
+      The requests logged by Pebble (and shown here) are only those requests that result in physical page view
+      (impression), a news feed or a file download. All other requests (e.g. CSS files, JavaScript files, images, etc)
+      are not included in the totals.
+    </p>
+
     <table width="99%" cellspacing="0" cellpadding="4">
 
       <thead>
       <tr>
-        <th>Total for <fmt:formatDate value="${logSummary.date}" pattern="MMMM yyyy" /></th>
-        <th align="right">
-          <%--
-          <a href="viewLog.secureaction?year=${year}&month=${month}" title="See log file for month">Log</a> |
-          <a href="viewReferers.secureaction?year=${year}&month=${month}" title="See referers for month">Referers</a> |
-          <a href="viewRequests.secureaction?year=${year}&month=${month}" title="See requests for month">Requests</a>
-          --%>
-        </th>
+        <th colspan="2">Total requests for <fmt:formatDate value="${logSummary.date}" pattern="MMMM yyyy" /></th>
         <th align="right"><fmt:formatNumber value="${logSummary.totalRequests}"/></th>
       </tr>
       </thead>
@@ -42,11 +38,16 @@
             <fmt:formatDate value="${logSummaryForDay.date}" type="date" dateStyle="long"/>
           </td>
           <td align="right">
-            <a href="viewLog.secureaction?year=${year}&month=${month}&day=${status.count}" title="See log file for day">Log</a> |
+            Requests -
+            <a href="viewRequests.secureaction?year=${year}&month=${month}&day=${status.count}" title="See all requests for day">All</a> |
+            <a href="viewRequestsByType.secureaction?year=${year}&month=${month}&day=${status.count}" title="See requests by type for day">By Type</a> |
+            <a href="viewRequestsByHour.secureaction?year=${year}&month=${month}&day=${status.count}" title="See requests by hour for day">By Hour</a>
+            <br />
             <a href="viewReferers.secureaction?year=${year}&month=${month}&day=${status.count}" title="See referers for day">Referers</a> |
-            <a href="viewRequests.secureaction?year=${year}&month=${month}&day=${status.count}" title="See requests for day">Requests</a> |
-            <a href="viewStatistics.secureaction?year=${year}&month=${month}&day=${status.count}" title="See statistics for day">Statistics</a> |
-            <a href="viewUserAgents.secureaction?year=${year}&month=${month}&day=${status.count}" title="See user agents for day">User Agents</a>
+            <a href="viewUserAgents.secureaction?year=${year}&month=${month}&day=${status.count}" title="See user agents for day">User Agents</a> |
+            <a href="viewCountries.secureaction?year=${year}&month=${month}&day=${status.count}" title="See visitor countries for day">Countries</a>
+            <br />
+            Raw Log - <a href="viewLog.secureaction?year=${year}&month=${month}&day=${status.count}&flavor=text" title="See log file for day as plain text">Plain Text</a> | <a href="viewLog.secureaction?year=${year}&month=${month}&day=${status.count}&flavor=tab" title="See log file for day as a tab delimited file">Tab Delimited</a>
           </td>
           <td align="right"><fmt:formatNumber value="${logSummaryForDay.totalRequests}"/></td>
           </td>

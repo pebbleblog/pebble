@@ -34,11 +34,11 @@ package net.sourceforge.pebble.web.view.impl;
 import net.sourceforge.pebble.web.view.HtmlView;
 
 /**
- * Represents the request statistics.
+ * Represents the request by hour view.
  *
  * @author    Simon Brown
  */
-public class StatisticsView extends HtmlView {
+public class RequestsByHourView extends HtmlView {
 
   /**
    * Gets the title of this view.
@@ -46,7 +46,7 @@ public class StatisticsView extends HtmlView {
    * @return the title as a String
    */
   public String getTitle() {
-    return "Statistics";
+    return "Requests by Hour";
   }
 
   /**
@@ -55,7 +55,7 @@ public class StatisticsView extends HtmlView {
    * @return the URI as a String
    */
   public String getUri() {
-    return "/WEB-INF/jsp/viewStatistics.jsp";
+    return "/WEB-INF/jsp/viewRequestsByHour.jsp";
   }
 
 }

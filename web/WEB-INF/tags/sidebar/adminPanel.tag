@@ -71,11 +71,7 @@
       <a href="viewReferers.secureaction" title="View referers for today">Referers</a> (<a href="viewReferers.secureaction?filter=false" title="View referers for today, unfiltered">unfiltered</a>) |
       <a href="viewRequests.secureaction" title="View requests for today">Requests</a>
       <br />                                                             
-      <a href="viewLog.secureaction" title="View log for today">Log</a> |
       <a href="viewLogSummary.secureaction" title="View log summary for this month">Log summary</a> |
-      <a href="viewStatistics.secureaction" title="View statistics for today">Statistics</a>
-      <br />
-      <a href="viewUserAgents.secureaction" title="View user agents for today">User Agents</a> |
       <a href="viewRefererFilters.secureaction" title="View referer filters">Referer filters</a>
       </div>
       <script type="text/javascript">hideComponent('admin-logs');</script>

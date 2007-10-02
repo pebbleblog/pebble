@@ -31,16 +31,14 @@
  */
 package net.sourceforge.pebble.web.action;
 
-import net.sourceforge.pebble.Constants;
-import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.logging.Log;
+import net.sourceforge.pebble.web.view.PlainTextView;
 import net.sourceforge.pebble.web.view.View;
-import net.sourceforge.pebble.web.view.impl.LogView;
+import net.sourceforge.pebble.web.view.impl.LogAsTabDelimitedView;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 /**
  * Gets the contents of the specified log file.
@@ -57,38 +55,17 @@ public class ViewLogAction extends AbstractLogAction {
    * @return the name of the next view
    */
   public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
-    Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
+    String flavor = request.getParameter("flavor");
 
-    String year = request.getParameter("year");
-    String month = request.getParameter("month");
-    String day = request.getParameter("day");
-
-    Calendar cal = blog.getCalendar();
-    String log = "";
-    String logPeriod = "";
-
-    if (year != null && year.length() > 0 &&
-        month != null && month.length() > 0 &&
-        day != null && day.length() > 0) {
-      cal.set(Calendar.YEAR, Integer.parseInt(year));
-      cal.set(Calendar.MONTH, Integer.parseInt(month)-1);
-      cal.set(Calendar.DAY_OF_MONTH, Integer.parseInt(day));
-      log = blog.getLogger().getLogFile(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH)+1, cal.get(Calendar.DAY_OF_MONTH));
-      SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy", blog.getLocale());
-      dateFormat.setTimeZone(blog.getTimeZone());
-      logPeriod = dateFormat.format(cal.getTime());
+    if (flavor != null && flavor.equalsIgnoreCase("tab")) {
+      Log log = getLog(request, response);
+      getModel().put("log", log);
+      return new LogAsTabDelimitedView();
     } else {
-      // get the log for today
-      log = blog.getLogger().getLogFile();
-      SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy", blog.getLocale());
-      dateFormat.setTimeZone(blog.getTimeZone());
-      logPeriod = dateFormat.format(cal.getTime());
+      String log = getLogFile(request, response);
+      getModel().put("text", log);
+      return new PlainTextView();
     }
-
-    getModel().put("logPeriod", logPeriod);
-    getModel().put("log", log.toString());
-
-    return new LogView();
   }
 
 }

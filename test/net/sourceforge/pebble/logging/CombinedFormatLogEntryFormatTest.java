@@ -53,37 +53,37 @@ public class CombinedFormatLogEntryFormatTest extends SingleBlogTestCase {
 
   public void testFormatWhenHostNotSpecified() {
     logEntry.setHost(null);
-    assertEquals("- - - " + format.dateFormatter.format(logEntry.getDate()) + " \"\" - - - -", format.format(logEntry));
+    assertEquals("- - - " + format.dateFormatter.format(logEntry.getDate()) + " \"\" 200 - - -", format.format(logEntry));
   }
 
   public void testFormatWhenHostSpecified() {
     logEntry.setHost("127.0.0.1");
-    assertEquals("127.0.0.1 - - " + format.dateFormatter.format(logEntry.getDate()) + " \"\" - - - -", format.format(logEntry));
+    assertEquals("127.0.0.1 - - " + format.dateFormatter.format(logEntry.getDate()) + " \"\" 200 - - -", format.format(logEntry));
   }
 
   public void testFormatWhenRequestSpecified() {
     logEntry.setRequest("GET /blog/index.jsp");
-    assertEquals("- - - " + format.dateFormatter.format(logEntry.getDate()) + " \"GET /blog/index.jsp\" - - - -", format.format(logEntry));
+    assertEquals("- - - " + format.dateFormatter.format(logEntry.getDate()) + " \"GET /blog/index.jsp\" 200 - - -", format.format(logEntry));
   }
 
   public void testFormatWhenRefererNotSpecified() {
     logEntry.setReferer(null);
-    assertEquals("- - - " + format.dateFormatter.format(logEntry.getDate()) + " \"\" - - - -", format.format(logEntry));
+    assertEquals("- - - " + format.dateFormatter.format(logEntry.getDate()) + " \"\" 200 - - -", format.format(logEntry));
   }
 
   public void testFormatWhenRefererSpecified() {
     logEntry.setReferer("http://www.google.com");
-    assertEquals("- - - " + format.dateFormatter.format(logEntry.getDate()) + " \"\" - - \"http://www.google.com\" -", format.format(logEntry));
+    assertEquals("- - - " + format.dateFormatter.format(logEntry.getDate()) + " \"\" 200 - \"http://www.google.com\" -", format.format(logEntry));
   }
 
   public void testFormatWhenAgentNotSpecified() {
     logEntry.setAgent(null);
-    assertEquals("- - - " + format.dateFormatter.format(logEntry.getDate()) + " \"\" - - - -", format.format(logEntry));
+    assertEquals("- - - " + format.dateFormatter.format(logEntry.getDate()) + " \"\" 200 - - -", format.format(logEntry));
   }
 
   public void testFormatWhenAgentSpecified() {
     logEntry.setAgent("Some user agent");
-    assertEquals("- - - " + format.dateFormatter.format(logEntry.getDate()) + " \"\" - - - \"Some user agent\"", format.format(logEntry));
+    assertEquals("- - - " + format.dateFormatter.format(logEntry.getDate()) + " \"\" 200 - - \"Some user agent\"", format.format(logEntry));
   }
 
   public void testParseWhenHostNotSpecified() {

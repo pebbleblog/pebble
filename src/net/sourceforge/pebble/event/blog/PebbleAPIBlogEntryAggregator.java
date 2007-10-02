@@ -44,7 +44,8 @@ import java.util.*;
 
 /**
  * Blog listener that polls a Pebble blog, using the Pebble XML-RPC API,
- * to pull across and aggregate blog entries.
+ * to pull across and aggregate blog entries. This assumes that the IDs of
+ * blog entries in both the local and remote blogs don't clash. 
  *
  * @author Simon Brown
  */

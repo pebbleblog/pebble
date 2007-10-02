@@ -69,8 +69,10 @@ public class LogEntryTest extends TestCase {
    * Tests the request property.
    */
   public void testRequest() {
-    logEntry.setRequest("http://www.simongbrown.com/blog/");
-    assertEquals("http://www.simongbrown.com/blog/", logEntry.getRequest());
+    logEntry.setRequest("GET /blog/");
+    assertEquals("GET /blog/", logEntry.getRequest());
+    assertEquals("GET", logEntry.getRequestMethod());
+    assertEquals("/blog/", logEntry.getRequestUri());
   }
 
   /**

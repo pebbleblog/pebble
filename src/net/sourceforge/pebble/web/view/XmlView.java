@@ -33,6 +33,7 @@ package net.sourceforge.pebble.web.view;
 
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.domain.AbstractBlog;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -72,6 +73,9 @@ public abstract class XmlView extends JspView {
       dispatcher.include(request, response);
     } catch (IOException ioe) {
       throw new ServletException(ioe);
+    } finally {
+      AbstractBlog blog = (AbstractBlog)getModel().get(Constants.BLOG_KEY);
+      blog.log(request, HttpServletResponse.SC_OK);
     }
   }
 

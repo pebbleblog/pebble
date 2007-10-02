@@ -34,6 +34,7 @@ package net.sourceforge.pebble.domain;
 import net.sourceforge.pebble.comparator.BlogEntryComparator;
 import net.sourceforge.pebble.PebbleContext;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 /**
@@ -147,6 +148,15 @@ public class MultiBlog extends AbstractBlog {
     } else {
       return new ArrayList(blogEntries);
     }
+  }
+
+  /**
+   * Logs this request for blog.
+   *
+   * @param request   the HttpServletRequest instance for this request
+   */
+  public void log(HttpServletRequest request, int status) {
+    // no op
   }
 
 }

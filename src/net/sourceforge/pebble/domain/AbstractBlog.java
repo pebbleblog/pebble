@@ -42,6 +42,8 @@ import java.util.*;
 
 import net.sourceforge.pebble.PebbleContext;
 
+import javax.servlet.http.HttpServletRequest;
+
 public abstract class AbstractBlog extends TimePeriod {
 
   /** the name of the file containing blog properties */
@@ -481,5 +483,12 @@ public abstract class AbstractBlog extends TimePeriod {
   public int getNumberOfMessages() {
     return messages.size();
   }
+
+  /**
+   * Logs this request for blog.
+   *
+   * @param request   the HttpServletRequest instance for this request
+   */
+  public abstract void log(HttpServletRequest request, int status);
 
 }

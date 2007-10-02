@@ -59,7 +59,7 @@ public class NullLogger extends AbstractLogger {
    *
    * @param request   a HttpServletRequest
    */
-  public void log(HttpServletRequest request) {
+  public void log(HttpServletRequest request, int status) {
   }
 
   /**

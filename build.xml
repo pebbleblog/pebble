@@ -104,6 +104,7 @@
         <include name="commons-logging-1.0.4.jar"/>
         <include name="dwr-2.0-rc2.jar"/>
         <include name="ehcache-1.2.1RC.jar"/>
+        <include name="geolite-java-1.2.1.jar"/>
         <include name="jcaptcha-all-1.0-RC3.jar"/>
         <include name="jdom-1.0.jar"/>
         <include name="jstl-1.1.2.jar"/>
@@ -158,6 +159,7 @@
         <include name="resources*.properties"/>
         <include name="ehcache.xml"/>
         <include name="propono.properties"/>
+        <include name="geo-ip.dat"/>
       </fileset>
     </copy>
   </target>

@@ -345,6 +345,15 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/geolite-java-1.2.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
     <orderEntryProperties />
   </component>
   <component name="WebModuleBuildComponent">
@@ -422,6 +431,11 @@
       <attribute name="method" value="1" />
       <attribute name="URI" value="/WEB-INF/lib/ehcache-1.2.1RC.jar" />
       <url>jar://$MODULE_DIR$/lib/ehcache-1.2.1RC.jar!/</url>
+    </containerElement>
+    <containerElement type="library" level="module">
+      <attribute name="method" value="1" />
+      <attribute name="URI" value="/WEB-INF/lib/geolite-java-1.2.1.jar" />
+      <url>jar://$MODULE_DIR$/lib/geolite-java-1.2.1.jar!/</url>
     </containerElement>
     <containerElement type="library" level="module">
       <attribute name="method" value="1" />

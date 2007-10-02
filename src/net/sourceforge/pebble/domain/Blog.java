@@ -1471,8 +1471,15 @@ public class Blog extends AbstractBlog {
    *
    * @param request   the HttpServletRequest instance for this request
    */
-  public synchronized void log(HttpServletRequest request) {
-    logger.log(request);
+  public synchronized void log(HttpServletRequest request, int status) {
+    String externalUri = (String)request.getAttribute(Constants.EXTERNAL_URI);
+    if (externalUri.matches("/images/.+")) {
+      // do nothing, we don't want to log the following types of requests
+      // - a blog's images
+    } else {
+      // log the request
+      logger.log(request, status);
+    }
   }
 
   /**

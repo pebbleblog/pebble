@@ -71,8 +71,11 @@ public class BlogService {
     BlogEntry blogEntry = null;
     Cache cache = blog.getBlogEntryCache();
 
-    // is the blog entry already in the cache?
-    Element element = cache.get(compositeKey);
+    // is the blog entry already in the cache?                                                  
+    Element element = null;
+    if (cache != null) {
+      element = cache.get(compositeKey);
+    }
     if (element != null) {
       blogEntry = (BlogEntry)element.getValue();
       log.debug("Got blog entry " + compositeKey + " from cache");
@@ -82,7 +85,7 @@ public class BlogService {
       try {
         blogEntry = dao.loadBlogEntry(blog, blogEntryId);
 
-        if (blogEntry != null) {
+        if (blogEntry != null && cache != null) {
           // place in the cache for faster lookup next time
           element = new Element(compositeKey, blogEntry);
           cache.put(element);

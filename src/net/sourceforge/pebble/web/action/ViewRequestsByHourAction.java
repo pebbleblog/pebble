@@ -35,24 +35,26 @@ import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.logging.Log;
 import net.sourceforge.pebble.logging.LogEntry;
-import net.sourceforge.pebble.logging.Request;
 import net.sourceforge.pebble.web.view.View;
-import net.sourceforge.pebble.web.view.impl.StatisticsView;
+import net.sourceforge.pebble.web.view.impl.RequestsByHourView;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Gets the statistics for the specified time period.
+ * Gets the a breakdown of the requests for each hour of the day.
  *
  * @author    Simon Brown
  */
-public class ViewStatisticsAction extends AbstractLogAction {
+public class ViewRequestsByHourAction extends AbstractLogAction {
+
+  protected Log getLog(HttpServletRequest request, HttpServletResponse response) throws ServletException {
+    return super.getLog(request, response);    //To change body of overridden methods use File | Settings | File Templates.
+  }
 
   /**
    * Peforms the processing associated with this action.
@@ -65,48 +67,13 @@ public class ViewStatisticsAction extends AbstractLogAction {
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
     Log log = getLog(request, response);
 
-    Collection<LogEntry> logEntries = log.getLogEntries();
-    Collection<Request> requests = log.getRequests();
-    Set<String> uniqueIps = new HashSet<String>();
-    Set<String> uniqueIpsForNewsFeeds = new HashSet<String>();
-    Set<String> uniqueIpsForPageViews = new HashSet<String>();
-    Set<String> uniqueIpsForFileDownloads = new HashSet<String>();
-    int totalNewsFeedRequests = 0;
-    int totalPageViews = 0;
-    int totalFileDownloads = 0;
-
-    for (Request aRequest : requests) {
-      for (LogEntry logEntry : aRequest.getLogEntries()) {
-        uniqueIps.add(logEntry.getHost());
-      }
-
-      if (aRequest.isNewsFeed()) {
-        totalNewsFeedRequests += aRequest.getCount();
-        for (LogEntry logEntry : aRequest.getLogEntries()) {
-          uniqueIpsForNewsFeeds.add(logEntry.getHost());
-        }
-      } else if (aRequest.isPageView()) {
-        totalPageViews += aRequest.getCount();
-        for (LogEntry logEntry : aRequest.getLogEntries()) {
-          uniqueIpsForPageViews.add(logEntry.getHost());
-        }
-      } else if (aRequest.isFileDownload()) {
-        totalFileDownloads += aRequest.getCount();
-        for (LogEntry logEntry : aRequest.getLogEntries()) {
-          uniqueIpsForFileDownloads.add(logEntry.getHost());
-        }
-      }
-    }
-
     // work out requests per hour
     int[] requestsPerHour = new int[24];
-    int[] requestsForNewsFeedsPerHour = new int[24];
     Set<String>[] uniqueIpsPerHourAsSet = new Set[24];
     for (int hour = 0; hour < 24; hour++) {
       requestsPerHour[hour] = 0;
-      requestsForNewsFeedsPerHour[hour] = 0;
       uniqueIpsPerHourAsSet[hour] = new HashSet<String>();
-    }                                       
+    }
     for (LogEntry logEntry : log.getLogEntries()) {
       Calendar logTime = blog.getCalendar();
       logTime.setTime(logEntry.getDate());
@@ -120,7 +87,6 @@ public class ViewStatisticsAction extends AbstractLogAction {
           logEntry.getRequestUri().indexOf("feed.action") > -1 ||
           logEntry.getRequestUri().indexOf("rdf.xml") > -1 ||
           logEntry.getRequestUri().indexOf("atom.xml") > -1) {
-        requestsForNewsFeedsPerHour[hour] = requestsForNewsFeedsPerHour[hour]+1;
       }
     }
 
@@ -129,19 +95,12 @@ public class ViewStatisticsAction extends AbstractLogAction {
       uniqueIpsPerHour[hour] = uniqueIpsPerHourAsSet[hour].size();
     }
 
+    getModel().put("logAction", "viewRequestsByHour");
     getModel().put("totalRequests", log.getTotalLogEntries());
-    getModel().put("uniqueIps", uniqueIps.size());
-    getModel().put("totalNewsfeedRequests", totalNewsFeedRequests);
-    getModel().put("uniqueIpsForNewsFeeds", uniqueIpsForNewsFeeds.size());
-    getModel().put("totalPageViews", totalPageViews);
-    getModel().put("uniqueIpsForPageViews", uniqueIpsForPageViews.size());
-    getModel().put("totalFileDownloads", totalFileDownloads);
-    getModel().put("uniqueIpsForFileDownloads", uniqueIpsForFileDownloads.size());
     getModel().put("requestsPerHour", requestsPerHour);
-    getModel().put("requestsForNewsFeedsPerHour", requestsForNewsFeedsPerHour);
     getModel().put("uniqueIpsPerHour", uniqueIpsPerHour);
 
-    return new StatisticsView();
+    return new RequestsByHourView();
   }
 
 }

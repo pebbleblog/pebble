@@ -33,6 +33,8 @@ package net.sourceforge.pebble.web.view.impl;
 
 import net.sourceforge.pebble.web.view.HtmlView;
 
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * Represents the error (HTTP 500) page.
  *
@@ -52,6 +54,9 @@ public class ErrorView extends HtmlView {
     return null;
   }
 
+  protected int getStatus() {
+    return HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
+  }
 
   /**
    * Gets the name of the theme to use.

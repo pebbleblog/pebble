@@ -32,6 +32,10 @@
 package net.sourceforge.pebble.web.view;
 
 import net.sourceforge.pebble.util.FileUtils;
+import net.sourceforge.pebble.domain.AbstractBlog;
+import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.domain.FileMetaData;
+import net.sourceforge.pebble.Constants;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -95,6 +99,9 @@ public class FileView extends BinaryView {
       out.close();
     } catch (IOException ioe) {
       log.warn(ioe);
+    } finally {
+      AbstractBlog blog = (AbstractBlog)getModel().get(Constants.BLOG_KEY);
+      blog.log(request, HttpServletResponse.SC_OK);
     }
   }
 

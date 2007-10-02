@@ -75,7 +75,7 @@ public class CombinedFormatLogEntryFormat {
     buf.append(" ");
     buf.append("\"" + entry.getRequest() + "\"");
     buf.append(" ");
-    buf.append("-");
+    buf.append(entry.getStatusCode());
     buf.append(" ");
     buf.append("-");
     buf.append(" ");

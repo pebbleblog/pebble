@@ -32,6 +32,7 @@
 package net.sourceforge.pebble.logging;
 
 import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.Constants;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
@@ -50,20 +51,16 @@ public class CombinedLogFormatLogger extends AbstractLogger {
 
   private static final String REFERER_HEADER = "Referer";
   private static final String USER_AGENT_HEADER = "User-Agent";
-  private static final int FLUSH_SIZE = 50;
+  private static final int FLUSH_SIZE = 0;
 
   /** the format of the log filenames */
   private SimpleDateFormat filenameFormat = new SimpleDateFormat("'blog-'yyyyMMdd'.log'");
 
   private List entries = new ArrayList();
 
-  /** a cached copy of the log for today */
-//  private Log logForToday;
-
   public CombinedLogFormatLogger(Blog blog) {
     super(blog);
     filenameFormat.setTimeZone(blog.getTimeZone());
-//    logForToday = super.getLog();
   }
 
   /**
@@ -71,28 +68,22 @@ public class CombinedLogFormatLogger extends AbstractLogger {
    *
    * @param request   a HttpServletRequest
    */
-  public synchronized void log(HttpServletRequest request) {
+  public synchronized void log(HttpServletRequest request, int status) {
+    String externalUri = (String)request.getAttribute(Constants.EXTERNAL_URI);
     LogEntry entry = new LogEntry();
-    entry.setHost(request.getRemoteHost());
+    entry.setHost(request.getRemoteAddr());
     entry.setDate(blog.getCalendar().getTime());
+    entry.setStatusCode(status);
     StringBuffer buf = new StringBuffer();
     buf.append(request.getMethod());
     buf.append(" ");
-
-    // make the request URI relative to the *blog*, not the webapp context
-    String requestUri = request.getRequestURI();
-    requestUri = requestUri.substring(request.getContextPath().length());
-    buf.append(requestUri);
-    if (request.getQueryString() != null) {
-      buf.append("?");
-      buf.append(request.getQueryString());
-    }
+    buf.append(externalUri);
     entry.setRequest(buf.toString());
     entry.setReferer(request.getHeader(REFERER_HEADER));
     entry.setAgent(request.getHeader(USER_AGENT_HEADER));
     entries.add(entry);
 
-    if (entries.size() > FLUSH_SIZE) {
+    if (entries.size() >= FLUSH_SIZE) {
       flush();
     }
   }
@@ -101,7 +92,6 @@ public class CombinedLogFormatLogger extends AbstractLogger {
     try {
       write(entries);
       entries.clear();
-//      logForToday = super.getLog();
     } catch (IOException ioe) {
       ioe.printStackTrace();
     }
@@ -119,15 +109,6 @@ public class CombinedLogFormatLogger extends AbstractLogger {
   public synchronized void stop() {
     flush();
   }
-
-//  /**
-//   * Gets the log for today - overridden to use the cached copy of todays log.
-//   *
-//   * @return a Log object
-//   */
-//  public Log getLog() {
-//    return logForToday;
-//  }
 
   /**
    * Gets a copy of the log file for a given year, month and day.

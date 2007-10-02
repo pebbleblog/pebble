@@ -40,6 +40,10 @@ import net.sourceforge.pebble.util.SecurityUtils;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.regex.Pattern;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * A filter that logs certain incoming requests.
@@ -47,6 +51,11 @@ import java.io.IOException;
  * @author    Simon Brown
  */
 public class LoggingFilter implements Filter {
+
+  private static final Log log = LogFactory.getLog(LoggingFilter.class);
+
+  private static final Pattern ACTION_REGEX = Pattern.compile("/[\\w]*\\.action.*");
+  private static final Pattern SECURE_ACTION_REGEX= Pattern.compile("/[\\w]*\\.secureaction.*");
 
   /** the config of this filter */
   private FilterConfig filterConfig;
@@ -80,24 +89,26 @@ public class LoggingFilter implements Filter {
     if (abstractBlog instanceof Blog) {
       Blog blog = (Blog)abstractBlog;
 
-      // this is the list of URIs that get logged
-      if (internalUri.startsWith("/feed.action") ||
-          internalUri.startsWith("/responseFeed.action") ||
-          internalUri.startsWith("/viewCategories.action") ||
-          internalUri.startsWith("/viewCategory.action") ||
-          internalUri.startsWith("/viewTags.action") ||
-          internalUri.startsWith("/viewTag.action") ||
-          internalUri.startsWith("/search.action") ||
-          internalUri.startsWith("/aboutAuthor.action") ||
-          internalUri.startsWith("/viewBlogEntry.action") ||
-          internalUri.startsWith("/viewStaticPage.action") ||
-          internalUri.startsWith("/viewDay.action") ||
-          internalUri.startsWith("/viewMonth.action") ||
-          internalUri.startsWith("/file.action?type=" + FileMetaData.BLOG_FILE) ||
-          internalUri.startsWith("/viewBlogEntriesByPage.action") ||
-          (internalUri.startsWith("/viewHomePage.action") && blog instanceof Blog)) {
-
-        blog.log(httpRequest);
+      if (ACTION_REGEX.matcher(internalUri).matches() || SECURE_ACTION_REGEX.matcher(internalUri).matches()) {
+//        log.info("Logging " + externalUri);
+//      // this is the list of URIs that get logged
+//      if (internalUri.startsWith("/feed.action") ||
+//          internalUri.startsWith("/responseFeed.action") ||
+//          internalUri.startsWith("/viewCategories.action") ||
+//          internalUri.startsWith("/viewCategory.action") ||
+//          internalUri.startsWith("/viewTags.action") ||
+//          internalUri.startsWith("/viewTag.action") ||
+//          internalUri.startsWith("/search.action") ||
+//          internalUri.startsWith("/aboutAuthor.action") ||
+//          internalUri.startsWith("/viewBlogEntry.action") ||
+//          internalUri.startsWith("/viewStaticPage.action") ||
+//          internalUri.startsWith("/viewDay.action") ||
+//          internalUri.startsWith("/viewMonth.action") ||
+//          internalUri.startsWith("/file.action?type=" + FileMetaData.BLOG_FILE) ||
+//          internalUri.startsWith("/viewBlogEntriesByPage.action") ||
+//          (internalUri.startsWith("/viewHomePage.action") && blog instanceof Blog)) {
+//
+//        blog.log(httpRequest);
       }
     }
 

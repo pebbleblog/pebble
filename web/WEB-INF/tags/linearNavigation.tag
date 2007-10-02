@@ -24,6 +24,26 @@
     </c:if>
   </c:when>
 
+  <c:when test="${displayMode == 'logSummaryForMonth'}">
+    <c:if test="${not empty previousMonth}">
+      <a href="${logAction}.secureaction?year=${previousMonth.year.year}&month=${previousMonth.month}">&lt;&lt; <fmt:formatDate value="${previousMonth.date}" pattern="MMMM yyyy"/></a> |
+    </c:if>
+    <a href="${blog.url}"><fmt:message key="common.home" /></a>
+    <c:if test="${not empty nextMonth}">
+      | <a href="${logAction}.secureaction?year=${nextMonth.year.year}&month=${nextMonth.month}"><fmt:formatDate value="${nextMonth.date}" pattern="MMMM yyyy"/> &gt;&gt;</a>
+    </c:if>
+  </c:when>
+
+  <c:when test="${displayMode == 'logSummaryForDay'}">
+    <c:if test="${not empty previousDay}">
+      <a href="${logAction}.secureaction?year=${previousDay.month.year.year}&month=${previousDay.month.month}&day=${previousDay.day}">&lt;&lt; <fmt:formatDate value="${previousDay.date}" type="date" dateStyle="long"/></a> |
+    </c:if>
+    <a href="${blog.url}"><fmt:message key="common.home" /></a>
+    <c:if test="${not empty nextDay}">
+      | <a href="${logAction}.secureaction?year=${nextDay.month.year.year}&month=${nextDay.month.month}&day=${nextDay.day}"><fmt:formatDate value="${nextDay.date}" type="date" dateStyle="long"/> &gt;&gt;</a>
+    </c:if>
+  </c:when>
+
   <c:when test="${displayMode == 'day'}">
     <c:if test="${not empty previousDay}">
       <a href="${previousDay.permalink}">&lt;&lt; <fmt:formatDate value="${previousDay.date}" type="date" dateStyle="long"/></a> |

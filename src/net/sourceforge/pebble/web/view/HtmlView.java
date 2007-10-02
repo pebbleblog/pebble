@@ -93,6 +93,10 @@ public abstract class HtmlView extends JspView {
     return theme;
   }
 
+  protected int getStatus() {
+    return HttpServletResponse.SC_OK;
+  }
+
   /**
    * Dispatches this view.
    *
@@ -119,6 +123,9 @@ public abstract class HtmlView extends JspView {
     } catch (IOException ioe) {
       ioe.printStackTrace();
       throw new ServletException(ioe);
+    } finally {
+      AbstractBlog blog = (AbstractBlog)getModel().get(Constants.BLOG_KEY);
+      blog.log(request, getStatus());
     }
   }
 

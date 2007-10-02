@@ -67,39 +67,6 @@ public class Log {
     if (logEntries == null) {
       logEntries = new ArrayList<LogEntry>();
     }
-
-    init();
-  }
-
-  /**
-   * Determines how many referers and requests there are.
-   */
-  private void init() {
-    Map refererMap = new HashMap();
-    Map requestMap = new HashMap();
-    Iterator it = logEntries.iterator();
-    while (it.hasNext()) {
-      LogEntry logEntry = (LogEntry)it.next();
-
-      Referer referer = new Referer(logEntry.getReferer());
-      if (refererMap.containsKey(referer.getName())) {
-        referer = (Referer)refererMap.get(referer.getName());
-      } else {
-        refererMap.put(referer.getName(), referer);
-      }
-      referer.addLogEntry(logEntry);
-
-      Request request = new Request(logEntry.getRequestUri(), blog);
-      if (requestMap.containsKey(request.getName())) {
-        request = (Request)requestMap.get(request.getName());
-      } else {
-        requestMap.put(request.getName(), request);
-      }
-      request.addLogEntry(logEntry);
-    }
-
-    this.referers = refererMap.values();
-    this.requests = requestMap.values();
   }
 
   /**
@@ -117,6 +84,20 @@ public class Log {
    * @return    a Collection of Referer instances
    */
   public Collection getReferers() {
+    if (this.referers == null) {
+      Map refererMap = new HashMap();
+      for (LogEntry logEntry : logEntries) {
+        Referer referer = new Referer(logEntry.getReferer());
+        if (refererMap.containsKey(referer.getName())) {
+          referer = (Referer)refererMap.get(referer.getName());
+        } else {
+          refererMap.put(referer.getName(), referer);
+        }
+        referer.addLogEntry(logEntry);
+      }
+      this.referers = refererMap.values();
+    }
+
     return this.referers;
   }
 
@@ -126,6 +107,19 @@ public class Log {
    * @return    a Collection of Request instances
    */
   public Collection getRequests() {
+    if (this.requests == null) {
+      Map requestMap = new HashMap();
+      for (LogEntry logEntry : logEntries) {
+        Request request = new Request(logEntry.getRequestUri(), blog);
+        if (requestMap.containsKey(request.getName())) {
+          request = (Request)requestMap.get(request.getName());
+        } else {
+          requestMap.put(request.getName(), request);
+        }
+        request.addLogEntry(logEntry);
+      }
+      this.requests = requestMap.values();
+    }
     return this.requests;
   }
 

@@ -33,6 +33,8 @@ package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.domain.Month;
+import net.sourceforge.pebble.domain.Day;
 import net.sourceforge.pebble.logging.Log;
 
 import javax.servlet.ServletException;
@@ -51,35 +53,131 @@ public abstract class AbstractLogAction extends SecureAction {
   protected Log getLog(HttpServletRequest request, HttpServletResponse response) throws ServletException {
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
 
-    String year = request.getParameter("year");
-    String month = request.getParameter("month");
-    String day = request.getParameter("day");
+    String yearAsString = request.getParameter("year");
+    String monthAsString = request.getParameter("month");
+    String dayAsString = request.getParameter("day");
 
     Calendar cal = blog.getCalendar();
     Log log = null;
     String logPeriod = "";
 
-    if (year != null && year.length() > 0 &&
-        month != null && month.length() > 0 &&
-        day != null && day.length() > 0) {
-      cal.set(Calendar.YEAR, Integer.parseInt(year));
-      cal.set(Calendar.MONTH, Integer.parseInt(month)-1);
-      cal.set(Calendar.DAY_OF_MONTH, Integer.parseInt(day));
+    if (yearAsString != null && yearAsString.length() > 0 &&
+        monthAsString != null && monthAsString.length() > 0 &&
+        dayAsString != null && dayAsString.length() > 0) {
+      int year = Integer.parseInt(yearAsString);
+      int month = Integer.parseInt(monthAsString);
+      int day = Integer.parseInt(dayAsString);
+      cal.set(Calendar.YEAR, year);
+      cal.set(Calendar.MONTH, month-1);
+      cal.set(Calendar.DAY_OF_MONTH, day);
       log = blog.getLogger().getLog(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH)+1, cal.get(Calendar.DAY_OF_MONTH));
       SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy", blog.getLocale());
       dateFormat.setTimeZone(blog.getTimeZone());
+      registerObjectsForNavigation(blog, blog.getBlogForDay(year, month, day));
+      logPeriod = dateFormat.format(cal.getTime());
+    } else if (yearAsString != null && yearAsString.length() > 0 &&
+          monthAsString != null && monthAsString.length() > 0) {
+      int year = Integer.parseInt(yearAsString);
+      int month = Integer.parseInt(monthAsString);
+      cal.set(Calendar.YEAR, year);
+      cal.set(Calendar.MONTH, month-1);
+      log = blog.getLogger().getLog(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH)+1);
+      SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM yyyy", blog.getLocale());
+      dateFormat.setTimeZone(blog.getTimeZone());
+      registerObjectsForNavigation(blog, blog.getBlogForMonth(year, month));
       logPeriod = dateFormat.format(cal.getTime());
     } else {
       // get the log for today
       log = blog.getLogger().getLog();
       SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy", blog.getLocale());
       dateFormat.setTimeZone(blog.getTimeZone());
+      registerObjectsForNavigation(blog, blog.getBlogForToday());
       logPeriod = dateFormat.format(cal.getTime());
     }
 
     getModel().put("logPeriod", logPeriod);
 
     return log;
+  }
+
+  protected String getLogFile(HttpServletRequest request, HttpServletResponse response) throws ServletException {
+    Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
+
+    String yearAsString = request.getParameter("year");
+    String monthAsString = request.getParameter("month");
+    String dayAsString = request.getParameter("day");
+
+    Calendar cal = blog.getCalendar();
+    String log = null;
+    String logPeriod = "";
+
+    if (yearAsString != null && yearAsString.length() > 0 &&
+        monthAsString != null && monthAsString.length() > 0 &&
+        dayAsString != null && dayAsString.length() > 0) {
+      int year = Integer.parseInt(yearAsString);
+      int month = Integer.parseInt(monthAsString);
+      int day = Integer.parseInt(dayAsString);
+      cal.set(Calendar.YEAR, year);
+      cal.set(Calendar.MONTH, month-1);
+      cal.set(Calendar.DAY_OF_MONTH, day);
+      log = blog.getLogger().getLogFile(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH)+1, cal.get(Calendar.DAY_OF_MONTH));
+      SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy", blog.getLocale());
+      dateFormat.setTimeZone(blog.getTimeZone());
+      registerObjectsForNavigation(blog, blog.getBlogForDay(year, month, day));
+      logPeriod = dateFormat.format(cal.getTime());
+    } else if (yearAsString != null && yearAsString.length() > 0 &&
+          monthAsString != null && monthAsString.length() > 0) {
+      int year = Integer.parseInt(yearAsString);
+      int month = Integer.parseInt(monthAsString);
+      cal.set(Calendar.YEAR, year);
+      cal.set(Calendar.MONTH, month-1);
+      log = blog.getLogger().getLogFile(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH)+1);
+      SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM yyyy", blog.getLocale());
+      dateFormat.setTimeZone(blog.getTimeZone());
+      registerObjectsForNavigation(blog, blog.getBlogForMonth(year, month));
+      logPeriod = dateFormat.format(cal.getTime());
+    } else {
+      // get the log for today
+      log = blog.getLogger().getLogFile();
+      SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy", blog.getLocale());
+      dateFormat.setTimeZone(blog.getTimeZone());
+      registerObjectsForNavigation(blog, blog.getBlogForToday());
+      logPeriod = dateFormat.format(cal.getTime());
+    }
+
+    getModel().put("logPeriod", logPeriod);
+
+    return log;
+  }
+
+  private void registerObjectsForNavigation(Blog blog, Month month) {
+    Month firstMonth = blog.getBlogForFirstMonth();
+    Month previousMonth = month.getPreviousMonth();
+    Month nextMonth = month.getNextMonth();
+
+    if (!previousMonth.before(firstMonth)) {
+      getModel().put("previousMonth", previousMonth);
+    }
+
+    if (!nextMonth.getDate().after(blog.getCalendar().getTime()) || nextMonth.before(firstMonth)) {
+      getModel().put("nextMonth", nextMonth);
+    }
+    getModel().put("displayMode", "logSummaryForMonth");
+  }
+
+  private void registerObjectsForNavigation(Blog blog, Day day) {
+    Day firstDay = blog.getBlogForFirstMonth().getBlogForFirstDay();
+    Day previousDay = day.getPreviousDay();
+    Day nextDay = day.getNextDay();
+
+    if (!previousDay.before(firstDay)) {
+      getModel().put("previousDay", previousDay);
+    }
+
+    if (!nextDay.getDate().after(blog.getCalendar().getTime()) || nextDay.before(firstDay)) {
+      getModel().put("nextDay", nextDay);
+    }
+    getModel().put("displayMode", "logSummaryForDay");
   }
 
   /**

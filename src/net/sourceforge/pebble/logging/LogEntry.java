@@ -50,7 +50,7 @@ public class LogEntry {
   private String request = "";
 
   /** the HTTP status code returned */
-  private int statusCode = -1;
+  private int statusCode = 200;
 
   /** the number of bytes returned */
   private long bytes = -1;
@@ -107,6 +107,15 @@ public class LogEntry {
   }
 
   /**
+   * Gets just the method portion of the request.
+   *
+   * @return  the request method as a String
+   */
+  public String getRequestMethod() {
+    return request.substring(0, request.indexOf("/")-1);
+  }
+
+  /**
    * Gets just the URI portion of the request.
    *
    * @return  the request URI as a String
@@ -148,7 +157,7 @@ public class LogEntry {
    * @return    the number of bytes as a long (-1 if not set)
    */
   public long getBytes() {
-    return statusCode;
+    return bytes;
   }
 
   /**

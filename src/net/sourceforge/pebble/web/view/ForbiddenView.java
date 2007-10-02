@@ -31,6 +31,9 @@
  */
 package net.sourceforge.pebble.web.view;
 
+import net.sourceforge.pebble.domain.AbstractBlog;
+import net.sourceforge.pebble.Constants;
+
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -65,6 +68,9 @@ public class ForbiddenView extends View {
       response.sendError(HttpServletResponse.SC_FORBIDDEN);
     } catch (IOException ioe) {
       throw new ServletException(ioe);
+    } finally {
+      AbstractBlog blog = (AbstractBlog)getModel().get(Constants.BLOG_KEY);
+      blog.log(request, HttpServletResponse.SC_FORBIDDEN);
     }
   }
 

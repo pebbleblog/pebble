@@ -33,6 +33,8 @@ package net.sourceforge.pebble.web.view.impl;
 
 import net.sourceforge.pebble.web.view.HtmlView;
 
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * Represents the 404 page.
  *
@@ -50,6 +52,10 @@ public class FourZeroFourView extends HtmlView {
    */
   public String getTitle() {
     return null;
+  }
+
+  protected int getStatus() {
+    return HttpServletResponse.SC_NOT_FOUND;
   }
 
   /**

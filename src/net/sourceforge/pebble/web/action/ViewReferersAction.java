@@ -83,6 +83,7 @@ public class ViewReferersAction extends AbstractLogAction {
       totalReferers += url.getCount();
     }
 
+    getModel().put("logAction", "viewReferers");
     getModel().put("referers", referers);
     getModel().put("totalReferers", new Integer(totalReferers));
 

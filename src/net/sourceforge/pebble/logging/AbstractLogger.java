@@ -60,7 +60,7 @@ public abstract class AbstractLogger {
    *
    * @param request   a HttpServletRequest
    */
-  public abstract void log(HttpServletRequest request);
+  public abstract void log(HttpServletRequest request, int status);
 
   /**
    * Called to start this logger.

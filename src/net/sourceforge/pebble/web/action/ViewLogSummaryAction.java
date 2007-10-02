@@ -33,6 +33,7 @@ package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.domain.Month;
 import net.sourceforge.pebble.logging.LogSummary;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.impl.LogSummaryByMonthView;
@@ -62,27 +63,31 @@ public class ViewLogSummaryAction extends SecureAction {
   public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
 
-    String year = request.getParameter("year");
-    String month = request.getParameter("month");
+    String yearAsStriing = request.getParameter("year");
+    String monthAsString = request.getParameter("month");
 
     Calendar cal = blog.getCalendar();
     LogSummary logSummary;
     View view;
 
-    if (year != null && year.length() > 0 &&
-        month != null && month.length() > 0) {
-      cal.set(Calendar.YEAR, Integer.parseInt(year));
-      cal.set(Calendar.MONTH, Integer.parseInt(month)-1);
+    if (yearAsStriing != null && yearAsStriing.length() > 0 &&
+        monthAsString != null && monthAsString.length() > 0) {
+      int year = Integer.parseInt(yearAsStriing);
+      int month = Integer.parseInt(monthAsString)-1;
+      cal.set(Calendar.YEAR, year);
+      cal.set(Calendar.MONTH, month);
       logSummary = blog.getLogger().getLogSummary(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH)+1);
       view = new LogSummaryByMonthView();
-//    } else if (year != null && year.length() > 0) {
-//      cal.set(Calendar.YEAR, Integer.parseInt(year));
-//      logSummary = blog.getLogger().getLogSummary(cal.get(Calendar.YEAR));
-//      view = new LogSummaryByYearView();
+      registerObjectsForNavigation(blog, blog.getBlogForMonth(year, month+1));
+    } else if (yearAsStriing != null && yearAsStriing.length() > 0) {
+      cal.set(Calendar.YEAR, Integer.parseInt(yearAsStriing));
+      logSummary = blog.getLogger().getLogSummary(cal.get(Calendar.YEAR));
+      view = new LogSummaryByYearView();
     } else {
-      // get the log for this month
+      // get the log for this monthAsString
       logSummary = blog.getLogger().getLogSummary(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH)+1);
       view = new LogSummaryByMonthView();
+      registerObjectsForNavigation(blog, blog.getBlogForThisMonth());
     }
 
     SimpleDateFormat yearFormatter = new SimpleDateFormat("yyyy", Locale.ENGLISH);
@@ -94,9 +99,25 @@ public class ViewLogSummaryAction extends SecureAction {
     getModel().put("year", yearFormatter.format(logSummary.getDate()));
     getModel().put("month", monthFormatter.format(logSummary.getDate()));
 
+    getModel().put("logAction", "viewLogSummary");
     getModel().put("logSummary", logSummary);
 
     return view;
+  }
+
+  private void registerObjectsForNavigation(Blog blog, Month month) {
+    Month firstMonth = blog.getBlogForFirstMonth();
+    Month previousMonth = month.getPreviousMonth();
+    Month nextMonth = month.getNextMonth();
+
+    if (!previousMonth.before(firstMonth)) {
+      getModel().put("previousMonth", previousMonth);
+    }
+
+    if (!nextMonth.getDate().after(blog.getCalendar().getTime()) || nextMonth.before(firstMonth)) {
+      getModel().put("nextMonth", nextMonth);
+    }
+    getModel().put("displayMode", "logSummaryForMonth");
   }
 
   /**

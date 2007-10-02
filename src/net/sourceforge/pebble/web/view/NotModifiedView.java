@@ -31,13 +31,16 @@
  */
 package net.sourceforge.pebble.web.view;
 
+import net.sourceforge.pebble.domain.AbstractBlog;
+import net.sourceforge.pebble.Constants;
+
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Represents a 404.
+ * Represents a 304 (not modified).
  *
  * @author    Simon Brown
  */
@@ -61,6 +64,9 @@ public class NotModifiedView extends View {
    */
   public void dispatch(HttpServletRequest request, HttpServletResponse response, ServletContext context) throws ServletException {
     response.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
+
+    AbstractBlog blog = (AbstractBlog)getModel().get(Constants.BLOG_KEY);
+    blog.log(request, HttpServletResponse.SC_NOT_MODIFIED);
   }
 
 }

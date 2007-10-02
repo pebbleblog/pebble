@@ -31,6 +31,11 @@
       <include-prelude>/WEB-INF/xml/prelude.jspf</include-prelude>
       <include-prelude>/WEB-INF/xml/coda.jspf</include-prelude>
     </jsp-property-group>
+
+    <jsp-property-group>
+      <url-pattern>*.txt</url-pattern>
+      <scripting-invalid>true</scripting-invalid>
+    </jsp-property-group>
   </jsp-config>
 
   <filter>

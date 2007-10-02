@@ -87,6 +87,7 @@ public class ViewRequestsAction extends AbstractLogAction {
       totalRequests += url.getCount();
     }
 
+    getModel().put("logAction", "viewRequests");
     getModel().put("requests", requests);
     getModel().put("totalRequests", new Integer(totalRequests));
 
