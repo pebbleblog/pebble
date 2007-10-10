@@ -102,59 +102,69 @@ public class PreProcessingFilter implements Filter {
 //      httpResponse.addCookie(cookie);
 //    }
 
-    AbstractBlog blog = (AbstractBlog)request.getAttribute(Constants.BLOG_KEY);
-    if (blog instanceof Blog) {
-      Blog b = (Blog)blog;
-      ContentDecoratorContext context = new ContentDecoratorContext();
-      context.setView(ContentDecoratorContext.SUMMARY_VIEW);
-      context.setMedia(ContentDecoratorContext.HTML_PAGE);
-
-      List blogEntries = b.getRecentPublishedBlogEntries();
-      ContentDecoratorChain.decorate(context, blogEntries);
-      Collections.sort(blogEntries, new BlogEntryComparator());
-      httpRequest.setAttribute(Constants.RECENT_BLOG_ENTRIES, blogEntries);
-
-      List<Response> recentApprovedResponses = b.getRecentApprovedResponses();
-      for (Response r : recentApprovedResponses) {
-        if (r instanceof Comment) {
-          b.getContentDecoratorChain().decorate(context, (Comment)r);
-        } else if (r instanceof TrackBack){
-          b.getContentDecoratorChain().decorate(context, (TrackBack)r);
-        }
-      }
-      httpRequest.setAttribute(Constants.RECENT_RESPONSES, recentApprovedResponses);
-      
-      httpRequest.setAttribute(Constants.CATEGORIES, b.getCategories());
-      httpRequest.setAttribute(Constants.TAGS, b.getTags());
-      httpRequest.setAttribute(Constants.PLUGIN_PROPERTIES, b.getPluginProperties());
-      httpRequest.setAttribute(Constants.ARCHIVES, b.getArchives());
-      httpRequest.setAttribute(Constants.BLOG_TYPE, "singleblog");
+    String externalUri = (String)request.getAttribute(Constants.EXTERNAL_URI);
+    if (externalUri.startsWith("/common/") ||
+        externalUri.startsWith("/dwr/") ||
+        externalUri.startsWith("/FCKeditor/") ||
+        externalUri.startsWith("/scripts/") ||
+        externalUri.startsWith("/themes/") ||
+        externalUri.equals("/pebble.css")) {
+      // do nothing
     } else {
-      httpRequest.setAttribute(Constants.BLOG_TYPE, "multiblog");
-    }
+      AbstractBlog blog = (AbstractBlog)request.getAttribute(Constants.BLOG_KEY);
+      if (blog instanceof Blog) {
+        Blog b = (Blog)blog;
+        ContentDecoratorContext context = new ContentDecoratorContext();
+        context.setView(ContentDecoratorContext.SUMMARY_VIEW);
+        context.setMedia(ContentDecoratorContext.HTML_PAGE);
 
-    if (PebbleContext.getInstance().getConfiguration().isMultiBlog()) {
-      httpRequest.setAttribute(Constants.MULTI_BLOG_KEY, BlogManager.getInstance().getMultiBlog());
-      
-      List blogs = BlogManager.getInstance().getPublicBlogs();
-      Collections.sort(blogs, new BlogByLastModifiedDateComparator());
-      httpRequest.setAttribute(Constants.BLOGS, blogs);
-    }
+        List blogEntries = b.getRecentPublishedBlogEntries();
+        ContentDecoratorChain.decorate(context, blogEntries);
+        Collections.sort(blogEntries, new BlogEntryComparator());
+        httpRequest.setAttribute(Constants.RECENT_BLOG_ENTRIES, blogEntries);
 
-    // change the character encoding so that we can successfully get
-    // international characters from the request when HTML forms are submitted
-    // ... but only if the browser doesn't send the character encoding back
-    if (request.getCharacterEncoding() == null) {
-      request.setCharacterEncoding(blog.getCharacterEncoding());
-    }
+        List<Response> recentApprovedResponses = b.getRecentApprovedResponses();
+        for (Response r : recentApprovedResponses) {
+          if (r instanceof Comment) {
+            b.getContentDecoratorChain().decorate(context, (Comment)r);
+          } else if (r instanceof TrackBack){
+            b.getContentDecoratorChain().decorate(context, (TrackBack)r);
+          }
+        }
+        httpRequest.setAttribute(Constants.RECENT_RESPONSES, recentApprovedResponses);
 
-    PebbleUserDetails user = SecurityUtils.getUserDetails();
-    if (user != null) {
-      httpRequest.setAttribute(Constants.AUTHENTICATED_USER, user);
-    }
+        httpRequest.setAttribute(Constants.CATEGORIES, b.getCategories());
+        httpRequest.setAttribute(Constants.TAGS, b.getTags());
+        httpRequest.setAttribute(Constants.PLUGIN_PROPERTIES, b.getPluginProperties());
+        httpRequest.setAttribute(Constants.ARCHIVES, b.getArchives());
+        httpRequest.setAttribute(Constants.BLOG_TYPE, "singleblog");
+      } else {
+        httpRequest.setAttribute(Constants.BLOG_TYPE, "multiblog");
+      }
 
-    Config.set(request, Config.FMT_LOCALE, blog.getLocale());
-    Config.set(request, Config.FMT_FALLBACK_LOCALE, Locale.ENGLISH);
+      if (PebbleContext.getInstance().getConfiguration().isMultiBlog()) {
+        httpRequest.setAttribute(Constants.MULTI_BLOG_KEY, BlogManager.getInstance().getMultiBlog());
+
+        List blogs = BlogManager.getInstance().getPublicBlogs();
+        Collections.sort(blogs, new BlogByLastModifiedDateComparator());
+        httpRequest.setAttribute(Constants.BLOGS, blogs);
+      }
+
+      // change the character encoding so that we can successfully get
+      // international characters from the request when HTML forms are submitted
+      // ... but only if the browser doesn't send the character encoding back
+      if (request.getCharacterEncoding() == null) {
+        request.setCharacterEncoding(blog.getCharacterEncoding());
+      }
+
+      PebbleUserDetails user = SecurityUtils.getUserDetails();
+      if (user != null) {
+        httpRequest.setAttribute(Constants.AUTHENTICATED_USER, user);
+      }
+
+      Config.set(request, Config.FMT_LOCALE, blog.getLocale());
+      Config.set(request, Config.FMT_FALLBACK_LOCALE, Locale.ENGLISH);
+    }
 
     chain.doFilter(request, response);
   }
