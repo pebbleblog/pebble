@@ -108,8 +108,11 @@ public class PreProcessingFilter implements Filter {
         externalUri.startsWith("/FCKeditor/") ||
         externalUri.startsWith("/scripts/") ||
         externalUri.startsWith("/themes/") ||
-        externalUri.equals("/pebble.css")) {
-      // do nothing
+        externalUri.equals("/pebble.css") ||
+        externalUri.equals("/jckconfig_pebble.js") ||
+        externalUri.equals("/favicon.ico")
+        ) {
+        // do nothing
     } else {
       AbstractBlog blog = (AbstractBlog)request.getAttribute(Constants.BLOG_KEY);
       if (blog instanceof Blog) {
