@@ -61,7 +61,7 @@ public class EmailSubscriptionListener extends BlogEntryListenerSupport {
    */
   public void blogEntryPublished(BlogEntryEvent event) {
     BlogEntry blogEntry = event.getBlogEntry();
-    sendNotification(blogEntry);
+    sendNotification((BlogEntry)blogEntry.clone());
   }
 
   private void sendNotification(BlogEntry blogEntry) {
