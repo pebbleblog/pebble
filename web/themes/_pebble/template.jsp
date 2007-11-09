@@ -22,18 +22,6 @@
       <div id="blogDescription"><span>${blog.description}</span></div>
     </div>
 
-    <%-- the linear navigation links (e.g. < Previous | Home | Next >) --%>
-    <div id="linearNavigation">
-      <template:linearNavigation/>
-    </div>
-
-    <%-- the sidebar that includes the calendar, recent blog entries, links, etc. --%>
-    <div id="sidebar">
-      <sidebar:adminPanel/>
-      <sidebar:blogSummary/>
-      <sidebar:loginForm/>
-    </div>
-
     <%-- the main area into which content gets rendered --%>
     <div id="content">
       <template:content/>
@@ -41,7 +29,6 @@
 
     <%-- the footer, containing the "powered by" link --%>
     <div id="footer">
-      <template:poweredByPebble/>
     </div>
 
   </div>
