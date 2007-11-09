@@ -62,6 +62,10 @@
       |
       <a href="login.secureaction"><fmt:message key="login.title" /></a>
       </pebble:isNotAuthenticated>
+      <pebble:isAuthenticated>
+      |
+      <a href="${pebbleContext.configuration.secureUrl}logout.action?redirectUrl=${blog.url}">Logout</a>
+      </pebble:isAuthenticated>
     </div>
 
   </div>

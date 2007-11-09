@@ -8,6 +8,7 @@ Added an RSS/Atom feed for individual authors (/authors/<username>/rss.xml|atom.
 Added e-mail subscription functionality, where readers can subscribe to new blog entries via e-mail.
 Added a statistics view, showing a breakdown of the total requests and unique IPs for newsfeeds, page views and file downloads.
 Fixed date formatting problems with Atom feeds (they weren't being formatted in UTC).
+Normal themes can now be used for the multi-blog pages, with the theme being switchable via the Pebble Properties page.
 
 Version 2.2 - 21st June 2007
 ----------------------------

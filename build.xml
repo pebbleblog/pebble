@@ -101,7 +101,7 @@
         <include name="commons-fileupload-1.0.jar"/>
         <include name="commons-httpclient-3.0-rc3.jar"/>
         <include name="commons-lang-2.1.jar"/>
-        <include name="commons-logging-1.0.4.jar"/>
+        <include name="commons-logging-1.1.jar"/>
         <include name="dwr-2.0-rc2.jar"/>
         <include name="ehcache-1.2.1RC.jar"/>
         <include name="geolite-java-1.2.1.jar"/>
@@ -121,7 +121,10 @@
         <include name="spring-web-1.2.8.jar"/>
         <include name="standard-1.1.2.jar"/>
         <include name="tidy.jar"/>
-        <include name="xmlrpc-1.2-b1.jar"/>
+        <include name="ws-commons-util-1.0.2.jar"/>
+        <include name="xmlrpc-client-3.1.jar"/>
+        <include name="xmlrpc-common-3.1.jar"/>
+        <include name="xmlrpc-server-3.1.jar"/>
       </fileset>
     </copy>
 
@@ -131,16 +134,6 @@
         <include name="license.txt"/>
         <include name="apache-license.txt"/>
         <include name="changelog.txt"/>
-      </fileset>
-    </copy>
-
-    <copy file="web/themes/default/screen.css" tofile="web/themes/_pebble/screen.css" />
-    <copy todir="web/themes/_pebble/images">
-      <fileset dir="web/themes/default/images">
-        <include name="*.gif"/>
-        <include name="*.jpg"/>
-        <include name="*.png"/>
-        <include name="*.ico"/>
       </fileset>
     </copy>
 
@@ -160,6 +153,12 @@
         <include name="ehcache.xml"/>
         <include name="propono.properties"/>
         <include name="geo-ip.dat"/>
+      </fileset>
+    </copy>
+
+    <copy todir="web/WEB-INF/classes/org/apache/xmlrpc/webserver">
+      <fileset dir="${etc.dir}">
+        <include name="XmlRpcServlet.properties"/>
       </fileset>
     </copy>
   </target>

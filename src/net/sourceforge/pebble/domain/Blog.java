@@ -284,7 +284,7 @@ public class Blog extends AbstractBlog {
     }
 
     eventListenerList.addBlogListener(new CacheListener());
-    eventListenerList.addBlogListener(new NewsFeedSubscriptionListener());
+    //eventListenerList.addBlogListener(new NewsFeedSubscriptionListener());
   }
 
   /**
@@ -422,7 +422,7 @@ public class Blog extends AbstractBlog {
     defaultProperties.setProperty(RECENT_RESPONSES_ON_HOME_PAGE_KEY, "3");
     defaultProperties.setProperty(THEME_KEY, "default");
     defaultProperties.setProperty(PRIVATE_KEY, FALSE);
-    defaultProperties.setProperty(LUCENE_ANALYZER_KEY, "org.apache.lucene.analysis.standard.StandardAnalyzer");
+    defaultProperties.setProperty(LUCENE_ANALYZER_KEY, "org.apache.lucene.analysis.SimpleAnalyzer");
     defaultProperties.setProperty(CONTENT_DECORATORS_KEY,
         "net.sourceforge.pebble.decorator.RadeoxDecorator\n" +
         "net.sourceforge.pebble.decorator.HtmlDecorator\n" +

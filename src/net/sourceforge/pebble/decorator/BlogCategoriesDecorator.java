@@ -29,9 +29,9 @@ public class BlogCategoriesDecorator extends ContentDecoratorSupport {
       if (categories.hasNext()) {
         StringBuffer buf = new StringBuffer();
 
-        buf.append("<div class=\"categories\">");
+        buf.append("<div class=\"categories\"><span>");
         buf.append(bundle.getString("category.categories"));
-        buf.append(" : ");
+        buf.append(" : </span>");
         while (categories.hasNext()) {
           Category category = (Category)categories.next();
           buf.append("<a href=\"");

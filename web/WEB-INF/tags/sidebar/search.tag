@@ -5,6 +5,7 @@
 <%--
   Displays the search form.
 --%>
+<c:if test="${blogType == 'singleblog'}">
 <div class="sidebarItem">
   <div class="sidebarItemTitle"><span><fmt:message key="common.search" /></span></div>
   <div class="sidebarItemBody">
@@ -14,3 +15,4 @@
     <a href="search.action"><fmt:message key="search.advancedSearch" /></a>
   </div>
 </div>
+</c:if>

@@ -5,6 +5,7 @@
 <%--
   Displays a list of category names and links, including the blog entry count for each.
 --%>
+<c:if test="${blogType == 'singleblog'}">
 <c:if test="${not empty categories[0].subCategories}">
 <div class="sidebarItem">
   <div class="sidebarItemTitle"><span><fmt:message key="category.categories" /></span></div>
@@ -16,4 +17,5 @@
     </c:forEach>
   </div>
 </div>
+</c:if>
 </c:if>

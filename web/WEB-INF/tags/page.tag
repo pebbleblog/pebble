@@ -33,7 +33,7 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/scripts/pebble.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/scripts/prototype.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/scripts/scriptaculous.js"></script>
-    <script type='text/javascript' src='${pageContext.request.contextPath}/dwr/engine.js'></script>
+    <script type='text/javascript' src='${pageContext.request.contextPath}/scripts/dwr-engine.js'></script>
     <script type='text/javascript' src='${pageContext.request.contextPath}/dwr/util.js'></script>
     <script type='text/javascript' src='${pageContext.request.contextPath}/dwr/interface/Pebble.js'></script>
 

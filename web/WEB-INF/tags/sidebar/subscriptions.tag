@@ -4,6 +4,7 @@
 <%--
  Displays the RSS/Atom links and an e-mail subscription form.
 --%>
+<c:if test="${blogType == 'singleblog'}">
 <div class="sidebarItem">
   <div class="sidebarItemTitle"><span><fmt:message key="newsfeed.subscribeTitle" /> <a href="rss.xml"><img src="common/images/feed-icon-10x10.png" alt="RSS feed" border="0" /></a></span></div>
   <div class="sidebarItemBody">
@@ -12,3 +13,4 @@
     <a href="${blog.url}subscribe.action"><fmt:message key="newsfeed.email"/></a>
   </div>
 </div>
+</c:if>

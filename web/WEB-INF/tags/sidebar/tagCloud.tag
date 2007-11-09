@@ -12,6 +12,7 @@
 
 <c:if test="${empty rankThreshold or rankThreshold < 1}"><c:set var="rankThreshold" value="1"/></c:if> 
 
+<c:if test="${blogType == 'singleblog'}">
 <c:if test="${not empty tags}">
 <div class="sidebarItem">
   <div class="sidebarItemTitle"><span><fmt:message key="tag.tags" /></span></div>
@@ -27,4 +28,5 @@
     </div>
    </div>
 </div>
+</c:if>
 </c:if>

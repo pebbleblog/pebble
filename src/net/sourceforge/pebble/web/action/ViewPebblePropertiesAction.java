@@ -67,6 +67,19 @@ public class ViewPebblePropertiesAction extends SecureAction {
     }
     getModel().put("numbers", numbers);
 
+    Set resources = request.getSession().getServletContext().getResourcePaths("/themes/");
+    List themes = new ArrayList();
+    Iterator it = resources.iterator();
+    String resource;
+    while (it.hasNext()) {
+      resource = (String)it.next();
+      resource = resource.substring(8, resource.length()-1);
+      if (!resource.startsWith("_")) {
+        themes.add(resource);
+      }
+    }
+    getModel().put("themes", themes);
+
     getModel().put("countries", Locale.getISOCountries());
     getModel().put("languages", Locale.getISOLanguages());
     List timeZones = Arrays.asList(TimeZone.getAvailableIDs());

@@ -56,7 +56,10 @@
 
     <c:if test="${not empty category}">
     <br />
-    <h3>Add a category</h3>
+    <c:choose>
+      <c:when test="${empty category.id}"><h3>Add a category</h3></c:when>
+      <c:otherwise><h3>Edit a category</h3></c:otherwise>
+    </c:choose>
     <br />
     <a name="form"></a>
     <form name="editCategoryForm" action="saveCategory.secureaction" method="post" accept-charset="<c:out value="${blog.characterEncoding}" />">

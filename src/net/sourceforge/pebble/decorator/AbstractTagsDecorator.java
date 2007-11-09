@@ -32,9 +32,9 @@ public abstract class AbstractTagsDecorator extends ContentDecoratorSupport {
       if (tags.hasNext()) {
         StringBuffer buf = new StringBuffer();
 
-        buf.append("<div class=\"tags\">");
+        buf.append("<div class=\"tags\"><span>");
         buf.append(bundle.getString("tag.tags"));
-        buf.append(" : ");
+        buf.append(" : </span>");
         while (tags.hasNext()) {
           Tag tag = (Tag)tags.next();
           buf.append("<a href=\"");

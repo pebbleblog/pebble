@@ -189,7 +189,9 @@ public class BlogService {
 
           // and store the blog entry now that listeners have been fired
           dao.storeBlogEntry(blogEntry);
-          cache.remove(compositeKey);
+          if (cache != null) {
+            cache.remove(compositeKey);
+          }
         }
 
         blogEntry.setPersistent(true);

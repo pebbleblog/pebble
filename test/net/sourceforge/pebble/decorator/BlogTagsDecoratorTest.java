@@ -83,7 +83,7 @@ public class BlogTagsDecoratorTest extends SingleBlogTestCase {
     decorator.decorate(context, blogEntry);
 
     StringBuffer tags = new StringBuffer();
-    tags.append("<div class=\"tags\">Tags : ");
+    tags.append("<div class=\"tags\"><span>Tags : </span>");
     tags.append("<a href=\"http://www.yourdomain.com/blog/tags/automatedunittesting\" rel=\"tag\">automatedunittesting</a> ");
     tags.append("<a href=\"http://www.yourdomain.com/blog/tags/junit\" rel=\"tag\">junit</a> ");
     tags.append("<a href=\"http://www.yourdomain.com/blog/tags/java\" rel=\"tag\">java</a>");

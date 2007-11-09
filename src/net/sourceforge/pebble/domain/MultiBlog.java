@@ -75,7 +75,7 @@ public class MultiBlog extends AbstractBlog {
     defaultProperties.setProperty(LANGUAGE_KEY, "en");
     defaultProperties.setProperty(COUNTRY_KEY, "GB");
     defaultProperties.setProperty(CHARACTER_ENCODING_KEY, "UTF-8");
-    defaultProperties.setProperty(THEME_KEY, "_pebble");
+    defaultProperties.setProperty(THEME_KEY, "default");
 
     return defaultProperties;
   }
