@@ -59,7 +59,7 @@ public class PhotoDecoratorTest extends SingleBlogTestCase {
   }
 
   /**
-   * Tests that text in the body between <escape> tags is escaped.
+   * Tests that text in the body between <photo> tags is escaped.
    */
   public void testEscapeTextInBody() throws Exception {
     blogEntry.setBody(null);
@@ -109,7 +109,7 @@ public class PhotoDecoratorTest extends SingleBlogTestCase {
   }
 
   /**
-   * Tests that text in the excerpt between <escape> tags is escaped.
+   * Tests that text in the excerpt between <photo> tags is escaped.
    */
   public void testEscapeTextInExcerpt() throws Exception {
     blogEntry.setExcerpt(null);
@@ -124,26 +124,42 @@ public class PhotoDecoratorTest extends SingleBlogTestCase {
     decorator.decorate(context, blogEntry);
     assertEquals("Here is some <b>HTML</b>.", blogEntry.getExcerpt());
 
-    blogEntry.setExcerpt("Here is some <escape><b>escaped HTML</b></escape>.");
+    blogEntry.setExcerpt("Before\n" +
+        "<photos>\n" +
+        "./images/photo1.jpg|caption1\n" +
+        "./images/photo2.jpg|caption2\n" +
+        "\n" +
+        "./images/photo3.jpg|caption3\n" +
+        "</photos>\n" +
+        "After");
     decorator.decorate(context, blogEntry);
-    assertEquals("Here is some &lt;b&gt;escaped HTML&lt;/b&gt;.", blogEntry.getExcerpt());
+    assertEquals("Before\n<div class=\"photos\">\n" +
+        "<div>\n" +
+        "<img src=\"./images/photo1.jpg\" class=\"photo\" alt=\"caption1\" />\n" +
+        "<img src=\"./images/photo2.jpg\" class=\"photo\" alt=\"caption2\" />\n" +
+        "</div>\n" +
+        "<div>\n" +
+        "<img src=\"./images/photo3.jpg\" class=\"photo\" alt=\"caption3\" />\n" +
+        "</div>\n" +
+        "</div>\n" +
+        "After", blogEntry.getExcerpt());
 
-    blogEntry.setExcerpt("Here is some <escape><b>escaped HTML</b></escape> and <escape><i>some more</i></escape>.");
+    blogEntry.setExcerpt("Before\n" +
+        "<photos>\n" +
+        "./images/photo1.jpg|\n" +
+        "</photos>\n" +
+        "After");
     decorator.decorate(context, blogEntry);
-    assertEquals("Here is some &lt;b&gt;escaped HTML&lt;/b&gt; and &lt;i&gt;some more&lt;/i&gt;.", blogEntry.getExcerpt());
-
-    blogEntry.setExcerpt("Here is some <escape><b>escaped\n" +
-        "HTML</b></escape>.");
-    decorator.decorate(context, blogEntry);
-    assertEquals("Here is some &lt;b&gt;escaped\nHTML&lt;/b&gt;.", blogEntry.getExcerpt());
-
-    blogEntry.setExcerpt("abc <escape></escape> def");
-    decorator.decorate(context, blogEntry);
-    assertEquals("abc <escape></escape> def", blogEntry.getExcerpt());
+    assertEquals("Before\n<div class=\"photos\">\n" +
+        "<div>\n" +
+        "<img src=\"./images/photo1.jpg\" class=\"photo\" alt=\"\" />\n" +
+        "</div>\n" +
+        "</div>\n" +
+        "After", blogEntry.getExcerpt());
   }
 
   /**
-   * Tests that text in the body between <escape> tags is escaped.
+   * Tests that text in the body of a static page between <photo> tags is escaped.
    */
   public void testEscapeTextInBodyOfStaticPage() throws Exception {
     staticPage.setBody(null);
@@ -158,22 +174,38 @@ public class PhotoDecoratorTest extends SingleBlogTestCase {
     decorator.decorate(context, staticPage);
     assertEquals("Here is some <b>HTML</b>.", staticPage.getBody());
 
-    staticPage.setBody("Here is some <escape><b>escaped HTML</b></escape>.");
+    staticPage.setBody("Before\n" +
+        "<photos>\n" +
+        "./images/photo1.jpg|caption1\n" +
+        "./images/photo2.jpg|caption2\n" +
+        "\n" +
+        "./images/photo3.jpg|caption3\n" +
+        "</photos>\n" +
+        "After");
     decorator.decorate(context, staticPage);
-    assertEquals("Here is some &lt;b&gt;escaped HTML&lt;/b&gt;.", staticPage.getBody());
+    assertEquals("Before\n<div class=\"photos\">\n" +
+        "<div>\n" +
+        "<img src=\"./images/photo1.jpg\" class=\"photo\" alt=\"caption1\" />\n" +
+        "<img src=\"./images/photo2.jpg\" class=\"photo\" alt=\"caption2\" />\n" +
+        "</div>\n" +
+        "<div>\n" +
+        "<img src=\"./images/photo3.jpg\" class=\"photo\" alt=\"caption3\" />\n" +
+        "</div>\n" +
+        "</div>\n" +
+        "After", staticPage.getBody());
 
-    staticPage.setBody("Here is some <escape><b>escaped HTML</b></escape> and <escape><i>some more</i></escape>.");
+    staticPage.setBody("Before\n" +
+        "<photos>\n" +
+        "./images/photo1.jpg|\n" +
+        "</photos>\n" +
+        "After");
     decorator.decorate(context, staticPage);
-    assertEquals("Here is some &lt;b&gt;escaped HTML&lt;/b&gt; and &lt;i&gt;some more&lt;/i&gt;.", staticPage.getBody());
-
-    staticPage.setBody("Here is some <escape><b>escaped\n" +
-        "HTML</b></escape>.");
-    decorator.decorate(context, staticPage);
-    assertEquals("Here is some &lt;b&gt;escaped\nHTML&lt;/b&gt;.", staticPage.getBody());
-
-    staticPage.setBody("abc <escape></escape> def");
-    decorator.decorate(context, staticPage);
-    assertEquals("abc <escape></escape> def", staticPage.getBody());
+    assertEquals("Before\n<div class=\"photos\">\n" +
+        "<div>\n" +
+        "<img src=\"./images/photo1.jpg\" class=\"photo\" alt=\"\" />\n" +
+        "</div>\n" +
+        "</div>\n" +
+        "After", staticPage.getBody());
   }
 
 }

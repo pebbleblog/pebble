@@ -1,16 +1,16 @@
 body {
   font-family: Trebuchet MS, Lucida Grande, Tahoma, Verdana, Arial, sans-serif;
   font-size: 13px;
-  background: gray;
+  background: white;
   color : black;
   text-align: left;
-  margin: 32px 32px 32px 32px;
+  margin: 32px;
 }
 #header {
-  background: white url( 'images/header.jpg' ) repeat-x top left;
+  background: white;
   color: black;
   font-weight: normal;
-  height: 200px;
+  height: 240px;
   text-align: left;
   margin-left: auto;
   margin-right: auto;
@@ -26,6 +26,7 @@ body {
   background: white;
   padding-top: 8px;
   padding-right: 8px;
+  padding-bottom: 8px;
   padding-bottom: 8px;
   padding-left: 0px;
   margin-right: 220px;
@@ -43,7 +44,7 @@ body {
   font-size: 11px;
 }
 #footer {
-  background: gray url('images/footer.jpg') no-repeat bottom left;
+  background: white;
   clear: both;
   text-align: center;
   font-size: 11px;
@@ -100,14 +101,14 @@ a:visited {
 
 #blogName {
   font-size: 44px;
-  color: white;
-  padding-top: 64px;
+  color: black;
+  padding-top: 160px;
   text-align: center;
   font-weight: normal;
 }
 #blogDescription {
   font-size: 16px;
-  color: white;
+  color: black;
   padding-top: 0px;
   padding-bottom: 8px;
   text-align: center;
@@ -115,16 +116,14 @@ a:visited {
 }
 
 h1 {
-  font-size: 24px;
+  font-size: 20px;
   font-weight: normal;
-  color : #6e7d8e;
-  background: transparent url('images/bullet.jpg') no-repeat center left;
+  color : black;
   padding-top: 4px;
   padding-bottom: 4px;
   padding-right: 4px;
   padding-left: 30px;
   margin: 0px;
-  border-bottom: #f0f0f0 solid 1px;
 }
 h1 a:link, h1 a:visited {
   color : #6e7d8e;
@@ -138,7 +137,7 @@ h2 {
   font-weight: normal;
   padding-left: 30px;
   padding-top: 4px;
-  color: #6e7d8e;
+  color: black;
   margin: 0px;
 }
 h3 {

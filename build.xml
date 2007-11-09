@@ -121,10 +121,7 @@
         <include name="spring-web-1.2.8.jar"/>
         <include name="standard-1.1.2.jar"/>
         <include name="tidy.jar"/>
-        <include name="ws-commons-util-1.0.2.jar"/>
-        <include name="xmlrpc-client-3.1.jar"/>
-        <include name="xmlrpc-common-3.1.jar"/>
-        <include name="xmlrpc-server-3.1.jar"/>
+        <include name="xmlrpc-1.2-b1.jar"/>
       </fileset>
     </copy>
 
