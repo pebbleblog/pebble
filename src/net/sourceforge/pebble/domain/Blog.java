@@ -284,7 +284,7 @@ public class Blog extends AbstractBlog {
     }
 
     eventListenerList.addBlogListener(new CacheListener());
-    //eventListenerList.addBlogListener(new NewsFeedSubscriptionListener());
+    eventListenerList.addBlogListener(new NewsFeedSubscriptionListener());
   }
 
   /**

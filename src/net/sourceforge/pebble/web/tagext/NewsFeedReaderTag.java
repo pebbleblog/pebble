@@ -37,8 +37,13 @@ import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.Constants;
 
 import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.JspContext;
+import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 import java.io.IOException;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * Gets entries for the specified news feed. 
@@ -46,6 +51,8 @@ import java.io.IOException;
  * @author    Simon Brown
  */
 public class NewsFeedReaderTag extends SimpleTagSupport {
+
+  private static final Log log = LogFactory.getLog(NewsFeedReaderTag.class);
 
   private String url;
 
@@ -58,7 +65,7 @@ public class NewsFeedReaderTag extends SimpleTagSupport {
     this.url = url;
 
     if (url != null) {
-      Blog blog = (Blog)getJspContext().getAttribute(Constants.BLOG_KEY);
+      Blog blog = (Blog)getJspContext().getAttribute(Constants.BLOG_KEY, PageContext.REQUEST_SCOPE);
       NewsFeedCache.getInstance().addSubscription(blog, url);
     }
   }

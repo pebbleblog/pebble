@@ -26,14 +26,14 @@
 
 <c:catch var="e">
 <pebble:getFeed url="${url}"/>
-  <c:if test="${not empty feedEntries}">
+<c:if test="${not empty feedEntries}">
 <div class="sidebarItem">
   <div class="sidebarItemTitle"><span>${name} <a href="${url}" style="border: 0px;"><img src="common/images/feed-icon-10x10.png" alt="RSS feed" border="0" /></a></span></div>
   <div class="sidebarItemBody">
     <ul>
       <c:forEach var="entry" items="${feedEntries}" end="${maxEntries-1}">
         <li>
-          <a href="${entry.url}">${entry.title}</a>
+          <a href="${entry.link}">${entry.title}</a>
           <c:if test="${showBody eq 'true'}">
           <br />
           <c:choose>
