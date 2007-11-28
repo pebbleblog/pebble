@@ -101,7 +101,7 @@
         <include name="commons-fileupload-1.0.jar"/>
         <include name="commons-httpclient-3.0-rc3.jar"/>
         <include name="commons-lang-2.1.jar"/>
-        <include name="commons-logging-1.1.jar"/>
+        <include name="commons-logging-1.0.4.jar"/>
         <include name="dwr-2.0-rc2.jar"/>
         <include name="ehcache-1.2.1RC.jar"/>
         <include name="geolite-java-1.2.1.jar"/>

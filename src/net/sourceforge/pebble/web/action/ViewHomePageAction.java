@@ -33,6 +33,9 @@ package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.web.view.ForwardView;
 import net.sourceforge.pebble.web.view.View;
+import net.sourceforge.pebble.domain.AbstractBlog;
+import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.Constants;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -55,6 +58,15 @@ public class ViewHomePageAction extends Action {
   public View process(HttpServletRequest request,
                       HttpServletResponse response)
       throws ServletException {
+
+    AbstractBlog abstractBlog = (AbstractBlog)getModel().get(Constants.BLOG_KEY);
+    if (abstractBlog instanceof Blog) {
+      Blog blog = (Blog)abstractBlog;
+      String homePage = blog.getHomePage();
+      if (homePage != null && !homePage.equals("")) {
+        return new ForwardView("/viewStaticPage.action?name=" + homePage);
+      }
+    }
 
     return new ForwardView("/viewBlogEntriesByPage.action?page=1");
   }

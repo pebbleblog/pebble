@@ -74,6 +74,15 @@
         </td>
       </tr>
 
+      <tr>
+        <td>
+          Home page
+        </td>
+        <td>
+          <pebble:select name="homePage" items="${staticPages}" selected="${blog.homePage}" label="title" value="name" />
+        </td>
+      </tr>
+
       <c:if test="${pebbleContext.configuration.userThemesEnabled}">
       <tr>
         <td>

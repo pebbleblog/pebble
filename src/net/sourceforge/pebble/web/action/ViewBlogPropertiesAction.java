@@ -36,6 +36,9 @@ import net.sourceforge.pebble.PebbleContext;
 import net.sourceforge.pebble.security.SecurityRealmException;
 import net.sourceforge.pebble.security.PebbleUserDetails;
 import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.domain.BlogService;
+import net.sourceforge.pebble.domain.StaticPage;
+import net.sourceforge.pebble.domain.BlogServiceException;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.impl.BlogPropertiesView;
 
@@ -96,6 +99,18 @@ public class ViewBlogPropertiesAction extends SecureAction {
       getModel().put("allUsers", PebbleContext.getInstance().getConfiguration().getSecurityRealm().getUsers());
     } catch (SecurityRealmException sre) {
       throw new ServletException("Could not get list of users", sre);
+    }
+
+    BlogService service = new BlogService();
+    try {
+      List staticPages = service.getStaticPages(blog);
+      StaticPage defaultPage = new StaticPage(blog);
+      defaultPage.setName("");
+      defaultPage.setTitle("Default - recent blog entries");
+      staticPages.add(0, defaultPage);
+      getModel().put("staticPages", staticPages);
+    } catch (BlogServiceException e) {
+      throw new ServletException(e);
     }
 
     return new BlogPropertiesView();

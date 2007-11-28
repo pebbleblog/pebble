@@ -112,6 +112,11 @@ public abstract class AbstractBlog extends TimePeriod {
     }
   }
 
+  public boolean isConfigured() {
+    File blogPropertiesFile = new File(getRoot(), BLOG_PROPERTIES_FILE);
+    return blogPropertiesFile.exists();
+  }
+
   /**
    * Gets the default properties for a blog.
    *

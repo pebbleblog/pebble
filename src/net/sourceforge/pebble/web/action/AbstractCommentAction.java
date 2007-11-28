@@ -42,7 +42,11 @@ public abstract class AbstractCommentAction extends Action {
       if (user != null) {
         comment.setAuthor(user.getName());
         comment.setEmail(user.getEmailAddress());
-        comment.setWebsite(user.getWebsite());
+        if (user.getWebsite() != null && !user.getWebsite().equals("")) {
+          comment.setWebsite(user.getWebsite());
+        } else {
+          comment.setWebsite(blogEntry.getBlog().getUrl() + "authors/" + user.getUsername() + "/");
+        }
         comment.setAuthenticated(true);
       }
     }
@@ -71,7 +75,11 @@ public abstract class AbstractCommentAction extends Action {
       if (user != null) {
         comment.setAuthor(user.getName());
         comment.setEmail(user.getEmailAddress());
-        comment.setWebsite(user.getWebsite());
+        if (user.getWebsite() != null && !user.getWebsite().equals("")) {
+          comment.setWebsite(user.getWebsite());
+        } else {
+          comment.setWebsite(blogEntry.getBlog().getUrl() + "authors/" + user.getUsername() + "/");
+        }
         comment.setAuthenticated(true);
       }
     } else {

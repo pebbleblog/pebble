@@ -1,14 +1,17 @@
 Version 2.3 - end July
 ----------------------------
-Removed redundant onClick handler from the login form.
-Fixed missing <tr> tag in the "archives by month" component when the number of months shown was odd.
 Added a "friendly" URL for the aboutAuthor action (/authors/<username/).
 About author page now shows the author's profile and their recent blog entries.
 Added an RSS/Atom feed for individual authors (/authors/<username>/rss.xml|atom.xml).
 Added e-mail subscription functionality, where readers can subscribe to new blog entries via e-mail.
-Added a statistics view, showing a breakdown of the total requests and unique IPs for newsfeeds, page views and file downloads.
+Enhanced log summary reporting (e.g. statistics view showing a breakdown of the total requests and unique IPs for newsfeeds, page views and file downloads).
+Added log summary by country.
 Fixed date formatting problems with Atom feeds (they weren't being formatted in UTC).
 Normal themes can now be used for the multi-blog pages, with the theme being switchable via the Pebble Properties page.
+A static page can now be configured (via blog properties) to be the home page for a blog.
+Minor HTML cleanup and tweaks to theme.
+Added a GZIP compression filter to reduce page loading times.
+DWR scripts are now cached to reduce page loading times.
 
 Version 2.2 - 21st June 2007
 ----------------------------

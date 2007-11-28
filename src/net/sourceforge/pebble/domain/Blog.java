@@ -102,6 +102,7 @@ public class Blog extends AbstractBlog {
   public static final String RICH_TEXT_EDITOR_FOR_BLOG_ENTRIES_ENABLED_KEY = "richTextEditorForBlogEntriesEnabled";
   public static final String RICH_TEXT_EDITOR_FOR_STATIC_PAGES_ENABLED_KEY = "richTextEditorForStaticPagesEnabled";
   public static final String RICH_TEXT_EDITOR_FOR_COMMENTS_ENABLED_KEY = "richTextEditorForCommentsEnabled";
+  public static final String HOME_PAGE_KEY = "homePage";
 
   /** the ID of this blog */
   private String id = "default";
@@ -520,6 +521,15 @@ public class Blog extends AbstractBlog {
    */
   public String getAbout() {
     return properties.getProperty(ABOUT_KEY);
+  }
+
+  /**
+   * Gets the home page to be used for this blog.
+   *
+   * @return    a String
+   */
+  public String getHomePage() {
+    return properties.getProperty(HOME_PAGE_KEY);
   }
 
   /**

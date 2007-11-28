@@ -339,34 +339,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/commons-logging-1.1.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/xmlrpc-common-3.1.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/xmlrpc-server-3.1.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/xmlrpc-client-3.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/../trunk/lib/commons-logging-1.0.4.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -434,11 +407,6 @@
       <attribute name="method" value="0" />
       <attribute name="URI" value="/WEB-INF/lib/commons-httpclient-3.0-rc3.jar" />
       <url>jar://$MODULE_DIR$/lib/commons-httpclient-3.0-rc3.jar!/</url>
-    </containerElement>
-    <containerElement type="library" level="module">
-      <attribute name="method" value="1" />
-      <attribute name="URI" value="/WEB-INF/lib/commons-logging-1.1.jar" />
-      <url>jar://$MODULE_DIR$/lib/commons-logging-1.1.jar!/</url>
     </containerElement>
     <containerElement type="library" level="module">
       <attribute name="method" value="1" />
@@ -567,18 +535,8 @@
     </containerElement>
     <containerElement type="library" level="module">
       <attribute name="method" value="1" />
-      <attribute name="URI" value="/WEB-INF/lib/xmlrpc-client-3.1.jar" />
-      <url>jar://$MODULE_DIR$/lib/xmlrpc-client-3.1.jar!/</url>
-    </containerElement>
-    <containerElement type="library" level="module">
-      <attribute name="method" value="1" />
-      <attribute name="URI" value="/WEB-INF/lib/xmlrpc-common-3.1.jar" />
-      <url>jar://$MODULE_DIR$/lib/xmlrpc-common-3.1.jar!/</url>
-    </containerElement>
-    <containerElement type="library" level="module">
-      <attribute name="method" value="1" />
-      <attribute name="URI" value="/WEB-INF/lib/xmlrpc-server-3.1.jar" />
-      <url>jar://$MODULE_DIR$/lib/xmlrpc-server-3.1.jar!/</url>
+      <attribute name="URI" value="/WEB-INF/lib/commons-logging-1.0.4.jar" />
+      <url>jar://$MODULE_DIR$/../trunk/lib/commons-logging-1.0.4.jar!/</url>
     </containerElement>
     <deploymentDescriptor name="web.xml" url="file://$MODULE_DIR$/web/WEB-INF/web.xml" optional="false" version="2.4" />
     <webroots>
