@@ -101,17 +101,21 @@ a:visited {
 #blogName {
   font-size: 44px;
   color: white;
-  padding-top: 64px;
-  text-align: center;
+  padding-top: 8px;
+  position: absolute;
+  top: 90px;
+  left: 20px;
   font-weight: normal;
 }
 #blogDescription {
   font-size: 16px;
   color: white;
-  padding-top: 0px;
+  padding-top: 8px;
   padding-bottom: 8px;
-  text-align: center;
   font-weight: normal;
+  position: absolute;
+  bottom: 20px;
+  left: 24px;
 }
 
 h1 {
