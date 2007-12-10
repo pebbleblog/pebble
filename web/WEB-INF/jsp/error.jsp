@@ -1,33 +1,21 @@
 <%@ page isErrorPage="true" %>
 
-<div class="contentItem">
+<table width="99%" cellspacing="0" cellpadding="8">
+  <tr>
+    <td width="50%" align="right" valign="top" style="border-right: #c0c0c0 solid 1px">
+      <h1><fmt:message key="error.errorTitle" /></h1>
+    </td>
+    <td width="50%" align="left">
+      <fmt:message key="error.error" />
+      <br /><br />
 
-  <h1><fmt:message key="error.errorTitle" /></h1>
-  <h2>&nbsp;</h2>
+      <pebble:isAuthenticated>
+      <p>
+        If you were editing your theme and have caused this error, click <a href="resetTheme.secureaction">here</a>
+        to switch back to the default theme.
+      </p>
+      </pebble:isAuthenticated>
+    </td>
+  </tr>
 
-  <div class="contentItemBody">
-    <fmt:message key="error.error" /> <a href="#" id="stacktraceLink" onclick="Effect.Appear('stacktrace', 'blind'); Effect.Fade('stacktraceLink', 'blind'); return false">[...]</a>
-    <br /><br />
-
-<div id="stacktrace" style="display: none;">
-<textarea rows="20" cols="60" readonly="true">
-${stackTrace}
-Request URL : ${pageContext.request.requestURL}
-Request URI : ${pageContext.request.requestURI}
-Query string : ${pageContext.request.queryString}
-External URI : ${externalUri}
-Internal URI : ${internalUri}
-Parameters : <c:forEach var="entry" items="${paramValues}">
-<c:forEach var="value" items="${entry.value}">${entry.key} = ${value}
-</c:forEach></c:forEach>
-</textarea>
-
-<p>
-  If you were editing your theme and have caused this error, click <a href="resetTheme.secureaction">here</a>
-  to switch back to the default theme.
-</p>
-</div>
-
-    </div>
-
-</div>
+</table>

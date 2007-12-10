@@ -267,4 +267,14 @@ public final class StringUtils {
     }
   }
 
+  public static String stripScriptTags(String html) {
+    if (html == null) {
+      return html;
+    }
+
+    html = html.replaceAll("<script.*?>.*?</script.*?>", "");
+    html = html.replaceAll("<script.*?/>", "");
+    return html;
+  }
+
 }

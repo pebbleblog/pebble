@@ -100,4 +100,12 @@ public class StringUtilsTest extends TestCase {
     assertEquals("Here is some text", StringUtils.filterHTML("Here is &lt;some&gt; text"));
   }
 
+  public void testStripScriptTags() {
+    assertEquals("some text", StringUtils.stripScriptTags("some <script>alert(1)</script>text"));
+    assertEquals("some text", StringUtils.stripScriptTags("some <script >alert(1)</script>text"));
+    assertEquals("some text", StringUtils.stripScriptTags("some <script >alert(1)</script >text"));
+    assertEquals("some text", StringUtils.stripScriptTags("some <script language=\"JavaScript\">alert(1)</script >text"));
+    assertEquals("some text", StringUtils.stripScriptTags("some <script src=\"something.js\"/>text"));
+  }
+
 }
