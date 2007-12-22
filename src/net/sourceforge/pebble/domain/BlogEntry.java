@@ -178,7 +178,7 @@ public class BlogEntry extends PageBasedContent {
       }
     }
 
-    Collections.reverse(list);
+    Collections.sort(list);
     return list;
   }
 
