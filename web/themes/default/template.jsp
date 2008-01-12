@@ -29,7 +29,6 @@
 
     <%-- the sidebar that includes the calendar, recent blog entries, links, etc. --%>
     <div id="sidebar">
-      <sidebar:adminPanel/>
       <sidebar:about/>
       <%-- uncomment this to have "about the author" information, which is useful for a multi-contributor blog
       <sidebar:aboutAuthor/>

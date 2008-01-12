@@ -41,6 +41,8 @@
 
   <body>
 
+  <%@ include file="/WEB-INF/fragments/admin.jspf" %>
+
   <jsp:doBody/>
 
   </body>

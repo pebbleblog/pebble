@@ -1,12 +1,31 @@
-.adminGroup {
-  background: transparent;
-  padding: 2px;
+#admin {
+  background: black;
+  color: white;
+  padding: 0px;
+  border: black solid 1px;
+  margin-bottom: 8px;
 }
-.adminGroup:hover {
-  background: #6e7d8e;
-  padding: 2px;
+#admin a {
   color: white;
 }
-.adminLinks {
+.adminLevel1 {
+  background: black;
+  padding: 4px;
+}
+.adminLevel1 span {
+  text-decoration: underline;  
+  padding-left: 4px;
+  padding-right: 4px;
+}
+.adminLevel1 span:hover {
+  background: gray;
+  color: white;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+.adminLevel2 {
+  background: gray;
   padding: 4px;
 }

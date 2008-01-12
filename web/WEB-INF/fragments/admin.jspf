@@ -1,0 +1,98 @@
+<%--
+  Displays the administration links that are available after logging in.
+--%>
+<pebble:isAuthenticated>
+<div id="admin">
+
+  <div class="adminLevel1">
+    ${authenticatedUser.username} :
+
+    <c:if test="${authenticatedUser.detailsUpdateable == true}">
+    <span id="admin-user-group" class="adminGroup" onmouseover="showMenu('admin-user'); hideMenu('admin-content'); hideMenu('admin-responses'); hideMenu('admin-blog'); hideMenu('admin-logs'); hideMenu('admin-admin')"">User Details</span> |
+    </c:if>
+
+    <pebble:isBlogContributor>
+    <span id="admin-content-group" class="adminGroup" onmouseover="showMenu('admin-content'); hideMenu('admin-user'); hideMenu('admin-responses'); hideMenu('admin-blog'); hideMenu('admin-logs'); hideMenu('admin-admin')">Content</span> |
+    <span id="admin-responses-group" class="adminGroup" onmouseover="showMenu('admin-responses'); hideMenu('admin-user'); hideMenu('admin-content'); hideMenu('admin-blog'); hideMenu('admin-logs'); hideMenu('admin-admin')">Responses</span> |
+    </pebble:isBlogContributor>
+
+    <pebble:isBlogAdminOrBlogOwner>
+    <span id="admin-blog-group" class="adminGroup" onmouseover="showMenu('admin-blog'); hideMenu('admin-user'); hideMenu('admin-content'); hideMenu('admin-responses'); hideMenu('admin-logs'); hideMenu('admin-admin')">Configuration</span> |
+    </pebble:isBlogAdminOrBlogOwner>
+
+    <pebble:isAuthorisedForBlog>
+    <span id="admin-logs-group" class="adminGroup" onmouseover="showMenu('admin-logs'); hideMenu('admin-user'); hideMenu('admin-content'); hideMenu('admin-responses'); hideMenu('admin-blog'); hideMenu('admin-admin')">Logs</span> |
+    </pebble:isAuthorisedForBlog>
+
+    <pebble:isBlogAdmin>
+    <span id="admin-admin-group" class="adminGroup" onmouseover="showMenu('admin-admin'); hideMenu('admin-user'); hideMenu('admin-content'); hideMenu('admin-responses'); hideMenu('admin-blog'); hideMenu('admin-logs')">Administration</span> |
+    </pebble:isBlogAdmin>
+
+    <span><a href="${pebbleContext.configuration.secureUrl}logout.action?redirectUrl=${blog.url}" onmouseover="hideMenu('admin-admin'); hideMenu('admin-user'); hideMenu('admin-content'); hideMenu('admin-responses'); hideMenu('admin-blog'); hideMenu('admin-logs')">Logout</a></span> |
+    <span><pebble:isAuthorisedForBlog><a href="./help/index.html" title="Help" onmouseover="hideMenu('admin-admin'); hideMenu('admin-user'); hideMenu('admin-content'); hideMenu('admin-responses'); hideMenu('admin-blog'); hideMenu('admin-logs')">Help</a></pebble:isAuthorisedForBlog></span>
+  </div>
+
+  <div class="adminLevel2">
+
+    <span id="admin-user">
+        <a href="editUserDetails.secureaction" title="Edit user details">User details</a> |
+        <a href="changePassword.secureaction" title="Change password">Change password</a>
+    </span>
+
+    <span id="admin-content">
+      <a href="addBlogEntry.secureaction#form" title="Add a new entry">New blog entry</a> (<fmt:formatNumber value="${blog.numberOfBlogEntries}"/>) |
+      <a href="viewUnpublishedBlogEntries.secureaction" title="View unpublished blog entries">Unpublished blog entries</a> (<fmt:formatNumber value="${blog.numberOfUnpublishedBlogEntries}"/>) |
+      <a href="addStaticPage.secureaction#form" title="Add a new static page">New static page</a> |
+      <a href="viewStaticPages.secureaction" title="Manage your static pages">Static pages</a> |
+      <a href="viewCategories.secureaction" title="Edit the categories associated with your blog">Categories</a> |
+      <a href="files/" title="Manage files in blog">Files</a> |
+      <a href="images/" title="Manage images in blog">Images</a>
+    </span>
+
+    <span id="admin-responses">
+      <a href="viewResponses.secureaction" title="Manage approved responses">Approved (<fmt:formatNumber value="${blog.numberOfApprovedResponses}"/>)</a> |
+      <a href="viewResponses.secureaction?type=pending" title="Manage pending responses">Pending (<fmt:formatNumber value="${blog.numberOfPendingResponses}"/>)</a> |
+      <a href="viewResponses.secureaction?type=rejected" title="Manage rejected responses">Rejected (<fmt:formatNumber value="${blog.numberOfRejectedResponses}"/>)</a>
+    </span>
+
+    <span id="admin-blog">
+      <a href="viewBlogProperties.secureaction" title="Manage your blog properties">Properties</a> |
+      <a href="viewPlugins.secureaction" title="Manage your plugins">Plugins</a>
+      <c:if test="${pebbleContext.configuration.userThemesEnabled}">
+        | <a href="theme/" title="Manage and edit the files in your theme">Theme</a> |
+      </c:if>
+      <a href="viewMessages.secureaction">Messages (<fmt:formatNumber value="${blog.numberOfMessages}" type="number" />)</a> |
+      <a href="utilities.secureaction" title="Maintenance and upgrade utilities">Utilities</a> |
+      <a href="aboutBlog.secureaction" title="About this blog">About</a>
+    </span>
+
+    <span id="admin-logs">
+      <a href="viewReferers.secureaction" title="View referers for today">Referers</a> (<a href="viewReferers.secureaction?filter=false" title="View referers for today, unfiltered">unfiltered</a>) |
+      <a href="viewRequests.secureaction" title="View requests for today">Requests</a> |
+      <a href="viewLogSummary.secureaction" title="View log summary for this month">Log summary</a> |
+      <a href="viewRefererFilters.secureaction" title="View referer filters">Referer filters</a>
+    </span>
+
+    <span id="admin-admin">
+      <c:if test="${blogManager.multiBlog}">
+      <a href="${multiBlog.url}viewPebbleProperties.secureaction" title="Manage Pebble properties">Properties</a> |
+      </c:if>
+      <a href="${multiBlog.url}viewBlogs.secureaction" title="View blogs">Blogs</a> |
+      <a href="${multiBlog.url}addUser.secureaction" title="Add user">Add user</a> |
+      <a href="${multiBlog.url}viewUsers.secureaction" title="View users">Users</a>
+    </span>
+
+    &nbsp;
+  </div>
+
+  <script type="text/javascript">
+    hideMenu('admin-user');
+    hideMenu('admin-content');
+    hideMenu('admin-responses');
+    hideMenu('admin-blog');
+    hideMenu('admin-logs');
+    hideMenu('admin-admin');
+  </script>
+
+</div>
+</pebble:isAuthenticated>

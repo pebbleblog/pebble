@@ -73,6 +73,16 @@ function hideComponent(elementId) {
     element.style.display = 'none';
 }
 
+function showMenu(elementId) {
+  var element = document.getElementById(elementId);
+  element.style.display = 'inline';
+}
+
+function hideMenu(elementId) {
+    var element = document.getElementById(elementId);
+    element.style.display = 'none';
+}
+
 function switchStyle(elementId, style) {
     var element = document.getElementById(elementId);
     element.className = style;
