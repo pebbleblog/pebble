@@ -1,11 +1,14 @@
 <%--
   Displays the administration links that are available after logging in.
 --%>
-<pebble:isAuthenticated>
+<pebble:isAuthorisedForBlog>
 <div id="admin">
 
   <div class="adminLevel1">
-    ${authenticatedUser.username} :
+    <table width="99%" cellspacing="0" cellpadding="0">
+    <tr>
+    <td>
+    <b>Logged in as ${authenticatedUser.username}</b> :
 
     <c:if test="${authenticatedUser.detailsUpdateable == true}">
     <span id="admin-user-group" class="adminGroup" onmouseover="showMenu('admin-user'); hideMenu('admin-content'); hideMenu('admin-responses'); hideMenu('admin-blog'); hideMenu('admin-logs'); hideMenu('admin-admin')"">User Details</span> |
@@ -13,7 +16,7 @@
 
     <pebble:isBlogContributor>
     <span id="admin-content-group" class="adminGroup" onmouseover="showMenu('admin-content'); hideMenu('admin-user'); hideMenu('admin-responses'); hideMenu('admin-blog'); hideMenu('admin-logs'); hideMenu('admin-admin')">Content</span> |
-    <span id="admin-responses-group" class="adminGroup" onmouseover="showMenu('admin-responses'); hideMenu('admin-user'); hideMenu('admin-content'); hideMenu('admin-blog'); hideMenu('admin-logs'); hideMenu('admin-admin')">Responses</span> |
+    <span id="admin-responses-group" class="adminGroup" onmouseover="showMenu('admin-responses'); hideMenu('admin-user'); hideMenu('admin-content'); hideMenu('admin-blog'); hideMenu('admin-logs'); hideMenu('admin-admin')">Comments and TrackBacks</span> |
     </pebble:isBlogContributor>
 
     <pebble:isBlogAdminOrBlogOwner>
@@ -28,8 +31,13 @@
     <span id="admin-admin-group" class="adminGroup" onmouseover="showMenu('admin-admin'); hideMenu('admin-user'); hideMenu('admin-content'); hideMenu('admin-responses'); hideMenu('admin-blog'); hideMenu('admin-logs')">Administration</span> |
     </pebble:isBlogAdmin>
 
-    <span><a href="${pebbleContext.configuration.secureUrl}logout.action?redirectUrl=${blog.url}" onmouseover="hideMenu('admin-admin'); hideMenu('admin-user'); hideMenu('admin-content'); hideMenu('admin-responses'); hideMenu('admin-blog'); hideMenu('admin-logs')">Logout</a></span> |
+    <span><a href="${pebbleContext.configuration.secureUrl}logout.action?redirectUrl=${blog.url}" onmouseover="hideMenu('admin-admin'); hideMenu('admin-user'); hideMenu('admin-content'); hideMenu('admin-responses'); hideMenu('admin-blog'); hideMenu('admin-logs')">Logout</a></span>
+    </td>
+    <td align="right">
     <span><pebble:isAuthorisedForBlog><a href="./help/index.html" title="Help" onmouseover="hideMenu('admin-admin'); hideMenu('admin-user'); hideMenu('admin-content'); hideMenu('admin-responses'); hideMenu('admin-blog'); hideMenu('admin-logs')">Help</a></pebble:isAuthorisedForBlog></span>
+    </td>
+    </tr>
+    </table>
   </div>
 
   <div class="adminLevel2">
@@ -95,4 +103,4 @@
   </script>
 
 </div>
-</pebble:isAuthenticated>
+</pebble:isAuthorisedForBlog>
