@@ -45,7 +45,6 @@
       <%-- the following is an example of the feed component that lets you aggregate a RSS/Atom feed into your blog
       <sidebar:feed name="del.icio.us" url="http://del.icio.us/rss/simongbrown" maxEntries="3" showBody="true" truncateBody="true"/>
       --%>
-      <sidebar:feed name="del.icio.us" url="http://localhost:8080/cta/rss.xml" maxEntries="3" showBody="true" truncateBody="true"/>
       <sidebar:loginForm/>
     </div>
 

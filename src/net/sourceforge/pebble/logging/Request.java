@@ -186,14 +186,14 @@ public class Request extends CountedUrl {
       }
     } else if (permalinkProvider.isMonthPermalink(url)) {
       Month month = permalinkProvider.getMonth(url);
-      SimpleDateFormat formatter = new SimpleDateFormat("MMMM yyyy");
+      SimpleDateFormat formatter = new SimpleDateFormat("MMMM yyyy", blog.getLocale());
       if (month != null) {
         setName("Month : " + formatter.format(month.getDate()));
         setPageView(true);
       }
     } else if (permalinkProvider.isDayPermalink(url)) {
       Day day = permalinkProvider.getDay(url);
-      SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM yyyy");
+      SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM yyyy", blog.getLocale());
       if (day != null) {
         setName("Day : " + formatter.format(day.getDate()));
         setPageView(true);

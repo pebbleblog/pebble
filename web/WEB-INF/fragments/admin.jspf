@@ -10,10 +10,6 @@
     <td>
     <b>Logged in as ${authenticatedUser.username}</b> :
 
-    <c:if test="${authenticatedUser.detailsUpdateable == true}">
-    <span id="admin-user-group" class="adminGroup" onmouseover="showMenu('admin-user'); hideMenu('admin-content'); hideMenu('admin-responses'); hideMenu('admin-blog'); hideMenu('admin-logs'); hideMenu('admin-admin')"">User Details</span> |
-    </c:if>
-
     <pebble:isBlogContributor>
     <span id="admin-content-group" class="adminGroup" onmouseover="showMenu('admin-content'); hideMenu('admin-user'); hideMenu('admin-responses'); hideMenu('admin-blog'); hideMenu('admin-logs'); hideMenu('admin-admin')">Content</span> |
     <span id="admin-responses-group" class="adminGroup" onmouseover="showMenu('admin-responses'); hideMenu('admin-user'); hideMenu('admin-content'); hideMenu('admin-blog'); hideMenu('admin-logs'); hideMenu('admin-admin')">Comments and TrackBacks</span> |
@@ -31,6 +27,10 @@
     <span id="admin-admin-group" class="adminGroup" onmouseover="showMenu('admin-admin'); hideMenu('admin-user'); hideMenu('admin-content'); hideMenu('admin-responses'); hideMenu('admin-blog'); hideMenu('admin-logs')">Administration</span> |
     </pebble:isBlogAdmin>
 
+    <c:if test="${authenticatedUser.detailsUpdateable == true}">
+    <span id="admin-user-group" class="adminGroup" onmouseover="showMenu('admin-user'); hideMenu('admin-content'); hideMenu('admin-responses'); hideMenu('admin-blog'); hideMenu('admin-logs'); hideMenu('admin-admin')"">User Details</span> |
+    </c:if>
+
     <span><a href="${pebbleContext.configuration.secureUrl}logout.action?redirectUrl=${blog.url}" onmouseover="hideMenu('admin-admin'); hideMenu('admin-user'); hideMenu('admin-content'); hideMenu('admin-responses'); hideMenu('admin-blog'); hideMenu('admin-logs')">Logout</a></span>
     </td>
     <td align="right">
@@ -41,11 +41,6 @@
   </div>
 
   <div class="adminLevel2">
-
-    <span id="admin-user">
-        <a href="editUserDetails.secureaction" title="Edit user details">User details</a> |
-        <a href="changePassword.secureaction" title="Change password">Change password</a>
-    </span>
 
     <span id="admin-content">
       <a href="addBlogEntry.secureaction#form" title="Add a new entry">New blog entry</a> (<fmt:formatNumber value="${blog.numberOfBlogEntries}"/>) |
@@ -65,6 +60,7 @@
 
     <span id="admin-blog">
       <a href="viewBlogProperties.secureaction" title="Manage your blog properties">Properties</a> |
+      <a href="viewBlogSecurity.secureaction" title="Manage your blog security">Security</a> |
       <a href="viewPlugins.secureaction" title="Manage your plugins">Plugins</a>
       <c:if test="${pebbleContext.configuration.userThemesEnabled}">
         | <a href="theme/" title="Manage and edit the files in your theme">Theme</a> |
@@ -90,16 +86,21 @@
       <a href="${multiBlog.url}viewUsers.secureaction" title="View users">Users</a>
     </span>
 
+    <span id="admin-user">
+        <a href="editUserDetails.secureaction" title="Edit user details">User details</a> |
+        <a href="changePassword.secureaction" title="Change password">Change password</a>
+    </span>
+
     &nbsp;
   </div>
 
   <script type="text/javascript">
-    hideMenu('admin-user');
     hideMenu('admin-content');
     hideMenu('admin-responses');
     hideMenu('admin-blog');
     hideMenu('admin-logs');
     hideMenu('admin-admin');
+    hideMenu('admin-user');
   </script>
 
 </div>

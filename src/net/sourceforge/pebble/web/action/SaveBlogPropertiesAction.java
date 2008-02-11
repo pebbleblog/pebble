@@ -98,47 +98,6 @@ public class SaveBlogPropertiesAction extends SecureAction {
         blog.setProperty(name, "false");
       }
 
-      // and the users
-      String values[] = request.getParameterValues("blogOwners");
-      StringBuffer blogOwners = new StringBuffer();
-      if (values != null) {
-        for (String value : values) {
-          blogOwners.append(value);
-          blogOwners.append(",");
-        }
-      }
-      blog.setProperty(Blog.BLOG_OWNERS_KEY, blogOwners.toString());
-
-      values = request.getParameterValues("blogPublishers");
-      StringBuffer blogPublishers = new StringBuffer();
-      if (values != null) {
-        for (String value : values) {
-          blogPublishers.append(value);
-          blogPublishers.append(",");
-        }
-      }
-      blog.setProperty(Blog.BLOG_PUBLISHERS_KEY, blogPublishers.toString());
-
-      values = request.getParameterValues("blogContributors");
-      StringBuffer blogContributors = new StringBuffer();
-      if (values != null) {
-        for (String value : values) {
-          blogContributors.append(value);
-          blogContributors.append(",");
-        }
-      }
-      blog.setProperty(Blog.BLOG_CONTRIBUTORS_KEY, blogContributors.toString());
-
-      values = request.getParameterValues("blogReaders");
-      StringBuffer blogReaders = new StringBuffer();
-      if (values != null) {
-        for (String value : values) {
-          blogReaders.append(value);
-          blogReaders.append(",");
-        }
-      }
-      blog.setProperty(Blog.BLOG_READERS_KEY, blogReaders.toString());
-
       try {
         blog.storeProperties();
       } catch (BlogServiceException e) {

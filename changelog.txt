@@ -1,4 +1,4 @@
-Version 2.3 - end July
+Version 2.3
 ----------------------------
 Added a "friendly" URL for the aboutAuthor action (/authors/<username/).
 About author page now shows the author's profile and their recent blog entries.
@@ -12,6 +12,10 @@ A static page can now be configured (via blog properties) to be the home page fo
 Minor HTML cleanup and tweaks to theme.
 Added a GZIP compression filter to reduce page loading times.
 DWR scripts are now cached to reduce page loading times.
+Fixed a problem where JavaScript would be served up when logging in to a private blog.
+Fixed problems with unit tests failing in non-English locales (patches from Frédéric Chuong).
+Moved admin links from the sidebar to the top of the page.
+Separated out blog security configuration from the general blog properties.
 
 Version 2.2 - 21st June 2007
 ----------------------------

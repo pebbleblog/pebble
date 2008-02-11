@@ -4,7 +4,8 @@ body {
   background: gray;
   color : black;
   text-align: left;
-  margin: 32px 32px 32px 32px;
+  margin: 0px auto 32px auto;
+  width: 800px;
 }
 #header {
   background: white url( 'images/header.jpg' ) repeat-x top left;
@@ -15,11 +16,10 @@ body {
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 0px;
+  margin-top: 32px;
   position: relative;
 }
 #body {
-  width: 800px;
-  margin: auto;
   background: white;
 }
 #content {
@@ -230,9 +230,14 @@ h3 {
   background: white url('images/draft.gif') no-repeat top left;
 }
 blockquote {
-  border-left: solid #E0E0E0 4px;
+  background: white url('images/blockquote.png') no-repeat top left;
+  padding-top: 8px;
+  padding-bottom: 16px;
   padding-left: 8px;
+  padding-right: 8px;
   color: gray;
+  margin-left: 24px;
+  margin-right: 24px;
 }
 .tags, .categories {
   border: solid #F0F0F0 1px;

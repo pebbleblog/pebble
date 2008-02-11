@@ -82,7 +82,10 @@ public class PrivateBlogFilterInvocationDefinitionSource implements FilterInvoca
         uri.startsWith("/scripts/") ||
         uri.startsWith("/common/") ||
         uri.startsWith("/dwr/") ||
-        uri.equals("/robots.txt")
+        uri.equals("/robots.txt") ||
+        uri.equals("/pebble.css") ||
+        uri.equals("/favicon.ico") ||
+        uri.startsWith("/FCKeditor/")
         ) {
       return null;
     }

@@ -4,7 +4,7 @@ body {
   background: white;
   color : black;
   text-align: left;
-  margin: 16px;
+  margin: 0px 16px 16px 16px;
 }
 a {
   color: black;
@@ -22,10 +22,11 @@ a:visited {
   font-weight: normal;
   height: 120px;
   text-align: left;
+  margin-top: 16px;
 }
 #content {
   background: white;
-  margin-left: 16px;
+  margin-left: 0px;
   padding-top: 16px;
   padding-right: 8px;
   padding-bottom: 8px;
@@ -36,7 +37,7 @@ a:visited {
   text-align: center;
   background: white;
   margin-left: 16px;
-  margin-right: 16px;
+  margin-right: 0px;
   float: right;
   width: 220px;
   padding-left: 8px;

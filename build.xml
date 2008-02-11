@@ -126,7 +126,7 @@
     </copy>
 
     <!-- copy license/readme information -->
-    <copy todir="web">
+    <copy todir="web">                
       <fileset dir=".">
         <include name="license.txt"/>
         <include name="apache-license.txt"/>
@@ -152,6 +152,7 @@
         <include name="geo-ip.dat"/>
       </fileset>
     </copy>
+    <copy file="web/WEB-INF/classes/resources.properties" tofile="web/WEB-INF/classes/resources_en.properties"/>
 
     <copy todir="web/WEB-INF/classes/org/apache/xmlrpc/webserver">
       <fileset dir="${etc.dir}">

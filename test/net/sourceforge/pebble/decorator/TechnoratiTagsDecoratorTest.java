@@ -85,8 +85,8 @@ public class TechnoratiTagsDecoratorTest extends SingleBlogTestCase {
     StringBuffer tags = new StringBuffer();
     tags.append("<div class=\"tags\"><span>Tags : </span>");
     tags.append("<a href=\"http://technorati.com/tag/automatedunittesting\" rel=\"tag\">automatedunittesting</a> ");
-    tags.append("<a href=\"http://technorati.com/tag/junit\" rel=\"tag\">junit</a> ");
-    tags.append("<a href=\"http://technorati.com/tag/java\" rel=\"tag\">java</a>");
+    tags.append("<a href=\"http://technorati.com/tag/java\" rel=\"tag\">java</a> ");
+    tags.append("<a href=\"http://technorati.com/tag/junit\" rel=\"tag\">junit</a>");
     tags.append("</div>");
 
     assertEquals("Excerpt - here is some text" + tags, blogEntry.getExcerpt());
