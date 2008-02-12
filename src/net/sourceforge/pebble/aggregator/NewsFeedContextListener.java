@@ -57,9 +57,14 @@ public class NewsFeedContextListener implements ServletContextListener {
     timer = new Timer();
     timer.scheduleAtFixedRate(new TimerTask() {
       public void run() {
-        NewsFeedCache.getInstance().refreshFeeds();
+        try {
+          NewsFeedCache.getInstance().refreshFeeds();
+        } catch (Exception e) {
+          log.error("Error while refreshing feeds " + e.getMessage());
+          e.printStackTrace();
+        }
       }
-    }, 0, ONE_MINUTE * 30);
+    }, 0, ONE_MINUTE * 15);
   }
 
   public void contextDestroyed(ServletContextEvent servletContextEvent) {
