@@ -117,13 +117,6 @@
           Rich text editor
         </td>
         <td>
-          <input type="checkbox" name="richTextEditorForBlogEntriesEnabled" value="true"
-                 <c:if test="${blog.richTextEditorForBlogEntriesEnabled == true}">checked="true"</c:if>
-          />&nbsp;Blog entries
-          <input type="checkbox" name="richTextEditorForStaticPagesEnabled" value="true"
-                 <c:if test="${blog.richTextEditorForStaticPagesEnabled == true}">checked="true"</c:if>
-          />&nbsp;Static pages
-          <br />
           <input type="checkbox" name="richTextEditorForCommentsEnabled" value="true"
                  <c:if test="${blog.richTextEditorForCommentsEnabled == true}">checked="true"</c:if>
           />&nbsp;Comments

@@ -96,6 +96,7 @@ public class SaveUserDetailsAction extends SecureAction {
           website,
           profile,
           currentUserDetails.getRoles(),
+          currentUserDetails.getPreferences(),
           currentUserDetails.isDetailsUpdateable());
 
           realm.updateUser(newUserDetails);

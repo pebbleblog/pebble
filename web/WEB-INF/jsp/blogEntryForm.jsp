@@ -1,4 +1,4 @@
-<c:if test="${blog.richTextEditorForBlogEntriesEnabled}">
+<c:if test="${authenticatedUser.preferences['richTextEditorForBlogEntriesEnabled'] == 'true'}">
   <script type="text/javascript">
   window.onload = function()
   {

@@ -46,6 +46,7 @@ import javax.servlet.http.HttpServletResponse;
 public abstract class View {
 
   private Model model;
+  private ServletContext servletContext;
 
   /**
    * Gets the content type of this view.
@@ -70,6 +71,25 @@ public abstract class View {
    */
   public void setModel(Model model) {
     this.model = model;
+  }
+
+
+  /**
+   * Gets the ServletContext in which this view is operating.
+   *
+   * @return    a ServletContext instance
+   */
+  public ServletContext getServletContext() {
+    return servletContext;
+  }
+
+  /**
+   * Gets the ServletContext in which this view is operating.
+   *
+   * @param   servletContext    a ServletContext instance
+   */
+  public void setServletContext(ServletContext servletContext) {
+    this.servletContext = servletContext;
   }
 
   /**

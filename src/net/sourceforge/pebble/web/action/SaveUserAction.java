@@ -47,9 +47,13 @@ import org.apache.commons.logging.LogFactory;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Enumeration;
 
 /**
- * Saves user details.
+ * Saves user details (this is the blog admin version, where roles
+ * can be changed).
  *
  * @author    Simon Brown
  */
@@ -58,7 +62,7 @@ public class SaveUserAction extends SecureAction {
   /** the log used by this class */
   private static final Log log = LogFactory.getLog(SaveUserAction.class);
 
-  private static final String DEFAULT_PASSWORD = "password";
+  private static final String PREFERENCE = "preference.";
 
   /**
    * Peforms the processing associated with this action.
@@ -81,10 +85,18 @@ public class SaveUserAction extends SecureAction {
       boolean newUser = request.getParameter("newUser").equalsIgnoreCase("true");
       String detailsUpdateableAsString = request.getParameter("detailsUpdateable");
       boolean detailsUpdateable = detailsUpdateableAsString != null && detailsUpdateableAsString.equalsIgnoreCase("true");
+      Map<String,String> preferences = new HashMap<String,String>();
+      Enumeration parameterNames = request.getParameterNames();
+      while (parameterNames.hasMoreElements()) {
+        String parameterName = (String)parameterNames.nextElement();
+        if (parameterName.startsWith(PREFERENCE)) {
+          preferences.put(parameterName.substring(PREFERENCE.length()), request.getParameter(parameterName));
+        }
+      }
 
       SecurityRealm realm = PebbleContext.getInstance().getConfiguration().getSecurityRealm();
       PebbleUserDetails currentUserDetails = realm.getUser(username);
-      PebbleUserDetails newUserDetails = new PebbleUserDetails(username, password1, name, emailAddress, website, profile, roles, detailsUpdateable);
+      PebbleUserDetails newUserDetails = new PebbleUserDetails(username, password1, name, emailAddress, website, profile, roles, preferences, detailsUpdateable);
 
       ValidationContext validationContext = new ValidationContext();
 

@@ -35,6 +35,8 @@ import net.sourceforge.pebble.domain.SingleBlogTestCase;
 import net.sourceforge.pebble.security.PebbleUserDetails;
 import org.acegisecurity.GrantedAuthorityImpl;
 
+import java.util.HashMap;
+
 /**
  * Tests for the PebbleUserDetailsComparator class.
  *
@@ -44,8 +46,8 @@ public class PebbleUserDetailsComparatorTest extends SingleBlogTestCase {
 
   public void testCompare() {
     PebbleUserDetailsComparator comp = new PebbleUserDetailsComparator();
-    PebbleUserDetails pud1 = new PebbleUserDetails("username1", "", "User1", "", "", "", new String[]{}, true);
-    PebbleUserDetails pud2 = new PebbleUserDetails("username2", "", "User2", "", "", "", new String[]{}, true);
+    PebbleUserDetails pud1 = new PebbleUserDetails("username1", "", "User1", "", "", "", new String[]{}, new HashMap<String,String>(), true);
+    PebbleUserDetails pud2 = new PebbleUserDetails("username2", "", "User2", "", "", "", new String[]{}, new HashMap<String,String>(), true);
 
     assertTrue(comp.compare(pud1, pud1) == 0);
     assertTrue(comp.compare(pud1, pud2) < 0);

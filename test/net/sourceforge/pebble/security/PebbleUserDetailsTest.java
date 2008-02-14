@@ -6,6 +6,7 @@ import org.acegisecurity.GrantedAuthorityImpl;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.HashMap;
 
 /**
  * Tests for the PebbleUserDetails class.
@@ -17,7 +18,7 @@ public class PebbleUserDetailsTest extends TestCase {
   private PebbleUserDetails user;
 
   protected void setUp() throws Exception {
-    user = new PebbleUserDetails("username", "password", "A user", "emailAddress", "website", "profile", new String[] {Constants.BLOG_OWNER_ROLE}, true);
+    user = new PebbleUserDetails("username", "password", "A user", "emailAddress", "website", "profile", new String[] {Constants.BLOG_OWNER_ROLE}, new HashMap<String,String>(), true);
   }
 
   public void testConstruction() {
@@ -34,7 +35,7 @@ public class PebbleUserDetailsTest extends TestCase {
   }
 
   public void testConstructionWithNoExplicitRoles() {
-    user = new PebbleUserDetails("username", "password", "A user", "emailAddress", "website", "profile", null, true);
+    user = new PebbleUserDetails("username", "password", "A user", "emailAddress", "website", "profile", null, new HashMap<String,String>(), true);
 
     assertEquals("username", user.getUsername());
     assertEquals("password", user.getPassword());

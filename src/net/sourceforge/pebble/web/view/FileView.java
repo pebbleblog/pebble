@@ -68,7 +68,17 @@ public class FileView extends BinaryView {
    * @return the title as a String
    */
   public String getContentType() {
-    return FileUtils.getContentType(file.getName());
+    String mimeType = null;
+    ServletContext servletContext = getServletContext();
+    if (servletContext != null) {
+      mimeType = servletContext.getMimeType(file.getName());
+    }
+
+    if (mimeType == null) {
+      return FileUtils.getContentType(file.getName());
+    }
+
+    return mimeType;
   }
 
   public long getContentLength() {

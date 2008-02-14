@@ -119,6 +119,7 @@ public class HttpController extends HttpServlet {
         if (view != null) {
 
           view.setModel(model);
+          view.setServletContext(this.getServletContext());
 
           view.prepare();
 

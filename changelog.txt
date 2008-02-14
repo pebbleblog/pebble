@@ -16,6 +16,8 @@ Fixed a problem where JavaScript would be served up when logging in to a private
 Fixed problems with unit tests failing in non-English locales (patches from Frédéric Chuong).
 Moved admin links from the sidebar to the top of the page.
 Separated out blog security configuration from the general blog properties.
+Pebble now uses the ServletContext for getting MIME type information when serving up files.
+Added a user preferences page and moved configuration of the rich text editor for blog entries/static pages (on/off) to be user specific. 
 
 Version 2.2 - 21st June 2007
 ----------------------------

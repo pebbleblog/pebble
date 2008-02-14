@@ -28,7 +28,7 @@
     </pebble:isBlogAdmin>
 
     <c:if test="${authenticatedUser.detailsUpdateable == true}">
-    <span id="admin-user-group" class="adminGroup" onmouseover="showMenu('admin-user'); hideMenu('admin-content'); hideMenu('admin-responses'); hideMenu('admin-blog'); hideMenu('admin-logs'); hideMenu('admin-admin')"">User Details</span> |
+    <span id="admin-user-group" class="adminGroup" onmouseover="showMenu('admin-user'); hideMenu('admin-content'); hideMenu('admin-responses'); hideMenu('admin-blog'); hideMenu('admin-logs'); hideMenu('admin-admin')"">User</span> |
     </c:if>
 
     <span><a href="${pebbleContext.configuration.secureUrl}logout.action?redirectUrl=${blog.url}" onmouseover="hideMenu('admin-admin'); hideMenu('admin-user'); hideMenu('admin-content'); hideMenu('admin-responses'); hideMenu('admin-blog'); hideMenu('admin-logs')">Logout</a></span>
@@ -87,8 +87,9 @@
     </span>
 
     <span id="admin-user">
-        <a href="editUserDetails.secureaction" title="Edit user details">User details</a> |
-        <a href="changePassword.secureaction" title="Change password">Change password</a>
+      <a href="editUserDetails.secureaction" title="Edit user details">User details</a> |
+      <a href="changePassword.secureaction" title="Change password">Change password</a> |
+      <a href="editUserPreferences.secureaction" title="Preferences">Preferences</a>
     </span>
 
     &nbsp;

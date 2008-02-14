@@ -103,6 +103,23 @@
           </td>
         </tr>
         <tr>
+          <td valign="top">
+            Rich text editor
+          </td>
+          <td>
+            <input type="checkbox" name="preference.richTextEditorForBlogEntriesEnabled" value="true"
+                   <c:if test="${user.preferences['richTextEditorForBlogEntriesEnabled'] == 'true'}">checked="true"</c:if>
+            />&nbsp;Blog entries
+            <input type="checkbox" name="preference.richTextEditorForStaticPagesEnabled" value="true"
+                   <c:if test="${user.preferences['richTextEditorForStaticPagesEnabled'] == 'true'}">checked="true"</c:if>
+            />&nbsp;Static pages
+            <br />
+            <input type="checkbox" name="preference.richTextEditorForCommentsEnabled" value="true"
+                   <c:if test="${user.preferences['richTextEditorForCommentsEnabled'] == 'true'}">checked="true"</c:if>
+            />&nbsp;Comments
+          </td>
+        </tr>
+        <tr>
           <td colspan="2" align="right">
             <input type="submit" value="Save" />
           </td>

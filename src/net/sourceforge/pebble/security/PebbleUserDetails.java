@@ -7,6 +7,8 @@ import org.acegisecurity.userdetails.UserDetails;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Extension of the Acegi User class that adds additional information
@@ -31,6 +33,9 @@ public class PebbleUserDetails implements UserDetails {
   /** the profile */
   private String profile;
 
+  /** the user's preferences */
+  private Map<String,String> preferences = new HashMap<String,String>();
+
   private GrantedAuthority grantedAuthories[];
 
   private boolean detailsUpdateable = true;
@@ -38,17 +43,18 @@ public class PebbleUserDetails implements UserDetails {
   public PebbleUserDetails() {
   }
 
-  public PebbleUserDetails(String username, String name, String emailAddress, String website, String profile, String roles[], boolean detailsUpdateable) {
+  public PebbleUserDetails(String username, String name, String emailAddress, String website, String profile, String roles[], Map<String,String> preferences, boolean detailsUpdateable) {
     this.username = username;
     this.name = name;
     this.emailAddress = emailAddress;
     this.website = website;
     this.profile = profile;
     this.grantedAuthories = createGrantedAuthorities(roles);
+    this.preferences = preferences;
     this.detailsUpdateable = detailsUpdateable;
   }
 
-  public PebbleUserDetails(String username, String password, String name, String emailAddress, String website, String profile, String roles[], boolean detailsUpdateable) {
+  public PebbleUserDetails(String username, String password, String name, String emailAddress, String website, String profile, String roles[], Map<String,String> preferences, boolean detailsUpdateable) {
     this.username = username;
     this.password = password;
     this.name = name;
@@ -56,6 +62,7 @@ public class PebbleUserDetails implements UserDetails {
     this.website = website;
     this.profile = profile;
     this.grantedAuthories = createGrantedAuthorities(roles);
+    this.preferences = preferences;
     this.detailsUpdateable = detailsUpdateable;
   }
 
@@ -221,6 +228,18 @@ public class PebbleUserDetails implements UserDetails {
 
   public void setDetailsUpdateable(boolean detailsUpdateable) {
     this.detailsUpdateable = detailsUpdateable;
+  }
+
+  public Map<String,String> getPreferences() {
+    return new HashMap<String,String>(preferences);
+  }
+
+  public String getPreference(String key) {
+    return preferences.get(key);
+  }
+
+  public void setPreferences(Map<String,String> preferences) {
+    this.preferences = new HashMap<String,String>(preferences);
   }
   
 }

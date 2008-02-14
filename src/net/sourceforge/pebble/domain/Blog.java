@@ -59,7 +59,6 @@ import net.sourceforge.pebble.event.EventListenerList;
 import net.sourceforge.pebble.event.AuditListener;
 import net.sourceforge.pebble.event.blogentry.EmailSubscriptionListener;
 import net.sourceforge.pebble.event.blog.CacheListener;
-import net.sourceforge.pebble.event.blog.NewsFeedSubscriptionListener;
 import net.sourceforge.pebble.index.*;
 import net.sourceforge.pebble.logging.AbstractLogger;
 import net.sourceforge.pebble.logging.CombinedLogFormatLogger;
@@ -99,8 +98,6 @@ public class Blog extends AbstractBlog {
   public static final String PERMALINK_PROVIDER_KEY = "permalinkProviderName";
   public static final String COMMENT_CONFIRMATION_STRATEGY_KEY = "commentConfirmationStrategy";
   public static final String TRACKBACK_CONFIRMATION_STRATEGY_KEY = "trackBackConfirmationStrategy";
-  public static final String RICH_TEXT_EDITOR_FOR_BLOG_ENTRIES_ENABLED_KEY = "richTextEditorForBlogEntriesEnabled";
-  public static final String RICH_TEXT_EDITOR_FOR_STATIC_PAGES_ENABLED_KEY = "richTextEditorForStaticPagesEnabled";
   public static final String RICH_TEXT_EDITOR_FOR_COMMENTS_ENABLED_KEY = "richTextEditorForCommentsEnabled";
   public static final String HOME_PAGE_KEY = "homePage";
 
@@ -285,7 +282,6 @@ public class Blog extends AbstractBlog {
     }
 
     eventListenerList.addBlogListener(new CacheListener());
-    //eventListenerList.addBlogListener(new NewsFeedSubscriptionListener());
   }
 
   /**
@@ -454,8 +450,6 @@ public class Blog extends AbstractBlog {
     defaultProperties.setProperty(LOGGER_KEY, "net.sourceforge.pebble.logging.CombinedLogFormatLogger");
     defaultProperties.setProperty(COMMENT_CONFIRMATION_STRATEGY_KEY, "net.sourceforge.pebble.confirmation.DefaultConfirmationStrategy");
     defaultProperties.setProperty(TRACKBACK_CONFIRMATION_STRATEGY_KEY, "net.sourceforge.pebble.confirmation.DefaultConfirmationStrategy");
-    defaultProperties.setProperty(RICH_TEXT_EDITOR_FOR_BLOG_ENTRIES_ENABLED_KEY, "true");
-    defaultProperties.setProperty(RICH_TEXT_EDITOR_FOR_STATIC_PAGES_ENABLED_KEY, "true");
     defaultProperties.setProperty(RICH_TEXT_EDITOR_FOR_COMMENTS_ENABLED_KEY, "true");
 
     return defaultProperties;
@@ -1807,16 +1801,6 @@ public class Blog extends AbstractBlog {
     this.blogEntryCache = blogEntryCache;
   }
 
-  public boolean isRichTextEditorForBlogEntriesEnabled() {
-    String s = getProperty(RICH_TEXT_EDITOR_FOR_BLOG_ENTRIES_ENABLED_KEY);
-    return s != null && s.equalsIgnoreCase("true");
-  }
-
-  public boolean isRichTextEditorForStaticPagesEnabled() {
-    String s = getProperty(RICH_TEXT_EDITOR_FOR_STATIC_PAGES_ENABLED_KEY);
-    return s != null && s.equalsIgnoreCase("true");
-  }
-
   public boolean isRichTextEditorForCommentsEnabled() {
     String s = getProperty(RICH_TEXT_EDITOR_FOR_COMMENTS_ENABLED_KEY);
     return s != null && s.equalsIgnoreCase("true");
@@ -1824,22 +1808,6 @@ public class Blog extends AbstractBlog {
 
   public EmailSubscriptionList getEmailSubscriptionList() {
     return emailSubscriptionList;
-  }
-
-  public List<String> getNewsFeedSubscriptions() {
-    List<String> urls = new LinkedList<String>();
-
-    try {
-      BufferedReader reader = new BufferedReader(new FileReader(new File(getFilesDirectory(), "newsfeed-subscriptions.txt")));
-      String line = reader.readLine();
-      while (line != null) {
-        urls.add(line);
-        line = reader.readLine();
-      }
-    } catch (IOException ioe) {
-      log.info("No newsfeed subscriptions found : " + ioe.getMessage());
-    }
-    return urls;
   }
 
   public List<NewsFeedEntry> getNewsFeedEntries() {

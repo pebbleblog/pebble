@@ -10,6 +10,8 @@ import org.acegisecurity.GrantedAuthorityImpl;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Tests for the DefaultSecurityRealm class.
@@ -49,7 +51,9 @@ public class DefaultSecurityRealmTest extends SingleBlogTestCase {
   }
 
   public void testGetUser() throws Exception {
-    PebbleUserDetails pud = new PebbleUserDetails("testuser", "password", "name", "emailAddress", "website", "profile", new String[]{Constants.BLOG_OWNER_ROLE}, true);
+    Map<String,String> preferences = new HashMap<String,String>();
+    preferences.put("testPreference", "true");
+    PebbleUserDetails pud = new PebbleUserDetails("testuser", "password", "name", "emailAddress", "website", "profile", new String[]{Constants.BLOG_OWNER_ROLE}, preferences, true);
     realm.createUser(pud);
     PebbleUserDetails user = realm.getUser("testuser");
 
@@ -60,6 +64,7 @@ public class DefaultSecurityRealmTest extends SingleBlogTestCase {
     assertEquals("emailAddress", user.getEmailAddress());
     assertEquals("website", user.getWebsite());
     assertEquals("profile", user.getProfile());
+    assertEquals("true", user.getPreference("testPreference"));
 
     List authorities = Arrays.asList(user.getAuthorities());
     assertEquals(2, authorities.size());
@@ -73,7 +78,7 @@ public class DefaultSecurityRealmTest extends SingleBlogTestCase {
   }
 
   public void testRemoveUser() throws Exception {
-    PebbleUserDetails pud = new PebbleUserDetails("testuser", "password", "name", "emailAddress", "website", "profile", new String[]{Constants.BLOG_OWNER_ROLE}, true);
+    PebbleUserDetails pud = new PebbleUserDetails("testuser", "password", "name", "emailAddress", "website", "profile", new String[]{Constants.BLOG_OWNER_ROLE}, new HashMap<String,String>(), true);
     realm.createUser(pud);
 
     PebbleUserDetails user = realm.getUser("testuser");

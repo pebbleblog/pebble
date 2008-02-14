@@ -8,6 +8,7 @@ import org.acegisecurity.GrantedAuthorityImpl;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.HashMap;
 
 /**
  * Tests for the DefaultUserDetails class.
@@ -30,7 +31,7 @@ public class DefaultUserDetailsServiceTest extends TestCase {
   }
 
   public void testLoadByUsername() throws Exception {
-    PebbleUserDetails pud = new PebbleUserDetails("username", "password", "name", "emailAddress", "website", "profile", new String[]{Constants.BLOG_OWNER_ROLE}, true);
+    PebbleUserDetails pud = new PebbleUserDetails("username", "password", "name", "emailAddress", "website", "profile", new String[]{Constants.BLOG_OWNER_ROLE}, new HashMap<String,String>(), true);
     securityRealm.createUser(pud);
     UserDetails user = service.loadUserByUsername("username");
 
@@ -46,7 +47,7 @@ public class DefaultUserDetailsServiceTest extends TestCase {
 
   public void testLoadByUsernameThrowsExceptionWhenUserDoesntExist() throws Exception {
     try {
-      PebbleUserDetails pud = new PebbleUserDetails("username", "password", "name", "emailAddress", "website", "profile", new String[]{Constants.BLOG_OWNER_ROLE}, true);
+      PebbleUserDetails pud = new PebbleUserDetails("username", "password", "name", "emailAddress", "website", "profile", new String[]{Constants.BLOG_OWNER_ROLE}, new HashMap<String,String>(), true);
       securityRealm.createUser(pud);
       UserDetails user = service.loadUserByUsername("someotherusername");
       fail();

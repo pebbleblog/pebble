@@ -1,4 +1,4 @@
-<c:if test="${blog.richTextEditorForStaticPagesEnabled}">
+<c:if test="${authenticatedUser.preferences['richTextEditorForStaticPagesEnabled'] == 'true'}">
   <script type="text/javascript">
   window.onload = function()
   {

@@ -9,10 +9,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import java.io.*;
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.Properties;
-import java.util.Collections;
+import java.util.*;
 
 /**
  * Implementation of the SecurityRealm that gets authentication
@@ -33,6 +30,7 @@ public class DefaultSecurityRealm implements SecurityRealm {
   protected static final String WEBSITE = "website";
   protected static final String PROFILE = "profile";
   protected static final String DETAILS_UPDATEABLE = "detailsUpdateable";
+  protected static final String PREFERENCE = "preference.";
 
   private Configuration configuration;
 
@@ -50,7 +48,7 @@ public class DefaultSecurityRealm implements SecurityRealm {
         realm.mkdirs();
         log.warn("*** Creating default user (username/password)");
         log.warn("*** Don't forget to delete this user in a production deployment!");
-        PebbleUserDetails defaultUser = new PebbleUserDetails("username", "password", "Default User", "username@domain.com", "http://www.domain.com", "Default User...", new String[] {Constants.BLOG_OWNER_ROLE, Constants.BLOG_PUBLISHER_ROLE, Constants.BLOG_CONTRIBUTOR_ROLE, Constants.BLOG_ADMIN_ROLE}, true);
+        PebbleUserDetails defaultUser = new PebbleUserDetails("username", "password", "Default User", "username@domain.com", "http://www.domain.com", "Default User...", new String[] {Constants.BLOG_OWNER_ROLE, Constants.BLOG_PUBLISHER_ROLE, Constants.BLOG_CONTRIBUTOR_ROLE, Constants.BLOG_ADMIN_ROLE}, new HashMap<String,String>(), true);
         createUser(defaultUser);
       }
     } catch (SecurityRealmException e) {
@@ -124,7 +122,15 @@ public class DefaultSecurityRealm implements SecurityRealm {
         detailsUpdateable = detailsUpdateableAsString.equalsIgnoreCase("true");
       }
 
-      return new PebbleUserDetails(username, password, name, emailAddress, website, profile, roles, detailsUpdateable);
+      Map<String,String> preferences = new HashMap<String,String>();
+      for (Object key : props.keySet()) {
+        String propertyName = (String)key;
+        if (propertyName.startsWith(PREFERENCE)) {
+          preferences.put(propertyName.substring(PREFERENCE.length()), props.getProperty(propertyName));          
+        }
+      }
+
+      return new PebbleUserDetails(username, password, name, emailAddress, website, profile, roles, preferences, detailsUpdateable);
     } catch (IOException ioe) {
       throw new SecurityRealmException(ioe);
     }
@@ -173,6 +179,11 @@ public class DefaultSecurityRealm implements SecurityRealm {
     props.setProperty(DefaultSecurityRealm.WEBSITE, pud.getWebsite());
     props.setProperty(DefaultSecurityRealm.PROFILE, pud.getProfile());
     props.setProperty(DefaultSecurityRealm.DETAILS_UPDATEABLE, "" + pud.isDetailsUpdateable());
+
+    Map<String,String> preferences = pud.getPreferences();
+    for (String preference : preferences.keySet()) {
+      props.setProperty(DefaultSecurityRealm.PREFERENCE + preference, preferences.get(preference));
+    }
 
     try {
       FileOutputStream out = new FileOutputStream(user);
