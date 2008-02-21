@@ -34,8 +34,8 @@
                 <li><a href="./help/bloggerApi.html">Blogger API</a></li>
                 <li><a href="./help/metaWeblogApi.html">MetaWeblog API</a></li>
                 <li><a href="./help/themes.html">Themes</a></li>
-                <li><a href="./help/delicious.html">del.icio.us</a></li>
-                <li><a href="./help/securityRoles.html">Security roles</a></li>
+                <li><a href="./help/newsfeedIntegration.html">Newsfeed integration</a></li>
+                <li><a href="./help/securityRoles.html">Blog Security</a></li>
                 <li><a href="./help/privateBlogs.html">Private blogs</a></li>
 <%--
             <li><a href="team-blogs.html">Multi-contributor and Team Blogs</a></li>

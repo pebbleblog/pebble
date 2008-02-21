@@ -167,34 +167,6 @@
         </td>
       </tr>
 
-      <c:if test="${blogManager.multiBlog}">
-      <tr>
-        <td colspan="2">
-          <br />
-          <b>Multi-blog</b>
-        </td>
-      </tr>
-
-      <tr>
-        <td>
-          Aggregate
-        </td>
-        <td>
-          &nbsp;
-          Yes&nbsp;<input type="radio" name="private" value="false"
-            <c:if test="${blog.public}">
-              checked="checked"
-            </c:if>
-          />
-          No<input type="radio" name="private" value="true"
-            <c:if test="${blog.private}">
-              checked="checked"
-            </c:if>
-          />
-        </td>
-      </tr>
-      </c:if>
-
       <tr>
         <td align="right" colspan="2">
           <input name="submit" type="submit" Value="Save Properties">

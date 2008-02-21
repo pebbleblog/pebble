@@ -20,6 +20,10 @@
       The important form field to fill in is "Name", and it's this that makes up the memorable permalink to the page. The name you give a page must only contain alphanumeric characters, numbers, '-', '_' or '/'. Examples include "aboutme", "articles/SomeArticleName", and so on.
     </p>
 
+    <p>
+      Switching on/off the rich text editor for the body of the static page can be done through your <a href="editUserPreferences.secureaction">user preferences</a>.
+    </p>
+
     <h3>Managing static pages</h3>
     <p>
       To manage your static pages, click the <a href="viewStaticPages.secureaction">Static pages</a> link.

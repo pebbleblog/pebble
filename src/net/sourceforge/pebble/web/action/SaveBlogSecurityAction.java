@@ -40,6 +40,7 @@ import net.sourceforge.pebble.web.view.View;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Enumeration;
 
 /**
  * Saves the security properties associated with the current Blog.
@@ -57,6 +58,9 @@ public class SaveBlogSecurityAction extends SecureAction {
    */
   public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
+
+    String privateBlog = request.getParameter("private");
+    blog.setProperty(Blog.PRIVATE_KEY, privateBlog);
 
     String values[] = request.getParameterValues("blogOwners");
     StringBuffer blogOwners = new StringBuffer();

@@ -1,7 +1,7 @@
 <div class="contentItem">
 
   <div class="contentItemLinks">
-    <a href="./help/configuration.html#security" target="_blank">Help</a>
+    <a href="./help/securityRoles.html" target="_blank">Help</a>
   </div>
 
   <h1>Blog security</h1>
@@ -25,12 +25,33 @@
         </tr>
 
         <tr>
+          <td align="center">Blog contributors</td>
           <td align="center">Blog readers (<span class="help"><a href="./help/privateBlogs.html" target="_blank">Help</a></span>)</td>
         </tr>
         <tr>
           <td align="center"><pebble:select name="blogContributors" items="${blogContributorUsers}" selected="${blog.blogContributors}" label="name" value="username" size="10" multiple="true" /></td>
           <td align="center"><pebble:select name="blogReaders" items="${allUsers}" selected="${blog.blogReaders}" label="name" value="username" size="10" multiple="true" /></td>
         </tr>
+
+        <c:if test="${blogManager.multiBlog}">
+        <tr>
+          <td colspan="2">
+            <br />
+            Do you want this blog included in the multi-blog home page and news feeds?
+            <br />
+            Yes&nbsp;<input type="radio" name="private" value="false"
+              <c:if test="${blog.public}">
+                checked="checked"
+              </c:if>
+            />
+            No<input type="radio" name="private" value="true"
+              <c:if test="${blog.private}">
+                checked="checked"
+              </c:if>
+            />
+          </td>
+        </tr>
+        </c:if>
 
         <tr>
           <td align="right" colspan="2">

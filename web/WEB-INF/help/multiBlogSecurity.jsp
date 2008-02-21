@@ -5,7 +5,7 @@
   <div class="contentItemBody">
     <p>
       An important point to mention about multi-blog mode is security. Defining a number of users with the
-      same roles (e.g. a generic <code>ROLE_BLOG_OWNER</code>) means that anybody with
+      same roles (e.g. blog contributor) means that anybody with
       the appropriate role can access the corresponding functions on any blog when Pebble runs in multi-blog mode.
       For example, if you have 3 blogs (blog1, blog2 and blog3) and create a unique user for each of them,
       the blog1 user will be able to access all of the owner/publisher/contributor functionality of
@@ -14,9 +14,8 @@
 
     <p>
       To restrict this, Pebble allows you to explicitly name those users that you wish to grant owner/publisher/contributor
-      privileges to, on an individual blog basis. To do this, go to the <b>Blog properties</b> page for a blog and, towards
-      the botton of the page, you'll see a <b>Security</b> section. Here you can select (or multi-select) those users that
-      you wish to grant access to for each of the owner, publisher and contributor roles.
+      privileges to, on an individual blog basis. To do this, go to the <a href="viewBlogSecurity.secureaction">blog security</a>
+      page for a blog and select (or multi-select) those users that you wish to grant access to for each of the owner, publisher and contributor roles.
     </p>
   </div>
 </div>

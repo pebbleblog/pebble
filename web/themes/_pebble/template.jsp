@@ -15,7 +15,7 @@
 <template:page>
 
   <div id="body">
-
+                     
     <%-- the header, containing blog name and description --%>
     <div id="header">
       <div id="blogName"><span>${blog.name}</span></div>

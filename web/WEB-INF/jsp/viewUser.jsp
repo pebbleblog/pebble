@@ -113,10 +113,6 @@
             <input type="checkbox" name="preference.richTextEditorForStaticPagesEnabled" value="true"
                    <c:if test="${user.preferences['richTextEditorForStaticPagesEnabled'] == 'true'}">checked="true"</c:if>
             />&nbsp;Static pages
-            <br />
-            <input type="checkbox" name="preference.richTextEditorForCommentsEnabled" value="true"
-                   <c:if test="${user.preferences['richTextEditorForCommentsEnabled'] == 'true'}">checked="true"</c:if>
-            />&nbsp;Comments
           </td>
         </tr>
         <tr>

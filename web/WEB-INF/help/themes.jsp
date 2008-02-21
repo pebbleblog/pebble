@@ -74,7 +74,6 @@
         <tr><td valign="top">about</td><td>Displays the "about" information, as set on the <a href="viewBlogProperties.secureaction">blog properties</a> page.</td></tr>
         <tr><td valign="top">aboutAuthor</td><td>Displays the profile information associated with the author of a blog entry, when viewing that blog entry on its permalinked page.</td></tr>
         <tr><td valign="top">loginForm</td><td>Displays the login form.</td></tr>
-        <tr><td valign="top">adminPanel</td><td>Displays the administration links that are available after logging in.</td></tr>
         <tr><td valign="top">navigation</td><td>Displays the basic navigation mechanisms; including the calendar, search and links to category/tag pages.</td></tr>
         <tr><td valign="top">archivesByMonth</td><td>Displays month-by-month archive links.</td></tr>
         <tr><td valign="top">categories</td><td>Displays a list of category names and links, including the blog entry count for each.</td></tr>
@@ -84,7 +83,7 @@
           - showBody : flag to indicate whether the (truncated) body of the entry should be displayed (optional, default is true)</td></tr>
         <tr><td valign="top">recentResponses</td><td>Displays the recent responses (comments and TrackBacks).</td></tr>
         <tr><td valign="top">blogSummary</td><td>In multi-blog mode, displays a list of all blogs along with a link back to the multi-blog home page.</td></tr>
-        <tr><td valign="top">feed</td><td>Reads the specified feed and formats it for the sidebar.<br />
+        <tr><td valign="top"><a name="sidebar-feed" />feed</td><td>Reads the specified feed and formats it for the sidebar.<br />
           - name : the name of the feed, which is displayed in the sidebar item title (required)<br />
           - url : the URL of the RSS/RDF/Atom feed (required)<br />
           - maxEntries : the maximum number of entries to display from this feed (required)<br />

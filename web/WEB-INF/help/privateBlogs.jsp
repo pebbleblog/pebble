@@ -10,7 +10,7 @@
     <h3>Making your blog private</h3>
     <p>
       To make your blog private and password protected, simply edit the list of users that you would like to be blog readers
-      in your <a href="viewBlogProperties.secureaction">blog properties</a> page. Once users are enlisted as blog readers, they will
+      on your <a href="viewBlogSecurity.secureaction">blog security</a> page. Once users are enlisted as blog readers, they will
       be required to enter their username and password to access your blog. Likewise for your blog's RSS and Atom feeds.
     </p>
 

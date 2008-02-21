@@ -18,6 +18,10 @@
       The body of a blog entry is just a XHTML or HTML fragment, meaning that you can use any XHTML or HTML tags you like for markup and formatting. Common examples include using bold and italics. Also, you can include other elements such as hyperlinks and <a href="./help/images.html">images</a>.
     </p>
 
+    <p>
+      Switching on/off the rich text editor for the excerpt/body of the blog entry can be done through your <a href="editUserPreferences.secureaction">user preferences</a>. 
+    </p>
+
     <h3>Excerpts</h3>
     <p>
     For long entries, you may not want the full content showing up on the summary (home, month or day view) pages, although still be visible via the permalinked page. For this reason, Pebble blog entries can be given excerpts. Typically these are shorter than blog entry bodies and, if populated, are displayed on the summary pages with a link to "Read more..." via the permalink. Excerpts are optional.

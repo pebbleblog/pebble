@@ -1,8 +1,25 @@
 <div class="contentItem">
-  <h1>Security roles</h1>
+  <h1>Blog Security</h1>
   <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
+    <p>
+      By default, when Pebble is hosting multiple blogs, all users defined as blog contributors will be able to contribute to all blogs. To prevent this from happening,
+      you can explicitly specify the users that are permitted to have access to each blog. To do this, simply go to the <a href="viewBlogSecurity.secureaction">blog security</a>
+      page and highlight the users that you would like in the following roles.
+    </p>
+    <table border="0">
+      <tr><td width="33%" valign="top">Blog owners</td><td valign="top">A list of usernames for those users that are blog owners for this blog. This is used when Pebble runs in multi-user mode.</td></tr>
+      <tr><td width="33%" valign="top">Blog publishers</td><td valign="top">A list of usernames for those users that are blog publishers for this blog. This is used when Pebble runs in multi-user mode.</td></tr>
+      <tr><td width="33%" valign="top">Blog contributors</td><td valign="top">A list of usernames for those users that are blog contributors for this blog. This is used when Pebble runs in multi-user mode.</td></tr>
+    </table>
+
+    <p>
+      Optionally, you can <a href="./help/privateBlogs.html">mark the whole blog to be private</a>
+      <c:if test="${blogManager.multiBlog}">and you can also state whether you want your blog included in the <a href="${pageContext.request.contextPath}" target="_blank">aggregated home page</a> and newsfeeds</c:if>.
+    </p>
+
+    <h3>Security Roles</h3>
     <p>
       The following table shows the privileges assigned to each of the security roles.
     </p>
@@ -82,5 +99,6 @@
         </tr>
       </tbody>
     </table>
+
   </div>
 </div>
