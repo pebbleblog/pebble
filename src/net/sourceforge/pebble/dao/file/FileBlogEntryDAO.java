@@ -75,7 +75,7 @@ public class FileBlogEntryDAO implements BlogEntryDAO {
         parser.parse(source, handler);
 
       } catch (Exception e) {
-        log.error(e.getMessage(), e);
+        log.error(e.getMessage() + " while loading blog enty from " + source.getAbsolutePath(), e);
         e.printStackTrace();
         throw new PersistenceException(e.getMessage());
       }
