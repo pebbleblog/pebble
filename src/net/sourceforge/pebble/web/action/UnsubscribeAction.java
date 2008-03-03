@@ -41,6 +41,8 @@ import net.sourceforge.pebble.web.view.impl.UnsubscribedView;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Allows the user to unsubscribe from e-mail updates whenever a blog entry
@@ -60,16 +62,22 @@ public class UnsubscribeAction extends Action {
   public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
     String[] emails = request.getParameterValues("email");
+
     if (emails != null) {
-      String emailList = "";
+      Set<String> emailSet = new HashSet<String>();
       for (String email : emails) {
         email = StringUtils.filterHTML(email);
         blog.getEmailSubscriptionList().removeEmailAddress(email);
-        emailList += email;
-        emailList += " ";
+        emailSet.add(email);
       }
 
-      getModel().put("email", emailList);
+      String emailListAsString = "";
+      for (String email : emailSet) {
+        emailListAsString += email;
+        emailListAsString += " ";
+      }
+
+      getModel().put("email", emailListAsString);
       return new UnsubscribedView();
     }
 
