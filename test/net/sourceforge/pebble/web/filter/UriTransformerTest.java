@@ -63,6 +63,10 @@ public class UriTransformerTest extends SingleBlogTestCase {
     assertEquals("/responseFeed.action?flavor=rss20", transformer.getUri("/responses/rss.xml", blog));
   }
 
+  public void testRssUrlForResponseFeedForBlogEntry() throws Exception {
+    assertEquals("/responseFeed.action?flavor=rss20&entry=1202928360000", transformer.getUri("/responses/rss.xml?entry=1202928360000", blog));
+  }
+
   public void testRdfUrlForSingleUserBlog() throws Exception {
     assertEquals("/feed.action?flavor=rdf", transformer.getUri("/rdf.xml", blog));
   }

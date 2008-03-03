@@ -195,6 +195,9 @@ public class UriTransformer {
       } else if (uri.equals("/responses/rss.xml")) {
         // url is for a response feed
         result = "/responseFeed.action?flavor=rss20";
+      } else if (uri.startsWith("/responses/rss.xml?entry=")) {
+        // url is for a response feed
+        result = "/responseFeed.action?flavor=rss20&" + uri.substring("/responses/rss.xml?".length());
       } else if (uri.startsWith("/rss.xml")) {
         // url matches rss.xml
         result = "/feed.action?flavor=rss20";
