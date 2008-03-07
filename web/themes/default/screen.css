@@ -16,7 +16,7 @@ body {
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 0px;
-  margin-top: 32px;
+  border-top: gray solid 32px;
   position: relative;
 }
 #body {
