@@ -95,14 +95,14 @@ public class SaveStaticPageAction extends SecureAction {
   private View savePage(HttpServletRequest request) throws ServletException {
     StaticPage staticPage = getStaticPage(request);
     populateStaticPage(staticPage, request);
-
-    ValidationContext context = new ValidationContext();
-    populateStaticPage(staticPage, request);
     getModel().put(Constants.STATIC_PAGE_KEY, staticPage);
 
-    if (context.hasErrors())  {
-      getModel().put("validationContext", context);
-      return new BlogEntryFormView();
+    ValidationContext validationContext = new ValidationContext();
+    staticPage.validate(validationContext);
+
+    if (validationContext.hasErrors())  {
+      getModel().put("validationContext", validationContext);
+      return new StaticPageFormView();
     } else {
       try {
         BlogService service = new BlogService();
