@@ -1,4 +1,4 @@
-Version 2.3
+Version 2.3 - 7th March 2008
 ----------------------------
 Added a "friendly" URL for the aboutAuthor action (/authors/<username/).
 About author page now shows the author's profile and their recent blog entries.
