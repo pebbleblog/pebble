@@ -40,7 +40,7 @@
   <target name="init">
     <propertyfile file="pebble-build.properties" comment="Build information">
         <entry key="build.date" type="date" value="now" pattern="dd MMMM yyyy HH:mm:ss z"/>
-        <entry key="build.version" value="2.3"/>
+        <entry key="build.version" value="2.3.1"/>
     </propertyfile>
     <loadproperties srcFile="pebble-build.properties"/>
 

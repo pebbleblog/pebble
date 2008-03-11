@@ -314,7 +314,11 @@ public class Blog extends AbstractBlog {
     eventListenerList.addBlogEntryListener(new AuthorIndexListener());
     eventListenerList.addBlogEntryListener(new SearchIndexListener());
     eventListenerList.addBlogEntryListener(new AuditListener());
-    eventListenerList.addBlogEntryListener(new EmailSubscriptionListener());
+    try {
+      eventListenerList.addBlogEntryListener(new EmailSubscriptionListener());
+    } catch (Throwable t) {
+      log.warn("Error while starting e-mail subscription listener - add mail.jar and activation.jar to the server classpath if you want to enable this listener.", t);
+    }
   }
 
   /**
@@ -486,7 +490,7 @@ public class Blog extends AbstractBlog {
       return "";
     } else if (BlogManager.getInstance().isMultiBlog()) {
       if (config.isVirtualHostingEnabled()) {
-        return url.substring(0, url.indexOf("://")+3) + getId() + "." + url.substring(url.indexOf("://")+3); 
+        return url.substring(0, url.indexOf("://")+3) + getId() + "." + url.substring(url.indexOf("://")+3);
       } else {
         return url + getId() + "/";
       }

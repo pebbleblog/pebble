@@ -1,3 +1,7 @@
+Version 2.3.1 - 11th March 2008
+-------------------------------
+Added code to prevent Pebble from not starting up if mail.jar and activation.jar are not on the server classpath (for e-mail integration).
+
 Version 2.3 - 7th March 2008
 ----------------------------
 Added a "friendly" URL for the aboutAuthor action (/authors/<username/).
