@@ -310,7 +310,11 @@ public class Blog extends AbstractBlog {
     eventListenerList.addBlogEntryListener(new AuthorIndexListener());
     eventListenerList.addBlogEntryListener(new SearchIndexListener());
     eventListenerList.addBlogEntryListener(new AuditListener());
-    eventListenerList.addBlogEntryListener(new EmailSubscriptionListener());
+    try {
+      eventListenerList.addBlogEntryListener(new EmailSubscriptionListener());
+    } catch (Throwable t) {
+      log.warn("Error while starting e-mail subscription listener - add mail.jar and activation.jar to the server classpath if you want to enable this listener.", t);
+    }
   }
 
   /**
