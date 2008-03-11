@@ -123,8 +123,7 @@ public class StaticPageIndex {
         }
         index(staticPage);
       } else {
-        // TODO : schedule a reindex
-        lockAttempts = 0;
+        blog.reindexStaticPages();
       }
     }
   }
@@ -149,8 +148,7 @@ public class StaticPageIndex {
         }
         unindex(staticPage);
       } else {
-        // TODO : schedule a reindex
-        lockAttempts = 0;
+        blog.reindexStaticPages();
       }
     }
   }
