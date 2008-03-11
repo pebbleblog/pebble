@@ -37,10 +37,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import java.io.*;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Iterator;
+import java.util.*;
 
 /**
  * Maintains an index of all static pages
@@ -51,24 +48,27 @@ public class StaticPageIndex {
 
   private static final Log log = LogFactory.getLog(StaticPageIndex.class);
 
+  private static final String PAGES_INDEX_DIRECTORY_NAME = "pages";
+  private static final String NAME_TO_ID_INDEX_FILE_NAME = "name.index";
+  private static final String LOCK_FILE_NAME = "pages.lock";
+  private static final int MAXIMUM_LOCK_ATTEMPTS = 3;
+
   /** the owning blog */
   private Blog blog;
 
   /** the collection of all static pages */
   private Map<String,String> index = new HashMap<String,String>();
+  private int lockAttempts = 0;
+  private long lastModified = 0;
 
   public StaticPageIndex(Blog blog) {
     this.blog = blog;
 
-    readIndex();
-  }
+    // create the directory structure if it doesn't exist
+    File indexDirectory = new File(blog.getIndexesDirectory(), PAGES_INDEX_DIRECTORY_NAME);
+    indexDirectory.mkdirs();    
 
-  /**
-   * Clears the index.
-   */
-  public void clear() {
-    index = new HashMap<String,String>();
-    writeIndex();
+    readIndex();
   }
 
   /**
@@ -76,11 +76,17 @@ public class StaticPageIndex {
    *
    * @param staticPages   a List of Page instances
    */
-  public synchronized void index(List<StaticPage> staticPages) {
+  public synchronized void reindex(List<StaticPage> staticPages) {
+    // remove any locks on the index
+    unlock();
+
+    // clear the index and add all static pages
+    index = new HashMap<String,String>();
     for (StaticPage staticPage : staticPages) {
       index.put(staticPage.getName(), staticPage.getId());
     }
 
+    // and finally, write the index
     writeIndex();
   }
 
@@ -90,20 +96,36 @@ public class StaticPageIndex {
    * @param staticPage    a Page instance
    */
   public synchronized void index(StaticPage staticPage) {
-    // when static name changes, multiple names will refer to the same page
-    // this block removes the page if it's been previously indexed
-    Iterator it = index.keySet().iterator();
-    while (it.hasNext()) {
-      String key = (String)it.next();
-      String value = index.get(key);
-      if (value.equals(staticPage.getId())) {
-        it.remove();
+    if (lock()) {
+      readIndex();
+
+      // remove the old entry for this static page
+      Iterator it = index.keySet().iterator();
+      while (it.hasNext()) {
+        String key = (String)it.next();
+        String value = index.get(key);
+        if (value.equals(staticPage.getId())) {
+          it.remove();
+        }
+      }
+
+      // and now add the new entry for this page
+      index.put(staticPage.getName(), staticPage.getId());
+      writeIndex();
+      unlock();
+    } else {
+      if (lockAttempts <= MAXIMUM_LOCK_ATTEMPTS) {
+        try {
+          Thread.sleep(1000);
+        } catch (InterruptedException ie) {
+          // ignore
+        }
+        index(staticPage);
+      } else {
+        // TODO : schedule a reindex
+        lockAttempts = 0;
       }
     }
-
-    // and now index the page
-    index.put(staticPage.getName(), staticPage.getId());
-    writeIndex();
   }
 
   /**
@@ -112,15 +134,32 @@ public class StaticPageIndex {
    * @param staticPage    a Page instance
    */
   public synchronized void unindex(StaticPage staticPage) {
-    index.remove(staticPage.getName());
-    writeIndex();
+    if (lock()) {
+      readIndex();
+      index.remove(staticPage.getName());
+      writeIndex();
+      unlock();
+    } else {
+      if (lockAttempts <= MAXIMUM_LOCK_ATTEMPTS) {
+        try {
+          Thread.sleep(1000);
+        } catch (InterruptedException ie) {
+          // ignore
+        }
+        unindex(staticPage);
+      } else {
+        // TODO : schedule a reindex
+        lockAttempts = 0;
+      }
+    }
   }
 
   /**
    * Helper method to load the index.
    */
   private void readIndex() {
-    File indexFile = new File(blog.getIndexesDirectory(), "pages.index");
+    log.info("Reading index from disk");
+    File indexFile = getIndexFile();
     if (indexFile.exists()) {
       try {
         BufferedReader reader = new BufferedReader(new FileReader(indexFile));
@@ -133,6 +172,8 @@ public class StaticPageIndex {
         }
 
         reader.close();
+
+        lastModified = indexFile.lastModified();
       } catch (Exception e) {
         log.error("Error while reading index", e);
       }
@@ -144,7 +185,7 @@ public class StaticPageIndex {
    */
   private void writeIndex() {
     try {
-      File indexFile = new File(blog.getIndexesDirectory(), "pages.index");
+      File indexFile = getIndexFile();
       BufferedWriter writer = new BufferedWriter(new FileWriter(indexFile));
 
       for (String name : index.keySet()) {
@@ -154,6 +195,8 @@ public class StaticPageIndex {
 
       writer.flush();
       writer.close();
+
+      lastModified = indexFile.lastModified();
     } catch (Exception e) {
       log.error("Error while writing index", e);
     }
@@ -168,6 +211,15 @@ public class StaticPageIndex {
    */
   public String getStaticPage(String name) {
     return index.get(name);
+  }
+
+  /**
+   * Gets the list of static page IDs.
+   *
+   * @return    a List<String>
+   */
+  public List<String> getStaticPages() {
+    return new LinkedList<String>(index.values());
   }
 
   /**
@@ -187,6 +239,32 @@ public class StaticPageIndex {
    */
   public int getNumberOfStaticPages() {
     return index.size();
+  }
+
+  private File getIndexFile() {
+    File indexDirectory = new File(blog.getIndexesDirectory(), PAGES_INDEX_DIRECTORY_NAME);
+    return new File(indexDirectory, NAME_TO_ID_INDEX_FILE_NAME);
+  }
+
+  private boolean lock() {
+    File lockFile = new File(blog.getIndexesDirectory(), LOCK_FILE_NAME);
+    boolean success = false;
+    try {
+      success = lockFile.createNewFile();
+      if (!success) {
+        lockAttempts++;
+      }
+    } catch (IOException ioe) {
+      log.warn("Error while creating lock file", ioe);
+    }
+
+    return success;
+  }
+
+  private void unlock() {
+    File lockFile = new File(blog.getIndexesDirectory(), LOCK_FILE_NAME);
+    lockFile.delete();
+    lockAttempts = 0;
   }
 
 }

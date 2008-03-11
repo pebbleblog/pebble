@@ -105,15 +105,6 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/log4j.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/commons-fileupload-1.0.jar!/" />
         </CLASSES>
         <JAVADOC />
@@ -205,15 +196,6 @@
       <library>
         <CLASSES>
           <root url="jar://$APPLICATION_HOME_DIR$/plugins/clover-idea5-1.0.7/lib/clover-idea5.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/ehcache-1.2.1RC.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -354,6 +336,25 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="ehcache-1.4.1" level="project" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/log4j-1.2.15.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/ehcache-1.4.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
     <orderEntryProperties />
   </component>
   <component name="WebModuleBuildComponent">
@@ -429,8 +430,8 @@
     </containerElement>
     <containerElement type="library" level="module">
       <attribute name="method" value="1" />
-      <attribute name="URI" value="/WEB-INF/lib/ehcache-1.2.1RC.jar" />
-      <url>jar://$MODULE_DIR$/lib/ehcache-1.2.1RC.jar!/</url>
+      <attribute name="URI" value="/WEB-INF/lib/ehcache-1.4.1.jar" />
+      <url>jar://$MODULE_DIR$/lib/ehcache-1.4.1.jar!/</url>
     </containerElement>
     <containerElement type="library" level="module">
       <attribute name="method" value="1" />
@@ -463,9 +464,9 @@
       <url>jar://$MODULE_DIR$/lib/junit.jar!/</url>
     </containerElement>
     <containerElement type="library" level="module">
-      <attribute name="method" value="0" />
-      <attribute name="URI" value="/WEB-INF/lib/log4j.jar" />
-      <url>jar://$MODULE_DIR$/lib/log4j.jar!/</url>
+      <attribute name="method" value="1" />
+      <attribute name="URI" value="/WEB-INF/lib/log4j-1.2.15.jar" />
+      <url>jar://$MODULE_DIR$/lib/log4j-1.2.15.jar!/</url>
     </containerElement>
     <containerElement type="library" level="module">
       <attribute name="method" value="0" />
@@ -551,6 +552,10 @@
       <attribute name="method" value="1" />
       <attribute name="URI" value="/WEB-INF/lib/xmlrpc-1.2-b1.jar" />
       <url>jar://$MODULE_DIR$/lib/xmlrpc-1.2-b1.jar!/</url>
+    </containerElement>
+    <containerElement type="library" name="ehcache-1.4.1" level="project">
+      <attribute name="method" value="1" />
+      <attribute name="URI" value="/WEB-INF/lib" />
     </containerElement>
     <deploymentDescriptor name="web.xml" url="file://$MODULE_DIR$/web/WEB-INF/web.xml" optional="false" version="2.4" />
     <webroots>

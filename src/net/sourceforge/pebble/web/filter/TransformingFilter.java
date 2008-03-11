@@ -104,7 +104,7 @@ public class TransformingFilter implements Filter {
     if (uri == null || uri.trim().equals("")) {
       uri = "/";
     }
-    log.debug("uri : " + uri);
+    log.trace("uri : " + uri);
 
     if (httpRequest.getQueryString() != null) {
       uri += "?" + httpRequest.getQueryString();
@@ -122,7 +122,7 @@ public class TransformingFilter implements Filter {
 
     request.setAttribute(Constants.INTERNAL_URI, internalUri);
 
-    log.debug(uri + " -> " + internalUri);
+    log.trace(uri + " -> " + internalUri);
 
     chain.doFilter(request, response);
   }

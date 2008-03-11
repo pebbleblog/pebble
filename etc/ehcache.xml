@@ -273,9 +273,11 @@
         disk cache, which in this configuration will go to wherever java.io.tmp is
         defined on your system. On a standard Linux system this will be /tmp" -->
 
-    <!-- Cache for blog entries, which is a simple and very small cache where
-         elements have a short time to live. -->
-    <cache name="blogEntriesCache"
+    <!-- Cache for blog entries and static pages, which is a simple and very small cache where
+         elements have a short time to live. The maxElementsInMemory is per blog (Pebble takes
+         this value and multiplies it up by the number of blogs is it managing on startup.
+         A single cache is used for all content across all blogs. -->
+    <cache name="contentCache"
            maxElementsInMemory="20"
            eternal="false"
            overflowToDisk="false"

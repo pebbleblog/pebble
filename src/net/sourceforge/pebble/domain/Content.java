@@ -31,18 +31,15 @@
  */
 package net.sourceforge.pebble.domain;
 
-import net.sourceforge.pebble.util.StringUtils;
 import net.sourceforge.pebble.api.event.PebbleEvent;
+import net.sourceforge.pebble.util.StringUtils;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.io.Serializable;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 /**
  * Superclass for blog entries, comments and TrackBacks.
@@ -50,8 +47,6 @@ import org.apache.commons.logging.LogFactory;
  * @author    Simon Brown
  */
 public abstract class Content implements Permalinkable, Cloneable, Serializable {
-
-  private static final Log log = LogFactory.getLog(Content.class);
 
   /** the state of the object */
   private State state;

@@ -38,6 +38,7 @@ import net.sourceforge.pebble.dao.StaticPageDAO;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.domain.BlogServiceException;
 import net.sourceforge.pebble.domain.StaticPage;
+import net.sourceforge.pebble.ContentCache;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -64,12 +65,10 @@ public class StaticPageService {
    */
   public List<StaticPage> getStaticPages(Blog blog) throws BlogServiceException {
     List<StaticPage> staticPages = new ArrayList<StaticPage>();
-    try {
-      DAOFactory factory = DAOFactory.getConfiguredFactory();
-      StaticPageDAO dao = factory.getStaticPageDAO();
-      staticPages.addAll(dao.loadStaticPages(blog));
-    } catch (PersistenceException pe) {
-      throw new BlogServiceException(blog, pe);
+
+    List<String> staticPageIds = blog.getStaticPageIndex().getStaticPages();
+    for (String staticPageId : staticPageIds) {
+      staticPages.add(getStaticPageById(blog, staticPageId));
     }
 
     Collections.sort(staticPages, new StaticPageByNameComparator());
@@ -85,19 +84,29 @@ public class StaticPageService {
    * @return  a Page instance, or null if the page couldn't be found
    */
   public StaticPage getStaticPageById(Blog blog, String pageId) throws BlogServiceException {
+    StaticPage staticPage = null;
+    ContentCache cache = ContentCache.getInstance();
+
     try {
-      DAOFactory factory = DAOFactory.getConfiguredFactory();
-      StaticPageDAO dao = factory.getStaticPageDAO();
-
-      StaticPage staticPage = dao.loadStaticPage(blog, pageId);
+      staticPage = cache.getStaticPage(blog, pageId);
       if (staticPage != null) {
-        staticPage.setPersistent(true);
-      }
+        log.debug("Got static page " + pageId+ " from cache");
+      } else {
+        log.debug("Loading static page " + pageId+ " from disk");
 
-      return staticPage;
+        DAOFactory factory = DAOFactory.getConfiguredFactory();
+        StaticPageDAO dao = factory.getStaticPageDAO();
+        staticPage = dao.loadStaticPage(blog, pageId);
+        if (staticPage != null) {
+          staticPage.setPersistent(true);
+          cache.putStaticPage(staticPage);
+        }
+      }
     } catch (PersistenceException pe) {
       throw new BlogServiceException(blog, pe);
     }
+
+    return staticPage;
   }
 
   /**
@@ -116,6 +125,7 @@ public class StaticPageService {
    * Puts the static page.
    */
   public void putStaticPage(StaticPage staticPage) throws BlogServiceException {
+    ContentCache cache = ContentCache.getInstance();
     DAOFactory factory = DAOFactory.getConfiguredFactory();
     StaticPageDAO dao = factory.getStaticPageDAO();
     Blog blog = staticPage.getBlog();
@@ -131,6 +141,7 @@ public class StaticPageService {
           putStaticPage(staticPage);
         } else {
           dao.storeStaticPage(staticPage);
+          cache.removeStaticPage(staticPage);
         }
 
         staticPage.setPersistent(true);
@@ -147,10 +158,13 @@ public class StaticPageService {
    * Removes a static page.
    */
   public void removeStaticPage(StaticPage staticPage) throws BlogServiceException {
+    ContentCache cache = ContentCache.getInstance();
+    DAOFactory factory = DAOFactory.getConfiguredFactory();
+    StaticPageDAO dao = factory.getStaticPageDAO();
+
     try {
-      DAOFactory factory = DAOFactory.getConfiguredFactory();
-      StaticPageDAO dao = factory.getStaticPageDAO();
       dao.removeStaticPage(staticPage);
+      cache.removeStaticPage(staticPage);
 
       staticPage.getBlog().getSearchIndex().unindex(staticPage);
       staticPage.getBlog().getStaticPageIndex().unindex(staticPage);

@@ -57,7 +57,7 @@ public class BlogManager {
   private static final String DEFAULT_BLOG = "default";
 
   /** the blogs that are currently being managed */
-  private Map blogs = new HashMap();
+  private Map<String,Blog> blogs = new HashMap<String,Blog>();
 
   private boolean multiBlog = false;
 
@@ -95,14 +95,13 @@ public class BlogManager {
    * @return  a Blog instance
    */
   public Blog getBlog(String id) {
-    return (Blog)blogs.get(id);
+    return blogs.get(id);
   }
 
   /**
    * Configures this instance to manage the blog(s) in the specified directory.
    */
   public void startBlogs() {
-    File dataDirectory = new File(PebbleContext.getInstance().getConfiguration().getDataDirectory());
     File blogsDirectory = getBlogsDirectory();
     File defaultBlog = new File(blogsDirectory, DEFAULT_BLOG);
 
@@ -128,10 +127,7 @@ public class BlogManager {
   }
 
   public void stopBlogs() {
-    Blog blog;
-    Iterator it = blogs.values().iterator();
-    while (it.hasNext()) {
-      blog = (Blog)it.next();
+    for (Blog blog : blogs.values()) {
       stopBlog(blog);
     }
   }
@@ -218,7 +214,7 @@ public class BlogManager {
   }
 
   public void removeAllBlogs() {
-    blogs = new HashMap();
+    blogs = new HashMap<String,Blog>();
   }
 
   /**
@@ -226,8 +222,8 @@ public class BlogManager {
    *
    * @return  a Collection of Blog instances
    */
-  public Collection getBlogs() {
-    List sortedBlogs = new ArrayList(blogs.values());
+  public Collection<Blog> getBlogs() {
+    List<Blog> sortedBlogs = new ArrayList<Blog>(blogs.values());
     Collections.sort(sortedBlogs, new BlogByLastModifiedDateComparator());
     return sortedBlogs;
   }
@@ -239,11 +235,8 @@ public class BlogManager {
    * @return  a List of Blog instances
    */
   public List<Blog> getPublicBlogs() {
-    Collection coll = blogs.values();
     List<Blog> list = new ArrayList<Blog>();
-    Iterator it = coll.iterator();
-    while (it.hasNext()) {
-      Blog blog = (Blog)it.next();
+    for (Blog blog : blogs.values()) {
       if (blog.isPublic()) {
         list.add(blog);
       }

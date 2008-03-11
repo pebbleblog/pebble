@@ -31,7 +31,6 @@
  */
 package net.sourceforge.pebble.domain;
 
-import net.sf.ehcache.Cache;
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.PebbleContext;
 import net.sourceforge.pebble.PluginProperties;
@@ -59,7 +58,6 @@ import net.sourceforge.pebble.event.DefaultEventDispatcher;
 import net.sourceforge.pebble.event.EventListenerList;
 import net.sourceforge.pebble.event.AuditListener;
 import net.sourceforge.pebble.event.blogentry.EmailSubscriptionListener;
-import net.sourceforge.pebble.event.blog.CacheListener;
 import net.sourceforge.pebble.index.*;
 import net.sourceforge.pebble.logging.AbstractLogger;
 import net.sourceforge.pebble.logging.CombinedLogFormatLogger;
@@ -145,8 +143,6 @@ public class Blog extends AbstractBlog {
   private CategoryIndex categoryIndex;
   private AuthorIndex authorIndex;
   private StaticPageIndex staticPageIndex;
-
-  private Cache blogEntryCache;
 
   private EmailSubscriptionList emailSubscriptionList;
 
@@ -281,8 +277,6 @@ public class Blog extends AbstractBlog {
         }
       }
     }
-
-    eventListenerList.addBlogListener(new CacheListener());
   }
 
   /**
@@ -1730,7 +1724,6 @@ public class Blog extends AbstractBlog {
     categoryIndex.clear();
     authorIndex.clear();
     searchIndex.clear();
-    staticPageIndex.clear();
 
     try {
       BlogService service = new BlogService();
@@ -1748,7 +1741,7 @@ public class Blog extends AbstractBlog {
     try {
       StaticPageService service = new StaticPageService();
       List<StaticPage> staticPages = service.getStaticPages(this);
-      staticPageIndex.index(staticPages);
+      staticPageIndex.reindex(staticPages);
       searchIndex.indexStaticPages(staticPages);
     } catch (BlogServiceException e) {
       // do nothing
@@ -1792,14 +1785,6 @@ public class Blog extends AbstractBlog {
 
   public TrackBackConfirmationStrategy getTrackBackConfirmationStrategy() {
     return trackBackConfirmationStrategy;
-  }
-
-  public Cache getBlogEntryCache() {
-    return blogEntryCache;
-  }
-
-  public void setBlogEntryCache(Cache blogEntryCache) {
-    this.blogEntryCache = blogEntryCache;
   }
 
   public boolean isRichTextEditorForCommentsEnabled() {

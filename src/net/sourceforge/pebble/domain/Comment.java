@@ -34,10 +34,9 @@ package net.sourceforge.pebble.domain;
 import net.sourceforge.pebble.api.event.comment.CommentEvent;
 import net.sourceforge.pebble.util.StringUtils;
 
-import java.util.*;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Represents a blog comment.
@@ -45,8 +44,6 @@ import org.apache.commons.logging.LogFactory;
  * @author    Simon Brown
  */
 public class Comment extends Response {
-
-  private static final Log log = LogFactory.getLog(Comment.class);
 
   /** the body of the comment */
   private String body;
@@ -135,7 +132,6 @@ public class Comment extends Response {
     } else {
       this.title = title;
     }
-    log.debug(title);
   }
 
   /**
@@ -203,7 +199,6 @@ public class Comment extends Response {
     } else {
       this.email = StringUtils.transformHTML(email);
     }
-    log.debug(email);
   }
 
   /**
@@ -242,7 +237,6 @@ public class Comment extends Response {
     } else {
       this.website = website;
     }
-    log.debug(website);
   }
 
   /**
