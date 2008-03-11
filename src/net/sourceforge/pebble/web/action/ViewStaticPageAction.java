@@ -32,8 +32,11 @@
 package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
+import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.domain.BlogEntry;
+import net.sourceforge.pebble.domain.StaticPage;
 import net.sourceforge.pebble.service.StaticPageService;
-import net.sourceforge.pebble.domain.*;
+import net.sourceforge.pebble.service.StaticPageServiceException;
 import net.sourceforge.pebble.web.view.NotFoundView;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.impl.StaticPageView;
@@ -65,7 +68,7 @@ public class ViewStaticPageAction extends Action {
     StaticPage staticPage = null;
     try {
       staticPage = service.getStaticPageByName(blog, name);
-    } catch (BlogServiceException e) {
+    } catch (StaticPageServiceException e) {
       throw new ServletException(e);
     }
     if (staticPage == null) {

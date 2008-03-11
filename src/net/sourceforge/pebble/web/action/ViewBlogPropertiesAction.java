@@ -33,10 +33,12 @@ package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.PebbleContext;
-import net.sourceforge.pebble.service.StaticPageService;
-import net.sourceforge.pebble.security.SecurityRealmException;
+import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.domain.StaticPage;
 import net.sourceforge.pebble.security.PebbleUserDetails;
-import net.sourceforge.pebble.domain.*;
+import net.sourceforge.pebble.security.SecurityRealmException;
+import net.sourceforge.pebble.service.StaticPageService;
+import net.sourceforge.pebble.service.StaticPageServiceException;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.impl.BlogPropertiesView;
 
@@ -107,7 +109,7 @@ public class ViewBlogPropertiesAction extends SecureAction {
       defaultPage.setTitle("Default - recent blog entries");
       staticPages.add(0, defaultPage);
       getModel().put("staticPages", staticPages);
-    } catch (BlogServiceException e) {
+    } catch (StaticPageServiceException e) {
       throw new ServletException(e);
     }
 

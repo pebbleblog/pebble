@@ -33,6 +33,7 @@ package net.sourceforge.pebble.index;
 
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.domain.StaticPage;
+import net.sourceforge.pebble.service.StaticPageService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 

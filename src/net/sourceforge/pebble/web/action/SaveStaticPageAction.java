@@ -33,6 +33,7 @@ package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.service.StaticPageService;
+import net.sourceforge.pebble.service.StaticPageServiceException;
 import net.sourceforge.pebble.domain.*;
 import net.sourceforge.pebble.util.SecurityUtils;
 import net.sourceforge.pebble.util.StringUtils;
@@ -121,9 +122,8 @@ public class SaveStaticPageAction extends SecureAction {
         service.putStaticPage(staticPage);
         service.unlock(staticPage);
         return new RedirectView(staticPage.getLocalPermalink());
-      } catch (BlogServiceException be) {
-        log.error(be.getMessage(), be);
-        be.printStackTrace();
+      } catch (StaticPageServiceException e) {
+        log.error(e.getMessage(), e);
 
         return new StaticPageFormView();
       }
@@ -139,7 +139,7 @@ public class SaveStaticPageAction extends SecureAction {
       try {
         StaticPageService service = new StaticPageService();
         return service.getStaticPageById(blog, id);
-      } catch (BlogServiceException e) {
+      } catch (StaticPageServiceException e) {
         throw new ServletException(e);
       }
     } else {

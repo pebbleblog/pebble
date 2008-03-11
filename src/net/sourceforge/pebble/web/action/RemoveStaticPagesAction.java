@@ -32,10 +32,12 @@
 package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
+import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.domain.StaticPage;
 import net.sourceforge.pebble.service.StaticPageService;
-import net.sourceforge.pebble.domain.*;
-import net.sourceforge.pebble.web.view.View;
+import net.sourceforge.pebble.service.StaticPageServiceException;
 import net.sourceforge.pebble.web.view.RedirectView;
+import net.sourceforge.pebble.web.view.View;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -65,7 +67,7 @@ public class RemoveStaticPagesAction extends SecureAction {
         StaticPage staticPage = null;
         try {
           staticPage = service.getStaticPageById(blog, id);
-        } catch (BlogServiceException e) {
+        } catch (StaticPageServiceException e) {
           throw new ServletException(e);
         }
         if (staticPage != null) {
@@ -74,8 +76,8 @@ public class RemoveStaticPagesAction extends SecureAction {
               service.removeStaticPage(staticPage);
               service.unlock(staticPage);
             }
-          } catch (BlogServiceException be) {
-            throw new ServletException(be);
+          } catch (StaticPageServiceException e) {
+            throw new ServletException(e);
           }
         }
       }

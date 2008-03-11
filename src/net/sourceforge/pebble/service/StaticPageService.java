@@ -31,14 +31,13 @@
  */
 package net.sourceforge.pebble.service;
 
+import net.sourceforge.pebble.ContentCache;
 import net.sourceforge.pebble.comparator.StaticPageByNameComparator;
 import net.sourceforge.pebble.dao.DAOFactory;
 import net.sourceforge.pebble.dao.PersistenceException;
 import net.sourceforge.pebble.dao.StaticPageDAO;
 import net.sourceforge.pebble.domain.Blog;
-import net.sourceforge.pebble.domain.BlogServiceException;
 import net.sourceforge.pebble.domain.StaticPage;
-import net.sourceforge.pebble.ContentCache;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -63,12 +62,14 @@ public class StaticPageService {
    * @param blog    the Blog
    * @return  a list of BlogEntry instances
    */
-  public List<StaticPage> getStaticPages(Blog blog) throws BlogServiceException {
+  public List<StaticPage> getStaticPages(Blog blog) throws StaticPageServiceException {
     List<StaticPage> staticPages = new ArrayList<StaticPage>();
-
-    List<String> staticPageIds = blog.getStaticPageIndex().getStaticPages();
-    for (String staticPageId : staticPageIds) {
-      staticPages.add(getStaticPageById(blog, staticPageId));
+    try {
+      DAOFactory factory = DAOFactory.getConfiguredFactory();
+      StaticPageDAO dao = factory.getStaticPageDAO();
+      staticPages.addAll(dao.loadStaticPages(blog));
+    } catch (PersistenceException pe) {
+      throw new StaticPageServiceException(blog, pe);
     }
 
     Collections.sort(staticPages, new StaticPageByNameComparator());
@@ -83,7 +84,7 @@ public class StaticPageService {
    * @param blog    the Blog
    * @return  a Page instance, or null if the page couldn't be found
    */
-  public StaticPage getStaticPageById(Blog blog, String pageId) throws BlogServiceException {
+  public StaticPage getStaticPageById(Blog blog, String pageId) throws StaticPageServiceException {
     StaticPage staticPage = null;
     ContentCache cache = ContentCache.getInstance();
 
@@ -103,7 +104,7 @@ public class StaticPageService {
         }
       }
     } catch (PersistenceException pe) {
-      throw new BlogServiceException(blog, pe);
+      throw new StaticPageServiceException(blog, pe);
     }
 
     return staticPage;
@@ -116,7 +117,7 @@ public class StaticPageService {
    * @param blog    the Blog
    * @return  a StaticPage instance, or null if the page couldn't be found
    */
-  public StaticPage getStaticPageByName(Blog blog, String name) throws BlogServiceException {
+  public StaticPage getStaticPageByName(Blog blog, String name) throws StaticPageServiceException {
     String id = blog.getStaticPageIndex().getStaticPage(name);
     return getStaticPageById(blog, id);
   }
@@ -124,7 +125,7 @@ public class StaticPageService {
   /**
    * Puts the static page.
    */
-  public void putStaticPage(StaticPage staticPage) throws BlogServiceException {
+  public void putStaticPage(StaticPage staticPage) throws StaticPageServiceException {
     ContentCache cache = ContentCache.getInstance();
     DAOFactory factory = DAOFactory.getConfiguredFactory();
     StaticPageDAO dao = factory.getStaticPageDAO();
@@ -149,7 +150,7 @@ public class StaticPageService {
         staticPage.getBlog().getSearchIndex().index(staticPage);
         staticPage.getBlog().getStaticPageIndex().index(staticPage);
       } catch (PersistenceException pe) {
-        throw new BlogServiceException(blog, pe);
+        throw new StaticPageServiceException(blog, pe);
       }
     }
   }
@@ -157,7 +158,7 @@ public class StaticPageService {
   /**
    * Removes a static page.
    */
-  public void removeStaticPage(StaticPage staticPage) throws BlogServiceException {
+  public void removeStaticPage(StaticPage staticPage) throws StaticPageServiceException {
     ContentCache cache = ContentCache.getInstance();
     DAOFactory factory = DAOFactory.getConfiguredFactory();
     StaticPageDAO dao = factory.getStaticPageDAO();
@@ -170,7 +171,7 @@ public class StaticPageService {
       staticPage.getBlog().getStaticPageIndex().unindex(staticPage);
 
     } catch (PersistenceException pe) {
-      throw new BlogServiceException(staticPage.getBlog(), pe);
+      throw new StaticPageServiceException(staticPage.getBlog(), pe);
     }
   }
 

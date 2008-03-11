@@ -32,9 +32,9 @@
 package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
-import net.sourceforge.pebble.service.StaticPageService;
 import net.sourceforge.pebble.domain.Blog;
-import net.sourceforge.pebble.domain.BlogServiceException;
+import net.sourceforge.pebble.service.StaticPageService;
+import net.sourceforge.pebble.service.StaticPageServiceException;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.impl.StaticPagesView;
 
@@ -62,7 +62,7 @@ public class ViewStaticPagesAction extends SecureAction {
     StaticPageService service = new StaticPageService();
     try {
       getModel().put("staticPages", service.getStaticPages(blog));
-    } catch (BlogServiceException e) {
+    } catch (StaticPageServiceException e) {
       throw new ServletException(e);
     }
 

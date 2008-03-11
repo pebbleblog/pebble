@@ -31,20 +31,19 @@
  */
 package net.sourceforge.pebble.web.action;
 
-import net.sourceforge.pebble.web.view.View;
-import net.sourceforge.pebble.web.view.RedirectView;
+import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.domain.StaticPage;
-import net.sourceforge.pebble.domain.BlogServiceException;
-import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.service.StaticPageService;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.ServletException;
-
+import net.sourceforge.pebble.service.StaticPageServiceException;
+import net.sourceforge.pebble.web.view.RedirectView;
+import net.sourceforge.pebble.web.view.View;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Unlocks a static page.
@@ -73,8 +72,8 @@ public class UnlockStaticPageAction extends SecureAction {
         if (staticPage != null) {
           service.unlock(staticPage);
         }
-      } catch (BlogServiceException bse) {
-        log.warn("Error while unlocking static page", bse);
+      } catch (StaticPageServiceException e) {
+        log.warn("Error while unlocking static page", e);
       }
     }
 

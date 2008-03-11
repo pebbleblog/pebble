@@ -32,12 +32,14 @@
 package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
+import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.domain.StaticPage;
 import net.sourceforge.pebble.service.StaticPageService;
-import net.sourceforge.pebble.domain.*;
+import net.sourceforge.pebble.service.StaticPageServiceException;
 import net.sourceforge.pebble.web.view.ForwardView;
 import net.sourceforge.pebble.web.view.NotFoundView;
-import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.RedirectView;
+import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.impl.StaticPageLockedView;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -73,7 +75,7 @@ public class ManageStaticPageAction extends SecureAction {
     StaticPage staticPage = null;
     try {
       staticPage = service.getStaticPageById(blog, id);
-    } catch (BlogServiceException e) {
+    } catch (StaticPageServiceException e) {
       throw new ServletException(e);
     }
 
@@ -94,8 +96,8 @@ public class ManageStaticPageAction extends SecureAction {
         }
 
         return new RedirectView(blog.getUrl() + "viewStaticPages.secureaction");
-      } catch (BlogServiceException be) {
-        throw new ServletException(be);
+      } catch (StaticPageServiceException e) {
+        throw new ServletException(e);
       }
     } else if (submit.equalsIgnoreCase("Unlock") && confirm != null && confirm.equals("true")) {
         service.unlock(staticPage);

@@ -31,13 +31,12 @@
  */
 package net.sourceforge.pebble.domain;
 
+import net.sourceforge.pebble.Configuration;
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.PebbleContext;
 import net.sourceforge.pebble.PluginProperties;
-import net.sourceforge.pebble.Configuration;
-import net.sourceforge.pebble.service.StaticPageService;
-import net.sourceforge.pebble.aggregator.NewsFeedEntry;
 import net.sourceforge.pebble.aggregator.NewsFeedCache;
+import net.sourceforge.pebble.aggregator.NewsFeedEntry;
 import net.sourceforge.pebble.api.confirmation.CommentConfirmationStrategy;
 import net.sourceforge.pebble.api.confirmation.TrackBackConfirmationStrategy;
 import net.sourceforge.pebble.api.decorator.ContentDecorator;
@@ -54,19 +53,21 @@ import net.sourceforge.pebble.dao.DAOFactory;
 import net.sourceforge.pebble.dao.PersistenceException;
 import net.sourceforge.pebble.decorator.ContentDecoratorChain;
 import net.sourceforge.pebble.decorator.HideUnapprovedResponsesDecorator;
+import net.sourceforge.pebble.event.AuditListener;
 import net.sourceforge.pebble.event.DefaultEventDispatcher;
 import net.sourceforge.pebble.event.EventListenerList;
-import net.sourceforge.pebble.event.AuditListener;
 import net.sourceforge.pebble.event.blogentry.EmailSubscriptionListener;
 import net.sourceforge.pebble.index.*;
 import net.sourceforge.pebble.logging.AbstractLogger;
 import net.sourceforge.pebble.logging.CombinedLogFormatLogger;
 import net.sourceforge.pebble.permalink.DefaultPermalinkProvider;
+import net.sourceforge.pebble.service.StaticPageService;
+import net.sourceforge.pebble.service.StaticPageServiceException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.*;
+import java.io.File;
 import java.lang.reflect.Constructor;
 import java.util.*;
 
@@ -1718,6 +1719,11 @@ public class Blog extends AbstractBlog {
   public void reindex() {
     log.info("Reindexing blog with ID " + getId());
 
+    reindexBlogEntries();
+    reindexStaticPages();
+  }
+
+  public void reindexBlogEntries() {
     blogEntryIndex.clear();
     responseIndex.clear();
     tagIndex.clear();
@@ -1737,14 +1743,16 @@ public class Blog extends AbstractBlog {
     } catch (BlogServiceException e) {
       // do nothing
     }
+  }
 
+  public void reindexStaticPages() {
     try {
       StaticPageService service = new StaticPageService();
       List<StaticPage> staticPages = service.getStaticPages(this);
       staticPageIndex.reindex(staticPages);
       searchIndex.indexStaticPages(staticPages);
-    } catch (BlogServiceException e) {
-      // do nothing
+    } catch (StaticPageServiceException spse) {
+      log.warn("Error while reindexing static pages", spse);
     }
   }
 
