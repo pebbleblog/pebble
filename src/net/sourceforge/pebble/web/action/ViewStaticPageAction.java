@@ -32,6 +32,7 @@
 package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
+import net.sourceforge.pebble.service.StaticPageService;
 import net.sourceforge.pebble.domain.*;
 import net.sourceforge.pebble.web.view.NotFoundView;
 import net.sourceforge.pebble.web.view.View;
@@ -56,7 +57,7 @@ public class ViewStaticPageAction extends Action {
    * @return the name of the next view
    */
   public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
-    BlogService service = new BlogService();
+    StaticPageService service = new StaticPageService();
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
     BlogEntry blogEntry = null;
     String name = request.getParameter("name");

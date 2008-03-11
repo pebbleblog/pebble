@@ -1,3 +1,7 @@
+Version 2.4 - TBC
+-----------------
+Added pessimistic locking strategy for static pages, to prevent concurrent updates.
+
 Version 2.3 - 7th March 2008
 ----------------------------
 Added a "friendly" URL for the aboutAuthor action (/authors/<username/).

@@ -17,12 +17,8 @@ public class UpgradeUtilities {
   public static void upgradeBlog(Blog blog, String fromVersion, String toVersion) throws Exception {
     log.info("Upgrading blog from " + fromVersion + " to " + toVersion);
     if (fromVersion == null) {
-      Utilities.restructureBlogToGMT(blog);
-      Utilities.resetTheme(blog);
-      Utilities.resetPlugins(blog);
+      Utilities.restructureStaticPages(blog);
       Utilities.buildIndexes(blog);
-    } else if (toVersion.equals("2.1")) {
-      Utilities.resetTheme(blog);
     }
   }
 

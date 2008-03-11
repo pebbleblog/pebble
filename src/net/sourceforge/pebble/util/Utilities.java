@@ -43,7 +43,9 @@ import org.apache.commons.logging.LogFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FilenameFilter;
 import java.util.*;
+import java.text.SimpleDateFormat;
 
 /**
  * Utilities for the current blog, such as those useful for moving
@@ -283,6 +285,45 @@ public class Utilities {
             }
           }
         }
+      }
+    }
+  }
+
+  /**
+   * Restructures how static pages are stored on disk.
+   *
+   * @param blog    a Blog instance
+   */
+  public static void restructureStaticPages(Blog blog) {
+    log.info("Restructuring static pages");
+    File root = new File(blog.getRoot(), "pages");
+    File files[] = root.listFiles(new FilenameFilter() {
+        public boolean accept(File dir, String name) {
+          return name.matches("(\\d+\\.xml)|(\\d+\\.xml\\.bak)");
+        }
+    });
+
+    for (File file : files) {
+      if (file.getName().endsWith(".xml")) {
+        File staticPageDirectory = new File(root, file.getName().substring(0, file.getName().indexOf(".xml")));
+        if (!staticPageDirectory.exists()) {
+          log.info("Creating static page directory at " + staticPageDirectory.getAbsolutePath());
+          staticPageDirectory.mkdir();
+        }
+        File destination = new File(staticPageDirectory, file.getName());
+        log.info("Moving " + file.getAbsolutePath() + " to " + destination.getAbsolutePath());
+        file.renameTo(destination);
+      } else {
+        File staticPageDirectory = new File(root, file.getName().substring(0, file.getName().indexOf(".xml")));
+        if (!staticPageDirectory.exists()) {
+          log.info("Creating static page directory at " + staticPageDirectory.getAbsolutePath());
+          staticPageDirectory.mkdir();
+        }
+        SimpleDateFormat archiveFileExtension = new SimpleDateFormat("yyyyMMdd-HHmmss");
+        archiveFileExtension.setTimeZone(blog.getTimeZone());
+        File destination = new File(staticPageDirectory, file.getName().substring(0, file.getName().length()-3) + archiveFileExtension.format(new Date(file.lastModified())));
+        log.info("Moving " + file.getAbsolutePath() + " to " + destination.getAbsolutePath());
+        file.renameTo(destination);
       }
     }
   }

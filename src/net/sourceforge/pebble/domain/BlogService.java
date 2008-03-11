@@ -36,22 +36,19 @@ import net.sf.ehcache.Element;
 import net.sourceforge.pebble.api.event.blogentry.BlogEntryEvent;
 import net.sourceforge.pebble.api.event.comment.CommentEvent;
 import net.sourceforge.pebble.api.event.trackback.TrackBackEvent;
-import net.sourceforge.pebble.comparator.PageBasedContentByTitleComparator;
 import net.sourceforge.pebble.dao.BlogEntryDAO;
 import net.sourceforge.pebble.dao.DAOFactory;
 import net.sourceforge.pebble.dao.PersistenceException;
-import net.sourceforge.pebble.dao.StaticPageDAO;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
 /**
  * Service that encompasses all functionality related to getting, putting
- * and removing blog entries and static pages.
+ * and removing blog entries.
  *
  * @author    Simon Brown
  */
@@ -252,110 +249,6 @@ public class BlogService {
       return blogEntry.getResponse(responseId);
     } else {
       return null;
-    }
-  }
-
-  /**
-   * Gets the list of static pages for the given blog.
-   *
-   * @param blog    the Blog
-   * @return  a list of BlogEntry instances
-   */
-  public List<StaticPage> getStaticPages(Blog blog) throws BlogServiceException {
-    List<StaticPage> staticPages = new ArrayList<StaticPage>();
-    try {
-      DAOFactory factory = DAOFactory.getConfiguredFactory();
-      StaticPageDAO dao = factory.getStaticPageDAO();
-      staticPages.addAll(dao.loadStaticPages(blog));
-    } catch (PersistenceException pe) {
-      throw new BlogServiceException(blog, pe);
-    }
-
-    Collections.sort(staticPages, new PageBasedContentByTitleComparator());
-
-    return staticPages;
-  }
-
-  /**
-   * Gets the page with the specified id.
-   *
-   * @param pageId   the id of the blog entry
-   * @param blog    the Blog
-   * @return  a Page instance, or null if the page couldn't be found
-   */
-  public StaticPage getStaticPageById(Blog blog, String pageId) throws BlogServiceException {
-    try {
-      DAOFactory factory = DAOFactory.getConfiguredFactory();
-      StaticPageDAO dao = factory.getStaticPageDAO();
-
-      StaticPage staticPage = dao.loadStaticPage(blog, pageId);
-      if (staticPage != null) {
-        staticPage.setPersistent(true);
-      }
-
-      return staticPage;
-    } catch (PersistenceException pe) {
-      throw new BlogServiceException(blog, pe);
-    }
-  }
-
-  /**
-   * Gets the static page with the specified name.
-   *
-   * @param name    the name of the static page
-   * @param blog    the Blog
-   * @return  a StaticPage instance, or null if the page couldn't be found
-   */
-  public StaticPage getStaticPageByName(Blog blog, String name) throws BlogServiceException {
-    String id = blog.getStaticPageIndex().getStaticPage(name);
-    return getStaticPageById(blog, id);
-  }
-
-  /**
-   * Puts the static page.
-   */
-  public void putStaticPage(StaticPage staticPage) throws BlogServiceException {
-    DAOFactory factory = DAOFactory.getConfiguredFactory();
-    StaticPageDAO dao = factory.getStaticPageDAO();
-    Blog blog = staticPage.getBlog();
-
-    synchronized (blog) {
-      try {
-        StaticPage sp = getStaticPageById(blog, staticPage.getId());
-
-        if (!staticPage.isPersistent() && sp != null) {
-          // the blog entry is new but one exists with the same ID already
-          // - increment the date/ID and try again
-          staticPage.setDate(new Date(staticPage.getDate().getTime() + 1));
-          putStaticPage(staticPage);
-        } else {
-          dao.storeStaticPage(staticPage);
-        }
-
-        staticPage.setPersistent(true);
-
-        staticPage.getBlog().getSearchIndex().index(staticPage);
-        staticPage.getBlog().getStaticPageIndex().index(staticPage);
-      } catch (PersistenceException pe) {
-        throw new BlogServiceException(blog, pe);
-      }
-    }
-  }
-
-  /**
-   * Removes a static page.
-   */
-  public void removeStaticPage(StaticPage staticPage) throws BlogServiceException {
-    try {
-      DAOFactory factory = DAOFactory.getConfiguredFactory();
-      StaticPageDAO dao = factory.getStaticPageDAO();
-      dao.removeStaticPage(staticPage);
-
-      staticPage.getBlog().getSearchIndex().unindex(staticPage);
-      staticPage.getBlog().getStaticPageIndex().unindex(staticPage);
-
-    } catch (PersistenceException pe) {
-      throw new BlogServiceException(staticPage.getBlog(), pe);
     }
   }
 

@@ -32,6 +32,7 @@
 package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
+import net.sourceforge.pebble.service.StaticPageService;
 import net.sourceforge.pebble.domain.*;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.RedirectView;
@@ -57,7 +58,7 @@ public class RemoveStaticPagesAction extends SecureAction {
   public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
     String ids[] = request.getParameterValues("page");
-    BlogService service = new BlogService();
+    StaticPageService service = new StaticPageService();
 
     if (ids != null) {
       for (String id : ids) {
@@ -69,7 +70,10 @@ public class RemoveStaticPagesAction extends SecureAction {
         }
         if (staticPage != null) {
           try {
-            service.removeStaticPage(staticPage);
+            if (service.lock(staticPage)) {
+              service.removeStaticPage(staticPage);
+              service.unlock(staticPage);
+            }
           } catch (BlogServiceException be) {
             throw new ServletException(be);
           }

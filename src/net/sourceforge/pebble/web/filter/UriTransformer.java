@@ -79,7 +79,7 @@ public class UriTransformer {
     DefaultPermalinkProvider defaultPermalinkProvider = new DefaultPermalinkProvider();
     defaultPermalinkProvider.setBlog(permalinkProvider.getBlog());
 
-    log.debug("URI before transformation : " + uri);
+    log.trace("URI before transformation : " + uri);
 
     if (uri == null || uri.trim().equals("")) {
       uri = "/";
@@ -230,7 +230,7 @@ public class UriTransformer {
       }
     }
 
-    log.debug("URI after transformation : " + result);
+    log.trace("URI after transformation : " + result);
 
     return result;
   }
@@ -247,7 +247,7 @@ public class UriTransformer {
   public String getUri(String uri, MultiBlog blog) {
     String result;
 
-    log.debug("URI before transformation : " + uri);
+    log.trace("URI before transformation : " + uri);
 
     if (uri == null || uri.trim().equals("")) {
       uri = "/";
@@ -277,7 +277,7 @@ public class UriTransformer {
       result = uri;
     }
 
-    log.debug("URI after transformation : " + result);
+    log.trace("URI after transformation : " + result);
 
     return result;
   }

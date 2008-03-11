@@ -1,14 +1,40 @@
 <div class="contentItemLinks">
   <c:if test="${displayMode != 'preview'}">
 
-  <pebble:isBlogContributor>
-  <form name="staticPageForm" action="manageStaticPage.secureaction" method="post">
-    <input type="hidden" name="page" value="${staticPage.id}" />
-    <input type="submit" name="submit" value="Edit" />
-    <input type="checkbox" name="confirm" value="true" />
-    <input type="submit" name="submit" value="Remove" />
-  </form>
-  </pebble:isBlogContributor>
+  <pebble:isAuthorisedForBlog>
+    <div class="inlineAdminLinks">
+    <c:choose>
+      <c:when test="${empty staticPage.lockedBy or staticPage.lockedBy == authenticatedUser.username}">
+        <pebble:isBlogContributor>
+          <form name="staticPageForm" action="manageStaticPage.secureaction" method="post">
+            <input type="hidden" name="page" value="${staticPage.id}" />
+            <input type="submit" name="submit" value="Edit" />
+            <input type="checkbox" name="confirm" value="true" />
+            <c:if test="${staticPage.lockedBy == authenticatedUser.username}">
+            <input type="submit" name="submit" value="Unlock" />
+            </c:if>
+            <input type="submit" name="submit" value="Remove" />
+          </form>
+          <c:if test="${staticPage.lockedBy == authenticatedUser.username}">
+            <br />You have this static page locked for editing.
+          </c:if>
+        </pebble:isBlogContributor>
+      </c:when>
+      <c:otherwise>
+        <pebble:isBlogAdminOrBlogOwner>
+        <form name="staticPageForm" action="manageStaticPage.secureaction" method="post">
+          <input type="hidden" name="page" value="${staticPage.id}" />
+          <input type="checkbox" name="confirm" value="true" />
+          <input type="submit" name="submit" value="Unlock" />
+        </form>
+        <br />
+        </pebble:isBlogAdminOrBlogOwner>
+        This static page is locked and being<br />
+        modified by ${staticPage.lockedBy}.
+      </c:otherwise>
+    </c:choose>
+    </div>
+  </pebble:isAuthorisedForBlog>
 
   </c:if>
 </div>

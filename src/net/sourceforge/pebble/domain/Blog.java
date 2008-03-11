@@ -36,6 +36,7 @@ import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.PebbleContext;
 import net.sourceforge.pebble.PluginProperties;
 import net.sourceforge.pebble.Configuration;
+import net.sourceforge.pebble.service.StaticPageService;
 import net.sourceforge.pebble.aggregator.NewsFeedEntry;
 import net.sourceforge.pebble.aggregator.NewsFeedCache;
 import net.sourceforge.pebble.api.confirmation.CommentConfirmationStrategy;
@@ -1731,9 +1732,8 @@ public class Blog extends AbstractBlog {
     searchIndex.clear();
     staticPageIndex.clear();
 
-    BlogService service = new BlogService();
-
     try {
+      BlogService service = new BlogService();
       List<BlogEntry> blogEntries = service.getBlogEntries(this);
       blogEntryIndex.index(blogEntries);
       responseIndex.index(blogEntries);
@@ -1746,6 +1746,7 @@ public class Blog extends AbstractBlog {
     }
 
     try {
+      StaticPageService service = new StaticPageService();
       List<StaticPage> staticPages = service.getStaticPages(this);
       staticPageIndex.index(staticPages);
       searchIndex.indexStaticPages(staticPages);

@@ -75,7 +75,7 @@ public class DispatchingFilter implements Filter {
     String uri = (String)request.getAttribute(Constants.INTERNAL_URI);
 
     try {
-      log.debug("Dispatching to " + uri);
+      log.trace("Dispatching to " + uri);
       RequestDispatcher dispatcher = request.getRequestDispatcher(uri);
       dispatcher.forward(request, response);
     } catch (Exception e) {

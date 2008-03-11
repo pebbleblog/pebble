@@ -77,7 +77,10 @@
       </tr>
 
       <tr>
-        <td colspan="2" align="right">
+        <td align="left">
+          <input name="submit" type="submit" Value="Cancel" />
+        </td>
+        <td align="right">
           <input name="submit" type="submit" Value="Preview" />
           <input name="submit" type="submit" Value="Save" />
         </td>

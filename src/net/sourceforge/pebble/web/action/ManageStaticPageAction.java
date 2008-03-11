@@ -32,11 +32,13 @@
 package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
+import net.sourceforge.pebble.service.StaticPageService;
 import net.sourceforge.pebble.domain.*;
 import net.sourceforge.pebble.web.view.ForwardView;
 import net.sourceforge.pebble.web.view.NotFoundView;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.RedirectView;
+import net.sourceforge.pebble.web.view.impl.StaticPageLockedView;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -67,7 +69,7 @@ public class ManageStaticPageAction extends SecureAction {
     String confirm = request.getParameter("confirm");
     String submit = request.getParameter("submit");
 
-    BlogService service = new BlogService();
+    StaticPageService service = new StaticPageService();
     StaticPage staticPage = null;
     try {
       staticPage = service.getStaticPageById(blog, id);
@@ -83,12 +85,22 @@ public class ManageStaticPageAction extends SecureAction {
       return new ForwardView("/editStaticPage.secureaction?page=" + id);
     } else if (submit.equalsIgnoreCase("Remove") && confirm != null && confirm.equals("true")) {
       try {
-        service.removeStaticPage(staticPage);
+        if (service.lock(staticPage)) {
+          service.removeStaticPage(staticPage);
+          service.unlock(staticPage);
+        } else {
+          getModel().put(Constants.STATIC_PAGE_KEY, staticPage);
+          return new StaticPageLockedView();
+        }
 
         return new RedirectView(blog.getUrl() + "viewStaticPages.secureaction");
       } catch (BlogServiceException be) {
         throw new ServletException(be);
       }
+    } else if (submit.equalsIgnoreCase("Unlock") && confirm != null && confirm.equals("true")) {
+        service.unlock(staticPage);
+
+        return new RedirectView(blog.getUrl() + "viewStaticPages.secureaction");
     }
 
     return new RedirectView(staticPage.getLocalPermalink());
@@ -108,6 +120,8 @@ public class ManageStaticPageAction extends SecureAction {
         return new String[]{Constants.BLOG_CONTRIBUTOR_ROLE};
       } else if (submit.equalsIgnoreCase("Remove")) {
         return new String[]{Constants.BLOG_CONTRIBUTOR_ROLE};
+      } else if (submit.equalsIgnoreCase("Unlock")) {
+        return new String[]{Constants.BLOG_ADMIN_ROLE, Constants.BLOG_OWNER_ROLE, Constants.BLOG_CONTRIBUTOR_ROLE};
       }
     }
 

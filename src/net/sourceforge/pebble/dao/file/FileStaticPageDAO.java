@@ -3,6 +3,7 @@ package net.sourceforge.pebble.dao.file;
 import net.sourceforge.pebble.dao.PersistenceException;
 import net.sourceforge.pebble.dao.StaticPageDAO;
 import net.sourceforge.pebble.domain.*;
+import net.sourceforge.pebble.util.SecurityUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
@@ -30,6 +31,10 @@ public class FileStaticPageDAO implements StaticPageDAO {
    * the log used by this class
    */
   private static Log log = LogFactory.getLog(FileStaticPageDAO.class);
+
+  private static final String STATIC_PAGES_DIRECTORY_NAME = "pages";
+  private static final String STATIC_PAGE_FILE_EXTENSION = ".xml";
+  private static final String STATIC_PAGE_LOCK_EXTENSION = ".lock";
 
   private DocumentBuilder builder;
 
@@ -78,12 +83,20 @@ public class FileStaticPageDAO implements StaticPageDAO {
    */
   public Collection<StaticPage> loadStaticPages(Blog blog) throws PersistenceException {
     List<StaticPage> list = new ArrayList<StaticPage>();
-    File root = new File(blog.getRoot(), "pages");
-    File files[] = root.listFiles(new BlogEntryFilenameFilter());
-    if (files != null) {
-        for (File file : files) {
-            list.add(loadStaticPage(blog, file));
+    File root = new File(blog.getRoot(), STATIC_PAGES_DIRECTORY_NAME);
+    File files[] = root.listFiles(new FilenameFilter() {
+        public boolean accept(File dir, String name) {
+          return new File(dir, name).isDirectory() && name.matches("\\d+");
         }
+    });
+    
+    if (files != null) {
+      for (File file : files) {
+        StaticPage staticPage = loadStaticPage(blog, file.getName());
+        if (staticPage != null) {
+          list.add(staticPage);
+        }
+      }
     }
 
     return list;
@@ -100,7 +113,7 @@ public class FileStaticPageDAO implements StaticPageDAO {
    */
   public StaticPage loadStaticPage(Blog blog, String pageId) throws PersistenceException {
     File path = new File(getPath(blog, pageId));
-    File file = new File(path, pageId + ".xml");
+    File file = new File(path, pageId + STATIC_PAGE_FILE_EXTENSION);
     return loadStaticPage(blog, file);
   }
 
@@ -117,7 +130,7 @@ public class FileStaticPageDAO implements StaticPageDAO {
       outputDir.mkdirs();
     }
 
-    File outputFile = new File(outputDir, staticPage.getId() + ".xml");
+    File outputFile = new File(outputDir, staticPage.getId() + STATIC_PAGE_FILE_EXTENSION);
     storeStaticPage(staticPage, outputFile);
   }
 
@@ -129,7 +142,6 @@ public class FileStaticPageDAO implements StaticPageDAO {
    * @throws PersistenceException if something goes wrong storing the static page
    */
   private void storeStaticPage(StaticPage staticPage, File destination) throws PersistenceException {
-    File backupFile = new File(destination.getParentFile(), destination.getName() + ".bak");
     try {
       DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
       factory.setValidating(false);
@@ -198,8 +210,7 @@ public class FileStaticPageDAO implements StaticPageDAO {
 
       // now take a backup of the correct file
       if (destination.exists() && destination.length() > 0) {
-        log.debug("Backing up to " + backupFile.getAbsolutePath());
-        destination.renameTo(backupFile);
+        removeStaticPage(staticPage); // this archives the current version
       }
 
       log.debug("Saving to " + destination.getAbsolutePath());
@@ -223,12 +234,28 @@ public class FileStaticPageDAO implements StaticPageDAO {
    */
   public void removeStaticPage(StaticPage staticPage) throws PersistenceException {
     File path = new File(getPath(staticPage.getBlog(), staticPage.getId()));
-    File file = new File(path, staticPage.getId() + ".xml");
+    File file = new File(path, staticPage.getId() + STATIC_PAGE_FILE_EXTENSION);
     log.debug("Removing " + staticPage.getGuid());
 
-    boolean success = file.delete();
-    if (!success) {
-      throw new PersistenceException("Deletion of static page" + staticPage.getGuid() + " failed");
+    // for archive purposes, the current version of the file will be saved with
+    // the timestamp as the extension
+    SimpleDateFormat archiveFileExtension = new SimpleDateFormat("yyyyMMdd-HHmmss");
+    archiveFileExtension.setTimeZone(staticPage.getBlog().getTimeZone());
+    Date date = new Date();
+    if (file.exists()) {
+      date = new Date(file.lastModified());
+    }
+    File backupFile = new File(
+        file.getParentFile(),
+        file.getName() + "." + archiveFileExtension.format(date));
+
+    if (!backupFile.exists()) {
+      log.debug("Archiving current version to " + backupFile.getAbsolutePath());
+      boolean success = file.renameTo(backupFile);
+
+      if (success) {
+        throw new PersistenceException("Deletion of " + staticPage.getGuid() + " failed");
+      }
     }
   }
 
@@ -257,6 +284,9 @@ public class FileStaticPageDAO implements StaticPageDAO {
         e.printStackTrace();
         throw new PersistenceException(e.getMessage());
       }
+
+      // and is the page locked?
+      staticPage.setLockedBy(getUsernameHoldingLock(staticPage));
 
       return staticPage;
     } else {
@@ -558,16 +588,95 @@ public class FileStaticPageDAO implements StaticPageDAO {
    * that blog entry is stored.
    *
    * @param blog    the owning Blog
-   * @param blogEntryId   the ID of the blog entry
+   * @param staticPageId   the ID of the static page
    * @return  a String of the form blogroot/yyyy/MM/dd
    */
-  private String getPath(Blog blog, String blogEntryId) {
+  private String getPath(Blog blog, String staticPageId) {
     StringBuffer buf = new StringBuffer();
     buf.append(blog.getRoot());
     buf.append(File.separator);
     buf.append("pages");
+    buf.append(File.separator);
+    buf.append(staticPageId);
 
     return buf.toString();
+  }
+
+  /**
+   * Locks the specified static page.
+   *
+   * @param staticPage the static page to lock
+   * @return  true if the page could be locked, false otherwise
+   */
+  public boolean lock(StaticPage staticPage) {
+    File lockFile = getLockFile(staticPage);
+    try {
+      boolean success = lockFile.createNewFile();
+      if (success) {
+        FileWriter writer = new FileWriter(lockFile);
+        writer.write(SecurityUtils.getUsername());
+        writer.flush();
+        writer.close();
+        return true;
+      } else {
+        String lockedBy = getUsernameHoldingLock(staticPage);
+        return (lockedBy != null && lockedBy.equals(SecurityUtils.getUsername()));
+      }
+    } catch (IOException e) {
+      log.warn("Exceptoin while attempting to lock static page " + staticPage.getGuid(), e);
+    }
+
+    return false;
+  }
+
+  /**
+   * Unlocks the specified static page.
+   *
+   * @param staticPage the static page to unlock
+   * @return true if the page could be unlocked, false otherwise
+   */
+  public boolean unlock(StaticPage staticPage) {
+    File lockFile = getLockFile(staticPage);
+    if (lockFile.exists()) {
+      return lockFile.delete();
+    } else {
+      return true;
+    }
+  }
+
+  /**
+   * Given a blog and blog entry ID, this method determines the path where
+   * that blog entry is stored.
+   *
+   * @param staticPage    a StaticPage instance
+   * @return  a File instance, representing a lock
+   */
+  private File getLockFile(StaticPage staticPage) {
+    StringBuffer buf = new StringBuffer();
+    buf.append(staticPage.getBlog().getRoot());
+    buf.append(File.separator);
+    buf.append(STATIC_PAGES_DIRECTORY_NAME);
+    buf.append(File.separator);
+    buf.append(staticPage.getId());
+    buf.append(STATIC_PAGE_LOCK_EXTENSION);
+
+    return new File(buf.toString());
+  }
+
+  private String getUsernameHoldingLock(StaticPage staticPage) {
+    String username = null;
+    try {
+      File lockFile = getLockFile(staticPage);
+      if (lockFile.exists()) {
+        BufferedReader reader = new BufferedReader(new FileReader(lockFile));
+        username = reader.readLine();
+        reader.close();
+      }
+    } catch (IOException ioe) {
+      log.warn("Error reading lock file", ioe);
+    }
+
+    return username;
   }
 
 }

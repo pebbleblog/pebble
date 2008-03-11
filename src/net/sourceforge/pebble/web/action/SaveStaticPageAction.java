@@ -32,6 +32,7 @@
 package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
+import net.sourceforge.pebble.service.StaticPageService;
 import net.sourceforge.pebble.domain.*;
 import net.sourceforge.pebble.util.SecurityUtils;
 import net.sourceforge.pebble.util.StringUtils;
@@ -59,6 +60,7 @@ public class SaveStaticPageAction extends SecureAction {
 
   /** the value used if the page is being previewed rather than saved */
   private static final String PREVIEW = "Preview";
+  private static final String CANCEL = "Cancel";
 
   /**
    * Peforms the processing associated with this action.
@@ -72,6 +74,8 @@ public class SaveStaticPageAction extends SecureAction {
 
     if (submitType != null && submitType.equalsIgnoreCase(PREVIEW)) {
       return previewPage(request);
+    } else if (submitType != null && submitType.equalsIgnoreCase(CANCEL)) {
+      return unlockPage(request);
     } else {
       return savePage(request);
     }
@@ -92,7 +96,16 @@ public class SaveStaticPageAction extends SecureAction {
     return new StaticPageFormView();
   }
 
+  private View unlockPage(HttpServletRequest request) throws ServletException {
+    StaticPage staticPage = getStaticPage(request);
+    StaticPageService service = new StaticPageService();
+    service.unlock(staticPage);
+
+    return new RedirectView(staticPage.getLocalPermalink());
+  }
+
   private View savePage(HttpServletRequest request) throws ServletException {
+    StaticPageService service = new StaticPageService();
     StaticPage staticPage = getStaticPage(request);
     populateStaticPage(staticPage, request);
     getModel().put(Constants.STATIC_PAGE_KEY, staticPage);
@@ -105,16 +118,15 @@ public class SaveStaticPageAction extends SecureAction {
       return new StaticPageFormView();
     } else {
       try {
-        BlogService service = new BlogService();
         service.putStaticPage(staticPage);
+        service.unlock(staticPage);
+        return new RedirectView(staticPage.getLocalPermalink());
       } catch (BlogServiceException be) {
         log.error(be.getMessage(), be);
         be.printStackTrace();
 
         return new StaticPageFormView();
       }
-
-      return new RedirectView(staticPage.getLocalPermalink());
     }
   }
 
@@ -125,7 +137,7 @@ public class SaveStaticPageAction extends SecureAction {
 
     if (persistent != null && persistent.equalsIgnoreCase("true")) {
       try {
-        BlogService service = new BlogService();
+        StaticPageService service = new StaticPageService();
         return service.getStaticPageById(blog, id);
       } catch (BlogServiceException e) {
         throw new ServletException(e);

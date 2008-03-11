@@ -33,12 +33,10 @@ package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.PebbleContext;
+import net.sourceforge.pebble.service.StaticPageService;
 import net.sourceforge.pebble.security.SecurityRealmException;
 import net.sourceforge.pebble.security.PebbleUserDetails;
-import net.sourceforge.pebble.domain.Blog;
-import net.sourceforge.pebble.domain.BlogService;
-import net.sourceforge.pebble.domain.StaticPage;
-import net.sourceforge.pebble.domain.BlogServiceException;
+import net.sourceforge.pebble.domain.*;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.impl.BlogPropertiesView;
 
@@ -101,7 +99,7 @@ public class ViewBlogPropertiesAction extends SecureAction {
       throw new ServletException("Could not get list of users", sre);
     }
 
-    BlogService service = new BlogService();
+    StaticPageService service = new StaticPageService();
     try {
       List staticPages = service.getStaticPages(blog);
       StaticPage defaultPage = new StaticPage(blog);

@@ -67,6 +67,7 @@ public abstract class PageBasedContent extends Content {
   private Blog blog;
 
   private boolean persistent = false;
+  private String lockedBy = null;
 
   /**
    * Creates a new blog entry.
@@ -329,6 +330,14 @@ public abstract class PageBasedContent extends Content {
     } else {
       setState(State.UNPUBLISHED);
     }
+  }
+
+  public String getLockedBy() {
+    return lockedBy;
+  }
+
+  public void setLockedBy(String lockedBy) {
+    this.lockedBy = lockedBy;
   }
 
 }

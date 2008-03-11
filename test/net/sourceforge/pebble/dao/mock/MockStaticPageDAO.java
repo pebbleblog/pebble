@@ -64,4 +64,23 @@ public class MockStaticPageDAO implements StaticPageDAO {
     pages.remove(staticPage.getId());
   }
 
+  /**
+   * Locks the specified static page.
+   *
+   * @param staticPage the static page to lock
+   * @return true if the page could be locked, false otherwise
+   */
+  public boolean lock(StaticPage staticPage) {
+    return true;
+  }
+
+  /**
+   * Unlocks the specified static page.
+   *
+   * @param staticPage the static page to unlock
+   * @return true if the page could be unlocked, false otherwise
+   */
+  public boolean unlock(StaticPage staticPage) {
+    return true;
+  }
 }
