@@ -19,6 +19,17 @@
 
 <table width="99%">
 
+  <c:if test="${not empty parentComment}">
+  <tr>
+    <td colspan="2">
+      <c:set var="comment" scope="request" value="${parentComment}"/>
+      <c:set var="displayMode" scope="request" value="preview" />
+      <div id="parentComment"><jsp:include page="comment.jsp"><jsp:param name="commentIdentifier" value="parentComment"/></jsp:include></div>
+      <br />
+    </td>
+  </tr>
+  </c:if>
+
   <c:if test="${not empty validationContext.errors}">
   <tr>
     <td colspan="2" class="validationError">

@@ -108,6 +108,14 @@ public class ReplyToBlogEntryAction extends AbstractCommentAction {
       getModel().put("decoratedComment", decoratedComment);
       getModel().put("undecoratedComment", comment);
 
+      // are we replying to an existing comment?
+      String parentCommentId = request.getParameter("comment");
+      if (parentCommentId != null && parentCommentId.length() > 0) {
+        Comment parentComment = blogEntry.getComment(Long.parseLong(parentCommentId));
+        blog.getContentDecoratorChain().decorate(decoratorContext, parentComment);
+        getModel().put("parentComment", parentComment);
+      }
+
       return new CommentFormView();
     }
   }
