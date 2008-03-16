@@ -33,6 +33,10 @@ package net.sourceforge.pebble.domain;
 
 import net.sourceforge.pebble.web.validation.ValidationContext;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * Represents a page.
  *
@@ -59,6 +63,18 @@ public class StaticPage extends PageBasedContent {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  /**
+   * Gets a list of all tags.
+   *
+   * @return  a List of tags
+   */
+  public List<Tag> getAllTags() {
+    List<Tag> list = new ArrayList<Tag>(getTagsAsList());
+    Collections.sort(list);
+
+    return list;
   }
 
   /**
@@ -129,6 +145,8 @@ public class StaticPage extends PageBasedContent {
     page.setAuthor(getAuthor());
     page.setOriginalPermalink(getOriginalPermalink());
     page.setName(getName());
+    page.setTags(getTags());
+    page.setLockedBy(getLockedBy());
 
     return page;
   }

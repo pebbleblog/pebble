@@ -59,7 +59,6 @@ public class BlogEntry extends PageBasedContent {
   public static final String TRACKBACKS_ENABLED_PROPERTY = "trackBacksEnabled";
   public static final String ATTACHMENT_PROPERTY = "attachment";
   public static final String CATEGORIES_PROPERTY = "categories";
-  public static final String TAGS_PROPERTY = "tags";
 
   /** the permalink */
   private String permalink;
@@ -68,12 +67,6 @@ public class BlogEntry extends PageBasedContent {
    * the category that the blog entry falls into
    */
   private Set categories = new HashSet();
-
-  /** the list of tags for this blog entry */
-  private String tags = "";
-
-  /** the List of tags for this blog entry */
-  private List<Tag> tagsAsList = new ArrayList<Tag>();
 
   /**
    * the excerpt of the blog entry
@@ -258,43 +251,6 @@ public class BlogEntry extends PageBasedContent {
       return false;
     }
   }
-
-  /**
-   * Gets the tags associated with this category.
-   *
-   * @return  a list of tags
-   */
-  public String getTags() {
-    return this.tags;
-  }
-
-  /**
-   * Gets the tags associated with this category, as a List.
-   *
-   * @return  a List of tags
-   */
-  public List<Tag> getTagsAsList() {
-    return this.tagsAsList;
-  }
-
-  /**
-   * Sets the set of tags associated with this category.
-   *
-   * @param newTags    a set of tags
-   */
-  public void setTags(String newTags) {
-    if (newTags != null && newTags.indexOf(",") > -1) {
-      // if the tags have been comma separated, convert them to
-      // whitespace separated by
-      // - remove whitespace
-      // - convert commas to whitespace
-      newTags = newTags.replaceAll(" ", "").replaceAll(",", " ");
-    }
-    propertyChangeSupport.firePropertyChange(TAGS_PROPERTY, tags, newTags);
-    this.tags = newTags;
-    this.tagsAsList = Tag.parse(getBlog(), tags);
-  }
-
 
   /**
    * Gets the content of this response.
@@ -871,7 +827,7 @@ public class BlogEntry extends PageBasedContent {
       entry.addCategory((Category)it.next());
     }
 
-    entry.setTags(tags);
+    entry.setTags(getTags());
 
     // also copy the comments
     it = getComments().iterator();

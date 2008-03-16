@@ -14,6 +14,7 @@
     <base href="${blog.url}" />
     <meta http-equiv="Content-Type" content="text/html; charset=${blog.characterEncoding}"/>
     <meta name="description" content="${blog.name}" />
+    <c:if test="${displayMode == 'detail'}"><c:choose><c:when test="${not empty blogEntry}"><meta name="keywords" content="${blogEntry.tags}" /></c:when><c:when test="${not empty staticPage}"><meta name="keywords" content="${staticPage.tags}" /></c:when></c:choose></c:if>
     <meta name="abstract" content="${blog.description}" />
     <meta name="author" content="${blog.author}" />
     <meta name="generator" content="Pebble (http://pebble.sourceforge.net)" />

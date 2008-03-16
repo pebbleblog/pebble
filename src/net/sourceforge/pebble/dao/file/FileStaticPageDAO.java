@@ -110,6 +110,7 @@ public class FileStaticPageDAO implements StaticPageDAO {
         staticPage.setTitle(spt.getTitle());
         staticPage.setSubtitle(spt.getSubtitle());
         staticPage.setBody(spt.getBody());
+        staticPage.setTags(spt.getTags());
         staticPage.setAuthor(spt.getAuthor());
         staticPage.setOriginalPermalink(spt.getOriginalPermalink());
         staticPage.setName(spt.getStaticName());
@@ -163,6 +164,7 @@ public class FileStaticPageDAO implements StaticPageDAO {
       type.setTitle(staticPage.getTitle());
       type.setSubtitle(staticPage.getSubtitle());
       type.setBody(staticPage.getBody());
+      type.setTags(staticPage.getTags());
       type.setAuthor(staticPage.getAuthor());
       type.setStaticName(staticPage.getName());
       type.setOriginalPermalink(staticPage.getOriginalPermalink());

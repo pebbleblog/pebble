@@ -69,6 +69,13 @@
       </tr>
 
       <tr>
+        <td valign="top"><b>Tags</b></td>
+        <td>
+          <input type="text" name="tags" size="60" value="${staticPage.tags}">
+        </td>
+      </tr>
+
+      <tr>
         <td valign="top"><b>Original permalink</b></td>
         <td>
           <input type="text" name="originalPermalink" size="60" value="${staticPage.originalPermalink}">

@@ -45,6 +45,7 @@ public class FileStaticPageDAOTest extends SingleBlogTestCase {
     assertEquals("Static page title", page.getTitle());
     assertEquals("Static page subtitle", page.getSubtitle());
     assertEquals("<p>Static page body.</p>", page.getBody());
+    assertEquals("some tags", page.getTags());
     assertEquals(1152083300843L, page.getDate().getTime());
     assertEquals("http://pebble.sourceforge.net", page.getOriginalPermalink());
   }

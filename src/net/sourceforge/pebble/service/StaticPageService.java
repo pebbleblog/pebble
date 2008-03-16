@@ -107,6 +107,10 @@ public class StaticPageService {
       throw new StaticPageServiceException(blog, pe);
     }
 
+    if (staticPage != null) {
+      staticPage = (StaticPage)staticPage.clone();
+    }
+
     return staticPage;
   }
 
@@ -176,11 +180,22 @@ public class StaticPageService {
   }
 
   public boolean lock(StaticPage staticPage) {
-    return DAOFactory.getConfiguredFactory().getStaticPageDAO().lock(staticPage);
+    boolean success = DAOFactory.getConfiguredFactory().getStaticPageDAO().lock(staticPage);
+
+    ContentCache cache = ContentCache.getInstance();
+    cache.removeStaticPage(staticPage);
+
+    return success;
   }
 
   public boolean unlock(StaticPage staticPage) {
-    return DAOFactory.getConfiguredFactory().getStaticPageDAO().unlock(staticPage);
+    boolean success = DAOFactory.getConfiguredFactory().getStaticPageDAO().unlock(staticPage);
+
+    ContentCache cache = ContentCache.getInstance();
+    cache.removeStaticPage(staticPage);    
+
+    return success;
+
   }
 
 }

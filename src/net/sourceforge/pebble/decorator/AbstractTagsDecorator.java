@@ -1,8 +1,9 @@
 package net.sourceforge.pebble.decorator;
 
-import net.sourceforge.pebble.domain.BlogEntry;
-import net.sourceforge.pebble.domain.Tag;
 import net.sourceforge.pebble.api.decorator.ContentDecoratorContext;
+import net.sourceforge.pebble.domain.BlogEntry;
+import net.sourceforge.pebble.domain.PageBasedContent;
+import net.sourceforge.pebble.domain.Tag;
 
 import java.util.Iterator;
 import java.util.ResourceBundle;
@@ -15,23 +16,16 @@ import java.util.ResourceBundle;
  */
 public abstract class AbstractTagsDecorator extends ContentDecoratorSupport {
 
-  /**
-   * Decorates the specified blog entry.
-   *
-   * @param context   the context in which the decoration is running
-   * @param blogEntry the blog entry to be decorated
-   *          if something goes wrong when running the decorator
-   */
-  public void decorate(ContentDecoratorContext context, BlogEntry blogEntry) {
-    if (context.getMedia() == ContentDecoratorContext.HTML_PAGE) {
-      ResourceBundle bundle = ResourceBundle.getBundle("resources", blogEntry.getBlog().getLocale());
-      Iterator tags = blogEntry.getAllTags().iterator();
+  protected String generateDecorationHtml(ContentDecoratorContext context, PageBasedContent content) {
+    StringBuffer buf = new StringBuffer();
 
-      String baseUrl = getBaseUrl(blogEntry);
+    if (context.getMedia() == ContentDecoratorContext.HTML_PAGE) {
+      ResourceBundle bundle = ResourceBundle.getBundle("resources", content.getBlog().getLocale());
+      Iterator tags = content.getAllTags().iterator();
+
+      String baseUrl = getBaseUrl(content);
 
       if (tags.hasNext()) {
-        StringBuffer buf = new StringBuffer();
-
         buf.append("<div class=\"tags\"><span>");
         buf.append(bundle.getString("tag.tags"));
         buf.append(" : </span>");
@@ -50,26 +44,18 @@ public abstract class AbstractTagsDecorator extends ContentDecoratorSupport {
         }
         buf.append("</div>");
 
-        // now add the tags to the body and excerpt, if they aren't empty
-        String body = blogEntry.getBody();
-        if (body != null && body.trim().length() > 0) {
-          blogEntry.setBody(body + buf.toString());
-        }
-
-        String excerpt = blogEntry.getExcerpt();
-        if (excerpt != null && excerpt.trim().length() > 0) {
-          blogEntry.setExcerpt(excerpt + buf.toString());
-        }
       }
     }
+
+    return buf.toString();
   }
 
   /**
    * Gets the base URL for tag links, complete with trailing slash.
    *
-   * @param blogEntry   the owning BlogEntry
+   * @param content   the owning content
    * @return  a URL as a String
    */
-  public abstract String getBaseUrl(BlogEntry blogEntry);
+  public abstract String getBaseUrl(PageBasedContent content);
 
 }

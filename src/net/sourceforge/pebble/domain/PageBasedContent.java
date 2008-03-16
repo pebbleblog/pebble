@@ -7,7 +7,7 @@ import net.sourceforge.pebble.security.SecurityRealmException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import java.util.Date;
+import java.util.*;
 
 /**
  * The superclass for blog entries and pages.
@@ -24,6 +24,7 @@ public abstract class PageBasedContent extends Content {
   public static final String AUTHOR_PROPERTY = "author";
   public static final String DATE_PROPERTY = "date";
   public static final String ORIGINAL_PERMALINK_PROPERTY = "originalPermalink";
+  public static final String TAGS_PROPERTY = "tags";
 
   /**
    * the id
@@ -62,6 +63,12 @@ public abstract class PageBasedContent extends Content {
    * the alternative permalink for this blog entry
    */
   private String originalPermalink;
+
+  /** the list of tags for this blog entry */
+  private String tags = "";
+
+  /** the List of tags for this blog entry */
+  private List<Tag> tagsAsList = new LinkedList<Tag>();
 
   /** the owning blog */
   private Blog blog;
@@ -217,6 +224,49 @@ public abstract class PageBasedContent extends Content {
    */
   public void setAuthor(String newAuthor) {
     this.author = newAuthor;
+  }
+
+  /**
+   * Gets the tags associated with this category.
+   *
+   * @return  a list of tags
+   */
+  public String getTags() {
+    return this.tags;
+  }
+
+  /**
+   * Gets the tags associated with this category, as a List.
+   *
+   * @return  a List of tags
+   */
+  public List<Tag> getTagsAsList() {
+    return this.tagsAsList;
+  }
+
+  /**
+   * Gets a list of all tags.
+   *
+   * @return  a List of tags
+   */
+  public abstract List<Tag> getAllTags();
+
+  /**
+   * Sets the set of tags associated with this category.
+   *
+   * @param newTags    a set of tags
+   */
+  public void setTags(String newTags) {
+    if (newTags != null && newTags.indexOf(",") > -1) {
+      // if the tags have been comma separated, convert them to
+      // whitespace separated by
+      // - remove whitespace
+      // - convert commas to whitespace
+      newTags = newTags.replaceAll(" ", "").replaceAll(",", " ");
+    }
+    propertyChangeSupport.firePropertyChange(TAGS_PROPERTY, tags, newTags);
+    this.tags = newTags;
+    this.tagsAsList = Tag.parse(getBlog(), tags);
   }
 
   /**

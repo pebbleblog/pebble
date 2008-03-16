@@ -11,6 +11,7 @@
       <xsd:element name="title" type="xsd:string"/>
       <xsd:element name="subtitle" type="xsd:string"/>
       <xsd:element name="body" type="xsd:string"/>
+      <xsd:element name="tags" type="xsd:string"/>
       <xsd:element name="date" type="xsd:string"/>
       <xsd:element name="state" type="ContentState"/>
       <xsd:element name="author" type="xsd:string"/>
