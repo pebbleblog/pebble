@@ -1,0 +1,29 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+  <xsd:annotation>
+    <xsd:documentation xml:lang="en">Pebble schema for the persistence of blog entries and static pages.</xsd:documentation>
+  </xsd:annotation>
+
+  <xsd:element name="staticPage" type="StaticPageType"/>
+
+  <xsd:complexType name="StaticPageType">
+    <xsd:sequence>
+      <xsd:element name="title" type="xsd:string"/>
+      <xsd:element name="subtitle" type="xsd:string"/>
+      <xsd:element name="body" type="xsd:string"/>
+      <xsd:element name="date" type="xsd:string"/>
+      <xsd:element name="state" type="ContentState"/>
+      <xsd:element name="author" type="xsd:string"/>
+      <xsd:element name="staticName" type="xsd:string"/>
+      <xsd:element name="originalPermalink" type="xsd:anyURI"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:simpleType name="ContentState">
+  <xsd:restriction base="xsd:string">
+    <xsd:enumeration value="published"/>
+    <xsd:enumeration value="unpublished"/>
+  </xsd:restriction>
+</xsd:simpleType>
+
+</xsd:schema>
