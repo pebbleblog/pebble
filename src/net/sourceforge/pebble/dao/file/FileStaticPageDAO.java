@@ -2,27 +2,20 @@ package net.sourceforge.pebble.dao.file;
 
 import net.sourceforge.pebble.dao.PersistenceException;
 import net.sourceforge.pebble.dao.StaticPageDAO;
-import net.sourceforge.pebble.domain.*;
+import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.domain.StaticPage;
 import net.sourceforge.pebble.util.SecurityUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.xml.sax.ErrorHandler;
-import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
-import org.xml.sax.helpers.DefaultHandler;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-import javax.xml.transform.*;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 import java.io.*;
 import java.text.SimpleDateFormat;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.util.*;
 
 public class FileStaticPageDAO implements StaticPageDAO {
@@ -36,33 +29,11 @@ public class FileStaticPageDAO implements StaticPageDAO {
   private static final String STATIC_PAGE_FILE_EXTENSION = ".xml";
   private static final String STATIC_PAGE_LOCK_EXTENSION = ".lock";
 
-  private DocumentBuilder builder;
+  private JAXBContext jaxbContext;
 
   public FileStaticPageDAO() {
     try {
-      DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-      factory.setValidating(false);
-      factory.setNamespaceAware(true);
-      factory.setIgnoringElementContentWhitespace(true);
-      factory.setIgnoringComments(true);
-      builder = factory.newDocumentBuilder();
-      builder.setErrorHandler(new ErrorHandler() {
-        public void warning(SAXParseException e) throws SAXException {
-          log.warn(e);
-          throw e;
-        }
-
-        public void error(SAXParseException e) throws SAXException {
-          log.error(e);
-          throw e;
-        }
-
-        public void fatalError(SAXParseException e) throws SAXException {
-          log.fatal(e);
-          throw e;
-        }
-      });
-
+      jaxbContext = JAXBContext.newInstance("net.sourceforge.pebble.dao.file");
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -118,6 +89,49 @@ public class FileStaticPageDAO implements StaticPageDAO {
   }
 
   /**
+   * Loads a static page from the specified file.
+   *
+   * @param blog      the Blog to which the static page belongs
+   * @param source    the File pointing to the source
+   * @return    a StaticPage instance
+   * @throws net.sourceforge.pebble.dao.PersistenceException
+   *          if the static page can't be loaded
+   */
+  private StaticPage loadStaticPage(Blog blog, File source) throws PersistenceException {
+    if (source.exists()) {
+      log.debug("Loading static page from " + source.getAbsolutePath());
+      StaticPage staticPage = new StaticPage(blog);
+
+      try {
+        Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+        JAXBElement<StaticPageType> controller = (JAXBElement)unmarshaller.unmarshal(source);
+        StaticPageType spt = controller.getValue();
+
+        staticPage.setTitle(spt.getTitle());
+        staticPage.setSubtitle(spt.getSubtitle());
+        staticPage.setBody(spt.getBody());
+        staticPage.setAuthor(spt.getAuthor());
+        staticPage.setOriginalPermalink(spt.getOriginalPermalink());
+        staticPage.setName(spt.getStaticName());
+        StaticPageDateConverter converter = new StaticPageDateConverter(staticPage);
+        staticPage.setDate(converter.parse(spt.getDate()));
+
+      } catch (Exception e) {
+        log.error(e.getMessage(), e);
+        e.printStackTrace();
+        throw new PersistenceException(e.getMessage());
+      }
+
+      // and is the page locked?
+      staticPage.setLockedBy(getUsernameHoldingLock(staticPage));
+
+      return staticPage;
+    } else {
+      return null;
+    }
+  }
+
+  /**
    * Stores the specified static page.
    *
    * @param staticPage the static page to store
@@ -143,70 +157,20 @@ public class FileStaticPageDAO implements StaticPageDAO {
    */
   private void storeStaticPage(StaticPage staticPage, File destination) throws PersistenceException {
     try {
-      DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-      factory.setValidating(false);
-      factory.setNamespaceAware(true);
-      factory.setIgnoringElementContentWhitespace(true);
-      factory.setIgnoringComments(true);
+      Marshaller marshaller = jaxbContext.createMarshaller();
+      StaticPageType type = new StaticPageType();
 
-      DocumentBuilder builder = factory.newDocumentBuilder();
-      Document doc = builder.newDocument();
+      type.setTitle(staticPage.getTitle());
+      type.setSubtitle(staticPage.getSubtitle());
+      type.setBody(staticPage.getBody());
+      type.setAuthor(staticPage.getAuthor());
+      type.setStaticName(staticPage.getName());
+      type.setOriginalPermalink(staticPage.getOriginalPermalink());
+      type.setState(ContentState.PUBLISHED);
+      type.setTitle(staticPage.getTitle());
 
-      Element root = doc.createElement("staticPage");
-      doc.appendChild(root);
-
-      Element titleNode = doc.createElement("title");
-      Element subtitleNode = doc.createElement("subtitle");
-      Element bodyNode = doc.createElement("body");
-      Element dateNode = doc.createElement("date");
-      Element stateNode = doc.createElement("state");
-      Element authorNode = doc.createElement("author");
-      Element staticNameNode = doc.createElement("staticName");
-
-      root.appendChild(titleNode);
-      root.appendChild(subtitleNode);
-      root.appendChild(bodyNode);
-      root.appendChild(dateNode);
-      root.appendChild(stateNode);
-      root.appendChild(authorNode);
-      root.appendChild(staticNameNode);
-
-      if (staticPage.isAggregated()) {
-        Element permalinkNode = doc.createElement("originalPermalink");
-        permalinkNode.appendChild(doc.createTextNode(staticPage.getOriginalPermalink()));
-        root.appendChild(permalinkNode);
-      }
-
-      titleNode.appendChild(doc.createTextNode(staticPage.getTitle()));
-      subtitleNode.appendChild(doc.createTextNode(staticPage.getSubtitle()));
-      bodyNode.appendChild(doc.createCDATASection(staticPage.getBody()));
-
-      if (staticPage.getAuthor() != null) {
-        authorNode.appendChild(doc.createTextNode(staticPage.getAuthor()));
-      }
-
-      if (staticPage.getName() != null) {
-        staticNameNode.appendChild(doc.createTextNode(staticPage.getName()));
-      }
-
-      SimpleDateFormat sdf = new SimpleDateFormat(NEW_PERSISTENT_DATETIME_FORMAT, Locale.ENGLISH);
-      sdf.setTimeZone(staticPage.getBlog().getTimeZone());
-      dateNode.appendChild(doc.createTextNode(sdf.format(staticPage.getDate())));
-
-      stateNode.appendChild(createTextNode(doc, staticPage.getState().getName()));
-
-      // write the XMl to a String, and then write this string to a file
-      // (if the XML format fails, we don't corrupt the file)
-      StringWriter sw = new StringWriter();
-      Source source = new DOMSource(doc);
-      Result result = new StreamResult(sw);
-      Transformer xformer = TransformerFactory.newInstance().newTransformer();
-      xformer.setOutputProperty(OutputKeys.METHOD, "xml");
-      xformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
-      xformer.setOutputProperty(OutputKeys.MEDIA_TYPE, "text/xml");
-      xformer.setOutputProperty(OutputKeys.CDATA_SECTION_ELEMENTS, "body");
-      xformer.setOutputProperty(OutputKeys.INDENT, "yes");
-      xformer.transform(source, result);
+      StaticPageDateConverter converter = new StaticPageDateConverter(staticPage);
+      type.setDate(converter.format(staticPage.getDate()));
 
       // now take a backup of the correct file
       if (destination.exists() && destination.length() > 0) {
@@ -214,10 +178,12 @@ public class FileStaticPageDAO implements StaticPageDAO {
       }
 
       log.debug("Saving to " + destination.getAbsolutePath());
-      BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(destination), "UTF-8"));
-      bw.write(sw.getBuffer().toString());
-      bw.flush();
-      bw.close();
+      ObjectFactory objectFactory = new ObjectFactory();
+      JAXBElement jaxbElement = objectFactory.createStaticPage(type);
+
+      marshaller.setProperty("jaxb.formatted.output", true);
+      marshaller.setProperty("jaxb.encoding", staticPage.getBlog().getCharacterEncoding());
+      marshaller.marshal(jaxbElement, destination);
     } catch (Exception e) {
       log.error(e.getMessage(), e);
       e.printStackTrace();
@@ -260,332 +226,8 @@ public class FileStaticPageDAO implements StaticPageDAO {
   }
 
   /**
-   * Loads a blog entry from the specified file.
-   *
-   * @param source    the File pointing to the source
-   * @throws net.sourceforge.pebble.dao.PersistenceException
-   *          if the blog entry can't be loaded
-   */
-  private StaticPage loadStaticPage(Blog blog, File source) throws PersistenceException {
-    if (source.exists()) {
-      log.debug("Loading static page from " + source.getAbsolutePath());
-      StaticPage staticPage = new StaticPage(blog);
-
-      try {
-        DefaultHandler handler = new StaticPageHandler(staticPage);
-        SAXParserFactory saxFactory = SAXParserFactory.newInstance();
-        saxFactory.setValidating(false);
-        saxFactory.setNamespaceAware(true);
-        SAXParser parser = saxFactory.newSAXParser();
-        parser.parse(source, handler);
-
-      } catch (Exception e) {
-        log.error(e.getMessage(), e);
-        e.printStackTrace();
-        throw new PersistenceException(e.getMessage());
-      }
-
-      // and is the page locked?
-      staticPage.setLockedBy(getUsernameHoldingLock(staticPage));
-
-      return staticPage;
-    } else {
-      return null;
-    }
-  }
-
-  /**
-   * Stores the specified blog entry.
-   *
-   * @param blogEntry the blog entry to store
-   * @throws net.sourceforge.pebble.dao.PersistenceException if something goes wrong storing the entry
-   */
-  public void storeBlogEntry(BlogEntry blogEntry) throws PersistenceException {
-    File outputDir = new File(getPath(blogEntry.getBlog(), blogEntry.getId()));
-    if (!outputDir.exists()) {
-      outputDir.mkdirs();
-    }
-
-    File outputFile = new File(outputDir, blogEntry.getId() + ".xml");
-    storeBlogEntry(blogEntry, outputFile);
-  }
-
-
-  /**
-   * Stores a blog entry to the specified file.
-   *
-   * @param blogEntry   the BlogEntry that is being stored
-   * @param destination the File pointing to the destination
-   * @throws net.sourceforge.pebble.dao.PersistenceException if something goes wrong storing the entry
-   */
-  private void storeBlogEntry(BlogEntry blogEntry, File destination) throws PersistenceException {
-    File backupFile = new File(destination.getParentFile(), destination.getName() + ".bak");
-    try {
-      DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-      factory.setValidating(false);
-      factory.setNamespaceAware(true);
-      factory.setIgnoringElementContentWhitespace(true);
-      factory.setIgnoringComments(true);
-
-      DocumentBuilder builder = factory.newDocumentBuilder();
-      Document doc = builder.newDocument();
-
-      Element root = doc.createElement("blogEntry");
-      doc.appendChild(root);
-
-      Element titleNode = doc.createElement("title");
-      Element subtitleNode = doc.createElement("subtitle");
-      Element excerptNode = doc.createElement("excerpt");
-      Element bodyNode = doc.createElement("body");
-      Element categoryNode;
-      Element tagsNode = doc.createElement("tags");
-      Element dateNode = doc.createElement("date");
-      Element stateNode = doc.createElement("state");
-      Element authorNode = doc.createElement("author");
-      Element staticNameNode = doc.createElement("staticName");
-      Element commentsEnabledNode = doc.createElement("commentsEnabled");
-      Element trackBacksEnabledNode = doc.createElement("trackBacksEnabled");
-      Element attachmentNode = doc.createElement("attachment");
-
-      root.appendChild(titleNode);
-      root.appendChild(subtitleNode);
-      root.appendChild(excerptNode);
-      root.appendChild(bodyNode);
-      root.appendChild(dateNode);
-      root.appendChild(stateNode);
-      root.appendChild(authorNode);
-      root.appendChild(staticNameNode);
-
-      if (blogEntry.isAggregated()) {
-        Element permalinkNode = doc.createElement("originalPermalink");
-        permalinkNode.appendChild(doc.createTextNode(blogEntry.getOriginalPermalink()));
-        root.appendChild(permalinkNode);
-      }
-
-      titleNode.appendChild(doc.createTextNode(blogEntry.getTitle()));
-      subtitleNode.appendChild(doc.createTextNode(blogEntry.getSubtitle()));
-      bodyNode.appendChild(doc.createCDATASection(blogEntry.getBody()));
-
-      if (blogEntry.getExcerpt() != null) {
-        excerptNode.appendChild(doc.createCDATASection(blogEntry.getExcerpt()));
-      }
-
-      root.appendChild(commentsEnabledNode);
-      commentsEnabledNode.appendChild(doc.createTextNode("" + blogEntry.isCommentsEnabled()));
-
-      root.appendChild(trackBacksEnabledNode);
-      trackBacksEnabledNode.appendChild(doc.createTextNode("" + blogEntry.isTrackBacksEnabled()));
-
-      Iterator it = blogEntry.getCategories().iterator();
-      Category category;
-      while (it.hasNext()) {
-        category = (Category) it.next();
-        categoryNode = doc.createElement("category");
-        categoryNode.appendChild(doc.createTextNode(category.getId()));
-        root.appendChild(categoryNode);
-      }
-
-      if (blogEntry.getTags() != null) {
-        root.appendChild(tagsNode);
-        tagsNode.appendChild(doc.createTextNode(blogEntry.getTags()));
-      }
-
-      if (blogEntry.getAuthor() != null) {
-        authorNode.appendChild(doc.createTextNode(blogEntry.getAuthor()));
-      }
-
-//      if (blogEntry.getStaticName() != null) {
-//        staticNameNode.appendChild(doc.createTextNode(blogEntry.getStaticName()));
-//      }
-
-      SimpleDateFormat sdf = new SimpleDateFormat(NEW_PERSISTENT_DATETIME_FORMAT, Locale.ENGLISH);
-      sdf.setTimeZone(blogEntry.getBlog().getTimeZone());
-      dateNode.appendChild(doc.createTextNode(sdf.format(blogEntry.getDate())));
-
-      stateNode.appendChild(createTextNode(doc, blogEntry.getState().getName()));
-
-      Attachment attachment = blogEntry.getAttachment();
-      if (attachment != null) {
-        root.appendChild(attachmentNode);
-        Element attachmentUrlNode = doc.createElement("url");
-        attachmentUrlNode.appendChild(createTextNode(doc, attachment.getUrl()));
-        attachmentNode.appendChild(attachmentUrlNode);
-        Element attachmentSizeNode = doc.createElement("size");
-        attachmentSizeNode.appendChild(createTextNode(doc, "" + attachment.getSize()));
-        attachmentNode.appendChild(attachmentSizeNode);
-        Element attachmentTypeNode = doc.createElement("type");
-        attachmentTypeNode.appendChild(createTextNode(doc, attachment.getType()));
-        attachmentNode.appendChild(attachmentTypeNode);
-      }
-
-      // and now store the comments
-      it = blogEntry.getComments().iterator();
-      while (it.hasNext()) {
-        Comment comment = (Comment) it.next();
-        storeComment(comment, doc, root);
-      }
-
-      // and finally the trackbacks
-      it = blogEntry.getTrackBacks().iterator();
-      while (it.hasNext()) {
-        TrackBack trackBack = (TrackBack) it.next();
-        storeTrackBack(trackBack, doc, root);
-      }
-
-      // write the XMl to a String, and then write this string to a file
-      // (if the XML format fails, we don't corrupt the file)
-      StringWriter sw = new StringWriter();
-      Source source = new DOMSource(doc);
-      Result result = new StreamResult(sw);
-      Transformer xformer = TransformerFactory.newInstance().newTransformer();
-      xformer.setOutputProperty(OutputKeys.METHOD, "xml");
-      xformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
-      xformer.setOutputProperty(OutputKeys.MEDIA_TYPE, "text/xml");
-      xformer.setOutputProperty(OutputKeys.CDATA_SECTION_ELEMENTS, "body");
-      xformer.setOutputProperty(OutputKeys.INDENT, "yes");
-      xformer.transform(source, result);
-
-      // now take a backup of the correct file
-      if (destination.exists() && destination.length() > 0) {
-        log.debug("Backing up to " + backupFile.getAbsolutePath());
-        destination.renameTo(backupFile);
-      }
-
-      log.debug("Saving to " + destination.getAbsolutePath());
-      BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(destination), "UTF-8"));
-      bw.write(sw.getBuffer().toString());
-      bw.flush();
-      bw.close();
-    } catch (Exception e) {
-      log.error(e.getMessage(), e);
-      e.printStackTrace();
-      throw new PersistenceException(e.getMessage());
-    }
-  }
-
-  /**
-   * Helper method to store an individual comment.
-   *
-   * @param comment the Comment being stored
-   * @param doc     the Document into which the comment is to be inserted
-   * @param root    the root Node for the comment
-   * @throws Exception if something goes wrong
-   */
-  private void storeComment(Comment comment, Document doc, Node root) throws Exception {
-    Element commentNode = doc.createElement("comment");
-    root.appendChild(commentNode);
-
-    Element titleNode = doc.createElement("title");
-    Element bodyNode = doc.createElement("body");
-    Element authorNode = doc.createElement("author");
-    Element emailNode = doc.createElement("email");
-    Element websiteNode = doc.createElement("website");
-    Element ipAddressNode = doc.createElement("ipAddress");
-    Element dateNode = doc.createElement("date");
-    Element parentNode = doc.createElement("parent");
-    Element stateNode = doc.createElement("state");
-
-    commentNode.appendChild(titleNode);
-    commentNode.appendChild(bodyNode);
-    commentNode.appendChild(authorNode);
-    commentNode.appendChild(emailNode);
-    commentNode.appendChild(websiteNode);
-    commentNode.appendChild(ipAddressNode);
-    commentNode.appendChild(dateNode);
-    commentNode.appendChild(stateNode);
-
-    titleNode.appendChild(createTextNode(doc, comment.getTitle()));
-    bodyNode.appendChild(createCDATASection(doc, comment.getBody()));
-    authorNode.appendChild(createTextNode(doc, comment.getAuthor()));
-    emailNode.appendChild(createTextNode(doc, comment.getEmail()));
-    websiteNode.appendChild(createTextNode(doc, comment.getWebsite()));
-    ipAddressNode.appendChild(createTextNode(doc, comment.getIpAddress()));
-    SimpleDateFormat sdf = new SimpleDateFormat(NEW_PERSISTENT_DATETIME_FORMAT, Locale.ENGLISH);
-    sdf.setTimeZone(comment.getBlogEntry().getBlog().getTimeZone());
-    dateNode.appendChild(createTextNode(doc, sdf.format(comment.getDate())));
-    stateNode.appendChild(createTextNode(doc, comment.getState().getName()));
-
-    if (comment.getParent() != null) {
-      commentNode.appendChild(parentNode);
-      parentNode.appendChild(createTextNode(doc, "" + comment.getParent().getId()));
-    }
-  }
-
-  private Node createCDATASection(Document doc, String text) {
-    if (text != null) {
-      return doc.createCDATASection(text);
-    } else {
-      return doc.createCDATASection("");
-    }
-  }
-
-  private Node createTextNode(Document doc, String text) {
-    if (text != null) {
-      return doc.createTextNode(text);
-    } else {
-      return doc.createTextNode("");
-    }
-  }
-
-  /**
-   * Helper method to store an individual trackback.
-   *
-   * @param trackBack the TrackBack being stored
-   * @param doc       the Document into which the trackback is to be inserted
-   * @param root      the root Node for the comment
-   * @throws Exception if something goes wrong
-   */
-  private void storeTrackBack(TrackBack trackBack, Document doc, Node root) throws Exception {
-    Element commentNode = doc.createElement("trackback");
-    root.appendChild(commentNode);
-
-    Element titleNode = doc.createElement("title");
-    Element excerptNode = doc.createElement("excerpt");
-    Element urlNode = doc.createElement("url");
-    Element blogNameNode = doc.createElement("blogName");
-    Element ipAddressNode = doc.createElement("ipAddress");
-    Element dateNode = doc.createElement("date");
-    Element stateNode = doc.createElement("state");
-
-    commentNode.appendChild(titleNode);
-    commentNode.appendChild(excerptNode);
-    commentNode.appendChild(urlNode);
-    commentNode.appendChild(blogNameNode);
-    commentNode.appendChild(ipAddressNode);
-    commentNode.appendChild(dateNode);
-    commentNode.appendChild(stateNode);
-
-    titleNode.appendChild(createTextNode(doc, trackBack.getTitle()));
-    excerptNode.appendChild(createCDATASection(doc, trackBack.getExcerpt()));
-    urlNode.appendChild(createTextNode(doc, trackBack.getUrl()));
-    blogNameNode.appendChild(createTextNode(doc, trackBack.getBlogName()));
-    ipAddressNode.appendChild(createTextNode(doc, trackBack.getIpAddress()));
-    SimpleDateFormat sdf = new SimpleDateFormat(NEW_PERSISTENT_DATETIME_FORMAT, Locale.ENGLISH);
-    sdf.setTimeZone(trackBack.getBlogEntry().getBlog().getTimeZone());
-    dateNode.appendChild(doc.createTextNode(sdf.format(trackBack.getDate())));
-    stateNode.appendChild(createTextNode(doc, trackBack.getState().getName()));
-  }
-
-  /**
-   * Removes the specified blog entry.
-   *
-   * @param blogEntry the blog entry to remove
-   * @throws net.sourceforge.pebble.dao.PersistenceException if something goes wrong removing the entry
-   */
-  public void removeBlogEntry(BlogEntry blogEntry) throws PersistenceException {
-    File path = new File(getPath(blogEntry.getBlog(), blogEntry.getId()));
-    File file = new File(path, blogEntry.getId() + ".xml");
-    log.debug("Removing " + blogEntry.getGuid());
-
-    boolean success = file.delete();
-    if (!success) {
-      throw new PersistenceException("Deletion of blog entry " + blogEntry.getGuid() + " failed");
-    }
-  }
-
-  /**
-   * Given a blog and blog entry ID, this method determines the path where
-   * that blog entry is stored.
+   * Given a blog and static page ID, this method determines the path where
+   * that static page is stored.
    *
    * @param blog    the owning Blog
    * @param staticPageId   the ID of the static page
@@ -645,8 +287,8 @@ public class FileStaticPageDAO implements StaticPageDAO {
   }
 
   /**
-   * Given a blog and blog entry ID, this method determines the path where
-   * that blog entry is stored.
+   * Given a static page, this method determines the path where
+   * that static page is stored.
    *
    * @param staticPage    a StaticPage instance
    * @return  a File instance, representing a lock
@@ -677,6 +319,59 @@ public class FileStaticPageDAO implements StaticPageDAO {
     }
 
     return username;
+  }
+
+  class StaticPageDateConverter {
+
+    private SimpleDateFormat dateTimeFormats[];
+
+    StaticPageDateConverter(StaticPage staticPage) {
+      // create all date/time formats, for backwards compatibility
+      SimpleDateFormat format;
+      dateTimeFormats = new SimpleDateFormat[6];
+
+      format = new SimpleDateFormat(FileBlogEntryDAO.NEW_PERSISTENT_DATETIME_FORMAT, Locale.ENGLISH);
+      format.setTimeZone(staticPage.getBlog().getTimeZone());
+      dateTimeFormats[0] = format;
+
+      format = new SimpleDateFormat(FileBlogEntryDAO.NEW_PERSISTENT_DATETIME_FORMAT, staticPage.getBlog().getLocale());
+      format.setTimeZone(staticPage.getBlog().getTimeZone());
+      dateTimeFormats[1] = format;
+
+      format = new SimpleDateFormat(FileBlogEntryDAO.NEW_PERSISTENT_DATETIME_FORMAT);
+      format.setTimeZone(staticPage.getBlog().getTimeZone());
+      dateTimeFormats[2] = format;
+
+      format = new SimpleDateFormat(FileBlogEntryDAO.OLD_PERSISTENT_DATETIME_FORMAT, Locale.ENGLISH);
+      format.setTimeZone(staticPage.getBlog().getTimeZone());
+      dateTimeFormats[3] = format;
+
+      format = new SimpleDateFormat(FileBlogEntryDAO.OLD_PERSISTENT_DATETIME_FORMAT, staticPage.getBlog().getLocale());
+      format.setTimeZone(staticPage.getBlog().getTimeZone());
+      dateTimeFormats[4] = format;
+
+      format = new SimpleDateFormat(FileBlogEntryDAO.OLD_PERSISTENT_DATETIME_FORMAT);
+      format.setTimeZone(staticPage.getBlog().getTimeZone());
+      dateTimeFormats[5] = format;
+    }
+
+    Date parse(String s) {
+      for (DateFormat dateTimeFormat : dateTimeFormats) {
+        try {
+          return dateTimeFormat.parse(s);
+        } catch (ParseException pe) {
+          // do nothing, just try the next one
+        }
+      }
+
+      log.error("Could not parse date of " + s);
+      return null;
+    }
+
+    String format(Date date) {
+      return dateTimeFormats[0].format(date);
+    }
+
   }
 
 }

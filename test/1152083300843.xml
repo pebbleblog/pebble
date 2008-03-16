@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <staticPage>
-<title>Static page title</title>
-<subtitle>Static page subtitle</subtitle>
-<body><![CDATA[<p>Static page body.</p>]]></body>
-<date>05 Jul 2006 08:08:20:843 +0100</date>
-<state>published</state>
-<author>username</author>
-<staticName>StaticPageName</staticName>
-<originalPermalink>http://pebble.sourceforge.net</originalPermalink>
+  <title>Static page title</title>
+  <subtitle>Static page subtitle</subtitle>
+  <body><![CDATA[<p>Static page body.</p>]]></body>
+  <date>05 Jul 2006 08:08:20:843 +0100</date>
+  <state>published</state>
+  <author>username</author>
+  <staticName>StaticPageName</staticName>
+  <originalPermalink>http://pebble.sourceforge.net</originalPermalink>
 </staticPage>

@@ -37,6 +37,15 @@
   </path>
   <taskdef classpathref="cobertura.classpath" resource="tasks.properties"/>
 
+  <path id="xjc.classpath">
+    <fileset dir="lib">
+      <include name="jaxb-api-2.1.6.jar"/>
+      <include name="jaxb-impl-2.1.6.jar"/>
+      <include name="jaxb-xjc-2.1.6.jar"/>
+    </fileset>
+  </path>
+  <taskdef name="xjc" classname="com.sun.tools.xjc.XJCTask" classpathref="xjc.classpath"/>
+
   <target name="init">
     <propertyfile file="pebble-build.properties" comment="Build information">
         <entry key="build.date" type="date" value="now" pattern="dd MMMM yyyy HH:mm:ss z"/>
@@ -55,6 +64,10 @@
     <mkdir dir="web/WEB-INF/classes"/>
   </target>
 
+  <target name="compileschema" depends="init">
+    <xjc schema="etc/pebble.xsd" destdir="src" package="net.sourceforge.pebble.dao.file"/>
+  </target>
+
   <target name="compile" depends="init">
     <property name="project.classpath" refid="project.classpath"/>
     <echo message="Using CLASSPATH of ${project.classpath}"/>
@@ -64,7 +77,7 @@
     </javac>
   </target>
 
-  <target name="build" depends="compile">
+  <target name="build" depends="compileschema,compile">
     <copy todir="${classes.dir}" file="pebble-build.properties" />
 
     <copy todir="${classes.dir}/META-INF">
@@ -91,6 +104,7 @@
       </fileset>
       <fileset dir="lib">
         <include name="acegi-security-1.0.1.jar"/>
+        <include name="activation.jar"/>
         <include name="asm-1.5.3.jar"/>
         <include name="asm-attrs-1.5.3.jar"/>
         <include name="asm-util-1.5.3.jar"/>
@@ -106,9 +120,13 @@
         <include name="dwr-2.0-rc2.jar"/>
         <include name="ehcache-1.4.1.jar"/>
         <include name="geolite-java-1.2.1.jar"/>
+        <include name="jaxb-api-2.1.6.jar"/>
+        <include name="jaxb-impl-2.1.6.jar"/>
+        <include name="jaxb-xjc-2.1.6.jar"/>
         <include name="jcaptcha-all-1.0-RC3.jar"/>
         <include name="jdom-1.0.jar"/>
         <include name="jstl-1.1.2.jar"/>
+        <include name="jsr173_1.0_api.jar"/>
         <include name="log4j-1.2.15.jar"/>
         <include name="lucene-1.4.1.jar"/>
         <include name="oro-2.0.8.jar"/>
