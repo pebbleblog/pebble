@@ -28,8 +28,30 @@
   background: #606060;
   padding: 4px;
 }
+.contentItemLinks {
+  float: right;
+  right: 0px;
+  text-align: right;
+  font-size: 11px;
+  color: gray;
+}
+.contentItemLinks form {
+  padding: 0px;
+  margin: 0px;
+}
+.contentItemLinks a {
+  color: gray;
+}
 .inlineAdminLinks {
-  background: #F8F8F8;
-  border: #F0F0F0 solid 1px;
+  background: #e0e0e0;
+  border: gray solid 1px;
   padding: 8px;
+  color: black;
+}
+.responseLinks {
+  float: right;
+  right: 0px;
+  text-align: right;
+  font-size: 11px;
+  color: gray;
 }

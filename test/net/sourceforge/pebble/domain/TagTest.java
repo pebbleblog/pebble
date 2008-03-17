@@ -56,10 +56,10 @@ public class TagTest extends SingleBlogTestCase {
   }
 
   public void testNameWithSpaces() {
-    tag.setName("automated unit testing");
-    assertEquals("automatedunittesting", tag.getName());
+    tag.setName("automated+unit+testing");
+    assertEquals("automated unit testing", tag.getName());
 
-    assertEquals("http://www.yourdomain.com/blog/tags/automatedunittesting/", tag.getPermalink());
+    assertEquals("http://www.yourdomain.com/blog/tags/automated unit testing/", tag.getPermalink());
   }
 
   public void testNameWithMixedCase() {
@@ -72,11 +72,18 @@ public class TagTest extends SingleBlogTestCase {
   public void testParse() {
     assertTrue(Tag.parse(blog, null).isEmpty());
 
-    List tags = Tag.parse(blog, "java junit automatedunittesting java");
+    List tags = Tag.parse(blog, "java junit automated+unit+testing java");
     assertEquals(3, tags.size());
     assertTrue(tags.contains(blog.getTag("java")));
     assertTrue(tags.contains(blog.getTag("junit")));
     assertTrue(tags.contains(blog.getTag("automated unit testing")));
+  }
+
+  public void testFormat() {
+    assertEquals("", Tag.format(null));
+
+    List tags = Tag.parse(blog, "java junit automatedunittesting java");
+    assertEquals("java, junit, automatedunittesting", Tag.format(tags));
   }
 
   public void testEncode() {
@@ -84,6 +91,7 @@ public class TagTest extends SingleBlogTestCase {
     assertEquals("sometag", Tag.encode("sometag"));
     assertEquals("sometag", Tag.encode(" sometag "));
     assertEquals("someothertag", Tag.encode("SomeOtherTag"));
+    assertEquals("some other tag", Tag.encode("Some+Other+Tag"));
   }
 
 }

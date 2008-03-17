@@ -61,7 +61,7 @@ public class ViewTagAction extends Action {
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
     String tag = request.getParameter("tag");
     try {
-      return new ForwardView("/search.action?query=tag:" + URLEncoder.encode(Tag.encode(tag), blog.getCharacterEncoding()) + "&sort=date");
+      return new ForwardView("/search.action?query=tag:\"" + URLEncoder.encode(Tag.encode(tag), blog.getCharacterEncoding()) + "\"&sort=date");
     } catch (UnsupportedEncodingException uee) {
       throw new ServletException(uee);
     }

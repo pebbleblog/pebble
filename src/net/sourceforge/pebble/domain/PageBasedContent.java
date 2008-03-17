@@ -70,6 +70,9 @@ public abstract class PageBasedContent extends Content {
   /** the List of tags for this blog entry */
   private List<Tag> tagsAsList = new LinkedList<Tag>();
 
+  /** the tags, comma separated */
+  private String tagsAsCommaSeparated = "";
+
   /** the owning blog */
   private Blog blog;
 
@@ -245,6 +248,15 @@ public abstract class PageBasedContent extends Content {
   }
 
   /**
+   * Gets a list of all tags, as a comma separated string.
+   *
+   * @return    a comma separated String of tags
+   */
+  public String getTagsAsCommaSeparated() {
+    return this.tagsAsCommaSeparated;
+  }
+
+  /**
    * Gets a list of all tags.
    *
    * @return  a List of tags
@@ -267,6 +279,7 @@ public abstract class PageBasedContent extends Content {
     propertyChangeSupport.firePropertyChange(TAGS_PROPERTY, tags, newTags);
     this.tags = newTags;
     this.tagsAsList = Tag.parse(getBlog(), tags);
+    this.tagsAsCommaSeparated = Tag.format(getAllTags());
   }
 
   /**

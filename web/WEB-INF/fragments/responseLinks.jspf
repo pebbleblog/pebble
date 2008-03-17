@@ -1,4 +1,4 @@
-<div class="contentItemLinks">
+<div class="responseLinks">
   <c:choose>
     <c:when test="${blogEntry.numberOfResponses > 0}">
       <a href="${blogEntry.localPermalink}#responses"><fmt:message key="blogentry.responses" />[<fmt:formatNumber value="${blogEntry.numberOfResponses}"/>]</a>

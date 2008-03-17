@@ -176,6 +176,29 @@ public class Tag implements Permalinkable, Comparable {
   }
 
   /**
+   * Given a list of tags, this method formats them into a comma separated list.
+   *
+   * @param tags    a List of tags
+   * @return  a comma separated String
+   */
+  public static String format(List<Tag> tags) {
+    StringBuilder builder = new StringBuilder();
+
+    if (tags != null) {
+      Iterator it = tags.iterator();
+      while (it.hasNext()) {
+        Tag tag = (Tag)it.next();
+        builder.append(tag.getName());
+        if (it.hasNext()) {
+          builder.append(", ");
+        }
+      }
+    }
+
+    return builder.toString();
+  }
+
+  /**
    * Encodes a tag.
    *
    * @param tag   a String
@@ -184,7 +207,9 @@ public class Tag implements Permalinkable, Comparable {
     if (tag == null) {
       return "";
     } else {
-      return tag.trim().replaceAll(" ", "").toLowerCase();
+      String encodedTag = tag.trim().toLowerCase();
+      encodedTag = encodedTag.replaceAll("\\+", " ");
+      return encodedTag;
     }
   }
 

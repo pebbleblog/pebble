@@ -11,14 +11,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
 
+    <c:set var="pageTitle">
+      <c:choose><c:when test="${empty title}">${blog.name}</c:when><c:otherwise>${title} - ${blog.name}</c:otherwise></c:choose>
+    </c:set>
+
     <base href="${blog.url}" />
     <meta http-equiv="Content-Type" content="text/html; charset=${blog.characterEncoding}"/>
-    <meta name="description" content="${blog.name}" />
-    <c:if test="${displayMode == 'detail'}"><c:choose><c:when test="${not empty blogEntry}"><meta name="keywords" content="${blogEntry.tags}" /></c:when><c:when test="${not empty staticPage}"><meta name="keywords" content="${staticPage.tags}" /></c:when></c:choose></c:if>
+    <meta name="description" content="${pageTitle}" />
+    <c:if test="${displayMode == 'detail'}"><c:choose><c:when test="${not empty blogEntry}"><meta name="keywords" content="${blogEntry.tagsAsCommaSeparated}" /></c:when><c:when test="${not empty staticPage}"><meta name="keywords" content="${staticPage.tagsAsCommaSeparated}" /></c:when></c:choose></c:if>
     <meta name="abstract" content="${blog.description}" />
     <meta name="author" content="${blog.author}" />
     <meta name="generator" content="Pebble (http://pebble.sourceforge.net)" />
-    <title><c:choose><c:when test="${empty title}">${blog.name}</c:when><c:otherwise>${title} - ${blog.name}</c:otherwise></c:choose></title>
+    <title>${pageTitle}</title>
     <link rel="alternate" type="application/rss+xml" title="RSS" href="${blog.url}rss.xml" />
     <link rel="alternate" type="application/rdf+xml" title="RDF" href="${blog.url}rdf.xml" />
     <link rel="alternate" type="application/atom+xml" title="Atom" href="${blog.url}atom.xml" />

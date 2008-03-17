@@ -72,6 +72,7 @@
         <td valign="top"><b>Tags</b></td>
         <td>
           <input type="text" name="tags" size="60" value="${staticPage.tags}">
+          <div class="small">(use a + character to represent a space in a tag)</div>
         </td>
       </tr>
 
