@@ -33,7 +33,7 @@ public class FileStaticPageDAO implements StaticPageDAO {
 
   public FileStaticPageDAO() {
     try {
-      jaxbContext = JAXBContext.newInstance("net.sourceforge.pebble.dao.file");
+      jaxbContext = JAXBContext.newInstance(getClass().getPackage().getName());
     } catch (Exception e) {
       e.printStackTrace();
     }

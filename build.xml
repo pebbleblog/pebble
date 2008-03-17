@@ -7,6 +7,7 @@
   <property name="website.dir" value="${basedir}/website"/>
   <property name="test.dir" value="${basedir}/test"/>
   <property name="build.dir" value="${basedir}/build"/>
+  <property name="generated-src.dir" value="${build.dir}/generated-src"/>
   <property name="classes.dir" value="${build.dir}/classes"/>
   <property name="testclasses.dir" value="${build.dir}/test-classes"/>
   <property name="instrumentedclasses.dir" value="${build.dir}/instrumented-classes"/>
@@ -56,6 +57,7 @@
     <available property="clover.available" file="${env.CLOVER_HOME}" />
 
     <mkdir dir="${build.dir}"/>
+    <mkdir dir="${generated-src.dir}"/>
     <mkdir dir="${classes.dir}"/>
     <mkdir dir="${testclasses.dir}"/>
     <mkdir dir="${instrumentedclasses.dir}"/>
@@ -65,13 +67,16 @@
   </target>
 
   <target name="compileschema" depends="init">
-    <xjc schema="etc/pebble.xsd" destdir="src" package="net.sourceforge.pebble.dao.file"/>
+    <xjc schema="etc/pebble.xsd" destdir="${generated-src.dir}" package="net.sourceforge.pebble.dao.file"/>
   </target>
 
   <target name="compile" depends="init">
     <property name="project.classpath" refid="project.classpath"/>
     <echo message="Using CLASSPATH of ${project.classpath}"/>
 
+    <javac srcdir="${generated-src.dir}" destdir="${classes.dir}" debug="yes">
+      <classpath refid="project.classpath"/>
+    </javac>
     <javac srcdir="${src.dir}" destdir="${classes.dir}" debug="yes">
       <classpath refid="project.classpath"/>
     </javac>

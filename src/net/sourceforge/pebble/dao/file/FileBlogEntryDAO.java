@@ -94,7 +94,7 @@ public class FileBlogEntryDAO implements BlogEntryDAO {
    * @throws net.sourceforge.pebble.dao.PersistenceException
    *          if the blog entries cannot be loaded
    */
-  public List<BlogEntry> loadBlogEntries(Blog blog) throws PersistenceException {
+  public Collection<BlogEntry> loadBlogEntries(Blog blog) throws PersistenceException {
     List<BlogEntry> list = new ArrayList<BlogEntry>();
 
     File root = new File(blog.getRoot());

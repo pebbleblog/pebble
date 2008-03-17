@@ -44,6 +44,7 @@ import org.apache.commons.logging.LogFactory;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Collection;
 
 /**
  * Service that encompasses all functionality related to getting, putting
@@ -110,9 +111,9 @@ public class BlogService {
    *
    * @return  a List of BlogEntry objects
    */
-  public List<BlogEntry> getBlogEntries(Blog blog) throws BlogServiceException {
+  public Collection<BlogEntry> getBlogEntries(Blog blog) throws BlogServiceException {
     BlogEntryDAO dao = DAOFactory.getConfiguredFactory().getBlogEntryDAO();
-    List<BlogEntry> blogEntries;
+    Collection<BlogEntry> blogEntries;
     try {
       blogEntries = dao.loadBlogEntries(blog);
       for (BlogEntry blogEntry : blogEntries) {

@@ -77,7 +77,7 @@ public class TagIndex {
    *
    * @param blogEntries   a List of BlogEntry instances
    */
-  public synchronized void index(List<BlogEntry> blogEntries) {
+  public synchronized void index(Collection<BlogEntry> blogEntries) {
     for (BlogEntry blogEntry : blogEntries) {
       if (blogEntry.isPublished()) {
         for (Tag tag : blogEntry.getAllTags()) {

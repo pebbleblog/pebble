@@ -77,7 +77,7 @@ public class StaticPageIndex {
    *
    * @param staticPages   a List of Page instances
    */
-  public synchronized void reindex(List<StaticPage> staticPages) {
+  public synchronized void reindex(Collection<StaticPage> staticPages) {
     // remove any locks on the index
     unlock();
 

@@ -55,6 +55,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Collection;
 
 /**
  * Wraps up the functionality to index blog entries. This is really just
@@ -96,7 +97,7 @@ public class SearchIndex {
   /**
    * Allows a collection of blog entries to be indexed.
    */
-  public void indexBlogEntries(List<BlogEntry> blogEntries) {
+  public void indexBlogEntries(Collection<BlogEntry> blogEntries) {
     synchronized (blog) {
       try {
         Analyzer analyzer = getAnalyzer();
@@ -116,7 +117,7 @@ public class SearchIndex {
   /**
    * Allows a collection of static pages to be indexed.
    */
-  public void indexStaticPages(List<StaticPage> staticPages) {
+  public void indexStaticPages(Collection<StaticPage> staticPages) {
     synchronized (blog) {
       try {
         Analyzer analyzer = getAnalyzer();

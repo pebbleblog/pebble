@@ -35,6 +35,7 @@ import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.domain.BlogEntry;
 
 import java.util.List;
+import java.util.Collection;
 
 public interface BlogEntryDAO {
 
@@ -56,7 +57,7 @@ public interface BlogEntryDAO {
    * @throws net.sourceforge.pebble.dao.PersistenceException
    *          if the blog entries cannot be loaded
    */
-  public List<BlogEntry> loadBlogEntries(Blog blog) throws PersistenceException;
+  public Collection<BlogEntry> loadBlogEntries(Blog blog) throws PersistenceException;
 
   /**
    * Stores the specified blog entry.

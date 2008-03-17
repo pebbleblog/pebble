@@ -4,6 +4,7 @@
     <xsd:documentation xml:lang="en">Pebble schema for the persistence of blog entries and static pages.</xsd:documentation>
   </xsd:annotation>
 
+  <xsd:element name="categories" type="CategoriesType"/>
   <xsd:element name="staticPage" type="StaticPageType"/>
 
   <xsd:complexType name="StaticPageType">
@@ -17,6 +18,20 @@
       <xsd:element name="author" type="xsd:string"/>
       <xsd:element name="staticName" type="xsd:string"/>
       <xsd:element name="originalPermalink" type="xsd:anyURI"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="CategoriesType">
+    <xsd:sequence>
+      <xsd:element name="category" type="CategoryType" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="CategoryType">
+    <xsd:sequence>
+      <xsd:element name="id" type="xsd:string"/>
+      <xsd:element name="name" type="xsd:string"/>
+      <xsd:element name="tags" type="xsd:string"/>
     </xsd:sequence>
   </xsd:complexType>
 

@@ -12,6 +12,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Collection;
 
 /**
  * Keeps an index of all responses.
@@ -55,7 +56,7 @@ public class ResponseIndex {
    *
    * @param blogEntries   a List of BlogEntry instances
    */
-  public synchronized void index(List<BlogEntry> blogEntries) {
+  public synchronized void index(Collection<BlogEntry> blogEntries) {
     for (BlogEntry blogEntry : blogEntries) {
       for (Response response : blogEntry.getResponses()) {
         if (response.isApproved()) {

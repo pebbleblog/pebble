@@ -39,6 +39,7 @@ import org.apache.commons.logging.LogFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Collection;
 import java.io.*;
 
 /**
@@ -78,7 +79,7 @@ public class CategoryIndex {
    *
    * @param blogEntries   a List of BlogEntry instances
    */
-  public synchronized void index(List<BlogEntry> blogEntries) {
+  public synchronized void index(Collection<BlogEntry> blogEntries) {
     for (BlogEntry blogEntry : blogEntries) {
       if (blogEntry.isPublished()) {
         for (Category category: blogEntry.getCategories()) {

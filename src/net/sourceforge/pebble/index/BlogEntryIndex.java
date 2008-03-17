@@ -8,10 +8,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Keeps an index of all blog entries, allowing efficient access at runtime.
@@ -51,7 +48,7 @@ public class BlogEntryIndex {
    *
    * @param blogEntries   a List of BlogEntry instances
    */
-  public synchronized void index(List<BlogEntry> blogEntries) {
+  public synchronized void index(Collection<BlogEntry> blogEntries) {
     for (BlogEntry blogEntry : blogEntries) {
       Day day = blog.getBlogForDay(blogEntry.getDate());
       if (blogEntry.isPublished()) {

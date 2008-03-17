@@ -6,7 +6,7 @@
     <c:choose>
       <c:when test="${empty staticPage.lockedBy or staticPage.lockedBy == authenticatedUser.username}">
         <pebble:isBlogContributor>
-          <form name="staticPageForm" action="manageStaticPage.secureaction" method="post">
+          <form name="staticPageForm" action="manageStaticPage.secureaction#form" method="post">
             <input type="hidden" name="page" value="${staticPage.id}" />
             <input type="submit" name="submit" value="Edit" />
             <input type="checkbox" name="confirm" value="true" />
@@ -22,7 +22,7 @@
       </c:when>
       <c:otherwise>
         <pebble:isBlogAdminOrBlogOwner>
-        <form name="staticPageForm" action="manageStaticPage.secureaction" method="post">
+        <form name="staticPageForm" action="manageStaticPage.secureaction#form" method="post">
           <input type="hidden" name="page" value="${staticPage.id}" />
           <input type="checkbox" name="confirm" value="true" />
           <input type="submit" name="submit" value="Unlock" />

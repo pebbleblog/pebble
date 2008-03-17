@@ -61,6 +61,7 @@ public class StaticPageService {
    *
    * @param blog    the Blog
    * @return  a list of BlogEntry instances
+   * @throws  StaticPageServiceException if something goes wrong
    */
   public List<StaticPage> getStaticPages(Blog blog) throws StaticPageServiceException {
     List<StaticPage> staticPages = new ArrayList<StaticPage>();
@@ -80,12 +81,13 @@ public class StaticPageService {
   /**
    * Gets the page with the specified id.
    *
-   * @param pageId   the id of the blog entry
+   * @param pageId   the id of the static page
    * @param blog    the Blog
    * @return  a Page instance, or null if the page couldn't be found
+   * @throws  StaticPageServiceException if something goes wrong
    */
   public StaticPage getStaticPageById(Blog blog, String pageId) throws StaticPageServiceException {
-    StaticPage staticPage = null;
+    StaticPage staticPage;
     ContentCache cache = ContentCache.getInstance();
 
     try {
@@ -120,6 +122,7 @@ public class StaticPageService {
    * @param name    the name of the static page
    * @param blog    the Blog
    * @return  a StaticPage instance, or null if the page couldn't be found
+   * @throws  StaticPageServiceException if something goes wrong
    */
   public StaticPage getStaticPageByName(Blog blog, String name) throws StaticPageServiceException {
     String id = blog.getStaticPageIndex().getStaticPage(name);
@@ -128,6 +131,9 @@ public class StaticPageService {
 
   /**
    * Puts the static page.
+   *
+   * @param   staticPage    the StaticPage instance to store
+   * @throws  StaticPageServiceException if something goes wrong
    */
   public void putStaticPage(StaticPage staticPage) throws StaticPageServiceException {
     ContentCache cache = ContentCache.getInstance();
@@ -140,16 +146,15 @@ public class StaticPageService {
         StaticPage sp = getStaticPageById(blog, staticPage.getId());
 
         if (!staticPage.isPersistent() && sp != null) {
-          // the blog entry is new but one exists with the same ID already
+          // the static page is new but one exists with the same ID already
           // - increment the date/ID and try again
           staticPage.setDate(new Date(staticPage.getDate().getTime() + 1));
           putStaticPage(staticPage);
         } else {
           dao.storeStaticPage(staticPage);
+          staticPage.setPersistent(true);
           cache.removeStaticPage(staticPage);
         }
-
-        staticPage.setPersistent(true);
 
         staticPage.getBlog().getSearchIndex().index(staticPage);
         staticPage.getBlog().getStaticPageIndex().index(staticPage);
@@ -161,6 +166,9 @@ public class StaticPageService {
 
   /**
    * Removes a static page.
+   *
+   * @param staticPage    the StaticPage instance to remove
+   * @throws  StaticPageServiceException if something goes wrong
    */
   public void removeStaticPage(StaticPage staticPage) throws StaticPageServiceException {
     ContentCache cache = ContentCache.getInstance();
@@ -175,27 +183,37 @@ public class StaticPageService {
       staticPage.getBlog().getStaticPageIndex().unindex(staticPage);
 
     } catch (PersistenceException pe) {
+      // remove from the cache so that it's picked up from storage when accessed next
+      cache.removeStaticPage(staticPage);
+
       throw new StaticPageServiceException(staticPage.getBlog(), pe);
     }
   }
 
+  /**
+   * Locks a given static page.
+   *
+   * @param staticPage    the static page to lock
+   * @return  true if the page could be locked, false otherwise
+   */
   public boolean lock(StaticPage staticPage) {
     boolean success = DAOFactory.getConfiguredFactory().getStaticPageDAO().lock(staticPage);
-
-    ContentCache cache = ContentCache.getInstance();
-    cache.removeStaticPage(staticPage);
+    ContentCache.getInstance().removeStaticPage(staticPage);
 
     return success;
   }
 
+  /**
+   * Unlocks a given static page.
+   *
+   * @param staticPage    the static page to unlock
+   * @return  true if the page could be unlocked, false otherwise
+   */
   public boolean unlock(StaticPage staticPage) {
     boolean success = DAOFactory.getConfiguredFactory().getStaticPageDAO().unlock(staticPage);
-
-    ContentCache cache = ContentCache.getInstance();
-    cache.removeStaticPage(staticPage);    
+    ContentCache.getInstance().removeStaticPage(staticPage);
 
     return success;
-
   }
 
 }

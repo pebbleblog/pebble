@@ -1736,27 +1736,27 @@ public class Blog extends AbstractBlog {
     searchIndex.clear();
 
     try {
-      BlogService service = new BlogService();
-      List<BlogEntry> blogEntries = service.getBlogEntries(this);
+      // to reindex all blog entries, we need to load them via the DAO
+      Collection<BlogEntry> blogEntries = DAOFactory.getConfiguredFactory().getBlogEntryDAO().loadBlogEntries(this);
       blogEntryIndex.index(blogEntries);
       responseIndex.index(blogEntries);
       tagIndex.index(blogEntries);
       categoryIndex.index(blogEntries);
       authorIndex.index(blogEntries);
       searchIndex.indexBlogEntries(blogEntries);
-    } catch (BlogServiceException e) {
-      // do nothing
+    } catch (Exception e) {
+      log.warn("Error while reindexing blog entries", e);
     }
   }
 
   public void reindexStaticPages() {
     try {
-      StaticPageService service = new StaticPageService();
-      List<StaticPage> staticPages = service.getStaticPages(this);
+      // to reindex all static pages, we need to load them via the DAO
+      Collection<StaticPage> staticPages = DAOFactory.getConfiguredFactory().getStaticPageDAO().loadStaticPages(this);
       staticPageIndex.reindex(staticPages);
       searchIndex.indexStaticPages(staticPages);
-    } catch (StaticPageServiceException spse) {
-      log.warn("Error while reindexing static pages", spse);
+    } catch (Exception e) {
+      log.warn("Error while reindexing static pages", e);
     }
   }
 

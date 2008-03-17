@@ -5,10 +5,7 @@ import net.sourceforge.pebble.dao.PersistenceException;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.domain.BlogEntry;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * This is a mock implementation of BlogEntryDAO that is used when performing
@@ -40,7 +37,7 @@ public class MockBlogEntryDAO implements BlogEntryDAO {
    * @throws net.sourceforge.pebble.dao.PersistenceException
    *          if the blog entries cannot be loaded
    */
-  public List<BlogEntry> loadBlogEntries(Blog blog) throws PersistenceException {
+  public Collection<BlogEntry> loadBlogEntries(Blog blog) throws PersistenceException {
     List<BlogEntry> list = new ArrayList<BlogEntry>();
     for (Object o : blogEntries.values()) {
       list.add((BlogEntry)o);
