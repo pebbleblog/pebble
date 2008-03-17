@@ -165,11 +165,11 @@ public class UriTransformerTest extends SingleBlogTestCase {
   }
 
   public void testTagPermalinkWithTrailingSlash() throws Exception {
-    assertEquals("/viewTag.action?tag=automated+unit+testing", transformer.getUri("/tags/automated+unit+testing", blog));
+    assertEquals("/viewTag.action?tag=automated unit testing", transformer.getUri("/tags/automated unit testing", blog));
   }
 
   public void testTagPermalinkWithoutTrailingSlash() throws Exception {
-    assertEquals("/viewTag.action?tag=automated+unit+testing", transformer.getUri("/tags/automated+unit+testing/", blog));
+    assertEquals("/viewTag.action?tag=automated unit testing", transformer.getUri("/tags/automated unit testing/", blog));
   }
 
   public void testTagNewsFeed() throws Exception {
