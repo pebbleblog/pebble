@@ -168,6 +168,19 @@ h3 {
   padding-right: 30px;
   text-align: left;
 }
+.contentItemLinks {
+  float: right;
+  text-align: right;
+  font-size: 11px;
+  color: gray;
+}
+.contentItemLinks form {
+  padding: 0px;
+  margin: 0px;
+}
+.contentItemLinks a {
+  color: gray;
+}
 .even {
   background: #F4F4F4;
 }

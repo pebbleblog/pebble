@@ -28,30 +28,9 @@
   background: #606060;
   padding: 4px;
 }
-.contentItemLinks {
-  float: right;
-  right: 0px;
-  text-align: right;
-  font-size: 11px;
-  color: gray;
-}
-.contentItemLinks form {
-  padding: 0px;
-  margin: 0px;
-}
-.contentItemLinks a {
-  color: gray;
-}
 .inlineAdminLinks {
   background: #e0e0e0;
   border: gray solid 1px;
   padding: 8px;
   color: black;
-}
-.responseLinks {
-  float: right;
-  right: 0px;
-  text-align: right;
-  font-size: 11px;
-  color: gray;
 }
