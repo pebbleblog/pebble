@@ -6,15 +6,18 @@
   Displays the recent blog entries.
 
  Parameters
+  - name : the name of this sidebar component (defaults to "Recent Blog Entries")
   - showBody : flag to indicate whether the (truncated) body of the entry should be displayed
 --%>
+<%@ attribute name="name"%>
 <%@ attribute name="showBody"%>
 
-<c:if test="${empty showBody}"><c:set var="showBody" value="true"/></c:if> 
+<c:if test="${empty name}"><c:set var="name"><fmt:message key="sidebar.recentBlogEntries" /></c:set></c:if> 
+<c:if test="${empty showBody}"><c:set var="showBody" value="true"/></c:if>
 
 <c:if test="${not empty recentBlogEntries}">
 <div class="sidebarItem">
-  <div class="sidebarItemTitle"><span><fmt:message key="sidebar.recentBlogEntries" /> <a href="rss.xml"><img src="common/images/feed-icon-10x10.png" alt="RSS feed" border="0" /></a></span></div>
+  <div class="sidebarItemTitle"><span>${name} <a href="rss.xml"><img src="common/images/feed-icon-10x10.png" alt="RSS feed" border="0" /></a></span></div>
   <div class="sidebarItemBody">
     <ul>
     <c:forEach var="recentBlogEntry" items="${recentBlogEntries}" >

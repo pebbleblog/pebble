@@ -80,6 +80,7 @@
         <tr><td valign="top">tagCloud</td><td>Displays a tag cloud, which is customizable using the following attributes<br />
           - rankThreshold : the minimum tag ranking (1-10) to display (optional, default is 1)</td></tr>
         <tr><td valign="top">recentBlogEntries</td><td>Displays the recent blog entries<br />
+          - name : the name of this sidebar component (defaults to "Recent Blog Entries")<br />
           - showBody : flag to indicate whether the (truncated) body of the entry should be displayed (optional, default is true)</td></tr>
         <tr><td valign="top">recentResponses</td><td>Displays the recent responses (comments and TrackBacks).</td></tr>
         <tr><td valign="top">blogSummary</td><td>In multi-blog mode, displays a list of all blogs along with a link back to the multi-blog home page.</td></tr>
