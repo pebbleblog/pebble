@@ -1,10 +1,12 @@
 Version 2.4 - TBC
 -----------------
 Added pessimistic locking strategy for static pages, to prevent concurrent updates.
-Tags can now include spaces (specify this with the + character when entering the tag).
 Static page persistence now uses JAXB instead of custom XML handling code.
 Category persistence now uses JAXB instead of custom XML handling code.
+When replying to a specific comment, that comment is now shown above the comment form.
+Tags can now include spaces (specify this with the + character when entering the tag).
 Enhanced HTML meta tags (keywords and description) for blog entry and static page permalinked pages.
+Added a name parameter to the <sidebar:recentBlogEntries/> tag so that the name/title can be overidden. 
 
 Version 2.3 - 7th March 2008
 ----------------------------

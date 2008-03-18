@@ -3,14 +3,31 @@
   <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
-    <table width="99%" class="small" style="text-align: left;">
-      <c:forEach var="message" items="${messages}">
+    <table width="99%" cellspacing="0" cellpadding="4">
+      <thead>
         <tr>
-          <td><b><fmt:formatDate value="${message.date}" type="both" dateStyle="short" timeStyle="short"/></b>
-          ${message.text}<br /><br /></td>
+          <th>Date/Time</th>
+          <th>Type</th>
+          <th>Message</th>
+        </tr>
+      </thead>
+      <c:forEach var="message" items="${messages}" varStatus="status">
+        <c:choose>
+          <c:when test="${status.count % 2 == 0}">
+            <tr class="even small">
+          </c:when>
+          <c:otherwise>
+              <tr class="odd small">
+          </c:otherwise>
+        </c:choose>
+          <td valign="top"><fmt:formatDate value="${message.date}" type="both" dateStyle="short" timeStyle="short"/></td>
+          <td valign="top">${message.type}</td>
+          <td>${message.text}</td>
         </tr>
       </c:forEach>
     </table>
+
+    <br />
 
     <c:if test="${not empty messages}">
     <form name="messagesForm" action="clearMessages.secureaction" method="POST" accept-charset="${blog.characterEncoding}">

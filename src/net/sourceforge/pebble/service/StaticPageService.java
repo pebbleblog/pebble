@@ -174,6 +174,7 @@ public class StaticPageService {
     ContentCache cache = ContentCache.getInstance();
     DAOFactory factory = DAOFactory.getConfiguredFactory();
     StaticPageDAO dao = factory.getStaticPageDAO();
+    Blog blog = staticPage.getBlog();
 
     try {
       dao.removeStaticPage(staticPage);
@@ -181,7 +182,6 @@ public class StaticPageService {
 
       staticPage.getBlog().getSearchIndex().unindex(staticPage);
       staticPage.getBlog().getStaticPageIndex().unindex(staticPage);
-
     } catch (PersistenceException pe) {
       // remove from the cache so that it's picked up from storage when accessed next
       cache.removeStaticPage(staticPage);
@@ -197,10 +197,14 @@ public class StaticPageService {
    * @return  true if the page could be locked, false otherwise
    */
   public boolean lock(StaticPage staticPage) {
-    boolean success = DAOFactory.getConfiguredFactory().getStaticPageDAO().lock(staticPage);
-    ContentCache.getInstance().removeStaticPage(staticPage);
+    if (staticPage.isPersistent()) {
+      boolean success = DAOFactory.getConfiguredFactory().getStaticPageDAO().lock(staticPage);
+      ContentCache.getInstance().removeStaticPage(staticPage);
 
-    return success;
+      return success;
+    } else {
+      return true;
+    }
   }
 
   /**
@@ -210,10 +214,14 @@ public class StaticPageService {
    * @return  true if the page could be unlocked, false otherwise
    */
   public boolean unlock(StaticPage staticPage) {
-    boolean success = DAOFactory.getConfiguredFactory().getStaticPageDAO().unlock(staticPage);
-    ContentCache.getInstance().removeStaticPage(staticPage);
+    if (staticPage.isPersistent()) {
+      boolean success = DAOFactory.getConfiguredFactory().getStaticPageDAO().unlock(staticPage);
+      ContentCache.getInstance().removeStaticPage(staticPage);
 
-    return success;
+      return success;
+    } else {
+      return true;
+    }
   }
 
 }

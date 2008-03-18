@@ -129,7 +129,7 @@ public class HttpController extends HttpServlet {
 
           response.setContentType(view.getContentType());
           view.dispatch(request, response, getServletContext());
-          
+
         }
       } catch (Exception e) {
         request.setAttribute("exception", e);

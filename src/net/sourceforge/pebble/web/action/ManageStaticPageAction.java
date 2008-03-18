@@ -89,6 +89,7 @@ public class ManageStaticPageAction extends SecureAction {
       try {
         if (service.lock(staticPage)) {
           service.removeStaticPage(staticPage);
+          blog.info("Static page \"" + staticPage.getTitle() + "\" removed.");
           service.unlock(staticPage);
         } else {
           getModel().put(Constants.STATIC_PAGE_KEY, staticPage);
@@ -101,6 +102,7 @@ public class ManageStaticPageAction extends SecureAction {
       }
     } else if (submit.equalsIgnoreCase("Unlock") && confirm != null && confirm.equals("true")) {
         service.unlock(staticPage);
+        blog.info("Static page \"" + staticPage.getTitle() + "\" unlocked.");
 
         return new RedirectView(blog.getUrl() + "viewStaticPages.secureaction");
     }

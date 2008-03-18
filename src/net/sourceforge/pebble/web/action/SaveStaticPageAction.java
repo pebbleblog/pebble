@@ -40,6 +40,7 @@ import net.sourceforge.pebble.util.StringUtils;
 import net.sourceforge.pebble.web.validation.ValidationContext;
 import net.sourceforge.pebble.web.view.RedirectView;
 import net.sourceforge.pebble.web.view.View;
+import net.sourceforge.pebble.web.view.ForwardView;
 import net.sourceforge.pebble.web.view.impl.BlogEntryFormView;
 import net.sourceforge.pebble.web.view.impl.StaticPageFormView;
 import org.apache.commons.logging.Log;
@@ -102,7 +103,11 @@ public class SaveStaticPageAction extends SecureAction {
     StaticPageService service = new StaticPageService();
     service.unlock(staticPage);
 
-    return new RedirectView(staticPage.getLocalPermalink());
+    if (staticPage.isPersistent()) {
+      return new RedirectView(staticPage.getLocalPermalink());
+    } else {
+      return new RedirectView(staticPage.getBlog().getUrl() + "viewStaticPages.secureaction");
+    }
   }
 
   private View savePage(HttpServletRequest request) throws ServletException {
@@ -120,6 +125,7 @@ public class SaveStaticPageAction extends SecureAction {
     } else {
       try {
         service.putStaticPage(staticPage);
+        staticPage.getBlog().info("Static page <a href=\"" + staticPage.getLocalPermalink() + "\">" + staticPage.getTitle() + "</a> saved.");
         service.unlock(staticPage);
         return new RedirectView(staticPage.getLocalPermalink());
       } catch (StaticPageServiceException e) {

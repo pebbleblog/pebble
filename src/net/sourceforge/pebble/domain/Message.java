@@ -31,6 +31,8 @@
  */
 package net.sourceforge.pebble.domain;
 
+import net.sourceforge.pebble.util.SecurityUtils;
+
 import java.util.Date;
 
 /**
@@ -46,7 +48,7 @@ public class Message {
 
   public Message(MessageType type, String text) {
     this.type = type;
-    this.text = text;
+    setText(text);
     this.date = new Date();
   }
 
@@ -54,16 +56,17 @@ public class Message {
     return date;
   }
 
-  public void setDate(Date date) {
-    this.date = date;
-  }
-
   public String getText() {
     return text;
   }
 
-  public void setText(String text) {
-    this.text = text;
+  private void setText(String text) {
+    String username = SecurityUtils.getUsername();
+    if (username != null) {
+      this.text = "[" + username + "] " + text;
+    } else {
+      this.text = text;
+    }
   }
 
   public MessageType getType() {

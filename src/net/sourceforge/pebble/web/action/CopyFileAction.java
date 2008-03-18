@@ -79,6 +79,8 @@ public class CopyFileAction extends AbstractFileAction {
           fileManager = new FileManager(blog, FileMetaData.BLOG_DATA);
           fileManager.renameFile("/theme" + path, name, newName);
         }
+
+        blog.info("File \"" + name + "\" renamed to \"" + newName + "\".");
       } else {
         if (FileManager.hasEnoughSpace(blog, fileManager.getFileMetaData(path, name).getSizeInKB())) {
           fileManager.copyFile(path, name, newName);
@@ -88,6 +90,8 @@ public class CopyFileAction extends AbstractFileAction {
             fileManager = new FileManager(blog, FileMetaData.BLOG_DATA);
             fileManager.copyFile("/theme" + path, name, newName);
           }
+
+          blog.info("File \"" + name + "\" copied to \"" + newName + "\".");
         } else {
           return new NotEnoughSpaceView();
         }

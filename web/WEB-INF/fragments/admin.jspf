@@ -117,4 +117,25 @@
   </script>
 
 </div>
+
+<c:if test="${blog.numberOfMessages > 0}">
+<div id="messages">
+  <div class="${blog.messages[0].type}">
+    <table width="99%" cellspacing="0" cellpadding="0">
+      <tr>
+        <td>
+          ${blog.messages[0].text}
+        </td>
+        <td align="right" valign="top">
+          <c:choose>
+            <c:when test="${blog.numberOfMessages == 1}"><a href="viewMessages.secureaction">1 message</a></c:when>
+            <c:otherwise><a href="viewMessages.secureaction">${blog.numberOfMessages} messages</a></c:otherwise>
+          </c:choose>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</c:if>
+
 </pebble:isAuthenticated>

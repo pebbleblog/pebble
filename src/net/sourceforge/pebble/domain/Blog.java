@@ -272,7 +272,7 @@ public class Blog extends AbstractBlog {
             BlogListener listener = (BlogListener)c.newInstance();
             eventListenerList.addBlogListener(listener);
           } catch (Exception e) {
-            error("Could not start blog listener \"" + classes[i] + "\"");
+            error("Could not start blog listener \"" + classes[i] + "\" - check the class name is correct on the <a href=\"viewPlugins.secureaction#blogListeners\">plugins page</a>.");
             log.error("Blog listener " + classes[i] + " could not be registered", e);
           }
         }
@@ -296,7 +296,7 @@ public class Blog extends AbstractBlog {
             BlogEntryListener listener = (BlogEntryListener)c.newInstance();
             eventListenerList.addBlogEntryListener(listener);
           } catch (Exception e) {
-            error("Could not start blog entry listener \"" + classes[i] + "\"");
+            error("Could not start blog entry listener \"" + classes[i] + "\" - check the class name is correct on the <a href=\"viewPlugins.secureaction#blogEntryListeners\">plugins page</a>.");
             log.error("Blog entry listener " + classes[i] + " could not be registered", e);
           }
         }
@@ -313,6 +313,7 @@ public class Blog extends AbstractBlog {
     try {
       eventListenerList.addBlogEntryListener(new EmailSubscriptionListener());
     } catch (Throwable t) {
+      warn("Error while starting e-mail subscription listener - add mail.jar and activation.jar to the server classpath if you want to enable this listener.");
       log.warn("Error while starting e-mail subscription listener - add mail.jar and activation.jar to the server classpath if you want to enable this listener.", t);
     }
   }
@@ -333,7 +334,7 @@ public class Blog extends AbstractBlog {
             CommentListener listener = (CommentListener)c.newInstance();
             eventListenerList.addCommentListener(listener);
           } catch (Exception e) {
-            error("Could not start comment listener \"" + classes[i] + "\"");
+            error("Could not start comment listener \"" + classes[i] + "\" - check the class name is correct on the <a href=\"viewPlugins.secureaction#commentListeners\">plugins page</a>.");
             log.error("Comment listener " + classes[i] + " could not be registered", e);
           }
         }
@@ -360,7 +361,7 @@ public class Blog extends AbstractBlog {
             TrackBackListener listener = (TrackBackListener)c.newInstance();
             eventListenerList.addTrackBackListener(listener);
           } catch (Exception e) {
-            error("Could not start TrackBack listener \"" + classes[i] + "\"");
+            error("Could not start TrackBack listener \"" + classes[i] + "\" - check the class name is correct on the <a href=\"viewPlugins.secureaction#trackbackListeners\">plugins page</a>.");
             log.error("TrackBack listener " + classes[i] + " could not be registered", e);
           }
         }
@@ -390,7 +391,7 @@ public class Blog extends AbstractBlog {
             decorator.setBlog(this);
             decoratorChain.add(decorator);
           } catch (Exception e) {
-            error("Could not start decorator \"" + classes[i] + "\"");
+            error("Could not start decorator \"" + classes[i] + "\" - check the class name is correct on the <a href=\"viewPlugins.secureaction#contentDecorators\">plugins page</a>.");
             e.printStackTrace();
             log.error(classes[i] + " could not be started", e);
           }
@@ -1744,8 +1745,10 @@ public class Blog extends AbstractBlog {
       categoryIndex.index(blogEntries);
       authorIndex.index(blogEntries);
       searchIndex.indexBlogEntries(blogEntries);
+      info("Blog entries reindexed.");
     } catch (Exception e) {
-      log.warn("Error while reindexing blog entries", e);
+      error("Error reindexing blog entries - " + e.getMessage());
+      log.error("Error reindexing blog entries", e);
     }
   }
 
@@ -1755,8 +1758,10 @@ public class Blog extends AbstractBlog {
       Collection<StaticPage> staticPages = DAOFactory.getConfiguredFactory().getStaticPageDAO().loadStaticPages(this);
       staticPageIndex.reindex(staticPages);
       searchIndex.indexStaticPages(staticPages);
+      info("Static pages reindexed.");
     } catch (Exception e) {
-      log.warn("Error while reindexing static pages", e);
+      error("Error reindexing static pages - " + e.getMessage());
+      log.error("Error reindexing static pages", e);
     }
   }
 

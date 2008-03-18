@@ -59,9 +59,9 @@ public class NotFoundView extends View {
   /**
    * Dispatches this view.
    *
-   * @param request  the HttpServletRequest instance
-   * @param response the HttpServletResponse instance
-   * @param context
+   * @param request   the HttpServletRequest instance
+   * @param response  the HttpServletResponse instance
+   * @param context   the ServletContext
    */
   public void dispatch(HttpServletRequest request, HttpServletResponse response, ServletContext context) throws ServletException {
     try {

@@ -100,6 +100,7 @@ public class SaveBlogPropertiesAction extends SecureAction {
 
       try {
         blog.storeProperties();
+        blog.info("Blog properties saved.");
       } catch (BlogServiceException e) {
         throw new ServletException(e);
       }

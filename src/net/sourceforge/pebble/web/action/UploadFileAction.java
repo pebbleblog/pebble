@@ -146,6 +146,8 @@ public abstract class UploadFileAction extends AbstractFileAction {
           }
         }
       }
+
+      blog.info("Files uploaded.");
     } catch (Exception e) {
       throw new ServletException(e);
     }

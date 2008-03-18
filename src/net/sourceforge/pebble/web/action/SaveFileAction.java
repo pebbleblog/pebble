@@ -75,6 +75,8 @@ public class SaveFileAction extends AbstractFileAction {
         fileManager = new FileManager(blog, FileMetaData.BLOG_DATA);
         fileManager.saveFile("/theme" + path, name, content);
       }
+
+      blog.info("File \"" + name + "\" saved.");
     } catch (IllegalFileAccessException e) {
       return new ForbiddenView();
     } catch (IOException ioe) {

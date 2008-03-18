@@ -76,6 +76,8 @@ public class RemoveFilesAction extends AbstractFileAction {
           if (type.equals(FileMetaData.THEME_FILE)) {
             themeFileManager.deleteFile("/theme" + path, name);
           }
+
+          blog.info("File \"" + name + "\" removed.");
         } catch (IllegalFileAccessException e) {
           return new ForbiddenView();
         }

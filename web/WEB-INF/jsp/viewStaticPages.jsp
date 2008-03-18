@@ -9,6 +9,11 @@
 
   <div class="contentItemBody">
     <pebble:isBlogContributor>
+    <p>
+      This page shows all of the static pages for this blog, where you can edit or remove pages. You can also
+      <a href="addStaticPage.secureaction#form">add a new static page</a>.
+    </p>
+
     <form name="staticPagesForm" method="post" action="removeStaticPages.secureaction">
     </pebble:isBlogContributor>
 

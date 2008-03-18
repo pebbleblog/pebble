@@ -81,6 +81,7 @@ public class ManageBlogEntriesAction extends SecureAction {
           if (submit.equalsIgnoreCase("Remove")) {
             try {
               service.removeBlogEntry(blogEntry);
+              blog.info("Blog entry \"" + blogEntry.getTitle() + "\" removed.");
             } catch (BlogServiceException be) {
               throw new ServletException(be);
             }
@@ -90,6 +91,7 @@ public class ManageBlogEntriesAction extends SecureAction {
             try {
               blogEntry.setPublished(true);
               service.putBlogEntry(blogEntry);
+              blog.info("Blog entry <a href=\"" + blogEntry.getLocalPermalink() + "\">" + blogEntry.getTitle() + "</a> published.");
             } catch (BlogServiceException be) {
               throw new ServletException(be);
             }

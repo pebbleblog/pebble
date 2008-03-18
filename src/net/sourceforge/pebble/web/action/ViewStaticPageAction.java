@@ -33,7 +33,6 @@ package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.domain.Blog;
-import net.sourceforge.pebble.domain.BlogEntry;
 import net.sourceforge.pebble.domain.StaticPage;
 import net.sourceforge.pebble.service.StaticPageService;
 import net.sourceforge.pebble.service.StaticPageServiceException;
@@ -46,7 +45,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Finds a particular blog entry via a story name, ready to be displayed.
+ * Finds a particular static page by its name, ready to be displayed.
  *
  * @author    Simon Brown
  */
@@ -62,10 +61,9 @@ public class ViewStaticPageAction extends Action {
   public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
     StaticPageService service = new StaticPageService();
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
-    BlogEntry blogEntry = null;
     String name = request.getParameter("name");
 
-    StaticPage staticPage = null;
+    StaticPage staticPage;
     try {
       staticPage = service.getStaticPageByName(blog, name);
     } catch (StaticPageServiceException e) {

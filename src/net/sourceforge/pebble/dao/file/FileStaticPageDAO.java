@@ -217,13 +217,15 @@ public class FileStaticPageDAO implements StaticPageDAO {
         file.getParentFile(),
         file.getName() + "." + archiveFileExtension.format(date));
 
-    if (!backupFile.exists()) {
-      log.debug("Archiving current version to " + backupFile.getAbsolutePath());
-      boolean success = file.renameTo(backupFile);
+    if (backupFile.exists()) {
+      backupFile.delete();
+    }
 
-      if (!success) {
-        throw new PersistenceException("Deletion of " + staticPage.getGuid() + " failed");
-      }
+    log.debug("Archiving current version to " + backupFile.getAbsolutePath());
+    boolean success = file.renameTo(backupFile);
+
+    if (!success) {
+      throw new PersistenceException("Deletion of " + staticPage.getGuid() + " failed");
     }
   }
 

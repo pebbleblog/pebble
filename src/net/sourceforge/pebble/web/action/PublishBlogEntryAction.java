@@ -91,6 +91,7 @@ public class PublishBlogEntryAction extends SecureAction {
         try {
           blogEntry.setPublished(true);
           service.putBlogEntry(blogEntry);
+          blog.info("Blog entry <a href=\"" + blogEntry.getLocalPermalink() + "\">" + blogEntry.getTitle() + "</a> published.");
         } catch (BlogServiceException be) {
           log.error(be);
         }
@@ -120,6 +121,7 @@ public class PublishBlogEntryAction extends SecureAction {
           blogEntry.setPublished(true);
           log.info("Putting blog entry dated " + blogEntry.getDate());
           service.putBlogEntry(blogEntry);
+          blog.info("Blog entry <a href=\"" + blogEntry.getLocalPermalink() + "\">" + blogEntry.getTitle() + "</a> published.");
         } catch (BlogServiceException be) {
           log.error(be);
         }
@@ -128,6 +130,7 @@ public class PublishBlogEntryAction extends SecureAction {
       blogEntry.setPublished(false);
       try {
         service.putBlogEntry(blogEntry);
+        blog.info("Blog entry <a href=\"" + blogEntry.getLocalPermalink() + "\">" + blogEntry.getTitle() + "</a> unpublished.");
       } catch (BlogServiceException be) {
         log.error(be);
       }

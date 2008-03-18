@@ -91,6 +91,7 @@ public class ManageBlogEntryAction extends SecureAction {
       if (submit.equalsIgnoreCase("Remove")) {
         try {
           service.removeBlogEntry(blogEntry);
+          blog.info("Blog entry \"" + blogEntry.getTitle() + "\" removed.");
         } catch (BlogServiceException be) {
           throw new ServletException(be);
         }

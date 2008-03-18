@@ -465,16 +465,31 @@ public abstract class AbstractBlog extends TimePeriod {
     return getName();
   }
 
-  public synchronized void info(String message) {
-    messages.add(new Message(MessageType.INFO, message));
+  public synchronized void info(String text) {
+    Message message = new Message(MessageType.INFO, text);
+    messages.add(0, message);
+    log.info(message.getText());
+    truncateMessages();
   }
 
-  public synchronized void warn(String message) {
-    messages.add(new Message(MessageType.WARN, message));
+  public synchronized void warn(String text) {
+    Message message = new Message(MessageType.WARN, text);
+    messages.add(0, message);
+    log.warn(message.getText());
+    truncateMessages();
   }
 
-  public synchronized void error(String message) {
-    messages.add(new Message(MessageType.ERROR, message));
+  public synchronized void error(String text) {
+    Message message = new Message(MessageType.ERROR, text);
+    messages.add(0, message);
+    log.error(message.getText());
+    truncateMessages();
+  }
+
+  private void truncateMessages() {
+    if (messages.size() > 20) {
+      messages = messages.subList(0, 19);
+    }
   }
 
   public synchronized void clearMessages() {

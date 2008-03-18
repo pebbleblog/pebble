@@ -74,6 +74,7 @@ public class RemoveStaticPagesAction extends SecureAction {
           try {
             if (service.lock(staticPage)) {
               service.removeStaticPage(staticPage);
+              blog.info("Static page \"" + staticPage.getTitle() + "\" removed.");
               service.unlock(staticPage);
             }
           } catch (StaticPageServiceException e) {

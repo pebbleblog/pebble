@@ -2,12 +2,15 @@ package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.domain.Message;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.impl.MessagesView;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Allows the user to see all messages for the current blog.
@@ -25,7 +28,9 @@ public class ViewMessagesAction extends SecureAction {
    */
   public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
-    getModel().put("messages", blog.getMessages());
+    List<Message> messages = blog.getMessages();
+    Collections.reverse(messages);
+    getModel().put("messages", messages);
 
     return new MessagesView();
   }

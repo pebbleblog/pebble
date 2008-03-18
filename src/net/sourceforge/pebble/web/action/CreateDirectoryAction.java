@@ -74,6 +74,8 @@ public class CreateDirectoryAction extends AbstractFileAction {
         fileManager = new FileManager(blog, FileMetaData.BLOG_DATA);
         fileManager.createDirectory("/theme" + path, name);
       }
+
+      blog.info("Directory \"" + name + "\" created.");
     } catch (IllegalFileAccessException e) {
       return new ForbiddenView();
     }

@@ -84,6 +84,7 @@ public class ManageResponsesAction extends SecureAction {
           try {
             ber.setApproved();
             service.putBlogEntry(ber.getBlogEntry());
+            blog.info("Response <a href=\"" + ber.getPermalink() + "\">" + ber.getTitle() + " (" + ber.getSourceName() + ")</a> approved.");
           } catch (BlogServiceException be) {
             log.error("Error updating state for response", be);
           }
@@ -91,6 +92,7 @@ public class ManageResponsesAction extends SecureAction {
           try {
             ber.setRejected();
             service.putBlogEntry(ber.getBlogEntry());
+            blog.info("Response \"" + ber.getTitle() + "\" (" + ber.getSourceName() + ") rejected.");
           } catch (BlogServiceException be) {
             log.error("Error updating state for response", be);
           }
@@ -98,6 +100,7 @@ public class ManageResponsesAction extends SecureAction {
           try {
             ber.getBlogEntry().removeResponse(ber);
             service.putBlogEntry(ber.getBlogEntry());
+            blog.info("Response \"" + ber.getTitle() + "\" (" + ber.getSourceName() + ") removed.");
           } catch (BlogServiceException be) {
             log.error("Error updating state for response", be);
           }

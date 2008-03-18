@@ -33,7 +33,6 @@ package net.sourceforge.pebble.index;
 
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.domain.StaticPage;
-import net.sourceforge.pebble.service.StaticPageService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -60,14 +59,15 @@ public class StaticPageIndex {
   /** the collection of all static pages */
   private Map<String,String> index = new HashMap<String,String>();
   private int lockAttempts = 0;
-  private long lastModified = 0;
 
   public StaticPageIndex(Blog blog) {
     this.blog = blog;
 
     // create the directory structure if it doesn't exist
     File indexDirectory = new File(blog.getIndexesDirectory(), PAGES_INDEX_DIRECTORY_NAME);
-    indexDirectory.mkdirs();    
+    if (!indexDirectory.exists()) {
+      indexDirectory.mkdirs();
+    }
 
     readIndex();
   }
@@ -78,17 +78,17 @@ public class StaticPageIndex {
    * @param staticPages   a List of Page instances
    */
   public synchronized void reindex(Collection<StaticPage> staticPages) {
-    // remove any locks on the index
-    unlock();
+    if (lock()) {
+      // clear the index and add all static pages
+      index = new HashMap<String,String>();
+      for (StaticPage staticPage : staticPages) {
+        index.put(staticPage.getName(), staticPage.getId());
+      }
 
-    // clear the index and add all static pages
-    index = new HashMap<String,String>();
-    for (StaticPage staticPage : staticPages) {
-      index.put(staticPage.getName(), staticPage.getId());
+      // and finally, write the index
+      writeIndex();
+      unlock();
     }
-
-    // and finally, write the index
-    writeIndex();
   }
 
   /**
@@ -123,7 +123,7 @@ public class StaticPageIndex {
         }
         index(staticPage);
       } else {
-        blog.reindexStaticPages();
+        blog.error("Could not index static page - try <a href=\"utilities.secureaction?action=buildIndexes\">rebuilding the indexes</a>.");
       }
     }
   }
@@ -171,8 +171,6 @@ public class StaticPageIndex {
         }
 
         reader.close();
-
-        lastModified = indexFile.lastModified();
       } catch (Exception e) {
         log.error("Error while reading index", e);
       }
@@ -194,8 +192,6 @@ public class StaticPageIndex {
 
       writer.flush();
       writer.close();
-
-      lastModified = indexFile.lastModified();
     } catch (Exception e) {
       log.error("Error while writing index", e);
     }

@@ -100,6 +100,7 @@ public class SaveBlogEntryAction extends SecureAction {
 
   private View saveBlogEntry(HttpServletRequest request) throws ServletException {
     BlogEntry blogEntry = getBlogEntry(request);
+    Blog blog = blogEntry.getBlog();
 
     populateBlogEntry(blogEntry, request);
 
@@ -115,6 +116,7 @@ public class SaveBlogEntryAction extends SecureAction {
       BlogService service = new BlogService();
       try {
         service.putBlogEntry(blogEntry);
+        blog.info("Blog entry <a href=\"" + blogEntry.getLocalPermalink() + "\">" + blogEntry.getTitle() + "</a> saved.");
         getModel().put(Constants.BLOG_ENTRY_KEY, blogEntry);
         return new RedirectView(blogEntry.getLocalPermalink());
       } catch (BlogServiceException be) {

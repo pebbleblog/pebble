@@ -63,6 +63,7 @@ public class SubscribeAction extends Action {
     email = StringUtils.filterHTML(email);
     if (email != null && email.length() > 0) {
       blog.getEmailSubscriptionList().addEmailAddress(email);
+      blog.info(email + " has subscribed to this blog.");
 
       getModel().put("email", email);
       return new SubscribedView();
