@@ -102,7 +102,7 @@ public class ManageStaticPageAction extends SecureAction {
       }
     } else if (submit.equalsIgnoreCase("Unlock") && confirm != null && confirm.equals("true")) {
         service.unlock(staticPage);
-        blog.info("Static page \"" + staticPage.getTitle() + "\" unlocked.");
+        blog.info("Static page <a href=\"" + staticPage.getLocalPermalink() + "\">" + staticPage.getTitle() + "</a> unlocked.");
 
         return new RedirectView(blog.getUrl() + "viewStaticPages.secureaction");
     }

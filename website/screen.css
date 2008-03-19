@@ -227,7 +227,6 @@ h3 {
 .published {
 }
 .unpublished {
-  background: white url('images/draft.gif') no-repeat top left;
 }
 blockquote {
   background: white url('images/blockquote.png') no-repeat top left;

@@ -71,7 +71,7 @@ public class UnlockStaticPageAction extends SecureAction {
         StaticPage staticPage = service.getStaticPageById(blog, id);
         if (staticPage != null) {
           service.unlock(staticPage);
-          blog.info("Static page \"" + staticPage.getTitle() + "\" unlocked.");
+          blog.info("Static page <a href=\"" + staticPage.getLocalPermalink() + "\">" + staticPage.getTitle() + "</a> unlocked.");
         }
       } catch (StaticPageServiceException e) {
         blog.warn("Error while unlocking static page - " + e.getMessage());

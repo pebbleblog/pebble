@@ -21,10 +21,10 @@
     </pebble:isBlogPublisher>
 
     <pebble:isBlogContributor>
+      <input type="submit" name="submit" value="Clone" />
       &nbsp;
       <input type="checkbox" name="confirm" value="true" />
       <input type="submit" name="submit" value="Remove" />
-      <input type="submit" name="submit" value="Clone" />
     </pebble:isBlogContributor>
 
     <pebble:isAuthorisedForBlog>
@@ -37,6 +37,11 @@
           <input type="submit" value="Send TrackBack" />
       </form>
     </pebble:isBlogContributor>
+
+    <c:if test="${blogEntry.unpublished}">
+      <br />
+      This blog entry has not been published yet.
+    </c:if>
   </div>
 
   </c:if>
