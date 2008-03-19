@@ -1,8 +1,8 @@
 <div class="contentItemLinks">
   <c:if test="${displayMode != 'preview'}">
 
-  <div class="inlineAdminLinks">
     <pebble:isAuthorisedForBlog>
+    <div class="inlineAdminLinks">
     <form name="blogEntryForm" action="manageBlogEntry.secureaction" method="post">
       <input type="hidden" name="entry" value="${blogEntry.id}" />
     </pebble:isAuthorisedForBlog>
@@ -42,7 +42,10 @@
       <br />
       This blog entry has not been published yet.
     </c:if>
-  </div>
+
+    <pebble:isAuthorisedForBlog>
+    </div>
+    </pebble:isAuthorisedForBlog>
 
   </c:if>
 </div>
