@@ -42,7 +42,12 @@ public class ViewMessagesAction extends SecureAction {
    * @param request
    */
   public String[] getRoles(HttpServletRequest request) {
-    return new String[]{Constants.BLOG_ADMIN_ROLE, Constants.BLOG_OWNER_ROLE};
+    return new String[]{
+      Constants.BLOG_ADMIN_ROLE,
+      Constants.BLOG_OWNER_ROLE,
+      Constants.BLOG_PUBLISHER_ROLE,
+      Constants.BLOG_CONTRIBUTOR_ROLE
+    };
   }
 
 }
