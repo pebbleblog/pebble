@@ -7,7 +7,7 @@
 --%>
 <c:if test="${blogType == 'singleblog'}">
 <div class="sidebarItem">
-  <div class="sidebarItemTitle"><span>Archives</span></div>
+  <div class="sidebarItemTitle"><span><fmt:message key="sidebar.archives"/></span></div>
   <div class="sidebarItemBody">
     <table width="99%" cellpadding="0" cellspacing="0">
       <c:forEach var="year" items="${archives}" varStatus="status">
