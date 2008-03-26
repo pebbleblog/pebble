@@ -1,12 +1,13 @@
 Version 2.4 - TBC
 -----------------
 Added pessimistic locking strategy for static pages, to prevent concurrent updates.
-Static page persistence now uses JAXB instead of custom XML handling code.
-Category persistence now uses JAXB instead of custom XML handling code.
+Static page persistence now uses JAXB 2.0 instead of custom XML handling code.
+Category persistence now uses JAXB 2.0 instead of custom XML handling code.
 When replying to a specific comment, that comment is now shown above the comment form.
 Tags can now include spaces (specify this with the + character when entering the tag).
 Enhanced HTML meta tags (keywords and description) for blog entry and static page permalinked pages.
-Added a name parameter to the <sidebar:recentBlogEntries/> tag so that the name/title can be overidden. 
+Added a name parameter to the <sidebar:recentBlogEntries/> tag so that the name/title can be overidden.
+Upgraded Acegi Security for Spring to version 1.0.6 (to fix a bug with remember me not working).
 
 Version 2.3 - 7th March 2008
 ----------------------------

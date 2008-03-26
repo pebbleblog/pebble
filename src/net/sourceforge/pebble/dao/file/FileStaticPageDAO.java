@@ -185,7 +185,10 @@ public class FileStaticPageDAO implements StaticPageDAO {
 
       marshaller.setProperty("jaxb.formatted.output", true);
       marshaller.setProperty("jaxb.encoding", staticPage.getBlog().getCharacterEncoding());
-      marshaller.marshal(jaxbElement, destination);
+      FileWriter writer = new FileWriter(destination);
+      marshaller.marshal(jaxbElement, writer);
+      writer.flush();
+      writer.close();
     } catch (Exception e) {
       log.error(e.getMessage(), e);
       e.printStackTrace();

@@ -13,6 +13,7 @@ import javax.xml.bind.JAXBElement;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import java.io.File;
+import java.io.FileWriter;
 import java.util.List;
 
 /**
@@ -135,7 +136,10 @@ public class FileCategoryDAO implements CategoryDAO {
 
       marshaller.setProperty("jaxb.formatted.output", true);
       marshaller.setProperty("jaxb.encoding", blog.getCharacterEncoding());
-      marshaller.marshal(jaxbElement, destination);
+      FileWriter writer = new FileWriter(destination);
+      marshaller.marshal(jaxbElement, writer);
+      writer.flush();
+      writer.close();
     } catch (Exception e) {
       log.error(e.getMessage(), e);
       e.printStackTrace();

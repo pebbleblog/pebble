@@ -40,9 +40,9 @@
 
   <path id="xjc.classpath">
     <fileset dir="lib">
-      <include name="jaxb-api-2.1.6.jar"/>
-      <include name="jaxb-impl-2.1.6.jar"/>
-      <include name="jaxb-xjc-2.1.6.jar"/>
+      <include name="jaxb-api-2.0.5.jar"/>
+      <include name="jaxb-impl-2.0.5.jar"/>
+      <include name="jaxb-xjc-2.0.5.jar"/>
     </fileset>
   </path>
   <taskdef name="xjc" classname="com.sun.tools.xjc.XJCTask" classpathref="xjc.classpath"/>
@@ -108,7 +108,7 @@
         <include name="pebble-${build.version}.jar"/>
       </fileset>
       <fileset dir="lib">
-        <include name="acegi-security-1.0.1.jar"/>
+        <include name="acegi-security-1.0.6.jar"/>
         <include name="activation.jar"/>
         <include name="asm-1.5.3.jar"/>
         <include name="asm-attrs-1.5.3.jar"/>
@@ -125,9 +125,9 @@
         <include name="dwr-2.0-rc2.jar"/>
         <include name="ehcache-1.4.1.jar"/>
         <include name="geolite-java-1.2.1.jar"/>
-        <include name="jaxb-api-2.1.6.jar"/>
-        <include name="jaxb-impl-2.1.6.jar"/>
-        <include name="jaxb-xjc-2.1.6.jar"/>
+        <include name="jaxb-api-2.0.5.jar"/>
+        <include name="jaxb-impl-2.0.5.jar"/>
+        <include name="jaxb-xjc-2.0.5.jar"/>
         <include name="jcaptcha-all-1.0-RC3.jar"/>
         <include name="jdom-1.0.jar"/>
         <include name="jstl-1.1.2.jar"/>

@@ -215,15 +215,6 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/acegi-security-1.0.1.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/commons-collections-3.1.jar!/" />
         </CLASSES>
         <JAVADOC />
@@ -369,7 +360,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/jaxb-impl-2.1.6.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/acegi-security-1.0.6.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -378,7 +369,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/jaxb-xjc-2.1.6.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/jaxb-xjc-2.0.5.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -387,7 +378,16 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/jaxb-api-2.1.6.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/jaxb-impl-2.0.5.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/jaxb-api-2.0.5.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -418,8 +418,8 @@
     </containerElement>
     <containerElement type="library" level="module">
       <attribute name="method" value="1" />
-      <attribute name="URI" value="/WEB-INF/lib/acegi-security-1.0.1.jar" />
-      <url>jar://$MODULE_DIR$/lib/acegi-security-1.0.1.jar!/</url>
+      <attribute name="URI" value="/WEB-INF/lib/acegi-security-1.0.6.jar" />
+      <url>jar://$MODULE_DIR$/lib/acegi-security-1.0.6.jar!/</url>
     </containerElement>
     <containerElement type="library" level="module">
       <attribute name="method" value="0" />
@@ -478,18 +478,18 @@
     </containerElement>
     <containerElement type="library" level="module">
       <attribute name="method" value="1" />
-      <attribute name="URI" value="/WEB-INF/lib/jaxb-api-2.1.6.jar" />
-      <url>jar://$MODULE_DIR$/lib/jaxb-api-2.1.6.jar!/</url>
+      <attribute name="URI" value="/WEB-INF/lib/jaxb-api-2.0.5.jar" />
+      <url>jar://$MODULE_DIR$/lib/jaxb-api-2.0.5.jar!/</url>
     </containerElement>
     <containerElement type="library" level="module">
       <attribute name="method" value="1" />
-      <attribute name="URI" value="/WEB-INF/lib/jaxb-impl-2.1.6.jar" />
-      <url>jar://$MODULE_DIR$/lib/jaxb-impl-2.1.6.jar!/</url>
+      <attribute name="URI" value="/WEB-INF/lib/jaxb-impl-2.0.5.jar" />
+      <url>jar://$MODULE_DIR$/lib/jaxb-impl-2.0.5.jar!/</url>
     </containerElement>
     <containerElement type="library" level="module">
       <attribute name="method" value="1" />
-      <attribute name="URI" value="/WEB-INF/lib/jaxb-xjc-2.1.6.jar" />
-      <url>jar://$MODULE_DIR$/lib/jaxb-xjc-2.1.6.jar!/</url>
+      <attribute name="URI" value="/WEB-INF/lib/jaxb-xjc-2.0.5.jar" />
+      <url>jar://$MODULE_DIR$/lib/jaxb-xjc-2.0.5.jar!/</url>
     </containerElement>
     <containerElement type="library" level="module">
       <attribute name="method" value="1" />
