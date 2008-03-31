@@ -48,12 +48,6 @@ public class Log {
   /** the collection of log entries */
   private Collection<LogEntry> logEntries;
 
-  /** the collection of referers */
-  private Collection referers;
-
-  /** the collection of requests */
-  private Collection requests;
-
   /**
    * Creates a new log associated with the given blog.
    *
@@ -83,22 +77,18 @@ public class Log {
    *
    * @return    a Collection of Referer instances
    */
-  public Collection getReferers() {
-    if (this.referers == null) {
-      Map refererMap = new HashMap();
-      for (LogEntry logEntry : logEntries) {
-        Referer referer = new Referer(logEntry.getReferer());
-        if (refererMap.containsKey(referer.getName())) {
-          referer = (Referer)refererMap.get(referer.getName());
-        } else {
-          refererMap.put(referer.getName(), referer);
-        }
-        referer.addLogEntry(logEntry);
+  public Collection<Referer> getReferers() {
+    Map<String,Referer> refererMap = new HashMap<String,Referer>();
+    for (LogEntry logEntry : logEntries) {
+      Referer referer = refererMap.get(logEntry.getReferer());
+      if (referer == null) {
+        referer = new Referer(logEntry.getReferer());
+        refererMap.put(referer.getName(), referer);
       }
-      this.referers = refererMap.values();
-    }
 
-    return this.referers;
+      referer.addLogEntry(logEntry);
+    }
+    return refererMap.values();
   }
 
   /**
@@ -106,21 +96,17 @@ public class Log {
    *
    * @return    a Collection of Request instances
    */
-  public Collection getRequests() {
-    if (this.requests == null) {
-      Map requestMap = new HashMap();
-      for (LogEntry logEntry : logEntries) {
-        Request request = new Request(logEntry.getRequestUri(), blog);
-        if (requestMap.containsKey(request.getName())) {
-          request = (Request)requestMap.get(request.getName());
-        } else {
-          requestMap.put(request.getName(), request);
-        }
-        request.addLogEntry(logEntry);
+  public Collection<Request> getRequests() {
+    Map<String,Request> requestMap = new HashMap<String,Request>();
+    for (LogEntry logEntry : logEntries) {
+      Request request = requestMap.get(logEntry.getRequestUri());
+      if (request == null) {
+        request = new Request(logEntry.getRequestUri(), blog);
+        requestMap.put(logEntry.getRequestUri(), request);
       }
-      this.requests = requestMap.values();
+      request.addLogEntry(logEntry);
     }
-    return this.requests;
+    return requestMap.values();
   }
 
   /**
