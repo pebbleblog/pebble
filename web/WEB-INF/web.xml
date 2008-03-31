@@ -63,11 +63,6 @@
   </filter>
 
   <filter>
-    <filter-name>LoggingFilter</filter-name>
-    <filter-class>net.sourceforge.pebble.web.filter.LoggingFilter</filter-class>
-  </filter>
-
-  <filter>
     <filter-name>DispatchingFilter</filter-name>
     <filter-class>net.sourceforge.pebble.web.filter.DispatchingFilter</filter-class>
   </filter>
@@ -115,12 +110,6 @@
 
   <filter-mapping>
     <filter-name>PreProcessingFilter</filter-name>
-    <url-pattern>/*</url-pattern>
-    <dispatcher>REQUEST</dispatcher>
-  </filter-mapping>
-
-  <filter-mapping>
-    <filter-name>LoggingFilter</filter-name>
     <url-pattern>/*</url-pattern>
     <dispatcher>REQUEST</dispatcher>
   </filter-mapping>
