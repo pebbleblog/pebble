@@ -49,6 +49,8 @@ public abstract class AbstractBlog extends TimePeriod {
   /** the name of the file containing blog properties */
   public static final String BLOG_PROPERTIES_FILE = "blog.properties";
 
+  private static final int MAXIMUM_MESSAGES = 20;
+
   /** the log used by this class */
   private static Log log = LogFactory.getLog(AbstractBlog.class);
 
@@ -487,8 +489,8 @@ public abstract class AbstractBlog extends TimePeriod {
   }
 
   private void truncateMessages() {
-    if (messages.size() > 20) {
-      messages = messages.subList(0, 19);
+    if (messages.size() > MAXIMUM_MESSAGES) {
+      messages = messages.subList(0, MAXIMUM_MESSAGES);
     }
   }
 
