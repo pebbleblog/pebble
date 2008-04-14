@@ -192,12 +192,6 @@
     <load-on-startup>1</load-on-startup>
   </servlet>
 
-  <servlet>
-      <description>Atom Publishing Protocol Servlet</description>
-      <servlet-name>AtomServlet</servlet-name>
-      <servlet-class>com.sun.syndication.propono.atom.server.AtomServlet</servlet-class>
-  </servlet>
-
   <servlet-mapping>
     <servlet-name>dwr-invoker</servlet-name>
     <url-pattern>/dwr/*</url-pattern>
@@ -226,11 +220,6 @@
   <servlet-mapping>
     <servlet-name>jcaptcha</servlet-name>
     <url-pattern>/jcaptcha</url-pattern>
-  </servlet-mapping>
-
-  <servlet-mapping>
-      <servlet-name>AtomServlet</servlet-name>
-      <url-pattern>/atom/*</url-pattern>
   </servlet-mapping>
 
   <session-config>
