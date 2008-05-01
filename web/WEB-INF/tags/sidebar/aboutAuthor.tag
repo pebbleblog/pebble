@@ -15,14 +15,4 @@
   </div>
 </div>
 </c:if>
-<c:if test="${displayMode == 'detail' and not empty staticPage and not empty staticPage.user.profile}">
-<div class="sidebarItem">
-  <div class="sidebarItemTitle"><span><fmt:message key="common.aboutAuthor" /> <a href="authors/${staticPage.user.username}/rss.xml"><img src="common/images/feed-icon-10x10.png" alt="RSS feed" border="0" /></a></span></div>
-  <div class="sidebarItemBody">
-    ${staticPage.user.profile}
-    <br /><br />
-    <a href="authors/${staticPage.user.username}/"><fmt:message key="common.readMore" /></a>
-  </div>
-</div>
-</c:if>
 </c:if>
