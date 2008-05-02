@@ -116,8 +116,6 @@
     hideMenu('admin-user');
   </script>
 
-</div>
-
 <c:if test="${blog.numberOfMessages > 0}">
 <div id="messages">
   <div class="${blog.messages[0].type}">
@@ -137,5 +135,7 @@
   </div>
 </div>
 </c:if>
+
+</div>
 
 </pebble:isAuthenticated>

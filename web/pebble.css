@@ -3,6 +3,7 @@
   color: white;
   padding: 0px;
   font-size: 11px;
+  border: black solid 1px;
 }
 #admin a {
   color: white;
@@ -37,6 +38,7 @@
 #messages {
   background: white;
   font-size: 11px;
+  border-top: black solid 1px;
 }
 .ERROR {
   background: red;
@@ -55,7 +57,7 @@
   color: white;
 }
 .INFO {
-  background: green;
+  background: gray;
   color: white;
   padding: 4px;
 }
