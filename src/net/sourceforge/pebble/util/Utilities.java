@@ -297,6 +297,11 @@ public class Utilities {
   public static void restructureStaticPages(Blog blog) {
     log.info("Restructuring static pages");
     File root = new File(blog.getRoot(), "pages");
+    // Upon first start this directory does not exist yet 
+    if(!root.isDirectory()) {
+    	root.mkdir();
+    }
+
     File files[] = root.listFiles(new FilenameFilter() {
         public boolean accept(File dir, String name) {
           return name.matches("(\\d+\\.xml)|(\\d+\\.xml\\.bak)");
