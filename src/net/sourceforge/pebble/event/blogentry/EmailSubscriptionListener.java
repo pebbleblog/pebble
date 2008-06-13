@@ -39,8 +39,6 @@ import net.sourceforge.pebble.util.MailUtils;
 
 import javax.mail.Session;
 import java.text.SimpleDateFormat;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -104,7 +102,10 @@ public class EmailSubscriptionListener extends BlogEntryListenerSupport {
             message.replaceAll(EMAIL_ADDRESS_TOKEN, emailAddress));
       }
     } catch (Exception e) {
-      e.printStackTrace();
+        e.printStackTrace();
+    } catch (NoClassDefFoundError e) {
+        // most likely: JavaMail is not in classpath
+        e.printStackTrace();
     }
   }
 
