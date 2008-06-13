@@ -39,9 +39,9 @@
     <h3>Feed and subscription utilities</h3>
     <ul>
       <li>Validate your newsfeeds :
-        <a href="http://www.feedvalidator.org/check.cgi?url=${blog.url}rss.xml"><img src="${pageContext.request.contextPath}/common/images/valid-rss.png" alt="[Valid RSS]" title="Validate my RSS feed" width="88" height="31" border="0" /></a>
+        <a href="http://www.feedvalidator.org/check.cgi?url=${blogUrl}rss.xml"><img src="${pageContext.request.contextPath}/common/images/valid-rss.png" alt="[Valid RSS]" title="Validate my RSS feed" width="88" height="31" border="0" /></a>
         &nbsp;
-        <a href="http://www.feedvalidator.org/check.cgi?url=${blog.url}atom.xml"><img src="${pageContext.request.contextPath}/common/images/valid-atom.png" alt="[Valid Atom]" title="Validate my Atom feed" width="88" height="31" border="0" /></a>
+        <a href="http://www.feedvalidator.org/check.cgi?url=${blogUrl}atom.xml"><img src="${pageContext.request.contextPath}/common/images/valid-atom.png" alt="[Valid Atom]" title="Validate my Atom feed" width="88" height="31" border="0" /></a>
       </li>
       <li><a href="viewEmailSubscribers.secureaction">Manage e-mail subscribers</a> : view and manage the list of e-mail subscribers.</li>
     </ul>

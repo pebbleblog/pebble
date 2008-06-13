@@ -35,6 +35,9 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import net.sourceforge.pebble.util.Utilities;
+
 import java.io.IOException;
 
 /**
@@ -82,7 +85,8 @@ public class RedirectView extends View {
    */
   public void dispatch(HttpServletRequest request, HttpServletResponse response, ServletContext context) throws ServletException {
     try {
-      response.sendRedirect(getUri());
+      String target = Utilities.calcBaseUrl(request.getScheme(), getUri());
+      response.sendRedirect(target);
     } catch (IOException ioe) {
       throw new ServletException(ioe);
     }

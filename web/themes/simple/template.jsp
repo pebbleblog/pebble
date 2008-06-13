@@ -62,7 +62,7 @@
       </pebble:isNotAuthenticated>
       <pebble:isAuthenticated>
       |
-      <a href="${pebbleContext.configuration.secureUrl}logout.action?redirectUrl=${blog.url}">Logout</a>
+      <a href="${pebbleContext.configuration.secureUrl}logout.action?redirectUrl=${blogUrl}">Logout</a>
       </pebble:isAuthenticated>
     </div>
 

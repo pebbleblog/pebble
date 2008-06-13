@@ -30,7 +30,7 @@
     <p>
       <b>net.sourceforge.pebble.decorator.RelativeUriDecorator</b> (*)<br />
       Replaces relative URIs with absolute URLs so that they are rendered properly in browsers and newsreaders.
-      For example, a link to <code>./images/someimage.jpg</code> would be transformed to <code>${blog.url}images/someimage.jpg</code>.
+      For example, a link to <code>./images/someimage.jpg</code> would be transformed to <code>${blogUrl}images/someimage.jpg</code>.
     </p>
 
     <p>

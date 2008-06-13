@@ -31,6 +31,8 @@
  */
 package net.sourceforge.pebble.util;
 
+import net.sourceforge.pebble.Configuration;
+import net.sourceforge.pebble.PebbleContext;
 import net.sourceforge.pebble.dao.CategoryDAO;
 import net.sourceforge.pebble.dao.DAOFactory;
 import net.sourceforge.pebble.dao.file.*;
@@ -358,6 +360,30 @@ public class Utilities {
       convertCategories(blog);
     }
 
+  }
+  /**
+   * this is a very simple way to honor https transfer. As
+   * the frontend depends upon setting a base url in the html/head block, it
+   * should at least contain the https scheme if the current page has been
+   * requested through https. 
+   * If there is no https involved, pebbles previous behaviour 
+   * (as of version 2.3.1) does not change. This change implies also changing 
+   * several frontend jsps WEB-INF/tags/page.tag to use the value calculated
+   * here instead of ${blog.url}. In the context of the patch that introduced
+   * this method, the values have been named ${blogUrl} and ${multiBlogUrl}
+
+   * @param currentScheme the scheme the current request has been sent through (e.g. request.getScheme())
+   * @param blogUrl the ordinary blog url that might be changed to the secure one.
+   * @return value to be used as base url for the blog named in blogUrl
+   */
+  public static String calcBaseUrl(String currentScheme, String blogUrl) {
+  	Configuration configuration = PebbleContext.getInstance().getConfiguration();
+  	if(configuration.isHttpsWorkaroundEnabled()) {
+  		if (currentScheme.equals("https")) {
+  			return blogUrl.replace(configuration.getUrl(), configuration.getSecureUrl());
+  		}
+  	} 
+  	return blogUrl;
   }
 
 }

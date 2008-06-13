@@ -5,7 +5,7 @@
 
   <div class="contentItemBody">
     <fmt:message key="newsfeed.subscribed">
-      <fmt:param value="<a href='${blog.url}'>${blog.name}</a>"/>
+      <fmt:param value="<a href='${blogUrl}'>${blog.name}</a>"/>
       <fmt:param value="${email}"/>
     </fmt:message>
   </div>

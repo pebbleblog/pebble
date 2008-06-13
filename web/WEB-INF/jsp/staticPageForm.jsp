@@ -48,7 +48,7 @@
     <table width="99%" cellspacing="0" cellpadding="4">
       <tr>
         <td valign="top"><b>Name</b></td>
-        <td><c:out value="${blog.url}pages/"/><input type="text" name="name" size="20" value="${staticPage.name}">.html</td>
+        <td><c:out value="${blogUrl}pages/"/><input type="text" name="name" size="20" value="${staticPage.name}">.html</td>
       </tr>
 
       <tr>

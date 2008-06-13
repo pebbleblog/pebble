@@ -9,7 +9,7 @@
 
   <div class="contentItemBody">
     <p>
-      The properties on this page are only applicable to this blog (<a href="${blog.url}">${blog.name}</a>).
+      The properties on this page are only applicable to this blog (<a href="${blogUrl}">${blog.name}</a>).
     </p>
 
     <form name="propertiesForm" action="saveBlogProperties.secureaction" method="POST" accept-charset="${blog.characterEncoding}">

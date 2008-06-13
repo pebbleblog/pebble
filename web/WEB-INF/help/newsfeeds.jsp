@@ -9,8 +9,8 @@
     </p>
 
     <ul>
-    <li>RSS : ${blog.url}rss.xml</li>
-    <li>Atom : ${blog.url}atom.xml</li>
+    <li>RSS : ${blogUrl}rss.xml</li>
+    <li>Atom : ${blogUrl}atom.xml</li>
     </ul>
 
     <p>
@@ -28,9 +28,9 @@
     <h3>Validating your newsfeeds</h3>
     <p>
       Click either of the following links to validate your newsfeeds.<br /><br />
-      <a href="http://www.feedvalidator.org/check.cgi?url=${blog.url}rss.xml"><img src="${pageContext.request.contextPath}/common/images/valid-rss.png" alt="[Valid RSS]" title="Validate my RSS feed" width="88" height="31" border="0" /></a>
+      <a href="http://www.feedvalidator.org/check.cgi?url=${blogUrl}rss.xml"><img src="${pageContext.request.contextPath}/common/images/valid-rss.png" alt="[Valid RSS]" title="Validate my RSS feed" width="88" height="31" border="0" /></a>
       &nbsp;
-      <a href="http://www.feedvalidator.org/check.cgi?url=${blog.url}atom.xml"><img src="${pageContext.request.contextPath}/common/images/valid-atom.png" alt="[Valid Atom]" title="Validate my Atom feed" width="88" height="31" border="0" /></a>
+      <a href="http://www.feedvalidator.org/check.cgi?url=${blogUrl}atom.xml"><img src="${pageContext.request.contextPath}/common/images/valid-atom.png" alt="[Valid Atom]" title="Validate my Atom feed" width="88" height="31" border="0" /></a>
     </p>
   </div>
 </div>

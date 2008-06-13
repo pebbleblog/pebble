@@ -53,6 +53,7 @@ public class Configuration {
   private boolean multiBlog = false;
   private boolean virtualHostingEnabled = false;
   private boolean userThemesEnabled = true;
+  private boolean httpsWorkaroundEnabled = false;
   private String smtpHost = "java:comp/env/mail/Session";
   private long fileUploadSize = 2048;
   private long fileUploadQuota = -1;
@@ -211,4 +212,27 @@ public class Configuration {
     this.userThemesEnabled = userThemesEnabled;
   }
 
+  /**
+   * Enables the use of https for secure access to the blog. Up until now
+   * the blog url (see setUrl()) and the secure url (see setSecureUrl()) could have
+   * been set but did not cause much change in behaviour. When this option is
+   * on, a request that is transferred through https will trigger the configured
+   * secureUrl to be sent as the blogs url instead of the blogs own url. When this 
+   * option is turned off or not set at all the behaviour will not change.
+   * 
+   * Note: This option might be superseded by comparing the url and secureUrl, 
+   * determining if the later one starts with https while the first one doesn't 
+   * while the current request is transferred through https or http... 
+   * 
+   * Right now I can't guess of a case where this not sufficient, but I'll ask for
+   * feedback on the mailing list. (Olaf)
+   * @return true if the htts workaround option is chosen.
+   */
+   public boolean isHttpsWorkaroundEnabled() {
+	return httpsWorkaroundEnabled;
+  }
+
+  public void setHttpsWorkaroundEnabled(boolean httpsWorkaroundEnabled) {
+	this.httpsWorkaroundEnabled = httpsWorkaroundEnabled;
+  }
 }

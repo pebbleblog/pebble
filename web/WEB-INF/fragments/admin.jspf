@@ -31,7 +31,7 @@
     <span id="admin-user-group" class="adminGroup" onmouseover="showMenu('admin-user'); hideMenu('admin-content'); hideMenu('admin-responses'); hideMenu('admin-blog'); hideMenu('admin-logs'); hideMenu('admin-admin')"">User</span> |
     </c:if>
 
-    <span><a href="${pebbleContext.configuration.secureUrl}logout.action?redirectUrl=${blog.url}" onmouseover="hideMenu('admin-admin'); hideMenu('admin-user'); hideMenu('admin-content'); hideMenu('admin-responses'); hideMenu('admin-blog'); hideMenu('admin-logs')">Logout</a></span>
+    <span><a href="${pebbleContext.configuration.secureUrl}logout.action?redirectUrl=${blogUrl}" onmouseover="hideMenu('admin-admin'); hideMenu('admin-user'); hideMenu('admin-content'); hideMenu('admin-responses'); hideMenu('admin-blog'); hideMenu('admin-logs')">Logout</a></span>
     </td>
     <td align="right">
     <span><a href="./help/index.html" title="Help" onmouseover="hideMenu('admin-admin'); hideMenu('admin-user'); hideMenu('admin-content'); hideMenu('admin-responses'); hideMenu('admin-blog'); hideMenu('admin-logs')">Help</a></span>
@@ -88,11 +88,11 @@
     <span id="admin-admin">
     <pebble:isBlogAdmin>
       <c:if test="${blogManager.multiBlog}">
-      <a href="${multiBlog.url}viewPebbleProperties.secureaction" title="Manage Pebble properties">Properties</a> |
+      <a href="${multiBlogUrl}viewPebbleProperties.secureaction" title="Manage Pebble properties">Properties</a> |
       </c:if>
-      <a href="${multiBlog.url}viewBlogs.secureaction" title="View blogs">Blogs</a> |
-      <a href="${multiBlog.url}addUser.secureaction" title="Add user">Add user</a> |
-      <a href="${multiBlog.url}viewUsers.secureaction" title="View users">Users</a>
+      <a href="${multiBlogUrl}viewBlogs.secureaction" title="View blogs">Blogs</a> |
+      <a href="${multiBlogUrl}addUser.secureaction" title="Add user">Add user</a> |
+      <a href="${multiBlogUrl}viewUsers.secureaction" title="View users">Users</a>
     </pebble:isBlogAdmin>
     </span>
 

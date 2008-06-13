@@ -35,6 +35,7 @@ import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.domain.AbstractBlog;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.util.SecurityUtils;
+import net.sourceforge.pebble.util.Utilities;
 import net.sourceforge.pebble.web.action.Action;
 import net.sourceforge.pebble.web.action.ActionFactory;
 import net.sourceforge.pebble.web.action.ActionNotFoundException;
@@ -114,6 +115,8 @@ public class HttpController extends HttpServlet {
       try {
         Model model = new Model();
         model.put(Constants.BLOG_KEY, blog);
+        String calculatedBaseUrl = Utilities.calcBaseUrl(request.getScheme(), blog.getUrl());
+		model.put(Constants.BLOG_URL, calculatedBaseUrl);
         action.setModel(model);
         View view = action.process(request, response);
         if (view != null) {

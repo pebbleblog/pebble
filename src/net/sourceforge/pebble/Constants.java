@@ -40,6 +40,9 @@ public class Constants {
 
   public static final String BLOG_KEY = "blog";
   public static final String MULTI_BLOG_KEY = "multiBlog";
+  public static final String BLOG_URL = "blogUrl";
+  public static final String MULTI_BLOG_URL = "multiBlogUrl";
+  
   public static final String BLOG_TYPE = "blogType";
   public static final String BLOGS = "blogs";
   public static final String MONTHLY_BLOG = "monthlyBlog";

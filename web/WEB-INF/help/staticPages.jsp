@@ -11,7 +11,7 @@
         <li>Page hits are included in your referers/logs.</li>
         <li>Pages and blog entries have a consistent look and feel.</li>
       </ul>
-      The key differences between a blog entry and static page are that static pages simply consist of a title and body, don't have comments/TrackBacks and have a more memorable permalink such as <code>${blog.url}pages/aboutme.html</code>.
+      The key differences between a blog entry and static page are that static pages simply consist of a title and body, don't have comments/TrackBacks and have a more memorable permalink such as <code>${blogUrl}pages/aboutme.html</code>.
     </p>
 
     <h3>Adding a static page</h3>

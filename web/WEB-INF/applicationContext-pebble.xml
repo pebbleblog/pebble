@@ -33,6 +33,9 @@
     <!-- a flag to indicate whether user themes are enabled, default is true -->
     <property name="userThemesEnabled" value="${userThemesEnabled}" />
 
+    <!-- a flag to indicate whether user themes are enabled, default is true -->
+    <property name="httpsWorkaroundEnabled" value="${httpsWorkaroundEnabled}" />
+
   </bean>
 
 </beans>

@@ -70,7 +70,7 @@ window.onload = function()
       <c:if test="${blogEntry.type == 8}">
       <tr>
         <td valign="top"><b>Name</b></td>
-        <td>${blog.url}pages/<input type="text" name="staticName" size="20" value="${blogEntry.staticName}">.html</td>
+        <td>${blogUrl}pages/<input type="text" name="staticName" size="20" value="${blogEntry.staticName}">.html</td>
       </tr>
       </c:if>
 

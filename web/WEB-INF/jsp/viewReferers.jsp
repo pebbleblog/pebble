@@ -9,7 +9,7 @@
 
   <div class="contentItemBody">
     <form name="referersForm" method="post" action="addRefererFilters.secureaction">
-    <input type="hidden" name="redirectUrl" value="${blog.url}/viewReferers.secureaction" />
+    <input type="hidden" name="redirectUrl" value="${blogUrl}/viewReferers.secureaction" />
     <input type="hidden" name="year" value="${param.year}" />
     <input type="hidden" name="month" value="${param.month}" />
     <input type="hidden" name="day" value="${param.day}" />

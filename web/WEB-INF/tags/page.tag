@@ -15,7 +15,7 @@
       <c:choose><c:when test="${empty title}">${blog.name}</c:when><c:otherwise>${title} - ${blog.name}</c:otherwise></c:choose>
     </c:set>
 
-    <base href="${blog.url}" />
+    <base href="${blogUrl}" />
     <meta http-equiv="Content-Type" content="text/html; charset=${blog.characterEncoding}"/>
     <meta name="description" content="${pageTitle}" />
     <c:if test="${displayMode == 'detail'}"><c:choose><c:when test="${not empty blogEntry}"><meta name="keywords" content="${blogEntry.tagsAsCommaSeparated}" /></c:when><c:when test="${not empty staticPage}"><meta name="keywords" content="${staticPage.tagsAsCommaSeparated}" /></c:when></c:choose></c:if>
