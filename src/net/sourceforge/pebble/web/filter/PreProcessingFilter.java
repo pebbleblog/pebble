@@ -36,6 +36,7 @@ import net.sourceforge.pebble.PebbleContext;
 import net.sourceforge.pebble.security.PebbleUserDetails;
 import net.sourceforge.pebble.util.SecurityUtils;
 import net.sourceforge.pebble.util.CookieUtils;
+import net.sourceforge.pebble.util.Utilities;
 import net.sourceforge.pebble.api.decorator.ContentDecoratorContext;
 import net.sourceforge.pebble.comparator.BlogEntryComparator;
 import net.sourceforge.pebble.comparator.BlogByLastModifiedDateComparator;
@@ -147,6 +148,7 @@ public class PreProcessingFilter implements Filter {
 
       if (PebbleContext.getInstance().getConfiguration().isMultiBlog()) {
         httpRequest.setAttribute(Constants.MULTI_BLOG_KEY, BlogManager.getInstance().getMultiBlog());
+        httpRequest.setAttribute(Constants.MULTI_BLOG_URL, Utilities.calcBaseUrl(request.getScheme(), BlogManager.getInstance().getMultiBlog().getUrl()));
 
         List blogs = BlogManager.getInstance().getPublicBlogs();
         Collections.sort(blogs, new BlogByLastModifiedDateComparator());

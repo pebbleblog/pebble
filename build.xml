@@ -186,7 +186,12 @@
   </target>
 
   <target name="test" depends="build">
-    <junit printsummary="withOutAndErr" haltonfailure="yes" fork="yes" forkMode="once" reloading="false">
+  	<delete dir="${build.dir}/test-report"/>
+	<mkdir dir="${build.dir}/test-report"/>
+	<mkdir dir="${build.dir}/test-report/xml"/>
+	<mkdir dir="${build.dir}/test-report/html"/>
+  	
+    <junit printsummary="withOutAndErr" haltonfailure="no" fork="yes" forkMode="once" reloading="false" failureproperty="junitfailure" errorproperty="juniterror">
       <classpath>
         <pathelement location="${instrumentedclasses.dir}"/>
         <pathelement location="${testclasses.dir}"/>
@@ -194,14 +199,27 @@
         <pathelement path="${project.classpath}"/>
       </classpath>
 
+  	  <formatter type="xml" />
+<!--
       <formatter type="plain" usefile="false"/>
-
-      <batchtest todir="${classes.dir}">
+-->    	
+      <batchtest todir="${build.dir}/test-report/xml">
         <fileset dir="${test.dir}">
           <include name="**/*Test.java"/>
         </fileset>
       </batchtest>
     </junit>
+
+  	<junitreport todir="${build.dir}/test-report/html" >
+  		<fileset dir="${build.dir}/test-report/xml">
+  			<include name="TEST*.xml"/>
+  		</fileset>
+  		<report format="frames" todir="${build.dir}/test-report/html"/>
+  	</junitreport> 
+
+  	<fail if="junitfailure"/>
+  	<fail if="juniterror"/>
+  	
   </target>
 
   <target name="webtest">

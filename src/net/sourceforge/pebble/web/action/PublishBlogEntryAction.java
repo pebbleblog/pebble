@@ -88,11 +88,14 @@ public class PublishBlogEntryAction extends SecureAction {
 
       if (publishDate != null && publishDate.equalsIgnoreCase("as-is")) {
         // this is the easiest scenario - just set the blog entry to published
+        // TODO: localization
         try {
           blogEntry.setPublished(true);
           service.putBlogEntry(blogEntry);
           blog.info("Blog entry <a href=\"" + blogEntry.getLocalPermalink() + "\">" + blogEntry.getTitle() + "</a> published.");
         } catch (BlogServiceException be) {
+          // give feedback to the user that something bad has happened
+          blog.error("Error publishing blog entry " + blogEntry.getTitle() + ": " + be.getClass().getName() + " " + be.getMessage());
           log.error(be);
         }
       } else {
