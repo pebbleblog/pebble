@@ -229,6 +229,16 @@ public class BlogManager {
   }
 
   /**
+   * Gets the number of blogs that are currently being managed.
+   *
+   * @return the number of managed blogs
+   */
+  public int getNumberOfBlogs() {
+	  return blogs.size();
+  }
+  
+  
+  /**
    * Gets all blogs that are currently being managed and are
    * to be included in aggregated pages and feeds.
    *

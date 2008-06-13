@@ -66,7 +66,10 @@ public class ContentCache {
     cache = cacheManager.getCache("contentCache");
 
     // size the cache (number of blogs * max elements in memory configured in the ehcache.xml file)
-    cache.getCacheConfiguration().setMaxElementsInMemory(cache.getCacheConfiguration().getMaxElementsInMemory() * BlogManager.getInstance().getBlogs().size());
+    // Fix: Previously the number of blogs was calculated through blogManager.getBlogs().getSize() which
+    // caused the blog to load and access the Cache that is just now being initialized.
+    // This lead to NPE because instance is not yet set to this instance.
+    cache.getCacheConfiguration().setMaxElementsInMemory(cache.getCacheConfiguration().getMaxElementsInMemory() * BlogManager.getInstance().getNumberOfBlogs());
   }
 
   public static ContentCache getInstance() {
