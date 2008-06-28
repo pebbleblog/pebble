@@ -1,6 +1,6 @@
 <div class="contentItem">
 
-  <h1>Preferences</h1>
+  <h1><fmt:message key="view.userPreferences"/></h1>
   <h2>&nbsp;</h2>
 
   <div class="contentItemBody">

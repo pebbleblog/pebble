@@ -46,7 +46,7 @@ public class BlogSecurityView extends HtmlView {
    * @return the title as a String
    */
   public String getTitle() {
-    return "Blog security";
+	return getLocalizedString("view.blogSecurity");
   }
 
   /**

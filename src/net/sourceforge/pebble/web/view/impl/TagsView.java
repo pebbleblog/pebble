@@ -31,11 +31,7 @@
  */
 package net.sourceforge.pebble.web.view.impl;
 
-import net.sourceforge.pebble.Constants;
-import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.web.view.HtmlView;
-
-import java.util.ResourceBundle;
 
 /**
  * Represents the tag cloud page.
@@ -53,9 +49,7 @@ public class TagsView extends HtmlView {
    * @return the title as a String
    */
   public String getTitle() {
-    Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
-    ResourceBundle bundle = ResourceBundle.getBundle("resources", blog.getLocale());
-    return bundle.getString("tag.tags");
+    return getLocalizedString("tag.tags");
   }
 
   /**

@@ -46,7 +46,7 @@ public class TemplatesView extends HtmlView {
    * @return the title as a String
    */
   public String getTitle() {
-    return "Templates";
+    return getLocalizedString("view.templates");
   }
 
   /**

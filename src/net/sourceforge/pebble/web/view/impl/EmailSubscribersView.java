@@ -46,7 +46,7 @@ public class EmailSubscribersView extends HtmlView {
    * @return the title as a String
    */
   public String getTitle() {
-    return "E-mail Subscribers";
+	return getLocalizedString("view.emailSubscribers");
   }
 
   /**

@@ -31,17 +31,11 @@
  */
 package net.sourceforge.pebble.web.view.impl;
 
+import java.text.DateFormat;
+
 import net.sourceforge.pebble.Constants;
-import net.sourceforge.pebble.api.decorator.ContentDecoratorContext;
-import net.sourceforge.pebble.comparator.BlogEntryComparator;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.domain.Day;
-import net.sourceforge.pebble.decorator.ContentDecoratorChain;
-import net.sourceforge.pebble.web.view.HtmlView;
-
-import java.text.DateFormat;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * Represents the home page view of a simple blog.

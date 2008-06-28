@@ -46,7 +46,7 @@ public class TrackBackFormView extends HtmlView {
    * @return the title as a String
    */
   public String getTitle() {
-    return "Send a TrackBack";
+	return getLocalizedString("view.trackBackForm");
   }
 
   /**

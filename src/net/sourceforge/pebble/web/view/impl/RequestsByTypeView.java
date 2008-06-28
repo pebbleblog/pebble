@@ -46,7 +46,7 @@ public class RequestsByTypeView extends HtmlView {
    * @return the title as a String
    */
   public String getTitle() {
-    return "Requests by Type";
+	return "view.requestsByType";
   }
 
   /**

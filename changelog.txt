@@ -1,5 +1,8 @@
 Version 2.4 - TBC
 -----------------
+Improved amount of localizeable content (with german translations) (Olaf Kock)
+Added mongolian localization (provided by Enkhbat Dash)
+Play nicer when delivering secured pages through https (Olaf Kock)
 Added pessimistic locking strategy for static pages, to prevent concurrent updates.
 Static page persistence now uses JAXB 2.0 instead of custom XML handling code.
 Category persistence now uses JAXB 2.0 instead of custom XML handling code.
@@ -24,7 +27,7 @@ Minor HTML cleanup and tweaks to theme.
 Added a GZIP compression filter to reduce page loading times.
 DWR scripts are now cached to reduce page loading times.
 Fixed a problem where JavaScript would be served up when logging in to a private blog.
-Fixed problems with unit tests failing in non-English locales (patches from Frédéric Chuong).
+Fixed problems with unit tests failing in non-English locales (patches from Frï¿½dï¿½ric Chuong).
 Moved admin links from the sidebar to the top of the page.
 Separated out blog security configuration from the general blog properties.
 Pebble now uses the ServletContext for getting MIME type information when serving up files.

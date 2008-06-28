@@ -46,7 +46,7 @@ public class UserPreferencesView extends HtmlView {
    * @return the title as a String
    */
   public String getTitle() {
-    return "Preferences";
+    return getLocalizedString("view.userPreferences");
   }
 
   /**

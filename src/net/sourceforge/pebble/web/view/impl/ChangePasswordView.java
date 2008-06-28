@@ -46,7 +46,7 @@ public class ChangePasswordView extends HtmlView {
    * @return the title as a String
    */
   public String getTitle() {
-    return "Change password";
+	return getLocalizedString("view.changePassword");
   }
 
   /**

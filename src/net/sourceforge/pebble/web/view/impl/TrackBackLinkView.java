@@ -1,11 +1,8 @@
 package net.sourceforge.pebble.web.view.impl;
 
-import net.sourceforge.pebble.web.view.HtmlView;
-import net.sourceforge.pebble.domain.BlogEntry;
 import net.sourceforge.pebble.Constants;
-
-import java.util.List;
-import java.util.Collections;
+import net.sourceforge.pebble.domain.BlogEntry;
+import net.sourceforge.pebble.web.view.HtmlView;
 
 /**
  * Represents the page that displays the TrackBack link for a blog entry.

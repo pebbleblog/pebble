@@ -46,7 +46,7 @@ public class CountriesView extends HtmlView {
    * @return the title as a String
    */
   public String getTitle() {
-    return "Countries";
+	return getLocalizedString("view.countries");
   }
 
   /**

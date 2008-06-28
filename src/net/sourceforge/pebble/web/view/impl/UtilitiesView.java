@@ -46,7 +46,7 @@ public class UtilitiesView extends HtmlView {
    * @return the title as a String
    */
   public String getTitle() {
-    return "Utilities";
+    return getLocalizedString("view.utilities");
   }
 
   /**

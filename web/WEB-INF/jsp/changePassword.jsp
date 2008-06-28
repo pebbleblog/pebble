@@ -1,6 +1,6 @@
 <div class="contentItem">
 
-  <h1>Change password</h1>
+  <h1><fmt:message key="view.changePassword"/></h1>
   <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
@@ -20,11 +20,11 @@
 
       <table width="99%" cellspacing="0" cellpadding="4">
         <tr>
-          <td valign="top">Password</td>
+          <td valign="top"><fmt:message key="view.changePassword.password"/></td>
           <td><input type="password" name="password1" size="40"/></td>
         </tr>
         <tr>
-          <td valign="top">Confirm</td>
+          <td valign="top"><fmt:message key="view.changePassword.confirm"/></td>
           <td><input type="password" name="password2" size="40"/></td>
         </tr>
         <tr>

@@ -1,10 +1,14 @@
 <div class="contentItem">
 
   <div class="contentItemLinks">
-    <a href="./help/logs.html" target="_blank">Help</a>
+    <a href="./help/logs.html" target="_blank"><fmt:message key="common.help"/></a>
   </div>
 
-  <h1>Log summary for <fmt:formatDate value="${logSummary.date}" pattern="yyyy" /></h1>
+  <h1>
+	<fmt:message key="view.logSummaryForPeriod">
+  		<fmt:param><fmt:formatDate value="${logSummary.date}" pattern="MMMM yyyy" /></fmt:param>
+  	</fmt:message>
+  </h1>
   <h2>&nbsp;</h2>
 
   <div class="contentItemBody">

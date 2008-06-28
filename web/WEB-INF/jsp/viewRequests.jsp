@@ -1,10 +1,14 @@
 <div class="contentItem">
 
   <div class="contentItemLinks">
-    <a href="./help/logs.html" target="_blank">Help</a>
+    <a href="./help/logs.html" target="_blank"><fmt:message key="common.help"/></a>
   </div>
 
-  <h1>Requests for <c:out value="${logPeriod}"/></h1>
+  <h1>
+  	<fmt:message key="view.requestsForPeriod">
+	  <fmt:param>${logPeriod}</fmt:param>
+	</fmt:message>
+  </h1>
   <h2>Total : <fmt:formatNumber value="${totalRequests}"/></h2>
 
   <div class="contentItemBody">

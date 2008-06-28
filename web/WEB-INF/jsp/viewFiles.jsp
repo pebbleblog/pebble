@@ -6,19 +6,19 @@
     </c:if>
     <a href="zipDirectory.secureaction?path=${directory.absolutePath}&type=${type}">Export as ZIP</a> |
     <c:choose>
-      <c:when test="${type == 'blogImage'}"><a href="./help/images.html" target="_blank">Help</a></c:when>
-      <c:when test="${type == 'blogFile'}"><a href="./help/files.html" target="_blank">Help</a></c:when>
-      <c:when test="${type == 'themeFile'}"><a href="./help/themes.html" target="_blank">Help</a></c:when>
+      <c:when test="${type == 'blogImage'}"><a href="./help/images.html" target="_blank"><fmt:message key="common.help"/></a></c:when>
+      <c:when test="${type == 'blogFile'}"><a href="./help/files.html" target="_blank"><fmt:message key="common.help"/></a></c:when>
+      <c:when test="${type == 'themeFile'}"><a href="./help/themes.html" target="_blank"><fmt:message key="common.help"/></a></c:when>
       <c:when test="${type == 'blogData'}"></c:when>
     </c:choose>
   </div>
 
   <h1>
     <c:choose>
-      <c:when test="${type == 'blogImage'}">Images</c:when>
-      <c:when test="${type == 'blogFile'}">Files</c:when>
-      <c:when test="${type == 'themeFile'}">Theme (${blog.editableTheme.name})</c:when>
-      <c:when test="${type == 'blogData'}">Files</c:when>
+      <c:when test="${type == 'blogImage'}"><fmt:message key="view.files.images"/></c:when>
+      <c:when test="${type == 'blogFile'}"><fmt:message key="view.files.files"/></c:when>
+      <c:when test="${type == 'themeFile'}"><fmt:message key="view.files.theme"/> (${blog.editableTheme.name})</c:when>
+      <c:when test="${type == 'blogData'}"><fmt:message key="view.files.files"/></c:when>
     </c:choose>
   </h1>
   <h2><c:out value="${directory.absolutePath}" /> (<fmt:formatNumber value="${directory.sizeInKB}" type="number" minFractionDigits="0" maxFractionDigits="0" />&nbsp;KB)</h2>

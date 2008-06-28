@@ -46,7 +46,7 @@ public class RequestsView extends HtmlView {
    * @return the title as a String
    */
   public String getTitle() {
-    return "Requests";
+    return getLocalizedString("view.requests");
   }
 
   /**

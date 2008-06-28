@@ -32,13 +32,6 @@
 package net.sourceforge.pebble.web.view.impl;
 
 import net.sourceforge.pebble.web.view.HtmlView;
-import net.sourceforge.pebble.api.decorator.ContentDecoratorContext;
-import net.sourceforge.pebble.Constants;
-import net.sourceforge.pebble.comparator.BlogEntryComparator;
-import net.sourceforge.pebble.decorator.ContentDecoratorChain;
-
-import java.util.List;
-import java.util.Collections;
 
 /**
  * Represents a page displaying blog entries from the community.
@@ -53,7 +46,7 @@ public class CommunityView extends HtmlView {
    * @return the title as a String
    */
   public String getTitle() {
-    return "Community";
+	return getLocalizedString("view.community");
   }
 
   /**

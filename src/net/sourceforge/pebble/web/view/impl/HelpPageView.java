@@ -53,7 +53,7 @@ public class HelpPageView extends HtmlView {
    * @return the title as a String
    */
   public String getTitle() {
-    return "Help";
+	return getLocalizedString("view.help");
   }
 
   /**

@@ -32,10 +32,6 @@
 package net.sourceforge.pebble.web.view.impl;
 
 import net.sourceforge.pebble.web.view.HtmlView;
-import net.sourceforge.pebble.domain.Blog;
-import net.sourceforge.pebble.Constants;
-
-import java.util.ResourceBundle;
 
 /**
  * Represents the tag cloud page.
@@ -50,9 +46,7 @@ public class UnsubscribeView extends HtmlView {
    * @return the title as a String
    */
   public String getTitle() {
-    Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
-    ResourceBundle bundle = ResourceBundle.getBundle("resources", blog.getLocale());
-    return bundle.getString("newsfeed.unsubscribeTitle");
+    return getLocalizedString("newsfeed.unsubscribeTitle");
   }
 
   /**

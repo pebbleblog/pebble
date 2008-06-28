@@ -46,7 +46,7 @@ public class LogSummaryByYearView extends HtmlView {
    * @return the title as a String
    */
   public String getTitle() {
-    return "Log summary";
+	return getLocalizedString("view.logSummaryByYear");
   }
 
   /**

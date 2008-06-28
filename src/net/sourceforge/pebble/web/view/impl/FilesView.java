@@ -49,11 +49,11 @@ public class FilesView extends HtmlView {
   public String getTitle() {
     String type = (String)getModel().get("type");
     if (type.equals(FileMetaData.BLOG_IMAGE)) {
-      return "Images";
+      return getLocalizedString("view.files.images");
     } else if (type.equals(FileMetaData.THEME_FILE)) {
-      return "Theme";
+      return getLocalizedString("view.files.theme");
     } else {
-      return "Files";
+      return getLocalizedString("view.files.files");
     }
   }
 

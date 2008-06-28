@@ -8,9 +8,9 @@
 <div class="sidebarItem">
   <div class="sidebarItemTitle"><span><fmt:message key="newsfeed.subscribeTitle" /> <a href="rss.xml"><img src="common/images/feed-icon-10x10.png" alt="RSS feed" border="0" /></a></span></div>
   <div class="sidebarItemBody">
-    <a href="${blog.url}rss.xml"><fmt:message key="newsfeed.rss"/></a> |
-    <a href="${blog.url}atom.xml"><fmt:message key="newsfeed.atom"/></a> |
-    <a href="${blog.url}subscribe.action"><fmt:message key="newsfeed.email"/></a>
+    <a href="${blogUrl}rss.xml"><fmt:message key="newsfeed.rss"/></a> |
+    <a href="${blogUrl}atom.xml"><fmt:message key="newsfeed.atom"/></a> |
+    <a href="${blogUrl}subscribe.action"><fmt:message key="newsfeed.email"/></a>
   </div>
 </div>
 </c:if>

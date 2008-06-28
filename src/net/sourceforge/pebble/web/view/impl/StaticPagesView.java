@@ -46,7 +46,7 @@ public class StaticPagesView extends HtmlView {
    * @return the title as a String
    */
   public String getTitle() {
-    return "Static pages";
+    return getLocalizedString("view.staticPages");
   }
 
   /**

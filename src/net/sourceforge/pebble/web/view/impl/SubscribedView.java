@@ -32,10 +32,6 @@
 package net.sourceforge.pebble.web.view.impl;
 
 import net.sourceforge.pebble.web.view.HtmlView;
-import net.sourceforge.pebble.domain.Blog;
-import net.sourceforge.pebble.Constants;
-
-import java.util.ResourceBundle;
 
 /**
  * Represents the page confirming that an user has subscribed to blog entry
@@ -51,9 +47,7 @@ public class SubscribedView extends HtmlView {
    * @return the title as a String
    */
   public String getTitle() {
-    Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
-    ResourceBundle bundle = ResourceBundle.getBundle("resources", blog.getLocale());
-    return bundle.getString("newsfeed.subscribedTitle");
+    return getLocalizedString("newsfeed.subscribedTitle");
   }
 
   /**

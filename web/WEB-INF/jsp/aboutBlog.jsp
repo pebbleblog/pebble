@@ -1,6 +1,6 @@
 <div class="contentItem">
 
-  <h1>About this blog</h1>
+  <h1><fmt:message key="view.aboutThisBlog"/></h1>
   <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
@@ -8,35 +8,58 @@
     <table width="99%" cellpadding="4" cellspacing="0" class="small">
 
     <tr class="odd">
-      <td valign="top"><b>Blog entries</b></td>
+      <td valign="top"><b><fmt:message key="view.aboutThisBlog.blogEntries"/></b></td>
       <td>
-          <fmt:formatNumber value="${blog.numberOfBlogEntries}"/> (published=<fmt:formatNumber value="${blog.numberOfPublishedBlogEntries}"/>, unpublished=<fmt:formatNumber value="${blog.numberOfUnpublishedBlogEntries}"/>)
+          <fmt:message key="view.aboutThisBlog.numberOfEntries">
+			<fmt:param>
+				<fmt:formatNumber value="${blog.numberOfBlogEntries}"/>
+			</fmt:param>
+			<fmt:param>
+				<fmt:formatNumber value="${blog.numberOfPublishedBlogEntries}"/>
+			</fmt:param>
+			<fmt:param>
+				<fmt:formatNumber value="${blog.numberOfUnpublishedBlogEntries}"/>
+			</fmt:param>
+          </fmt:message>
       </td>
     </tr>
 
     <tr class="even">
-      <td valign="top"><b>Responses</b></td>
+      <td valign="top"><b><fmt:message key="view.aboutThisBlog.responses"/></b></td>
       <td>
           <fmt:formatNumber value="${blog.numberOfResponses}"/>
       </td>
     </tr>
 
     <tr class="odd">
-      <td valign="top"><b>Last modified</b></td>
+      <td valign="top"><b><fmt:message key="view.aboutThisBlog.lastModified"/></b></td>
       <td>
           <fmt:formatDate value="${blog.lastModified}" type="both" dateStyle="long" timeStyle="long"/>
       </td>
     </tr>
 
     <tr class="even">
-      <td valign="top"><b>Uptime</b></td>
+      <td valign="top"><b><fmt:message key="view.aboutThisBlog.uptime"/></b></td>
       <td>
-        <fmt:formatNumber value="${pebbleContext.uptime.days}"/> days, <fmt:formatNumber value="${pebbleContext.uptime.hours}" pattern="00"/>:<fmt:formatNumber value="${pebbleContext.uptime.minutes}" pattern="00"/>:<fmt:formatNumber value="${pebbleContext.uptime.seconds}" pattern="00"/>
+      <fmt:message key="view.aboutThisBlog.actualUptime">
+      	<fmt:param>
+      		<fmt:formatNumber value="${pebbleContext.uptime.days}"/>
+      	</fmt:param>
+      	<fmt:param>
+      		<fmt:formatNumber value="${pebbleContext.uptime.hours}" pattern="00"/>
+      	</fmt:param>
+      	<fmt:param>
+      		<fmt:formatNumber value="${pebbleContext.uptime.minutes}" pattern="00"/>
+      	</fmt:param>
+      	<fmt:param>
+      		<fmt:formatNumber value="${pebbleContext.uptime.seconds}" pattern="00"/>
+      	</fmt:param>
+      </fmt:message>
       </td>
     </tr>
 
     <tr class="odd">
-      <td valign="top"><b>Version</b></td>
+      <td valign="top"><b><fmt:message key="view.aboutThisBlog.version"/></b></td>
       <td>
           Pebble ${pebbleContext.buildVersion}, built ${pebbleContext.buildDate}
       </td>
@@ -59,7 +82,7 @@
       <tr class="even">
         <td valign="top"><b>Blog URL</b></td>
         <td>
-          ${blog.url}
+          ${blogUrl}
         </td>
       </tr>
 

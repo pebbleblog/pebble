@@ -46,7 +46,7 @@ public class PebblePropertiesView extends HtmlView {
    * @return the title as a String
    */
   public String getTitle() {
-    return "Pebble properties";
+    return getLocalizedString("view.pebbleProperties");
   }
 
   /**

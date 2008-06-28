@@ -46,7 +46,7 @@ public class UserDetailsView extends HtmlView {
    * @return the title as a String
    */
   public String getTitle() {
-    return "User details";
+    return getLocalizedString("view.userDetails");
   }
 
   /**

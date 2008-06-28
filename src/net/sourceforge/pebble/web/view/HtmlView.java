@@ -31,19 +31,21 @@
  */
 package net.sourceforge.pebble.web.view;
 
-import net.sourceforge.pebble.Constants;
-import net.sourceforge.pebble.PebbleContext;
-import net.sourceforge.pebble.domain.AbstractBlog;
-import net.sourceforge.pebble.domain.BlogManager;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import java.io.IOException;
+import java.util.ResourceBundle;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+
+import net.sourceforge.pebble.Constants;
+import net.sourceforge.pebble.PebbleContext;
+import net.sourceforge.pebble.domain.AbstractBlog;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * Represents a HTML view component, implemented by a JSP
@@ -75,6 +77,12 @@ public abstract class HtmlView extends JspView {
    */
   public abstract String getTitle();
 
+  public String getLocalizedString(String key) {
+	ResourceBundle bundle = ResourceBundle.getBundle("resources", ((AbstractBlog)getModel().get(Constants.BLOG_KEY)).getLocale());
+	return bundle.getString(key);
+  }
+  
+  
   /**
    * Gets the name of the theme to use.
    *

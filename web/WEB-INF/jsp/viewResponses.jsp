@@ -1,7 +1,7 @@
   <div class="contentItem">
 
   <div class="contentItemLinks">
-    <a href="./help/commentAndTrackbackSpam.html" target="_blank">Help</a>
+    <a href="./help/commentAndTrackbackSpam.html" target="_blank"><fmt:message key="common.help"/></a>
   </div>
 
   <h1>

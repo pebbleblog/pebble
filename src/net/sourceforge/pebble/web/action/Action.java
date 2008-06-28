@@ -31,6 +31,10 @@
  */
 package net.sourceforge.pebble.web.action;
 
+import java.util.ResourceBundle;
+
+import net.sourceforge.pebble.Constants;
+import net.sourceforge.pebble.domain.AbstractBlog;
 import net.sourceforge.pebble.web.model.Model;
 import net.sourceforge.pebble.web.view.View;
 
@@ -67,7 +71,18 @@ public abstract class Action {
   }
 
   /**
-   * Peforms the processing associated with this action.
+   * retrieve a localized String for the current blogs locale by key
+   * @param key
+   * @return
+   */
+  public String getLocalizedString(String key) {
+  	ResourceBundle bundle = ResourceBundle.getBundle("resources", ((AbstractBlog)getModel().get(Constants.BLOG_KEY)).getLocale());
+  	return bundle.getString(key);
+  }
+
+  
+  /**
+   * Performs the processing associated with this action.
    *
    * @param request     the HttpServletRequest instance
    * @param response    the HttpServletResponse instance

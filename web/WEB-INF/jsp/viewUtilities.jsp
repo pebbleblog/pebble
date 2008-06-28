@@ -1,5 +1,5 @@
 <div class="contentItem">
-  <h1>Utilities</h1>
+  <h1><fmt:message key="view.utilities"/></h1>
   <h2>&nbsp;</h2>
 
   <div class="contentItemBody">

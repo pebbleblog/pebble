@@ -1,10 +1,14 @@
 <div class="contentItem">
 
   <div class="contentItemLinks">
-    <a href="./help/referers.html" target="_blank">Help</a>
+    <a href="./help/referers.html" target="_blank"><fmt:message key="common.help"/></a>
   </div>
 
-  <h1>Referers for ${logPeriod}</h1>
+  <h1>
+  	<fmt:message key="view.referrersForPeriod">
+	  <fmt:param>${logPeriod}</fmt:param>
+	</fmt:message>
+  </h1>
   <h2>Total : <fmt:formatNumber value="${totalReferers}"/></h2>
 
   <div class="contentItemBody">

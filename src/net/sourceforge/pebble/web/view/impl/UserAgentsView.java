@@ -46,7 +46,7 @@ public class UserAgentsView extends HtmlView {
    * @return the title as a String
    */
   public String getTitle() {
-    return "User Agents";
+    return getLocalizedString("view.userAgents");
   }
 
   /**

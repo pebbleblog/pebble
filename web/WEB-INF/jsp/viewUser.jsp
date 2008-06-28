@@ -1,10 +1,10 @@
 <div class="contentItem">
 
   <div class="contentItemLinks">
-    <a href="./help/managingUsers.html" target="_blank">Help</a>
+    <a href="./help/managingUsers.html" target="_blank"><fmt:message key="common.help"/></a>
   </div>
 
-  <h1>User</h1>
+  <h1><fmt:message key="view.user"/></h1>
   <h2>&nbsp;</h2>
 
   <div class="contentItemBody">

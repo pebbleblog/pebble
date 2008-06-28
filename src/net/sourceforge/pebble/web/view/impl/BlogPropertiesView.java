@@ -46,7 +46,7 @@ public class BlogPropertiesView extends HtmlView {
    * @return the title as a String
    */
   public String getTitle() {
-    return "Blog properties";
+	return getLocalizedString("view.blogProperties");
   }
 
   /**

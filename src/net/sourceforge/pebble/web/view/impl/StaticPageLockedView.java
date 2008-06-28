@@ -46,7 +46,7 @@ public class StaticPageLockedView extends HtmlView {
    * @return the title as a String
    */
   public String getTitle() {
-    return "Static page locked";
+    return getLocalizedString("view.staticPageLocked");
   }
 
   /**

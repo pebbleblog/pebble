@@ -48,11 +48,11 @@ public class ResponsesView extends HtmlView {
   public String getTitle() {
     String type = (String)getModel().get("type");
     if (type.equalsIgnoreCase("pending")) {
-      return "Pending Responses";
+      return getLocalizedString("view.responses.pending");
     } else if (type.equalsIgnoreCase("rejected")) {
-      return "Rejected Responses";
+      return getLocalizedString("view.responses.rejected");
     } else {
-      return "Approved Responses";
+      return getLocalizedString("view.responses.approved");
     }
   }
 

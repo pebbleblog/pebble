@@ -46,7 +46,7 @@ public class UnpublishedBlogEntriesView extends HtmlView {
    * @return the title as a String
    */
   public String getTitle() {
-    return "Unpublished blog entries";
+	return getLocalizedString("view.unpublishedBlogEntries");
   }
 
   /**

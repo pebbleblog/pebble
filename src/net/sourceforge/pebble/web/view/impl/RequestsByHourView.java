@@ -46,7 +46,7 @@ public class RequestsByHourView extends HtmlView {
    * @return the title as a String
    */
   public String getTitle() {
-    return "Requests by Hour";
+	return getLocalizedString("view.requestsByHour");
   }
 
   /**

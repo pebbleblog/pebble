@@ -1,10 +1,10 @@
 <div class="contentItem">
 
   <div class="contentItemLinks">
-    <a href="./help/plugins.html" target="_blank">Help</a>
+    <a href="./help/plugins.html" target="_blank"><fmt:message key="common.help"/></a>
   </div>
 
-  <h1>Plugins</h1>
+  <h1><fmt:message key="view.plugins"/></h1>
   <h2>&nbsp;</h2>
 
   <div class="contentItemBody" style="overflow: auto">

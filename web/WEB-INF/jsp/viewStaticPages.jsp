@@ -1,10 +1,10 @@
 <div class="contentItem">
 
   <div class="contentItemLinks">
-    <a href="./help/staticPages.html" target="_blank">Help</a>
+    <a href="./help/staticPages.html" target="_blank"><fmt:message key="common.help"/></a>
   </div>
 
-  <h1>Static pages</h1>
+  <h1><fmt:message key="view.staticPages"/></h1>
   <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
