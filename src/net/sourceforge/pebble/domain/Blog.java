@@ -154,8 +154,20 @@ public class Blog extends AbstractBlog {
    */
   public Blog(String root) {
     super(root);
+    
+    // probably Blog should be made a final class if init is called from here - 
+    // see javadoc comment on AbstractBlog.init() for reasons
+    init();
   }
 
+  /**
+   * Initialize this blog - prepare it for use.
+   * Note: As this blog instance is passed to the various participants while
+   * it is being initialized, this method is dependent on the correct order 
+   * of calls: Keep in mind that 'this' is only partly initialized until the
+   * end of this method...
+   */
+  
   protected void init() {
     super.init();
 

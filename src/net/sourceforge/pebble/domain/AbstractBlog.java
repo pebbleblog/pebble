@@ -79,16 +79,22 @@ public abstract class AbstractBlog extends TimePeriod {
 
   /**
    * Creates a new Blog instance, based at the specified location.
-   *
+   * Note: You must call init() before being able to use this object -
+   * 
    * @param root    an absolute path pointing to the root directory of the blog
    */
   public AbstractBlog(String root) {
     super(null);
     this.root = root;
-
-    init();
+// see javadoc comment about why init cannot be called here.
+//    init();
   }
 
+  /**
+   * Call this method to initialize this object before using it. As this method
+   * may call some abstract methods, it should be called either last from the 
+   * topmost constructor or from the outside just after construction. 
+   */
   protected void init() {
     loadProperties();
   }

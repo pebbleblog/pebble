@@ -57,6 +57,10 @@ public class MultiBlog extends AbstractBlog {
    */
   public MultiBlog(String root) {
     super(root);
+
+    // probably MultiBlog should be made a final class if init is called from here - 
+    // see javadoc comment on AbstractBlog.init() for reasons
+    init();
   }
 
   /**
