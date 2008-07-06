@@ -120,6 +120,7 @@ public class SaveBlogEntryAction extends SecureAction {
       } catch (BlogServiceException be) {
         log.error(be.getMessage(), be);
         be.printStackTrace();
+        context.addError(be.getMessage());
         return new BlogEntryFormView();
       }
     }

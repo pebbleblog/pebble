@@ -103,7 +103,10 @@ public class EmailSubscriptionListener extends BlogEntryListenerSupport {
         MailUtils.sendMail(session, blog, emailAddress, subject,
             message.replaceAll(EMAIL_ADDRESS_TOKEN, emailAddress));
       }
-    } catch (Exception e) {
+    } catch (Throwable e) {
+      // (note: this catch block has been changed from Exception to Throwable:
+      // When Mail jars are not found, the NoClassDefFoundError should have no
+      // impact on publishing other than subscriptions that can't be delivered.)
       e.printStackTrace();
     }
   }
