@@ -121,6 +121,7 @@ public class SaveBlogEntryAction extends SecureAction {
         return new RedirectView(blogEntry.getLocalPermalink());
       } catch (BlogServiceException be) {
         log.error(be.getMessage(), be);
+        context.addError(be.getMessage());
         be.printStackTrace();
         return new BlogEntryFormView();
       }
