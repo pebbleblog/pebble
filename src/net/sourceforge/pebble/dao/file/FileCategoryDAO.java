@@ -59,9 +59,8 @@ public class FileCategoryDAO implements CategoryDAO {
         CategoriesType categoriesType = controller.getValue();
 
         for (CategoryType categoryType : categoriesType.getCategory()) {
-          Category category = new Category();
-          category.setId(categoryType.getId());
-          category.setName(categoryType.getName());
+          Category category = new Category(categoryType.getId(), categoryType.getName());
+          category.setBlog(blog);
           category.setTags(categoryType.getTags());
 
           categoryBuilder.addCategory(category);
