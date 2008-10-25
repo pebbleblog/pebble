@@ -63,8 +63,46 @@ public class MailUtilsTest extends TestCase {
     MailUtils.validate("firstname-lastname@somedomain.com", context);
     assertFalse(context.hasErrors());
 
+    MailUtils.validate("firstname+lastname@somedomain.com", context);
+    assertFalse(context.hasErrors());
+
+    MailUtils.validate("firstname#lastname@somedomain.com", context);
+    assertFalse(context.hasErrors());
+
+    MailUtils.validate("me&you@somedomain.com", context);
+    assertFalse(context.hasErrors());
+
+    MailUtils.validate("me$you@somedomain.com", context);
+    assertFalse(context.hasErrors());
+
     MailUtils.validate("somebody@some-domain.com", context);
     assertFalse(context.hasErrors());
+
+    context = new ValidationContext();    
+    MailUtils.validate("first,last@some-domain.com", context);
+    assertTrue(context.hasErrors());
+
+    context = new ValidationContext();    
+    MailUtils.validate("first@last@some-domain.com", context);
+    assertTrue(context.hasErrors());
+
+    context = new ValidationContext();    
+    MailUtils.validate("first last@some-domain.com", context);
+    assertTrue(context.hasErrors());
+
   }
 
+  public void testInvalidMailAddresses() {
+	    ValidationContext context = new ValidationContext();
+
+	    MailUtils.validate("somebody@somedomain@someotherdomain.com", context);
+	    assertTrue(context.hasErrors());
+
+	    context = new ValidationContext();
+
+	    MailUtils.validate("somebody with spaces at somedomain@someotherdomain.com", context);
+	    assertTrue(context.hasErrors());
+  }
+  
+  
 }

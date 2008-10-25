@@ -40,6 +40,7 @@ import net.sourceforge.pebble.PebbleContext;
 import javax.mail.Message;
 import javax.mail.Session;
 import javax.mail.Transport;
+import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.naming.Context;
@@ -235,8 +236,13 @@ public class MailUtils {
    * @param context   the context in which to perform validation
    */
   public static void validate(String email, ValidationContext context) {
-    if (email != null && !email.matches("[A-Za-z0-9_.-]+@[A-Za-z0-9_.-]+\\.[A-Za-z]{2,}")) {
-      context.addError(email + " is not a valid e-mail address");
+    if (email != null) {
+      try {
+        InternetAddress ia = new InternetAddress(email, true);
+        ia.validate();
+      } catch (AddressException aex) {
+        context.addError(aex.getMessage() + ": " + email);
+      }
     }
   }
 

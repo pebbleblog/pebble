@@ -125,7 +125,14 @@ public abstract class AbstractCommentAction extends Action {
 
   protected ValidationContext validateComment(Comment comment) {
     ValidationContext context = new ValidationContext();
-    MailUtils.validate(comment.getEmail(), context);
+    try {
+      MailUtils.validate(comment.getEmail(), context);
+    } catch (NoClassDefFoundError e) {
+      // most likely: JavaMail is not in classpath
+      // ignore, when we can not send email we must not validate address
+      // this might lead to problems when mail is activated later without this
+      // address being validated... Discussion started on mailing list, Oct-25 2008
+    }
     getModel().put("validationContext", context);
     return context;
   }
