@@ -6,8 +6,10 @@
 
   <h1>
   	<fmt:message key="view.logSummaryForPeriod">
-  		<fmt:param><fmt:formatDate value="${logSummary.date}" pattern="MMMM yyyy" /></fmt:param>
+  		<fmt:param><fmt:formatDate value="${logSummary.date}" pattern="MMMM" /></fmt:param>
   	</fmt:message>
+	<a href="viewLogSummary.secureaction?year=<fmt:formatDate value="${logSummary.date}" pattern="yyyy" />"><fmt:formatDate value="${logSummary.date}" pattern="yyyy" /></a>
+
   </h1>
   <h2>&nbsp;</h2>
 

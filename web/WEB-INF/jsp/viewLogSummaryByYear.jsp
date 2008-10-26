@@ -6,7 +6,7 @@
 
   <h1>
 	<fmt:message key="view.logSummaryForPeriod">
-  		<fmt:param><fmt:formatDate value="${logSummary.date}" pattern="MMMM yyyy" /></fmt:param>
+  		<fmt:param><fmt:formatDate value="${logSummary.date}" pattern="yyyy" /></fmt:param>
   	</fmt:message>
   </h1>
   <h2>&nbsp;</h2>
