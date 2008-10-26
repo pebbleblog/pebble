@@ -4,7 +4,7 @@
     <a href="./help/securityRoles.html" target="_blank"><fmt:message key="common.help"/></a>
   </div>
 
-  <h1><fmt:message key="view.blogProperties"/></h1>
+  <h1><fmt:message key="view.blogSecurity"/></h1>
   <h2>&nbsp;</h2>
 
   <div class="contentItemBody">

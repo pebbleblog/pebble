@@ -1,5 +1,5 @@
 <div class="contentItem">
-  <h1>Messages</h1>
+  <h1><fmt:message key="view.messages"/></h1>
   <h2>&nbsp;</h2>
 
   <div class="contentItemBody">

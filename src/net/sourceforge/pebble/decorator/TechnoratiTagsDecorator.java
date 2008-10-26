@@ -12,7 +12,10 @@ import net.sourceforge.pebble.api.decorator.ContentDecoratorContext;
  * @author Simon Brown
  */
 public class TechnoratiTagsDecorator extends AbstractTagsDecorator {
-
+  public TechnoratiTagsDecorator() {
+	super("tag.technoratiTags", true);
+  }
+	
   /**
    * Decorates the specified blog entry.
    *

@@ -56,6 +56,12 @@
     </p>
 
     <p>
+      <b>net.sourceforge.pebble.decorator.SocialBookmarksDecorator</b><br/>
+      Adds recommendation links to popular social bookmarking sites to your blog entry. 
+      Currently included are: Slashdot, Digg, Reddit, Delicious and StumbleUpon
+    </p>
+
+    <p>
       <b>net.sourceforge.pebble.decorator.BlogCategoriesDecorator</b><br/>
       Adds links from your blog entry back to your categories, for those categories associated with the blog entry.
     </p>
