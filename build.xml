@@ -67,7 +67,17 @@
   </target>
 
   <target name="compileschema" depends="init">
-    <xjc schema="etc/pebble.xsd" destdir="${generated-src.dir}" package="net.sourceforge.pebble.dao.file"/>
+    <xjc schema="etc/pebble.xsd" destdir="${generated-src.dir}" package="net.sourceforge.pebble.dao.file">
+    	<depends dir=".">
+    		<exclude name="pebble-build.properties"/>
+    		<include name="etc/pebble.xsd"/>
+    		<include name="*build.*"/>
+       		<include name="etc/pebble.xsd"/>
+    	</depends>
+    	<produces dir="${generated-src.dir}">
+    		<include name="net/sourceforge/pebble/dao/file/*.java"/>
+    	</produces>
+    </xjc>
   </target>
 
   <target name="compile" depends="init">
