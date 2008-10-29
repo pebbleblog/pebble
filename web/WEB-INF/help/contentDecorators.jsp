@@ -62,6 +62,12 @@
     </p>
 
     <p>
+      <b>net.sourceforge.pebble.decorator.RelatedPostsDecorator</b><br/>
+      Finds similar posts to the current within your posts. Similarity is determined by
+      comparing the tags. Currently up to 6 similar posts are displayed.
+    </p>
+
+    <p>
       <b>net.sourceforge.pebble.decorator.BlogCategoriesDecorator</b><br/>
       Adds links from your blog entry back to your categories, for those categories associated with the blog entry.
     </p>
