@@ -208,7 +208,8 @@
         <pathelement location="${classes.dir}"/>
         <pathelement path="${project.classpath}"/>
       </classpath>
-
+      <jvmarg value="-Duser.language=en"/>
+      <jvmarg value="-Duser.region="/>
   	  <formatter type="xml" />
 <!--
       <formatter type="plain" usefile="false"/>
