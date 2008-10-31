@@ -67,6 +67,7 @@ public class SocialBookmarksDecoratorTest extends SingleBlogTestCase {
 
 	blogEntry.setDate(date);
 	blogEntry.setTitle("Title - some title");
+	blogEntry.setExcerpt("Excerpt - here is some text");
     blogEntry.setBody("Body - here is some text");
 	
     context.setMedia(ContentDecoratorContext.HTML_PAGE);
@@ -74,12 +75,16 @@ public class SocialBookmarksDecoratorTest extends SingleBlogTestCase {
 
     StringBuffer bookmarks = new StringBuffer();
     bookmarks.append("<div class=\"tags\"><span>Social Bookmarks : </span>");
-    bookmarks.append("<a href=\"http://slashdot.org/bookmark.pl?url=http://www.yourdomain.com/blog/1970/01/01/1.html&title=Title - some title\" target=\"_blank\">SlashDot It!</a>   ");
-	bookmarks.append("<a href=\"http://digg.com/submit?url=http://www.yourdomain.com/blog/1970/01/01/1.html&title=Title - some title\" target=\"_blank\">Digg this!</a>   ");
-	bookmarks.append("<a href=\"http://reddit.com/submit?url=http://www.yourdomain.com/blog/1970/01/01/1.html&title=Title - some title\" target=\"_blank\">Reddit!</a>   ");
-	bookmarks.append("<a href=\"http://del.icio.us/post?url=http://www.yourdomain.com/blog/1970/01/01/1.html&title=Title - some title\" target=\"_blank\">Save to del.icio.us!</a>   ");
-	bookmarks.append("<a href=\"http://www.stumbleupon.com/submit?url=http://www.yourdomain.com/blog/1970/01/01/1.html&title=Title - some title\" target=\"_blank\">Stumble it!</a>");
+    bookmarks.append("<a href=\"http://slashdot.org/bookmark.pl?url=http://www.yourdomain.com/blog/1970/01/01/1.html&title=Title - some title\" target=\"_blank\" alt=\"Add this post to Slash Dot\" title=\"Add this post to Slash Dot\"><img src=\"/common/images/slashdot.png\" border=\"0\"/></a>&nbsp;&nbsp;&nbsp;&nbsp;");
+	bookmarks.append("<a href=\"http://digg.com/submit?url=http://www.yourdomain.com/blog/1970/01/01/1.html&title=Title - some title\" target=\"_blank\" alt=\"Digg this post\" title=\"Digg this post\"><img src=\"/common/images/digg.png\" border=\"0\"/></a>&nbsp;&nbsp;&nbsp;&nbsp;");
+	bookmarks.append("<a href=\"http://reddit.com/submit?url=http://www.yourdomain.com/blog/1970/01/01/1.html&title=Title - some title\" target=\"_blank\" alt=\"Add this post to Reddit\" title=\"Add this post to Reddit\"><img src=\"/common/images/reddit.png\" border=\"0\"/></a>&nbsp;&nbsp;&nbsp;&nbsp;");
+	bookmarks.append("<a href=\"http://del.icio.us/post?url=http://www.yourdomain.com/blog/1970/01/01/1.html&title=Title - some title\" target=\"_blank\" alt=\"Save this post to Del.icio.us\" title=\"Save this post to Del.icio.us\"><img src=\"/common/images/delicious.png\" border=\"0\"/></a>&nbsp;&nbsp;&nbsp;&nbsp;");
+	bookmarks.append("<a href=\"http://www.stumbleupon.com/submit?url=http://www.yourdomain.com/blog/1970/01/01/1.html&title=Title - some title\" target=\"_blank\" alt=\"Stumble this post\" title=\"Stumble this post\"><img src=\"/common/images/stumbleit.png\" border=\"0\"/></a>&nbsp;&nbsp;&nbsp;&nbsp;");
+	bookmarks.append("<a href=\"http://www.google.com/bookmarks/mark?op=edit&bkmk=http://www.yourdomain.com/blog/1970/01/01/1.html&title=Title - some title\" target=\"_blank\" alt=\"Add this post to Google\" title=\"Add this post to Google\"><img src=\"/common/images/google.ico\" border=\"0\"/></a>&nbsp;&nbsp;&nbsp;&nbsp;");
+	bookmarks.append("<a href=\"http://technorati.com/faves?add=http://www.yourdomain.com/blog/1970/01/01/1.html\" target=\"_blank\" alt=\"Add this post to Technorati\" title=\"Add this post to Technorati\"><img src=\"/common/images/technorati.png\" border=\"0\"/></a>");
     bookmarks.append("</div>");
+
+	assertEquals("Excerpt - here is some text" + bookmarks, blogEntry.getExcerpt());
     assertEquals("Body - here is some text" + bookmarks, blogEntry.getBody());
   }
 
