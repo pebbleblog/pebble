@@ -1,0 +1,26 @@
+﻿AUTHOR: yusuke
+TITLE: 日本語
+STATUS: Publish
+ALLOW COMMENTS: 1
+CONVERT BREAKS: __default__
+ALLOW PINGS: 1
+PRIMARY CATEGORY: mycategory
+CATEGORY: mycategory
+
+DATE: 06/21/2006 10:57:57 PM
+-----
+BODY:
+日本語body
+-----
+EXTENDED BODY:
+日本語extended body
+-----
+EXCERPT:
+日本語excerpt
+-----
+KEYWORDS:
+
+-----
+
+
+--------

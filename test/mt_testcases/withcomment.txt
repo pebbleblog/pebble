@@ -1,0 +1,34 @@
+AUTHOR: yusuke
+TITLE: title
+STATUS: Publish
+ALLOW COMMENTS: 1
+CONVERT BREAKS: __default__
+ALLOW PINGS: 1
+PRIMARY CATEGORY: mycategory
+CATEGORY: mycategory
+
+DATE: 06/21/2006 10:57:57 PM
+-----
+BODY:
+body
+-----
+EXTENDED BODY:
+extended body
+-----
+EXCERPT:
+excerpt
+-----
+KEYWORDS:
+
+-----
+COMMENT:
+AUTHOR: commentor
+EMAIL: 
+IP: 127.0.0.1
+URL: 
+DATE: 08/28/2008 12:01:32 PM
+this is a comment
+-----
+
+
+--------

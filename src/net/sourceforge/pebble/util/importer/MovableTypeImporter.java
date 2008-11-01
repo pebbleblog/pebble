@@ -31,16 +31,28 @@
  */
 package net.sourceforge.pebble.util.importer;
 
+import net.sourceforge.pebble.Configuration;
+import net.sourceforge.pebble.PebbleContext;
 import net.sourceforge.pebble.dao.CategoryDAO;
 import net.sourceforge.pebble.dao.DAOFactory;
 import net.sourceforge.pebble.dao.file.FileDAOFactory;
-import net.sourceforge.pebble.domain.*;
+import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.domain.BlogEntry;
+import net.sourceforge.pebble.domain.BlogService;
+import net.sourceforge.pebble.domain.Category;
+import net.sourceforge.pebble.domain.Comment;
+import net.sourceforge.pebble.domain.State;
+import net.sourceforge.pebble.domain.TrackBack;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * Simple utility to import posts Movable Type into Pebble.
@@ -63,6 +75,14 @@ public class MovableTypeImporter {
     }
 
     File file = new File(args[0]);
+    if(null == PebbleContext.getInstance().getConfiguration()){
+      //to prevent NullPointerException upon UpdateNotificationPingsClient.sendUpdateNotificationPing()
+      Configuration config = new Configuration();
+      config.setDataDirectory(args[1]);
+      config.setUrl("http://www.yourdomain.com/blog/");
+      PebbleContext.getInstance().setConfiguration(config);
+    }
+
     DAOFactory.setConfiguredFactory(new FileDAOFactory());
     Blog blog = new Blog(args[1]);
     blog.setProperty(Blog.TIMEZONE_KEY, args[2]);
@@ -80,7 +100,7 @@ public class MovableTypeImporter {
   private static void importBlog(Blog blog, File file) throws Exception {
     System.out.println("Importing " + file.getName());
 
-    BufferedReader reader = new BufferedReader(new FileReader(file));
+    BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file),"UTF8"));
     BlogEntry blogEntry = null;
     do {
       blogEntry = readBlogEntry(blog, reader);
@@ -94,7 +114,7 @@ public class MovableTypeImporter {
     if (line == null) {
       return null;
     }
-    SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a");
+    SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a", Locale.ENGLISH);
     String author = line.substring("AUTHOR: ".length());
 //    System.out.println("Author:" + author);
     String title = reader.readLine().substring("TITLE: ".length());
@@ -107,14 +127,31 @@ public class MovableTypeImporter {
 //    System.out.println("Convert breaks:" + convertBreaks);
     String allowPings = reader.readLine().substring("ALLOW PINGS: ".length());
 //    System.out.println("Allow pings:" + allowPings);
-    String primaryCategory = reader.readLine().substring("PRIMARY CATEGORY: ".length());
-    String otherCategory = null;
+//    String primaryCategory = "";
+    List<String> categories = new ArrayList<String>(1);
+    line = reader.readLine();
     //    System.out.println("Primary category:" + primaryCategory);
-    if (primaryCategory.trim().length() > 0) {
-      otherCategory = reader.readLine().substring("CATEGORY: ".length());
+    if(line.length() != 0){
+      // the entry is categorized
+//      primaryCategory = line.substring("PRIMARY CATEGORY: ".length());
+      //    System.out.println("Primary category:" + primaryCategory);
+//      if (primaryCategory.trim().length() > 0) {
+        line = reader.readLine();
+        while(line.length() > 0){
+          if(line.indexOf("CATEGORY: ") != -1){
+            String category = line.substring(line.indexOf("CATEGORY: ")+10);
+            if(category.trim().length() > 0){
+              categories.add(category);
+            }
+//            categories.add(line.substring(line.indexOf("CATEGORY: ")+10));
+          }
+          line = reader.readLine();
+        }
 //      System.out.println("Category:" + category);
+//      }else{
+//        reader.readLine(); // blank line
+//      }
     }
-    reader.readLine(); // blank line
     Date date = sdf.parse(reader.readLine().substring("DATE: ".length()));
 //    System.out.println("Date:" + date);
 
@@ -170,30 +207,33 @@ public class MovableTypeImporter {
     // create a new Pebble entry, add and store
     BlogEntry entry = new BlogEntry(blog);
     entry.setTitle(title);
-    entry.setBody(body.toString());
+    if (extendedBody.length() != 0) {
+      entry.setBody(body+"<br />"+extendedBody);
+      entry.setExcerpt(body.toString());
+    }else{
+      entry.setBody(body.toString());
+    }
     entry.setDate(date);
-    entry.setExcerpt(excerpt.toString());
+    if (excerpt.length() != 0) {
+      entry.setExcerpt(excerpt.toString());
+    }else if(extendedBody.length() != 0){
+      entry.setExcerpt(body.toString());
+    }
     entry.setAuthor(author);
     entry.setCommentsEnabled(allowComments.equals("1"));
     entry.setTrackBacksEnabled(allowPings.equals("1"));
 
-    if (primaryCategory.trim().length()> 0) {
-      Category category = new Category(primaryCategory, primaryCategory);
-      DAOFactory factory = DAOFactory.getConfiguredFactory();
-      CategoryDAO dao = factory.getCategoryDAO();
-      dao.addCategory(category, blog);
-      blog.addCategory(category);
-      entry.addCategory(category);
+    for (String categoryStr : categories) {
+      if(categoryStr != null && categoryStr.trim().length() > 0) {
+        Category category = new Category(categoryStr.trim(), categoryStr.trim());
+        DAOFactory factory = DAOFactory.getConfiguredFactory();
+        CategoryDAO dao = factory.getCategoryDAO();
+        dao.addCategory(category, blog);
+        blog.addCategory(category);
+        entry.addCategory(category);
+      }
     }
-
-    if (otherCategory != null && otherCategory.trim().length()> 0) {
-      Category category = new Category(otherCategory, otherCategory);
-      DAOFactory factory = DAOFactory.getConfiguredFactory();
-      CategoryDAO dao = factory.getCategoryDAO();
-      dao.addCategory(category, blog);
-      blog.addCategory(category);
-      entry.addCategory(category);
-    }
+    entry.setPublished("Publish".equals(status));
 
     BlogService service = new BlogService();
     service.putBlogEntry(entry);

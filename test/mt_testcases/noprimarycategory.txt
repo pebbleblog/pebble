@@ -1,0 +1,24 @@
+AUTHOR: yusuke
+TITLE: entry-title
+STATUS: Publish
+ALLOW COMMENTS: 1
+CONVERT BREAKS: __default__
+ALLOW PINGS: 1
+
+DATE: 01/22/2006 09:18:53 PM
+-----
+BODY:
+body
+-----
+EXTENDED BODY:
+extended body
+-----
+EXCERPT:
+excerpt
+-----
+KEYWORDS:
+
+-----
+
+
+--------
