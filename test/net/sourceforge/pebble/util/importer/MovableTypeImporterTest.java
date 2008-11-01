@@ -34,9 +34,6 @@ public class MovableTypeImporterTest extends SingleBlogTestCase {
     assertEquals("size of entry", 1, list.size());
   }
 
-  /* 
-    Missing multiplesubcategory.txt...
-    
   public void testMultipleSubCategory() throws Exception {
     blog.setProperty(Blog.TIMEZONE_KEY, "Japan/Tokyo");
     File source = new File(testCasesDir, "multiplesubcategory.txt");
@@ -52,7 +49,7 @@ public class MovableTypeImporterTest extends SingleBlogTestCase {
 //    assertTrue(categories.contains("subcategory"));
 //    assertTrue(categories.contains("subcategory2"));
   }
-*/
+
   public void testNoExcerpt() throws Exception {
     blog.setProperty(Blog.TIMEZONE_KEY, "Japan/Tokyo");
     File source = new File(testCasesDir, "noexcerpt.txt");
