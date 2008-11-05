@@ -18,7 +18,7 @@ function populateFilename(fromField, toField) {
     indexOfSlash = 0;
   }
 
-  toField.value = fromField.value.substring(indexOfSlash+1, fromField.value.length);
+  toField.value = fromField.value.substring(indexOfSlash, fromField.value.length);
 }
 
 function checkAll(checkboxes) {
