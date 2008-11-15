@@ -1,5 +1,14 @@
 Version 2.4 - TBC
 -----------------
+Fix image upload bug (first character was silently dropped) (James Manger)
+This version doesn't require JavaMail on the classpath and will ignore (but log) NoClassDefFoundErrors relating to JavaMail 
+fixed "Atom Feed NPE" (Christian Fochler)
+JavaMail routines are used for validating mail addresses instead of homegrown solution (Frank Behrens)
+RelatedPostsDecorator with links to similarly tagged articles (Alexander Zagniotov)
+SocialBookmarksDecorator with links to popular social bookmarking sites (Alexander Zagniotov)
+JUnit tests run with reliable language setting (english)
+Improved MovableTypeImporter (by Yusuke Yamamoto) 
+Improved russian localization (by Alexander Zagniotov)
 Improved amount of localizeable content (with german translations) (Olaf Kock)
 Added mongolian localization (provided by Enkhbat Dash)
 Play nicer when delivering secured pages through https (Olaf Kock)
