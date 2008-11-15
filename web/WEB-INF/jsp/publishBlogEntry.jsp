@@ -38,7 +38,7 @@
 
           <tr>
             <td colspan="2" align="right">
-              <input name="submit" type="submit" Value="Publish" />
+              <button name="submit" type="submit" Value="Publish" ><fmt:message key="common.publish"/></button>
             </td>
           </tr>
         </table>
@@ -51,7 +51,7 @@
         <table width="99%" cellspacing="0" cellpadding="4">
           <tr>
             <td colspan="2" align="right">
-              <input name="submit" type="submit" Value="Unpublish" />
+              <button name="submit" type="submit" Value="Unpublish"><fmt:message key="common.unpublish"/></button>
             </td>
           </tr>
         </table>

@@ -1,3 +1,8 @@
+<%-- 
+TODO: I have not found any usage of this page - 
+      perhaps it is superceded by staticPageForm.jsp
+      (and blogEntryForm.jsp)?
+--%>
 <%-- uncomment this to enable FCKeditor
 <script type="text/javascript" src="${pageContext.request.contextPath}/FCKeditor/fckeditor.js"></script>
 <script type="text/javascript">
@@ -203,15 +208,15 @@ window.onload = function()
 
       <tr>
         <td colspan="2" align="right">
-          <input name="submit" type="submit" Value="Preview" />
+          <button name="submit" type="submit" Value="Preview" ><fmt:message key="common.preview"/></button>
           <c:choose>
           <c:when test="${blogEntry.staticPage}">
-          <input name="submit" type="submit" Value="Publish" />
+          <button name="submit" type="submit" Value="Publish" ><fmt:message key="common.publish"/></button>
           </c:when>
           <c:otherwise>
-          <input name="submit" type="submit" Value="Save as Template" />
-          <input name="submit" type="submit" Value="Save as Draft" />
-          <input name="submit" type="submit" Value="Publish" />
+          <button name="submit" type="submit" Value="Save as Template" ><fmt:message key="common.saveAsTemplate"/></button>
+          <button name="submit" type="submit" Value="Save as Draft" ><fmt:message key="common.saveAsDraft"/></button>
+          <button name="submit" type="submit" Value="Publish" ><fmt:message key="common.publish"/></button>
           </c:otherwise>
           </c:choose>
         </td>

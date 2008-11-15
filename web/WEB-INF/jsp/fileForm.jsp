@@ -1,7 +1,7 @@
 <div class="contentItem">
 
   <div class="contentItemLinks">
-    <a href="${parent.url}">Back to ${file.path}</a>
+    <a href="${parent.url}"><fmt:message key="admin.backTo"><fmt:param>${file.path}</fmt:param></fmt:message></a>
   </div>
 
   <h1>${file.name}</h1>
@@ -22,7 +22,7 @@
         <td align="left">
         </td>
         <td align="right">
-          <input name="submit" type="submit" Value="Save File">
+          <button name="submit" type="submit" Value="Save File"><fmt:message key="admin.saveFile"/></button>
         </td>
       </tr>
     </table>

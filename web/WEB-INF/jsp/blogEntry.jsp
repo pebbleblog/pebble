@@ -89,9 +89,9 @@
           <input type="button" value="Uncheck All" onclick="uncheckAll(document.responsesForm.response)" />
         </td>
         <td align="right">
-          <input type="submit" name="submit" value="Approve" />
-          <input type="submit" name="submit" value="Reject" />
-          <input type="submit" name="submit" value="Remove" />
+          <button type="submit" name="submit" value="Approve" ><fmt:message key="common.approve"/></button>
+          <button type="submit" name="submit" value="Reject" ><fmt:message key="common.reject"/></button>
+          <button type="submit" name="submit" value="Remove" ><fmt:message key="common.remove"/></button>
         </td>
       </tr>
     </table>

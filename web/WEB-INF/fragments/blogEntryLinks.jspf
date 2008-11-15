@@ -8,23 +8,23 @@
     </pebble:isAuthorisedForBlog>
 
     <pebble:isBlogContributor>
-      <input type="submit" name="submit" value="Edit" />
+      <button type="submit" name="submit" value="Edit"><fmt:message key="common.edit"/></button>
     </pebble:isBlogContributor>
 
     <pebble:isBlogPublisher>
     <c:if test="${blogEntry.unpublished}">
-      <input type="submit" name="submit" value="Publish" />
+      <button type="submit" name="submit" value="Publish" ><fmt:message key="common.publish"/></button>
     </c:if>
     <c:if test="${blogEntry.published}">
-      <input type="submit" name="submit" value="Unpublish" />
+      <button type="submit" name="submit" value="Unpublish" ><fmt:message key="common.unpublish"/></button>
     </c:if>
     </pebble:isBlogPublisher>
 
     <pebble:isBlogContributor>
-      <input type="submit" name="submit" value="Clone" />
+      <button type="submit" name="submit" value="Clone" ><fmt:message key="common.clone"/></button>
       &nbsp;
       <input type="checkbox" name="confirm" value="true" />
-      <input type="submit" name="submit" value="Remove" />
+      <button type="submit" name="submit" value="Remove" ><fmt:message key="common.remove"/></button>
     </pebble:isBlogContributor>
 
     <pebble:isAuthorisedForBlog>
@@ -34,7 +34,7 @@
     <pebble:isBlogContributor>
       <form action="sendTrackBack.secureaction" method="post">
         <input type="hidden" name="entry" value="${blogEntry.id}" />
-          <input type="submit" value="Send TrackBack" />
+          <button type="submit" value="Send TrackBack" ><fmt:message key="common.sendTrackback"/></button>
       </form>
     </pebble:isBlogContributor>
 

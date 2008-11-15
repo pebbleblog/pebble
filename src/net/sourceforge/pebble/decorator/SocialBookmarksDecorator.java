@@ -32,13 +32,13 @@ public class SocialBookmarksDecorator extends ContentDecoratorSupport {
 	private static final String GOOGLE_IMG = "<img src=\"common/images/google.ico\" border=\"0\"/>";
 	private static final String TECHNORATI_IMG = "<img src=\"common/images/technorati.png\" border=\"0\"/>";
 
-	private static final String SLASHDOT_ALT = "Add this post to Slash Dot";
-	private static final String DIGG_ALT = "Digg this post";
-	private static final String REDDIT_ALT = "Add this post to Reddit";
-	private static final String DELICIOUS_ALT = "Save this post to Del.icio.us";
-	private static final String STUMBLEUPON_ALT = "Stumble this post";
-	private static final String GOOGLE_ALT = "Add this post to Google";
-	private static final String TECHNORATI_ALT = "Add this post to Technorati";
+	private static final String SLASHDOT_ALT = "socialbookmark.addToSlashdot";
+	private static final String DIGG_ALT = "socialbookmark.addToDigg";
+	private static final String REDDIT_ALT = "socialbookmark.addToReddit";
+	private static final String DELICIOUS_ALT = "socialbookmark.addToDelicious";
+	private static final String STUMBLEUPON_ALT = "socialbookmark.addToStumbleupon";
+	private static final String GOOGLE_ALT = "socialbookmark.addToGoogle";
+	private static final String TECHNORATI_ALT = "socialbookmark.addToTechnorati";
 
 	private static final String[] bookmarkingSites = { SLASHDOT_URL, DIGG_URL,
 			REDDIT_URL, DELICIOUS_URL, STUMBLEUPON_URL, GOOGLE_URL };
@@ -80,7 +80,6 @@ public class SocialBookmarksDecorator extends ContentDecoratorSupport {
 		StringBuffer buf = new StringBuffer();
 		String permLink = blogEntry.getPermalink();
 		String title = blogEntry.getTitle();
-
 		buf.append("<div class=\"tags\"><span>");
 		buf.append(bundle.getString("common.bookmarks"));
 		buf.append(" : </span>");
@@ -90,8 +89,8 @@ public class SocialBookmarksDecorator extends ContentDecoratorSupport {
 			buf.append(bookmarkingSites[i] + permLink);
 			buf.append(TITLE + title + "\"");
 			buf.append(" target=\"_blank\"");
-			buf.append(" alt=\"" + bookmarkingAltText[i] + "\"");
-			buf.append(" title=\"" + bookmarkingAltText[i] + "\">");
+			buf.append(" alt=\"" + bundle.getString(bookmarkingAltText[i]) + "\"");
+			buf.append(" title=\"" + bundle.getString(bookmarkingAltText[i]) + "\">");
 			buf.append(bookmarkingNames[i]);
 			buf.append("</a>");
 			buf.append("&nbsp;&nbsp;&nbsp;&nbsp;");
@@ -100,8 +99,8 @@ public class SocialBookmarksDecorator extends ContentDecoratorSupport {
 		buf.append("<a href=\"");
 		buf.append(TECHNORATI_URL + permLink + "\"");
 		buf.append(" target=\"_blank\"");
-		buf.append(" alt=\"" + TECHNORATI_ALT + "\"");
-		buf.append(" title=\"" + TECHNORATI_ALT + "\">");
+		buf.append(" alt=\"" + bundle.getString(TECHNORATI_ALT) + "\"");
+		buf.append(" title=\"" + bundle.getString(TECHNORATI_ALT) + "\">");
 		buf.append(TECHNORATI_IMG);
 		buf.append("</a>");
 

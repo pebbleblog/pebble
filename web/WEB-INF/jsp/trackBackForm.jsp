@@ -1,10 +1,10 @@
 <div class="contentItem">
 
   <div class="contentItemLinks">
-    <a href="./help/trackbacks.html" target="_blank">Help</a>
+    <a href="./help/trackbacks.html" target="_blank"><fmt:message key="common.help"/></a>
   </div>
 
-  <h1>Send a TrackBack</h1>
+  <h1><fmt:message key="trackback.sendTrackBack"/></h1>
   <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
@@ -12,12 +12,12 @@
     <input type="hidden" name="entry" value="${blogEntry.id}" />
     <table width="99%">
       <tr>
-        <td valign="top"><b>TrackBack URL</b></td>
+        <td valign="top"><b><fmt:message key="trackback.url" /></b></td>
         <td><input type="text" name="url" size="50" /></td>
       </tr>
 
       <tr>
-        <td valign="top"><b>Excerpt</b></td>
+        <td valign="top"><b><fmt:message key="blogentry.excerpt"/></b></td>
         <td>
           <textarea name="excerpt" rows="8" cols="40">${blogEntry.truncatedContent}</textarea>
         </td>
@@ -25,7 +25,7 @@
 
       <tr>
         <td colspan="2" align="right">
-          <input name="submit" type="submit" Value="Send TrackBack" />
+          <button name="submit" type="submit" Value="Send TrackBack" ><fmt:message key="common.sendTrackback"/></button>
         </td>
       </tr>
     </table>

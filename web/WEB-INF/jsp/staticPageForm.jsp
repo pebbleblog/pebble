@@ -86,11 +86,11 @@
 
       <tr>
         <td align="left">
-          <input name="submit" type="submit" Value="Cancel" />
+          <button name="submit" type="submit" Value="Cancel" ><fmt:message key="common.cancel"/></button>
         </td>
         <td align="right">
-          <input name="submit" type="submit" Value="Preview" />
-          <input name="submit" type="submit" Value="Save" />
+          <button name="submit" type="submit" Value="Preview"><fmt:message key="common.preview"/></button>
+          <button name="submit" type="submit" Value="Save"><fmt:message key="common.save"/></button>
         </td>
       </tr>
     </table>

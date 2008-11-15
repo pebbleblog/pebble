@@ -29,7 +29,7 @@
         </tr>
         <tr>
           <td colspan="2" align="right">
-            <input type="submit" name="submit" value="Change Password" />
+            <button type="submit" name="submit" value="Change Password"><fmt:message key="admin.changePassword"/>"</button>
           </td>
         </tr>
       </table>

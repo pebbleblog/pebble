@@ -8,15 +8,15 @@
         <pebble:isBlogContributor>
           <form name="staticPageForm" action="manageStaticPage.secureaction#form" method="post">
             <input type="hidden" name="page" value="${staticPage.id}" />
-            <input type="submit" name="submit" value="Edit" />
+            <button type="submit" name="submit" value="Edit"><fmt:message key="common.edit"/></button>
             <input type="checkbox" name="confirm" value="true" />
             <c:if test="${staticPage.lockedBy == authenticatedUser.username}">
-            <input type="submit" name="submit" value="Unlock" />
+            <button type="submit" name="submit" value="Unlock" ><fmt:message key="common.unlock"/></button>
             </c:if>
-            <input type="submit" name="submit" value="Remove" />
+            <button type="submit" name="submit" value="Remove"><fmt:message key="common.remove"/></button>
           </form>
           <c:if test="${staticPage.lockedBy == authenticatedUser.username}">
-            <br />You have this static page locked for editing.
+            <br /><fmt:message key="staticPage.lockedByCurrentUser"/>
           </c:if>
         </pebble:isBlogContributor>
       </c:when>
@@ -25,12 +25,13 @@
         <form name="staticPageForm" action="manageStaticPage.secureaction#form" method="post">
           <input type="hidden" name="page" value="${staticPage.id}" />
           <input type="checkbox" name="confirm" value="true" />
-          <input type="submit" name="submit" value="Unlock" />
+          <button type="submit" name="submit" value="Unlock" ><fmt:message key="common.unlock"/></button>
         </form>
         <br />
         </pebble:isBlogAdminOrBlogOwner>
-        This static page is locked and being<br />
-        modified by ${staticPage.lockedBy}.
+		<fmt:message key="staticPage.lockedByUser">
+			<fmt:param>${staticPage.lockedBy}</fmt:param>		
+		</fmt:message>
       </c:otherwise>
     </c:choose>
     </div>

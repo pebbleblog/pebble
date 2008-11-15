@@ -48,7 +48,7 @@
     <table width="99%" cellspacing="0" cellpadding="0">
       <tr>
         <td align="right">
-          <input type="submit" value="Remove" />
+          <button type="submit" value="Remove" ><fmt:message key="common.remove"/></button>
         </td>
       </tr>
     </table>
@@ -91,7 +91,7 @@
         </tr>
         <tr>
           <td colspan="2" align="right">
-            <input name="submit" type="submit" Value="Save Category" />
+            <button name="submit" type="submit" Value="Save Category"><fmt:message key="common.save"/></button>
           </td>
         </tr>
       </table>

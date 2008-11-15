@@ -9,20 +9,23 @@
 
   <div class="contentItemBody">
     <p>
-      The properties on this page are only applicable to this blog (<a href="${blogUrl}">${blog.name}</a>).
+      <fmt:message key="blogproperties.thePropertiesAreOnlyApplicableForThisBlog">
+      	<fmt:param>${blogUrl}</fmt:param>
+      	<fmt:param>${blog.name}</fmt:param>
+      </fmt:message>
     </p>
 
     <form name="propertiesForm" action="saveBlogProperties.secureaction" method="POST" accept-charset="${blog.characterEncoding}">
     <table>
       <tr>
         <td colspan="2">
-          <b>General blog properties</b>
+          <b><fmt:message key="blogproperties.generalBlogProperties"/></b>
         </td>
       </tr>
 
       <tr>
         <td>
-          Name
+          <fmt:message key="blogproperties.name"/>
         </td>
         <td>
           <input type="text" name="name" size="40" value="${blog.name}">
@@ -31,7 +34,7 @@
 
       <tr>
         <td>
-          Description
+          <fmt:message key="blogproperties.description"/>
         </td>
         <td>
           <input type="text" name="description" size="40" value="${blog.description}">
@@ -40,7 +43,7 @@
 
       <tr>
         <td valign="top">
-          About
+          <fmt:message key="blogproperties.about"/>
         </td>
         <td>
           <textarea name="about" rows="12" cols="50">${blog.about}</textarea>
@@ -49,7 +52,7 @@
 
       <tr>
         <td>
-          Image (URL)
+          <fmt:message key="blogproperties.imageUrl"/>
         </td>
         <td>
           <input type="text" name="image" size="40" value="${blog.image}">
@@ -58,7 +61,7 @@
 
       <tr>
         <td>
-          Author
+          <fmt:message key="blogproperties.author"/>
         </td>
         <td>
           <input type="text" name="author" size="40" value="${blog.author}">
@@ -67,7 +70,7 @@
 
       <tr>
         <td>
-          E-mail address
+          <fmt:message key="blogproperties.emailaddress"/>
         </td>
         <td>
           <input type="text" name="email" size="40" value="${blog.email}">
@@ -76,7 +79,7 @@
 
       <tr>
         <td>
-          Home page
+          <fmt:message key="blogproperties.homepage"/>
         </td>
         <td>
           <pebble:select name="homePage" items="${staticPages}" selected="${blog.homePage}" label="title" value="name" />
@@ -86,7 +89,7 @@
       <c:if test="${pebbleContext.configuration.userThemesEnabled}">
       <tr>
         <td>
-          Theme
+          <fmt:message key="blogproperties.theme"/>
         </td>
         <td>
           <pebble:select name="theme" items="${themes}" selected="${blog.theme}" />
@@ -96,7 +99,7 @@
 
       <tr>
         <td>
-          Recent blog entries
+          <fmt:message key="blogproperties.recentBlogEntries"/>
         </td>
         <td>
           <pebble:select name="recentBlogEntriesOnHomePage" items="${numbers}" selected="${blog.recentBlogEntriesOnHomePage}" />
@@ -105,7 +108,7 @@
 
       <tr>
         <td>
-          Recent responses
+          <fmt:message key="blogproperties.recentResponses"/>
         </td>
         <td>
           <pebble:select name="recentResponsesOnHomePage" items="${numbers}" selected="${blog.recentResponsesOnHomePage}" />
@@ -114,25 +117,25 @@
 
       <tr>
         <td valign="top">
-          Rich text editor
+          <fmt:message key="blogproperties.richTextEditor"/>
         </td>
         <td>
           <input type="checkbox" name="richTextEditorForCommentsEnabled" value="true"
                  <c:if test="${blog.richTextEditorForCommentsEnabled == true}">checked="true"</c:if>
-          />&nbsp;Comments
+          />&nbsp;<fmt:message key="blogproperties.comments"/>
         </td>
       </tr>
 
       <tr>
         <td colspan="2">
           <br />
-          <b>Internationalization and localization</b>
+          <b><fmt:message key="blogproperties.i18nAndL10n"/></b>
         </td>
       </tr>
 
       <tr>
         <td>
-          Country
+          <fmt:message key="blogproperties.country"/>
         </td>
         <td>
           <pebble:select name="country" items="${countries}" selected="${blog.country}" />
@@ -141,7 +144,7 @@
 
       <tr>
         <td>
-          Language
+          <fmt:message key="blogproperties.language"/>
         </td>
         <td>
           <pebble:select name="language" items="${languages}" selected="${blog.language}" />
@@ -150,17 +153,17 @@
 
       <tr>
         <td>
-          Time zone
+          <fmt:message key="blogproperties.timeZone"/>
         </td>
         <td>
           <pebble:select name="timeZone" items="${timeZones}" selected="${blog.timeZoneId}" />
-          <div class="small">(changing this will reindex your blog, which may take a while)</div>
+          <div class="small"><fmt:message key="blogproperties.noteChangingWillReindex"/></div>
         </td>
       </tr>
 
       <tr>
         <td>
-          Character encoding
+          <fmt:message key="blogproperties.characterEncoding"/>
         </td>
         <td>
           <pebble:select name="characterEncoding" items="${characterEncodings}" selected="${blog.characterEncoding}" />
@@ -169,7 +172,7 @@
 
       <tr>
         <td align="right" colspan="2">
-          <input name="submit" type="submit" Value="Save Properties">
+          <button name="submit" type="submit" Value="Save Properties"><fmt:message key="common.save"/></button>
         </td>
       </tr>
 

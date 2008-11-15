@@ -186,9 +186,8 @@
       </tr>
       <tr>
         <td colspan="2" align="right">
-          <%-- TODO: I'd like these buttons to be localized, but the Action implementation depends upon these labels. --%>
-          <input name="submit" type="submit" Value="Preview" />
-          <input name="submit" type="submit" Value="Save" />
+          <button name="submit" type="submit" Value="Preview"><fmt:message key="common.preview"/></button>
+          <button name="submit" type="submit" Value="Save"><fmt:message key="common.save"/></button>
         </td>
       </tr>
     </table>
