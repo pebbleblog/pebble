@@ -66,30 +66,40 @@
     </tr>
 
     <tr class="even">
-      <td valign="top"><b>JVM memory</b></td>
+      <td valign="top"><b><fmt:message key="view.aboutThisBlog.jvmMemory"/></b></td>
       <td>
-        Using <fmt:formatNumber value="${pebbleContext.memoryUsageInKB}"/> KB of <fmt:formatNumber value="${pebbleContext.totalMemoryInKB}"/> KB (<a href="gc.secureaction" title="Run the garbage collector">GC</a>)
+		<fmt:message key="view.aboutThisBlog.jvmMemory.actual">
+			<fmt:param>
+				<fmt:formatNumber value="${pebbleContext.memoryUsageInKB}"/>
+			</fmt:param>
+			<fmt:param>
+				<fmt:formatNumber value="${pebbleContext.totalMemoryInKB}"/>
+			</fmt:param>
+		</fmt:message>
+		(<a href="gc.secureaction" title="<fmt:message key="view.aboutThisBlog.runGC.long"/>"><fmt:message key="view.aboutThisBlog.runGC"/></a>)
       </td>
     </tr>
 
       <tr class="odd">
-        <td valign="top"><b>Blog directory</b></td>
+        <td valign="top"><b><fmt:message key="view.aboutThisBlog.blogDirectory"/></b></td>
         <td>
           ${blog.root}
         </td>
       </tr>
 
       <tr class="even">
-        <td valign="top"><b>Blog URL</b></td>
+        <td valign="top"><b><fmt:message key="view.aboutThisBlog.blogUrl"/></b></td>
         <td>
           ${blogUrl}
         </td>
       </tr>
 
       <tr class="odd">
-        <td valign="top"><b>XML-RPC Details</b></td>
+        <td valign="top"><b><fmt:message key="view.aboutThisBlog.xmlRpcDetails"/></b></td>
         <td>
-          URL : ${pebbleContext.configuration.url}xmlrpc/
+          <fmt:message key="view.aboutThisBlog.xmlRpcDetails.url">
+			<fmt:param>${pebbleContext.configuration.url}</fmt:param>
+		  </fmt:message>
           <br />
           Handler : blogger or metaWeblog
           <br />

@@ -40,7 +40,7 @@
 
     <c:if test="${blogEntry.unpublished}">
       <br />
-      This blog entry has not been published yet.
+      <fmt:message key="blogEntry.notYetPublished"/>
     </c:if>
 
     <pebble:isAuthorisedForBlog>

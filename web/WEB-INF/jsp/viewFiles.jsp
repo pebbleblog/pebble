@@ -2,9 +2,9 @@
 
   <div class="contentItemLinks">
     <c:if test='${not empty parent}'>
-      <a href="${parent.url}">Back to parent</a> |
+      <a href="${parent.url}"><fmt:message key="admin.backToParent"/></a> |
     </c:if>
-    <a href="zipDirectory.secureaction?path=${directory.absolutePath}&type=${type}">Export as ZIP</a> |
+    <a href="zipDirectory.secureaction?path=${directory.absolutePath}&type=${type}"><fmt:message key="admin.exportAsZip"/></a> |
     <c:choose>
       <c:when test="${type == 'blogImage'}"><a href="./help/images.html" target="_blank"><fmt:message key="common.help"/></a></c:when>
       <c:when test="${type == 'blogFile'}"><a href="./help/files.html" target="_blank"><fmt:message key="common.help"/></a></c:when>
@@ -26,9 +26,14 @@
   <div class="contentItemBody">
   <p>
     <c:if test="${pebbleContext.configuration.fileUploadQuota > -1}">
-      You are using <fmt:formatNumber value="${currentUsage}" type="number" minFractionDigits="0" maxFractionDigits="0" />&nbsp;KB of
-      your <fmt:formatNumber value="${pebbleContext.configuration.fileUploadQuota}" type="number" minFractionDigits="0" maxFractionDigits="0" />&nbsp;KB quota, which is shared between
-      all of your images, files and theme.
+		<fmt:message key="admin.quotaUsage">
+			<fmt:param>
+				<fmt:formatNumber value="${currentUsage}" type="number" minFractionDigits="0" maxFractionDigits="0" />
+			</fmt:param>
+			<fmt:param>
+				<fmt:formatNumber value="${pebbleContext.configuration.fileUploadQuota}" type="number" minFractionDigits="0" maxFractionDigits="0" />
+			</fmt:param>
+		</fmt:message>
     </c:if>
   </p>
 
@@ -101,7 +106,7 @@
   </c:when>
   <c:otherwise>
       <p>
-        There are no files in this directory.
+        <fmt:message key="admin.noFilesInDirectory"/>
       </p>
   </c:otherwise>
   </c:choose>
@@ -110,7 +115,7 @@
   <a name="manageFile" />
   <form name="copyFile" action="copyFile.secureaction" method="POST">
     <p>
-      <b>Rename/copy file</b>
+      <b><fmt:message key="admin.renameCopyFile"/></b>
       <br />
       Name
       <input type="hidden" name="type" value="${type}" />
@@ -126,7 +131,7 @@
   </c:if>
 
   <form name="createDirectory" action="createDirectory.secureaction" method="POST">
-    <h3>Create directory</h3>
+    <h3><fmt:message key="admin.createDirectory"/></h3>
     <p>
       Name
       <input type="hidden" name="type" value="${type}" />
@@ -144,10 +149,10 @@
         <thead>
           <tr>
           <th>
-            Local filename
+            <fmt:message key="admin.localFilename"/>
           </th>
           <th>
-            Remote filename
+            <fmt:message key="admin.remoteFilename"/>
           </th>
           </tr>
         </thead>
@@ -172,7 +177,7 @@
           <td><input name="filename4" type="text" value="" /></td>
         </tr>
         <tr>
-          <td align="right" colspan="2"><input type="submit" value="Upload File(s)" /></td>
+          <td align="right" colspan="2"><input type="submit" value="<fmt:message key="admin.uploadFileS"/>" /></td>
         </tr>
       </table>
 

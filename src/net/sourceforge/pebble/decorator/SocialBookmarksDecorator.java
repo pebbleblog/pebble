@@ -24,13 +24,13 @@ public class SocialBookmarksDecorator extends ContentDecoratorSupport {
 	private static final String GOOGLE_URL = "http://www.google.com/bookmarks/mark?op=edit&bkmk=";
 	private static final String TECHNORATI_URL = "http://technorati.com/faves?add=";
 
-	private static final String SLASHDOT_IMG = "<img src=\"/common/images/slashdot.png\" border=\"0\"/>";
-	private static final String DIGG_IMG = "<img src=\"/common/images/digg.png\" border=\"0\"/>";
-	private static final String REDDIT_IMG = "<img src=\"/common/images/reddit.png\" border=\"0\"/>";
-	private static final String DELICIOUS_IMG = "<img src=\"/common/images/delicious.png\" border=\"0\"/>";
-	private static final String STUMBLEUPON_IMG = "<img src=\"/common/images/stumbleit.png\" border=\"0\"/>";
-	private static final String GOOGLE_IMG = "<img src=\"/common/images/google.ico\" border=\"0\"/>";
-	private static final String TECHNORATI_IMG = "<img src=\"/common/images/technorati.png\" border=\"0\"/>";
+	private static final String SLASHDOT_IMG = "<img src=\"common/images/slashdot.png\" border=\"0\"/>";
+	private static final String DIGG_IMG = "<img src=\"common/images/digg.png\" border=\"0\"/>";
+	private static final String REDDIT_IMG = "<img src=\"common/images/reddit.png\" border=\"0\"/>";
+	private static final String DELICIOUS_IMG = "<img src=\"common/images/delicious.png\" border=\"0\"/>";
+	private static final String STUMBLEUPON_IMG = "<img src=\"common/images/stumbleit.png\" border=\"0\"/>";
+	private static final String GOOGLE_IMG = "<img src=\"common/images/google.ico\" border=\"0\"/>";
+	private static final String TECHNORATI_IMG = "<img src=\"common/images/technorati.png\" border=\"0\"/>";
 
 	private static final String SLASHDOT_ALT = "Add this post to Slash Dot";
 	private static final String DIGG_ALT = "Digg this post";

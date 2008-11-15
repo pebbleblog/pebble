@@ -82,6 +82,7 @@
       (<a href="viewReferers.secureaction?filter=false" title="<fmt:message key="admin.tooltip.viewReferrersForTodayUnfiltered"/>"/><fmt:message key="admin.viewReferrersForTodayUnfiltered"/></a>) |
       <a href="viewRequests.secureaction" title="<fmt:message key="admin.tooltip.viewRequestsForToday"/>"><fmt:message key="admin.requests"/></a> |
       <a href="viewLogSummary.secureaction" title="<fmt:message key="admin.tooltip.viewLogSummaryForThisMonth"/>"><fmt:message key="admin.logSummary"/></a> |
+      <a href="viewLogSummary.secureaction?year=<%= java.util.Calendar.getInstance().get(java.util.Calendar.YEAR) %>" title="<fmt:message key="admin.tooltip.yearlyLogs"/>"><fmt:message key="admin.yearlyLogs"/></a> |
       <a href="viewRefererFilters.secureaction" title="<fmt:message key="admin.tooltip.viewReferrerFilters"/>"><fmt:message key="admin.referrerFilters"/></a>
     </pebble:isAuthorisedForBlog>
     </span>
