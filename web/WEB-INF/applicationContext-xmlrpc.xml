@@ -15,4 +15,8 @@
     <property name="authenticationManager"><ref bean="authenticationManager"/></property>
   </bean>
 
+  <bean id="searchApiHandler" class="net.sourceforge.pebble.webservice.SearchAPIHandler">
+    <property name="authenticationManager"><ref bean="authenticationManager"/></property>
+  </bean>
+
 </beans>

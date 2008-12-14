@@ -1,5 +1,6 @@
 Version 2.4 - TBC
 -----------------
+Added Search API for XML-RPC (Seymour Cakes)
 Fix image upload bug (first character was silently dropped) (James Manger)
 This version doesn't require JavaMail on the classpath and will ignore (but log) NoClassDefFoundErrors relating to JavaMail 
 fixed "Atom Feed NPE" (Christian Fochler)

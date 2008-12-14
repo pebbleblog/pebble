@@ -58,11 +58,13 @@ public class MetaWeblogAPIHandler extends AbstractAPIHandler {
   static final String PERMALINK = "permaLink";
   static final String PUB_DATE = "pubDate";
   static final String CATEGORIES = "categories";
+  static final String TAGS = "tags";
   static final String NAME = "name";
   static final String TYPE = "type";
   static final String BITS = "bits";
   static final String HTML_URL = "htmlUrl";
   static final String RSS_URL = "rssUrl";
+  static final String COMMENTS = "comments";
 
   /** the log used by this class */
   private static Log log = LogFactory.getLog(MetaWeblogAPIHandler.class);
@@ -331,7 +333,42 @@ public class MetaWeblogAPIHandler extends AbstractAPIHandler {
     }
     post.put(CATEGORIES, categories);
 
+    //Get Tags
+    Vector tags = new Vector();
+    for (Tag tag : entry.getAllTags()) {
+        tags.add(tag.getName());
+    }
+    post.put(TAGS, tags);
+
+    //Get comments
+    Vector comments = new Vector();
+    for (Comment comment : entry.getComments()) {
+        comments.add(adaptBlogEntryComment(comment));
+    }
+    post.put(COMMENTS, comments);
+
     return post;
+  }
+
+  /** 
+   * help method to adapt a blog entry comments into an XML-RPC compatible struct.
+   * 
+   * @param entry   the BlogEntry to adapt
+   * @return  a Hashtable representing the major properties of the entry
+   */
+  private Hashtable adaptBlogEntryComment(Comment comment) {
+      Hashtable cmnt = new Hashtable();
+        
+      cmnt.put("body", comment.getBody());
+      cmnt.put("author", comment.getAuthor());
+      cmnt.put("email", comment.getEmail());
+      cmnt.put("date", comment.getDate());
+      cmnt.put("permaLink", comment.getPermalink());
+      cmnt.put("website", comment.getWebsite());
+      cmnt.put("ipAddress", comment.getIpAddress());
+      //comment.put("", comment.);
+
+      return cmnt;
   }
 
   /**
@@ -342,18 +379,22 @@ public class MetaWeblogAPIHandler extends AbstractAPIHandler {
    * @param username  the author
    */
   private void populateEntry(BlogEntry entry, Hashtable struct, String username) {
-    entry.setTitle((String)struct.get(TITLE));
-    entry.setBody((String)struct.get(DESCRIPTION));
-    entry.setAuthor(username);
+      assert entry != null;
+      entry.setTitle((String)struct.get(TITLE));
+      entry.setBody((String)struct.get(DESCRIPTION));
+      entry.setAuthor(username);
 
-    Vector categories = (Vector)struct.get(CATEGORIES);
-    if (categories != null) {
-      for (int i = 0; i < categories.size(); i++) {
-      Category c = entry.getBlog().getCategory((String)categories.get(i));
-       if (c != null)
-         entry.addCategory(c);
+      Vector categories = (Vector)struct.get(CATEGORIES);
+      if (categories != null) {
+          for (int i = 0; i < categories.size(); i++) {
+              Category c = entry.getBlog().getCategory((String)categories.get(i));
+              if (c != null)
+                  entry.addCategory(c);
+          }
       }
-    }
+
+      String taglist = (String)struct.get(TAGS);
+      entry.setTags( taglist );
   }
 
 }

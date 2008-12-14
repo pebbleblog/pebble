@@ -34,6 +34,7 @@ package net.sourceforge.pebble.web.controller;
 import net.sourceforge.pebble.webservice.BloggerAPIHandler;
 import net.sourceforge.pebble.webservice.MetaWeblogAPIHandler;
 import net.sourceforge.pebble.webservice.PebbleAPIHandler;
+import net.sourceforge.pebble.webservice.SearchAPIHandler;
 import org.apache.xmlrpc.XmlRpcServer;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
@@ -80,6 +81,9 @@ public class XmlRpcController extends HttpServlet {
 
       PebbleAPIHandler pebbleApi = (PebbleAPIHandler)ctx.getBean("pebbleApiHandler");
       xmlrpc.addHandler("pebble", pebbleApi);
+
+      SearchAPIHandler searchApi = (SearchAPIHandler)ctx.getBean("searchApiHandler");
+      xmlrpc.addHandler("search", searchApi);
 
       byte[] result = xmlrpc.execute(request.getInputStream());
       response.setContentType("text/xml; charset=UTF-8");
