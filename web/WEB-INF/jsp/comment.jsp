@@ -46,7 +46,7 @@
       </fmt:param>
       <fmt:param value="${commentDate}"/>
     </fmt:message>
-    <a href="${comment.permalink}" title="${comment.permalink}">#</a>
+    <a href="${url:rewrite(comment.permalink)}" title="${comment.permalink}">#</a>
   </div>
 
   <div id="${param.commentIdentifier}.body" class="responseBody">

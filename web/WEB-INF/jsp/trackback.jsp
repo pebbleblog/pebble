@@ -34,7 +34,7 @@
       </fmt:param>
       <fmt:param value="${trackbackDate}"/>
     </fmt:message>
-    <a href="${trackback.permalink}" title="${trackback.permalink}">#</a>
+    <a href="${url:rewrite(trackback.permalink)}" title="${trackback.permalink}">#</a>
   </div>
 
   <div class="responseBody">

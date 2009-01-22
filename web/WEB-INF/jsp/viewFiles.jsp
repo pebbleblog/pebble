@@ -2,7 +2,7 @@
 
   <div class="contentItemLinks">
     <c:if test='${not empty parent}'>
-      <a href="${parent.url}"><fmt:message key="admin.backToParent"/></a> |
+      <a href="${url:rewrite(parent.url)}"><fmt:message key="admin.backToParent"/></a> |
     </c:if>
     <a href="zipDirectory.secureaction?path=${directory.absolutePath}&type=${type}"><fmt:message key="admin.exportAsZip"/></a> |
     <c:choose>
@@ -72,7 +72,7 @@
             </c:choose>
           </td>
           <td>
-            <a href="${aFile.url}">${aFile.name}</a>
+            <a href="${url:rewrite(aFile.url)}">${aFile.name}</a>
           </td>
           <td align="right">
             <fmt:formatNumber value="${aFile.sizeInKB}" type="number" minFractionDigits="2" maxFractionDigits="2" />&nbsp;KB

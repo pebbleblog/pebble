@@ -35,7 +35,7 @@
             <br />
           </td>
           <td valign="top">
-            <a href="${entry.link}">${entry.title}</a> - <a href="${entry.feed.link}">${entry.feed.title}</a> <a href="${entry.feed.url}"><img src="common/images/feed-icon-10x10.png" alt="RSS feed" border="0" /></a>
+            <a href="${url:rewrite(entry.link)}">${entry.title}</a> - <a href="${url:rewrite(entry.feed.link)}">${entry.feed.title}</a> <a href="${url:rewrite(entry.feed.url)}"><img src="common/images/feed-icon-10x10.png" alt="RSS feed" border="0" /></a>
             <br />
             ${entry.truncatedBody}
           </td>

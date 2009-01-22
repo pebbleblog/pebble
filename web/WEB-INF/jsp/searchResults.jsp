@@ -36,7 +36,7 @@
               <br />
             </td>
             <td valign="top">
-              <a href="${hit.permalink}" title="${hit.score}">${hit.title}</a>
+              <a href="${url:rewrite(hit.permalink)}" title="${hit.score}">${hit.title}</a>
               <br />
               ${hit.excerpt}
             </td>

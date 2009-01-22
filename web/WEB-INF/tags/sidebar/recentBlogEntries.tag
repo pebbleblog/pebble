@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 <%@ taglib uri="http://pebble.sourceforge.net/pebble" prefix="pebble" %>
+<%@ taglib uri="/WEB-INF/url.tld" prefix="url" %>
 
 <%--
   Displays the recent blog entries.
@@ -21,7 +22,7 @@
   <div class="sidebarItemBody">
     <ul>
     <c:forEach var="recentBlogEntry" items="${recentBlogEntries}" >
-      <li><a href="${recentBlogEntry.permalink}" title="${recentBlogEntry.permalink}">${recentBlogEntry.title}</a>
+      <li><a href="${url:rewrite(recentBlogEntry.permalink)}" title="${recentBlogEntry.permalink}">${recentBlogEntry.title}</a>
         <c:if test="${showBody eq 'true'}">
         <br />${recentBlogEntry.truncatedContent}
         </c:if>

@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
+<%@ taglib uri="/WEB-INF/url.tld" prefix="url" %>
 
 <%--
   In multi-blog mode, displays a list of all blogs along with a link back to the multi-blog home page.
@@ -10,9 +11,9 @@
   <div class="sidebarItemBody">
     <c:if test="${blogType == 'singleblog'}"><a href="${multiBlog.url}">${multiBlog.name}</a> <a href="${multiBlog.url}rss.xml" style="border: 0px;"><img src="common/images/feed-icon-10x10.png" alt="RSS feed" border="0" /></a><br /></c:if>
     <c:forEach var="aBlog" items="${blogs}">
-      <a href="${aBlog.url}">${aBlog.name}</a>
+      <a href="${url:rewrite(aBlog.url)}">${aBlog.name}</a>
       <c:if test="${not empty aBlog.description}"> - ${aBlog.description}</c:if>
-      <a href="${aBlog.url}rss.xml" style="border: 0px;"><img src="common/images/feed-icon-10x10.png" alt="RSS feed" border="0" /></a>
+      <a href="${url:rewrite(aBlog.url)}rss.xml" style="border: 0px;"><img src="common/images/feed-icon-10x10.png" alt="RSS feed" border="0" /></a>
       <br />
     </c:forEach>
   </div>

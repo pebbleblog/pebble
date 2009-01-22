@@ -3,6 +3,7 @@
 <%@ taglib uri="http://pebble.sourceforge.net/pebble" prefix="pebble" %>
 <%@ taglib prefix="sidebar" tagdir="/WEB-INF/tags/sidebar" %>
 <%@ taglib prefix="include" tagdir="/WEB-INF/tags/" %>
+<%@ taglib prefix="url" uri="/WEB-INF/url.tld" %>
 
 <fmt:setTimeZone value="${blog.timeZoneId}" scope="request" />
 <fmt:setBundle basename="resources" scope="request" />
@@ -15,7 +16,7 @@
       <c:choose><c:when test="${empty title}">${blog.name}</c:when><c:otherwise>${title} - ${blog.name}</c:otherwise></c:choose>
     </c:set>
 
-    <base href="${blogUrl}" />
+    <base href="${url:rewrite(blogUrl)}" />
     <meta http-equiv="Content-Type" content="text/html; charset=${blog.characterEncoding}"/>
     <meta name="description" content="${pageTitle}" />
     <c:if test="${displayMode == 'detail'}"><c:choose><c:when test="${not empty blogEntry}"><meta name="keywords" content="${blogEntry.tagsAsCommaSeparated}" /></c:when><c:when test="${not empty staticPage}"><meta name="keywords" content="${staticPage.tagsAsCommaSeparated}" /></c:when></c:choose></c:if>

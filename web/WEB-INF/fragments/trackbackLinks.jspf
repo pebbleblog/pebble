@@ -1,5 +1,5 @@
 <div class="contentItemLinks">
-  <a href="${trackback.url}"><fmt:message key="common.readMore" /></a>
+  <a href="${url:rewrite(trackback.url)}"><fmt:message key="common.readMore" /></a>
   <pebble:isBlogContributor>
   | <input type="checkbox" name="response" value="${trackback.guid}" />
   </pebble:isBlogContributor>

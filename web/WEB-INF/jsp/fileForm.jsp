@@ -1,7 +1,7 @@
 <div class="contentItem">
 
   <div class="contentItemLinks">
-    <a href="${parent.url}"><fmt:message key="admin.backTo"><fmt:param>${file.path}</fmt:param></fmt:message></a>
+    <a href="${url:rewrite(parent.url)}"><fmt:message key="admin.backTo"><fmt:param>${file.path}</fmt:param></fmt:message></a>
   </div>
 
   <h1>${file.name}</h1>

@@ -44,7 +44,7 @@
         </td>
         </pebble:isBlogContributor>
         <td>
-          <a href="${staticPage.localPermalink}">${staticPage.name}.html</a>
+          <a href="${url:rewrite(staticPage.localPermalink)}">${staticPage.name}.html</a>
         </td>
         <td>
           ${staticPage.title}

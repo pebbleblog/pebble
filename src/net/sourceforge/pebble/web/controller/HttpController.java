@@ -116,7 +116,7 @@ public class HttpController extends HttpServlet {
         Model model = new Model();
         model.put(Constants.BLOG_KEY, blog);
         String calculatedBaseUrl = Utilities.calcBaseUrl(request.getScheme(), blog.getUrl());
-		model.put(Constants.BLOG_URL, calculatedBaseUrl);
+		model.put(Constants.BLOG_URL, blog.getUrl());
         action.setModel(model);
         View view = action.process(request, response);
         if (view != null) {

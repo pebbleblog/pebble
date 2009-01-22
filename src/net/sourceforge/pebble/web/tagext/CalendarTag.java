@@ -35,6 +35,7 @@ import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.domain.Day;
 import net.sourceforge.pebble.domain.Month;
+import net.sourceforge.pebble.util.UrlRewriter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
@@ -98,7 +99,7 @@ public class CalendarTag extends TagSupport {
         out.write("</b>");
       } else {
         out.write("<b><a href=\"");
-        out.write(month.getPermalink());
+        out.write(UrlRewriter.doRewrite(month.getPermalink()));
         out.write("\">");
         out.write(monthAndYearFormatter.format(month.getDate()));
         out.write("</a></b>");
@@ -145,14 +146,14 @@ public class CalendarTag extends TagSupport {
           now.get(Calendar.DAY_OF_MONTH) == cal.get(Calendar.DAY_OF_MONTH)) {
           out.write("<td class=\"calendarToday\">");
           if (daily.hasBlogEntries()) {
-            out.write("&nbsp;<a href=\"" + daily.getPermalink() + "\">" + formattedNumber + "</a>&nbsp;");
+            out.write("&nbsp;<a href=\"" + UrlRewriter.doRewrite(daily.getPermalink()) + "\">" + formattedNumber + "</a>&nbsp;");
           } else {
             out.write("&nbsp;" + formattedNumber + "&nbsp;");
           }
         } else {
           if (daily.hasBlogEntries()) {
             out.write("<td class=\"calendarDayWithEntries\">");
-            out.write("&nbsp;<a href=\"" + daily.getPermalink() + "\">" + formattedNumber + "</a>&nbsp;");
+            out.write("&nbsp;<a href=\"" + UrlRewriter.doRewrite(daily.getPermalink()) + "\">" + formattedNumber + "</a>&nbsp;");
           } else {
             out.write("<td class=\"calendarDay\">");
             out.write("&nbsp;" + formattedNumber + "&nbsp;");
@@ -178,19 +179,19 @@ public class CalendarTag extends TagSupport {
       if (previous.before(firstMonth)) {
         out.write(monthFormatter.format(previous.getDate()));
       } else {
-        out.write("<a href=\"" + previous.getPermalink() + "\">" + monthFormatter.format(previous.getDate()) + "</a>");
+        out.write("<a href=\"" + UrlRewriter.doRewrite(previous.getPermalink()) + "\">" + monthFormatter.format(previous.getDate()) + "</a>");
       }
 
       String todayText = bundle.getString("common.today");
       out.write("&nbsp; | &nbsp;");
-      out.write("<a href=\"" + today.getPermalink() + "\">" + todayText + "</a>");
+      out.write("<a href=\"" + UrlRewriter.doRewrite(today.getPermalink()) + "\">" + todayText + "</a>");
       out.write("&nbsp; | &nbsp;");
 
       // only display the next month date if it's not in the future
       if (next.getDate().after(now.getTime()) || next.before(firstMonth)) {
         out.write(monthFormatter.format(next.getDate()));
       } else {
-        out.write("<a href=\"" + next.getPermalink() + "\">" + monthFormatter.format(next.getDate()) + "</a>");
+        out.write("<a href=\"" + UrlRewriter.doRewrite(next.getPermalink()) + "\">" + monthFormatter.format(next.getDate()) + "</a>");
       }
       out.write("</td>");
       out.write("</tr>");

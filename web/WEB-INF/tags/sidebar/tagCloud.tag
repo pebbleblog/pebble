@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 <%@ taglib uri="http://pebble.sourceforge.net/pebble" prefix="pebble" %>
+<%@ taglib uri="/WEB-INF/url.tld" prefix="url" %>
 
 <%--
  Displays a tag cloud.
@@ -21,7 +22,7 @@
     <ul>
     <c:forEach var="tag" items="${tags}" varStatus="status">
       <c:if test="${tag.rank >= rankThreshold}">
-      <li><span class="tagCloud${tag.rank}"><a href="${tag.permalink}" title="rank=<fmt:formatNumber value="${tag.rank}"/>, blog entries=<fmt:formatNumber value="${tag.numberOfBlogEntries}"/>"><c:out value="${tag.name}" escapeXml="true"/></a></span></li>
+      <li><span class="tagCloud${tag.rank}"><a href="${url:rewrite(tag.permalink)}" title="rank=<fmt:formatNumber value="${tag.rank}"/>, blog entries=<fmt:formatNumber value="${tag.numberOfBlogEntries}"/>"><c:out value="${tag.name}" escapeXml="true"/></a></span></li>
       </c:if>
     </c:forEach>
     </ul>

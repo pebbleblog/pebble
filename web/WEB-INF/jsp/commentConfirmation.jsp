@@ -20,7 +20,7 @@
     </c:choose>
 
     <p>
-    <fmt:message key="common.backTo" /> <a href="${blogEntry.permalink}">${blogEntry.title}</a>.
+    <fmt:message key="common.backTo" /> <a href="${url:rewrite(blogEntry.permalink)}">${blogEntry.title}</a>.
     </p>
   </div>
 

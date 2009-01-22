@@ -1,0 +1,11 @@
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee" version="2.0">  
+<tlib-version>1.0</tlib-version>  
+<short-name>url</short-name>  
+<uri>http://pebble.sourceforge.net/tags/url.tld</uri> 
+	<function>
+		<name>rewrite</name>
+		<function-class>net.sourceforge.pebble.web.tagext.UrlFunctions</function-class>
+		<function-signature>java.lang.String rewrite(java.lang.String)</function-signature>
+	</function> 
+</taglib>
+

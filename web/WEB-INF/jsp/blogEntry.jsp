@@ -13,7 +13,7 @@
   <%@ include file="/WEB-INF/fragments/blogEntryLinks.jspf" %>
 
   <a name="a${blogEntry.id}"></a>
-  <h1><a href="${blogEntry.permalink}">${blogEntry.title}</a></h1>
+  <h1><a href="${url:rewrite(blogEntry.permalink)}">${blogEntry.title}</a></h1>
   <h2>${blogEntry.subtitle}</h2>
 
   <div class="contentItemBody">
@@ -60,8 +60,8 @@
         ${blogEntryDate}
         </fmt:param>
       </fmt:message>
-      <a href="${blogEntry.localPermalink}" title="${blogEntry.localPermalink}">#</a>
-      <c:if test="${not empty blogEntry.attachment}"><a href="${blogEntry.attachment.url}" title="${blogEntry.attachment.size} bytes, ${blogEntry.attachment.type}"><fmt:message key="blogentry.attachment" /></a></c:if>
+      <a href="${url:rewrite(blogEntry.localPermalink)}" title="${blogEntry.localPermalink}">#</a>
+      <c:if test="${not empty blogEntry.attachment}"><a href="${url:rewrite(blogEntry.attachment.url)}" title="${blogEntry.attachment.size} bytes, ${blogEntry.attachment.type}"><fmt:message key="blogentry.attachment" /></a></c:if>
     </div>
   </div>
 
@@ -70,7 +70,7 @@
     <pebble:isBlogContributor>
     <c:if test="${blogEntry.numberOfResponses > 0}">
     <form name="responsesForm" method="post" action="manageResponses.secureaction">
-    <input type="hidden" name="redirectUrl" value="${blogEntry.localPermalink}" />
+    <input type="hidden" name="redirectUrl" value="${url:rewrite(blogEntry.localPermalink)}" />
     </c:if>
     </pebble:isBlogContributor>
 

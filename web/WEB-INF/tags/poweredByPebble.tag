@@ -2,6 +2,6 @@
 
 <fmt:message key="common.poweredBy">
   <fmt:param>
-    <a href="http://pebble.sourceforge.net">Pebble ${pebbleContext.buildVersion}</a>
+    <a href="http://pebble.sourceforge.net/">Pebble ${pebbleContext.buildVersion}</a>
   </fmt:param>
 </fmt:message>

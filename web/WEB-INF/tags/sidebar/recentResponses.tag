@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 <%@ taglib uri="http://pebble.sourceforge.net/pebble" prefix="pebble" %>
+<%@ taglib uri="/WEB-INF/url.tld" prefix="url" %>
 
 <%--
   Displays the recent responses (comments and TrackBacks).
@@ -12,7 +13,7 @@
   <div class="sidebarItemBody">
     <ul>
     <c:forEach var="aResponse" items="${recentResponses}" varStatus="status" end="${blog.recentResponsesOnHomePage-1}">
-      <li><a href="${aResponse.permalink}" title="${aResponse.permalink}">${aResponse.title}</a><br />${aResponse.truncatedContent}</li>
+      <li><a href="${url:rewrite(aResponse.permalink)}" title="${aResponse.permalink}">${aResponse.title}</a><br />${aResponse.truncatedContent}</li>
     </c:forEach>
     </ul>
   </div>

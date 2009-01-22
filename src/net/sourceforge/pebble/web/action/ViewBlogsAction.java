@@ -56,7 +56,7 @@ public class ViewBlogsAction extends SecureAction {
    */
   public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
     BlogManager blogManager = BlogManager.getInstance();
-    getModel().put("blogs", blogManager.getBlogs());
+    getModel().put(Constants.BLOGS, blogManager.getBlogs());
 
     return new BlogsView();
   }

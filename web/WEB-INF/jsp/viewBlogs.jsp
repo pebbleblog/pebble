@@ -30,7 +30,7 @@
           </c:otherwise>
         </c:choose>
         <td>${aBlog.id}</td>
-        <td><a href="${aBlog.url}">${aBlog.name}</a></td>
+        <td><a href="${url:rewrite(aBlog.url)}">${aBlog.name}</a></td>
         <td align="right">
           <c:choose><c:when test="${not empty aBlog.blogOwners}">X</c:when><c:otherwise>&nbsp;</c:otherwise></c:choose>
         </td>
@@ -44,8 +44,8 @@
           <c:choose><c:when test="${not empty aBlog.blogReaders}">X</c:when><c:otherwise>&nbsp;</c:otherwise></c:choose>
         </td>
         <td align="right">
-          <a href="${aBlog.url}viewBlogProperties.secureaction"><fmt:message key="admin.properties"/></a> |
-          <a href="${aBlog.url}viewPlugins.secureaction"><fmt:message key="admin.plugins"/></a>
+          <a href="${url:rewrite(aBlog.url)}viewBlogProperties.secureaction"><fmt:message key="admin.properties"/></a> |
+          <a href="${url:rewrite(aBlog.url)}viewPlugins.secureaction"><fmt:message key="admin.plugins"/></a>
         </td>
       </tr>
       </c:forEach>

@@ -58,7 +58,7 @@
       <template:poweredByPebble/>
       <pebble:isNotAuthenticated>
       |
-      <a href="login.secureaction"><fmt:message key="login.title" /></a>
+      <a href="${pebbleContext.configuration.secureUrl}login.secureaction"><fmt:message key="login.title" /></a>
       </pebble:isNotAuthenticated>
       <pebble:isAuthenticated>
       |

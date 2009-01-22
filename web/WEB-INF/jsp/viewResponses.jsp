@@ -68,7 +68,7 @@
           <c:out value="${response.ipAddress}" default="-" />
         </td>
         <td valign="top" class="small">
-          <a href="<c:out value="${response.permalink}"/>" title="Go to this response"><c:out value="${response.title}"/></a>
+          <a href="<c:out value="${url:rewrite(response.permalink)}"/>" title="Go to this response"><c:out value="${response.title}"/></a>
           <br />
           <c:out value="${response.truncatedContent}" escapeXml="true" />
         </td>

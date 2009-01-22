@@ -8,7 +8,7 @@
     <pre><c:out value="${trackBackResponseMessage}" escapeXml="true" /></pre>
 
     <p>
-    Return to <a href="${blogEntry.permalink}">${blogEntry.title}</a>.
+    Return to <a href="${url:rewrite(blogEntry.permalink)}">${blogEntry.title}</a>.
     </p>
   </div>
 

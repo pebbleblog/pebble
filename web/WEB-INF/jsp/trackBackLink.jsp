@@ -6,7 +6,7 @@
   <div class="contentItemBody">
     <p>
       <fmt:message key="trackback.hereIsLink">
-        <fmt:param><a href="${blogEntry.permalink}">${blogEntry.title}</a></fmt:param>
+        <fmt:param><a href="${url:rewrite(blogEntry.permalink)}">${blogEntry.title}</a></fmt:param>
       </fmt:message>
       <c:if test="${trackBackLinkExpires}">
         <fmt:message key="trackback.linkExpires" />

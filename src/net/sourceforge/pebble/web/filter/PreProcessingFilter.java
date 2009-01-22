@@ -31,11 +31,14 @@
  */
 package net.sourceforge.pebble.web.filter;
 
+import net.sourceforge.pebble.Configuration;
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.PebbleContext;
 import net.sourceforge.pebble.security.PebbleUserDetails;
+import net.sourceforge.pebble.util.HttpsURLRewriter;
 import net.sourceforge.pebble.util.SecurityUtils;
 import net.sourceforge.pebble.util.CookieUtils;
+import net.sourceforge.pebble.util.UrlRewriter;
 import net.sourceforge.pebble.util.Utilities;
 import net.sourceforge.pebble.api.decorator.ContentDecoratorContext;
 import net.sourceforge.pebble.comparator.BlogEntryComparator;
@@ -171,6 +174,15 @@ public class PreProcessingFilter implements Filter {
       Config.set(request, Config.FMT_FALLBACK_LOCALE, Locale.ENGLISH);
     }
 
-    chain.doFilter(request, response);
+    try {
+	  	Configuration configuration = PebbleContext.getInstance().getConfiguration();
+	  	if(configuration.isHttpsWorkaroundEnabled()) {
+	  		UrlRewriter.useThisRewriter(new HttpsURLRewriter(request.getScheme()));
+	  	}
+	    
+	    chain.doFilter(request, response);
+    } finally {
+    	UrlRewriter.clear();
+    }
   }
 }

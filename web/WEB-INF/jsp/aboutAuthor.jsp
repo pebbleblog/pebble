@@ -29,7 +29,7 @@
           <br />
         </td>
         <td valign="top">
-          <a href="${blogEntry.permalink}" title="${blogEntry.title}">${blogEntry.title}</a>
+          <a href="${url:rewrite(blogEntry.permalink)}" title="${blogEntry.title}">${blogEntry.title}</a>
           <br />
           ${blogEntry.truncatedContent}
         </td>

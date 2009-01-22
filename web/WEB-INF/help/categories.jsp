@@ -30,10 +30,10 @@
     <p>
       Each category has an associated RSS/Atom feed, allowing readers to subscribe to only those categories they are interested in.
       <c:if test="${not empty blog.rootCategory.subCategories}">
-        For example, the newsfeed URLs for your <a href="${blog.categories[1].permalink}">${blog.categories[1]}</a> category are as follows.
+        For example, the newsfeed URLs for your <a href="${url:rewrite(blog.categories[1].permalink)}">${blog.categories[1]}</a> category are as follows.
         <ul>
-          <li>RSS : <a href="${blog.categories[1].permalink}rss.xml">${blog.categories[1].permalink}rss.xml</a></li>
-          <li>Atom : <a href="${blog.categories[1].permalink}atom.xml">${blog.categories[1].permalink}atom.xml</a></li>
+          <li>RSS : <a href="${url:rewrite(blog.categories[1].permalink)}rss.xml">${blog.categories[1].permalink}rss.xml</a></li>
+          <li>Atom : <a href="${url:rewrite(blog.categories[1].permalink)}atom.xml">${blog.categories[1].permalink}atom.xml</a></li>
         </ul>
         You can find these links on the public <a href="./categories/">Categories</a> page.
       </c:if>
