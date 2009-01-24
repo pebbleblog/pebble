@@ -2,7 +2,7 @@
   <c:choose>
     <c:when test="${blogEntry.numberOfResponses > 0}">
       <a href="${url:rewrite(blogEntry.localPermalink)}#responses"><fmt:message key="blogentry.responses" />[<fmt:formatNumber value="${blogEntry.numberOfResponses}"/>]</a>
-      <a href="${blogEntry.blog.url)}responses/rss.xml?entry=${blogEntry.id}"><img src="common/images/feed-icon-10x10.png" alt="RSS feed for responses to this blog entry" border="0" /></a>
+      <a href="${url:rewrite(blogEntry.blog.url)}responses/rss.xml?entry=${blogEntry.id}"><img src="common/images/feed-icon-10x10.png" alt="RSS feed for responses to this blog entry" border="0" /></a>
     </c:when>
     <c:when test="${blogEntry.commentsEnabled}">
       <a href="${url:rewrite(blogEntry.blog.url)}replyToBlogEntry.action?entry=${blogEntry.id}"><fmt:message key="comment.addComment"/></a>
