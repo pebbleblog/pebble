@@ -33,6 +33,7 @@ package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.domain.*;
+import net.sourceforge.pebble.util.StringUtils;
 import net.sourceforge.pebble.web.view.ForwardView;
 import net.sourceforge.pebble.web.view.RedirectView;
 import net.sourceforge.pebble.web.view.View;
@@ -91,7 +92,7 @@ public class ManageBlogEntryAction extends SecureAction {
       if (submit.equalsIgnoreCase("Remove")) {
         try {
           service.removeBlogEntry(blogEntry);
-          blog.info("Blog entry \"" + blogEntry.getTitle() + "\" removed.");
+          blog.info("Blog entry \"" + StringUtils.transformHTML(blogEntry.getTitle()) + "\" removed.");
         } catch (BlogServiceException be) {
           throw new ServletException(be);
         }

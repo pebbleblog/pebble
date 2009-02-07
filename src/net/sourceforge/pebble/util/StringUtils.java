@@ -100,6 +100,9 @@ public final class StringUtils {
         case '&':
           buf.append("&amp;");
           break;
+        case '\"':
+            buf.append("&quot;");
+            break;
         default :
           buf.append(s.charAt(i));
       }

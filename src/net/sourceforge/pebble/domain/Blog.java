@@ -63,6 +63,8 @@ import net.sourceforge.pebble.logging.CombinedLogFormatLogger;
 import net.sourceforge.pebble.permalink.DefaultPermalinkProvider;
 import net.sourceforge.pebble.service.StaticPageService;
 import net.sourceforge.pebble.service.StaticPageServiceException;
+import net.sourceforge.pebble.util.StringUtils;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -1759,7 +1761,7 @@ public class Blog extends AbstractBlog {
       searchIndex.indexBlogEntries(blogEntries);
       info("Blog entries reindexed.");
     } catch (Exception e) {
-      error("Error reindexing blog entries - " + e.getMessage());
+      error(e.getClass().getName() + " reindexing blog entries - " + StringUtils.transformHTML(e.getMessage()));
       log.error("Error reindexing blog entries", e);
     }
   }
@@ -1772,7 +1774,7 @@ public class Blog extends AbstractBlog {
       searchIndex.indexStaticPages(staticPages);
       info("Static pages reindexed.");
     } catch (Exception e) {
-      error("Error reindexing static pages - " + e.getMessage());
+      error(e.getClass().getName() + " reindexing static pages - " + StringUtils.transformHTML(e.getMessage()));
       log.error("Error reindexing static pages", e);
     }
   }

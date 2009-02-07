@@ -4,6 +4,8 @@ import net.sourceforge.pebble.PebbleContext;
 import net.sourceforge.pebble.security.PebbleUserDetails;
 import net.sourceforge.pebble.security.SecurityRealm;
 import net.sourceforge.pebble.security.SecurityRealmException;
+import net.sourceforge.pebble.util.StringUtils;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -113,6 +115,7 @@ public abstract class PageBasedContent extends Content {
    * @param newTitle  the title as a String
    */
   public void setTitle(String newTitle) {
+	newTitle = StringUtils.transformHTML(newTitle);
     propertyChangeSupport.firePropertyChange(TITLE_PROPERTY, title, newTitle);
     this.title = newTitle;
   }
@@ -132,6 +135,7 @@ public abstract class PageBasedContent extends Content {
    * @param newSubtitle  the subtitle as a String
    */
   public void setSubtitle(String newSubtitle) {
+	newSubtitle = StringUtils.transformHTML(newSubtitle);
     propertyChangeSupport.firePropertyChange(SUBTITLE_PROPERTY, subtitle, newSubtitle);
     this.subtitle = newSubtitle;
   }
@@ -226,7 +230,7 @@ public abstract class PageBasedContent extends Content {
    * @param newAuthor the author as a String
    */
   public void setAuthor(String newAuthor) {
-    this.author = newAuthor;
+    this.author = StringUtils.transformHTML(newAuthor);
   }
 
   /**
@@ -307,6 +311,7 @@ public abstract class PageBasedContent extends Content {
    * @param newPermalink an absolute URL as a String
    */
   public void setOriginalPermalink(String newPermalink) {
+	newPermalink = StringUtils.transformHTML(newPermalink);
     if (newPermalink == null || newPermalink.length() == 0) {
       propertyChangeSupport.firePropertyChange(ORIGINAL_PERMALINK_PROPERTY, originalPermalink, null);
       this.originalPermalink = null;

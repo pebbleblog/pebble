@@ -36,6 +36,7 @@ import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.domain.StaticPage;
 import net.sourceforge.pebble.service.StaticPageService;
 import net.sourceforge.pebble.service.StaticPageServiceException;
+import net.sourceforge.pebble.util.StringUtils;
 import net.sourceforge.pebble.web.view.RedirectView;
 import net.sourceforge.pebble.web.view.View;
 import org.apache.commons.logging.Log;
@@ -74,7 +75,7 @@ public class UnlockStaticPageAction extends SecureAction {
           blog.info("Static page <a href=\"" + staticPage.getLocalPermalink() + "\">" + staticPage.getTitle() + "</a> unlocked.");
         }
       } catch (StaticPageServiceException e) {
-        blog.warn("Error while unlocking static page - " + e.getMessage());
+        blog.warn(e.getClass().getName() + " Error while unlocking static page - " + StringUtils.transformHTML(e.getMessage()));
         log.warn("Error while unlocking static page", e);
       }
     }

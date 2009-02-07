@@ -31,6 +31,7 @@
  */
 package net.sourceforge.pebble.domain;
 
+import net.sourceforge.pebble.util.StringUtils;
 import net.sourceforge.pebble.web.validation.ValidationContext;
 
 import java.util.ArrayList;
@@ -62,7 +63,7 @@ public class StaticPage extends PageBasedContent {
   }
 
   public void setName(String name) {
-    this.name = name;
+    this.name = StringUtils.transformHTML(name);
   }
 
   /**
@@ -89,10 +90,11 @@ public class StaticPage extends PageBasedContent {
   }
 
   public void validate(ValidationContext context) {
+	// TODO: localize
     if (name == null || name.length() == 0) {
       context.addError("Name cannot be empty");
     } else if (!name.matches("[\\w_/-]+")) {
-      context.addError("Name \"" + name + "\" must contain only A-Za-z0-9_-/");
+      context.addError("Name \"" + StringUtils.transformHTML(name) + "\" must contain only A-Za-z0-9_-/");
     }
 
     String id = getBlog().getStaticPageIndex().getStaticPage(name);

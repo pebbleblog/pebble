@@ -36,6 +36,7 @@ import net.sourceforge.pebble.domain.FileManager;
 import net.sourceforge.pebble.domain.FileMetaData;
 import net.sourceforge.pebble.domain.IllegalFileAccessException;
 import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.util.StringUtils;
 import net.sourceforge.pebble.web.view.ForbiddenView;
 import net.sourceforge.pebble.web.view.ForwardView;
 import net.sourceforge.pebble.web.view.View;
@@ -76,7 +77,7 @@ public class SaveFileAction extends AbstractFileAction {
         fileManager.saveFile("/theme" + path, name, content);
       }
 
-      blog.info("File \"" + name + "\" saved.");
+      blog.info("File \"" + StringUtils.transformHTML(name) + "\" saved.");
     } catch (IllegalFileAccessException e) {
       return new ForbiddenView();
     } catch (IOException ioe) {

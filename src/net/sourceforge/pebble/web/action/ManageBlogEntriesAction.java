@@ -36,6 +36,7 @@ import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.domain.BlogEntry;
 import net.sourceforge.pebble.domain.BlogService;
 import net.sourceforge.pebble.domain.BlogServiceException;
+import net.sourceforge.pebble.util.StringUtils;
 import net.sourceforge.pebble.web.view.RedirectView;
 import net.sourceforge.pebble.web.view.View;
 import org.apache.commons.logging.Log;
@@ -81,7 +82,7 @@ public class ManageBlogEntriesAction extends SecureAction {
           if (submit.equalsIgnoreCase("Remove")) {
             try {
               service.removeBlogEntry(blogEntry);
-              blog.info("Blog entry \"" + blogEntry.getTitle() + "\" removed.");
+              blog.info("Blog entry \"" + StringUtils.transformHTML(blogEntry.getTitle()) + "\" removed.");
             } catch (BlogServiceException be) {
               throw new ServletException(be);
             }

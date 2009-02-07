@@ -36,6 +36,7 @@ import net.sourceforge.pebble.domain.FileManager;
 import net.sourceforge.pebble.domain.FileMetaData;
 import net.sourceforge.pebble.domain.IllegalFileAccessException;
 import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.util.StringUtils;
 import net.sourceforge.pebble.web.view.ForbiddenView;
 import net.sourceforge.pebble.web.view.RedirectView;
 import net.sourceforge.pebble.web.view.View;
@@ -77,7 +78,7 @@ public class RemoveFilesAction extends AbstractFileAction {
             themeFileManager.deleteFile("/theme" + path, name);
           }
 
-          blog.info("File \"" + name + "\" removed.");
+          blog.info("File \"" + StringUtils.transformHTML(name) + "\" removed.");
         } catch (IllegalFileAccessException e) {
           return new ForbiddenView();
         }

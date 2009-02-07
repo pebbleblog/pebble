@@ -34,6 +34,8 @@ package net.sourceforge.pebble.domain;
 import java.util.Calendar;
 import java.util.Date;
 
+import net.sourceforge.pebble.util.StringUtils;
+
 /**
  * Represents a response to a blog entry - either a comment or a TrackBack.
  *
@@ -122,7 +124,7 @@ public abstract class Response extends Content {
    * @param   title   the title as a String
    */
   public void setTitle(String title) {
-    this.title = title;
+    this.title = StringUtils.transformHTML(title);
   }
 
   /**

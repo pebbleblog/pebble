@@ -32,6 +32,8 @@
 package net.sourceforge.pebble.webservice;
 
 import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.util.StringUtils;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.xmlrpc.AsyncCallback;
@@ -79,7 +81,7 @@ public class UpdateNotificationPingsClient {
     try {
       for (String site : sites) {
         log.info("Sending XML-RPC ping to " + site);
-        blog.info("Sending XML-RPC ping to " + site);
+        blog.info("Sending XML-RPC ping to " + StringUtils.transformHTML(site));
         XmlRpcClient xmlrpc = new XmlRpcClient(site);
         Vector params = new Vector();
         params.addElement(blog.getName());
@@ -113,7 +115,7 @@ public class UpdateNotificationPingsClient {
       Hashtable result = (Hashtable)o;
       if (result != null) {
         log.info("Result of XML-RPC ping to " + method + " at " + url + " was " + result.get("flerror") + ", " + result.get("message"));
-        blog.info("Result of XML-RPC ping to " + method + " at " + url + " was " + result.get("flerror") + ", " + result.get("message"));
+        blog.info("Result of XML-RPC ping to " + t(method) + " at " + t(url) + " was " + t(result.get("flerror")) + ", " + t(result.get("message")));
       }
     }
 
@@ -126,6 +128,11 @@ public class UpdateNotificationPingsClient {
      */
     public void handleError(Exception e, URL url, String method) {
       log.error("Exception when calling " + method + " at " + url, e);
+    }
+
+    private String t(Object object) {
+  	  if(object == null) return null;
+  	  return StringUtils.transformHTML(object.toString());
     }
   }
 

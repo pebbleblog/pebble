@@ -4,6 +4,7 @@ import net.sourceforge.pebble.domain.*;
 import net.sourceforge.pebble.util.CookieUtils;
 import net.sourceforge.pebble.util.MailUtils;
 import net.sourceforge.pebble.util.SecurityUtils;
+import net.sourceforge.pebble.util.StringUtils;
 import net.sourceforge.pebble.web.validation.ValidationContext;
 import net.sourceforge.pebble.security.PebbleUserDetails;
 import org.apache.commons.logging.Log;
@@ -27,11 +28,11 @@ public abstract class AbstractCommentAction extends Action {
   private static final Log log = LogFactory.getLog(AbstractCommentAction.class);
 
   protected Comment createComment(HttpServletRequest request, BlogEntry blogEntry) {
-    String author = request.getParameter("author");
+    String author = StringUtils.transformHTML(request.getParameter("author"));
     String email = request.getParameter("email");
     String website = request.getParameter("website");
     String ipAddress = request.getRemoteAddr();
-    String title = request.getParameter("title");
+    String title = StringUtils.transformHTML(request.getParameter("title"));
     String body = request.getParameter("commentBody");
 
     Comment comment = blogEntry.createComment(title, body, author, email, website, ipAddress);

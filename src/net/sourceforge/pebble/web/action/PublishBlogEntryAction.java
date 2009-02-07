@@ -33,6 +33,7 @@ package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.domain.*;
+import net.sourceforge.pebble.util.StringUtils;
 import net.sourceforge.pebble.web.view.NotFoundView;
 import net.sourceforge.pebble.web.view.RedirectView;
 import net.sourceforge.pebble.web.view.View;
@@ -95,7 +96,7 @@ public class PublishBlogEntryAction extends SecureAction {
           blog.info("Blog entry <a href=\"" + blogEntry.getLocalPermalink() + "\">" + blogEntry.getTitle() + "</a> published.");
         } catch (BlogServiceException be) {
           // give feedback to the user that something bad has happened
-          blog.error("Error publishing blog entry " + blogEntry.getTitle() + ": " + be.getClass().getName() + " " + be.getMessage());
+          blog.error("Error publishing blog entry " + StringUtils.transformHTML(blogEntry.getTitle()) + ": " + be.getClass().getName() + " " + StringUtils.transformHTML(be.getMessage()));
           log.error(be);
         }
       } else {

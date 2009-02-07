@@ -36,6 +36,7 @@ import net.sourceforge.pebble.domain.FileManager;
 import net.sourceforge.pebble.domain.FileMetaData;
 import net.sourceforge.pebble.domain.IllegalFileAccessException;
 import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.util.StringUtils;
 import net.sourceforge.pebble.web.view.RedirectView;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.ForbiddenView;
@@ -63,9 +64,10 @@ public class CopyFileAction extends AbstractFileAction {
   public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
     String name = request.getParameter("name");
+    String oldName = StringUtils.filterHTML(name);
     String type = request.getParameter("type");
     String path = request.getParameter("path");
-    String newName = request.getParameter("newName");
+    String newName = StringUtils.filterHTML(request.getParameter("newName"));
     String submit = request.getParameter("submit");
 
     FileManager fileManager = new FileManager(blog, type);
@@ -80,7 +82,7 @@ public class CopyFileAction extends AbstractFileAction {
           fileManager.renameFile("/theme" + path, name, newName);
         }
 
-        blog.info("File \"" + name + "\" renamed to \"" + newName + "\".");
+        blog.info("File \"" + oldName + "\" renamed to \"" + newName + "\".");
       } else {
         if (FileManager.hasEnoughSpace(blog, fileManager.getFileMetaData(path, name).getSizeInKB())) {
           fileManager.copyFile(path, name, newName);
@@ -91,7 +93,7 @@ public class CopyFileAction extends AbstractFileAction {
             fileManager.copyFile("/theme" + path, name, newName);
           }
 
-          blog.info("File \"" + name + "\" copied to \"" + newName + "\".");
+          blog.info("File \"" + oldName + "\" copied to \"" + newName + "\".");
         } else {
           return new NotEnoughSpaceView();
         }

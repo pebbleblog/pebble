@@ -31,6 +31,8 @@
  */
 package net.sourceforge.pebble.domain;
 
+import net.sourceforge.pebble.util.StringUtils;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -160,12 +162,12 @@ public class Tag implements Permalinkable, Comparable {
    * @return        a List of Tag instances
    */
   public static List<Tag> parse(Blog blog, String tags) {
-    List list = new ArrayList();
+    List<Tag> list = new ArrayList<Tag>();
 
     if (tags != null && tags.trim().length() > 0) {
       String s[] = tags.trim().split(" ");
       for (int i = 0; i < s.length; i++) {
-        Tag tag = new Tag(s[i].trim(), blog);
+        Tag tag = new Tag(StringUtils.transformHTML(s[i].trim()), blog);
         if (!list.contains(tag)) {
           list.add(tag);
         }

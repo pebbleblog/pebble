@@ -36,6 +36,7 @@ import net.sourceforge.pebble.domain.FileManager;
 import net.sourceforge.pebble.domain.FileMetaData;
 import net.sourceforge.pebble.domain.IllegalFileAccessException;
 import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.util.StringUtils;
 import net.sourceforge.pebble.web.view.ForbiddenView;
 import net.sourceforge.pebble.web.view.RedirectView;
 import net.sourceforge.pebble.web.view.View;
@@ -60,7 +61,7 @@ public class CreateDirectoryAction extends AbstractFileAction {
    */
   public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
-    String name = request.getParameter("name");
+    String name = StringUtils.filterHTML(request.getParameter("name"));
     String type = request.getParameter("type");
     String path = request.getParameter("path");
 
