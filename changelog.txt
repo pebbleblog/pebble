@@ -1,5 +1,7 @@
 Version 2.4 - TBC
 -----------------
+Sourceforge-SCP-Uploads now use ${sourceforge.username},pebble@web.sf.net (Olaf Kock) - remaining permissions-issues when different people are uploading 
+Fixed xss issues (Olaf Kock)
 Added Search API for XML-RPC (Seymour Cakes)
 Fix image upload bug (first character was silently dropped) (James Manger)
 This version doesn't require JavaMail on the classpath and will ignore (but log) NoClassDefFoundErrors relating to JavaMail 
@@ -37,7 +39,7 @@ Minor HTML cleanup and tweaks to theme.
 Added a GZIP compression filter to reduce page loading times.
 DWR scripts are now cached to reduce page loading times.
 Fixed a problem where JavaScript would be served up when logging in to a private blog.
-Fixed problems with unit tests failing in non-English locales (patches from Fr�d�ric Chuong).
+Fixed problems with unit tests failing in non-English locales (patches from Frédéric Chuong).
 Moved admin links from the sidebar to the top of the page.
 Separated out blog security configuration from the general blog properties.
 Pebble now uses the ServletContext for getting MIME type information when serving up files.

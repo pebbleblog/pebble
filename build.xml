@@ -341,9 +341,8 @@
     <zip destfile="${build.dir}/website.zip" basedir="${website.dir}" />
   </target>
 
-  <target name="uploadwebsite" depends="website">
-    <loadproperties srcFile="${user.home}/sourceforge.properties"/>
-    <scp file="${build.dir}/website.zip" todir="${sourceforge.username}@shell.sf.net:/home/groups/p/pe/pebble/htdocs/website.zip" password="${sourceforge.password}"/>
+  <target name="uploadwebsite" depends="website,sourceforgecredentials">
+    <scp file="${build.dir}/website.zip" todir="${sourceforge.username},pebble@web.sf.net:htdocs/website.zip" password="${sourceforge.password}"/>
   </target> 
 
   <target name="releaseBuild">
@@ -392,10 +391,31 @@
     <delete file="web/WEB-INF/generated_web.xml"/>
   </target>
 
-  <target name="nightlybuild" depends="dist">
+<target name="sourceforgecredentials">
     <loadproperties srcFile="${user.home}/sourceforge.properties"/>
-    <scp file="${dist.dir}/${project.name}-${build.version}.zip" todir="${sourceforge.username}@shell.sf.net:/home/groups/p/pe/pebble/htdocs/pebble-nightly.zip" password="${sourceforge.password}"/>
+	<echo>
+		In order to sftp to ${sourceforge.username},pebble@web.sf.net 
+		with your ssh key please enter the location of your key
+	</echo>
+	<input message="Location / Filename"
+           defaultvalue="${user.home}/.ssh/id_rsa" 
+		   addproperty="sshkeylocation"/>
+	<echo>
+		Also, we need your secret passphrase to unlock the key. 
+		Note that the passphrase WILL BE PRINTED to the console.
+		This is documented in the ant input task as a java flaw,
+		because Java cannot read input from the console without
+		printing the characters at the same time. Sorry for that.
+		You might want to consider creating a ssh key specifically
+		for this.
+	</echo>
+    <input message="Your secret passphrase to unlock the key" 
+    	   addproperty="sshpassphrase"/>
+</target>	
+	
+	
 
+  <target name="nightlybuild" depends="dist,sourceforgecredentials">
     <copy file="website/index.html" tofile="${build.dir}/index.html" />
     <replace file="${build.dir}/index.html">
       <replacetoken><![CDATA[<!-- @@nightlyBuild@@ -->]]></replacetoken>
@@ -404,7 +424,25 @@
 ]]></replacevalue>
     </replace>
     <replace file="${build.dir}/index.html" token="@@buildDate@@" value="${build.date}" />
-    <scp file="${build.dir}/index.html" todir="${sourceforge.username}@shell.sf.net:/home/groups/p/pe/pebble/htdocs/index.html" password="${sourceforge.password}"/>
+
+    <scp file="${dist.dir}/${project.name}-${build.version}.zip" 
+         todir="${sourceforge.username},pebble@web.sf.net:htdocs/pebble-nightly.zip" 
+         keyfile="${sshkeylocation}"
+         passphrase="${sshpassphrase}"/>
+    <scp file="${build.dir}/index.html"
+         toDir="${sourceforge.username},pebble@web.sf.net:htdocs/index.html"
+         keyfile="${sshkeylocation}"
+         passphrase="${sshpassphrase}"/>
+<!--
+	previously the upload was user-based - it changed to "user,project" based above,
+	so that these scp tasks are superceded by the ones above. As I'm still getting used
+	to releasing files, I'd like to leave these lines here for a while even though
+	they still exist in svn.
+    <scp file="${dist.dir}/${project.name}-${build.version}.zip"
+         todir="${sourceforge.username}@web.sf.net:/home/groups/p/pe/pebble/htdocs/pebble-nightly.zip"
+         password="${sourceforge.password}"/>
+    <scp file="${build.dir}/index.html" todir="${sourceforge.username}@web.sf.net:/home/groups/p/pe/pebble/htdocs/index.html" password="${sourceforge.password}"/>
+-->
   </target>
 
   <target name="with.clover" depends="init">
