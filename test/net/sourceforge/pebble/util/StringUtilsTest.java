@@ -46,7 +46,8 @@ public class StringUtilsTest extends TestCase {
     assertEquals("Here is a &lt; symbol", StringUtils.transformHTML("Here is a < symbol"));
     assertEquals("Here is a &gt; symbol", StringUtils.transformHTML("Here is a > symbol"));
     assertEquals("Here is a &amp; symbol", StringUtils.transformHTML("Here is a & symbol"));
-    assertEquals("&lt;a href=\"http://www.google.com\"&gt;Google&lt;/a&gt;", StringUtils.transformHTML("<a href=\"http://www.google.com\">Google</a>"));
+    System.out.println("\n\n\n\n" + StringUtils.transformHTML("<a href=\"http://www.google.com\">Google</a>") + "\n\n\n\n");
+    assertEquals("&lt;a href=&quot;http://www.google.com&quot;&gt;Google&lt;/a&gt;", StringUtils.transformHTML("<a href=\"http://www.google.com\">Google</a>"));
   }
 
   public void testTransformToHTMLSubset() {

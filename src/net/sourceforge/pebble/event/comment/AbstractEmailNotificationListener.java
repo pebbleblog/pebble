@@ -36,6 +36,7 @@ import net.sourceforge.pebble.domain.Comment;
 import net.sourceforge.pebble.api.decorator.ContentDecoratorContext;
 import net.sourceforge.pebble.api.event.comment.CommentEvent;
 import net.sourceforge.pebble.util.MailUtils;
+import net.sourceforge.pebble.util.StringUtils;
 
 import javax.mail.Session;
 import java.text.SimpleDateFormat;
@@ -90,7 +91,7 @@ public abstract class AbstractEmailNotificationListener extends CommentListenerS
     sdf.setTimeZone(blog.getTimeZone());
 
     String subject = "[Comment] " + comment.getTitle();
-    String author = comment.getAuthor();
+    String author = StringUtils.transformHTML(comment.getAuthor());
     if (comment.getWebsite() != null) {
       author = "<a href=\"" + comment.getWebsite() + "\">" + author + "</a>";
     }
@@ -138,7 +139,7 @@ public abstract class AbstractEmailNotificationListener extends CommentListenerS
     sdf.setTimeZone(blog.getTimeZone());
 
     String subject = "[Comment-" + comment.getState().getName() + "] " + comment.getTitle();
-    String author = comment.getAuthor();
+    String author = StringUtils.transformHTML(comment.getAuthor());
     if (comment.getWebsite() != null) {
       author = "<a href=\"" + comment.getWebsite() + "\">" + author + "</a>";
     }

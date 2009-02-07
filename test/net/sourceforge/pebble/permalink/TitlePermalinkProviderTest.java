@@ -115,7 +115,8 @@ public class TitlePermalinkProviderTest extends PermalinkProviderSupportTestCase
     blogEntry.setTitle("");
     assertEquals(prefix + blogEntry.getId() + suffix, permalinkProvider.getPermalink(blogEntry));
 
-    blogEntry.setTitle("./:!@£$%^&*()");
+    blogEntry.setTitle("./:!@ï¿½$%^&*()");
+    System.out.println("\n\n\n\n" + permalinkProvider.getPermalink(blogEntry) + "\n\n\n\n");
     assertEquals(prefix + blogEntry.getId() + suffix, permalinkProvider.getPermalink(blogEntry));
   }
 

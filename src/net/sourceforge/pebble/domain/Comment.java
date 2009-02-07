@@ -175,7 +175,7 @@ public class Comment extends Response {
     if (author == null || author.length() == 0) {
       this.author = "Anonymous";
     } else {
-      this.author = StringUtils.transformHTML(author);
+      this.author = author;
     }
   }
 
@@ -225,7 +225,7 @@ public class Comment extends Response {
    * @param website   the website url
    */
   public void setWebsite(String website) {
-    website = StringUtils.transformHTML(website);
+    website = StringUtils.filterHTML(website);
     if (website == null || website.length() == 0) {
       this.website = null;
     } else if (
