@@ -5,3 +5,4 @@
 <%@ taglib uri="http://pebble.sourceforge.net/pebble" prefix="pebble" %>
 <%@ taglib prefix="sidebar" tagdir="/WEB-INF/tags/sidebar" %>
 <%@ taglib prefix="template" tagdir="/WEB-INF/tags/" %>
+<%@ taglib prefix="url" uri="/WEB-INF/url.tld" %>

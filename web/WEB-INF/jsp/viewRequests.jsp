@@ -32,7 +32,7 @@
           </c:otherwise>
         </c:choose>
           <td>
-            <a href="<c:out value=".${aRequest.url}"/>" title="<c:out value="${aRequest.url}"/>"><c:out value="${aRequest.truncatedName}"/></a>
+            <a href="<c:out value=".${url:escape(aRequest.url)}"/>" title="<c:out value="${url:escape(aRequest.url)}"/>"><c:out value="${aRequest.truncatedName}"/></a>
           </td>
           <td align="right">
             <fmt:formatNumber value="${aRequest.count}"/>

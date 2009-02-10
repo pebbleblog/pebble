@@ -1,3 +1,7 @@
+Version 2.3.2 - 10th February 2009
+----------------------------------
+fixed XSS issues (reported by James Roper)
+
 Version 2.3.1 - 11th March 2008
 -------------------------------
 Added code to prevent Pebble from not starting up if mail.jar and activation.jar are not on the server classpath (for e-mail integration).
@@ -17,7 +21,7 @@ Minor HTML cleanup and tweaks to theme.
 Added a GZIP compression filter to reduce page loading times.
 DWR scripts are now cached to reduce page loading times.
 Fixed a problem where JavaScript would be served up when logging in to a private blog.
-Fixed problems with unit tests failing in non-English locales (patches from Frédéric Chuong).
+Fixed problems with unit tests failing in non-English locales (patches from Frï¿½dï¿½ric Chuong).
 Moved admin links from the sidebar to the top of the page.
 Separated out blog security configuration from the general blog properties.
 Pebble now uses the ServletContext for getting MIME type information when serving up files.
