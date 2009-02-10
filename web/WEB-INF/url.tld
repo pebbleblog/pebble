@@ -7,5 +7,10 @@
 		<function-class>net.sourceforge.pebble.web.tagext.UrlFunctions</function-class>
 		<function-signature>java.lang.String rewrite(java.lang.String)</function-signature>
 	</function> 
+	<function>
+		<name>escape</name>
+		<function-class>net.sourceforge.pebble.web.tagext.UrlFunctions</function-class>
+		<function-signature>java.lang.String escape(java.lang.String)</function-signature>
+	</function> 
 </taglib>
 

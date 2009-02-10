@@ -40,7 +40,7 @@
             <input type="checkbox" name="expression" value="${referer.domainFilter}" />
           </td>
           <td>
-            <a href="${referer.url}" title="${referer.url}" rel="nofollow">${referer.truncatedName}</a>
+            <a href="${url:escape(referer.url)}" title="${url:escape(referer.url)}" rel="nofollow">${url:escape(referer.truncatedName)}</a>
           </td>
           <td align="right">
             <fmt:formatNumber value="${referer.count}"/>
