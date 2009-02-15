@@ -1,7 +1,8 @@
 Version 2.4 - TBC
 -----------------
+Updated french translation (Sylvain Balbous)
 fixed XSS issues with referrer log (James Roper)
-Sourceforge-SCP-Uploads now use ${sourceforge.username},pebble@web.sf.net (Olaf Kock) - remaining permissions-issues when different people are uploading 
+Sourceforge-SCP-Uploads now use ${sourceforge.username},pebble@web.sf.net in build.xml (Olaf Kock) - remaining permissions-issues when different people are uploading 
 Fixed xss issues with comments and info-messages (Olaf Kock)
 Added Search API for XML-RPC (Seymour Cakes)
 Fix image upload bug (first character was silently dropped) (James Manger)
