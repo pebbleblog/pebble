@@ -1,5 +1,6 @@
 Version 2.4 - TBC
 -----------------
+Updated norwegian translation (Tor Helland)
 Updated french translation (Sylvain Balbous)
 fixed XSS issues with referrer log (James Roper)
 Sourceforge-SCP-Uploads now use ${sourceforge.username},pebble@web.sf.net in build.xml (Olaf Kock) - remaining permissions-issues when different people are uploading 
