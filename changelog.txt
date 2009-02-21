@@ -1,5 +1,7 @@
 Version 2.4 - TBC
 -----------------
+started polish translation (Sylvain Balbous)
+Updated portuguese translation (Eduardo Ramalho)
 Updated norwegian translation (Tor Helland)
 Updated french translation (Sylvain Balbous)
 fixed XSS issues with referrer log (James Roper)
