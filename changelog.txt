@@ -1,5 +1,6 @@
 Version 2.4 - TBC
 -----------------
+Updated spanish and new spanish (spain) translation (Antonio Santos Izaguirre)
 started polish translation (Sylvain Balbous)
 Updated portuguese translation (Eduardo Ramalho)
 Updated norwegian translation (Tor Helland)
