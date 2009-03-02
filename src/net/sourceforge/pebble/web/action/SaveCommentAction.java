@@ -84,6 +84,7 @@ public class SaveCommentAction extends AbstractCommentAction {
     if (blogEntry == null) {
       // just send back a 404 - this is probably somebody looking for a way
       // to send comment spam ;-)
+      log.info("ignoring saveComment with no related blog entry (spam) from " + request.getRemoteAddr());
       return new NotFoundView();
     } else if (!blogEntry.isCommentsEnabled()) {
       return new CommentConfirmationView();

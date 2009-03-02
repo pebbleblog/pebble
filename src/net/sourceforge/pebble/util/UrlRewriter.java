@@ -29,7 +29,7 @@ public abstract class UrlRewriter {
 	/**
 	 * Initialize the threadlocal urlRewriter. The given rewriter 
 	 * will be used until this method is called again (or clear()
-	 * is called. 
+	 * is called) 
 	 * @param urlRewriter
 	 */
 	public static void useThisRewriter(UrlRewriter urlRewriter) {
