@@ -378,11 +378,9 @@ public class Utilities {
    */
   public static String calcBaseUrl(String currentScheme, String blogUrl) {
   	Configuration configuration = PebbleContext.getInstance().getConfiguration();
-  	if(configuration.isHttpsWorkaroundEnabled()) {
-  		if (currentScheme.equals("https")) {
-  			return blogUrl.replace(configuration.getUrl(), configuration.getSecureUrl());
-  		}
-  	} 
+  	if ("https".equals(currentScheme) && configuration.getSecureUrl().startsWith("https")) {
+		return blogUrl.replace(configuration.getUrl(), configuration.getSecureUrl());
+	} 
   	return blogUrl;
   }
 

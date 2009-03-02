@@ -176,7 +176,7 @@ public class PreProcessingFilter implements Filter {
 
     try {
 	  	Configuration configuration = PebbleContext.getInstance().getConfiguration();
-	  	if(configuration.isHttpsWorkaroundEnabled()) {
+	  	if(configuration.getSecureUrl().startsWith("https")) {
 	  		UrlRewriter.useThisRewriter(new HttpsURLRewriter(request.getScheme()));
 	  	}
 	    
