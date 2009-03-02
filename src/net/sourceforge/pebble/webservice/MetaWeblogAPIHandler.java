@@ -31,22 +31,43 @@
  */
 package net.sourceforge.pebble.webservice;
 
-import net.sourceforge.pebble.domain.*;
+import java.io.IOException;
+import java.util.Collection;
+import java.util.Date;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Vector;
+
 import net.sourceforge.pebble.PebbleContext;
+import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.domain.BlogEntry;
+import net.sourceforge.pebble.domain.BlogService;
+import net.sourceforge.pebble.domain.BlogServiceException;
+import net.sourceforge.pebble.domain.Category;
+import net.sourceforge.pebble.domain.Comment;
+import net.sourceforge.pebble.domain.FileManager;
+import net.sourceforge.pebble.domain.FileMetaData;
+import net.sourceforge.pebble.domain.IllegalFileAccessException;
+import net.sourceforge.pebble.domain.Tag;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.xmlrpc.XmlRpcException;
-
-import java.io.IOException;
-import java.util.*;
 
 /**
  * A handler for the MetaWeblog API (accessed via XML-RPC).
  *
  * @author    Simon Brown
  */
+@SuppressWarnings("unchecked")
 public class MetaWeblogAPIHandler extends AbstractAPIHandler {
 
+  static final String BODY = "body";
+  static final String AUTHOR = "author";
+  static final String EMAIL = "email";
+  static final String DATE = "date";
+  static final String WEBSITE = "website";
+  static final String IP_ADDRESS = "ipAddress";
   static final String URL = "url";
   static final String BLOG_ID = "blogid";
   static final String BLOG_NAME = "blogName";
@@ -359,14 +380,15 @@ public class MetaWeblogAPIHandler extends AbstractAPIHandler {
   private Hashtable adaptBlogEntryComment(Comment comment) {
       Hashtable cmnt = new Hashtable();
         
-      cmnt.put("body", comment.getBody());
-      cmnt.put("author", comment.getAuthor());
-      cmnt.put("email", comment.getEmail());
-      cmnt.put("date", comment.getDate());
-      cmnt.put("permaLink", comment.getPermalink());
-      cmnt.put("website", comment.getWebsite());
-      cmnt.put("ipAddress", comment.getIpAddress());
-      //comment.put("", comment.);
+      cmnt.put(BODY, comment.getBody());
+      cmnt.put(AUTHOR, comment.getAuthor());
+      String email = comment.getEmail();
+      if (email != null) cmnt.put(EMAIL, email);
+      cmnt.put(DATE, comment.getDate());
+      cmnt.put(PERMALINK, comment.getPermalink());
+      String website = comment.getWebsite();
+      if (website != null) cmnt.put(WEBSITE, website);
+      cmnt.put(IP_ADDRESS, comment.getIpAddress());
 
       return cmnt;
   }

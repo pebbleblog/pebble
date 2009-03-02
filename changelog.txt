@@ -1,5 +1,6 @@
 Version 2.4 - TBC
 -----------------
+Fixed MetaWeblogAPIHandler to handle comments without mail or website (Wyatt)
 Updated spanish and new spanish (spain) translation (Antonio Santos Izaguirre)
 started polish translation (Sylvain Balbous)
 Updated portuguese translation (Eduardo Ramalho)
