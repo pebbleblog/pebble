@@ -88,7 +88,7 @@
           <div class="sidebarItemTitle"><span>Thanks to</span></div>
           <ul>
             <li><a href="http://sourceforge.net"><img src="http://sourceforge.net/sflogo.php?group_id=79200&type=1" border="0" alt="Forged on SourceForge" /></a></li>
-            <li><a href="http://www.atlassian.com/software/jira/?clicked=Non-Profit"><img src="images/jira_button_120wx60h.gif" border="0" alt="Issues tracked by JIRA" /></a></li>
+            <!-- li><a href="http://www.atlassian.com/software/jira/?clicked=Non-Profit"><img src="images/jira_button_120wx60h.gif" border="0" alt="Issues tracked by JIRA" /></a></li -->
             <li><a href="http://www.cenqua.com/clover"><img src="images/clovered2.gif" width="89" height="33" border="0" alt="Code Coverage by Clover"/></a></li>
           </ul>
         </div>
@@ -140,10 +140,11 @@
               <li>Blogger and MetaWeblog API interface included for posting content via compatible tools.</li>
               <li>Categorisation of content into multiple hierarchical categories.</li>
               <li>Tagging of content and a generation of a tagcloud.</li>
-              <li>RSS enclosures for distrbuting files or podcasting.</li>
+              <li>RSS enclosures for distributing files or podcasting.</li>
               <li>Simple content publication workflow.</li>
               <li>Pinging websites via XML-RPC when new blog entries are added.</li>
               <li>Publication of static content alongside your blog entries.</li>
+              <li>Link to your favorite social bookmarking site</li>
             </ul>
 
             <h3><a name="responses"></a>Reader responses</h3>
@@ -167,6 +168,7 @@
             <ul>
               <li>RSS 2.0, RDF and Atom 1.0 feeds for blog entries and responses.</li>
               <li>Category and tag specific newsfeeds.</li>
+              <li>Syndicate external newsfeeds.</li>
             </ul>
 
             <h3><a name="navigation"></a>Navigation</h3>
@@ -188,7 +190,8 @@
               <li>Content in international character sets such as UTF-8.</li>
               <li>Publication of content aligned with your timezone, regardless of where your host is based.</li>
               <li>Locale sensitive delivery of dates, times and numbers.</li>
-              <li>Translated public-facing text provides a consistent user experience in a single language, including :<br /><br />
+              <li>Translated public-facing text (and partially to the admin interface) 
+                  provides a consistent user experience in a single language, including:<br /><br />
                 <table>
                   <tr>
                     <td valign="top" width="33%">
@@ -197,31 +200,50 @@
                       <li>Chinese&nbsp;(Traditional)</li>
                       <li>Danish</li>
                       <li>Dutch</li>
-                      <li>English</li>
-                      </ul>
-                    </td>
-                    <td valign="top" width="33%">
-                      <ul>
+                      <li><strong>English</strong></li>
                       <li>Finnish</li>
-                      <li>French</li>
-                      <li>German</li>
-                      <li>Hindi</li>
-                      <li>Italian</li>
+                      <li><strong>French</strong></li>
                       </ul>
                     </td>
                     <td valign="top" width="33%">
                       <ul>
+                      <li><strong>German</strong></li>
+                      <li>Hindi</li>
+                      <li>Hungarian</li>
+                      <li>Italian</li>
                       <li>Japanese</li>
-                      <li>Norwegian</li>
-                      <li>Portuguese</li>
-                      <li>Spanish</li>
+					  <li>Mongolian</li>
+                      <li><strong>Norwegian</strong></li>
+                      <li><strong>Russian</strong></li>
+                      </ul>
+                    </td>
+                    <td valign="top" width="33%">
+                      <ul>
+                      <li>Polish</li>
+                      <li><strong>Portuguese</strong></li>
+                      <li>Portuguese/Brazil</li>
+                      <li><strong>Slovak</strong></li>
+                      <li><strong>Spanish</strong></li>
+                      <li><strong>Spanish/Spain</strong></li>
                       <li>Swedish</li>
                       </ul>
                     </td>
                   </tr>
+                  <tr>
+                  	<td colspan="3">
+                  	   <p>Entries in <strong>bold</strong> are 
+			               as-complete-as-possible in version 2.4.0. If you
+			               want to provide translations to more languages, 
+			               please contact the 
+			               <a href="http://lists.sourceforge.net/mailman/listinfo/pebble-user/">pebble-user
+			               mailing list</a>.
+			            </p>
+                  	</td>
+                  </tr>
                 </table>
               </li>
             </ul>
+            
 
             <h3><a name="plugins"></a>Plugin APIs</h3>
             <ul>

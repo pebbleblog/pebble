@@ -31,6 +31,7 @@
           <h2>How do I customise the security?</h2>
 
           <div class="contentItemBody">
+            <h3>Authentication</h3>
             <p>
               Pebble uses the Acegi Security Framework for Spring, which is a very flexible security implementation
               that provides a way to configure almost every aspect of the security infrastructure.
@@ -81,6 +82,14 @@ emailAddress=username@domain.com</pre>
               implement the <code>net.sourceforge.pebble.security.SecurityRealm</code> interface, which specifies the various
               CRUD operations on the underlying security realm that are required so that user information can be updated
               through Pebble's web UI.
+            </p>
+            
+            <h3>Usage of https</h3>
+            <p>
+              From version 2.4 on, pebble honors the setting of a secureUrl (in pebble.properties). If you want to
+              make sure, your password is transmitted only through https and you want to stay in https mode, set
+              this value to an url starting with https:// - pebble will use it for all actions that require login 
+              as well as for all urls once you're logged in.  
             </p>
           </div>
         </div>
