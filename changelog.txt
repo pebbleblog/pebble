@@ -1,7 +1,8 @@
 Version 2.4 - TBC
 -----------------
+Updated dutch translation (Ger-Jan te Dorsthorst)
 Updated russian translation (by Alexander Zagniotov)
-started slovak translation (Peter Miklosko)
+New slovak translation (Peter Miklosko)
 Fixed MetaWeblogAPIHandler to handle comments without mail or website (Wyatt)
 Updated spanish and new spanish (spain) translation (Antonio Santos Izaguirre)
 started polish translation (Sylvain Balbous)
