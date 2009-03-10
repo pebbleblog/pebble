@@ -1,5 +1,6 @@
 Version 2.4 - TBC
 -----------------
+Updated japanese translation (Yusuke Yamamoto)
 Updated dutch translation (Ger-Jan te Dorsthorst)
 Updated russian translation (by Alexander Zagniotov)
 New slovak translation (Peter Miklosko)
