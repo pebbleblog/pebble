@@ -43,6 +43,7 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeUtility;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import java.util.*;
@@ -58,6 +59,7 @@ public class MailUtils {
 
   /** the log used by this class */
   private static Log log = LogFactory.getLog(MailUtils.class);
+  private static String ENCODING = "UTF-8";
 
   /** thread pool used to send e-mail */
   private static ExecutorService pool = Executors.newFixedThreadPool(1);
@@ -171,7 +173,7 @@ public class MailUtils {
       try {
         // create a message and try to send it
         Message msg = new MimeMessage(session);
-        msg.setFrom(new InternetAddress(blog.getFirstEmailAddress(), blog.getName()));
+        msg.setFrom(new InternetAddress(blog.getFirstEmailAddress(), MimeUtility.encodeText(blog.getName(), ENCODING, "B")));
         Collection internetAddresses = new HashSet();
         Iterator it = to.iterator();
         while (it.hasNext()) {
@@ -193,9 +195,9 @@ public class MailUtils {
         }
         msg.addRecipients(Message.RecipientType.BCC, (InternetAddress[])internetAddresses.toArray(new InternetAddress[]{}));
 
-        msg.setSubject(subject);
+        msg.setSubject(MimeUtility.encodeText(subject, ENCODING, "B"));
         msg.setSentDate(new Date());
-        msg.setContent(message, "text/html");
+        msg.setContent(message, "text/html; charset=" + ENCODING);
 
         log.debug("From : " + blog.getName() + " (" + blog.getFirstEmailAddress() + ")");
         log.debug("Subject : " + subject);
