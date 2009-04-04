@@ -8,8 +8,11 @@ import net.sourceforge.pebble.domain.Tag;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.domain.BlogEntry;
 import net.sourceforge.pebble.api.decorator.ContentDecoratorContext;
-
+import net.sourceforge.pebble.util.StringUtils;
+import net.sourceforge.pebble.PluginProperties;
 import java.util.ResourceBundle;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * Adds related posts to the current post. 
@@ -22,6 +25,13 @@ import java.util.ResourceBundle;
  */
 public class RelatedPostsDecorator extends ContentDecoratorSupport {
 
+
+  private static final Log log = LogFactory.getLog(RelatedPostsDecorator.class);
+
+
+	/** the name of the max number of posts property */
+  public static final String MAX_POSTS = "RelatedPostsDecorator.maxPosts";
+
   /**
    * Decorates the specified blog entry.
    *
@@ -29,6 +39,19 @@ public class RelatedPostsDecorator extends ContentDecoratorSupport {
    * @param blogEntry the blog entry to be decorated
    */
   public void decorate(ContentDecoratorContext context, BlogEntry blogEntry) {
+
+	PluginProperties props = blogEntry.getBlog().getPluginProperties();
+    int maxPosts = StringUtils.MAX_NUM_OF_POSTS;
+
+	if (props.hasProperty(RelatedPostsDecorator.MAX_POSTS)) {
+      try {
+        maxPosts = Integer.parseInt(props.getProperty(MAX_POSTS));
+      } catch (NumberFormatException nfe) {
+        log.error(nfe.getMessage());
+        // do nothing, the value has already been defaulted
+      }
+    }
+
     Blog blog = blogEntry.getBlog();
     ResourceBundle bundle = ResourceBundle.getBundle("resources", blog.getLocale());
 
@@ -38,7 +61,7 @@ public class RelatedPostsDecorator extends ContentDecoratorSupport {
 
 		StringBuffer buf = new StringBuffer();
 		buf.append(body);
-		buf.append("<p><b>" + bundle.getString("common.relatedPosts") + "</b><br/>");
+		buf.append("<p><b>" + bundle.getString("common.relatedPosts") + "</b><br />");
 		
 		// tags of the current entry
 		List<Tag> currentEntryTags = blogEntry.getAllTags();
@@ -62,19 +85,21 @@ public class RelatedPostsDecorator extends ContentDecoratorSupport {
 				  if (entry.hasTag(currentTag.getName())) {
 					  // if we successfully selected related post - create hyperlink for it
 					  if (relatedEntries.add(entry)) 
-						  buf.append("<a href=\"" + entry.getPermalink() + "\">" + entry.getTitle() + "</a><br/>");
+						  buf.append("<a href=\"" + entry.getPermalink() + "\" rel=\"bookmark\" title=\"" + entry.getTitle() + "\">" + entry.getTitle() + "</a><br />");
 				  }
 			}
 
-            // do not allow more than 6 posts
-			if (relatedEntries.size() == 6)
+            // do not allow more than default amount of posts or 
+			// amount set through the RelatedPostsDecorator.maxPosts property
+			if (relatedEntries.size() == maxPosts)  {
 				break;
+			}
 		}
 
 		if (relatedEntries.size() == 0)
 		buf.append("<i>" + bundle.getString("common.noRelatedPosts") + "</i>");
 
-		buf.append("</p><br/>");
+		buf.append("</p><br />");
 		blogEntry.setBody(buf.toString());	
 	}
   }

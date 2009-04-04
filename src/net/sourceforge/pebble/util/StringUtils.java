@@ -71,6 +71,7 @@ public final class StringUtils {
 
   public static final int MAX_CONTENT_LENGTH = 255;
   public static final int MAX_WORD_LENGTH = 20;
+  public static final int MAX_NUM_OF_POSTS = 5;
 
   /**
    * Filters out characters that have meaning within JSP and HTML, and

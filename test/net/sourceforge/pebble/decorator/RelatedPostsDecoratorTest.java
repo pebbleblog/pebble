@@ -62,6 +62,9 @@ public class RelatedPostsDecoratorTest extends SingleBlogTestCase {
   protected void setUp() throws Exception {
     super.setUp();
 
+	//default for RelatedPostsDecorator.MAX_POSTS is 5
+	blog.getPluginProperties().setProperty(RelatedPostsDecorator.MAX_POSTS, "6");
+
     blogEntryOne = new BlogEntry(blog);
 	blogEntryTwo = new BlogEntry(blog);
 	blogEntryThree = new BlogEntry(blog);
@@ -105,9 +108,9 @@ public class RelatedPostsDecoratorTest extends SingleBlogTestCase {
     decorator.decorate(context, blogEntryThree);
 
     StringBuffer relatedPosts = new StringBuffer();
-    relatedPosts.append("<p><b>Related Posts</b><br/>");
+    relatedPosts.append("<p><b>Related Posts</b><br />");
     relatedPosts.append("<i>There are no related posts for this blog entry</i>");
-	relatedPosts.append("</p><br/>");
+	relatedPosts.append("</p><br />");
 	
     assertEquals("Body - body three" + relatedPosts, blogEntryThree.getBody());
   }
@@ -147,10 +150,10 @@ public class RelatedPostsDecoratorTest extends SingleBlogTestCase {
     decorator.decorate(context, blogEntryThree);
 
     StringBuffer relatedPosts = new StringBuffer();
-    relatedPosts.append("<p><b>Related Posts</b><br/>");
-    relatedPosts.append("<a href=\"http://www.yourdomain.com/blog/1970/01/01/2.html\">Title - title two</a><br/>");
-	relatedPosts.append("<a href=\"http://www.yourdomain.com/blog/1970/01/01/1.html\">Title - title one</a><br/>");
-	relatedPosts.append("</p><br/>");
+    relatedPosts.append("<p><b>Related Posts</b><br />");
+    relatedPosts.append("<a href=\"http://www.yourdomain.com/blog/1970/01/01/2.html\" rel=\"bookmark\" title=\"Title - title two\">Title - title two</a><br />");
+	relatedPosts.append("<a href=\"http://www.yourdomain.com/blog/1970/01/01/1.html\" rel=\"bookmark\" title=\"Title - title one\">Title - title one</a><br />");
+	relatedPosts.append("</p><br />");
 	
     assertEquals("Body - body three" + relatedPosts, blogEntryThree.getBody());
 
@@ -231,14 +234,14 @@ public class RelatedPostsDecoratorTest extends SingleBlogTestCase {
     decorator.decorate(context, blogEntryOne);
 
     StringBuffer relatedPosts = new StringBuffer();
-    relatedPosts.append("<p><b>Related Posts</b><br/>");
-    relatedPosts.append("<a href=\"http://www.yourdomain.com/blog/1970/01/01/8.html\">Title - title eight</a><br/>");
-	relatedPosts.append("<a href=\"http://www.yourdomain.com/blog/1970/01/01/7.html\">Title - title seven</a><br/>");
-	relatedPosts.append("<a href=\"http://www.yourdomain.com/blog/1970/01/01/6.html\">Title - title six</a><br/>");
-	relatedPosts.append("<a href=\"http://www.yourdomain.com/blog/1970/01/01/5.html\">Title - title five</a><br/>");
-	relatedPosts.append("<a href=\"http://www.yourdomain.com/blog/1970/01/01/4.html\">Title - title four</a><br/>");
-	relatedPosts.append("<a href=\"http://www.yourdomain.com/blog/1970/01/01/3.html\">Title - title three</a><br/>");
-	relatedPosts.append("</p><br/>");
+    relatedPosts.append("<p><b>Related Posts</b><br />");
+    relatedPosts.append("<a href=\"http://www.yourdomain.com/blog/1970/01/01/8.html\" rel=\"bookmark\" title=\"Title - title eight\">Title - title eight</a><br />");
+	relatedPosts.append("<a href=\"http://www.yourdomain.com/blog/1970/01/01/7.html\" rel=\"bookmark\" title=\"Title - title seven\">Title - title seven</a><br />");
+	relatedPosts.append("<a href=\"http://www.yourdomain.com/blog/1970/01/01/6.html\" rel=\"bookmark\" title=\"Title - title six\">Title - title six</a><br />");
+	relatedPosts.append("<a href=\"http://www.yourdomain.com/blog/1970/01/01/5.html\" rel=\"bookmark\" title=\"Title - title five\">Title - title five</a><br />");
+	relatedPosts.append("<a href=\"http://www.yourdomain.com/blog/1970/01/01/4.html\" rel=\"bookmark\" title=\"Title - title four\">Title - title four</a><br />");
+	relatedPosts.append("<a href=\"http://www.yourdomain.com/blog/1970/01/01/3.html\" rel=\"bookmark\" title=\"Title - title three\">Title - title three</a><br />");
+	relatedPosts.append("</p><br />");
 	
     assertEquals("Body - body one" + relatedPosts, blogEntryOne.getBody());
   }

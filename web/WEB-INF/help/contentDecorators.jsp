@@ -64,7 +64,10 @@
     <p>
       <b>net.sourceforge.pebble.decorator.RelatedPostsDecorator</b><br/>
       Finds similar posts to the current within your posts. Similarity is determined by
-      comparing the tags. Currently up to 6 similar posts are displayed.
+      comparing the tags.
+	  <br /><br />
+      The default number of related posts displayed is five (5), although this
+      can be configured using the <code>RelatedPostsDecorator.maxPosts</code> plugin property.
     </p>
 
     <p>
