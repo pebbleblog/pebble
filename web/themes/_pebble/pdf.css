@@ -1,0 +1,75 @@
+@page { 
+size: 8.3in 11.7in;
+margin: 0.4in;
+-fs-flow-top: "header";
+border: thin solid #E7E5DC;
+padding: 1.0em;
+}
+
+#header {
+font: bold serif;
+position: relative; top: 0px; left: 0; 
+-fs-move-to-flow: "header";
+}
+
+h1 {
+  font-size: 32px;
+  font-weight: bold;
+  color : #6e7d8e;
+  padding-top: 4px;
+  padding-right: 4px;
+  padding-bottom: 4px;
+  padding-left: 0px;
+  margin: 0px;
+}
+
+h2 {
+  font-size: 14px;
+  font-weight: normal;
+  padding-top: 4px;
+  padding-right: 4px;
+  padding-bottom: 4px;
+  padding-left: 0px;
+  color: #6e7d8e;
+  margin: 0px;
+}
+h3 {
+  font-size: 12px;
+  font-weight: normal;
+  padding: 4px;
+  color: #6e7d8e;
+  margin: 0px;
+}
+
+pre {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 12px;
+  color:#060;
+  border: solid #d5d3c6 1px;
+  text-align: left;
+  background: #f7f7f7;
+  margin-left: 8px;
+  margin-right: 8px;
+  padding: 8px;
+  overflow: auto;
+}
+
+.error  {
+  font-weight: bold;
+  color: red;
+}
+
+blockquote {
+  background: white url('../default/images/blockquote.png') no-repeat top left;
+  padding-top: 8px;
+  padding-bottom: 16px;
+  padding-left: 8px;
+  padding-right: 8px;
+  color: gray;
+  margin-left: 24px;
+  margin-right: 24px;
+}
+
+p  {
+	margin: 8px;
+}

@@ -108,4 +108,14 @@ public class StringUtilsTest extends TestCase {
     assertEquals("some text", StringUtils.stripScriptTags("some <script src=\"something.js\"/>text"));
   }
 
+
+   public void testUnescapeHTMLEntities() {
+    assertEquals("\u00A0", StringUtils.unescapeHTMLEntities("&nbsp;"));
+	assertEquals("\u00A0\u00A0nbsp\u00A0\u00A0", StringUtils.unescapeHTMLEntities("&nbsp;&nbsp;nbsp&nbsp;&nbsp;"));
+	assertEquals("\u00E7", StringUtils.unescapeHTMLEntities("&ccedil;"));
+	assertEquals("\u00C7", StringUtils.unescapeHTMLEntities("&Ccedil;"));
+	assertEquals("\u03BC\u03BD\u039E", StringUtils.unescapeHTMLEntities("&mu;&nu;&Xi;"));
+    assertEquals("Seven \u00D0 and eight \u00A3 \u00E7 5 \u2666", StringUtils.unescapeHTMLEntities("Seven &ETH; and eight &pound; &ccedil; 5 &diams;"));
+  }
+
 }
