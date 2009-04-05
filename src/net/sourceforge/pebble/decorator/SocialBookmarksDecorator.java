@@ -15,6 +15,7 @@ import java.util.ResourceBundle;
 public class SocialBookmarksDecorator extends ContentDecoratorSupport {
 
 	private static final String TITLE = "&amp;title=";
+	private static final String TITLE_FURL_YAHOO = "&amp;t=";
 
 	private static final String SLASHDOT_URL = "http://slashdot.org/bookmark.pl?url=";
 	private static final String DIGG_URL = "http://digg.com/submit?url=";
@@ -23,14 +24,24 @@ public class SocialBookmarksDecorator extends ContentDecoratorSupport {
 	private static final String STUMBLEUPON_URL = "http://www.stumbleupon.com/submit?url=";
 	private static final String GOOGLE_URL = "http://www.google.com/bookmarks/mark?op=edit&amp;bkmk=";
 	private static final String TECHNORATI_URL = "http://technorati.com/faves?add=";
+	private static final String BLOGLINES_URL = "http://www.bloglines.com/sub/";
+	private static final String FACEBOOK_URL = "http://www.facebook.com/share.php?u=";
+	private static final String FURL_URL = "http://www.furl.net/storeIt.jsp?u=";
+	private static final String WINDOWSLIVE_URL = "https://favorites.live.com/quickadd.aspx?mkt=en-us&amp;url=";
+	private static final String YAHOO_URL = "http://bookmarks.yahoo.com/toolbar/savebm?opener=tb&amp;u=";
 
 	private static final String SLASHDOT_IMG = "<img src=\"common/images/slashdot.png\" alt=\"Add this post to Slashdot\" border=\"0\" />";
 	private static final String DIGG_IMG = "<img src=\"common/images/digg.png\" alt=\"Add this post to Digg\" border=\"0\" />";
 	private static final String REDDIT_IMG = "<img src=\"common/images/reddit.png\" alt=\"Add this post to Reddit\" border=\"0\" />";
 	private static final String DELICIOUS_IMG = "<img src=\"common/images/delicious.png\" alt=\"Add this post to Delicious\" border=\"0\" />";
-	private static final String STUMBLEUPON_IMG = "<img src=\"common/images/stumbleit.png\" alt=\"Add this post to Stumble it\" border=\"0\" />";
-	private static final String GOOGLE_IMG = "<img src=\"common/images/google.ico\" alt=\"Add this post to Google\" border=\"0\" />";
+	private static final String STUMBLEUPON_IMG = "<img src=\"common/images/stumbleupon.png\" alt=\"Add this post to Stumble it\" border=\"0\" />";
+	private static final String GOOGLE_IMG = "<img src=\"common/images/google.png\" alt=\"Add this post to Google\" border=\"0\" />";
 	private static final String TECHNORATI_IMG = "<img src=\"common/images/technorati.png\" alt=\"Add this post to Technorati\" border=\"0\" />";
+	private static final String BLOGLINES_IMG = "<img src=\"common/images/bloglines.png\" alt=\"Add this post to Bloglines\" border=\"0\" />";
+	private static final String FACEBOOK_IMG = "<img src=\"common/images/facebook.png\" alt=\"Add this post to Facebook\" border=\"0\" />";
+	private static final String FURL_IMG = "<img src=\"common/images/furl.png\" alt=\"Add this post to Furl\" border=\"0\" />";
+	private static final String WINDOWSLIVE_IMG = "<img src=\"common/images/windowslive.png\" alt=\"Add this post to Windows Live\" border=\"0\" />";
+	private static final String YAHOO_IMG = "<img src=\"common/images/yahoo.png\" alt=\"Add this post to Yahoo!\" border=\"0\" />";
 
 	private static final String SLASHDOT_ALT = "socialbookmark.addToSlashdot";
 	private static final String DIGG_ALT = "socialbookmark.addToDigg";
@@ -39,13 +50,23 @@ public class SocialBookmarksDecorator extends ContentDecoratorSupport {
 	private static final String STUMBLEUPON_ALT = "socialbookmark.addToStumbleupon";
 	private static final String GOOGLE_ALT = "socialbookmark.addToGoogle";
 	private static final String TECHNORATI_ALT = "socialbookmark.addToTechnorati";
+	private static final String BLOGLINES_ALT = "socialbookmark.addToBloglines";
+	private static final String FACEBOOK_ALT = "socialbookmark.addToFacebook";
+	private static final String FURL_ALT = "socialbookmark.addToFurl";
+	private static final String WINDOWSLIVE_ALT = "socialbookmark.addToWindowsLive";
+	private static final String YAHOO_ALT = "socialbookmark.addToYahoo";
 
 	private static final String[] bookmarkingSites = { SLASHDOT_URL, DIGG_URL,
-			REDDIT_URL, DELICIOUS_URL, STUMBLEUPON_URL, GOOGLE_URL };
+			REDDIT_URL, DELICIOUS_URL, STUMBLEUPON_URL, GOOGLE_URL, TECHNORATI_URL, BLOGLINES_URL, FACEBOOK_URL,
+			FURL_URL, WINDOWSLIVE_URL, YAHOO_URL};
+
 	private static final String[] bookmarkingNames = { SLASHDOT_IMG, DIGG_IMG,
-			REDDIT_IMG, DELICIOUS_IMG, STUMBLEUPON_IMG, GOOGLE_IMG };
-	private static final String[] bookmarkingAltText = { SLASHDOT_ALT,
-			DIGG_ALT, REDDIT_ALT, DELICIOUS_ALT, STUMBLEUPON_ALT, GOOGLE_ALT };
+			REDDIT_IMG, DELICIOUS_IMG, STUMBLEUPON_IMG, GOOGLE_IMG, TECHNORATI_IMG, BLOGLINES_IMG, FACEBOOK_IMG,
+			FURL_IMG, WINDOWSLIVE_IMG, YAHOO_IMG};
+
+	private static final String[] bookmarkingAltText = { SLASHDOT_ALT, DIGG_ALT,
+			REDDIT_ALT, DELICIOUS_ALT, STUMBLEUPON_ALT, GOOGLE_ALT, TECHNORATI_ALT, BLOGLINES_ALT, FACEBOOK_ALT,
+			FURL_ALT, WINDOWSLIVE_ALT, YAHOO_ALT};
 
 	/**
 	 * Decorates the specified blog entry.
@@ -75,6 +96,8 @@ public class SocialBookmarksDecorator extends ContentDecoratorSupport {
 		}
 	}
 
+	
+
 	private String generateDecorationHtml(ResourceBundle bundle,
 			BlogEntry blogEntry) {
 		StringBuffer buf = new StringBuffer();
@@ -82,25 +105,38 @@ public class SocialBookmarksDecorator extends ContentDecoratorSupport {
 		String title = blogEntry.getTitle();
 		buf.append("<div class=\"tags\"><span>");
 		buf.append(bundle.getString("common.bookmarks"));
-		buf.append(" : </span>");
+		buf.append(" : </span>&nbsp;");
 
 		for (int i = 0; i < bookmarkingSites.length; i++) {
 			buf.append("<a href=\"");
 			buf.append(bookmarkingSites[i] + permLink);
-			buf.append(TITLE + title + "\"");
+
+
+			if (bookmarkingSites[i] != TECHNORATI_URL && 
+				bookmarkingSites[i] != BLOGLINES_URL && 
+				bookmarkingSites[i] != FACEBOOK_URL &&
+				bookmarkingSites[i] != FURL_URL &&
+				bookmarkingSites[i] != YAHOO_URL) {
+				buf.append(TITLE + title + "\"");
+			} 
+
+			else if (bookmarkingSites[i] == FURL_URL || bookmarkingSites[i] == YAHOO_URL) {
+				buf.append(TITLE_FURL_YAHOO + title + "\"");
+			}
+
+			else {
+				buf.append("\"");
+			}
+
 			buf.append(" target=\"_blank\"");
 			buf.append(" title=\"" + bundle.getString(bookmarkingAltText[i]) + "\">");
 			buf.append(bookmarkingNames[i]);
 			buf.append("</a>");
-			buf.append("&nbsp;&nbsp;&nbsp;&nbsp;");
-		}
 
-		buf.append("<a href=\"");
-		buf.append(TECHNORATI_URL + permLink + "\"");
-		buf.append(" target=\"_blank\"");
-		buf.append(" title=\"" + bundle.getString(TECHNORATI_ALT) + "\">");
-		buf.append(TECHNORATI_IMG);
-		buf.append("</a>");
+			if (i < bookmarkingSites.length - 1) {
+				buf.append("&nbsp;&nbsp;&nbsp;&nbsp;");
+			}
+		}
 
 		buf.append("</div>");
 		return buf.toString();

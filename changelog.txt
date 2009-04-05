@@ -1,5 +1,6 @@
 Version 2.4 - TBC
 -----------------
+MailUtils now encodes from, subtitle, and mail body (Yusuke Yamamoto)
 Updated japanese translation (Yusuke Yamamoto)
 Updated dutch translation (Ger-Jan te Dorsthorst)
 Updated russian translation (by Alexander Zagniotov)
