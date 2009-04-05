@@ -44,7 +44,7 @@ public abstract class AbstractTagsDecorator extends ContentDecoratorSupport {
 
     if (context.getMedia() == ContentDecoratorContext.HTML_PAGE) {
       ResourceBundle bundle = ResourceBundle.getBundle("resources", content.getBlog().getLocale());
-      Iterator tags = content.getAllTags().iterator();
+      Iterator<Tag> tags = content.getAllTags().iterator();
 
       String baseUrl = getBaseUrl(content);
 
@@ -52,19 +52,25 @@ public abstract class AbstractTagsDecorator extends ContentDecoratorSupport {
         buf.append("<div class=\"tags\"><span>");
 		buf.append(bundle.getString(resourceKey));
         buf.append(" : </span>");
-        while (tags.hasNext()) {
-          Tag tag = (Tag)tags.next();
-          buf.append("<a href=\"");
-          buf.append(baseUrl);
-          buf.append(tag.getName() + "\"");
-          buf.append(target);
-          buf.append(" rel=\"tag\">");
-          buf.append(tag.getName());
-          buf.append("</a>");
 
-          if (tags.hasNext()) {
-            buf.append(" ");
-          }
+        while (tags.hasNext()) {
+
+          Tag tag = tags.next();
+
+		  if (tag.getName() != null && !tag.getName().equals("")) {
+
+			  buf.append("<a href=\"");
+			  buf.append(baseUrl);
+			  buf.append(tag.getName() + "\"");
+			  buf.append(target);
+			  buf.append(" rel=\"tag\">");
+			  buf.append(tag.getName());
+			  buf.append("</a>");
+
+			  if (tags.hasNext()) {
+				buf.append(", ");
+			  }
+		  }
         }
         buf.append("</div>");
 
