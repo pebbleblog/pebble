@@ -84,10 +84,10 @@
     <property name="project.classpath" refid="project.classpath"/>
     <echo message="Using CLASSPATH of ${project.classpath}"/>
 
-    <javac srcdir="${generated-src.dir}" destdir="${classes.dir}" debug="yes">
+    <javac srcdir="${generated-src.dir}" destdir="${classes.dir}" debug="yes" source="1.5" target="1.5">
       <classpath refid="project.classpath"/>
     </javac>
-    <javac srcdir="${src.dir}" destdir="${classes.dir}" debug="yes">
+    <javac srcdir="${src.dir}" destdir="${classes.dir}" debug="yes" source="1.5" target="1.5">
       <classpath refid="project.classpath"/>
     </javac>
   </target>
@@ -106,7 +106,7 @@
       </fileset>
     </jar>
 
-    <javac srcdir="${test.dir}" destdir="${testclasses.dir}" debug="yes">
+    <javac srcdir="${test.dir}" destdir="${testclasses.dir}" debug="yes" source="1.5" target="1.5">
       <classpath>
         <pathelement location="${classes.dir}"/>
         <pathelement path="${project.classpath}"/>
@@ -132,9 +132,11 @@
         <include name="commons-httpclient-3.0-rc3.jar"/>
         <include name="commons-lang-2.1.jar"/>
         <include name="commons-logging-1.0.4.jar"/>
+		<include name="core-renderer.jar"/>
         <include name="dwr-2.0-rc2.jar"/>
         <include name="ehcache-1.4.1.jar"/>
         <include name="geolite-java-1.2.1.jar"/>
+		<include name="iText-2.0.8.jar"/>
         <include name="jaxb-api-2.0.5.jar"/>
         <include name="jaxb-impl-2.0.5.jar"/>
         <include name="jaxb-xjc-2.0.5.jar"/>
@@ -144,6 +146,7 @@
         <include name="jsr173_1.0_api.jar"/>
         <include name="log4j-1.2.15.jar"/>
         <include name="lucene-1.4.1.jar"/>
+		<include name="minium.jar"/>
         <include name="oro-2.0.8.jar"/>
         <include name="radeox-1.0-beta2.jar"/>
         <include name="rome-0.9.jar"/>

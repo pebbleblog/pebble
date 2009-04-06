@@ -70,6 +70,14 @@
       can be configured using the <code>RelatedPostsDecorator.maxPosts</code> plugin property.
     </p>
 
+	<p>
+      <b>net.sourceforge.pebble.decorator.EntryToPdfDecorator</b><br />
+      Adds link to your blog entries that allows export of the blog entry to PDF document. <br />
+	  Currently PDF generation supports only "Latin 1" or ISO-8859-1 encoding (Asian, Hebrew, Arabic and Cyrillic languages are not supported).<br />
+	  <b>Please note</b>:
+	  CSS styles for PDF document located under <code>YOUR_PEBBLE_HOMEDIR/themes/_pebble/pdf.css</code>
+    </p>
+
     <p>
       <b>net.sourceforge.pebble.decorator.BlogCategoriesDecorator</b><br/>
       Adds links from your blog entry back to your categories, for those categories associated with the blog entry.
