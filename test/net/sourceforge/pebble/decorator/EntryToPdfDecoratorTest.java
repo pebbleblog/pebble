@@ -67,7 +67,7 @@ public class EntryToPdfDecoratorTest extends SingleBlogTestCase {
 
 	blogEntryOne.setTitle("Some title");
 	blogEntryOne.setSubtitle("Some subtitle");
-	blogEntryOne.setExcerpt("This is a excerpt");
+	//blogEntryOne.setExcerpt("This is a excerpt");
     blogEntryOne.setBody("This is a body");
 	
     decorator.decorate(context, blogEntryOne);
@@ -80,6 +80,6 @@ public class EntryToPdfDecoratorTest extends SingleBlogTestCase {
 	pdf.append("</a> as PDF document</p>");
 	
     assertEquals("This is a body" + pdf, blogEntryOne.getBody());
-	assertEquals("This is a excerpt" + pdf, blogEntryOne.getExcerpt());
+	//assertEquals("This is a excerpt" + pdf, blogEntryOne.getExcerpt());
   }
 }

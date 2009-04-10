@@ -31,12 +31,12 @@ public class EntryToPdfDecorator extends ContentDecoratorSupport {
 			blogEntry.setBody(body + html);
 		}
 
-		String excerpt = blogEntry.getExcerpt();
-		if (excerpt != null && excerpt.trim().length() > 0) {
+		//String excerpt = blogEntry.getExcerpt();
+		//if (excerpt != null && excerpt.trim().length() > 0) {
 
-			String html = generateDecorationHtml(blogEntry);
-			blogEntry.setExcerpt(excerpt + html);
-		}
+		//	String html = generateDecorationHtml(blogEntry);
+		//	blogEntry.setExcerpt(excerpt + html);
+		//}
 	}
 
 	private String generateDecorationHtml(BlogEntry blogEntry) {
