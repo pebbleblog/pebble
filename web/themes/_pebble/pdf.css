@@ -12,6 +12,11 @@ position: relative; top: 0px; left: 0;
 -fs-move-to-flow: "header";
 }
 
+body {
+     font-family: Helvetica, Arial;
+}
+
+
 h1 {
   font-size: 32px;
   font-weight: bold;

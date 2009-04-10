@@ -73,9 +73,12 @@
 	<p>
       <b>net.sourceforge.pebble.decorator.EntryToPdfDecorator</b><br />
       Adds link to your blog entries that allows export of the blog entry to PDF document. <br />
-	  Currently PDF generation supports only "Latin 1" or ISO-8859-1 encoding (Asian, Hebrew, Arabic and Cyrillic languages are not supported).<br />
+	  By default, PDF generation supports only "Latin 1" or ISO-8859-1 encoding (Asian, Hebrew, Arabic and Eastern European languages are not supported).<br /><br />
+	  You can enable support for your chosen language during PDF generation, by placing TTF or OTF font file under: <code>&lt;PEBBLE_ROOT&gt;/themes/_pebble/fonts/</code>.<br />
+	  Font file will be loaded dynamically at run time during PDF generation.<br /><br />
 	  <b>Please note</b>:
-	  CSS styles for PDF document located under <code>YOUR_PEBBLE_HOMEDIR/themes/_pebble/pdf.css</code>
+	  CSS styles for PDF document template located in: <br />
+	  <code>&lt;PEBBLE_ROOT&gt;/themes/_pebble/pdf.css</code>
     </p>
 
     <p>
