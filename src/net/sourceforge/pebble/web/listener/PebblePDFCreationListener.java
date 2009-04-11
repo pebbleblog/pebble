@@ -106,17 +106,33 @@ public class PebblePDFCreationListener implements PDFCreationListener {
 		try {
 			Enumeration e = headerTags.propertyNames();
 
+			PdfWriter writer = renderer.getWriter(); 
+
+			 if (writer == null) {
+					 log.warn("PdfWriter is null, not able to set header meta tags to PDF document");
+					 return;
+			 }
+
+			 /*
+					Available versions:
+					PdfWriter.VERSION_1_2,
+					PdfWriter.VERSION_1_3,
+					PdfWriter.VERSION_1_4,  //default
+					PdfWriter.VERSION_1_5,
+					PdfWriter.VERSION_1_6,
+					PdfWriter.VERSION_1_7
+				*/
+			writer.setPdfVersion(PdfWriter.VERSION_1_5);
+
+			//Full compression means that not only page streams are compressed, 
+			//but some other objects as well, such as the cross-reference table. 
+			//This is only possible since PDF-1.5
+			writer.setFullCompression();
+
 			while (e.hasMoreElements())  { 
 
 				  String key = (String) e.nextElement() ;
 				  PdfString val = new PdfString(headerTags.getProperty(key), PdfObject.TEXT_UNICODE);
-
-				  PdfWriter writer = renderer.getWriter(); 
-
-				  if (writer == null) {
-					 log.warn("PdfWriter is null, not able to set header meta tags to PDF document");
-					 break;
-				  }
 
 				  PdfDictionary dictionary = writer.getInfo();
 				  
@@ -149,6 +165,16 @@ public class PebblePDFCreationListener implements PDFCreationListener {
 	}
 
     public void onClose(ITextRenderer renderer) { 
-	
+
+		PdfWriter writer = renderer.getWriter(); 
+
+		if (writer == null) {
+			 log.warn("PdfWriter is null, not able to set header meta tags to PDF document");
+			 return;
+		}
+
+		//Display doc title in the title bar instead of filename,
+		writer.setViewerPreferences(PdfWriter.DisplayDocTitle);
+
 	}
 }

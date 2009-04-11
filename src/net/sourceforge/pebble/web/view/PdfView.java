@@ -123,6 +123,9 @@ public class PdfView extends BinaryView {
 
 				//This will be an attachment
 				response.setHeader("Content-Disposition", "attachment; filename=" + filename);
+				response.setHeader("Expires", "0");
+				response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
+				response.setHeader("Pragma", "public");
 
 				String body = entry.getBody();
 
@@ -181,7 +184,7 @@ public class PdfView extends BinaryView {
 				StringBuffer buf = new StringBuffer();
 				buf.append("<html>");
 				buf.append("<head>");
-				buf.append("<meta name=\"title\" content=\"" + entry.getBlog().getName() + "\"/>");
+				buf.append("<meta name=\"title\" content=\"" + entry.getTitle() + " - " + entry.getBlog().getName() + "\"/>");
 				buf.append("<meta name=\"subject\" content=\"" + entry.getTitle() + "\"/>");
 				buf.append("<meta name=\"keywords\" content=\"" + tags.toString().trim() + "\"/>");
 				buf.append("<meta name=\"author\" content=\"" + entry.getUser().getName() + "\"/>");
@@ -209,8 +212,6 @@ public class PdfView extends BinaryView {
 
 				byte[] bytes = buf.toString().getBytes(DEFAULT_ENCODING);
 
-				//Set the length, although I dont think its neccessary
-				length = bytes.length;
 				ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
 				DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 				InputSource is = new InputSource(bais);
@@ -220,17 +221,6 @@ public class PdfView extends BinaryView {
 				PebblePDFCreationListener pdfListener = new PebblePDFCreationListener();
 				pdfListener.parseMetaTags(doc);
 				renderer.setListener(pdfListener);
-				
-				/*
-					Available versions:
-					PdfWriter.VERSION_1_2,
-					PdfWriter.VERSION_1_3,
-					PdfWriter.VERSION_1_4,  //default
-					PdfWriter.VERSION_1_5,
-					PdfWriter.VERSION_1_6,
-					PdfWriter.VERSION_1_7
-				*/
-				renderer.setPDFVersion(PdfWriter.VERSION_1_5);
 				renderer.setDocument(doc, null);
 				renderer.layout();
 
