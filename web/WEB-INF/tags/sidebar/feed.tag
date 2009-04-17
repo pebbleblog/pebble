@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 <%@ taglib uri="http://pebble.sourceforge.net/pebble" prefix="pebble" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib uri="/WEB-INF/url.tld" prefix="url" %>
 
 <%--
@@ -34,7 +35,7 @@
     <ul>
       <c:forEach var="entry" items="${feedEntries}" end="${maxEntries-1}">
         <li>
-          <a href="${url:rewrite(entry.link)}">${entry.title}</a>
+          <a href="${fn:replace(url:rewrite(entry.link), "&", "&amp;")}">${fn:replace(entry.title, "&", "&amp;")}</a>
           <c:if test="${showBody eq 'true'}">
           <br />
           <c:choose>

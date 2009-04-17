@@ -48,7 +48,7 @@
     <td colspan="2">
       <c:set var="comment" scope="request" value="${decoratedComment}"/>
       <c:set var="displayMode" scope="request" value="preview" />
-      <div id="previewComment"><jsp:include page="comment.jsp"><jsp:param name="commentIdentifier" value="previewComment"/></jsp:include></div>
+      <jsp:include page="comment.jsp"><jsp:param name="commentIdentifier" value="previewComment"/></jsp:include>
       <br />
     </td>
   </tr>
@@ -133,8 +133,8 @@
 
   <tr>
     <td colspan="2" align="right">
-      <input name="submit" type="submit" Value="<fmt:message key="comment.previewButton"/>" onclick="previewComment(); return false;"/>
-      <input name="submit" type="submit" Value="<fmt:message key="comment.addCommentButton"/>" />
+      <input name="submit" type="submit" value="<fmt:message key="comment.previewButton"/>" onclick="previewComment(); return false;"/>
+      <input name="submit" type="submit" value="<fmt:message key="comment.addCommentButton"/>" />
     </td>
   </tr>
 
