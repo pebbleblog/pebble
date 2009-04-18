@@ -127,9 +127,23 @@ public class PdfView extends BinaryView {
 				response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
 				response.setHeader("Pragma", "public");
 
+				String author = entry.getUser().getName();
+				String title = entry.getTitle();
+				String subtitle = entry.getSubtitle();
 				String body = entry.getBody();
+				String blogName = entry.getBlog().getName();
+				String entryPermalink = entry.getPermalink();
+				String entryDescription = entry.getBlog().getDescription();
 
-				//Some of the HTML entities need to be unescaped for XHTML markup to validate
+				//Some of the HTML entities need to be escaped to Unicode notation \\uXXXX for XHTML markup to validate
+		
+                /*  ugly hack */
+                subtitle = subtitle.replaceAll("amp;", "");
+				subtitle = subtitle.replaceAll("&", "&amp;");
+				title = title.replaceAll("amp;", "");
+				title = title.replaceAll("&", "&amp;");
+				 /*  ugly hack */
+
 				body = StringUtils.unescapeHTMLEntities(body);
 				
 				//Build absolute path to: <pebble_root>/themes/_pebble/fonts/ 
@@ -139,31 +153,6 @@ public class PdfView extends BinaryView {
 				String fontDirAbsolutePath = webApplicationRoot + SEP + SYSTEM_THEME_PATH + SEP + FONTS_PATH;
 				File fontDir = new File(fontDirAbsolutePath);
 
-				//Gets TTF or OTF font file from the font directory in the system theme folder
-				 if (fontDir.isDirectory()) {
-						File[] files = fontDir.listFiles(new FilenameFilter() {
-							public boolean accept(File dir, String name) {
-								String lower = name.toLowerCase();
-
-								//Load TTF or OTF files
-								return lower.endsWith(".otf") || lower.endsWith(".ttf");
-							}
-						});
-						
-						if (files.length > 0) {
-							//You should always embed TrueType fonts.
-							renderer.getFontResolver().addFont(files[0].getAbsolutePath(), BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
-							log.info("Added font: " + files[0].getAbsolutePath());
-
-							//Get font family name from the BaseFont object. All this work just to get font family name
-							BaseFont font = BaseFont.createFont(files[0].getAbsolutePath(), BaseFont.IDENTITY_H , BaseFont.NOT_EMBEDDED);
-							String fontFamilyName = TrueTypeUtil.getFamilyName(font);
-							
-							//Wrap DIV with font family name around the content of the blog entry
-							body = "<div style=\"font-family: " + fontFamilyName + ";\">" + body + "</div>";
-							log.info("Added font family: '" + fontFamilyName + "' to blog entry content");
-						}
-				 }
 
 				//Get blog entry tags for PDF metadata 'keywords'
 				StringBuffer tags = new StringBuffer();
@@ -184,10 +173,10 @@ public class PdfView extends BinaryView {
 				StringBuffer buf = new StringBuffer();
 				buf.append("<html>");
 				buf.append("<head>");
-				buf.append("<meta name=\"title\" content=\"" + entry.getTitle() + " - " + entry.getBlog().getName() + "\"/>");
-				buf.append("<meta name=\"subject\" content=\"" + entry.getTitle() + "\"/>");
+				buf.append("<meta name=\"title\" content=\"" + title + " - " + blogName + "\"/>");
+				buf.append("<meta name=\"subject\" content=\"" + title + "\"/>");
 				buf.append("<meta name=\"keywords\" content=\"" + tags.toString().trim() + "\"/>");
-				buf.append("<meta name=\"author\" content=\"" + entry.getUser().getName() + "\"/>");
+				buf.append("<meta name=\"author\" content=\"" + author + "\"/>");
 				buf.append("<meta name=\"creator\" content=\"Pebble (by pebble.sourceforge.net)\"/>");
 				buf.append("<meta name=\"producer\" content=\"Flying Saucer (by xhtmlrenderer.dev.java.net)\"/>");
 				buf.append("<link rel='stylesheet' type='text/css' href='" + entry.getBlog().getUrl() + 
@@ -196,16 +185,49 @@ public class PdfView extends BinaryView {
 																			PDF_CSS + "' media='print' />");
 				buf.append("</head>");
 				buf.append("<body>");
-				buf.append("<div id=\"header\" style=\"\">" + entry.getBlog().getName() + " - " + entry.getBlog().getDescription() + "</div>");
+				buf.append("<div id=\"header\" style=\"\">" + blogName + " - " + entryDescription + "</div>");
 				buf.append("<p>");
-				buf.append("<h1>" + entry.getTitle()  + "</h1>");
-				buf.append("<h2>" + entry.getSubtitle() + "</h2>");
+
+				//Gets TTF or OTF font file from the font directory in the system theme folder
+				 if (fontDir.isDirectory()) {
+						File[] files = fontDir.listFiles(new FilenameFilter() {
+							public boolean accept(File dir, String name) {
+								String lower = name.toLowerCase();
+
+								//Load TTF or OTF files
+								return lower.endsWith(".otf") || lower.endsWith(".ttf");
+							}
+						});
+						
+						if (files.length > 0) {
+							String fontFamilyName = "";
+							//You should always embed TrueType fonts.
+							renderer.getFontResolver().addFont(files[0].getAbsolutePath(), BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+							log.info("Added font: " + files[0].getAbsolutePath());
+
+							//Get font family name from the BaseFont object. All this work just to get font family name
+							BaseFont font = BaseFont.createFont(files[0].getAbsolutePath(), BaseFont.IDENTITY_H , BaseFont.NOT_EMBEDDED);
+							fontFamilyName = TrueTypeUtil.getFamilyName(font);
+							
+							if (!fontFamilyName.equals("")) {
+								//Wrap DIV with font family name around the content of the blog entry
+								author = "<div style=\"font-family: " + fontFamilyName + ";\">" + author + "</div>";
+								title = "<div style=\"font-family: " + fontFamilyName + ";\">" + title + "</div>";
+								subtitle = "<div style=\"font-family: " + fontFamilyName + ";\">" + subtitle + "</div>";
+								body = "<div style=\"font-family: " + fontFamilyName + ";\">" + body + "</div>";
+								log.info("PDFGenerator - Added font family: '" + fontFamilyName + "' to PDF content");
+							}		
+						}
+				 }
+
+				buf.append("<h1>" + title  + "</h1>");
+				buf.append("<h2>" + subtitle + "</h2>");
 				buf.append("</p>");
 				buf.append("<p>" + body + "</p>");
 				buf.append("<p><br /><br /><br />");
-				buf.append("<i>Published by " + entry.getUser().getName() + "</i><br />");
+				buf.append("<i>Published by " + author + "</i><br />");
 				buf.append("<i>" + entry.getDate().toString() + "</i><br />");
-				buf.append("<i><a href=\"" + entry.getPermalink() + "\" title=\"" + entry.getPermalink() + "\">" + entry.getPermalink() + "</a></i>");
+				buf.append("<i><a href=\"" + entryPermalink + "\" title=\"" + entryPermalink + "\">" + entryPermalink + "</a></i>");
 				buf.append("</p>");
 				buf.append("</body>");
 				buf.append("</html>");
