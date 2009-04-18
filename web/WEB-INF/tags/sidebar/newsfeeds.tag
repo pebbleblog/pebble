@@ -13,7 +13,7 @@
   <div class="sidebarItemTitle"><span>${name}</span></div>
   <div class="sidebarItemBody">
     <c:forEach var="entry" items="${blog.recentNewsFeedEntries}" >
-      <a href="${url:rewrite(entry.link)}">${entry.title}</a> - <a href="${url:rewrite(entry.feed.link)}">${entry.feed.title}</a> <a href="${entry.feed.url}"><img src="common/images/feed-icon-10x10.png" alt="RSS feed" border="0" /></a>
+      <a title="URL for recent news entry ${entry.title}" href="${url:rewrite(entry.link)}">${entry.title}</a> - <a title="RSS feed for recent news entry ${entry.feed.title}" href="${url:rewrite(entry.feed.link)}">${entry.feed.title}</a> <a title="RSS feed for recent news entry ${entry.feed.title}" href="${entry.feed.url}"><img src="common/images/feed-icon-10x10.png" alt="RSS feed" border="0" /></a>
       <br />${entry.truncatedBody}
       <br /><br />
     </c:forEach>

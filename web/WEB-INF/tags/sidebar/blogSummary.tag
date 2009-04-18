@@ -7,13 +7,13 @@
 --%>
 <c:if test="${not empty blogs}">
 <div class="sidebarItem">
-  <div class="sidebarItemTitle"><span><fmt:message key="common.summaryOfBlogs"/> <a href="${multiBlog.url}rss.xml"><img src="common/images/feed-icon-10x10.png" alt="RSS feed" border="0" /></a></span></div>
+  <div class="sidebarItemTitle"><span><fmt:message key="common.summaryOfBlogs"/> <a title="RSS feed for multiblog ${multiBlog.name}" href="${multiBlog.url}rss.xml"><img src="common/images/feed-icon-10x10.png" alt="RSS feed" border="0" /></a></span></div>
   <div class="sidebarItemBody">
-    <c:if test="${blogType == 'singleblog'}"><a href="${multiBlog.url}">${multiBlog.name}</a> <a href="${multiBlog.url}rss.xml" style="border: 0px;"><img src="common/images/feed-icon-10x10.png" alt="RSS feed" border="0" /></a><br /></c:if>
+    <c:if test="${blogType == 'singleblog'}"><a href="${multiBlog.url}" title="URL for multiblog ${multiBlog.name}">${multiBlog.name}</a> <a title="RSS feed for multiblog ${multiBlog.name}" href="${multiBlog.url}rss.xml" style="border: 0px;"><img src="common/images/feed-icon-10x10.png" alt="RSS feed" border="0" /></a><br /></c:if>
     <c:forEach var="aBlog" items="${blogs}">
-      <a href="${url:rewrite(aBlog.url)}">${aBlog.name}</a>
+      <a href="${url:rewrite(aBlog.url)}" title="URL for blog ${aBlog.name}">${aBlog.name}</a>
       <c:if test="${not empty aBlog.description}"> - ${aBlog.description}</c:if>
-      <a href="${url:rewrite(aBlog.url)}rss.xml" style="border: 0px;"><img src="common/images/feed-icon-10x10.png" alt="RSS feed" border="0" /></a>
+      <a href="${url:rewrite(aBlog.url)}rss.xml" title="RSS feed for blog ${aBlog.name}" style="border: 0px;"><img src="common/images/feed-icon-10x10.png" alt="RSS feed" border="0" /></a>
       <br />
     </c:forEach>
   </div>

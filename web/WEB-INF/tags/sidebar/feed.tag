@@ -1,7 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 <%@ taglib uri="http://pebble.sourceforge.net/pebble" prefix="pebble" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib uri="/WEB-INF/url.tld" prefix="url" %>
 
 <%--
@@ -30,12 +29,12 @@
 <pebble:getFeed url="${url}"/>
 <c:if test="${not empty feedEntries}">
 <div class="sidebarItem">
-  <div class="sidebarItemTitle"><span>${name} <a href="${url}" style="border: 0px;"><img src="common/images/feed-icon-10x10.png" alt="RSS feed" border="0" /></a></span></div>
+  <div class="sidebarItemTitle"><span>${name}&nbsp;<a href="${url}" title="${url}" style="border: 0px;"><img src="common/images/feed-icon-10x10.png" alt="RSS feed" border="0" /></a></span></div>
   <div class="sidebarItemBody">
     <ul>
       <c:forEach var="entry" items="${feedEntries}" end="${maxEntries-1}">
         <li>
-          <a href="${fn:replace(url:rewrite(entry.link), "&", "&amp;")}">${fn:replace(entry.title, "&", "&amp;")}</a>
+          <a href="${url:escape(url:rewrite(entry.link))}" title="${url:escape(name)} - ${url:escape(entry.title)}" target="_blank">${url:escape(entry.title)}</a>
           <c:if test="${showBody eq 'true'}">
           <br />
           <c:choose>

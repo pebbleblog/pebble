@@ -9,9 +9,9 @@
 <c:if test="${empty showAtom}"><c:set var="showAtom" value="false"/></c:if>
 
 <c:if test="${showRSS eq 'true'}">
-<a href="${url:rewrite(blog.url)}rss.xml"></a> <a href="${url:rewrite(blog.url)}rss.xml" style="border: 0px;"><img src="common/images/feed-icon-16x16.png" alt="RSS feed" border="0" valign="top" /></a>
+<a title="Subscribe to blog via RSS feed" href="${url:rewrite(blog.url)}rss.xml"></a> <a href="${url:rewrite(blog.url)}rss.xml" title="Subscribe to blog via RSS feed" style="border: 0px;"><img src="common/images/feed-icon-16x16.png" alt="RSS feed" border="0" valign="top" /></a>
 </c:if>
 
 <c:if test="${showAtom eq 'true'}">
-<a href="${url:rewrite(blog.url)}atom.xml"></a> <a href="${url:rewrite(blog.url)}atom.xml" style="border: 0px;"><img src="common/images/feed-icon-16x16.png" alt="Atom feed" border="0" valign="top" /></a>
+<a title="Subscribe to blog via Atom feed" href="${url:rewrite(blog.url)}atom.xml"></a> <a href="${url:rewrite(blog.url)}atom.xml" title="Subscribe to blog via Atom feed" style="border: 0px;"><img src="common/images/feed-icon-16x16.png" alt="Atom feed" border="0" valign="top" /></a>
 </c:if>
