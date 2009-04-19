@@ -135,7 +135,7 @@ public abstract class PageBasedContent extends Content {
    * @param newSubtitle  the subtitle as a String
    */
   public void setSubtitle(String newSubtitle) {
-	newSubtitle = StringUtils.transformHTML(newSubtitle);
+	//newSubtitle = StringUtils.transformHTML(newSubtitle);
     propertyChangeSupport.firePropertyChange(SUBTITLE_PROPERTY, subtitle, newSubtitle);
     this.subtitle = newSubtitle;
   }
