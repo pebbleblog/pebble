@@ -136,14 +136,8 @@ public class PdfView extends BinaryView {
 				String entryDescription = entry.getBlog().getDescription();
 
 				//Some of the HTML entities need to be escaped to Unicode notation \\uXXXX for XHTML markup to validate
-		
-                /*  ugly hack */
-                subtitle = subtitle.replaceAll("amp;", "");
-				subtitle = subtitle.replaceAll("&", "&amp;");
-				title = title.replaceAll("amp;", "");
-				title = title.replaceAll("&", "&amp;");
-				 /*  ugly hack */
-
+				title = StringUtils.transformHTML(title);
+				subtitle = StringUtils.transformHTML(subtitle);
 				body = StringUtils.unescapeHTMLEntities(body);
 				
 				//Build absolute path to: <pebble_root>/themes/_pebble/fonts/ 
