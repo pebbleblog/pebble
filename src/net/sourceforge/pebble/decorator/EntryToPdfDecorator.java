@@ -14,6 +14,8 @@ import java.util.ResourceBundle;
  */
 public class EntryToPdfDecorator extends ContentDecoratorSupport {
 
+	private static final String PDF_IMG = "<img src=\"common/images/pdf_logo.gif\" alt=\"Export this post as PDF document\" align=\"bottom\" border=\"0\" />";
+
 	/**
 	 * Decorates the specified blog entry.
 	 * 
@@ -31,12 +33,12 @@ public class EntryToPdfDecorator extends ContentDecoratorSupport {
 			blogEntry.setBody(body + html);
 		}
 
-		//String excerpt = blogEntry.getExcerpt();
-		//if (excerpt != null && excerpt.trim().length() > 0) {
-
-		//	String html = generateDecorationHtml(blogEntry);
-		//	blogEntry.setExcerpt(excerpt + html);
-		//}
+//		String excerpt = blogEntry.getExcerpt();
+//
+//		if (excerpt != null && excerpt.trim().length() > 0) {
+//			String html = generateDecorationHtml(blogEntry);
+//			blogEntry.setExcerpt(excerpt + html);
+//		}
 	}
 
 	private String generateDecorationHtml(BlogEntry blogEntry) {
@@ -46,10 +48,9 @@ public class EntryToPdfDecorator extends ContentDecoratorSupport {
 			String subtitle = blogEntry.getSubtitle();
 
 			buf.append("<p>");
-			buf.append("You can ");
 			buf.append("<a href=\"" + blogEntry.getBlog().getUrl() + "entryToPDF.action?entry=" + blogEntry.getId() + "\" title=\"Export " + title + " - " + subtitle + " as PDF document\">");
-			buf.append("export this post");
-			buf.append("</a> as PDF document</p>");
+			buf.append(PDF_IMG);
+			buf.append("</a>&nbsp;&nbsp;Export this post to PDF document</p>");
 
 			return buf.toString();
 	}

@@ -51,6 +51,8 @@ public class EntryToPdfDecoratorTest extends SingleBlogTestCase {
   private ContentDecorator decorator;
   private ContentDecoratorContext context;
 
+  private static final String PDF_IMG = "<img src=\"common/images/pdf_logo.gif\" alt=\"Export this post as PDF document\" align=\"bottom\" border=\"0\" />";
+
   protected void setUp() throws Exception {
     super.setUp();
     blogEntryOne = new BlogEntry(blog);
@@ -74,10 +76,9 @@ public class EntryToPdfDecoratorTest extends SingleBlogTestCase {
 
     StringBuffer pdf = new StringBuffer();
     pdf.append("<p>");
-	pdf.append("You can ");
 	pdf.append("<a href=\"" + blogEntryOne.getBlog().getUrl() + "entryToPDF.action?entry=" + blogEntryOne.getId() + "\" title=\"Export Some title - Some subtitle as PDF document\">");
-	pdf.append("export this post");
-	pdf.append("</a> as PDF document</p>");
+	pdf.append(PDF_IMG);
+	pdf.append("</a>&nbsp;&nbsp;Export this post to PDF document</p>");
 	
     assertEquals("This is a body" + pdf, blogEntryOne.getBody());
 	//assertEquals("This is a excerpt" + pdf, blogEntryOne.getExcerpt());
