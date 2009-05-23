@@ -1,16 +1,17 @@
 package net.sourceforge.pebble.decorator;
 
-import java.util.List;
-import java.util.Set;
 import java.util.HashSet;
-import java.util.Collections;
-import net.sourceforge.pebble.domain.Tag;
+import java.util.List;
+import java.util.ResourceBundle;
+import java.util.Set;
+
+import net.sourceforge.pebble.PluginProperties;
+import net.sourceforge.pebble.api.decorator.ContentDecoratorContext;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.domain.BlogEntry;
-import net.sourceforge.pebble.api.decorator.ContentDecoratorContext;
+import net.sourceforge.pebble.domain.Tag;
 import net.sourceforge.pebble.util.StringUtils;
-import net.sourceforge.pebble.PluginProperties;
-import java.util.ResourceBundle;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 

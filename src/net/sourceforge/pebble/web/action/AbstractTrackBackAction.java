@@ -1,7 +1,7 @@
 package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.domain.BlogEntry;
-import net.sourceforge.pebble.trackback.TrackBackTokenManager;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 

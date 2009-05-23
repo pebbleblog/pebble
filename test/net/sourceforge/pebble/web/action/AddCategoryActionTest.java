@@ -1,11 +1,9 @@
 package net.sourceforge.pebble.web.action;
 
-import net.sourceforge.pebble.web.view.View;
-import net.sourceforge.pebble.web.view.ForwardView;
-import net.sourceforge.pebble.web.view.impl.BlogEntryFormView;
-import net.sourceforge.pebble.domain.BlogEntry;
-import net.sourceforge.pebble.domain.Category;
 import net.sourceforge.pebble.Constants;
+import net.sourceforge.pebble.domain.Category;
+import net.sourceforge.pebble.web.view.ForwardView;
+import net.sourceforge.pebble.web.view.View;
 
 /**
  * Tests for the AddCategoryAction class.

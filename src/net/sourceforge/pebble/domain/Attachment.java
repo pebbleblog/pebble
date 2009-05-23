@@ -31,8 +31,6 @@
  */
 package net.sourceforge.pebble.domain;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 /**
  * Represents a blog entry attachment (such as that used within an RSS

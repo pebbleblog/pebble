@@ -31,9 +31,8 @@
  */
 package net.sourceforge.pebble.index;
 
-import net.sourceforge.pebble.domain.SingleBlogTestCase;
 import net.sourceforge.pebble.domain.BlogEntry;
-import net.sourceforge.pebble.domain.Tag;
+import net.sourceforge.pebble.domain.SingleBlogTestCase;
 
 /**
  * Tests for the AuthorIndex class.

@@ -3,6 +3,7 @@ package net.sourceforge.pebble.decorator;
 import net.sourceforge.pebble.domain.BlogEntry;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.domain.StaticPage;
+import net.sourceforge.pebble.util.UrlRewriter;
 import net.sourceforge.pebble.api.decorator.ContentDecoratorContext;
 import org.radeox.api.engine.RenderEngine;
 import org.radeox.api.engine.WikiRenderEngine;
@@ -112,11 +113,13 @@ class RadeoxWikiRenderEngine extends BaseRenderEngine implements WikiRenderEngin
 
   public void appendLink(StringBuffer buffer, String name, String view, String anchor) {
     buffer.append("<a href=\"");
-    buffer.append(blog.getUrl() + "pages/" + name + ".html");
+    StringBuffer url = new StringBuffer();
+    url.append(blog.getUrl()).append("pages/").append(name).append(".html");
     if (anchor != null && anchor.trim().length() > 0) {
-      buffer.append("#");
-      buffer.append(anchor);
+      url.append("#");
+      url.append(anchor);
     }
+    buffer.append(UrlRewriter.doRewrite(url.toString()));
     buffer.append("\">");
     buffer.append(view);
     buffer.append("</a>");

@@ -1,22 +1,27 @@
 package net.sourceforge.pebble.web.action;
 
-import net.sourceforge.pebble.domain.*;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.domain.BlogEntry;
+import net.sourceforge.pebble.domain.BlogService;
+import net.sourceforge.pebble.domain.BlogServiceException;
+import net.sourceforge.pebble.domain.Comment;
+import net.sourceforge.pebble.security.PebbleUserDetails;
 import net.sourceforge.pebble.util.CookieUtils;
 import net.sourceforge.pebble.util.MailUtils;
 import net.sourceforge.pebble.util.SecurityUtils;
 import net.sourceforge.pebble.util.StringUtils;
 import net.sourceforge.pebble.web.validation.ValidationContext;
-import net.sourceforge.pebble.security.PebbleUserDetails;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.servlet.http.Cookie;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.net.URLDecoder;
 
 /**
  * Adds a comment to an existing blog entry.
