@@ -1,21 +1,24 @@
 ﻿/*
- * FCKeditor - The text editor for internet
- * Copyright (C) 2003-2006 Frederico Caldeira Knabben
- * 
- * Licensed under the terms of the GNU Lesser General Public License:
- * 		http://www.opensource.org/licenses/lgpl-license.php
- * 
- * For further information visit:
- * 		http://www.fckeditor.net/
- * 
- * "Support Open Source software. What about a donation today?"
- * 
- * File Name: he.js
- * 	Hebrew language file.
- * 
- * File Authors:
- * 		Tamir Mordo (tamir@tetitu.co.il)
- * 		Ophir Radnitz (ophir@liqweed.net)
+ * FCKeditor - The text editor for Internet - http://www.fckeditor.net
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
+ *
+ * == BEGIN LICENSE ==
+ *
+ * Licensed under the terms of any of the following licenses at your
+ * choice:
+ *
+ *  - GNU General Public License Version 2 or later (the "GPL")
+ *    http://www.gnu.org/licenses/gpl.html
+ *
+ *  - GNU Lesser General Public License Version 2.1 or later (the "LGPL")
+ *    http://www.gnu.org/licenses/lgpl.html
+ *
+ *  - Mozilla Public License Version 1.1 or later (the "MPL")
+ *    http://www.mozilla.org/MPL/MPL-1.1.html
+ *
+ * == END LICENSE ==
+ *
+ * Hebrew language file.
  */
 
 var FCKLang =
@@ -41,7 +44,9 @@ RemoveFormat		: "הסרת העיצוב",
 InsertLinkLbl		: "קישור",
 InsertLink			: "הוספת/עריכת קישור",
 RemoveLink			: "הסרת הקישור",
+VisitLink			: "פתח קישור",
 Anchor				: "הוספת/עריכת נקודת עיגון",
+AnchorDelete		: "הסר נקודת עיגון",
 InsertImageLbl		: "תמונה",
 InsertImage			: "הוספת/עריכת תמונה",
 InsertFlashLbl		: "פלאש",
@@ -67,6 +72,10 @@ RightJustify		: "יישור לימין",
 BlockJustify		: "יישור לשוליים",
 DecreaseIndent		: "הקטנת אינדנטציה",
 IncreaseIndent		: "הגדלת אינדנטציה",
+Blockquote			: "בלוק ציטוט",
+CreateDiv			: "צור מיכל(תג)DIV",
+EditDiv				: "ערוך מיכל (תג)DIV",
+DeleteDiv			: "הסר מיכל(תג) DIV",
 Undo				: "ביטול צעד אחרון",
 Redo				: "חזרה על צעד אחרון",
 NumberedListLbl		: "רשימה ממוספרת",
@@ -100,20 +109,27 @@ SelectionField	: "שדה בחירה",
 ImageButton		: "כפתור תמונה",
 
 FitWindow		: "הגדל את גודל העורך",
+ShowBlocks		: "הצג בלוקים",
 
 // Context Menu
 EditLink			: "עריכת קישור",
 CellCM				: "תא",
 RowCM				: "שורה",
 ColumnCM			: "עמודה",
-InsertRow			: "הוספת שורה",
+InsertRowAfter		: "הוסף שורה אחרי",
+InsertRowBefore		: "הוסף שורה לפני",
 DeleteRows			: "מחיקת שורות",
-InsertColumn		: "הוספת עמודה",
+InsertColumnAfter	: "הוסף עמודה אחרי",
+InsertColumnBefore	: "הוסף עמודה לפני",
 DeleteColumns		: "מחיקת עמודות",
-InsertCell			: "הוספת תא",
+InsertCellAfter		: "הוסף תא אחרי",
+InsertCellBefore	: "הוסף תא אחרי",
 DeleteCells			: "מחיקת תאים",
 MergeCells			: "מיזוג תאים",
-SplitCell			: "פיצול תאים",
+MergeRight			: "מזג ימינה",
+MergeDown			: "מזג למטה",
+HorizontalSplitCell	: "פצל תא אופקית",
+VerticalSplitCell	: "פצל תא אנכית",
 TableDelete			: "מחק טבלה",
 CellProperties		: "תכונות התא",
 TableProperties		: "תכונות הטבלה",
@@ -145,6 +161,7 @@ UnknownToolbarSet	: "ערכת סרגל הכלים \"%1\" לא קיימת",
 NoActiveX			: "הגדרות אבטחה של הדפדפן עלולות לגביל את אפשרויות העריכה.יש לאפשר את האופציה \"הרץ פקדים פעילים ותוספות\". תוכל לחוות טעויות וחיווים של אפשרויות שחסרים.",
 BrowseServerBlocked : "לא ניתן לגשת לדפדפן משאבים.אנא וודא שחוסם חלונות הקופצים לא פעיל.",
 DialogBlocked		: "לא היה ניתן לפתוח חלון דיאלוג. אנא וודא שחוסם חלונות קופצים לא פעיל.",
+VisitLinkBlocked	: "לא ניתן לפתוח חלון חדש.נא לוודא שחוסמי החלונות הקופצים לא פעילים.",
 
 // Dialogs
 DlgBtnOK			: "אישור",
@@ -154,7 +171,7 @@ DlgBtnBrowseServer	: "סייר השרת",
 DlgAdvancedTag		: "אפשרויות מתקדמות",
 DlgOpOther			: "<אחר>",
 DlgInfoTab			: "מידע",
-DlgAlertUrl			: "אנה הזן URL",
+DlgAlertUrl			: "אנא הזן URL",
 
 // General Dialogs Labels
 DlgGenNotSet		: "<לא נקבע>",
@@ -226,7 +243,7 @@ DlgLnkURL			: "כתובת (URL)",
 DlgLnkAnchorSel		: "בחירת עוגן",
 DlgLnkAnchorByName	: "עפ''י שם העוגן",
 DlgLnkAnchorById	: "עפ''י זיהוי (Id) הרכיב",
-DlgLnkNoAnchors		: "<אין עוגנים זמינים בדף>",
+DlgLnkNoAnchors		: "(אין עוגנים זמינים בדף)",
 DlgLnkEMail			: "כתובת הדוא''ל",
 DlgLnkEMailSubject	: "נושא ההודעה",
 DlgLnkEMailBody		: "גוף ההודעה",
@@ -259,6 +276,7 @@ DlgLnkPopTop		: "מיקום צד עליון",
 DlnLnkMsgNoUrl		: "נא להקליד את כתובת הקישור (URL)",
 DlnLnkMsgNoEMail	: "נא להקליד את כתובת הדוא''ל",
 DlnLnkMsgNoAnchor	: "נא לבחור עוגן במסמך",
+DlnLnkMsgInvPopName	: "שם החלון הקופץ חייב להתחיל באותיות ואסור לכלול רווחים",
 
 // Color Dialog
 DlgColorTitle		: "בחירת צבע",
@@ -290,6 +308,11 @@ DlgTableCellSpace	: "מרווח תא",
 DlgTableCellPad		: "ריפוד תא",
 DlgTableCaption		: "כיתוב",
 DlgTableSummary		: "סיכום",
+DlgTableHeaders		: "כותרות",
+DlgTableHeadersNone		: "אין",
+DlgTableHeadersColumn	: "עמודה ראשונה",
+DlgTableHeadersRow		: "שורה ראשונה",
+DlgTableHeadersBoth		: "שניהם",
 
 // Table Cell Dialog
 DlgCellTitle		: "תכונות תא",
@@ -312,11 +335,17 @@ DlgCellVerAlignTop	: "למעלה",
 DlgCellVerAlignMiddle	: "לאמצע",
 DlgCellVerAlignBottom	: "לתחתית",
 DlgCellVerAlignBaseline	: "קו תחתית",
+DlgCellType		: "סוג תא",
+DlgCellTypeData		: "סוג",
+DlgCellTypeHeader	: "כותרת",
 DlgCellRowSpan		: "טווח שורות",
 DlgCellCollSpan		: "טווח עמודות",
 DlgCellBackColor	: "צבע רקע",
 DlgCellBorderColor	: "צבע מסגרת",
 DlgCellBtnSelect	: "בחירה...",
+
+// Find and Replace Dialog
+DlgFindAndReplaceTitle	: "חפש והחלף",
 
 // Find Dialog
 DlgFindTitle		: "חיפוש",
@@ -333,7 +362,6 @@ DlgReplaceReplAllBtn	: "החלפה בכל העמוד",
 DlgReplaceWordChk		: "התאמה למילה המלאה",
 
 // Paste Operations / Dialog
-PasteErrorPaste	: "הגדרות האבטחה בדפדפן שלך לא מאפשרות לעורך לבצע פעולות הדבקה אוטומטיות. יש להשתמש במקלדת לשם כך (Ctrl+V).",
 PasteErrorCut	: "הגדרות האבטחה בדפדפן שלך לא מאפשרות לעורך לבצע פעולות גזירה  אוטומטיות. יש להשתמש במקלדת לשם כך (Ctrl+X).",
 PasteErrorCopy	: "הגדרות האבטחה בדפדפן שלך לא מאפשרות לעורך לבצע פעולות העתקה אוטומטיות. יש להשתמש במקלדת לשם כך (Ctrl+C).",
 
@@ -341,9 +369,9 @@ PasteAsText		: "הדבקה כטקסט פשוט",
 PasteFromWord	: "הדבקה מ-וורד",
 
 DlgPasteMsg2	: "אנא הדבק בתוך הקופסה באמצעות  (<STRONG>Ctrl+V</STRONG>) ולחץ על  <STRONG>אישור</STRONG>.",
+DlgPasteSec		: "עקב הגדרות אבטחה בדפדפן, לא ניתן לגשת אל לוח הגזירים (clipboard) בצורה ישירה.אנא בצע הדבק שוב בחלון זה.",
 DlgPasteIgnoreFont		: "התעלם מהגדרות סוג פונט",
 DlgPasteRemoveStyles	: "הסר הגדרות סגנון",
-DlgPasteCleanBox		: "ניקוי קופסה",
 
 // Color Picker
 ColorAutomatic	: "אוטומטי",
@@ -375,8 +403,11 @@ DlgSpellManyChanges		: "בדיקות איות הסתיימה: %1 מילים שו
 IeSpellDownload			: "בודק האיות לא מותקן, האם אתה מעוניין להוריד?",
 
 // Button Dialog
-DlgButtonText	: "טקסט (ערך)",
-DlgButtonType	: "סוג",
+DlgButtonText		: "טקסט (ערך)",
+DlgButtonType		: "סוג",
+DlgButtonTypeBtn	: "כפתור",
+DlgButtonTypeSbm	: "שלח",
+DlgButtonTypeRst	: "אפס",
 
 // Checkbox and Radio Button Dialogs
 DlgCheckboxName		: "שם",
@@ -425,6 +456,7 @@ DlgHiddenValue	: "ערך",
 // Bulleted List Dialog
 BulletedListProp	: "מאפייני רשימה",
 NumberedListProp	: "מאפייני רשימה ממוספרת",
+DlgLstStart			: "התחלה",
 DlgLstType			: "סוג",
 DlgLstTypeCircle	: "עיגול",
 DlgLstTypeDisc		: "דיסק",
@@ -447,6 +479,15 @@ DlgDocLangDirLTR	: "שמאל לימין (LTR)",
 DlgDocLangDirRTL	: "ימין לשמאל (RTL)",
 DlgDocLangCode		: "קוד שפה",
 DlgDocCharSet		: "קידוד אותיות",
+DlgDocCharSetCE		: "מרכז אירופה",
+DlgDocCharSetCT		: "סיני מסורתי (Big5)",
+DlgDocCharSetCR		: "קירילי",
+DlgDocCharSetGR		: "יוונית",
+DlgDocCharSetJP		: "יפנית",
+DlgDocCharSetKR		: "קוראנית",
+DlgDocCharSetTR		: "טורקית",
+DlgDocCharSetUN		: "יוני קוד (UTF-8)",
+DlgDocCharSetWE		: "מערב אירופה",
 DlgDocCharSetOther	: "קידוד אותיות אחר",
 
 DlgDocDocType		: "הגדרות סוג מסמך",
@@ -476,12 +517,18 @@ DlgTemplatesTitle	: "תביות תוכן",
 DlgTemplatesSelMsg	: "אנא בחר תבנית לפתיחה בעורך <BR>התוכן המקורי ימחק:",
 DlgTemplatesLoading	: "מעלה רשימת תבניות אנא המתן",
 DlgTemplatesNoTpl	: "(לא הוגדרו תבניות)",
+DlgTemplatesReplace	: "החלפת תוכן ממשי",
 
 // About Dialog
 DlgAboutAboutTab	: "אודות",
 DlgAboutBrowserInfoTab	: "גירסת דפדפן",
 DlgAboutLicenseTab	: "רשיון",
 DlgAboutVersion		: "גירסא",
-DlgAboutLicense		: "ברשיון תחת תנאי GNU Lesser General Public License",
-DlgAboutInfo		: "מידע נוסף ניתן למצוא כאן:"
-}
+DlgAboutInfo		: "מידע נוסף ניתן למצוא כאן:",
+
+// Div Dialog
+DlgDivGeneralTab	: "כללי",
+DlgDivAdvancedTab	: "מתקדם",
+DlgDivStyle		: "סגנון",
+DlgDivInlineStyle	: "סגנון בתוך השורה"
+};

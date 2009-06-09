@@ -1,20 +1,24 @@
 ﻿/*
- * FCKeditor - The text editor for internet
- * Copyright (C) 2003-2006 Frederico Caldeira Knabben
- * 
- * Licensed under the terms of the GNU Lesser General Public License:
- * 		http://www.opensource.org/licenses/lgpl-license.php
- * 
- * For further information visit:
- * 		http://www.fckeditor.net/
- * 
- * "Support Open Source software. What about a donation today?"
- * 
- * File Name: gl.js
- * 	Galician language file.
- * 
- * File Authors:
- * 		Fernando Riveiro Lopez
+ * FCKeditor - The text editor for Internet - http://www.fckeditor.net
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
+ *
+ * == BEGIN LICENSE ==
+ *
+ * Licensed under the terms of any of the following licenses at your
+ * choice:
+ *
+ *  - GNU General Public License Version 2 or later (the "GPL")
+ *    http://www.gnu.org/licenses/gpl.html
+ *
+ *  - GNU Lesser General Public License Version 2.1 or later (the "LGPL")
+ *    http://www.gnu.org/licenses/lgpl.html
+ *
+ *  - Mozilla Public License Version 1.1 or later (the "MPL")
+ *    http://www.mozilla.org/MPL/MPL-1.1.html
+ *
+ * == END LICENSE ==
+ *
+ * Galician language file.
  */
 
 var FCKLang =
@@ -40,7 +44,9 @@ RemoveFormat		: "Eliminar Formato",
 InsertLinkLbl		: "Ligazón",
 InsertLink			: "Inserir/Editar Ligazón",
 RemoveLink			: "Eliminar Ligazón",
+VisitLink			: "Open Link",	//MISSING
 Anchor				: "Inserir/Editar Referencia",
+AnchorDelete		: "Remove Anchor",	//MISSING
 InsertImageLbl		: "Imaxe",
 InsertImage			: "Inserir/Editar Imaxe",
 InsertFlashLbl		: "Flash",
@@ -66,13 +72,17 @@ RightJustify		: "Aliñar á Dereita",
 BlockJustify		: "Xustificado",
 DecreaseIndent		: "Disminuir Sangría",
 IncreaseIndent		: "Aumentar Sangría",
+Blockquote			: "Blockquote",	//MISSING
+CreateDiv			: "Create Div Container",	//MISSING
+EditDiv				: "Edit Div Container",	//MISSING
+DeleteDiv			: "Remove Div Container",	//MISSING
 Undo				: "Desfacer",
 Redo				: "Refacer",
 NumberedListLbl		: "Lista Numerada",
 NumberedList		: "Inserir/Eliminar Lista Numerada",
 BulletedListLbl		: "Marcas",
 BulletedList		: "Inserir/Eliminar Marcas",
-ShowTableBorders	: "Mostrar Bordes das Taboas",
+ShowTableBorders	: "Mostrar Bordes das Táboas",
 ShowDetails			: "Mostrar Marcas Parágrafo",
 Style				: "Estilo",
 FontFormat			: "Formato",
@@ -99,23 +109,30 @@ SelectionField	: "Campo de Selección",
 ImageButton		: "Botón de Imaxe",
 
 FitWindow		: "Maximizar o tamaño do editor",
+ShowBlocks		: "Show Blocks",	//MISSING
 
 // Context Menu
 EditLink			: "Editar Ligazón",
 CellCM				: "Cela",
 RowCM				: "Fila",
 ColumnCM			: "Columna",
-InsertRow			: "Inserir Fila",
+InsertRowAfter		: "Insert Row After",	//MISSING
+InsertRowBefore		: "Insert Row Before",	//MISSING
 DeleteRows			: "Borrar Filas",
-InsertColumn		: "Inserir Columna",
+InsertColumnAfter	: "Insert Column After",	//MISSING
+InsertColumnBefore	: "Insert Column Before",	//MISSING
 DeleteColumns		: "Borrar Columnas",
-InsertCell			: "Inserir Cela",
+InsertCellAfter		: "Insert Cell After",	//MISSING
+InsertCellBefore	: "Insert Cell Before",	//MISSING
 DeleteCells			: "Borrar Cela",
 MergeCells			: "Unir Celas",
-SplitCell			: "Partir Celas",
-TableDelete			: "Borrar Taboa",
+MergeRight			: "Merge Right",	//MISSING
+MergeDown			: "Merge Down",	//MISSING
+HorizontalSplitCell	: "Split Cell Horizontally",	//MISSING
+VerticalSplitCell	: "Split Cell Vertically",	//MISSING
+TableDelete			: "Borrar Táboa",
 CellProperties		: "Propriedades da Cela",
-TableProperties		: "Propriedades da Taboa",
+TableProperties		: "Propriedades da Táboa",
 ImageProperties		: "Propriedades Imaxe",
 FlashProperties		: "Propriedades Flash",
 
@@ -144,6 +161,7 @@ UnknownToolbarSet	: "O conxunto de ferramentas \"%1\" non existe",
 NoActiveX			: "As opcións de seguridade do seu navegador poderían limitar algunha das características de editor. Debe activar a opción \"Executar controis ActiveX e plug-ins\". Pode notar que faltan características e experimentar erros",
 BrowseServerBlocked : "Non se poido abrir o navegador de recursos. Asegúrese de que están desactivados os bloqueadores de xanelas emerxentes",
 DialogBlocked		: "Non foi posible abrir a xanela de diálogo. Asegúrese de que están desactivados os bloqueadores de xanelas emerxentes",
+VisitLinkBlocked	: "It was not possible to open a new window. Make sure all popup blockers are disabled.",	//MISSING
 
 // Dialogs
 DlgBtnOK			: "OK",
@@ -225,7 +243,7 @@ DlgLnkURL			: "URL",
 DlgLnkAnchorSel		: "Seleccionar unha Referencia",
 DlgLnkAnchorByName	: "Por Nome de Referencia",
 DlgLnkAnchorById	: "Por Element Id",
-DlgLnkNoAnchors		: "<Non hai referencias disponibles no documento>",
+DlgLnkNoAnchors		: "(Non hai referencias disponibles no documento)",
 DlgLnkEMail			: "Enderezo de E-Mail",
 DlgLnkEMailSubject	: "Asunto do Mensaxe",
 DlgLnkEMailBody		: "Corpo do Mensaxe",
@@ -258,6 +276,7 @@ DlgLnkPopTop		: "Posición dende Arriba",
 DlnLnkMsgNoUrl		: "Por favor, escriba a ligazón URL",
 DlnLnkMsgNoEMail	: "Por favor, escriba o enderezo de e-mail",
 DlnLnkMsgNoAnchor	: "Por favor, seleccione un destino",
+DlnLnkMsgInvPopName	: "The popup name must begin with an alphabetic character and must not contain spaces",	//MISSING
 
 // Color Dialog
 DlgColorTitle		: "Seleccionar Color",
@@ -272,7 +291,7 @@ DlgSmileyTitle		: "Inserte un Smiley",
 DlgSpecialCharTitle	: "Seleccione Caracter Especial",
 
 // Table Dialog
-DlgTableTitle		: "Propiedades da Taboa",
+DlgTableTitle		: "Propiedades da Táboa",
 DlgTableRows		: "Filas",
 DlgTableColumns		: "Columnas",
 DlgTableBorder		: "Tamaño do Borde",
@@ -289,6 +308,11 @@ DlgTableCellSpace	: "Marxe entre Celas",
 DlgTableCellPad		: "Marxe interior",
 DlgTableCaption		: "Título",
 DlgTableSummary		: "Sumario",
+DlgTableHeaders		: "Headers",	//MISSING
+DlgTableHeadersNone		: "None",	//MISSING
+DlgTableHeadersColumn	: "First column",	//MISSING
+DlgTableHeadersRow		: "First Row",	//MISSING
+DlgTableHeadersBoth		: "Both",	//MISSING
 
 // Table Cell Dialog
 DlgCellTitle		: "Propriedades da Cela",
@@ -311,11 +335,17 @@ DlgCellVerAlignTop	: "Arriba",
 DlgCellVerAlignMiddle	: "Medio",
 DlgCellVerAlignBottom	: "Abaixo",
 DlgCellVerAlignBaseline	: "Liña de Base",
+DlgCellType		: "Cell Type",	//MISSING
+DlgCellTypeData		: "Data",	//MISSING
+DlgCellTypeHeader	: "Header",	//MISSING
 DlgCellRowSpan		: "Ocupar Filas",
 DlgCellCollSpan		: "Ocupar Columnas",
 DlgCellBackColor	: "Color de Fondo",
 DlgCellBorderColor	: "Color de Borde",
 DlgCellBtnSelect	: "Seleccionar...",
+
+// Find and Replace Dialog
+DlgFindAndReplaceTitle	: "Find and Replace",	//MISSING
 
 // Find Dialog
 DlgFindTitle		: "Procurar",
@@ -332,7 +362,6 @@ DlgReplaceReplAllBtn	: "Substitiur Todo",
 DlgReplaceWordChk		: "Coincidir con toda a palabra",
 
 // Paste Operations / Dialog
-PasteErrorPaste	: "Os axustes de seguridade do seu navegador non permiten que o editor realice automáticamente as tarefas de pegado. Por favor, use o teclado para iso (Ctrl+V).",
 PasteErrorCut	: "Os axustes de seguridade do seu navegador non permiten que o editor realice automáticamente as tarefas de corte. Por favor, use o teclado para iso (Ctrl+X).",
 PasteErrorCopy	: "Os axustes de seguridade do seu navegador non permiten que o editor realice automáticamente as tarefas de copia. Por favor, use o teclado para iso (Ctrl+C).",
 
@@ -340,9 +369,9 @@ PasteAsText		: "Pegar como texto plano",
 PasteFromWord	: "Pegar dende Word",
 
 DlgPasteMsg2	: "Por favor, pegue dentro do seguinte cadro usando o teclado (<STRONG>Ctrl+V</STRONG>) e pulse <STRONG>OK</STRONG>.",
+DlgPasteSec		: "Because of your browser security settings, the editor is not able to access your clipboard data directly. You are required to paste it again in this window.",	//MISSING
 DlgPasteIgnoreFont		: "Ignorar as definicións de Tipografía",
 DlgPasteRemoveStyles	: "Eliminar as definicións de Estilos",
-DlgPasteCleanBox		: "Limpar o Cadro",
 
 // Color Picker
 ColorAutomatic	: "Automático",
@@ -374,8 +403,11 @@ DlgSpellManyChanges		: "Corrección ortográfica rematada: %1 verbas substituida
 IeSpellDownload			: "O corrector ortográfico non está instalado. ¿Quere descargalo agora?",
 
 // Button Dialog
-DlgButtonText	: "Texto (Valor)",
-DlgButtonType	: "Tipo",
+DlgButtonText		: "Texto (Valor)",
+DlgButtonType		: "Tipo",
+DlgButtonTypeBtn	: "Button",	//MISSING
+DlgButtonTypeSbm	: "Submit",	//MISSING
+DlgButtonTypeRst	: "Reset",	//MISSING
 
 // Checkbox and Radio Button Dialogs
 DlgCheckboxName		: "Nome",
@@ -424,6 +456,7 @@ DlgHiddenValue	: "Valor",
 // Bulleted List Dialog
 BulletedListProp	: "Propriedades das Marcas",
 NumberedListProp	: "Propriedades da Lista de Numeración",
+DlgLstStart			: "Start",	//MISSING
 DlgLstType			: "Tipo",
 DlgLstTypeCircle	: "Círculo",
 DlgLstTypeDisc		: "Disco",
@@ -446,6 +479,15 @@ DlgDocLangDirLTR	: "Esquerda a Dereita (LTR)",
 DlgDocLangDirRTL	: "Dereita a Esquerda (RTL)",
 DlgDocLangCode		: "Código de Idioma",
 DlgDocCharSet		: "Codificación do Xogo de Caracteres",
+DlgDocCharSetCE		: "Central European",	//MISSING
+DlgDocCharSetCT		: "Chinese Traditional (Big5)",	//MISSING
+DlgDocCharSetCR		: "Cyrillic",	//MISSING
+DlgDocCharSetGR		: "Greek",	//MISSING
+DlgDocCharSetJP		: "Japanese",	//MISSING
+DlgDocCharSetKR		: "Korean",	//MISSING
+DlgDocCharSetTR		: "Turkish",	//MISSING
+DlgDocCharSetUN		: "Unicode (UTF-8)",	//MISSING
+DlgDocCharSetWE		: "Western European",	//MISSING
 DlgDocCharSetOther	: "Outra Codificación do Xogo de Caracteres",
 
 DlgDocDocType		: "Encabezado do Tipo de Documento",
@@ -475,12 +517,18 @@ DlgTemplatesTitle	: "Plantillas de Contido",
 DlgTemplatesSelMsg	: "Por favor, seleccione a plantilla a abrir no editor<br>(o contido actual perderase):",
 DlgTemplatesLoading	: "Cargando listado de plantillas. Por favor, espere...",
 DlgTemplatesNoTpl	: "(Non hai plantillas definidas)",
+DlgTemplatesReplace	: "Replace actual contents",	//MISSING
 
 // About Dialog
 DlgAboutAboutTab	: "Acerca de",
 DlgAboutBrowserInfoTab	: "Información do Navegador",
 DlgAboutLicenseTab	: "Licencia",
 DlgAboutVersion		: "versión",
-DlgAboutLicense		: "Licencia concedida baixo os termos da GNU Lesser General Public License",
-DlgAboutInfo		: "Para máis información visitar:"
-}
+DlgAboutInfo		: "Para máis información visitar:",
+
+// Div Dialog
+DlgDivGeneralTab	: "General",	//MISSING
+DlgDivAdvancedTab	: "Advanced",	//MISSING
+DlgDivStyle		: "Style",	//MISSING
+DlgDivInlineStyle	: "Inline Style"	//MISSING
+};

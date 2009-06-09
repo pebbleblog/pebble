@@ -1,20 +1,24 @@
 ﻿/*
- * FCKeditor - The text editor for internet
- * Copyright (C) 2003-2006 Frederico Caldeira Knabben
- * 
- * Licensed under the terms of the GNU Lesser General Public License:
- * 		http://www.opensource.org/licenses/lgpl-license.php
- * 
- * For further information visit:
- * 		http://www.fckeditor.net/
- * 
- * "Support Open Source software. What about a donation today?"
- * 
- * File Name: it.js
- * 	Italian language file.
- * 
- * File Authors:
- * 		Simone Chiaretta (simone@piyosailing.com)
+ * FCKeditor - The text editor for Internet - http://www.fckeditor.net
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
+ *
+ * == BEGIN LICENSE ==
+ *
+ * Licensed under the terms of any of the following licenses at your
+ * choice:
+ *
+ *  - GNU General Public License Version 2 or later (the "GPL")
+ *    http://www.gnu.org/licenses/gpl.html
+ *
+ *  - GNU Lesser General Public License Version 2.1 or later (the "LGPL")
+ *    http://www.gnu.org/licenses/lgpl.html
+ *
+ *  - Mozilla Public License Version 1.1 or later (the "MPL")
+ *    http://www.mozilla.org/MPL/MPL-1.1.html
+ *
+ * == END LICENSE ==
+ *
+ * Italian language file.
  */
 
 var FCKLang =
@@ -40,7 +44,9 @@ RemoveFormat		: "Elimina formattazione",
 InsertLinkLbl		: "Collegamento",
 InsertLink			: "Inserisci/Modifica collegamento",
 RemoveLink			: "Elimina collegamento",
+VisitLink			: "Open Link",	//MISSING
 Anchor				: "Inserisci/Modifica Ancora",
+AnchorDelete		: "Rimuovi Ancora",
 InsertImageLbl		: "Immagine",
 InsertImage			: "Inserisci/Modifica immagine",
 InsertFlashLbl		: "Oggetto Flash",
@@ -66,6 +72,10 @@ RightJustify		: "Allinea a destra",
 BlockJustify		: "Giustifica",
 DecreaseIndent		: "Riduci rientro",
 IncreaseIndent		: "Aumenta rientro",
+Blockquote			: "Blockquote",	//MISSING
+CreateDiv			: "Create Div Container",	//MISSING
+EditDiv				: "Edit Div Container",	//MISSING
+DeleteDiv			: "Remove Div Container",	//MISSING
 Undo				: "Annulla",
 Redo				: "Ripristina",
 NumberedListLbl		: "Elenco numerato",
@@ -99,20 +109,27 @@ SelectionField	: "Menu di selezione",
 ImageButton		: "Bottone immagine",
 
 FitWindow		: "Massimizza l'area dell'editor",
+ShowBlocks		: "Visualizza Blocchi",
 
 // Context Menu
 EditLink			: "Modifica collegamento",
 CellCM				: "Cella",
 RowCM				: "Riga",
 ColumnCM			: "Colonna",
-InsertRow			: "Inserisci riga",
+InsertRowAfter		: "Inserisci Riga Dopo",
+InsertRowBefore		: "Inserisci Riga Prima",
 DeleteRows			: "Elimina righe",
-InsertColumn		: "Inserisci colonna",
+InsertColumnAfter	: "Inserisci Colonna Dopo",
+InsertColumnBefore	: "Inserisci Colonna Prima",
 DeleteColumns		: "Elimina colonne",
-InsertCell			: "Inserisci cella",
+InsertCellAfter		: "Inserisci Cella Dopo",
+InsertCellBefore	: "Inserisci Cella Prima",
 DeleteCells			: "Elimina celle",
 MergeCells			: "Unisce celle",
-SplitCell			: "Dividi celle",
+MergeRight			: "Unisci a Destra",
+MergeDown			: "Unisci in Basso",
+HorizontalSplitCell	: "Dividi Cella Orizzontalmente",
+VerticalSplitCell	: "Dividi Cella Verticalmente",
 TableDelete			: "Cancella Tabella",
 CellProperties		: "Proprietà cella",
 TableProperties		: "Proprietà tabella",
@@ -144,6 +161,7 @@ UnknownToolbarSet	: "La barra di strumenti \"%1\" non esiste",
 NoActiveX			: "Le impostazioni di sicurezza del tuo browser potrebbero limitare alcune funzionalità dell'editor. Devi abilitare l'opzione \"Esegui controlli e plug-in ActiveX\". Potresti avere errori e notare funzionalità mancanti.",
 BrowseServerBlocked : "Non è possibile aprire la finestra di espolorazione risorse. Verifica che tutti i blocca popup siano bloccati.",
 DialogBlocked		: "Non è possibile aprire la finestra di dialogo. Verifica che tutti i blocca popup siano bloccati.",
+VisitLinkBlocked	: "It was not possible to open a new window. Make sure all popup blockers are disabled.",	//MISSING
 
 // Dialogs
 DlgBtnOK			: "OK",
@@ -225,7 +243,7 @@ DlgLnkURL			: "URL",
 DlgLnkAnchorSel		: "Scegli Ancora",
 DlgLnkAnchorByName	: "Per Nome",
 DlgLnkAnchorById	: "Per id elemento",
-DlgLnkNoAnchors		: "<Nessuna ancora disponibile nel documento>",
+DlgLnkNoAnchors		: "(Nessuna ancora disponibile nel documento)",
 DlgLnkEMail			: "Indirizzo E-Mail",
 DlgLnkEMailSubject	: "Oggetto del messaggio",
 DlgLnkEMailBody		: "Corpo del messaggio",
@@ -258,6 +276,7 @@ DlgLnkPopTop		: "Posizione dall'alto",
 DlnLnkMsgNoUrl		: "Devi inserire l'URL del collegamento",
 DlnLnkMsgNoEMail	: "Devi inserire un'indirizzo e-mail",
 DlnLnkMsgNoAnchor	: "Devi selezionare un'ancora",
+DlnLnkMsgInvPopName	: "Il nome del popup deve iniziare con una lettera, e non può contenere spazi",
 
 // Color Dialog
 DlgColorTitle		: "Seleziona colore",
@@ -289,6 +308,11 @@ DlgTableCellSpace	: "Spaziatura celle",
 DlgTableCellPad		: "Padding celle",
 DlgTableCaption		: "Intestazione",
 DlgTableSummary		: "Indice",
+DlgTableHeaders		: "Headers",	//MISSING
+DlgTableHeadersNone		: "None",	//MISSING
+DlgTableHeadersColumn	: "First column",	//MISSING
+DlgTableHeadersRow		: "First Row",	//MISSING
+DlgTableHeadersBoth		: "Both",	//MISSING
 
 // Table Cell Dialog
 DlgCellTitle		: "Proprietà cella",
@@ -311,11 +335,17 @@ DlgCellVerAlignTop	: "In Alto",
 DlgCellVerAlignMiddle	: "Centrato",
 DlgCellVerAlignBottom	: "In Basso",
 DlgCellVerAlignBaseline	: "Linea base",
+DlgCellType		: "Cell Type",	//MISSING
+DlgCellTypeData		: "Data",	//MISSING
+DlgCellTypeHeader	: "Header",	//MISSING
 DlgCellRowSpan		: "Righe occupate",
 DlgCellCollSpan		: "Colonne occupate",
 DlgCellBackColor	: "Colore sfondo",
 DlgCellBorderColor	: "Colore bordo",
 DlgCellBtnSelect	: "Scegli...",
+
+// Find and Replace Dialog
+DlgFindAndReplaceTitle	: "Cerca e Sostituisci",
 
 // Find Dialog
 DlgFindTitle		: "Trova",
@@ -332,7 +362,6 @@ DlgReplaceReplAllBtn	: "Sostituisci tutto",
 DlgReplaceWordChk		: "Solo parole intere",
 
 // Paste Operations / Dialog
-PasteErrorPaste	: "Le impostazioni di sicurezza del browser non permettono di incollare automaticamente il testo. Usa la tastiera (Ctrl+V).",
 PasteErrorCut	: "Le impostazioni di sicurezza del browser non permettono di tagliare automaticamente il testo. Usa la tastiera (Ctrl+X).",
 PasteErrorCopy	: "Le impostazioni di sicurezza del browser non permettono di copiare automaticamente il testo. Usa la tastiera (Ctrl+C).",
 
@@ -340,9 +369,9 @@ PasteAsText		: "Incolla come testo semplice",
 PasteFromWord	: "Incolla da Word",
 
 DlgPasteMsg2	: "Incolla il testo all'interno dell'area sottostante usando la scorciatoia di tastiere (<STRONG>Ctrl+V</STRONG>) e premi <STRONG>OK</STRONG>.",
+DlgPasteSec		: "A causa delle impostazioni di sicurezza del browser,l'editor non è in grado di accedere direttamente agli appunti. E' pertanto necessario incollarli di nuovo in questa finestra.",
 DlgPasteIgnoreFont		: "Ignora le definizioni di Font",
 DlgPasteRemoveStyles	: "Rimuovi le definizioni di Stile",
-DlgPasteCleanBox		: "Svuota area di testo",
 
 // Color Picker
 ColorAutomatic	: "Automatico",
@@ -374,8 +403,11 @@ DlgSpellManyChanges		: "Controllo ortografico completato: %1 parole cambiate",
 IeSpellDownload			: "Contollo ortografico non installato. Lo vuoi scaricare ora?",
 
 // Button Dialog
-DlgButtonText	: "Testo (Value)",
-DlgButtonType	: "Tipo",
+DlgButtonText		: "Testo (Value)",
+DlgButtonType		: "Tipo",
+DlgButtonTypeBtn	: "Bottone",
+DlgButtonTypeSbm	: "Invio",
+DlgButtonTypeRst	: "Annulla",
 
 // Checkbox and Radio Button Dialogs
 DlgCheckboxName		: "Nome",
@@ -424,6 +456,7 @@ DlgHiddenValue	: "Valore",
 // Bulleted List Dialog
 BulletedListProp	: "Proprietà lista puntata",
 NumberedListProp	: "Proprietà lista numerata",
+DlgLstStart			: "Inizio",
 DlgLstType			: "Tipo",
 DlgLstTypeCircle	: "Tondo",
 DlgLstTypeDisc		: "Disco",
@@ -446,6 +479,15 @@ DlgDocLangDirLTR	: "Da Sinistra a Destra (LTR)",
 DlgDocLangDirRTL	: "Da Destra a Sinistra (RTL)",
 DlgDocLangCode		: "Codice Lingua",
 DlgDocCharSet		: "Set di caretteri",
+DlgDocCharSetCE		: "Europa Centrale",
+DlgDocCharSetCT		: "Cinese Tradizionale (Big5)",
+DlgDocCharSetCR		: "Cirillico",
+DlgDocCharSetGR		: "Greco",
+DlgDocCharSetJP		: "Giapponese",
+DlgDocCharSetKR		: "Coreano",
+DlgDocCharSetTR		: "Turco",
+DlgDocCharSetUN		: "Unicode (UTF-8)",
+DlgDocCharSetWE		: "Europa Occidentale",
 DlgDocCharSetOther	: "Altro set di caretteri",
 
 DlgDocDocType		: "Intestazione DocType",
@@ -475,12 +517,18 @@ DlgTemplatesTitle	: "Contenuto dei modelli",
 DlgTemplatesSelMsg	: "Seleziona il modello da aprire nell'editor<br />(il contenuto attuale verrà eliminato):",
 DlgTemplatesLoading	: "Caricamento modelli in corso. Attendere prego...",
 DlgTemplatesNoTpl	: "(Nessun modello definito)",
+DlgTemplatesReplace	: "Cancella il contenuto corrente",
 
 // About Dialog
 DlgAboutAboutTab	: "Informazioni",
 DlgAboutBrowserInfoTab	: "Informazioni Browser",
 DlgAboutLicenseTab	: "Licenza",
 DlgAboutVersion		: "versione",
-DlgAboutLicense		: "Rilasciato sotto la licensa GNU Lesser General Public License",
-DlgAboutInfo		: "Localizzazione in Italiano realizzata da Simone Chiaretta<br /><a target=\"_blank\" href=\"http://www.piyosailing.com/S/\">www.piyosailing.com</a><br /><br />Per maggiori informazioni visitare"
-}
+DlgAboutInfo		: "Per maggiori informazioni visitare",
+
+// Div Dialog
+DlgDivGeneralTab	: "General",	//MISSING
+DlgDivAdvancedTab	: "Advanced",	//MISSING
+DlgDivStyle		: "Style",	//MISSING
+DlgDivInlineStyle	: "Inline Style"	//MISSING
+};

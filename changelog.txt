@@ -1,5 +1,6 @@
 Version 2.4 - TBC
 -----------------
+Update FCKeditor to Version 2.6.4
 fixed XSS issues for authors and referrers (Tiago Mendo and Nuno Loureiro)
 EntryToPdfDecorator with link to export blog entry to PDF document (Alexander Zagniotov)
 MailUtils now encodes from, subtitle, and mail body (Yusuke Yamamoto)

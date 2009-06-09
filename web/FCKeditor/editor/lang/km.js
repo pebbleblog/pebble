@@ -1,20 +1,24 @@
 ﻿/*
- * FCKeditor - The text editor for internet
- * Copyright (C) 2003-2006 Frederico Caldeira Knabben
- * 
- * Licensed under the terms of the GNU Lesser General Public License:
- * 		http://www.opensource.org/licenses/lgpl-license.php
- * 
- * For further information visit:
- * 		http://www.fckeditor.net/
- * 
- * "Support Open Source software. What about a donation today?"
- * 
- * File Name: km.js
- * 	Khmer language file.
- * 
- * File Authors:
- * 		Chay Sengtha (sengtha@e-khmer.com - http://translate.e-khmer.net)
+ * FCKeditor - The text editor for Internet - http://www.fckeditor.net
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
+ *
+ * == BEGIN LICENSE ==
+ *
+ * Licensed under the terms of any of the following licenses at your
+ * choice:
+ *
+ *  - GNU General Public License Version 2 or later (the "GPL")
+ *    http://www.gnu.org/licenses/gpl.html
+ *
+ *  - GNU Lesser General Public License Version 2.1 or later (the "LGPL")
+ *    http://www.gnu.org/licenses/lgpl.html
+ *
+ *  - Mozilla Public License Version 1.1 or later (the "MPL")
+ *    http://www.mozilla.org/MPL/MPL-1.1.html
+ *
+ * == END LICENSE ==
+ *
+ * Khmer language file.
  */
 
 var FCKLang =
@@ -40,7 +44,9 @@ RemoveFormat		: "លប់ចោល ការរចនា",
 InsertLinkLbl		: "ឈ្នាប់",
 InsertLink			: "បន្ថែម/កែប្រែ ឈ្នាប់",
 RemoveLink			: "លប់ឈ្នាប់",
+VisitLink			: "Open Link",	//MISSING
 Anchor				: "បន្ថែម/កែប្រែ យុថ្កា",
+AnchorDelete		: "Remove Anchor",	//MISSING
 InsertImageLbl		: "រូបភាព",
 InsertImage			: "បន្ថែម/កែប្រែ រូបភាព",
 InsertFlashLbl		: "Flash",
@@ -66,6 +72,10 @@ RightJustify		: "តំរឹមស្តាំ",
 BlockJustify		: "តំរឹមសងខាង",
 DecreaseIndent		: "បន្ថយការចូលបន្ទាត់",
 IncreaseIndent		: "បន្ថែមការចូលបន្ទាត់",
+Blockquote			: "Blockquote",	//MISSING
+CreateDiv			: "Create Div Container",	//MISSING
+EditDiv				: "Edit Div Container",	//MISSING
+DeleteDiv			: "Remove Div Container",	//MISSING
 Undo				: "សារឡើងវិញ",
 Redo				: "ធ្វើឡើងវិញ",
 NumberedListLbl		: "បញ្ជីជាអក្សរ",
@@ -99,20 +109,27 @@ SelectionField	: "ជួរជ្រើសរើស",
 ImageButton		: "ប៉ូតុនរូបភាព",
 
 FitWindow		: "Maximize the editor size",	//MISSING
+ShowBlocks		: "Show Blocks",	//MISSING
 
 // Context Menu
 EditLink			: "កែប្រែឈ្នាប់",
 CellCM				: "Cell",	//MISSING
 RowCM				: "Row",	//MISSING
 ColumnCM			: "Column",	//MISSING
-InsertRow			: "បន្ថែមជួរផ្តេក",
+InsertRowAfter		: "Insert Row After",	//MISSING
+InsertRowBefore		: "Insert Row Before",	//MISSING
 DeleteRows			: "លប់ជួរផ្តេក",
-InsertColumn		: "បន្ថែមជួរឈរ",
+InsertColumnAfter	: "Insert Column After",	//MISSING
+InsertColumnBefore	: "Insert Column Before",	//MISSING
 DeleteColumns		: "លប់ជួរឈរ",
-InsertCell			: "បន្ថែម សែល",
+InsertCellAfter		: "Insert Cell After",	//MISSING
+InsertCellBefore	: "Insert Cell Before",	//MISSING
 DeleteCells			: "លប់សែល",
 MergeCells			: "បញ្ជូលសែល",
-SplitCell			: "ផ្តាច់សែល",
+MergeRight			: "Merge Right",	//MISSING
+MergeDown			: "Merge Down",	//MISSING
+HorizontalSplitCell	: "Split Cell Horizontally",	//MISSING
+VerticalSplitCell	: "Split Cell Vertically",	//MISSING
 TableDelete			: "លប់តារាង",
 CellProperties		: "ការកំណត់សែល",
 TableProperties		: "ការកំណត់តារាង",
@@ -144,6 +161,7 @@ UnknownToolbarSet	: "របាឧបរកណ៍ \"%1\" ពុំមាន ។",
 NoActiveX			: "ការកំណត់សុវត្ថភាពរបស់កម្មវិធីរុករករបស់លោកអ្នក នេះ​អាចធ្វើអោយលោកអ្នកមិនអាចប្រើមុខងារខ្លះរបស់កម្មវិធីតាក់តែងអត្ថបទនេះ ។ លោកអ្នកត្រូវកំណត់អោយ \"ActiveX និង​កម្មវិធីជំនួយក្នុង (plug-ins)\" អោយដំណើរការ ។ លោកអ្នកអាចជួបប្រទះនឹង បញ្ហា ព្រមជាមួយនឹងការបាត់បង់មុខងារណាមួយរបស់កម្មវិធីតាក់តែងអត្ថបទនេះ ។",
 BrowseServerBlocked : "The resources browser could not be opened. Make sure that all popup blockers are disabled.",	//MISSING
 DialogBlocked		: "វីនដូវមិនអាចបើកបានទេ ។ សូមពិនិត្យចំពោះកម្មវិធីបិទ វីនដូវលោត (popup) ថាតើវាដំណើរការរឺទេ ។",
+VisitLinkBlocked	: "It was not possible to open a new window. Make sure all popup blockers are disabled.",	//MISSING
 
 // Dialogs
 DlgBtnOK			: "យល់ព្រម",
@@ -225,7 +243,7 @@ DlgLnkURL			: "URL",
 DlgLnkAnchorSel		: "ជ្រើសរើសយុថ្កា",
 DlgLnkAnchorByName	: "តាមឈ្មោះរបស់យុថ្កា",
 DlgLnkAnchorById	: "តាម Id",
-DlgLnkNoAnchors		: "<ពុំមានយុថ្កានៅក្នុងឯកសារនេះទេ>",
+DlgLnkNoAnchors		: "(No anchors available in the document)",	//MISSING
 DlgLnkEMail			: "អ៊ីមែល",
 DlgLnkEMailSubject	: "ចំណងជើងអត្ថបទ",
 DlgLnkEMailBody		: "អត្ថបទ",
@@ -258,6 +276,7 @@ DlgLnkPopTop		: "ទីតាំងខាងលើ",
 DlnLnkMsgNoUrl		: "សូមសរសេរ អាស័យដ្ឋាន URL",
 DlnLnkMsgNoEMail	: "សូមសរសេរ អាស័យដ្ឋាន អ៊ីមែល",
 DlnLnkMsgNoAnchor	: "សូមជ្រើសរើស យុថ្កា",
+DlnLnkMsgInvPopName	: "The popup name must begin with an alphabetic character and must not contain spaces",	//MISSING
 
 // Color Dialog
 DlgColorTitle		: "ជ្រើសរើស ពណ៌",
@@ -289,6 +308,11 @@ DlgTableCellSpace	: "គំលាតសែល",
 DlgTableCellPad		: "គែមសែល",
 DlgTableCaption		: "ចំណងជើង",
 DlgTableSummary		: "សេចក្តីសង្ខេប",
+DlgTableHeaders		: "Headers",	//MISSING
+DlgTableHeadersNone		: "None",	//MISSING
+DlgTableHeadersColumn	: "First column",	//MISSING
+DlgTableHeadersRow		: "First Row",	//MISSING
+DlgTableHeadersBoth		: "Both",	//MISSING
 
 // Table Cell Dialog
 DlgCellTitle		: "ការកំណត់ សែល",
@@ -311,11 +335,17 @@ DlgCellVerAlignTop	: "ខាងលើ",
 DlgCellVerAlignMiddle	: "កណ្តាល",
 DlgCellVerAlignBottom	: "ខាងក្រោម",
 DlgCellVerAlignBaseline	: "បន្ទាត់ជាមូលដ្ឋាន",
+DlgCellType		: "Cell Type",	//MISSING
+DlgCellTypeData		: "Data",	//MISSING
+DlgCellTypeHeader	: "Header",	//MISSING
 DlgCellRowSpan		: "បញ្ជូលជួរផ្តេក",
 DlgCellCollSpan		: "បញ្ជូលជួរឈរ",
 DlgCellBackColor	: "ពណ៌ផ្នែកខាងក្រោម",
 DlgCellBorderColor	: "ពណ៌ស៊ុម",
 DlgCellBtnSelect	: "ជ្រើសរើស...",
+
+// Find and Replace Dialog
+DlgFindAndReplaceTitle	: "Find and Replace",	//MISSING
 
 // Find Dialog
 DlgFindTitle		: "ស្វែងរក",
@@ -332,7 +362,6 @@ DlgReplaceReplAllBtn	: "ជំនួសទាំងអស់",
 DlgReplaceWordChk		: "ត្រូវពាក្យទាំងអស់",
 
 // Paste Operations / Dialog
-PasteErrorPaste	: "Your browser security settings don't permit the editor to automatically execute pasting operations. Please use the keyboard for that (Ctrl+V).",	//MISSING
 PasteErrorCut	: "ការកំណត់សុវត្ថភាពរបស់កម្មវិធីរុករករបស់លោកអ្នក នេះ​មិនអាចធ្វើកម្មវិធីតាក់តែងអត្ថបទ កាត់អត្ថបទយកដោយស្វ័យប្រវត្តបានឡើយ ។ សូមប្រើប្រាស់បន្សំ ឃីដូចនេះ  (Ctrl+X) ។",
 PasteErrorCopy	: "ការកំណត់សុវត្ថភាពរបស់កម្មវិធីរុករករបស់លោកអ្នក នេះ​មិនអាចធ្វើកម្មវិធីតាក់តែងអត្ថបទ ចំលងអត្ថបទយកដោយស្វ័យប្រវត្តបានឡើយ ។ សូមប្រើប្រាស់បន្សំ ឃីដូចនេះ (Ctrl+C)។",
 
@@ -340,9 +369,9 @@ PasteAsText		: "ចំលងដាក់អត្ថបទធម្មតា",
 PasteFromWord	: "ចំលងពាក្យពីកម្មវិធី Word",
 
 DlgPasteMsg2	: "សូមចំលងអត្ថបទទៅដាក់ក្នុងប្រអប់ដូចខាងក្រោមដោយប្រើប្រាស់ ឃី ​(<STRONG>Ctrl+V</STRONG>) ហើយចុច <STRONG>OK</STRONG> ។",
+DlgPasteSec		: "Because of your browser security settings, the editor is not able to access your clipboard data directly. You are required to paste it again in this window.",	//MISSING
 DlgPasteIgnoreFont		: "មិនគិតអំពីប្រភេទពុម្ភអក្សរ",
 DlgPasteRemoveStyles	: "លប់ម៉ូត",
-DlgPasteCleanBox		: "លប់អត្ថបទចេញពីប្រអប់",
 
 // Color Picker
 ColorAutomatic	: "ស្វ័យប្រវត្ត",
@@ -374,8 +403,11 @@ DlgSpellManyChanges		: "ការពិនិត្យអក្ខរាវិ�
 IeSpellDownload			: "ពុំមានកម្មវិធីពិនិត្យអក្ខរាវិរុទ្ធ ។ តើចង់ទាញយកពីណា?",
 
 // Button Dialog
-DlgButtonText	: "អត្ថបទ(តំលៃ)",
-DlgButtonType	: "ប្រភេទ",
+DlgButtonText		: "អត្ថបទ(តំលៃ)",
+DlgButtonType		: "ប្រភេទ",
+DlgButtonTypeBtn	: "Button",	//MISSING
+DlgButtonTypeSbm	: "Submit",	//MISSING
+DlgButtonTypeRst	: "Reset",	//MISSING
 
 // Checkbox and Radio Button Dialogs
 DlgCheckboxName		: "ឈ្មោះ",
@@ -424,6 +456,7 @@ DlgHiddenValue	: "តំលៃ",
 // Bulleted List Dialog
 BulletedListProp	: "កំណត់បញ្ជីរង្វង់",
 NumberedListProp	: "កំណត់បញ្េជីលេខ",
+DlgLstStart			: "Start",	//MISSING
 DlgLstType			: "ប្រភេទ",
 DlgLstTypeCircle	: "រង្វង់",
 DlgLstTypeDisc		: "Disc",
@@ -446,6 +479,15 @@ DlgDocLangDirLTR	: "ពីឆ្វេងទៅស្ដាំ(LTR)",
 DlgDocLangDirRTL	: "ពីស្ដាំទៅឆ្វេង(RTL)",
 DlgDocLangCode		: "លេខកូតភាសា",
 DlgDocCharSet		: "កំណត់លេខកូតភាសា",
+DlgDocCharSetCE		: "Central European",	//MISSING
+DlgDocCharSetCT		: "Chinese Traditional (Big5)",	//MISSING
+DlgDocCharSetCR		: "Cyrillic",	//MISSING
+DlgDocCharSetGR		: "Greek",	//MISSING
+DlgDocCharSetJP		: "Japanese",	//MISSING
+DlgDocCharSetKR		: "Korean",	//MISSING
+DlgDocCharSetTR		: "Turkish",	//MISSING
+DlgDocCharSetUN		: "Unicode (UTF-8)",	//MISSING
+DlgDocCharSetWE		: "Western European",	//MISSING
 DlgDocCharSetOther	: "កំណត់លេខកូតភាសាផ្សេងទៀត",
 
 DlgDocDocType		: "ប្រភេទក្បាលទំព័រ",
@@ -475,12 +517,18 @@ DlgTemplatesTitle	: "ឯកសារគំរូ របស់អត្ថន័�
 DlgTemplatesSelMsg	: "សូមជ្រើសរើសឯកសារគំរូ ដើម្បីបើកនៅក្នុងកម្មវិធីតាក់តែងអត្ថបទ<br>(អត្ថបទនឹងបាត់បង់):",
 DlgTemplatesLoading	: "កំពុងអានបញ្ជីឯកសារគំរូ ។ សូមរងចាំ...",
 DlgTemplatesNoTpl	: "(ពុំមានឯកសារគំរូត្រូវបានកំណត់)",
+DlgTemplatesReplace	: "Replace actual contents",	//MISSING
 
 // About Dialog
 DlgAboutAboutTab	: "អំពី",
 DlgAboutBrowserInfoTab	: "ព៌តមានកម្មវិធីរុករក",
 DlgAboutLicenseTab	: "License",	//MISSING
 DlgAboutVersion		: "ជំនាន់",
-DlgAboutLicense		: "Licensed under the terms of the GNU Lesser General Public License",
-DlgAboutInfo		: "សំរាប់ព៌តមានផ្សេងទៀត សូមទាក់ទង"
-}
+DlgAboutInfo		: "សំរាប់ព៌តមានផ្សេងទៀត សូមទាក់ទង",
+
+// Div Dialog
+DlgDivGeneralTab	: "General",	//MISSING
+DlgDivAdvancedTab	: "Advanced",	//MISSING
+DlgDivStyle		: "Style",	//MISSING
+DlgDivInlineStyle	: "Inline Style"	//MISSING
+};
