@@ -18,8 +18,8 @@
           <th>
             Resource
             <c:choose>
-              <c:when test="${param.sort eq 'name'}">(<a href="viewRequests.secureaction?year=${param.year}&month=${param.month}&day=${param.day}">sort by count</a>)</c:when>
-              <c:otherwise>(<a href="viewRequests.secureaction?year=${param.year}&month=${param.month}&day=${param.day}&sort=name">sort by name</a>)</c:otherwise>
+              <c:when test="${param.sort eq 'name'}">(<a href="viewRequests.secureaction?year=<fmt:formatNumber value="${param.year}" pattern="#"/>&month=<fmt:formatNumber value="${param.month}"/>&day=<fmt:formatNumber value="${param.day}"/>">sort by count</a>)</c:when>
+              <c:otherwise>(<a href="viewRequests.secureaction?year=<fmt:formatNumber value="${param.year}" pattern="#"/>&month=<fmt:formatNumber value="${param.month}"/>&day=<fmt:formatNumber value="${param.day}"/>&sort=name">sort by name</a>)</c:otherwise>
             </c:choose>
           </th>
           <th align="right">Count</th>

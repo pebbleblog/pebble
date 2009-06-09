@@ -149,8 +149,8 @@ public class SaveBlogEntryAction extends SecureAction {
 
   private void populateBlogEntry(BlogEntry blogEntry, HttpServletRequest request) {
     Blog blog = (Blog)request.getAttribute(Constants.BLOG_KEY);
-    String title = request.getParameter("title");
-    String subtitle = request.getParameter("subtitle");
+    String title = StringUtils.stripScriptTags(request.getParameter("title"));
+    String subtitle = StringUtils.stripScriptTags(request.getParameter("subtitle"));
     String body = StringUtils.filterNewlines(request.getParameter("body"));
     String excerpt = StringUtils.filterNewlines(request.getParameter("excerpt"));
     String originalPermalink = request.getParameter("originalPermalink");

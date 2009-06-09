@@ -14,9 +14,9 @@
   <div class="contentItemBody">
     <form name="referersForm" method="post" action="addRefererFilters.secureaction">
     <input type="hidden" name="redirectUrl" value="${blogUrl}/viewReferers.secureaction" />
-    <input type="hidden" name="year" value="${param.year}" />
-    <input type="hidden" name="month" value="${param.month}" />
-    <input type="hidden" name="day" value="${param.day}" />
+    <input type="hidden" name="year" value="<fmt:formatNumber value="${param.year}" pattern="#"/>" />
+    <input type="hidden" name="month" value="<fmt:formatNumber value="${param.month}"/>" />
+    <input type="hidden" name="day" value="<fmt:formatNumber value="${param.day}"/>" />
 
     <table width="99%" cellspacing="0" cellpadding="4">
       <thead>

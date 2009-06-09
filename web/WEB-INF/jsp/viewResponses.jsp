@@ -28,7 +28,7 @@
     <br />
 
     <form name="manageResponsesForm" action="manageResponses.secureaction" method="post">
-    <input type="hidden" name="type" value="${param.type}" />
+    <input type="hidden" name="type" value="${param.type == 'pending' ? 'pending' : param.type == 'rejected' ? 'rejected' : ''}" />
     <input type="hidden" name="page" value="${page}" />
 
     <table width="99%" cellspacing="0" cellpadding="4">
@@ -84,22 +84,23 @@
 
     <br />
 
+***
     <table width="99%" cellspacing="0" cellpadding="0">
       <tr>
         <td align="right">
           <c:choose>
             <c:when test="${param.type == 'pending'}">
-              <input type="submit" name="submit" value="Approve" />
-              <input type="submit" name="submit" value="Reject" />
-              <input type="submit" name="submit" value="Remove" />
+              <button name="submit" type="submit" Value="Approve"><fmt:message key="admin.approve"/></button>
+			  <button name="submit" type="submit" Value="Reject"><fmt:message key="admin.reject"/></button>
+			  <button name="submit" type="submit" Value="Remove"><fmt:message key="admin.remove"/></button>
             </c:when>
             <c:when test="${param.type == 'rejected'}">
-              <input type="submit" name="submit" value="Approve" />
-              <input type="submit" name="submit" value="Remove" />
+              <button name="submit" type="submit" Value="Approve"><fmt:message key="admin.approve"/></button>
+			  <button name="submit" type="submit" Value="Remove"><fmt:message key="admin.remove"/></button>
             </c:when>
             <c:otherwise>
-              <input type="submit" name="submit" value="Reject" />
-              <input type="submit" name="submit" value="Remove" />
+			  <button name="submit" type="submit" Value="Reject"><fmt:message key="admin.reject"/></button>
+			  <button name="submit" type="submit" Value="Remove"><fmt:message key="admin.remove"/></button>
             </c:otherwise>
           </c:choose>
         </td>
