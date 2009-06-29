@@ -34,7 +34,7 @@
     <ul>
       <c:forEach var="entry" items="${feedEntries}" end="${maxEntries-1}">
         <li>
-          <a href="${url:escape(url:rewrite(entry.link))}" title="${url:escape(name)} - ${url:escape(entry.title)}" target="_blank">${url:escape(entry.title)}</a>
+          <a href="${fn:escapeXml(url:rewrite(entry.link))}" title="${fn:escapeXml(name)} - ${fn:escapeXml(entry.title)}" target="_blank">${fn:escapeXml(entry.title)}</a>
           <c:if test="${showBody eq 'true'}">
           <br />
           <c:choose>

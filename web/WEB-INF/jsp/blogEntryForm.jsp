@@ -54,12 +54,12 @@
     <table width="99%" cellspacing="0" cellpadding="4">
       <tr>
         <td valign="top"><b><fmt:message key="blogentry.title"/></b></td>
-        <td><input type="text" name="title" size="60" value="${url:escape(blogEntry.title)}"></td>
+        <td><input type="text" name="title" size="60" value="${fn:escapeXml(blogEntry.title)}"></td>
       </tr>
 
       <tr>
         <td valign="top"><b><fmt:message key="blogentry.subtitle"/></b></td>
-        <td><input type="text" name="subtitle" size="60" value="${url:escape(blogEntry.subtitle)}"></td>
+        <td><input type="text" name="subtitle" size="60" value="${fn:escapeXml(blogEntry.subtitle)}"></td>
       </tr>
 
       <tr>
