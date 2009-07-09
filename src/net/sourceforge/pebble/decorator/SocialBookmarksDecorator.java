@@ -5,6 +5,8 @@ import net.sourceforge.pebble.domain.BlogEntry;
 import net.sourceforge.pebble.domain.StaticPage;
 import net.sourceforge.pebble.api.decorator.ContentDecoratorContext;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ResourceBundle;
 
 /**
@@ -102,7 +104,13 @@ public class SocialBookmarksDecorator extends ContentDecoratorSupport {
 			BlogEntry blogEntry) {
 		StringBuffer buf = new StringBuffer();
 		String permLink = blogEntry.getPermalink();
-		String title = blogEntry.getTitle();
+		String title = "";
+		try {
+			title = URLEncoder.encode(blogEntry.getTitle(), "UTF-8");
+		}
+		catch(UnsupportedEncodingException e) {
+			title = blogEntry.getTitle();
+		}
 		buf.append("<div class=\"tags\"><span>");
 		buf.append(bundle.getString("common.bookmarks"));
 		buf.append(" : </span>&nbsp;");
