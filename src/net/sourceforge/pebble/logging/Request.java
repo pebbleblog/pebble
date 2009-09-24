@@ -177,29 +177,38 @@ public class Request extends CountedUrl {
     }
   }
 
-  private void matchOnPermalinkProvider(String url, PermalinkProvider permalinkProvider) {
-    if (permalinkProvider.isBlogEntryPermalink(url)) {
-      BlogEntry blogEntry = permalinkProvider.getBlogEntry(url);
-      if (blogEntry != null) {
-        setName("Blog Entry : " + blogEntry.getTitle());
-        setPageView(true);
+  private void matchOnPermalinkProvider(String url,
+      PermalinkProvider permalinkProvider) {
+    try {
+      if (permalinkProvider.isBlogEntryPermalink(url)) {
+        BlogEntry blogEntry = permalinkProvider.getBlogEntry(url);
+        if (blogEntry != null) {
+          setName("Blog Entry : " + blogEntry.getTitle());
+          setPageView(true);
+        }
+      } else if (permalinkProvider.isMonthPermalink(url)) {
+        Month month = permalinkProvider.getMonth(url);
+        SimpleDateFormat formatter = new SimpleDateFormat("MMMM yyyy", blog
+            .getLocale());
+        formatter.setTimeZone(blog.getTimeZone());
+        if (month != null) {
+          setName("Month : " + formatter.format(month.getDate()));
+          setPageView(true);
+        }
+      } else if (permalinkProvider.isDayPermalink(url)) {
+        Day day = null;
+        day = permalinkProvider.getDay(url);
+        SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM yyyy", blog
+            .getLocale());
+        formatter.setTimeZone(blog.getTimeZone());
+        if (day != null) {
+          setName("Day : " + formatter.format(day.getDate()));
+          setPageView(true);
+        }
       }
-    } else if (permalinkProvider.isMonthPermalink(url)) {
-      Month month = permalinkProvider.getMonth(url);
-      SimpleDateFormat formatter = new SimpleDateFormat("MMMM yyyy", blog.getLocale());
-      formatter.setTimeZone(blog.getTimeZone());
-      if (month != null) {
-        setName("Month : " + formatter.format(month.getDate()));
-        setPageView(true);
-      }
-    } else if (permalinkProvider.isDayPermalink(url)) {
-      Day day = permalinkProvider.getDay(url);
-      SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM yyyy", blog.getLocale());
-      formatter.setTimeZone(blog.getTimeZone());
-      if (day != null) {
-        setName("Day : " + formatter.format(day.getDate()));
-        setPageView(true);
-      }
+    } catch (IllegalArgumentException e) {
+      setName("Error: " + url);
+      setPageView(false);
     }
   }
 

@@ -1,5 +1,6 @@
 Version 2.4 - TBC
 -----------------
+PEBBLE-8: Requests for illegal dates cause errors in log display (as well as in page views)
 Correctly escape title in SocialBookmarksDecorator (Wyatt)
 Update JSTL usage to 1.1 and replaced url:escape with fn:escapeXml (James Manger)
 Update FCKeditor to Version 2.6.4 (additional fixes by Wyatt)
