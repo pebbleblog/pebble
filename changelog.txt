@@ -1,5 +1,6 @@
 Version 2.4 - TBC
 -----------------
+Updated simplified chinese translation (Huang Feilong)
 PEBBLE-8: Requests for illegal dates cause errors in log display (as well as in page views)
 Correctly escape title in SocialBookmarksDecorator (Wyatt)
 Update JSTL usage to 1.1 and replaced url:escape with fn:escapeXml (James Manger)
