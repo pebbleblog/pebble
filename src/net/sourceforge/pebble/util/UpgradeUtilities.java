@@ -16,9 +16,14 @@ public class UpgradeUtilities {
 
   public static void upgradeBlog(Blog blog, String fromVersion, String toVersion) throws Exception {
     log.info("Upgrading blog from " + fromVersion + " to " + toVersion);
-    if (fromVersion == null) {
+    if (fromVersion == null || fromVersion.startsWith("2.3")) {
+      log.info("restructuring static pages");
       Utilities.restructureStaticPages(blog);
+      log.info("building indizes");
       Utilities.buildIndexes(blog);
+      log.info("upgrade done");
+    } else {
+      log.info("No upgrade required");
     }
   }
 
