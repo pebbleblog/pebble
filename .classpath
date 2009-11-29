@@ -183,5 +183,8 @@
 	<classpathentry kind="lib" path="lib/jaxb-impl-2.0.5.jar"/>
 	<classpathentry kind="lib" path="lib/jaxb-xjc-2.0.5.jar"/>
 	<classpathentry kind="lib" path="lib/jsr173_1.0_api.jar"/>
+	<classpathentry kind="lib" path="lib/iText-2.0.8.jar"/>
+	<classpathentry kind="lib" path="lib/core-renderer.jar"/>
+	<classpathentry kind="lib" path="lib/minium.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
