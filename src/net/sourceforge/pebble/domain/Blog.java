@@ -349,8 +349,15 @@ public class Blog extends AbstractBlog {
     try {
       eventListenerList.addBlogEntryListener(new EmailSubscriptionListener());
     } catch (Throwable t) {
-      warn("Error while starting e-mail subscription listener - add mail.jar and activation.jar to the server classpath if you want to enable this listener.");
-      log.warn("Error while starting e-mail subscription listener - add mail.jar and activation.jar to the server classpath if you want to enable this listener.", t);
+      final String text = "Error while starting e-mail subscription listener - add mail.jar and activation.jar to the server classpath if you want to enable this listener.";
+      warn(text);
+      if(t instanceof NoClassDefFoundError && 
+         t.getMessage() != null && 
+         t.getMessage().indexOf("javax/mail/Session") > -1) {
+        log.warn(text); // consider exception already handled well...
+      } else {
+        log.warn(text, t);
+      }
     }
   }
 
