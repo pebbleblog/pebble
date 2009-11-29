@@ -17,6 +17,7 @@
       <xsd:element name="state" type="ContentState"/>
       <xsd:element name="author" type="xsd:string"/>
       <xsd:element name="staticName" type="xsd:string"/>
+      <xsd:element name="template" type="xsd:string"/>
       <xsd:element name="originalPermalink" type="xsd:anyURI"/>
     </xsd:sequence>
   </xsd:complexType>

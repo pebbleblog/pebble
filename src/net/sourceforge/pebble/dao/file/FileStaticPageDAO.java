@@ -116,6 +116,7 @@ public class FileStaticPageDAO implements StaticPageDAO {
         staticPage.setName(spt.getStaticName());
         StaticPageDateConverter converter = new StaticPageDateConverter(staticPage);
         staticPage.setDate(converter.parse(spt.getDate()));
+        staticPage.setTemplate(spt.getTemplate());
 
       } catch (Exception e) {
         log.error(e.getMessage(), e);
@@ -170,6 +171,7 @@ public class FileStaticPageDAO implements StaticPageDAO {
       type.setOriginalPermalink(staticPage.getOriginalPermalink());
       type.setState(ContentState.PUBLISHED);
       type.setTitle(staticPage.getTitle());
+      type.setTemplate(staticPage.getTemplate());
 
       StaticPageDateConverter converter = new StaticPageDateConverter(staticPage);
       type.setDate(converter.format(staticPage.getDate()));

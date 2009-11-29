@@ -161,6 +161,7 @@ public class SaveStaticPageAction extends SecureAction {
     String originalPermalink = request.getParameter("originalPermalink");
     String name = request.getParameter("name");
     String author = SecurityUtils.getUsername();
+    String template = request.getParameter("template");
 
     staticPage.setTitle(title);
     staticPage.setSubtitle(subtitle);
@@ -169,6 +170,7 @@ public class SaveStaticPageAction extends SecureAction {
     staticPage.setAuthor(author);
     staticPage.setOriginalPermalink(originalPermalink);
     staticPage.setName(name);
+    staticPage.setTemplate(template);
   }
 
   /**

@@ -1,5 +1,6 @@
 Version 2.4 - TBC
 -----------------
+PEBBLE-9 Support for a different template in static pages (Jürgen Rose)
 PEBBLE-11: FCKEditor now works for Blogs and Static pages (Wyatt)
 PEBBLE-10: Updated xerces to 2.9.0 (Olaf Kock)
 PEBBLE-2: Update process updates Static Pages when updating from 2.3.x (Olaf Kock)

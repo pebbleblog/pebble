@@ -31,6 +31,7 @@
  */
 package net.sourceforge.pebble.web.view;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ResourceBundle;
 
@@ -43,6 +44,8 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.PebbleContext;
 import net.sourceforge.pebble.domain.AbstractBlog;
+import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.domain.StaticPage;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -118,7 +121,7 @@ public abstract class HtmlView extends JspView {
     request.setAttribute(Constants.TITLE_KEY, getTitle());
     log.debug("Content is " + getUri());
     request.setAttribute("content", getUri());
-    String uri = "/themes/" + theme + "/template.jsp";
+    String uri = "/themes/" + theme + "/" + getTemplate() + ".jsp";
     log.debug("Dispatching to " + uri);
 
     response.setHeader("Cache-Control","no-cache, no-store");
@@ -137,4 +140,19 @@ public abstract class HtmlView extends JspView {
     }
   }
 
+  private String getTemplate() {
+    if (!(getModel().get(Constants.BLOG_KEY) instanceof Blog)) {
+      return "template";
+    }
+    if (!getModel().contains(Constants.STATIC_PAGE_KEY)) {
+      return "template";
+    }
+    StaticPage staticPage = (StaticPage) getModel().get(Constants.STATIC_PAGE_KEY);
+    Blog blog = (Blog) getModel().get(Constants.BLOG_KEY);
+    String templateFile = blog.getThemeDirectory() + "/" + staticPage.getTemplate() + ".jsp";
+    if (new File(templateFile).canRead()) {
+      return staticPage.getTemplate();
+    }
+    return "template";
+  }
 }

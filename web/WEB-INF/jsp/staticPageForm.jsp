@@ -86,6 +86,11 @@
       </tr>
 
       <tr>
+        <td valign="top"><b>Template</b></td>
+        <td><input type="text" name="template" size="60" value="${staticPage.template}"></td>
+      </tr>
+
+      <tr>
         <td align="left">
           <button name="submit" type="submit" Value="Cancel" ><fmt:message key="common.cancel"/></button>
         </td>

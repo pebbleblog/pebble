@@ -45,8 +45,13 @@ import java.util.List;
  */
 public class StaticPage extends PageBasedContent {
 
+	public static final String TEMPLATE_PROPERTY = "template";
+	
   /** the name of the page */
   private String name;
+  
+  /** the name of the template **/
+  private String template = TEMPLATE_PROPERTY;
 
   /**
    * Creates a new blog entry.
@@ -107,6 +112,15 @@ public class StaticPage extends PageBasedContent {
     return "page/" + getBlog().getId() + "/" + getId();
   }
 
+  public void setTemplate(String newTemplate) {
+    propertyChangeSupport.firePropertyChange(TEMPLATE_PROPERTY, template, newTemplate);
+    this.template = newTemplate;
+  }
+  
+  public String getTemplate() {
+    return template;
+  }
+  
   /**
    * Indicates whether some other object is "equal to" this one.
    *
@@ -149,6 +163,7 @@ public class StaticPage extends PageBasedContent {
     page.setName(getName());
     page.setTags(getTags());
     page.setLockedBy(getLockedBy());
+    page.setTemplate(getTemplate());
 
     return page;
   }
