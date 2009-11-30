@@ -55,8 +55,13 @@ public class ViewUserAgentsAction extends AbstractLogAction {
   private static final String MSIE_50 = "MSIE 5.0";
   private static final String MSIE_60 = "MSIE 6.0";
   private static final String MSIE_70 = "MSIE 7.0";
+  private static final String MSIE_80 = "MSIE 8.0";
+  private static final String MSIE_90 = "MSIE 9.0";
   private static final String FIREFOX_1X = "Firefox/1.";
   private static final String FIREFOX_2X = "Firefox/2.";
+  private static final String FIREFOX_30 = "Firefox/3.0";
+  private static final String FIREFOX_35 = "Firefox/3.5";
+  private static final String FIREFOX_36 = "Firefox/3.6";
   private static final String SAFARI = "Safari";
   private static final String BLOGLINES = "Bloglines";
   private static final String GOOGLEBOT = "Googlebot";
@@ -106,9 +111,19 @@ public class ViewUserAgentsAction extends AbstractLogAction {
         consolidatedUserAgent = MSIE_60;
       } else if (userAgent.contains(MSIE_70)) {
         consolidatedUserAgent = MSIE_70;
+      } else if (userAgent.contains(MSIE_80)) {
+        consolidatedUserAgent = MSIE_70;
+      } else if (userAgent.contains(MSIE_90)) {
+        consolidatedUserAgent = MSIE_70;
       } else if (userAgent.contains(FIREFOX_1X)) {
         consolidatedUserAgent = FIREFOX_1X;
       } else if (userAgent.contains(FIREFOX_2X)) {
+        consolidatedUserAgent = FIREFOX_2X;
+      } else if (userAgent.contains(FIREFOX_30)) {
+        consolidatedUserAgent = FIREFOX_2X;
+      } else if (userAgent.contains(FIREFOX_35)) {
+        consolidatedUserAgent = FIREFOX_2X;
+      } else if (userAgent.contains(FIREFOX_36)) {
         consolidatedUserAgent = FIREFOX_2X;
       } else if (userAgent.contains(SAFARI)) {
         consolidatedUserAgent = SAFARI;
