@@ -1,5 +1,6 @@
 Version 2.4 - TBC
 -----------------
+Update UserAgent detection to more recent versions
 PEBBLE-9 Support for a different template in static pages (Jürgen Rose)
 PEBBLE-11: FCKEditor now works for Blogs and Static pages (Wyatt)
 PEBBLE-10: Updated xerces to 2.9.0 (Olaf Kock)
