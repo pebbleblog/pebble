@@ -1,8 +1,6 @@
 package net.sourceforge.pebble.confirmation;
 
 import com.octo.captcha.service.CaptchaServiceException;
-import com.sun.image.codec.jpeg.JPEGCodec;
-import com.sun.image.codec.jpeg.JPEGImageEncoder;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -21,6 +19,10 @@ import java.io.IOException;
  */
 public class ImageCaptchaServlet extends HttpServlet {
 
+  private static final long serialVersionUID = -6227490839816434342L;
+
+  private static final String JPG_FORMAT = "JPG";
+  
   /**
    * Called to initialise the servlet.
    *
@@ -52,10 +54,8 @@ public class ImageCaptchaServlet extends HttpServlet {
           CaptchaService.getInstance().getImageChallengeForID(captchaId,
               httpServletRequest.getLocale());
 
-      // a jpeg encoder
-      JPEGImageEncoder jpegEncoder =
-          JPEGCodec.createJPEGEncoder(jpegOutputStream);
-      jpegEncoder.encode(challenge);
+      javax.imageio.ImageIO.write(challenge, JPG_FORMAT, jpegOutputStream);
+      
     } catch (IllegalArgumentException e) {
       httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND);
       return;
