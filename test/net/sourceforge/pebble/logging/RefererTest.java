@@ -147,6 +147,20 @@ public class RefererTest extends TestCase {
     assertEquals("Yahoo! : \"some search term\"", url.getName());
   }
 
+  public void testFriendlyNamesForBingSearchUrls() {
+    url = new Referer("http://www.bing.com");
+    assertEquals("Bing : ", url.getName());
+    url = new Referer("http://www.BING.com");
+    assertEquals("Bing : ", url.getName());
+    url = new Referer("http://www.bing.com?q=some+search+term");
+    assertEquals("Bing : some search term", url.getName());
+    url = new Referer("http://www.bing.com?q=some+search+term&abc=123");
+    assertEquals("Bing : some search term", url.getName());
+    url = new Referer("http://www.bing.com?abc=123&q=some+search+term&xyz=456");
+    assertEquals("Bing : some search term", url.getName());
+    url = new Referer("http://www.bing.com?q=%22some+search+term%22");
+    assertEquals("Bing : \"some search term\"", url.getName());
+  }
   public void testFriendlyNamesForJavaBlogsUrls() {
     url = new Referer("http://www.javablogs.com/Welcome.action");
     assertEquals("java.blogs : Welcome", url.getName());

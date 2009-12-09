@@ -52,23 +52,29 @@ public class Referer extends CountedUrl {
   /** regular expression to pull out the query from a Google referer */
   private static final Pattern GOOGLE_IMAGES_QUERY_STRING_PATTERN = Pattern.compile("[?&]prev=[^&]+&*");
 
-  /** the prefix for all Google referers */
+  /** the prefix for all Google imagesearch referers */
   private static final String GOOGLE_IMAGES_PREFIX = "http://images.google.";
 
   /** regular expression to pull out the query from a Yahoo! referer */
   private static final Pattern YAHOO_QUERY_STRING_PATTERN = Pattern.compile("[?&]p=[^&]+&*");
 
-  /** the prefix for all Google referers */
+  /** the prefix for all Yahoo! referers */
   private static final String YAHOO_PREFIX = "http://search.yahoo.";
 
   /** regular expression to pull out the query from an MSN referer */
   private static final Pattern MSN_QUERY_STRING_PATTERN = Pattern.compile("[?&]q=[^&]+&*");
 
-  /** the prefix for all Google referers */
+  /** the prefix for all MSN referers */
   private static final String MSN_PREFIX = "http://search.msn.";
 
-  /** the prefix for all Google referers */
+  /** the prefix for all MSN Beta referers */
   private static final String MSN_BETA_PREFIX = "http://beta.search.msn.";
+
+  /** regular expression to pull out the query from an BING referer */
+  private static final Pattern BING_QUERY_STRING_PATTERN = Pattern.compile("[?&]q=[^&]+&*");
+
+  /** the prefix for all BING referers */
+  private static final String BING_PREFIX = "http://www.bing.com";
 
   /** pattern for java.blogs welcome page referers */
   private static final Pattern JAVABLOGS_WELCOME_PATTERN = Pattern.compile(".*javablogs.com/Welcome.*");
@@ -116,6 +122,11 @@ public class Referer extends CountedUrl {
 
       String query = extractQuery(MSN_QUERY_STRING_PATTERN, url);
       setName("MSN beta : " + query);
+    } else if (url.length() >= BING_PREFIX.length() &&
+        url.substring(0, BING_PREFIX.length()).equalsIgnoreCase(BING_PREFIX)) {
+
+      String query = extractQuery(BING_QUERY_STRING_PATTERN, url);
+      setName("Bing : " + query);
     } else if (JAVABLOGS_WELCOME_PATTERN.matcher(url).matches()) {
       setName("java.blogs : Welcome");
     } else if (JAVABLOGS_HOT_ENTRIES_PATTERN.matcher(url).matches()) {

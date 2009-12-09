@@ -1,5 +1,6 @@
 Version 2.4 - TBC
 -----------------
+Bing is now a recognized search engine for the referrer log
 PEBBLE-13 Updated ImageCaptchaServlet: removed sun proprietary classes warning for com.sun.* (Antonio Santos Izaguirre)
 PEBBLE-12 Update UserAgent detection to more recent versions
 PEBBLE-9 Support for a different template in static pages (Jürgen Rose)
