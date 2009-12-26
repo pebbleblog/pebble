@@ -17,7 +17,13 @@
     <p>
       <b>net.sourceforge.pebble.event.blogentry.EmailNotificationListener</b><br />
       Sends a notification e-mail to the blog owner when a new blog entry is added, changed or published.
-     </p>
+    </p>
+
+    <p>
+      <b>net.sourceforge.pebble.event.blogentry.PostToTwitterBlogEntryListener</b><br />
+      Post the title and a tinyurl to twitter when a new blog entry is published. This requires the 
+      plugin properties twitter.username and twitter.password to be configured.
+    </p>
 
     <p>
       <b>net.sourceforge.pebble.event.blogentry.MarkUnpublishedListenerener</b><br />

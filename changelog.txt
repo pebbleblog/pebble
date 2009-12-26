@@ -1,5 +1,9 @@
-Version 2.4 - TBC
+Version 2.5 - TBC
 -----------------
+PEBBLE-15 new BlogEntryListener to post to twitter whenever a new blogentry is published (Steve Carton)
+
+Version 2.4 - 13.12.2009
+------------------------
 Bing is now a recognized search engine for the referrer log
 PEBBLE-13 Updated ImageCaptchaServlet: removed sun proprietary classes warning for com.sun.* (Antonio Santos Izaguirre)
 PEBBLE-12 Update UserAgent detection to more recent versions
