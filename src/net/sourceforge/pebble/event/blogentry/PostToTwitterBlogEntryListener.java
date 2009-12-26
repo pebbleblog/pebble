@@ -32,7 +32,7 @@ public class PostToTwitterBlogEntryListener extends BlogEntryListenerSupport {
 	/** the log used by this class */
 	private static final Log log = LogFactory
 			.getLog(PostToTwitterBlogEntryListener.class);
-	public static final String tweetURL="https://twitter.com/statuses/update.xml";
+	private static final String DEFAULT_TWEET_URL="https://twitter.com/statuses/update.xml";
 
 	/**
 	 * Called when a blog entry has been published.
@@ -42,15 +42,11 @@ public class PostToTwitterBlogEntryListener extends BlogEntryListenerSupport {
 	 */
 	public void blogEntryPublished(BlogEntryEvent event) {
 		BlogEntry blogEntry = event.getBlogEntry();
-		sendNotification(blogEntry);
-	}
-
-	private void sendNotification(BlogEntry blogEntry) {
 		String twitterUsername = getTwitterUsername(blogEntry);
 		String twitterPassword = getTwitterPassword(blogEntry);
 		String twitterUrl = getTwitterUrl(blogEntry);
-		if(twitterUsername == null || twitterPassword == null || twitterUrl == null) {
-			blogEntry.getBlog().error("Please configure twitter credentials and url in order to post to twitter");
+		if(twitterUsername == null || twitterPassword == null) {
+			blogEntry.getBlog().error("Please configure twitter credentials in order to post to twitter");
 			return;
 		}
 		String longUrl = blogEntry.getLocalPermalink();
@@ -75,36 +71,23 @@ public class PostToTwitterBlogEntryListener extends BlogEntryListenerSupport {
 				+ "\">" + blogEntry.getTitle() + "</a> tweeted.");
 	}
 
+	/**
+	 * make sure that the url we are about to post is one that makes sense to post - e.g. don't post 'localhost' urls.
+	 * @param longUrl
+	 * @return true if the url passes the (simple) tests and may be posted
+	 */
 	boolean checkUrl(String longUrl) {
 		return ! (longUrl.contains("://localhost:") || longUrl.contains("://localhost/"));
 	}
 
-	private void post(String twitterUrl, String twitterUsername, String twitterPassword, String msg)
-			throws Exception {
-		log.info("Posting to Twitter as user " + twitterUsername + ": " + msg);
-		URL url = new URL(twitterUrl);
-		URLConnection connection = url.openConnection();
-		connection.setDoInput(true);
-		connection.setDoOutput(true);
-		connection.setUseCaches(false);
-		String authorization = twitterUsername + ":" + twitterPassword;
-		BASE64Encoder encoder = new BASE64Encoder();
-		String encoded = new String(encoder.encodeBuffer(authorization.getBytes())).trim();
-		connection.setRequestProperty("Authorization", "Basic " + encoded);
-		OutputStreamWriter out = new OutputStreamWriter(connection.getOutputStream());
-		out.write("status=" + URLEncoder.encode(msg.substring(
-						0, Math.min(140, msg.length())).toString(), "UTF-8"));
-		out.close();
-		BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-		String r;
-		StringBuffer response = new StringBuffer();
-		while ((r = in.readLine()) != null) {
-			response.append(r+"\n");
-		}
-		in.close();
-		response.toString();
-	}
-
+	/**
+	 * combine message with url. This will use longUrl when enough characters are left, tinyUrl otherwise.
+	 * If necessary, the title will be shortened in order to include the full URL
+	 * @param title
+	 * @param longUrl
+	 * @param tinyUrl
+	 * @return the "up to 140 character" message to post to twitter
+	 */
 	String composeMessage(String title, String longUrl, String tinyUrl) {
 		if(longUrl.length() + title.length() > 139 ) {
 			if(tinyUrl.length() + title.length() > 139) {
@@ -116,15 +99,32 @@ public class PostToTwitterBlogEntryListener extends BlogEntryListenerSupport {
 			return title + " " + longUrl ;
 		}
 	}
-	
+
+	/**
+	 * get twitter URL to post to. This can be overridden with the blog property twitter.url - e.g. for testing purposes.
+	 * @param blogEntry
+	 * @return
+	 */
 	private String getTwitterUrl(BlogEntry blogEntry) {
-		return getProperty(blogEntry, "url");
+		String twitterUrl = getProperty(blogEntry, "url");
+		if(twitterUrl == null) twitterUrl = DEFAULT_TWEET_URL;
+		return twitterUrl;
 	}
 
+	/**
+	 * the password to post to twitter as configured in the blog properties
+	 * @param blogEntry
+	 * @return
+	 */
 	private String getTwitterPassword(BlogEntry blogEntry) {
 		return getProperty(blogEntry, "password");
 	}
 
+	/**
+	 * the username to post to twitter as configured in the blog properties
+	 * @param blogEntry
+	 * @return
+	 */
 	private String getTwitterUsername(BlogEntry blogEntry) {
 		return getProperty(blogEntry, "username");
 	}
@@ -147,7 +147,50 @@ public class PostToTwitterBlogEntryListener extends BlogEntryListenerSupport {
 		return result;
 	}
 
-	public String makeTinyURL(String url) {
+	/**
+	 * Post the given message to twitter, using the given postUrl and credentials.
+	 * @param twitterUrl URL to post to
+	 * @param twitterUsername username to post as
+	 * @param twitterPassword password to authenticate username
+	 * @param msg the message to post to twitter.
+	 * @throws Exception
+	 */
+	private void post(String twitterUrl, String twitterUsername,
+			String twitterPassword, String msg) throws Exception {
+		log.info("Posting to Twitter as user " + twitterUsername + ": " + msg);
+		URL url = new URL(twitterUrl);
+		URLConnection connection = url.openConnection();
+		connection.setDoInput(true);
+		connection.setDoOutput(true);
+		connection.setUseCaches(false);
+		String authorization = twitterUsername + ":" + twitterPassword;
+		BASE64Encoder encoder = new BASE64Encoder();
+		String encoded = new String(encoder.encodeBuffer(authorization
+				.getBytes())).trim();
+		connection.setRequestProperty("Authorization", "Basic " + encoded);
+		OutputStreamWriter out = new OutputStreamWriter(connection
+				.getOutputStream());
+		out.write("status="
+				+ URLEncoder.encode(msg.substring(0,
+						Math.min(140, msg.length())).toString(), "UTF-8"));
+		out.close();
+		BufferedReader in = new BufferedReader(new InputStreamReader(connection
+				.getInputStream()));
+		String r;
+		StringBuffer response = new StringBuffer();
+		while ((r = in.readLine()) != null) {
+			response.append(r + "\n");
+		}
+		in.close();
+		response.toString();
+	}
+
+	/**
+	 * create a shortened version of the given url
+	 * @param url
+	 * @return
+	 */
+	private String makeTinyURL(String url) {
 		// http://tinyurl.com/api-create.php?...
 		StringBuffer response = new StringBuffer();
 		try {
