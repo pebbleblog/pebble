@@ -48,26 +48,41 @@ public class PostToTwitterBlogEntryListener extends BlogEntryListenerSupport {
 	private void sendNotification(BlogEntry blogEntry) {
 		String twitterUsername = getTwitterUsername(blogEntry);
 		String twitterPassword = getTwitterPassword(blogEntry);
-		if(twitterUsername == null || twitterPassword == null) {
-			log.error("Please configure twitter credentials in order to post to twitter");
+		String twitterUrl = getTwitterUrl(blogEntry);
+		if(twitterUsername == null || twitterPassword == null || twitterUrl == null) {
+			blogEntry.getBlog().error("Please configure twitter credentials and url in order to post to twitter");
+			return;
 		}
-		String url = makeTinyURL(blogEntry.getLocalPermalink());
-		if (url.equalsIgnoreCase("error"))
-			url = blogEntry.getLocalPermalink();
-		String msg = composeMessage(blogEntry, url);
+		String longUrl = blogEntry.getLocalPermalink();
+		if(!checkUrl(longUrl)) {
+			blogEntry.getBlog().error("cowardly refusing to post url '" + longUrl + "' to twitter");
+			return;
+		}
+		String tinyUrl = makeTinyURL(longUrl);
+		if (tinyUrl.equalsIgnoreCase("error"))
+			tinyUrl = longUrl;
+		String msg = composeMessage(blogEntry.getTitle(), longUrl, tinyUrl);
 		try {
-			post(twitterUsername, twitterPassword, msg);
+			if(getProperty(blogEntry, "simulate") != null) {
+				blogEntry.getBlog().info("Found property 'twitter.simulate' - This would have been posted to twitter with username '" + twitterUsername + "':\n" + msg);
+			} else {
+				post(twitterUrl, twitterUsername, twitterPassword, msg);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		log.debug("Blog entry <a href=\"" + blogEntry.getLocalPermalink()
+		log.debug("Blog entry <a href=\"" + longUrl
 				+ "\">" + blogEntry.getTitle() + "</a> tweeted.");
 	}
 
-	private void post(String twitterUsername, String twitterPassword, String msg)
+	boolean checkUrl(String longUrl) {
+		return ! (longUrl.contains("://localhost:") || longUrl.contains("://localhost/"));
+	}
+
+	private void post(String twitterUrl, String twitterUsername, String twitterPassword, String msg)
 			throws Exception {
 		log.info("Posting to Twitter as user " + twitterUsername + ": " + msg);
-		URL url = new URL(PostToTwitterBlogEntryListener.tweetURL);
+		URL url = new URL(twitterUrl);
 		URLConnection connection = url.openConnection();
 		connection.setDoInput(true);
 		connection.setDoOutput(true);
@@ -90,9 +105,20 @@ public class PostToTwitterBlogEntryListener extends BlogEntryListenerSupport {
 		response.toString();
 	}
 
-	private String composeMessage(BlogEntry blogEntry, String url) {
-		return "New Blog Post at " + url + " \"" + blogEntry.getTitle()
-				+ "\"";
+	String composeMessage(String title, String longUrl, String tinyUrl) {
+		if(longUrl.length() + title.length() > 139 ) {
+			if(tinyUrl.length() + title.length() > 139) {
+				return title.substring(0, 139-tinyUrl.length()) + " " + tinyUrl;
+			} else {
+				return title + " " + tinyUrl;
+			}
+		} else {
+			return title + " " + longUrl ;
+		}
+	}
+	
+	private String getTwitterUrl(BlogEntry blogEntry) {
+		return getProperty(blogEntry, "url");
 	}
 
 	private String getTwitterPassword(BlogEntry blogEntry) {
