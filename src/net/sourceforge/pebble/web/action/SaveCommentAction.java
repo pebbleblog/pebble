@@ -31,23 +31,28 @@
  */
 package net.sourceforge.pebble.web.action;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.api.confirmation.CommentConfirmationStrategy;
 import net.sourceforge.pebble.api.decorator.ContentDecoratorContext;
-import net.sourceforge.pebble.domain.*;
+import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.domain.BlogEntry;
+import net.sourceforge.pebble.domain.BlogService;
+import net.sourceforge.pebble.domain.BlogServiceException;
+import net.sourceforge.pebble.domain.Comment;
+import net.sourceforge.pebble.util.I18n;
 import net.sourceforge.pebble.web.validation.ValidationContext;
 import net.sourceforge.pebble.web.view.NotFoundView;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.impl.CommentConfirmationView;
 import net.sourceforge.pebble.web.view.impl.CommentFormView;
 import net.sourceforge.pebble.web.view.impl.ConfirmCommentView;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.ResourceBundle;
 
 /**
  * Adds a comment to an existing blog entry.
@@ -94,8 +99,7 @@ public class SaveCommentAction extends AbstractCommentAction {
     ValidationContext context = validateComment(comment);
 
     // are we previewing or adding the comment?
-    ResourceBundle bundle = ResourceBundle.getBundle("resources", blog.getLocale());
-    String previewButton = bundle.getString("comment.previewButton");
+    String previewButton = I18n.getMessage(blog, "comment.previewButton");
 
     ContentDecoratorContext decoratorContext = new ContentDecoratorContext();
     decoratorContext.setView(ContentDecoratorContext.DETAIL_VIEW);
@@ -133,5 +137,4 @@ public class SaveCommentAction extends AbstractCommentAction {
       }
     }
   }
-
 }

@@ -1,5 +1,6 @@
 Version 2.5 - TBC
 -----------------
+More Internatinalization for messages, info etc, that are triggered from within classes (based on PEBBLE-16)
 PEBBLE-15 new BlogEntryListener to post to twitter whenever a new blogentry is published (Steve Carton)
 
 Version 2.4 - 13.12.2009

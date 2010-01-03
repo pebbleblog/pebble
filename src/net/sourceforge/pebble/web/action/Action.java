@@ -31,16 +31,15 @@
  */
 package net.sourceforge.pebble.web.action;
 
-import java.util.ResourceBundle;
-
-import net.sourceforge.pebble.Constants;
-import net.sourceforge.pebble.domain.AbstractBlog;
-import net.sourceforge.pebble.web.model.Model;
-import net.sourceforge.pebble.web.view.View;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import net.sourceforge.pebble.Constants;
+import net.sourceforge.pebble.domain.AbstractBlog;
+import net.sourceforge.pebble.util.I18n;
+import net.sourceforge.pebble.web.model.Model;
+import net.sourceforge.pebble.web.view.View;
 
 /**
  * The superclass for all command/action components delegated to by the
@@ -76,8 +75,7 @@ public abstract class Action {
    * @return
    */
   public String getLocalizedString(String key) {
-  	ResourceBundle bundle = ResourceBundle.getBundle("resources", ((AbstractBlog)getModel().get(Constants.BLOG_KEY)).getLocale());
-  	return bundle.getString(key);
+  	return I18n.getMessage(((AbstractBlog)getModel().get(Constants.BLOG_KEY)).getLocale(), key);
   }
 
   

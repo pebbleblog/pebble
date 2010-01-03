@@ -1,13 +1,13 @@
 package net.sourceforge.pebble.decorator;
 
-import net.sourceforge.pebble.domain.Blog;
-import net.sourceforge.pebble.domain.BlogEntry;
-import net.sourceforge.pebble.domain.StaticPage;
-import net.sourceforge.pebble.api.decorator.ContentDecoratorContext;
-
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ResourceBundle;
+
+import net.sourceforge.pebble.api.decorator.ContentDecoratorContext;
+import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.domain.BlogEntry;
+import net.sourceforge.pebble.util.I18n;
 
 /**
  * Adds links to the social bookmarking sites to add current blog entry
@@ -80,8 +80,7 @@ public class SocialBookmarksDecorator extends ContentDecoratorSupport {
 	 */
 	public void decorate(ContentDecoratorContext context, BlogEntry blogEntry) {
 		Blog blog = blogEntry.getBlog();
-		ResourceBundle bundle = ResourceBundle.getBundle("resources", blog
-				.getLocale());
+		ResourceBundle bundle = I18n.getBundle(blog.getLocale());
 
 		String body = blogEntry.getBody();
 		if (body != null && body.trim().length() > 0) {

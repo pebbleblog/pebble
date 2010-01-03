@@ -33,7 +33,6 @@ package net.sourceforge.pebble.web.view;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ResourceBundle;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -46,6 +45,7 @@ import net.sourceforge.pebble.PebbleContext;
 import net.sourceforge.pebble.domain.AbstractBlog;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.domain.StaticPage;
+import net.sourceforge.pebble.util.I18n;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -81,8 +81,7 @@ public abstract class HtmlView extends JspView {
   public abstract String getTitle();
 
   public String getLocalizedString(String key) {
-	ResourceBundle bundle = ResourceBundle.getBundle("resources", ((AbstractBlog)getModel().get(Constants.BLOG_KEY)).getLocale());
-	return bundle.getString(key);
+	  return I18n.getMessage(((AbstractBlog)getModel().get(Constants.BLOG_KEY)).getLocale(), key);
   }
   
   

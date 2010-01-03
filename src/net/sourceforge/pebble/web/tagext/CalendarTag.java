@@ -31,22 +31,27 @@
  */
 package net.sourceforge.pebble.web.tagext;
 
-import net.sourceforge.pebble.Constants;
-import net.sourceforge.pebble.domain.Blog;
-import net.sourceforge.pebble.domain.Day;
-import net.sourceforge.pebble.domain.Month;
-import net.sourceforge.pebble.util.UrlRewriter;
+import java.io.IOException;
+import java.text.DateFormatSymbols;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspTagException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.TagSupport;
-import java.io.IOException;
-import java.text.DateFormatSymbols;
-import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
-import java.util.*;
+
+import net.sourceforge.pebble.Constants;
+import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.domain.Day;
+import net.sourceforge.pebble.domain.Month;
+import net.sourceforge.pebble.util.I18n;
+import net.sourceforge.pebble.util.UrlRewriter;
 
 /**
  * A custom tag that outputs a calendar control.
@@ -66,7 +71,6 @@ public class CalendarTag extends TagSupport {
 
     HttpServletRequest request = (HttpServletRequest)pageContext.getRequest();
     Blog blog = (Blog)request.getAttribute(Constants.BLOG_KEY);
-    ResourceBundle bundle = ResourceBundle.getBundle("resources", blog.getLocale());
     Month month = (Month)request.getAttribute(Constants.MONTHLY_BLOG);
     Day today = blog.getBlogForToday();
     Calendar now = blog.getCalendar();
@@ -182,7 +186,7 @@ public class CalendarTag extends TagSupport {
         out.write("<a href=\"" + UrlRewriter.doRewrite(previous.getPermalink()) + "\">" + monthFormatter.format(previous.getDate()) + "</a>");
       }
 
-      String todayText = bundle.getString("common.today");
+      String todayText = I18n.getMessage(blog, "common.today");
       out.write("&nbsp; | &nbsp;");
       out.write("<a href=\"" + UrlRewriter.doRewrite(today.getPermalink()) + "\">" + todayText + "</a>");
       out.write("&nbsp; | &nbsp;");

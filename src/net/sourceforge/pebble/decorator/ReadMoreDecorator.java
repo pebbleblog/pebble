@@ -1,10 +1,9 @@
 package net.sourceforge.pebble.decorator;
 
+import net.sourceforge.pebble.api.decorator.ContentDecoratorContext;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.domain.BlogEntry;
-import net.sourceforge.pebble.api.decorator.ContentDecoratorContext;
-
-import java.util.ResourceBundle;
+import net.sourceforge.pebble.util.I18n;
 
 /**
  * Adds a read more link :
@@ -24,7 +23,6 @@ public class ReadMoreDecorator extends ContentDecoratorSupport {
    */
   public void decorate(ContentDecoratorContext context, BlogEntry blogEntry) {
     Blog blog = blogEntry.getBlog();
-    ResourceBundle bundle = ResourceBundle.getBundle("resources", blog.getLocale());
 
     if ((blogEntry.getExcerpt() != null && blogEntry.getExcerpt().length() > 0 && context.getView() == ContentDecoratorContext.SUMMARY_VIEW)) {
       StringBuffer buf = new StringBuffer();
@@ -33,7 +31,7 @@ public class ReadMoreDecorator extends ContentDecoratorSupport {
       buf.append("<p><a href=\"");
       buf.append(blogEntry.getPermalink());
       buf.append("\">");
-      buf.append(bundle.getString("common.readMore"));
+      buf.append(I18n.getMessage(blog, "common.readMore"));
       buf.append("</a></p>");
 
       blogEntry.setExcerpt(buf.toString());
@@ -44,7 +42,7 @@ public class ReadMoreDecorator extends ContentDecoratorSupport {
       buf.append("<p><a href=\"");
       buf.append(blogEntry.getPermalink());
       buf.append("\">");
-      buf.append(bundle.getString("common.readMore"));
+      buf.append(I18n.getMessage(blog, "common.readMore"));
       buf.append("</a></p>");
 
       blogEntry.setBody(buf.toString());

@@ -31,7 +31,12 @@
  */
 package net.sourceforge.pebble.domain;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+
+import net.sourceforge.pebble.util.I18n;
 
 /**
  * A class to manage blog categories.
@@ -135,8 +140,7 @@ public class CategoryBuilder {
 
     if (id.equals("/")) {
       if (rootCategory == null) {
-        ResourceBundle bundle = ResourceBundle.getBundle("resources", blog.getLocale());
-        Category category = new Category("/", bundle.getString("category.all"));
+        Category category = new Category("/", I18n.getMessage(blog.getLocale(), "category.all"));
         addCategory(category);
       }
 

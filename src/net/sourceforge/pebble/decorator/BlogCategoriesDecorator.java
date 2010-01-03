@@ -1,11 +1,11 @@
 package net.sourceforge.pebble.decorator;
 
+import java.util.Iterator;
+
+import net.sourceforge.pebble.api.decorator.ContentDecoratorContext;
 import net.sourceforge.pebble.domain.BlogEntry;
 import net.sourceforge.pebble.domain.Category;
-import net.sourceforge.pebble.api.decorator.ContentDecoratorContext;
-
-import java.util.Iterator;
-import java.util.ResourceBundle;
+import net.sourceforge.pebble.util.I18n;
 
 /**
  * Generates category links for inclusion in the body of blog entries,
@@ -23,14 +23,13 @@ public class BlogCategoriesDecorator extends ContentDecoratorSupport {
    */
   public void decorate(ContentDecoratorContext context, BlogEntry blogEntry) {
   if (context.getMedia() == ContentDecoratorContext.HTML_PAGE) {
-      ResourceBundle bundle = ResourceBundle.getBundle("resources", blogEntry.getBlog().getLocale());
       Iterator categories = blogEntry.getCategories().iterator();
 
       if (categories.hasNext()) {
         StringBuffer buf = new StringBuffer();
 
         buf.append("<div class=\"categories\"><span>");
-        buf.append(bundle.getString("category.categories"));
+        buf.append(I18n.getMessage(blogEntry.getBlog(), "category.categories"));
         buf.append(" : </span>");
         while (categories.hasNext()) {
           Category category = (Category)categories.next();

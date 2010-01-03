@@ -1,12 +1,11 @@
 package net.sourceforge.pebble.decorator;
 
+import java.util.Iterator;
+
 import net.sourceforge.pebble.api.decorator.ContentDecoratorContext;
-import net.sourceforge.pebble.domain.BlogEntry;
 import net.sourceforge.pebble.domain.PageBasedContent;
 import net.sourceforge.pebble.domain.Tag;
-
-import java.util.Iterator;
-import java.util.ResourceBundle;
+import net.sourceforge.pebble.util.I18n;
 
 /**
  * Generates tag links for inclusion in the body of blog entries,
@@ -43,14 +42,13 @@ public abstract class AbstractTagsDecorator extends ContentDecoratorSupport {
     StringBuffer buf = new StringBuffer();
 
     if (context.getMedia() == ContentDecoratorContext.HTML_PAGE) {
-      ResourceBundle bundle = ResourceBundle.getBundle("resources", content.getBlog().getLocale());
       Iterator<Tag> tags = content.getAllTags().iterator();
 
       String baseUrl = getBaseUrl(content);
 
       if (tags.hasNext()) {
         buf.append("<div class=\"tags\"><span>");
-		buf.append(bundle.getString(resourceKey));
+		buf.append(I18n.getMessage(content.getBlog(), resourceKey));
         buf.append(" : </span>");
 
         while (tags.hasNext()) {

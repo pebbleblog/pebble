@@ -2,7 +2,6 @@ package net.sourceforge.pebble.decorator;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.pebble.PluginProperties;
@@ -10,6 +9,7 @@ import net.sourceforge.pebble.api.decorator.ContentDecoratorContext;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.domain.BlogEntry;
 import net.sourceforge.pebble.domain.Tag;
+import net.sourceforge.pebble.util.I18n;
 import net.sourceforge.pebble.util.StringUtils;
 
 import org.apache.commons.logging.Log;
@@ -54,15 +54,13 @@ public class RelatedPostsDecorator extends ContentDecoratorSupport {
     }
 
     Blog blog = blogEntry.getBlog();
-    ResourceBundle bundle = ResourceBundle.getBundle("resources", blog.getLocale());
-
 	String body = blogEntry.getBody();
 
 	if (body != null && body.trim().length() > 0) {
 
 		StringBuffer buf = new StringBuffer();
 		buf.append(body);
-		buf.append("<p><b>" + bundle.getString("common.relatedPosts") + "</b><br />");
+		buf.append("<p><b>" + I18n.getMessage(blog, "common.relatedPosts") + "</b><br />");
 		
 		// tags of the current entry
 		List<Tag> currentEntryTags = blogEntry.getAllTags();
@@ -98,7 +96,7 @@ public class RelatedPostsDecorator extends ContentDecoratorSupport {
 		}
 
 		if (relatedEntries.size() == 0)
-		buf.append("<i>" + bundle.getString("common.noRelatedPosts") + "</i>");
+		buf.append("<i>" + I18n.getMessage(blog, "common.noRelatedPosts") + "</i>");
 
 		buf.append("</p><br />");
 		blogEntry.setBody(buf.toString());	
