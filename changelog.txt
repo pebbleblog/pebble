@@ -1,5 +1,6 @@
 Version 2.5 - TBC
 -----------------
+PEBBLE-17 integrated twitter4j (Yusuke Yamamoto's library for twitter - http://yusuke.homeip.net/twitter4j/en/index.html) (in progress, target is to use OAuth)
 More Internatinalization for messages, info etc, that are triggered from within classes (based on PEBBLE-16)
 PEBBLE-15 new BlogEntryListener to post to twitter whenever a new blogentry is published (Steve Carton)
 
