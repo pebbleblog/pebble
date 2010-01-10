@@ -33,7 +33,7 @@ public class PostToTwitterBlogEntryListener extends BlogEntryListenerSupport {
 	/** the log used by this class */
 	private static final Log log = LogFactory
 			.getLog(PostToTwitterBlogEntryListener.class);
-	private static final String DEFAULT_TWEET_URL="https://twitter.com/statuses/update.xml";
+	private static final String DEFAULT_TWEET_URL="https://twitter.com/";
 
 	/**
 	 * Called when a blog entry has been published.
