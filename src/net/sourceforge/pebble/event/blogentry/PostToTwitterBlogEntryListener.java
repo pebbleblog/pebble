@@ -19,6 +19,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import sun.misc.BASE64Encoder;
+import twitter4j.Twitter;
 
 /**
  * Post new blog entries to twitter.
@@ -50,10 +51,10 @@ public class PostToTwitterBlogEntryListener extends BlogEntryListenerSupport {
 			return;
 		}
 		String longUrl = blogEntry.getLocalPermalink();
-		if(!checkUrl(longUrl)) {
-			blogEntry.getBlog().error("cowardly refusing to post url '" + longUrl + "' to twitter");
-			return;
-		}
+//		if(!checkUrl(longUrl)) {
+//			blogEntry.getBlog().error("cowardly refusing to post url '" + longUrl + "' to twitter");
+//			return;
+//		}
 		String tinyUrl = makeTinyURL(longUrl);
 		if (tinyUrl.equalsIgnoreCase("error"))
 			tinyUrl = longUrl;
@@ -157,33 +158,11 @@ public class PostToTwitterBlogEntryListener extends BlogEntryListenerSupport {
 	 */
 	private void post(String twitterUrl, String twitterUsername,
 			String twitterPassword, String msg) throws Exception {
-		log.info("Posting to Twitter as user " + twitterUsername + ": " + msg);
-		URL url = new URL(twitterUrl);
-		URLConnection connection = url.openConnection();
-		connection.setDoInput(true);
-		connection.setDoOutput(true);
-		connection.setUseCaches(false);
-		String authorization = twitterUsername + ":" + twitterPassword;
-		BASE64Encoder encoder = new BASE64Encoder();
-		String encoded = new String(encoder.encodeBuffer(authorization
-				.getBytes())).trim();
-		connection.setRequestProperty("Authorization", "Basic " + encoded);
-		OutputStreamWriter out = new OutputStreamWriter(connection
-				.getOutputStream());
-		out.write("status="
-				+ URLEncoder.encode(msg.substring(0,
-						Math.min(140, msg.length())).toString(), "UTF-8"));
-		out.close();
-		BufferedReader in = new BufferedReader(new InputStreamReader(connection
-				.getInputStream()));
-		String r;
-		StringBuffer response = new StringBuffer();
-		while ((r = in.readLine()) != null) {
-			response.append(r + "\n");
-		}
-		in.close();
-		response.toString();
+		System.out.println("Posting to Twitter: " + msg);
+		Twitter twitter = new Twitter(twitterUsername, twitterPassword, twitterUrl);
+		twitter.updateStatus(msg);
 	}
+
 
 	/**
 	 * create a shortened version of the given url

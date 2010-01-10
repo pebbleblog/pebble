@@ -186,5 +186,10 @@
 	<classpathentry kind="lib" path="lib/iText-2.0.8.jar"/>
 	<classpathentry kind="lib" path="lib/core-renderer.jar"/>
 	<classpathentry kind="lib" path="lib/minium.jar"/>
+	<classpathentry kind="lib" path="lib/twitter4j-2.0.10.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
