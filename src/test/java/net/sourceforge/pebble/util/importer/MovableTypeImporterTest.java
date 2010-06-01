@@ -9,7 +9,7 @@ import java.io.File;
 import java.util.List;
 
 public class MovableTypeImporterTest extends SingleBlogTestCase {
-  private String testCasesDir = "test" + File.separator + "mt_testcases";
+  private File testCasesDir = new File(TEST_RESOURCE_LOCATION, "mt_testcases");
 
   public void testImport() throws Exception {
     blog.setProperty(Blog.TIMEZONE_KEY, "Japan/Tokyo");

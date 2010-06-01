@@ -35,6 +35,7 @@ import junit.framework.TestCase;
 import net.sourceforge.pebble.util.FileUtils;
 import net.sourceforge.pebble.PebbleContext;
 import net.sourceforge.pebble.Configuration;
+import org.acegisecurity.context.SecurityContextHolder;
 
 import java.io.File;
 
@@ -46,13 +47,18 @@ import java.io.File;
 public abstract class PebbleTestCase extends TestCase {
 
   protected static final File TEST_BLOG_LOCATION;
+  protected static final File TEST_RESOURCE_LOCATION;
 
   static {
     TEST_BLOG_LOCATION = new File(System.getProperty("java.io.tmpdir"), "pebble");
+    TEST_RESOURCE_LOCATION = new File("src/test/resources");
   }
 
   protected void setUp() throws Exception {
     super.setUp();
+
+    // Make sure we aren't logged in
+    SecurityContextHolder.getContext().setAuthentication(null);
 
     TEST_BLOG_LOCATION.mkdir();
     new File(TEST_BLOG_LOCATION, "blogs").mkdir();

@@ -59,6 +59,8 @@ public abstract class SingleBlogTestCase extends PebbleTestCase {
     blog = new Blog(blogDirectory.getAbsolutePath());
     Theme theme = new Theme(blog, "user-default", TEST_BLOG_LOCATION.getAbsolutePath());
     blog.setEditableTheme(theme);
+    // There is some code that does i18n and runs assertions assuming that the locale is English
+    blog.setProperty(Blog.LANGUAGE_KEY, "en");
 
     Configuration config = new Configuration();
     config.setDataDirectory(TEST_BLOG_LOCATION.getAbsolutePath());

@@ -34,7 +34,7 @@ public class FileStaticPageDAOTest extends SingleBlogTestCase {
 
   public void testLoadStaticPageFomFile() throws Exception {
 
-    File source = new File("test", "1152083300843.xml");
+    File source = new File(TEST_RESOURCE_LOCATION, "1152083300843.xml");
     File destination = new File(blog.getRoot(), "pages/1152083300843");
     destination.mkdirs();
     FileUtils.copyFile(source, new File(destination, "1152083300843.xml"));

@@ -65,8 +65,8 @@ public class FileBlogEntryDAOTest extends SingleBlogTestCase {
   }
 
   public void testLoadBlogEntryFomFile() throws Exception {
-
-    File source = new File("test", "1081203335000.xml");
+    
+    File source = new File(TEST_RESOURCE_LOCATION, "1081203335000.xml");
     File destination = new File(blog.getRoot(), "2004/04/05/");
     destination.mkdirs();
     FileUtils.copyFile(source, new File(destination, "1081203335000.xml"));

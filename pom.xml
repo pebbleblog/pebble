@@ -331,23 +331,6 @@
                     </includeSchemas>
                 </configuration>
             </plugin>
-            <!--plugin>
-                <groupId>com.sun.tools.xjc.maven2</groupId>
-                <artifactId>maven-jaxb-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <generatePackage>net.sourceforge.pebble.dao.file</generatePackage>
-                    <includeSchemas>
-                        <includeSchema>etc/pebble.xsd</includeSchema>
-                    </includeSchemas>
-                </configuration>
-            </plugin-->
         </plugins>
     </build>
 </project>

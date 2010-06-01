@@ -3,11 +3,9 @@ package net.sourceforge.pebble.event.blogentry;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.net.URLEncoder;
 
 import net.sourceforge.pebble.PluginProperties;
 import net.sourceforge.pebble.api.event.blogentry.BlogEntryEvent;
@@ -18,7 +16,6 @@ import net.sourceforge.pebble.domain.BlogEntry;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import sun.misc.BASE64Encoder;
 import twitter4j.Twitter;
 
 /**
