@@ -1,3 +1,6 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
+<%@ taglib prefix="pebble" uri="http://pebble.sourceforge.net/pebble" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <%--
   Displays the administration links that are available after logging in.
 --%>
@@ -28,7 +31,7 @@
     </pebble:isBlogAdmin>
 
     <c:if test="${authenticatedUser.detailsUpdateable == true}">
-    <span id="admin-user-group" class="adminGroup" onmouseover="showMenu('admin-user'); hideMenu('admin-content'); hideMenu('admin-responses'); hideMenu('admin-blog'); hideMenu('admin-logs'); hideMenu('admin-admin')""><fmt:message key="admin.user"/></span> |
+    <span id="admin-user-group" class="adminGroup" onmouseover="showMenu('admin-user'); hideMenu('admin-content'); hideMenu('admin-responses'); hideMenu('admin-blog'); hideMenu('admin-logs'); hideMenu('admin-admin')"><fmt:message key="admin.user"/></span> |
     </c:if>
 
     <span><a href="${pebbleContext.configuration.secureUrl}logout.action?redirectUrl=${blogUrl}" onmouseover="hideMenu('admin-admin'); hideMenu('admin-user'); hideMenu('admin-content'); hideMenu('admin-responses'); hideMenu('admin-blog'); hideMenu('admin-logs')"><fmt:message key="admin.logout"/></a></span>
@@ -79,7 +82,7 @@
     <span id="admin-logs">
     <pebble:isAuthorisedForBlog>
       <a href="viewReferers.secureaction" title="<fmt:message key="admin.tooltip.viewReferrersForToday"/>"><fmt:message key="admin.referrers"/></a> 
-      (<a href="viewReferers.secureaction?filter=false" title="<fmt:message key="admin.tooltip.viewReferrersForTodayUnfiltered"/>"/><fmt:message key="admin.viewReferrersForTodayUnfiltered"/></a>) |
+      (<a href="viewReferers.secureaction?filter=false" title="<fmt:message key="admin.tooltip.viewReferrersForTodayUnfiltered"/>"><fmt:message key="admin.viewReferrersForTodayUnfiltered"/></a>) |
       <a href="viewRequests.secureaction" title="<fmt:message key="admin.tooltip.viewRequestsForToday"/>"><fmt:message key="admin.requests"/></a> |
       <a href="viewLogSummary.secureaction" title="<fmt:message key="admin.tooltip.viewLogSummaryForThisMonth"/>"><fmt:message key="admin.logSummary"/></a> |
       <a href="viewLogSummary.secureaction?year=<%= java.util.Calendar.getInstance().get(java.util.Calendar.YEAR) %>" title="<fmt:message key="admin.tooltip.yearlyLogs"/>"><fmt:message key="admin.yearlyLogs"/></a> |
