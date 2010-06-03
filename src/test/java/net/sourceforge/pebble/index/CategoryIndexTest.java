@@ -41,14 +41,14 @@ import net.sourceforge.pebble.domain.*;
 public class CategoryIndexTest extends SingleBlogTestCase {
 
   private CategoryIndex index;
-  private Category java;
+  private Category javaCategory;
 
   protected void setUp() throws Exception {
     super.setUp();
 
     this.index = new CategoryIndex(blog);
-    java = new Category("/java", "Java");
-    blog.addCategory(java);
+    javaCategory = new Category("/java", "Java");
+    blog.addCategory(javaCategory);
   }
 
   /**
@@ -56,12 +56,12 @@ public class CategoryIndexTest extends SingleBlogTestCase {
    */
   public void testIndexBlogEntry() throws Exception {
     BlogEntry blogEntry = new BlogEntry(blog);
-    blogEntry.addCategory(java);
+    blogEntry.addCategory(javaCategory);
     blogEntry.setPublished(true);
     index.index(blogEntry);
 
-    assertEquals(1, java.getNumberOfBlogEntries());
-    assertTrue(index.getRecentBlogEntries(java).contains(blogEntry.getId()));
+    assertEquals(1, javaCategory.getNumberOfBlogEntries());
+    assertTrue(index.getRecentBlogEntries(javaCategory).contains(blogEntry.getId()));
   }
 
   /**
@@ -69,14 +69,14 @@ public class CategoryIndexTest extends SingleBlogTestCase {
    */
   public void testUnindexBlogEntry() throws Exception {
     BlogEntry blogEntry = new BlogEntry(blog);
-    blogEntry.addCategory(java);
+    blogEntry.addCategory(javaCategory);
     index.index(blogEntry);
 
     blogEntry.removeAllCategories();
     index.unindex(blogEntry);
 
-    assertEquals(0, java.getNumberOfBlogEntries());
-    assertFalse(index.getRecentBlogEntries(java).contains(blogEntry.getId()));
+    assertEquals(0, javaCategory.getNumberOfBlogEntries());
+    assertFalse(index.getRecentBlogEntries(javaCategory).contains(blogEntry.getId()));
   }
 
 //  /**
