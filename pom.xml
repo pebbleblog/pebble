@@ -358,30 +358,29 @@
             </plugin>
         </plugins>
     </build>
-    <profiles>
-        <profile>
-            <id>clover</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>com.atlassian.maven.plugins</groupId>
-                        <artifactId>maven-clover2-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <phase>generate-sources</phase>
-                                <goals>
-                                    <goal>instrument</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>com.atlassian.maven.plugins</groupId>
+                <artifactId>maven-clover2-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>cobertura-maven-plugin</artifactId>
+                <version>2.4</version>
+            </plugin>
+        </plugins>
+    </reporting>
     <properties>
         <clover.version>3.0.2</clover.version>
     </properties>
+
+    <distributionManagement>
+        <site>
+            <id>pebble.sf.net</id>
+            <url>scp://shell.sourceforge.net/home/groups/p/pe/pebble/htdocs</url>
+        </site>
+    </distributionManagement>
 
     <scm>
         <connection>scm:svn:https://open.jira.com/svn/PEBBLE/trunk</connection>
