@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="Maven">
+  <bannerLeft>
+    <name>Pebble</name>
+  </bannerLeft>
+  <bannerRight>
+    <name>A lightweight, open source, Java EE blogging tool</name>
+  </bannerRight>
+  <body>
+    <links>
+        <item name="SourceForge.net project page" href="http://sourceforge.net/projects/pebble/" />
+      <item name="Home" href="index.html"/>
+      <item name="pebble-user mailing list"
+          href="http://lists.sourceforge.net/mailman/listinfo/pebble-user/"/>
+    </links>
+
+    <menu name="Download">
+        <item alt="Current stable release" name="Pebble 2.4"
+            href="http://prdownloads.sourceforge.net/pebble/pebble-2.4.zip?download"/>
+        <item alt="Latest code" name="/trunk on open.jira.com"
+            href="https://open.jira.com/svn/PEBBLE/trunk"/>
+    </menu>
+    <menu name="Documentation" alt="The documentation here is focussed
+        around getting Pebble installed, configured and running.  User
+        documentation is integrated with the Pebble web application and can be
+        accessed by clicking &quot;Help&quot; after logging in.">
+        <item name="Installation" href="installation.html"/>
+        <item name="Configuration" href="configuration.html"/>
+        <item name="Single-blog vs multi-blog" href="multiblog.html"/>
+        <item name="Security" href="security.html"/>
+        <item name="Screenshots" href="screenshots.html"/>
+        <item name="Upgrading from 2.x" href="upgrading2x.html"/>
+        <item name="Upgrading from 1.x" href="upgrading1x.html"/>
+    </menu>
+
+    <menu name="Maven Reports" ref="reports"/>
+
+  </body>
+</project>

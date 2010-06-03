@@ -1,0 +1,28 @@
+    ---
+    Upgrading from Pebble 2.x
+    ---
+
+Upgrading from Pebble 2.x
+
+    There are no specific upgrade intsructions if you are upgrading from a previous 2.0 version of Pebble (including
+    milestones and release candidates). However, you should be aware that Pebble will perform the following activities
+    the first time you start it up following an upgrade. <<You should backup your Pebble data directory before
+    upgrading.>>
+
+    * Restructure the directory hierarchy in which blog entries are stored to be GMT based.
+    * Set your theme back to "default".
+    * Reset the following plugins back to their default configuration.
+
+          * Permalink Provider
+          * Content Decorators
+          * Blog Listeners
+          * Blog Entry Listeners
+          * Comment Listeners
+          * Comment Confirmation Strategy
+          * TrackBack Listeners
+          * TrackBack Confirmation Strategy
+          * Lucene Analyzer
+          C Logger
+
+    Once you are happy that Pebble is working as expected, you should set your theme back to the one you were using
+    prior to the upgrade (via the blog properties page) and customize the plugins as required (via the plugins page).

@@ -7,6 +7,11 @@
     <artifactId>pebble</artifactId>
     <packaging>war</packaging>
     <version>2.5-SNAPSHOT</version>
+
+    <name>Pebble</name>
+    <description>A lightweight, open source, Java EE blogging tool</description>
+    <url>http://pebble.sourceforge.net</url>
+
     <pluginRepositories>
         <!-- This is for the jaxb-maven-plugin -->
         <pluginRepository>
@@ -336,6 +341,21 @@
                 <artifactId>maven-clover2-plugin</artifactId>
                 <version>${clover.version}</version>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>2.1</version>
+                <configuration>
+                    <templateFile>${basedir}/src/site/pebble-site.vm</templateFile>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.maven.doxia</groupId>
+                        <artifactId>doxia-module-xhtml</artifactId>
+                        <version>1.1.2</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
         </plugins>
     </build>
     <profiles>
@@ -362,4 +382,165 @@
     <properties>
         <clover.version>3.0.2</clover.version>
     </properties>
+
+    <scm>
+        <connection>scm:svn:https://open.jira.com/svn/PEBBLE/trunk</connection>
+        <developerConnection>scm:svn:https://open.jira.com/svn/PEBBLE/trunk</developerConnection>
+        <url>http://open.jira.com/source/browse/PEBBLE/trunk</url>
+    </scm>
+
+    <issueManagement>
+        <system>JIRA</system>
+        <url>http://open.jira.com/browse/PEBBLE</url>
+    </issueManagement>
+
+    <mailingLists>
+        <mailingList>
+            <name>pebble-user</name>
+            <subscribe>https://lists.sourceforge.net/lists/listinfo/pebble-user/</subscribe>
+            <unsubscribe>https://lists.sourceforge.net/lists/listinfo/pebble-user/</unsubscribe>
+            <post>pebble-user@lists.sourceforge.net</post>
+            <archive>http://sourceforge.net/mailarchive/forum.php?forum_name=pebble-user</archive>
+        </mailingList>
+    </mailingLists>
+    
+    <licenses>
+        <license>
+            <name>Simon Brown</name>
+            <url>./license.txt</url>
+            <distribution>repo</distribution>
+        </license>
+        <license>
+            <name>Apache 1.1</name>
+            <url>http://www.apache.org/licenses/LICENSE-1.1.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>Simon Brown</name>
+            <url>http://www.simongbrown.com</url>
+        </developer>
+        <developer>
+            <name>Olaf Kock</name>
+            <url>http://www.olafkock.de</url>
+        </developer>
+        <developer>
+            <name>James Roper</name>
+            <url>http://jazzy.id.au</url>
+            <email>jroper2@gmail.com</email>
+        </developer>
+    </developers>
+
+    <contributors>
+        <contributor>
+            <name>Alexander Zagniotov</name>
+        </contributor>
+        <contributor>
+            <name>Antonio Santos Izaguirre</name>
+        </contributor>
+        <contributor>
+            <name>AllNightLong</name>
+        </contributor>
+        <contributor>
+            <name>Christian Fochler</name>
+        </contributor>
+        <contributor>
+            <name>Daniel Farinha</name>
+        </contributor>
+        <contributor>
+            <name>Debashish Chakrabarty</name>
+        </contributor>
+        <contributor>
+            <name>Eduardo Ramalho</name>
+        </contributor>
+        <contributor>
+            <name>Enkhbat Dash</name>
+        </contributor>
+        <contributor>
+            <name>Frank Behrens</name>
+        </contributor>
+        <contributor>
+            <name>Frédéric Chuong</name>
+        </contributor>
+        <contributor>
+            <name>Ger-Jan te Dorsthorst</name>
+        </contributor>
+        <contributor>
+            <name>James Manger</name>
+        </contributor>
+        <contributor>
+            <name>James Roper</name>
+        </contributor>
+        <contributor>
+            <name>Jorge Juan Gómez Basanta</name>
+        </contributor>
+        <contributor>
+            <name>Jürgen Rose</name>
+        </contributor>
+        <contributor>
+            <name>Kene Lin</name>
+        </contributor>
+        <contributor>
+            <name>Laust. Ladefoged</name>
+        </contributor>
+        <contributor>
+            <name>Lasse Koskela</name>
+        </contributor>
+        <contributor>
+            <name>Mark Phippard</name>
+        </contributor>
+        <contributor>
+            <name>Okura (Pebble JP project)</name>
+        </contributor>
+        <contributor>
+            <name>Olaf Kock</name>
+        </contributor>
+        <contributor>
+            <name>Paolo Perego</name>
+        </contributor>
+        <contributor>
+            <name>Pedro Bachiega</name>
+        </contributor>
+        <contributor>
+            <name>Per von Dolwitz</name>
+        </contributor>
+        <contributor>
+            <name>Peter Miklosko</name>
+        </contributor>
+        <contributor>
+            <name>remagio</name>
+        </contributor>
+        <contributor>
+            <name>Ron Smits</name>
+        </contributor>
+        <contributor>
+            <name>Sascha Kohlmann and Gabi Lohmann</name>
+        </contributor>
+        <contributor>
+            <name>Seymour Cakes</name>
+        </contributor>
+        <contributor>
+            <name>Simon G. Brown</name>
+        </contributor>
+        <contributor>
+            <name>Sylvain Balbous</name>
+        </contributor>
+        <contributor>
+            <name>Tor Helland</name>
+        </contributor>
+        <contributor>
+            <name>Valentin Crettaz</name>
+        </contributor>
+        <contributor>
+            <name>Weiqi Gao</name>
+        </contributor>
+        <contributor>
+            <name>Yusuke Yamamoto</name>
+        </contributor>
+        <contributor>
+            <name>Zoltan Levardy</name>
+        </contributor>
+    </contributors>
 </project>

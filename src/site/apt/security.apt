@@ -1,0 +1,59 @@
+    ---
+    Security
+    ---
+
+Security
+
+* How do I customise the security?
+
+** Authentication
+
+    Pebble uses the Acegi Security Framework for Spring, which is a very flexible security implementation that provides
+    a way to configure almost every aspect of the security infrastructure.
+
+    User information is stored underneath the Pebble data directory, in a sub-directory called realm. In here there is
+    one file per user, with the filename convention of <<<{username}.properties>>>. Each file contains a series of
+    name=value pairs that correspond to the information stored about each user. The out-of-the-box Acegi configuration
+    uses an SHA encoded password with the username used as the salt, although this is configurable. An example file (the
+    default <<<username.properties>>>) is as follows.
+
+---
+name=Default User
+password=1d26806da123dd76cdc52fc3daa9ad6777522935
+roles=ROLE_BLOG_OWNER,ROLE_BLOG_PUBLISHER,ROLE_BLOG_CONTRIBUTOR,ROLE_BLOG_ADMIN
+website=http://www.domain.com
+emailAddress=username@domain.com
+---
+
+    The full set of possible roles is as follows.
+
+    * ROLE_BLOG_ADMIN : can administer the Pebble application.
+
+    * ROLE_BLOG_OWNER : can configure and customize how the blog works, looks, etc.
+    
+    * ROLE_BLOG_PUBLISHER : can publish/unpublish blog entries.
+    
+    * ROLE_BLOG_CONTRIBUTOR : can contribute blog entries and static pages, manage comments, etc.
+
+** Adding new users
+
+    To add more users, login to Pebble with a user in the ROLE_BLOG_ADMIN role and click the <<Add user>> link.
+
+** Using another realm
+
+    Pebble is distributed with a bespoke security realm implementation that stores user information in the file system,
+    next to the blog data. It is, however, possible to change this and configure Pebble to use another realm
+    implementation, such as one that stores user information in a relational database or LDAP.
+
+    In addition to configuring Acegi's <<<authenticationManager>>> bean, you'll additionally need to provide an
+    implementation of, and configure the <<<pebbleSecurityRealm>>> bean. This needs to implement the
+    <<<net.sourceforge.pebble.security.SecurityRealm>>> interface, which specifies the various CRUD operations on the
+    underlying security realm that are required so that user information can be updated through Pebble's web UI.
+
+** Usage of https
+
+    From version 2.4 on, pebble honors the setting of a secureUrl (in <<<pebble.properties>>>). If you want to make
+    sure, your password is transmitted only through https and you want to stay in https mode, set this value to an url
+    starting with https:// - pebble will use it for all actions that require login as well as for all urls once you're
+    logged in.
+

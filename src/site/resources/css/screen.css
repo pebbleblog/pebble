@@ -8,7 +8,7 @@ body {
   width: 800px;
 }
 #header {
-  background: white url( 'images/header.jpg' ) repeat-x top left;
+  background: white url( '../images/header.jpg' ) repeat-x top left;
   color: black;
   font-weight: normal;
   height: 200px;
@@ -43,7 +43,7 @@ body {
   font-size: 11px;
 }
 #footer {
-  background: gray url('images/footer.jpg') no-repeat bottom left;
+  background: gray url('../images/footer.jpg') no-repeat bottom left;
   clear: both;
   text-align: center;
   font-size: 11px;
@@ -61,7 +61,7 @@ body {
   text-align: left;
   font-size: 12px;
   font-weight: normal;
-  background: white url('images/sidebartitle.jpg') no-repeat left top;
+  background: white url('../images/sidebartitle.jpg') no-repeat left top;
   color: white;
   padding-left: 8px;
   padding-top: 2px;
@@ -79,14 +79,10 @@ body {
 }
 .sidebarItem ul {
   margin: 0px;
-  padding-left: 8px;
-  padding-right: 8px;
+  padding: 2px;
 }
 .sidebarItem li {
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 8px;
-  padding-right: 8px;
+  padding: 2px 8px;
   list-style-type: none;
 }
 
@@ -118,55 +114,52 @@ a:visited {
   left: 24px;
 }
 
-h1 {
+h2 {
   font-size: 24px;
   font-weight: normal;
   color : #6e7d8e;
-  background: transparent url('images/bullet.jpg') no-repeat center left;
+  background: transparent url('../images/bullet.jpg') no-repeat center left;
   padding-top: 4px;
   padding-bottom: 4px;
   padding-right: 4px;
   padding-left: 30px;
-  margin: 0px;
+  margin: 0 0 0 -30px;
   border-bottom: #f0f0f0 solid 1px;
 }
-h1 a:link, h1 a:visited {
+h2 a:link, h1 a:visited {
   color : #6e7d8e;
   text-decoration: none;
 }
-h1 a:hover {
+h2 a:hover {
   text-decoration: underline;
 }
-h2 {
+h3 {
   font-size: 12px;
   font-weight: normal;
-  padding-left: 30px;
+  padding-left: 0px;
   padding-top: 4px;
   color: #6e7d8e;
   margin: 0px;
 }
-h3 {
+h4 {
   font-size: 12px;
   font-weight: normal;
   padding-top: 0px;
   color: #6e7d8e;
   margin: 0px;
 }
-.contentItem {
-  padding-left: 8px;
-  padding-right: 8px;
+#content > .section {
+  padding-left: 38px;
+  padding-right: 38px;
   padding-top: 8px;
   padding-bottom: 8px;
   margin-bottom: 8px;
   background: white;
-}
-.contentItemBody {
-  line-height: 1.5;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 30px;
-  padding-right: 30px;
   text-align: left;
+  line-height: 1.5;
+}
+#content > .section > .section {
+  padding-bottom: 8px;
 }
 .contentItemLinks {
   float: right;
@@ -217,11 +210,11 @@ h3 {
 .approved {
 }
 .pending {
-  background: transparent url('images/pending.gif') no-repeat top left;
+  background: transparent url('../images/pending.gif') no-repeat top left;
   border: solid orange 1px;
 }
 .rejected {
-  background: transparent url('images/rejected.gif') no-repeat top left;
+  background: transparent url('../images/rejected.gif') no-repeat top left;
   border: solid red 1px;
 }
 .published {
@@ -229,7 +222,7 @@ h3 {
 .unpublished {
 }
 blockquote {
-  background: white url('images/blockquote.png') no-repeat top left;
+  background: white url('../images/blockquote.png') no-repeat top left;
   padding-top: 8px;
   padding-bottom: 16px;
   padding-left: 8px;
@@ -400,17 +393,21 @@ blockquote {
 #feeds a:hover {
   text-decoration: underline;
 }
-thead {
-  text-align: left;
-  background: #6e7d8e;
-  color: white;
+.bodyTable {
+    border-collapse: collapse;
+    width: 99%;
+}
+tr.a {
+  background: #E0E0E0;
 }
 th, th a:link, th a:visited {
   font-weight: normal;
   color: white;
+  background: #6e7d8e;
+  text-align: left;
 }
 .authenticated {
-  background: transparent url( 'images/authenticated.gif' ) no-repeat center left;
+  background: transparent url( '../images/authenticated.gif' ) no-repeat center left;
   padding-left: 10px;
 }
 .unauthenticated {
