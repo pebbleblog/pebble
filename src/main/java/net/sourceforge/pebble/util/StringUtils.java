@@ -31,12 +31,9 @@
  */
 package net.sourceforge.pebble.util;
 
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import java.util.Map;
-import java.util.HashMap;
-import java.util.Iterator;
 
 /**
  * A collection of utility methods for manipulating strings.
@@ -80,6 +77,7 @@ public final class StringUtils {
   
   //HTML4 248 named entities
   private final static Map<String,String> htmlEntities = new HashMap<String,String>();
+  private final static Collection<String> allowedSchemes = new ArrayList<String>();
 
   static {
 	htmlEntities.put("&nbsp;", "\u00A0");
@@ -330,6 +328,11 @@ public final class StringUtils {
 	htmlEntities.put("&clubs;", "\u2663");
 	htmlEntities.put("&hearts;", "\u2665");
 	htmlEntities.put("&diams;", "\u2666");
+
+  allowedSchemes.add("https://");
+  allowedSchemes.add("http://");
+  allowedSchemes.add("ftp://");
+  allowedSchemes.add("mailto:");
   }
 	
 
@@ -422,18 +425,19 @@ public final class StringUtils {
     while (m.find()) {
       int start = m.start();
       int end = m.end();
-      buffer.append(s.substring(position, start)).append("<a ");
+      buffer.append(s.subSequence(position, start)).append("<a href=");
       String link = s.substring(start, end);
       int startOfHrefIndex = link.indexOf("href=&quot;");
       if (startOfHrefIndex > -1) {
         int startOfHrefValue = startOfHrefIndex + "href=&quot;".length();
         int endOfHrefIndex = link.indexOf("&quot;", startOfHrefValue);
-        buffer.append("href=\"").append(link.substring(startOfHrefValue, endOfHrefIndex)).append("\"");
+        buffer.append("\"").append(validateUrl(link.substring(startOfHrefValue, endOfHrefIndex))).append("\"");
       } else {
         startOfHrefIndex = link.indexOf("href='");
         if (startOfHrefIndex > -1) {
+          int startOfHrefValue = startOfHrefIndex + "href='".length();
           int endOfHrefIndex = link.indexOf("'", startOfHrefIndex+"href='".length());
-          buffer.append(link.subSequence(startOfHrefIndex, endOfHrefIndex + 1));
+          buffer.append("'").append(validateUrl(link.substring(startOfHrefValue, endOfHrefIndex))).append("'");
         }
       }
       buffer.append(">");
@@ -441,7 +445,7 @@ public final class StringUtils {
     }
     // If position is still 0 there were no matches, so don't do anything
     if (position > 0) {
-      buffer.append(s.substring(position));
+      buffer.append(s.subSequence(position, s.length()));
       s = buffer.toString();
     }
 
@@ -561,6 +565,16 @@ public final class StringUtils {
 		 source = source.replaceAll(key, val);
 	 } 
      return source;
+  }
+
+  public static String validateUrl(String url) {
+    // whitelist, don't blacklist.
+    for (String scheme : allowedSchemes) {
+      if (url.startsWith(scheme)) {
+        return url;
+      }
+    }
+    return "";
   }
 
 }
