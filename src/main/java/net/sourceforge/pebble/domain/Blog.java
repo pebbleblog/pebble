@@ -178,7 +178,7 @@ public class Blog extends AbstractBlog {
    */
   public Blog(String root) {
     super(root);
-    
+
     // probably Blog should be made a final class if init is called from here - 
     // see javadoc comment on AbstractBlog.init() for reasons
     init();
@@ -187,11 +187,11 @@ public class Blog extends AbstractBlog {
   /**
    * Initialize this blog - prepare it for use.
    * Note: As this blog instance is passed to the various participants while
-   * it is being initialized, this method is dependent on the correct order 
+   * it is being initialized, this method is dependent on the correct order
    * of calls: Keep in mind that 'this' is only partly initialized until the
    * end of this method...
    */
-  
+
   protected void init() {
     super.init();
 
@@ -298,20 +298,14 @@ public class Blog extends AbstractBlog {
   private void initBlogListeners() {
     log.debug("Registering blog listeners");
 
-    String classNames = getBlogListeners();
-    if (classNames != null && classNames.length() > 0) {
-      String classes[] = classNames.split("\\s+");
-      for (int i = 0; i < classes.length; i++) {
-        if (!classes[i].startsWith("#")) {
-          try {
-            Class c = Class.forName(classes[i].trim());
-            BlogListener listener = (BlogListener)c.newInstance();
-            eventListenerList.addBlogListener(listener);
-          } catch (Exception e) {
-            error("Could not start blog listener \"" + classes[i] + "\" - check the class name is correct on the <a href=\"viewPlugins.secureaction#blogListeners\">plugins page</a>.");
-            log.error("Blog listener " + classes[i] + " could not be registered", e);
-          }
-        }
+    for (String className : getBlogListeners()) {
+      try {
+        Class c = Class.forName(className.trim());
+        BlogListener listener = (BlogListener) c.newInstance();
+        eventListenerList.addBlogListener(listener);
+      } catch (Exception e) {
+        error("Could not start blog listener \"" + className + "\" - check the class name is correct on the <a href=\"viewPlugins.secureaction#blogListeners\">plugins page</a>.");
+        log.error("Blog listener " + className + " could not be registered", e);
       }
     }
   }
@@ -322,20 +316,14 @@ public class Blog extends AbstractBlog {
   private void initBlogEntryListeners() {
     log.debug("Registering blog entry listeners");
 
-    String classNames = getBlogEntryListeners();
-    if (classNames != null && classNames.length() > 0) {
-      String classes[] = classNames.split("\\s+");
-      for (int i = 0; i < classes.length; i++) {
-        if (!classes[i].startsWith("#")) {
-          try {
-            Class c = Class.forName(classes[i].trim());
-            BlogEntryListener listener = (BlogEntryListener)c.newInstance();
-            eventListenerList.addBlogEntryListener(listener);
-          } catch (Exception e) {
-            error("Could not start blog entry listener \"" + classes[i] + "\" - check the class name is correct on the <a href=\"viewPlugins.secureaction#blogEntryListeners\">plugins page</a>.");
-            log.error("Blog entry listener " + classes[i] + " could not be registered", e);
-          }
-        }
+    for (String className : getBlogEntryListeners()) {
+      try {
+        Class c = Class.forName(className.trim());
+        BlogEntryListener listener = (BlogEntryListener) c.newInstance();
+        eventListenerList.addBlogEntryListener(listener);
+      } catch (Exception e) {
+        error("Could not start blog entry listener \"" + className + "\" - check the class name is correct on the <a href=\"viewPlugins.secureaction#blogEntryListeners\">plugins page</a>.");
+        log.error("Blog entry listener " + className + " could not be registered", e);
       }
     }
 
@@ -351,8 +339,8 @@ public class Blog extends AbstractBlog {
     } catch (Throwable t) {
       final String text = "Error while starting e-mail subscription listener - add mail.jar and activation.jar to the server classpath if you want to enable this listener.";
       warn(text);
-      if(t instanceof NoClassDefFoundError && 
-         t.getMessage() != null && 
+      if(t instanceof NoClassDefFoundError &&
+         t.getMessage() != null &&
          t.getMessage().indexOf("javax/mail/Session") > -1) {
         log.warn(text); // consider exception already handled well...
       } else {
@@ -367,20 +355,14 @@ public class Blog extends AbstractBlog {
   private void initCommentListeners() {
     log.debug("Registering comment listeners");
 
-    String classNames = getCommentListeners();
-    if (classNames != null && classNames.length() > 0) {
-      String classes[] = classNames.split("\\s+");
-      for (int i = 0; i < classes.length; i++) {
-        if (!classes[i].startsWith("#")) {
-          try {
-            Class c = Class.forName(classes[i].trim());
-            CommentListener listener = (CommentListener)c.newInstance();
-            eventListenerList.addCommentListener(listener);
-          } catch (Exception e) {
-            error("Could not start comment listener \"" + classes[i] + "\" - check the class name is correct on the <a href=\"viewPlugins.secureaction#commentListeners\">plugins page</a>.");
-            log.error("Comment listener " + classes[i] + " could not be registered", e);
-          }
-        }
+    for (String className : getCommentListeners()) {
+      try {
+        Class c = Class.forName(className.trim());
+        CommentListener listener = (CommentListener) c.newInstance();
+        eventListenerList.addCommentListener(listener);
+      } catch (Exception e) {
+        error("Could not start comment listener \"" + className + "\" - check the class name is correct on the <a href=\"viewPlugins.secureaction#commentListeners\">plugins page</a>.");
+        log.error("Comment listener " + className + " could not be registered", e);
       }
     }
 
@@ -394,20 +376,14 @@ public class Blog extends AbstractBlog {
   private void initTrackBackListeners() {
     log.debug("Registering TrackBack listeners");
 
-    String classNames = getTrackBackListeners();
-    if (classNames != null && classNames.length() > 0) {
-      String classes[] = classNames.split("\\s+");
-      for (int i = 0; i < classes.length; i++) {
-        if (!classes[i].startsWith("#")) {
-          try {
-            Class c = Class.forName(classes[i].trim());
-            TrackBackListener listener = (TrackBackListener)c.newInstance();
-            eventListenerList.addTrackBackListener(listener);
-          } catch (Exception e) {
-            error("Could not start TrackBack listener \"" + classes[i] + "\" - check the class name is correct on the <a href=\"viewPlugins.secureaction#trackbackListeners\">plugins page</a>.");
-            log.error("TrackBack listener " + classes[i] + " could not be registered", e);
-          }
-        }
+    for (String className : getTrackBackListeners()) {
+      try {
+        Class c = Class.forName(className.trim());
+        TrackBackListener listener = (TrackBackListener) c.newInstance();
+        eventListenerList.addTrackBackListener(listener);
+      } catch (Exception e) {
+        error("Could not start TrackBack listener \"" + className + "\" - check the class name is correct on the <a href=\"viewPlugins.secureaction#trackbackListeners\">plugins page</a>.");
+        log.error("TrackBack listener " + className + " could not be registered", e);
       }
     }
 
@@ -423,22 +399,16 @@ public class Blog extends AbstractBlog {
 
     decoratorChain.add(new HideUnapprovedResponsesDecorator());
 
-    String classNames = getContentDecorators();
-    if (classNames != null && classNames.length() > 0) {
-      String classes[] = classNames.split("\\s+");
-      for (int i = 0; i < classes.length; i++) {
-        if (!classes[i].startsWith("#")) {
-          try {
-            Class c = Class.forName(classes[i].trim());
-            ContentDecorator decorator = (ContentDecorator)c.newInstance();
-            decorator.setBlog(this);
-            decoratorChain.add(decorator);
-          } catch (Exception e) {
-            error("Could not start decorator \"" + classes[i] + "\" - check the class name is correct on the <a href=\"viewPlugins.secureaction#contentDecorators\">plugins page</a>.");
-            e.printStackTrace();
-            log.error(classes[i] + " could not be started", e);
-          }
-        }
+    for (String className : getContentDecorators()) {
+      try {
+        Class c = Class.forName(className.trim());
+        ContentDecorator decorator = (ContentDecorator) c.newInstance();
+        decorator.setBlog(this);
+        decoratorChain.add(decorator);
+      } catch (Exception e) {
+        error("Could not start decorator \"" + className + "\" - check the class name is correct on the <a href=\"viewPlugins.secureaction#contentDecorators\">plugins page</a>.");
+        e.printStackTrace();
+        log.error(className + " could not be started", e);
       }
     }
   }
@@ -530,7 +500,7 @@ public class Blog extends AbstractBlog {
       return "";
     } else if (BlogManager.getInstance().isMultiBlog()) {
       if (config.isVirtualHostingEnabled()) {
-        return url.substring(0, url.indexOf("://")+3) + getId() + "." + url.substring(url.indexOf("://")+3); 
+        return url.substring(0, url.indexOf("://")+3) + getId() + "." + url.substring(url.indexOf("://")+3);
       } else {
         return url + getId() + "/";
       }
@@ -1658,8 +1628,8 @@ public class Blog extends AbstractBlog {
    *
    * @return  a comma separated list of class names
    */
-  public String getContentDecorators() {
-    return getProperty(CONTENT_DECORATORS_KEY);
+  public List<String> getContentDecorators() {
+    return getStringsFromProperty(CONTENT_DECORATORS_KEY);
   }
 
   /**
@@ -1672,39 +1642,39 @@ public class Blog extends AbstractBlog {
   }
 
   /**
-   * Gets the list of blog listeners as a String.
+   * Gets the list of blog listeners as strings.
    *
-   * @return  a String
+   * @return  The list of class names
    */
-  public String getBlogListeners() {
-    return getProperty(BLOG_LISTENERS_KEY);
+  public List<String> getBlogListeners() {
+    return getStringsFromProperty(BLOG_LISTENERS_KEY);
   }
 
   /**
-   * Gets the list of blog entry listeners as a String.
+   * Gets the list of blog entry listeners as strings.
    *
-   * @return  a String
+   * @return  The list of class names
    */
-  public String getBlogEntryListeners() {
-    return getProperty(BLOG_ENTRY_LISTENERS_KEY);
+  public List<String> getBlogEntryListeners() {
+    return getStringsFromProperty(BLOG_ENTRY_LISTENERS_KEY);
   }
 
   /**
-   * Gets the list of comment listeners as a String.
+   * Gets the list of comment listeners as strings.
    *
-   * @return  a String
+   * @return  The list of class names
    */
-  public String getCommentListeners() {
-    return getProperty(COMMENT_LISTENERS_KEY);
+  public List<String> getCommentListeners() {
+    return getStringsFromProperty(COMMENT_LISTENERS_KEY);
   }
 
   /**
-   * Gets the list of TrackBack listeners as a String.
+   * Gets the list of TrackBack listeners as strings.
    *
-   * @return  a String
+   * @return  The list of class names
    */
-  public String getTrackBackListeners() {
-    return getProperty(TRACKBACK_LISTENERS_KEY);
+  public List<String> getTrackBackListeners() {
+    return getStringsFromProperty(TRACKBACK_LISTENERS_KEY);
   }
 
   /**
@@ -1868,4 +1838,17 @@ public class Blog extends AbstractBlog {
     return entries;
   }
 
+  private List<String> getStringsFromProperty(String key) {
+    List<String> strings = new ArrayList<String>();
+    String value = getProperty(key);
+    if (value != null && value.length() > 0) {
+      String values[] = value.split("\\s+");
+      for (int i = 0; i < values.length; i++) {
+        if (!values[i].startsWith("#")) {
+          strings.add(values[i].trim());
+        }
+      }
+    }
+    return strings;
+  }
 }

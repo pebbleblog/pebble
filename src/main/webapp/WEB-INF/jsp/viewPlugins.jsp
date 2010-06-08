@@ -1,3 +1,6 @@
+<%@ taglib prefix="plugins" tagdir="/WEB-INF/tags/plugins" %>
+<%--@elvariable id="blog" type="net.sourceforge.pebble.domain.Blog"--%>
+<%--@elvariable id="availablePlugins" type="net.sourceforge.pebble.plugins.AvailablePlugins"--%>
 <div class="contentItem">
 
   <div class="contentItemLinks">
@@ -13,67 +16,61 @@
       <a name="permalinkProvider"></a>
       Permalink Provider (<span class="help"><a href="./help/permalinkProviders.html" target="_blank">Help</a></span>)
       <br />
-      <input type="text" name="permalinkProviderName" size="60" value="${blog.permalinkProviderName}" />
-      <br /><br />
+      <plugins:single name="permalinkProviderName" plugins="${availablePlugins.permalinkProviders}"
+                     enabled="${blog.permalinkProviderName}" properties="${pluginProperties}"/>
 
       <a name="contentDecorators"></a>
       Content Decorators (<span class="help"><a href="./help/contentDecorators.html" target="_blank">Help</a></span>)
       <br />
-      <textarea name="decorators" rows="10" cols="60">${blog.contentDecorators}</textarea>
-      <br /><br />
+      <plugins:multiple name="decorators" plugins="${availablePlugins.contentDecorators}" orderable="${true}"
+                       enabled="${blog.contentDecorators}" properties="${pluginProperties}"/>
 
       <a name="blogListeners"></a>
       Blog Listeners (<span class="help"><a href="./help/blogListeners.html" target="_blank">Help</a></span>)
       <br />
-      <textarea name="blogListeners" rows="4" cols="60">${blog.blogListeners}</textarea>
-      <br /><br />
+      <plugins:multiple name="blogListeners" plugins="${availablePlugins.blogListeners}" orderable="${false}"
+                       enabled="${blog.blogListeners}" properties="${pluginProperties}"/>
 
       <a name="blogEntryListeners"></a>
       Blog Entry Listeners (<span class="help"><a href="./help/blogEntryListeners.html" target="_blank">Help</a></span>)
       <br />
-      <textarea name="blogEntryListeners" rows="10" cols="60">${blog.blogEntryListeners}</textarea>
-      <br /><br />
+      <plugins:multiple name="blogEntryListeners" plugins="${availablePlugins.blogEntryListeners}"
+                         enabled="${blog.blogEntryListeners}" properties="${pluginProperties}"/>
 
       <a name="commentListeners"></a>
       Comment Listeners (<span class="help"><a href="./help/commentListeners.html" target="_blank">Help</a></span>)
       <br />
-      <textarea name="commentListeners" rows="10" cols="60">${blog.commentListeners}</textarea>
-      <br /><br />
+      <plugins:multiple name="commentListeners" plugins="${availablePlugins.commentListeners}"
+                         enabled="${blog.commentListeners}" properties="${pluginProperties}"/>
 
       <a name="commentConfirmationStrategy"></a>
       Comment Confirmation Strategy (<span class="help"><a href="./help/confirmationStrategies.html#commentProcess" target="_blank">Help</a></span>)
       <br />
-      <input type="text" name="commentConfirmationStrategy" size="60" value="${blog.commentConfirmationStrategyName}" />
-      <br /><br />
+      <plugins:single name="commentConfirmationStrategy" plugins="${availablePlugins.commentConfirmationStrategies}"
+                         enabled="${blog.commentConfirmationStrategyName}" properties="${pluginProperties}"/>
 
       <a name="trackbackListeners"></a>
       TrackBack Listeners (<span class="help"><a href="./help/trackbackListeners.html" target="_blank">Help</a></span>)
       <br />
-      <textarea name="trackBackListeners" rows="10" cols="60">${blog.trackBackListeners}</textarea>
-      <br /><br />
+      <plugins:multiple name="trackBackListeners" plugins="${availablePlugins.trackbackListeners}"
+                         enabled="${blog.trackBackListeners}" properties="${pluginProperties}"/>
 
       <a name="trackBackConfirmationStrategy"></a>
       TrackBack Confirmation Strategy (<span class="help"><a href="./help/confirmationStrategies.html#trackbackProcess" target="_blank">Help</a></span>)
       <br />
-      <input type="text" name="trackBackConfirmationStrategy" size="60" value="${blog.trackBackConfirmationStrategyName}" />
-      <br /><br />
-
-      <a name="properties"></a>
-      Properties (<span class="help"><a href="./help/plugins.html#properties" target="_blank">Help</a></span>)
-      <br />
-      <textarea name="pluginProperties" rows="32" cols="60">${pluginPropertiesAsString}</textarea>
-      <br /><br />
+      <plugins:single name="trackBackConfirmationStrategy" plugins="${availablePlugins.trackbackConfirmationStrategies}"
+                           enabled="${blog.trackBackConfirmationStrategyName}" properties="${pluginProperties}"/>
 
       Lucene Analyzer
       <br />
-      <input type="text" name="luceneAnalyzer" size="60" value="${blog.luceneAnalyzer}" />
-      <br /><br />
+      <plugins:single name="luceneAnalyzer" plugins="${availablePlugins.luceneAnalyzers}"
+                             enabled="${blog.luceneAnalyzer}" properties="${pluginProperties}"/>
 
       <a name="logger"></a>
       Logger (<span class="help"><a href="./help/logs.html" target="_blank">Help</a></span>)
       <br />
-      <input type="text" name="logger" size="60" value="${blog.loggerName}">
-      <br /><br />
+      <plugins:single name="logger" plugins="${availablePlugins.loggers}"
+                             enabled="${blog.loggerName}" properties="${pluginProperties}"/>
 
       <table width="99%">
         <tr>
@@ -83,5 +80,8 @@
         </tr>
       </table>
     </form>
+    <script type="text/javascript">
+        initPluginProperties();
+    </script>
   </div>
 </div>

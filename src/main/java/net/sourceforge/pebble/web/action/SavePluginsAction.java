@@ -35,6 +35,7 @@ import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.PluginProperties;
 import net.sourceforge.pebble.domain.BlogServiceException;
 import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.plugins.PluginConfigType;
 import net.sourceforge.pebble.web.view.ForwardView;
 import net.sourceforge.pebble.web.view.View;
 
@@ -42,6 +43,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Enumeration;
+import java.util.Properties;
 
 /**
  * Saves the plugins associated with the current blog.
@@ -62,28 +64,45 @@ public class SavePluginsAction extends SecureAction {
 
     String submit = request.getParameter("submit");
     if (submit != null && submit.length() > 0) {
+      Properties pluginProperties = blog.getPluginProperties().getProperties();
       Enumeration params = request.getParameterNames();
       while (params.hasMoreElements()) {
         String key = (String)params.nextElement();
-        String value = request.getParameter(key);
 
         if (key.equals("submit")) {
           // this is the parameter representing the submit button - do nothing
-        } else if (key.equals("pluginProperties")) {
-          PluginProperties props = blog.getPluginProperties();
-          props.setPropertiesAsString(value);
+        } else if (key.startsWith(PluginConfigType.PLUGIN_PROPERTY_NAME_PREFIX)) {
+          String value = request.getParameterValues(key)[0];
+          String property = key.substring(PluginConfigType.PLUGIN_PROPERTY_NAME_PREFIX.length());
+          if (value == null || value.length() == 0)
+          {
+            pluginProperties.remove(property);
+          }
+          else
+          {
+            pluginProperties.setProperty(property, value);
+          }
         } else {
           // this is an existing parameter - save or remove it
-          if (value == null || value.length() == 0) {
+          String[] values = request.getParameterValues(key);
+          if (values == null || values.length == 0) {
             blog.removeProperty(key);
           } else {
-            blog.setProperty(key, value);
+            StringBuilder builder = new StringBuilder();
+            String separator = "";
+            for (String value : values)
+            {
+              builder.append(separator).append(value);
+              separator = "\n";
+            }
+            blog.setProperty(key, builder.toString());
           }
         }
       }
 
       try {
         blog.storeProperties();
+        blog.getPluginProperties().store();
       } catch (BlogServiceException e) {
         throw new ServletException(e);
       }

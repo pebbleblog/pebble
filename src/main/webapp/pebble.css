@@ -64,3 +64,64 @@
 .INFO a {
   color: white;
 }
+/* Plugins */
+.pluginsBox {
+    margin: 0 0 10px 0;
+    padding: 0;
+    border: 1px solid #CCC;
+}
+.pluginsBox > li {
+    list-style-type: none;
+    margin: 0 0 0 0;
+    padding: 0 10px;
+    border-bottom: 1px dotted #CCC;
+    background-color: #F8F8F8;
+}
+.pluginHeader {
+    height: 25px;
+    padding-top: 3px;
+}
+.moveHandle {
+    display: inline;
+    float: right;
+    background: url('common/images/handle.png');
+    background-repeat: no-repeat;
+    width: 10px;
+    margin-top: 5px;
+    margin-left: 5px;
+    height: 15px;
+    cursor: move;
+}
+.pluginConfigLink {
+    padding-top: 2px;
+    display: inline;
+    float: right;
+    text-decoration: underline;
+    font-size: 10px;
+    cursor:pointer;
+}
+.pluginConfig {
+    font-size: 11px;
+}
+.pluginConfig > ul {
+    margin: 0;
+    padding: 0 0 10px 0;
+}
+.pluginConfig > ul > li {
+    margin: 0;
+    padding: 5px 0 0 20px;
+    list-style-type: none;
+}
+.pluginPropertyLabel {
+    display: block;
+    float: left;
+    width: 120px;
+    padding-right: 10px;
+    text-align: right;
+}
+.pluginPropertyControl {
+    display: inline;
+}
+.singlePluginBox .pluginConfig {
+    padding: 10px;
+}

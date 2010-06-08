@@ -44,23 +44,29 @@ import java.util.*;
 /**
  * Contains properties that can be used by Pebble plugins.
  *
- * @author    Simon Brown
+ * @author Simon Brown
  */
 public class PluginProperties {
 
-  /** the log used by this class */
+  /**
+   * the log used by this class
+   */
   private static final Log log = LogFactory.getLog(PluginProperties.class);
 
-  /** the Properties object that backs this instance */
+  /**
+   * the Properties object that backs this instance
+   */
   private Properties properties;
 
-  /** the owning blog */
+  /**
+   * the owning blog
+   */
   private Blog blog;
 
   /**
    * Creates a new instance with the specified owning blog.
    *
-   * @param blog    the owning Blog instance
+   * @param blog the owning Blog instance
    */
   public PluginProperties(Blog blog) {
     this.blog = blog;
@@ -98,7 +104,7 @@ public class PluginProperties {
   /**
    * Gets properties file as a String in the format it is saved on disk.
    *
-   * @return  a String
+   * @return a String
    */
   public String getPropertiesAsString() {
     StringBuffer buf = new StringBuffer();
@@ -106,7 +112,7 @@ public class PluginProperties {
     Collections.sort(keys);
     Iterator it = keys.iterator();
     while (it.hasNext()) {
-      String key = (String)it.next();
+      String key = (String) it.next();
       buf.append(key);
       buf.append("=");
       buf.append(properties.getProperty(key));
@@ -117,29 +123,10 @@ public class PluginProperties {
   }
 
   /**
-   * Sets the properties and saves it to disk.
-   *
-   * @param content   the properties file format as a String
-   */
-  public void setPropertiesAsString(String content) {
-    try {
-      BufferedWriter writer = new BufferedWriter(new FileWriter(blog.getPluginPropertiesFile()));
-      writer.write(content);
-      writer.flush();
-      writer.close();
-
-      loadProperties();
-    } catch (FileNotFoundException fnfe) {
-    } catch (IOException ioe) {
-      log.error(ioe.getMessage());
-    }
-  }
-
-  /**
    * Determines whether a property with the specified name exists.
    *
-   * @param name    the name of th eproperty to test for
-   * @return  true if the property exists, false otherwise
+   * @param name the name of th eproperty to test for
+   * @return true if the property exists, false otherwise
    */
   public boolean hasProperty(String name) {
     return properties.containsKey(name);
@@ -148,8 +135,8 @@ public class PluginProperties {
   /**
    * Gets the named property.
    *
-   * @param name    the name of the property
-   * @return  the value of the property, or null if it doesn't exist
+   * @param name the name of the property
+   * @return the value of the property, or null if it doesn't exist
    */
   public String getProperty(String name) {
     return properties.getProperty(name);
@@ -162,8 +149,8 @@ public class PluginProperties {
   /**
    * Sets the named property.
    *
-   * @param name    the name of the property
-   * @param value   the value of the property
+   * @param name  the name of the property
+   * @param value the value of the property
    */
   public void setProperty(String name, String value) {
     properties.setProperty(name, value);

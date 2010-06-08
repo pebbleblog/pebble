@@ -29,52 +29,58 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package net.sourceforge.pebble.web.action;
+package net.sourceforge.pebble.web.tagext;
 
-import net.sourceforge.pebble.Constants;
-import net.sourceforge.pebble.domain.Blog;
-import net.sourceforge.pebble.plugins.PluginLocator;
-import net.sourceforge.pebble.web.view.View;
-import net.sourceforge.pebble.web.view.impl.PluginsView;
+import net.sourceforge.pebble.plugins.Plugin;
+import net.sourceforge.pebble.plugins.PluginConfig;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.JspTagException;
+import javax.servlet.jsp.JspWriter;
+import javax.servlet.jsp.tagext.TagSupport;
+import java.io.IOException;
+import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Properties;
 
 /**
- * Views the plugins associated with the current blog.
+ * Given a Collection or array, this tag produces a HTML select (dropdown) list
+ * based upon the items contained within.
  *
  * @author    Simon Brown
  */
-public class ViewPluginsAction extends SecureAction {
+public class RenderPluginConfigTag extends TagSupport {
+
+  /** the plugin config to render */
+  private PluginConfig pluginConfig;
+
+  /** The current value of the plugin config item */
+  private Properties properties;
 
   /**
-   * Peforms the processing associated with this action.
-   *
-   * @param request  the HttpServletRequest instance
-   * @param response the HttpServletResponse instance
-   * @return the name of the next view
+   * Called when the starting tag is encountered.
    */
-  public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
-    Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
-    getModel().put("pluginProperties", blog.getPluginProperties().getProperties());
-    getModel().put("pluginPropertiesAsString", blog.getPluginProperties().getPropertiesAsString());
-    getModel().put("availablePlugins", PluginLocator.getAvailablePluginsSortedForBlog(blog));
-
-    return new PluginsView();
+  public int doStartTag() throws JspException {
+    try
+    {
+      pluginConfig.getType().render(pageContext.getOut(), pluginConfig,
+              properties.getProperty(pluginConfig.getKey()));
+    }
+    catch (IOException ioe)
+    {
+      throw new JspException(ioe);
+    }
+    // and skip the body
+    return SKIP_BODY;
   }
 
-  /**
-   * Gets a list of all roles that are allowed to access this action.
-   *
-   * @return  an array of Strings representing role names
-   * @param request
-   */
-  public String[] getRoles(HttpServletRequest request) {
-    return new String[]{
-        Constants.BLOG_ADMIN_ROLE,
-        Constants.BLOG_OWNER_ROLE
-    };
+  public void setPluginConfig(PluginConfig pluginConfig) {
+    this.pluginConfig = pluginConfig;
   }
 
+  public void setProperties(Properties properties) {
+    this.properties = properties;
+  }
 }

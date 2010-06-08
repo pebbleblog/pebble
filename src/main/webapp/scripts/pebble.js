@@ -128,3 +128,47 @@ function previewComment() {
   });
   new Effect.Highlight('previewComment');
 }
+
+function updatePluginProperty(event) {
+    var name = this.name;
+    var value = this.value;
+    var formElements = event.findElement("form").elements;
+    // Find all elements in the form with the same name
+    for (var i = 0; i < formElements.length; i++) {
+        if (formElements[i].name == name) {
+            formElements[i].value = value;
+        }
+    }
+}
+
+function initPluginProperties() {
+    var formElements = document.forms["pluginsForm"].elements;
+    for (var i = 0; i < formElements.length; i++) {
+        if (formElements[i].name.indexOf("pluginProperty_") == 0) {
+            Event.observe(formElements[i], "change", updatePluginProperty);
+        }
+    }
+}
+
+function initSingleSelect(element) {
+  var select = document.forms["pluginsForm"].elements[element];
+  var options = select.options;
+  // Show the selected one
+  for (var i = 0; i < options.length; i++) {
+    var option = options[i];
+    if (option.selected) {
+      $("pluginsBox_" + element + "_" + option.value + "_pluginConfig").setStyle({display: "block"});
+    }
+  }
+  // Attach callback
+  Event.observe(select, "change", function(event) {
+    for (var i = 0; i < options.length; i++) {
+      var option = options[i];
+      if (option.selected) {
+        $("pluginsBox_" + element + "_" + option.value + "_pluginConfig").setStyle({display: "block"});
+      } else {
+        $("pluginsBox_" + element + "_" + option.value + "_pluginConfig").setStyle({display: "none"});
+      }
+    }
+  })
+}

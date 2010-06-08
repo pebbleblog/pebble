@@ -1,39 +1,36 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
-<!DOCTYPE taglib
-  PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN"
-  "http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd">
-
-<taglib>
-
-  <tlib-version>2.0</tlib-version>
-  <jsp-version>2.0</jsp-version>
-  <short-name>pebble</short-name>
-  <uri>http://pebble.sourceforge.net/pebble</uri>
+<taglib xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
+  version="2.1">
   <description>
     The core Pebble tags.
   </description>
 
+  <tlib-version>2.0</tlib-version>
+  <short-name>pebble</short-name>
+  <uri>http://pebble.sourceforge.net/pebble</uri>
+
   <tag>
-    <name>calendar</name>
-    <tag-class>net.sourceforge.pebble.web.tagext.CalendarTag</tag-class>
-    <body-content>empty</body-content>
     <description>
       Builds a calendar control for use on the blog pages.
     </description>
+    <name>calendar</name>
+    <tag-class>net.sourceforge.pebble.web.tagext.CalendarTag</tag-class>
+    <body-content>empty</body-content>
   </tag>
 
   <tag>
-    <name>select</name>
-    <tag-class>net.sourceforge.pebble.web.tagext.SelectTag</tag-class>
-    <body-content>empty</body-content>
     <description>
       Creates a HTML select control based upon a collection of objects.
     </description>
+    <name>select</name>
+    <tag-class>net.sourceforge.pebble.web.tagext.SelectTag</tag-class>
+    <body-content>empty</body-content>
 
     <attribute>
       <name>name</name>
       <required>true</required>
-      <rtexprvalue>false</rtexprvalue>
+      <rtexprvalue>true</rtexprvalue>
     </attribute>
 
     <attribute>
@@ -76,89 +73,110 @@
   </tag>
 
   <tag>
-    <name>isBlogAdmin</name>
-    <tag-class>net.sourceforge.pebble.web.tagext.IsBlogAdminTag</tag-class>
-    <body-content>JSP</body-content>
+    <description>
+      Renders a plugin configuration item
+    </description>
+    <name>renderpluginconfig</name>
+    <tag-class>net.sourceforge.pebble.web.tagext.RenderPluginConfigTag</tag-class>
+    <body-content>empty</body-content>
+
+    <attribute>
+      <name>pluginConfig</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>properties</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
     <description>
       Includes the body content only if the current user is a blog admin user.
     </description>
+    <name>isBlogAdmin</name>
+    <tag-class>net.sourceforge.pebble.web.tagext.IsBlogAdminTag</tag-class>
+    <body-content>JSP</body-content>
   </tag>
 
   <tag>
-    <name>isBlogAdminOrBlogOwner</name>
-    <tag-class>net.sourceforge.pebble.web.tagext.IsBlogAdminOrBlogOwnerTag</tag-class>
-    <body-content>JSP</body-content>
     <description>
       Includes the body content only if the current user is a blog admin or blog owner user.
     </description>
+    <name>isBlogAdminOrBlogOwner</name>
+    <tag-class>net.sourceforge.pebble.web.tagext.IsBlogAdminOrBlogOwnerTag</tag-class>
+    <body-content>JSP</body-content>
   </tag>
 
   <tag>
-    <name>isBlogOwner</name>
-    <tag-class>net.sourceforge.pebble.web.tagext.IsBlogOwnerTag</tag-class>
-    <body-content>JSP</body-content>
     <description>
       Includes the body content only if the current user is a blog owner of the current blog.
     </description>
+    <name>isBlogOwner</name>
+    <tag-class>net.sourceforge.pebble.web.tagext.IsBlogOwnerTag</tag-class>
+    <body-content>JSP</body-content>
   </tag>
 
   <tag>
-    <name>isBlogPublisher</name>
-    <tag-class>net.sourceforge.pebble.web.tagext.IsBlogPublisherTag</tag-class>
-    <body-content>JSP</body-content>
     <description>
       Includes the body content only if the current user is a blog publisher of the current blog.
     </description>
+    <name>isBlogPublisher</name>
+    <tag-class>net.sourceforge.pebble.web.tagext.IsBlogPublisherTag</tag-class>
+    <body-content>JSP</body-content>
   </tag>
 
   <tag>
-    <name>isBlogContributor</name>
-    <tag-class>net.sourceforge.pebble.web.tagext.IsBlogContributorTag</tag-class>
-    <body-content>JSP</body-content>
     <description>
       Includes the body content only if the current user is a blog contributor of the current blog.
     </description>
+    <name>isBlogContributor</name>
+    <tag-class>net.sourceforge.pebble.web.tagext.IsBlogContributorTag</tag-class>
+    <body-content>JSP</body-content>
   </tag>
 
   <tag>
-    <name>isAuthorisedForBlog</name>
-    <tag-class>net.sourceforge.pebble.web.tagext.IsAuthorisedForBlogTag</tag-class>
-    <body-content>JSP</body-content>
     <description>
       Includes the body content only if the current user authorised for the current blog.
     </description>
+    <name>isAuthorisedForBlog</name>
+    <tag-class>net.sourceforge.pebble.web.tagext.IsAuthorisedForBlogTag</tag-class>
+    <body-content>JSP</body-content>
   </tag>
 
   <tag>
-    <name>isAuthenticated</name>
-    <tag-class>net.sourceforge.pebble.web.tagext.IsAuthenticatedTag</tag-class>
-    <body-content>JSP</body-content>
     <description>
       Includes the body content only if the current user has been authenticated.
     </description>
+    <name>isAuthenticated</name>
+    <tag-class>net.sourceforge.pebble.web.tagext.IsAuthenticatedTag</tag-class>
+    <body-content>JSP</body-content>
   </tag>
 
   <tag>
-    <name>isNotAuthenticated</name>
-    <tag-class>net.sourceforge.pebble.web.tagext.IsNotAuthenticatedTag</tag-class>
-    <body-content>JSP</body-content>
     <description>
       Includes the body content only if the current user has not been authenticated.
     </description>
+    <name>isNotAuthenticated</name>
+    <tag-class>net.sourceforge.pebble.web.tagext.IsNotAuthenticatedTag</tag-class>
+    <body-content>JSP</body-content>
   </tag>
 
   <tag>
-    <name>getFeed</name>
-    <tag-class>net.sourceforge.pebble.web.tagext.NewsFeedReaderTag</tag-class>
-    <body-content>empty</body-content>
     <description>
       Exposes a variable containing entries from the specified feed.
     </description>
+    <name>getFeed</name>
+    <tag-class>net.sourceforge.pebble.web.tagext.NewsFeedReaderTag</tag-class>
+    <body-content>empty</body-content>
 
     <variable>
       <name-given>feedEntries</name-given>
       <variable-class>java.util.List</variable-class>
-      <scope>PAGE</scope>
+      <scope>AT_BEGIN</scope>
     </variable>
 
     <attribute>
@@ -168,5 +186,12 @@
       <type>java.lang.String</type>
     </attribute>
   </tag>
+
+  <function>
+    <name>contains</name>
+    <function-class>net.sourceforge.pebble.web.tagext.Util</function-class>
+    <function-signature>boolean contains(java.util.Collection, java.lang.Object)</function-signature>    
+  </function>
+
 
 </taglib>
