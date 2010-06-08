@@ -415,25 +415,34 @@ public final class StringUtils {
     // HTTP links - remove all attributes other than href
     s = replace(s, CLOSING_A_TAG_PATTERN, "</a>");
     Matcher m = OPENING_A_TAG_PATTERN.matcher(s);
+    // Use a single buffer for efficiency
+    StringBuffer buffer = new StringBuffer();
+    // The position in the original string that we are up to
+    int position = 0;
     while (m.find()) {
       int start = m.start();
       int end = m.end();
+      buffer.append(s.substring(position, start)).append("<a ");
       String link = s.substring(start, end);
-      String hrefAttribute = "";
-      int startOfHrefIndex = link.indexOf("href=\"");
+      int startOfHrefIndex = link.indexOf("href=&quot;");
       if (startOfHrefIndex > -1) {
-        int endOfHrefIndex = link.indexOf("\"", startOfHrefIndex+"href=\"".length()); // 6 = href="
-        hrefAttribute = link.substring(startOfHrefIndex, endOfHrefIndex+1);
+        int startOfHrefValue = startOfHrefIndex + "href=&quot;".length();
+        int endOfHrefIndex = link.indexOf("&quot;", startOfHrefValue);
+        buffer.append("href=\"").append(link.substring(startOfHrefValue, endOfHrefIndex)).append("\"");
       } else {
         startOfHrefIndex = link.indexOf("href='");
         if (startOfHrefIndex > -1) {
-          int endOfHrefIndex = link.indexOf("'", startOfHrefIndex+"href='".length()); // 6 = href='
-          hrefAttribute = link.substring(startOfHrefIndex, endOfHrefIndex+1);
+          int endOfHrefIndex = link.indexOf("'", startOfHrefIndex+"href='".length());
+          buffer.append(link.subSequence(startOfHrefIndex, endOfHrefIndex + 1));
         }
       }
-      link = "<a " + hrefAttribute + ">";
-      s = s.substring(0, start) + link + s.substring(end, s.length());
-      m = OPENING_A_TAG_PATTERN.matcher(s);
+      buffer.append(">");
+      position = end;
+    }
+    // If position is still 0 there were no matches, so don't do anything
+    if (position > 0) {
+      buffer.append(s.substring(position));
+      s = buffer.toString();
     }
 
     // escaped angle brackets and other allowed entities
