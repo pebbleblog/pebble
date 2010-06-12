@@ -77,12 +77,16 @@ public class PebbleContext {
 
     try {
       Properties buildProperties = new Properties();
-      InputStream in = getClass().getClassLoader().getResourceAsStream("pebble-build.properties");
+      InputStream in = getClass().getClassLoader().getResourceAsStream(
+              "/META-INF/maven/org.sourceforge.pebble/pebble/pom.properties");
       if (in != null) {
         buildProperties.load(in);
-        this.buildVersion = buildProperties.getProperty(BUILD_VERSION_KEY);
-        this.buildDate = buildProperties.getProperty(BUILD_DATE_KEY);
+        this.buildVersion = buildProperties.getProperty("version");
+        // It's a little harder to do this in maven, seeing as it's not used anyway, commenting out.
+        // this.buildDate = buildProperties.getProperty(BUILD_DATE_KEY);
         in.close();
+      } else {
+        log.warn("No maven pom.properties found, build version set for development");
       }
     } catch (IOException e) {
       log.error(e.getMessage(), e);
