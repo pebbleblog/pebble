@@ -13,6 +13,7 @@
 
   <div class="contentItemBody">
     <form name="referersForm" method="post" action="addRefererFilters.secureaction">
+    <pebble:token/>
     <input type="hidden" name="redirectUrl" value="${blogUrl}/viewReferers.secureaction" />
     <input type="hidden" name="year" value="<fmt:formatNumber value="${param.year}" pattern="#"/>" />
     <input type="hidden" name="month" value="<fmt:formatNumber value="${param.month}"/>" />

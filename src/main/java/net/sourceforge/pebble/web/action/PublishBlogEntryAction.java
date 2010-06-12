@@ -34,6 +34,7 @@ package net.sourceforge.pebble.web.action;
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.domain.*;
 import net.sourceforge.pebble.util.StringUtils;
+import net.sourceforge.pebble.web.security.RequireSecurityToken;
 import net.sourceforge.pebble.web.view.NotFoundView;
 import net.sourceforge.pebble.web.view.RedirectView;
 import net.sourceforge.pebble.web.view.View;
@@ -52,6 +53,7 @@ import java.util.Date;
  *
  * @author    Simon Brown
  */
+@RequireSecurityToken
 public class PublishBlogEntryAction extends SecureAction {
 
   /** the log used by this class */

@@ -9,6 +9,7 @@
 
   <div class="contentItemBody">
     <form name="categoriesForm" method="post" action="removeCategories.secureaction">
+    <pebble:token/>
     <table width="99%" cellspacing="0" cellpadding="4">
       <thead>
       <tr>
@@ -63,6 +64,7 @@
     <br />
     <a name="form"></a>
     <form name="editCategoryForm" action="saveCategory.secureaction" method="post" accept-charset="<c:out value="${blog.characterEncoding}" />">
+      <pebble:token/>
       <table width="99%">
         <tr>
           <td valign="top">ID</td>

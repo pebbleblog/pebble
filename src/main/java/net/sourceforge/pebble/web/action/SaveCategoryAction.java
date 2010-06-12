@@ -37,6 +37,7 @@ import net.sourceforge.pebble.dao.DAOFactory;
 import net.sourceforge.pebble.dao.PersistenceException;
 import net.sourceforge.pebble.domain.Category;
 import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.web.security.RequireSecurityToken;
 import net.sourceforge.pebble.web.view.ForwardView;
 import net.sourceforge.pebble.web.view.View;
 
@@ -49,6 +50,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author    Simon Brown
  */
+@RequireSecurityToken
 public class SaveCategoryAction extends SecureAction {
 
   /**

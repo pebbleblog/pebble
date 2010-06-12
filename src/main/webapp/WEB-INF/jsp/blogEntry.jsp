@@ -70,6 +70,7 @@
     <pebble:isBlogContributor>
     <c:if test="${blogEntry.numberOfResponses > 0}">
     <form name="responsesForm" method="post" action="manageResponses.secureaction">
+      <pebble:token/>
     <input type="hidden" name="redirectUrl" value="${url:rewrite(blogEntry.localPermalink)}" />
     </c:if>
     </pebble:isBlogContributor>

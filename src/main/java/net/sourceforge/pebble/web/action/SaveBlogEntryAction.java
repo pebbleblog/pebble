@@ -35,6 +35,7 @@ import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.domain.*;
 import net.sourceforge.pebble.util.SecurityUtils;
 import net.sourceforge.pebble.util.StringUtils;
+import net.sourceforge.pebble.web.security.RequireSecurityToken;
 import net.sourceforge.pebble.web.validation.ValidationContext;
 import net.sourceforge.pebble.web.view.RedirectView;
 import net.sourceforge.pebble.web.view.View;
@@ -60,6 +61,7 @@ import java.util.Set;
  *
  * @author    Simon Brown
  */
+@RequireSecurityToken
 public class SaveBlogEntryAction extends SecureAction {
 
   /** the log used by this class */

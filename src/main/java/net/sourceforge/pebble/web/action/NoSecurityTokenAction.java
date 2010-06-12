@@ -31,37 +31,34 @@
  */
 package net.sourceforge.pebble.web.action;
 
-import net.sourceforge.pebble.Constants;
-import net.sourceforge.pebble.domain.FileMetaData;
-import net.sourceforge.pebble.web.security.RequireSecurityToken;
+import net.sourceforge.pebble.web.view.View;
+import net.sourceforge.pebble.web.view.impl.NoSecurityTokenView;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
- * Allows the user to upload an image to the editable theme.
+ * Redirects the user to a 404 page.
  *
  * @author    Simon Brown
  */
-@RequireSecurityToken
-public class UploadFileToThemeAction extends UploadFileAction {
+public class NoSecurityTokenAction extends Action {
+
+  /** the log used by this class */
+  private static final Log log = LogFactory.getLog(NoSecurityTokenAction.class);
 
   /**
-   * Gets the type of this upload (blog image, blog file or theme file).
+   * Peforms the processing associated with this action.
    *
-   * @return    a String representing the type
-   * @see       net.sourceforge.pebble.domain.FileMetaData
+   * @param request  the HttpServletRequest instance
+   * @param response the HttpServletResponse instance
+   * @return the name of the next view
    */
-  protected String getType() {
-    return FileMetaData.THEME_FILE;
-  }
-
-  /**
-   * Gets a list of all roles that are allowed to access this action.
-   *
-   * @return  an array of Strings representing role names
-   */
-  public String[] getRoles(HttpServletRequest request) {
-    return new String[]{Constants.BLOG_OWNER_ROLE};
+  public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
+    return new NoSecurityTokenView();
   }
 
 }

@@ -1,9 +1,11 @@
+<%@ taglib prefix="pebble" uri="http://pebble.sourceforge.net/pebble" %>
 <div class="contentItemLinks">
   <c:if test="${displayMode != 'preview'}">
 
     <pebble:isAuthorisedForBlog>
     <div class="inlineAdminLinks">
     <form name="blogEntryForm" action="manageBlogEntry.secureaction" method="post">
+      <pebble:token/>
       <input type="hidden" name="entry" value="${blogEntry.id}" />
     </pebble:isAuthorisedForBlog>
 
@@ -33,6 +35,7 @@
 
     <pebble:isBlogContributor>
       <form action="sendTrackBack.secureaction" method="post">
+        <pebble:token/>
         <input type="hidden" name="entry" value="${blogEntry.id}" />
           <button type="submit" value="Send TrackBack" ><fmt:message key="common.sendTrackback"/></button>
       </form>

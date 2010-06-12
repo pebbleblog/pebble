@@ -1,5 +1,6 @@
 package net.sourceforge.pebble.web.action;
 
+import net.sourceforge.pebble.web.security.RequireSecurityToken;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.ForwardView;
 import net.sourceforge.pebble.domain.Blog;
@@ -15,6 +16,7 @@ import javax.servlet.ServletException;
  *
  * @author    Simon Brown
  */
+@RequireSecurityToken
 public class ResetThemeAction extends SecureAction {
 
   /**

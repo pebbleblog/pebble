@@ -9,6 +9,7 @@
 
   <div class="contentItemBody">
     <form name="editFile" action="saveFile.secureaction" method="POST">
+    <pebble:token/>
 
     <input type="hidden" name="name" value="${file.name}" />
     <input type="hidden" name="path" value="${file.path}" />

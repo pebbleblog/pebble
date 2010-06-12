@@ -14,6 +14,7 @@
     </p>
 
     <form name="securityForm" action="saveBlogSecurity.secureaction" method="POST" accept-charset="${blog.characterEncoding}">
+      <pebble:token/>
       <table width="99%">
         <tr>
           <td align="center">Blog owners</td>

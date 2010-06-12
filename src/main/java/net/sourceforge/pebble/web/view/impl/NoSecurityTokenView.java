@@ -29,39 +29,42 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package net.sourceforge.pebble.web.action;
+package net.sourceforge.pebble.web.view.impl;
 
-import net.sourceforge.pebble.Constants;
-import net.sourceforge.pebble.domain.FileMetaData;
-import net.sourceforge.pebble.web.security.RequireSecurityToken;
+import net.sourceforge.pebble.web.view.HtmlView;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
- * Allows the user to upload an image to the editable theme.
+ * Represents the no security token page.
  *
- * @author    Simon Brown
+ * @author    James Roper
  */
-@RequireSecurityToken
-public class UploadFileToThemeAction extends UploadFileAction {
+public class NoSecurityTokenView extends HtmlView {
 
-  /**
-   * Gets the type of this upload (blog image, blog file or theme file).
-   *
-   * @return    a String representing the type
-   * @see       net.sourceforge.pebble.domain.FileMetaData
-   */
-  protected String getType() {
-    return FileMetaData.THEME_FILE;
+  public void prepare() {
   }
 
   /**
-   * Gets a list of all roles that are allowed to access this action.
+   * Gets the title of this view.
    *
-   * @return  an array of Strings representing role names
+   * @return the title as a String
    */
-  public String[] getRoles(HttpServletRequest request) {
-    return new String[]{Constants.BLOG_OWNER_ROLE};
+  public String getTitle() {
+    return null;
+  }
+
+  protected int getStatus() {
+    return HttpServletResponse.SC_FORBIDDEN;
+  }
+
+  /**
+   * Gets the URI that this view represents.
+   *
+   * @return the URI as a String
+   */
+  public String getUri() {
+    return "/WEB-INF/jsp/noSecurityToken.jsp";
   }
 
 }

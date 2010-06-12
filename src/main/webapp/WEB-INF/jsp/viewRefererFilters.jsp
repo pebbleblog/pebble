@@ -14,6 +14,7 @@
     </p>
 
     <form name="newRefererFilterForm" action="addRefererFilters.secureaction" method="post">
+      <pebble:token/>
       <b>Filter</b>
       <input type="text" name="expression" size="40" value=""/>
       <input name="submit" type="submit" Value="Add Filter" />
@@ -22,6 +23,7 @@
     <br />
 
     <form name="refererFiltersForm" action="removeRefererFilters.secureaction" method="post">
+    <pebble:token/>
     <table width="99%" cellspacing="0" cellpadding="4">
       <thead>
       <tr>

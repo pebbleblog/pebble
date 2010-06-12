@@ -13,6 +13,7 @@
 </c:if>
 
 <form id="commentForm" name="commentForm" action="saveComment.action" method="post" accept-charset="${blog.characterEncoding}">
+  <pebble:token/>
   <input type="hidden" name="blogId" value="<c:out value="${blogEntry.blog.id}"/>" />
   <input type="hidden" name="entry" value="<c:out value="${blogEntry.id}"/>" />
   <input type="hidden" name="comment" value="<c:out value="${undecoratedComment.parent.id}"/>" />

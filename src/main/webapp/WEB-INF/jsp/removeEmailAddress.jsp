@@ -8,6 +8,7 @@
     <br /><br />
 
     <form name="removeEmailAddress" action="removeEmailAddress.action" method="POST">
+    <pebble:token/>
     <input type="hidden" name="entry" value=""${blogEntry.id}" />
     <input type="text" name="email" size="40" />
     <input name="submit" type="submit" Value="<fmt:message key="comment.removeEmailAddressButton" />" />

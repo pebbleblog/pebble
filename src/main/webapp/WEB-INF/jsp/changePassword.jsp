@@ -17,6 +17,7 @@
     </c:if>
 
     <form name="user" action="changePassword.secureaction" method="post">
+      <pebble:token/>
 
       <table width="99%" cellspacing="0" cellpadding="4">
         <tr>

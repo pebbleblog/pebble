@@ -37,6 +37,7 @@ import net.sourceforge.pebble.domain.FileMetaData;
 import net.sourceforge.pebble.domain.IllegalFileAccessException;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.util.StringUtils;
+import net.sourceforge.pebble.web.security.RequireSecurityToken;
 import net.sourceforge.pebble.web.view.ForbiddenView;
 import net.sourceforge.pebble.web.view.ForwardView;
 import net.sourceforge.pebble.web.view.View;
@@ -51,6 +52,7 @@ import java.io.IOException;
  *
  * @author    Simon Brown
  */
+@RequireSecurityToken
 public class SaveFileAction extends AbstractFileAction {
 
   /**

@@ -18,6 +18,7 @@
 
   <div class="contentItemBody">
     <form name="publishBlogEntryForm" action="publishBlogEntry.secureaction" method="POST" accept-charset="${blog.characterEncoding}">
+    <pebble:token/>
     <input type="hidden" name="entry" value="${blogEntry.id}" />
 
     <c:choose>

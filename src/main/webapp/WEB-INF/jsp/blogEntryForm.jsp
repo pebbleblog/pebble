@@ -38,6 +38,7 @@
 
   <div class="contentItemBody">
     <form name="editBlogEntry" action="saveBlogEntry.secureaction#preview" method="POST" accept-charset="${blog.characterEncoding}">
+    <pebble:token/>
     <input type="hidden" name="entry" value="${blogEntry.id}" />
     <input type="hidden" name="persistent" value="${blogEntry.persistent}" />
 

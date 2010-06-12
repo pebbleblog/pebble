@@ -6,6 +6,7 @@
   <div class="contentItemBody">
 
     <form name="emailSubscribersForm" action="unsubscribe.action" method="post">
+    <pebble:token/>
     <table width="99%" cellspacing="0" cellpadding="4">
       <thead>
       <tr>

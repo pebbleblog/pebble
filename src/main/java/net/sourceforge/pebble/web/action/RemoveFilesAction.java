@@ -37,6 +37,7 @@ import net.sourceforge.pebble.domain.FileMetaData;
 import net.sourceforge.pebble.domain.IllegalFileAccessException;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.util.StringUtils;
+import net.sourceforge.pebble.web.security.RequireSecurityToken;
 import net.sourceforge.pebble.web.view.ForbiddenView;
 import net.sourceforge.pebble.web.view.RedirectView;
 import net.sourceforge.pebble.web.view.View;
@@ -50,6 +51,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author    Simon Brown
  */
+@RequireSecurityToken
 public class RemoveFilesAction extends AbstractFileAction {
 
   /**

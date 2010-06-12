@@ -32,6 +32,7 @@
 
   <div class="contentItemBody">
     <form name="editStaticPage" action="saveStaticPage.secureaction#preview" method="POST" accept-charset="${blog.characterEncoding}">
+    <pebble:token/>
     <input type="hidden" name="page" value="${staticPage.id}" />
     <input type="hidden" name="persistent" value="${staticPage.persistent}" />
 

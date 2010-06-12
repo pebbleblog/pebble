@@ -32,10 +32,10 @@
 package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
-import net.sourceforge.pebble.PluginProperties;
 import net.sourceforge.pebble.domain.BlogServiceException;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.plugins.PluginConfigType;
+import net.sourceforge.pebble.web.security.RequireSecurityToken;
 import net.sourceforge.pebble.web.view.ForwardView;
 import net.sourceforge.pebble.web.view.View;
 
@@ -50,6 +50,7 @@ import java.util.Properties;
  *
  * @author    Simon Brown
  */
+@RequireSecurityToken
 public class SavePluginsAction extends SecureAction {
 
   /**

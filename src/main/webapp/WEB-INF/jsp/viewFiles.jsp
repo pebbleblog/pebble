@@ -40,6 +40,7 @@
   <c:choose>
   <c:when test="${not empty files}">
     <form name="filesForm" action="removeFiles.secureaction" method="post">
+    <pebble:token/>
     <input type="hidden" name="path" value="${directory.absolutePath}" />
     <input type="hidden" name="type" value="${type}" />
     <table width="99%" cellspacing="0" cellpadding="4">
@@ -114,6 +115,7 @@
   <c:if test="${not empty file}">
   <a name="manageFile" />
   <form name="copyFile" action="copyFile.secureaction" method="POST">
+    <pebble:token/>
     <p>
       <b><fmt:message key="admin.renameCopyFile"/></b>
       <br />
@@ -131,6 +133,7 @@
   </c:if>
 
   <form name="createDirectory" action="createDirectory.secureaction" method="POST">
+    <pebble:token/>
     <h3><fmt:message key="admin.createDirectory"/></h3>
     <p>
       Name
@@ -142,6 +145,7 @@
   </form>
 
   <form name="uploadFile" enctype="multipart/form-data" action="${uploadAction}" method="post">
+    <pebble:token/>
     <input type="hidden" name="path" value="${directory.absolutePath}" />
     <h3>Upload file (files must be less than <fmt:formatNumber value="${pebbleContext.configuration.fileUploadSize}" type="number" />&nbsp;KB each)</h3>
     <p>

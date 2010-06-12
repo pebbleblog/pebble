@@ -18,7 +18,20 @@
     <tag-class>net.sourceforge.pebble.web.tagext.CalendarTag</tag-class>
     <body-content>empty</body-content>
   </tag>
+  <tag>
+    <description>
+      Writes the security token in a hidden input tag to the request.
+    </description>
+    <name>token</name>
+    <tag-class>net.sourceforge.pebble.web.tagext.SecurityTokenTag</tag-class>
+    <body-content>empty</body-content>
 
+    <attribute>
+      <name>query</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+  </tag>
   <tag>
     <description>
       Creates a HTML select control based upon a collection of objects.

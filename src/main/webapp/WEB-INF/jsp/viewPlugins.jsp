@@ -12,6 +12,7 @@
 
   <div class="contentItemBody" style="overflow: auto">
     <form name="pluginsForm" action="savePlugins.secureaction" method="POST" accept-charset="${blog.characterEncoding}">
+      <pebble:token/>
 
       <a name="permalinkProvider"></a>
       Permalink Provider (<span class="help"><a href="./help/permalinkProviders.html" target="_blank">Help</a></span>)

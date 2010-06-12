@@ -1,3 +1,4 @@
+<%@ taglib prefix="pebble" uri="http://pebble.sourceforge.net/pebble" %>
 <c:if test="${blogEntry.trackBacksEnabled}" >
   <pebble:isBlogContributor>
 
@@ -6,6 +7,7 @@
     <br /><br />
 
     <form name="sendTrackBack" action="sendTrackBack.secureaction" method="post" accept-charset="<c:out value="${blog.characterEncoding}" />">
+      <pebble:token/>
     <input type="hidden" name="entry" value="<c:out value="${blogEntry.id}"/>" />
     <table width="99%">
       <tr>

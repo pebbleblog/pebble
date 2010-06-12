@@ -5,6 +5,7 @@
 
   <div class="contentItemBody">
     <form name="confirmationForm" action="${confirmationAction}" method="post" accept-charset="${blog.characterEncoding}">
+      <pebble:token/>
 
       <p>
         <fmt:message key="confirmation.simpleMathsMessage" />

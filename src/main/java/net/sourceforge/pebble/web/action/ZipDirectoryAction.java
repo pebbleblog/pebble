@@ -36,6 +36,7 @@ import net.sourceforge.pebble.domain.FileManager;
 import net.sourceforge.pebble.domain.FileMetaData;
 import net.sourceforge.pebble.domain.IllegalFileAccessException;
 import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.web.security.RequireSecurityToken;
 import net.sourceforge.pebble.web.view.ForbiddenView;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.ZipView;
@@ -51,6 +52,7 @@ import java.util.List;
  *
  * @author Simon Brown
  */
+@RequireSecurityToken
 public class ZipDirectoryAction extends AbstractFileAction {
 
   /**

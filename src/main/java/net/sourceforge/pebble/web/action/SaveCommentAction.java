@@ -44,6 +44,7 @@ import net.sourceforge.pebble.domain.BlogService;
 import net.sourceforge.pebble.domain.BlogServiceException;
 import net.sourceforge.pebble.domain.Comment;
 import net.sourceforge.pebble.util.I18n;
+import net.sourceforge.pebble.web.security.RequireSecurityToken;
 import net.sourceforge.pebble.web.validation.ValidationContext;
 import net.sourceforge.pebble.web.view.NotFoundView;
 import net.sourceforge.pebble.web.view.View;
@@ -59,6 +60,7 @@ import org.apache.commons.logging.LogFactory;
  *
  * @author    Simon Brown
  */
+@RequireSecurityToken
 public class SaveCommentAction extends AbstractCommentAction {
 
   /** the log used by this class */

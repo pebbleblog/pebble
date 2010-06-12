@@ -41,32 +41,44 @@ import net.sourceforge.pebble.web.action.ActionFactory;
 import net.sourceforge.pebble.web.action.ActionNotFoundException;
 import net.sourceforge.pebble.web.action.SecureAction;
 import net.sourceforge.pebble.web.model.Model;
+import net.sourceforge.pebble.web.security.RequireSecurityToken;
+import net.sourceforge.pebble.web.security.SecurityTokenValidator;
 import net.sourceforge.pebble.web.view.View;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
 import java.io.IOException;
+import java.security.SecureRandom;
 
 /**
  * An implementation of the front controller pattern, using the command
  * and controller strategy.
  *
- * @author    Simon Brown
+ * @author Simon Brown
  */
 public class HttpController extends HttpServlet {
 
-  /** the log used by this class */
+  /**
+   * the log used by this class
+   */
   private static Log log = LogFactory.getLog(HttpController.class);
 
-  /** a reference to the factory used to create Action instances */
+  /**
+   * a reference to the factory used to create Action instances
+   */
   private ActionFactory actionFactory;
 
-  /** the extension used to refer to actions */
+  /**
+   * the extension used to refer to actions
+   */
   private String actionExtension = ".action";
+
+  /**
+   * The security token validator
+   */
+  private SecurityTokenValidator securityTokenValidator;
 
   /**
    * Initialises this instance.
@@ -75,19 +87,20 @@ public class HttpController extends HttpServlet {
     String actions = getServletConfig().getInitParameter("actions");
     this.actionExtension = getServletConfig().getInitParameter("actionExtension");
     this.actionFactory = new ActionFactory(actions);
+    this.securityTokenValidator = new SecurityTokenValidator();
   }
 
   /**
    * Processes the request - this is delegated to from doGet and doPost.
    *
-   * @param request   the HttpServletRequest instance
-   * @param response   the HttpServletResponse instance
+   * @param request  the HttpServletRequest instance
+   * @param response the HttpServletResponse instance
    */
   protected void processRequest(HttpServletRequest request,
                                 HttpServletResponse response)
-      throws ServletException, IOException {
+          throws ServletException, IOException {
 
-    AbstractBlog blog = (AbstractBlog)request.getAttribute(Constants.BLOG_KEY);
+    AbstractBlog blog = (AbstractBlog) request.getAttribute(Constants.BLOG_KEY);
 
     // find which action should be used
     String actionName = request.getRequestURI();
@@ -112,38 +125,44 @@ public class HttpController extends HttpServlet {
     if (!authorised) {
       response.sendError(HttpServletResponse.SC_FORBIDDEN);
     } else {
-      try {
-        Model model = new Model();
-        model.put(Constants.BLOG_KEY, blog);
-        String calculatedBaseUrl = Utilities.calcBaseUrl(request.getScheme(), blog.getUrl());
-		model.put(Constants.BLOG_URL, blog.getUrl());
-        action.setModel(model);
-        View view = action.process(request, response);
-        if (view != null) {
+      boolean validated = securityTokenValidator.validateSecurityToken(request, response, action);
+      if (!validated) {
+        // Forward to no security url
+        request.getRequestDispatcher("/noSecurityToken.action").forward(request, response);
+      } else {
+        try {
+          Model model = new Model();
+          model.put(Constants.BLOG_KEY, blog);
+          String calculatedBaseUrl = Utilities.calcBaseUrl(request.getScheme(), blog.getUrl());
+          model.put(Constants.BLOG_URL, blog.getUrl());
+          action.setModel(model);
+          View view = action.process(request, response);
+          if (view != null) {
 
-          view.setModel(model);
-          view.setServletContext(this.getServletContext());
+            view.setModel(model);
+            view.setServletContext(this.getServletContext());
 
-          view.prepare();
+            view.prepare();
 
-          for (Object key : model.keySet()) {
-            request.setAttribute(key.toString(), model.get(key.toString()));
+            for (Object key : model.keySet()) {
+              request.setAttribute(key.toString(), model.get(key.toString()));
+            }
+
+            response.setContentType(view.getContentType());
+            view.dispatch(request, response, getServletContext());
+
           }
-
-          response.setContentType(view.getContentType());
-          view.dispatch(request, response, getServletContext());
-
+        } catch (Exception e) {
+          request.setAttribute("exception", e);
+          throw new ServletException(e);
         }
-      } catch (Exception e) {
-        request.setAttribute("exception", e);
-        throw new ServletException(e);
       }
     }
   }
 
   private boolean isAuthorised(HttpServletRequest request, Action action) {
     if (action instanceof SecureAction) {
-      SecureAction secureAction = (SecureAction)action;
+      SecureAction secureAction = (SecureAction) action;
       return isUserInRole(request, secureAction);
     } else {
       return true;
@@ -154,12 +173,12 @@ public class HttpController extends HttpServlet {
    * Determines whether the current user in one of the roles specified
    * by the secure action.
    *
-   * @param request   the HttpServletRequest
-   * @param action    the SecureAction to check against
-   * @return  true if the user is in one of the roles, false otherwise
+   * @param request the HttpServletRequest
+   * @param action  the SecureAction to check against
+   * @return true if the user is in one of the roles, false otherwise
    */
   private boolean isUserInRole(HttpServletRequest request, SecureAction action) {
-    AbstractBlog ab = (AbstractBlog)request.getAttribute(Constants.BLOG_KEY);
+    AbstractBlog ab = (AbstractBlog) request.getAttribute(Constants.BLOG_KEY);
     String currentUser = SecurityUtils.getUsername();
     String roles[] = action.getRoles(request);
     for (String role : roles) {
@@ -167,7 +186,7 @@ public class HttpController extends HttpServlet {
         return true;
       } else if (SecurityUtils.isUserInRole(role)) {
         if (ab instanceof Blog) {
-          Blog blog = (Blog)ab;
+          Blog blog = (Blog) ab;
           if (blog.isUserInRole(role, currentUser)) {
             return true;
           }
@@ -179,25 +198,26 @@ public class HttpController extends HttpServlet {
     return false;
   }
 
+
   /**
    * A default implementation of doGet that delegates to the processRequest method.
    *
-   * @param req   the HttpServletRequest instance
-   * @param res   the HttpServletResponse instance
+   * @param req the HttpServletRequest instance
+   * @param res the HttpServletResponse instance
    */
   protected void doGet(HttpServletRequest req, HttpServletResponse res)
-      throws ServletException, IOException {
+          throws ServletException, IOException {
     processRequest(req, res);
   }
 
   /**
    * A default implementation of doPost that delegates to the processRequest method.
    *
-   * @param req   the HttpServletRequest instance
-   * @param res   the HttpServletResponse instance
+   * @param req the HttpServletRequest instance
+   * @param res the HttpServletResponse instance
    */
   protected void doPost(HttpServletRequest req, HttpServletResponse res)
-      throws ServletException, IOException {
+          throws ServletException, IOException {
     processRequest(req, res);
   }
 

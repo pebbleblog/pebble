@@ -1,3 +1,4 @@
+<%@ taglib prefix="pebble" uri="http://pebble.sourceforge.net/pebble" %>
 <div class="contentItem">
 
   <div class="contentItemLinks">
@@ -15,6 +16,7 @@
     </p>
 
     <form name="staticPagesForm" method="post" action="removeStaticPages.secureaction">
+    <pebble:token/>
     </pebble:isBlogContributor>
 
     <table width="99%" cellspacing="0" cellpadding="4">

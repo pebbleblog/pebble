@@ -13,6 +13,7 @@
     </p>
 
     <form name="propertiesForm" action="savePebbleProperties.secureaction" method="POST" accept-charset="${blog.characterEncoding}">
+    <pebble:token/>
     <table>
       <tr>
         <td colspan="2">

@@ -9,6 +9,7 @@
 
   <div class="contentItemBody">
     <form name="trackBackForm" action="sendTrackBack.secureaction" method="post" accept-charset="${blog.characterEncoding}">
+    <pebble:token/>
     <input type="hidden" name="entry" value="${blogEntry.id}" />
     <table width="99%">
       <tr>

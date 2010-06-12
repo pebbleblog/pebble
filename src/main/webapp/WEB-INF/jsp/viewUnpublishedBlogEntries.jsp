@@ -9,6 +9,7 @@
 
   <div class="contentItemBody">
     <form name="unpublishedBlogEntriesForm" method="post" action="manageBlogEntries.secureaction">
+      <pebble:token/>
       <input type="hidden" name="redirectUrl" value="${blogUrl}viewUnpublishedBlogEntries.secureaction" />
     <table width="99%" cellspacing="0" cellpadding="4">
       <thead>

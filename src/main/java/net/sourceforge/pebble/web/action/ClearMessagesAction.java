@@ -1,5 +1,6 @@
 package net.sourceforge.pebble.web.action;
 
+import net.sourceforge.pebble.web.security.RequireSecurityToken;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.impl.MessagesView;
 import net.sourceforge.pebble.Constants;
@@ -14,6 +15,7 @@ import javax.servlet.ServletException;
  *
  * @author    Simon Brown
  */
+@RequireSecurityToken
 public class ClearMessagesAction extends SecureAction {
 
   /**

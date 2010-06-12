@@ -11,6 +11,7 @@
   <div class="contentItemBody">
 
     <form name="manageUsersForm" action="manageUsers.secureaction" method="post">
+    <pebble:token/>
     <table width="99%" cellspacing="0" cellpadding="4">
       <thead>
       <tr>

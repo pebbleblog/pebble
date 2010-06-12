@@ -5,6 +5,7 @@
 
   <div class="contentItemBody">
     <form action="${confirmationAction}" method="post" accept-charset="${blog.characterEncoding}">
+      <pebble:token/>
       
       <p>
         <fmt:message key="confirmation.imageCaptchaMessage" />

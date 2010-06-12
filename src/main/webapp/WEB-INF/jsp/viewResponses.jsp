@@ -28,6 +28,7 @@
     <br />
 
     <form name="manageResponsesForm" action="manageResponses.secureaction" method="post">
+    <pebble:token/>
     <input type="hidden" name="type" value="${param.type == 'pending' ? 'pending' : param.type == 'rejected' ? 'rejected' : ''}" />
     <input type="hidden" name="page" value="${page}" />
 

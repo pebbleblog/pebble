@@ -34,6 +34,7 @@ package net.sourceforge.pebble.web.action;
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.web.action.UploadFileAction;
 import net.sourceforge.pebble.domain.FileMetaData;
+import net.sourceforge.pebble.web.security.RequireSecurityToken;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -42,6 +43,7 @@ import javax.servlet.http.HttpServletRequest;
  *
  * @author    Simon Brown
  */
+@RequireSecurityToken
 public class UploadImageToBlogAction extends UploadFileAction {
 
   /**

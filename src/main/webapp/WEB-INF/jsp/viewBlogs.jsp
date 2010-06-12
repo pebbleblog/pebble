@@ -65,6 +65,7 @@
 
     <p>
     <form name="addBlog" action="addBlog.secureaction" method="POST">
+      <pebble:token/>
       <c:choose>
         <c:when test="${pebbleContext.configuration.virtualHostingEnabled == true}">
           ${blog.protocol}

@@ -34,19 +34,20 @@ package net.sourceforge.pebble.web.action;
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.domain.BlogServiceException;
+import net.sourceforge.pebble.web.security.RequireSecurityToken;
 import net.sourceforge.pebble.web.view.RedirectView;
 import net.sourceforge.pebble.web.view.View;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Enumeration;
 
 /**
  * Saves the security properties associated with the current Blog.
  *
  * @author    Simon Brown
  */
+@RequireSecurityToken
 public class SaveBlogSecurityAction extends SecureAction {
 
   /**

@@ -35,6 +35,8 @@ import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.domain.Category;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.util.Utilities;
+import net.sourceforge.pebble.web.security.RequireSecurityToken;
+import net.sourceforge.pebble.web.security.SecurityTokenValidatorCondition;
 import net.sourceforge.pebble.web.view.ForwardView;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.impl.UtilitiesView;
@@ -49,6 +51,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author    Simon Brown
  */
+@RequireSecurityToken(UtilitiesAction.UtilitiesCondition.class)
 public class UtilitiesAction extends SecureAction {
 
   /**
@@ -100,4 +103,10 @@ public class UtilitiesAction extends SecureAction {
     return new String[]{Constants.BLOG_ADMIN_ROLE, Constants.BLOG_OWNER_ROLE};
   }
 
+  public static class UtilitiesCondition implements SecurityTokenValidatorCondition {
+    public boolean shouldValidate(HttpServletRequest request) {
+      // Only validate if we have an action, so return true if the action is not null
+      return request.getParameter("action") != null;
+    }
+  }
 }

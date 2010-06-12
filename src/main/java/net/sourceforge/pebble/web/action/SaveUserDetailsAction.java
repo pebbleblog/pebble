@@ -38,6 +38,7 @@ import net.sourceforge.pebble.security.PebbleUserDetails;
 import net.sourceforge.pebble.security.SecurityRealm;
 import net.sourceforge.pebble.security.SecurityRealmException;
 import net.sourceforge.pebble.util.SecurityUtils;
+import net.sourceforge.pebble.web.security.RequireSecurityToken;
 import net.sourceforge.pebble.web.validation.ValidationContext;
 import net.sourceforge.pebble.web.view.ForwardView;
 import net.sourceforge.pebble.web.view.RedirectView;
@@ -55,6 +56,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author    Simon Brown
  */
+@RequireSecurityToken
 public class SaveUserDetailsAction extends SecureAction {
 
   /** the log used by this class */

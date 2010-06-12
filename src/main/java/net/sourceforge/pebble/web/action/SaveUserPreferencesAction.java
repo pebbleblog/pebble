@@ -31,6 +31,7 @@
  */
 package net.sourceforge.pebble.web.action;
 
+import net.sourceforge.pebble.web.security.RequireSecurityToken;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import net.sourceforge.pebble.web.view.View;
@@ -58,6 +59,7 @@ import java.util.Enumeration;
  *
  * @author    Simon Brown
  */
+@RequireSecurityToken
 public class SaveUserPreferencesAction extends SecureAction {
 
   /** the log used by this class */

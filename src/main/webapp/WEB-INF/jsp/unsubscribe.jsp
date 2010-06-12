@@ -4,6 +4,7 @@
 
   <div class="contentItemBody">
     <form action="unsubscribe.action" method="post">
+      <pebble:token/>
       <fmt:message key="comment.emailAddress" />
       <input type="text" name="email" size="40" />
       <input type="submit" value="Unsubscribe" />
