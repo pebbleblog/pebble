@@ -1,0 +1,79 @@
+================================
+A quick howto for certain topics
+================================
+
+Building:
+=========
+
+To create the pebble war, run
+mvn package
+
+This will run all unit tests as well. To just run the unit tests, run
+mvn test
+
+Editing the website:
+====================
+
+The website is stored in src/site.  Most of the website is written in APT a lightweight wiki style markup language.
+Documentation on APT can be found at http://maven.apache.org/doxia/references/apt-format.html. Some files are written in
+XHTML, where APT has not been sufficient.  Static resources can be found in the src/site/resources directory.  The
+src/site.xml is the site descriptor, containing menus and the like, and the src/pebble-site.vm is the template that's
+run to generate all the decorations, menus etc for the pages.  Do not edit this template unless you really know what you
+are doing.
+
+Use "mvn site:run" when editing the website.  This will start an embedded Jetty server that will render pages as they are
+requested, so is very convenient.  To build the website, "mvn site", and to deploy the website use "mvn site-deploy".
+Before deploying the website you need to have a few things set up, see below.
+
+Deploying to SourceForge:
+=========================
+
+In order to deploy to sourceforge, a few things need to be set up.  Firstly, your ~/.m2/settings.xml needs to have the
+sourceforge site set up, and also the username and password put in separate variables.  The reason your
+username/password is needed twice is that the maven site deploy plugin will happily deploy the maven site to sourceforge
+the way we want it, but the maven deploy plugin when we point it at sourceforge FRS tries to turn FRS into a maven
+repository, which we don't want, consequently we upload artifacts using the maven ant plugin, which requires that we
+pass usernames/passwords to it in properties.  Here is what should be in your settings.xml at a minimum:
+
+<settings>
+    <servers>
+        <server>
+            <id>pebble.sf.net</id>
+            <username>YOURUSERNAME,pebble</username>
+            <password>YOURPASSWORD</password>
+            <directoryPermissions>775</directoryPermissions>
+            <filePermissions>664</filePermissions>
+        </server>
+    </servers>
+    <profiles>
+        <profile>
+            <id>pebble</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <pebble.sf.net.username>YOURUSERANME,pebble</pebble.sf.net.username>
+                <pebble.sf.net.password>YOURPASSWORD</pebble.sf.net.password>
+            </properties>
+        </profile>
+    </profiles>
+</settings>
+
+In addition to this, *everytime* before doing a deploy to sourceforge, you need to create a shell at sourceforge.  This
+has to be done everytime because the way sourceforge shells work is you create it, and it is automatically destroyed
+after 4 hours.  To do this, run:
+
+ssh -t YOURUSERNAME,pebble@shell.sourceforge.net create
+
+Releasing Pebble
+================
+
+To release pebble, simply run:
+
+mvn release:prepare release:perform
+
+This will prompt you for the release version number, the tag name, and the next development version (eg, if I release
+2.5 the next development version might be 2.6-SNAPSHOT).  It will then update the version in the pom.xml, and do a dry
+run of the build (running mvn clean verify).  If that's successful, it will commit to SVN, tag the repository, update
+the version to the development snapshot, and commit again.  It will then check out pebble from the tag in a working
+directory, and do a full build, including the website, and deploy them both to sourceforge.

@@ -385,8 +385,82 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <artifactId>maven-release-plugin</artifactId>
+                <configuration>
+                    <goals>install site-deploy</goals>
+                    <releaseProfiles>release</releaseProfiles>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
+    <profiles>
+        <profile>
+            <id>release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.apache.ant</groupId>
+                                <artifactId>ant-jsch</artifactId>
+                                <version>1.7.1</version>
+                            </dependency>
+                            <dependency>
+                                <groupId>jsch</groupId>
+                                <artifactId>jsch</artifactId>
+                                <version>0.1.25</version>
+                            </dependency>
+                        </dependencies>
+                        <executions>
+                            <execution>
+                                <phase>site-deploy</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <tasks>
+                                        <echo>Setting up directory...</echo>
+                                        <sshexec host="shell.sourceforge.net" username="${pebble.sf.net.username}"
+                                            password="${pebble.sf.net.password}" trust="true"
+                                            command="mkdir -p /home/frs/project/p/pe/pebble/pebble/${project.version}"/>
+                                        <echo>Uploading pebble zip to sourceforge...</echo>
+                                        <scp
+                                            todir="${pebble.sf.net.username}@frs.sourceforge.net:/home/frs/project/p/pe/pebble/pebble/${project.version}/"
+                                            password="${pebble.sf.net.password}" trust="true" sftp="true"
+                                            file="target/pebble-${project.version}.zip"/>
+                                        <echo>Updating permissions...</echo>
+                                        <sshexec host="shell.sourceforge.net" username="${pebble.sf.net.username}"
+                                            password="${pebble.sf.net.password}" trust="true"
+                                            command="chmod -R g+w /home/frs/project/p/pe/pebble/pebble/${project.version}"/>
+                                    </tasks>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-assembly-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <phase>post-site</phase>
+                                <goals>
+                                    <goal>single</goal>
+                                </goals>
+                                <configuration>
+                                    <appendAssemblyId>false</appendAssemblyId>
+                                    <attach>false</attach>
+                                    <descriptors>
+                                        <descriptor>src/assemble/distribution.xml</descriptor>
+                                    </descriptors>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
     <reporting>
         <plugins>
             <plugin>
@@ -412,9 +486,9 @@
     </distributionManagement>
 
     <scm>
-        <connection>scm:svn:https://open.jira.com/svn/PEBBLE/trunk</connection>
-        <developerConnection>scm:svn:https://open.jira.com/svn/PEBBLE/trunk</developerConnection>
-        <url>http://open.jira.com/source/browse/PEBBLE/trunk</url>
+        <connection>scm:svn:https://open.jira.com/svn/PEBBLE/branches/mavenised</connection>
+        <developerConnection>scm:svn:https://open.jira.com/svn/PEBBLE/branches/mavenised</developerConnection>
+        <url>http://open.jira.com/source/browse/PEBBLE/branches/mavenised</url>
     </scm>
 
     <issueManagement>
