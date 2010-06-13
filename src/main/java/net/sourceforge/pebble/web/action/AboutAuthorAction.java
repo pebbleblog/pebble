@@ -75,7 +75,7 @@ public class AboutAuthorAction extends Action {
         return new AboutAuthorView();
       }
     } catch (SecurityRealmException e) {
-      log.error(e);
+      log.error("Exception encountered", e);
     }
 
     return new NotFoundView();

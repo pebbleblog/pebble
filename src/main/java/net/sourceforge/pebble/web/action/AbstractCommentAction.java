@@ -111,7 +111,7 @@ public abstract class AbstractCommentAction extends Action {
           }
         }
       } catch (UnsupportedEncodingException e) {
-        log.error(e);
+        log.error("Exception encountered", e);
       }
     }
 
@@ -172,7 +172,7 @@ public abstract class AbstractCommentAction extends Action {
       try {
         return URLEncoder.encode(s, characterEncoding);
       } catch (UnsupportedEncodingException e) {
-        log.error(e);
+        log.error("Exception encountered", e);
         return "";
       }
     }

@@ -80,7 +80,7 @@ public final class SecurityUtils {
       SecurityRealm realm = PebbleContext.getInstance().getConfiguration().getSecurityRealm();
       return realm.getUser(getUsername());
     } catch (SecurityRealmException e) {
-      log.error(e);
+      log.error("Exception encountered", e);
       return null;
     }
   }

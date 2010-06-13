@@ -171,7 +171,7 @@ public class BlogManager {
         reader.close();
       }
     } catch (Exception e) {
-      log.error(e);
+      log.error("Exception encountered", e);
     }
 
     try {
@@ -186,7 +186,7 @@ public class BlogManager {
         reloadBlog(blog);
       }
     } catch (Exception e) {
-      log.error(e);
+      log.error("Exception encountered", e);
     }
   }
 

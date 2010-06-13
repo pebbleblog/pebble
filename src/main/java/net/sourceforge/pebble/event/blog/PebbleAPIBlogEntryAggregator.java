@@ -176,7 +176,7 @@ public abstract class PebbleAPIBlogEntryAggregator extends TimerTask implements 
         service.putBlogEntry(blogEntry);
       }
     } catch (Exception e) {
-      log.error(e);
+      log.error("Exception encountered", e);
     }
   }
 

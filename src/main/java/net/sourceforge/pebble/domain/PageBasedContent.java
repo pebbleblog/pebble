@@ -217,7 +217,7 @@ public abstract class PageBasedContent extends Content {
       try {
         this.user = realm.getUser(getAuthor());
       } catch (SecurityRealmException e) {
-        log.error(e);
+        log.error("Exception encountered", e);
       }
     }
 

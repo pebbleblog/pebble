@@ -76,7 +76,7 @@ public class ImageCaptchaConfirmationStrategy extends AbstractConfirmationStrate
     try {
       return CaptchaService.getInstance().validateResponseForID(captchaId, response);
     } catch (CaptchaServiceException e) {
-      ImageCaptchaConfirmationStrategy.log.error(e);
+      ImageCaptchaConfirmationStrategy.log.error("Exception encountered", e);
     }
 
     return false;

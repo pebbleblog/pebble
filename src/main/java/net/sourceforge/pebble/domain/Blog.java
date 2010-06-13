@@ -926,7 +926,7 @@ public class Blog extends AbstractBlog {
         try {
           blogEntries.addAll(service.getBlogEntries(this, y.getYear(), months[month].getMonth()));
         } catch (BlogServiceException e) {
-          log.error(e);
+          log.error("Exception encountered", e);
         }
       }
     }
@@ -948,7 +948,7 @@ public class Blog extends AbstractBlog {
       try {
         blogEntries.add(service.getBlogEntry(this, blogEntryId));
       } catch (BlogServiceException e) {
-        log.error(e);
+        log.error("Exception encountered", e);
       }
     }
 
@@ -1007,7 +1007,7 @@ public class Blog extends AbstractBlog {
         BlogEntry blogEntry = service.getBlogEntry(this, blogEntryId);
         blogEntries.add(blogEntry);
       } catch (BlogServiceException e) {
-        log.error(e);
+        log.error("Exception encountered", e);
       }
 
       if (blogEntries.size() == numberOfEntries) {
@@ -1050,7 +1050,7 @@ public class Blog extends AbstractBlog {
           blogEntries.add(blogEntry);
         }
       } catch (BlogServiceException e) {
-        log.error(e);
+        log.error("Exception encountered", e);
       }
     }
 
@@ -1073,7 +1073,7 @@ public class Blog extends AbstractBlog {
           blogEntries.add(blogEntry);
         }
       } catch (BlogServiceException e) {
-        log.error(e);
+        log.error("Exception encountered", e);
       }
     }
 
@@ -1098,7 +1098,7 @@ public class Blog extends AbstractBlog {
           blogEntries.add(blogEntry);
         }
       } catch (BlogServiceException e) {
-        log.error(e);
+        log.error("Exception encountered", e);
       }
 
       if (blogEntries.size() == getRecentBlogEntriesOnHomePage()) {
@@ -1127,7 +1127,7 @@ public class Blog extends AbstractBlog {
           blogEntries.add(blogEntry);
         }
       } catch (BlogServiceException e) {
-        log.error(e);
+        log.error("Exception encountered", e);
       }
 
       if (blogEntries.size() == getRecentBlogEntriesOnHomePage()) {
@@ -1156,7 +1156,7 @@ public class Blog extends AbstractBlog {
           blogEntries.add(blogEntry);
         }
       } catch (BlogServiceException e) {
-        log.error(e);
+        log.error("Exception encountered", e);
       }
 
       if (blogEntries.size() == getRecentBlogEntriesOnHomePage()) {
@@ -1183,7 +1183,7 @@ public class Blog extends AbstractBlog {
           responses.add(response);
         }
       } catch (BlogServiceException e) {
-        log.error(e);
+        log.error("Exception encountered", e);
       }
 
       if (responses.size() == getRecentResponsesOnHomePage()) {

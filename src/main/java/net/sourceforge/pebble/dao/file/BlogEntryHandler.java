@@ -345,15 +345,15 @@ public class BlogEntryHandler extends DefaultHandler {
   }
 
   public void warning(SAXParseException e) throws SAXException {
-    log.warn(e);
+    log.warn("Exception encountered", e);
   }
 
   public void error(SAXParseException e) throws SAXException {
-    log.error(e);
+    log.error("Exception encountered", e);
   }
 
   public void fatalError(SAXParseException e) throws SAXException {
-    log.fatal(e);
+    log.fatal("Exception encountered", e);
   }
 
   private Date getDate(String s) {

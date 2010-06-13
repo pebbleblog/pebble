@@ -77,7 +77,7 @@ public class ErrorAction extends Action {
         log.error(" " + name + " = " + request.getParameter(name));
       }
 
-      log.error(e);
+      log.error("Exception encountered", e);
 
       getModel().put("stackTrace", ExceptionUtils.getStackTraceAsString(e));
     }

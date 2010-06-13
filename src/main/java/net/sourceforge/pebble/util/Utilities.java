@@ -182,7 +182,7 @@ public class Utilities {
         dao.addCategory(category, blog);
       }
     } catch (Exception e) {
-      log.error(e);
+      log.error("Exception encountered", e);
     }
   }
 
