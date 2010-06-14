@@ -78,7 +78,7 @@ public class PebbleContext {
     try {
       Properties buildProperties = new Properties();
       InputStream in = getClass().getClassLoader().getResourceAsStream(
-              "/META-INF/maven/org.sourceforge.pebble/pebble/pom.properties");
+              "META-INF/maven/org.sourceforge.pebble/pebble/pom.properties");
       if (in != null) {
         buildProperties.load(in);
         this.buildVersion = buildProperties.getProperty("version");

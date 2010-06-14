@@ -70,7 +70,7 @@ public class PluginLocator {
     if (availablePlugins == null) {
       Map<String, List<Plugin>> plugins = new HashMap<String, List<Plugin>>();
       try {
-        Enumeration<URL> resources = Thread.currentThread().getContextClassLoader().getResources("/pebble-plugins.xml");
+        Enumeration<URL> resources = PluginLocator.class.getClassLoader().getResources("pebble-plugins.xml");
         while (resources.hasMoreElements()) {
           installPlugins(plugins, resources.nextElement());
         }
@@ -101,6 +101,10 @@ public class PluginLocator {
   }
 
   private static List<Plugin> sortPlugins(List<Plugin> plugins, final List<String> installedPlugins) {
+    if (plugins == null)
+    {
+      return null;
+    }
     Collections.sort(plugins, new Comparator<Plugin>() {
       public int compare(Plugin plugin1, Plugin plugin2) {
         // This comparator ensures installed plugins are at the top, in the order specified by the user,
@@ -133,7 +137,7 @@ public class PluginLocator {
   static void installPlugins(Map<String, List<Plugin>> plugins, URL resource) {
     SAXBuilder saxBuilder = new SAXBuilder();
     try {
-      Document document = saxBuilder.build(resource);
+      Document document = saxBuilder.build(resource.openStream());
       Element root = document.getRootElement();
       for (Element element : (Iterable<Element>) root.getChildren())
       {
