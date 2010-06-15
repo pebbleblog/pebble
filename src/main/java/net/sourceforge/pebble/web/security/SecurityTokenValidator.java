@@ -122,25 +122,21 @@ public class SecurityTokenValidator {
       // We've already configured it for this request
       return token;
     }
-    String contextPath = request.getContextPath();
     Cookie[] cookies = request.getCookies();
     if (cookies != null) {
       for (Cookie cookie : cookies) {
         if (PEBBLE_SECURITY_TOKEN_PARAMETER.equals(cookie.getName())) {
-          if (contextPath != null && contextPath.length() > 0) {
-            if (contextPath.equals(cookie.getPath())) {
-              token = cookie.getValue();
-              break;
-            }
-          } else {
-            token = cookie.getValue();
-            break;
-          }
+          token = cookie.getValue();
         }
       }
     }
     // No cookie, generate a token at least 12 characters long
     if (token == null) {
+      String contextPath = request.getContextPath();
+      // Ensure context path is not empty
+      if (contextPath == null || contextPath.length() == 0) {
+        contextPath = "/";
+      }
       token = "";
       while (token.length() < 12) {
         token += Long.toHexString(random.nextLong());
