@@ -11,7 +11,7 @@ import java.io.IOException;
 
 /**
  * Provides support for Facebook OpenID operations
- * 
+ *
  * @author James Roper
  */
 public class FacebookOpenIdSupportDecorator implements PageDecorator {
