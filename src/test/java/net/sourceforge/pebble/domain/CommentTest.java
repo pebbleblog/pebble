@@ -51,7 +51,7 @@ public class CommentTest extends SingleBlogTestCase {
     super.setUp();
 
     blogEntry = new BlogEntry(blog);
-    comment = blogEntry.createComment("Title", "Body", "Author", "me@somedomain.com", "http://www.google.com", "127.0.0.1");
+    comment = blogEntry.createComment("Title", "Body", "Author", "me@somedomain.com", "http://www.google.com", "http://graph.facebook.com/user/picture", "127.0.0.1");
     comment.setEventsEnabled(true);
   }
 
@@ -65,6 +65,7 @@ public class CommentTest extends SingleBlogTestCase {
     assertEquals("Author", comment.getAuthor());
     assertEquals("me@somedomain.com", comment.getEmail());
     assertEquals("http://www.google.com", comment.getWebsite());
+    assertEquals("http://graph.facebook.com/user/picture", comment.getAvatar());
     assertEquals("127.0.0.1", comment.getIpAddress());
     assertNotNull(comment.getDate());
     assertEquals(comment.getDate().getTime(), comment.getId());
@@ -138,6 +139,37 @@ public class CommentTest extends SingleBlogTestCase {
     assertEquals("http://www.google.com", comment.getWebsite());
   }
 
+
+  /**
+   * Tests that the avatar is properly escaped and set.
+   */
+  public void testAvatar() {
+    assertEquals("http://graph.facebook.com/user/picture", comment.getAvatar());
+
+    // blank or null avatar name defaults to null
+    comment.setAvatar("");
+    assertEquals(null, comment.getAvatar());
+    comment.setAvatar(null);
+    assertEquals(null, comment.getAvatar());
+
+    // for security, special HTML characters are removed
+    comment.setAvatar("<script>http://graph.facebook.com/user/picture");
+    assertEquals("http://graph.facebook.com/user/picture", comment.getAvatar());
+
+    // anything avatar are also checked for known prefixes and "http://"
+    // is prepended if missing
+    comment.setAvatar("http://graph.facebook.com/user/picture");
+    assertEquals("http://graph.facebook.com/user/picture", comment.getAvatar());
+    comment.setAvatar("https://graph.facebook.com/user/picture");
+    assertEquals("https://graph.facebook.com/user/picture", comment.getAvatar());
+    comment.setAvatar("ftp://graph.facebook.com/user/picture");
+    assertEquals("ftp://graph.facebook.com/user/picture", comment.getAvatar());
+    comment.setAvatar("mailto://graph.facebook.com/user/picture");
+    assertEquals("mailto://graph.facebook.com/user/picture", comment.getAvatar());
+    comment.setAvatar("graph.facebook.com/user/picture");
+    assertEquals("http://graph.facebook.com/user/picture", comment.getAvatar());
+  }
+
   /**
    * Tests the body.
    */
@@ -170,9 +202,9 @@ public class CommentTest extends SingleBlogTestCase {
   public void testTitleTakenFromOwningBlogEntryWhenNotSpecified() {
     BlogEntry entry = new BlogEntry(blog);
     entry.setTitle("My blog entry title");
-    comment = entry.createComment(null, "", "", "", "", "");
+    comment = entry.createComment(null, "", "", "", "", "", "");
     assertEquals("Re: My blog entry title", comment.getTitle());
-    comment = entry.createComment("", "", "", "", "", "");
+    comment = entry.createComment("", "", "", "", "", "", "");
     assertEquals("Re: My blog entry title", comment.getTitle());
   }
 
@@ -187,7 +219,7 @@ public class CommentTest extends SingleBlogTestCase {
    * Tests that the number of parents is correct when comments are nested.
    */
   public void testNumberOfParentsIsCorrectWhenNested() {
-    comment.setParent(new BlogEntry(blog).createComment("", "", "", "", "", ""));
+    comment.setParent(new BlogEntry(blog).createComment("", "", "", "", "", "", ""));
     assertEquals(1, comment.getNumberOfParents());
   }
 
@@ -250,6 +282,7 @@ public class CommentTest extends SingleBlogTestCase {
     assertEquals(comment.getTitle(), clonedComment.getTitle());
     assertEquals(comment.getBody(), clonedComment.getBody());
     assertEquals(comment.getWebsite(), clonedComment.getWebsite());
+    assertEquals(comment.getAvatar(), clonedComment.getAvatar());
     assertEquals(comment.getAuthor(), clonedComment.getAuthor());
     assertEquals(comment.getIpAddress(), clonedComment.getIpAddress());
     assertEquals(comment.getDate(), clonedComment.getDate());
@@ -267,7 +300,7 @@ public class CommentTest extends SingleBlogTestCase {
 
     Calendar cal = blog.getCalendar();
     cal.set(Calendar.YEAR, cal.get(Calendar.YEAR)-1);
-    Comment comment2 = new BlogEntry(blog).createComment("Title", "Body", "Author", "me@somedomain.com", "http://www.google.com", "127.0.0.1", cal.getTime(), State.APPROVED);
+    Comment comment2 = new BlogEntry(blog).createComment("Title", "Body", "Author", "me@somedomain.com", "http://www.google.com", "http://graph.facebook.com/user/picture", "127.0.0.1", cal.getTime(), State.APPROVED);
     assertFalse(comment.equals(comment2));
 
   }
@@ -406,8 +439,8 @@ public class CommentTest extends SingleBlogTestCase {
 
   public void testNestedCommentsAreUnindexedWhenParentDeleted() throws Exception {
     BlogService service = new BlogService();
-    Comment comment2 = blogEntry.createComment("Title", "Body", "Author", "me@somedomain.com", "http://www.google.com", "127.0.0.1");
-    Comment comment3 = blogEntry.createComment("Title", "Body", "Author", "me@somedomain.com", "http://www.google.com", "127.0.0.1");
+    Comment comment2 = blogEntry.createComment("Title", "Body", "Author", "me@somedomain.com", "http://www.google.com", "http://graph.facebook.com/user/picture", "127.0.0.1");
+    Comment comment3 = blogEntry.createComment("Title", "Body", "Author", "me@somedomain.com", "http://www.google.com", "http://graph.facebook.com/user/picture", "127.0.0.1");
 
     service.putBlogEntry(blogEntry);
     blogEntry.addComment(comment);

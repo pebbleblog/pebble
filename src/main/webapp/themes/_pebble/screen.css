@@ -406,3 +406,9 @@ th, th a:link, th a:visited {
 }
 .unauthenticated {
 }
+.avatar {
+  float: left;
+  max-height: 50px;
+  max-width: 50px;
+  margin-right: 10px;
+}

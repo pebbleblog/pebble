@@ -42,6 +42,7 @@ public class BlogEntryHandler extends DefaultHandler {
   private static final int SUBTITLE = 20;
   private static final int TIME_ZONE = 21;
   private static final int AUTHENTICATED = 22;
+  private static final int AVATAR = 23;
 
   private static final int IN_BLOG_ENTRY = 100;
   private static final int IN_COMMENT = 101;
@@ -63,6 +64,7 @@ public class BlogEntryHandler extends DefaultHandler {
   private String commentBody;
   private String commentAuthor;
   private String commentWebsite;
+  private String commentAvatar;
   private String commentIpAddress;
   private String commentEmail;
   private Date commentDate;
@@ -143,6 +145,8 @@ public class BlogEntryHandler extends DefaultHandler {
       elementStatus = EMAIL;
     } else if (name.equals("website")) {
       elementStatus = WEBSITE;
+    } else if (name.equals("avatar")) {
+      elementStatus = AVATAR;
     } else if (name.equals("ipAddress")) {
       elementStatus = IP_ADDRESS;
     } else if (name.equals("authenticated")) {
@@ -245,7 +249,7 @@ public class BlogEntryHandler extends DefaultHandler {
           break;
       }
     } else if (groupStatus == IN_COMMENT && name.equals("comment")) {
-      Comment comment = blogEntry.createComment(commentTitle, commentBody, commentAuthor, commentEmail, commentWebsite, commentIpAddress, commentDate, commentState);
+      Comment comment = blogEntry.createComment(commentTitle, commentBody, commentAuthor, commentEmail, commentWebsite, commentAvatar, commentIpAddress, commentDate, commentState);
       if (commentParent != -1) {
         comment.setParent(blogEntry.getComment(commentParent));
       }
@@ -258,6 +262,7 @@ public class BlogEntryHandler extends DefaultHandler {
       commentBody = null;
       commentAuthor = null;
       commentWebsite = null;
+      commentAvatar = null;
       commentIpAddress = null;
       commentEmail = null;
       commentDate = null;
@@ -283,6 +288,9 @@ public class BlogEntryHandler extends DefaultHandler {
           break;
         case WEBSITE :
           commentWebsite = elementContent.toString();
+          break;
+        case AVATAR :
+          commentAvatar = elementContent.toString();
           break;
         case IP_ADDRESS :
           commentIpAddress = elementContent.toString();

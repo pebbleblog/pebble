@@ -36,7 +36,7 @@ public class BlogServiceTest extends SingleBlogTestCase {
    */
   public void testListenersFiredWhenCommentAdded() throws Exception {
     final StringBuffer buf = new StringBuffer("123");
-    final Comment comment = blogEntry.createComment("title", "body", "author", "email", "website", "127.0.0.1");
+    final Comment comment = blogEntry.createComment("title", "body", "author", "email", "website", "avatar", "127.0.0.1");
 
     CommentListener listener = new CommentListener() {
       public void commentAdded(CommentEvent event) {
@@ -69,7 +69,7 @@ public class BlogServiceTest extends SingleBlogTestCase {
    */
   public void testListenersFiredWhenCommentRemoved() throws Exception {
     final StringBuffer buf = new StringBuffer("123");
-    final Comment comment = blogEntry.createComment("title", "body", "author", "email", "website", "127.0.0.1");
+    final Comment comment = blogEntry.createComment("title", "body", "author", "email", "website", "avatar", "127.0.0.1");
     blogEntry.addComment(comment);
     service.putBlogEntry(blogEntry);
 
@@ -103,7 +103,7 @@ public class BlogServiceTest extends SingleBlogTestCase {
    */
   public void testListenersFiredWhenCommentApproved() throws Exception {
     final StringBuffer buf = new StringBuffer("123");
-    final Comment comment = blogEntry.createComment("title", "body", "author", "email", "website", "127.0.0.1");
+    final Comment comment = blogEntry.createComment("title", "body", "author", "email", "website", "avatar", "127.0.0.1");
 
     blogEntry.addComment(comment);
     comment.setPending();
@@ -139,7 +139,7 @@ public class BlogServiceTest extends SingleBlogTestCase {
    */
   public void testListenersFiredWhenCommentRejected() throws Exception {
     final StringBuffer buf = new StringBuffer("123");
-    final Comment comment = blogEntry.createComment("title", "body", "author", "email", "website", "127.0.0.1");
+    final Comment comment = blogEntry.createComment("title", "body", "author", "email", "website", "avatar", "127.0.0.1");
     blogEntry.addComment(comment);
     comment.setPending();
     service.putBlogEntry(blogEntry);
@@ -417,9 +417,9 @@ public class BlogServiceTest extends SingleBlogTestCase {
    * Tests that comment listeners are fired when a blog entry is removed.
    */
   public void testListenersFiredForCommentsWhenBlogEntryRemoved() throws Exception {
-    final Comment comment1 = blogEntry.createComment("title", "body", "author", "email", "website", "127.0.0.1");
-    final Comment comment2 = blogEntry.createComment("title", "body", "author", "email", "website", "127.0.0.1");
-    final Comment comment3 = blogEntry.createComment("title", "body", "author", "email", "website", "127.0.0.1");
+    final Comment comment1 = blogEntry.createComment("title", "body", "author", "email", "website", "avatar", "127.0.0.1");
+    final Comment comment2 = blogEntry.createComment("title", "body", "author", "email", "website", "avatar", "127.0.0.1");
+    final Comment comment3 = blogEntry.createComment("title", "body", "author", "email", "website", "avatar", "127.0.0.1");
 
     blogEntry.addComment(comment1);
     blogEntry.addComment(comment2);

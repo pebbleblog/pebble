@@ -36,11 +36,12 @@ public abstract class AbstractCommentAction extends Action {
     String author = StringUtils.transformHTML(request.getParameter("author"));
     String email = request.getParameter("email");
     String website = request.getParameter("website");
+    String avatar = request.getParameter("avatar");
     String ipAddress = request.getRemoteAddr();
     String title = StringUtils.transformHTML(request.getParameter("title"));
     String body = request.getParameter("commentBody");
 
-    Comment comment = blogEntry.createComment(title, body, author, email, website, ipAddress);
+    Comment comment = blogEntry.createComment(title, body, author, email, website, avatar, ipAddress);
 
     // if the user is authenticated, overwrite the author information
     if (SecurityUtils.isUserAuthenticated()) {
@@ -71,7 +72,7 @@ public abstract class AbstractCommentAction extends Action {
   }
 
   protected Comment createBlankComment(Blog blog, BlogEntry blogEntry, HttpServletRequest request) {
-    Comment comment = blogEntry.createComment("", "", "", "", "", request.getRemoteAddr());
+    Comment comment = blogEntry.createComment("", "", "", "", "", "", request.getRemoteAddr());
 
     // populate the author, email and website from one of :
     // - the logged in user details

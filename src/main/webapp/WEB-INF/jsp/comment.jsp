@@ -13,6 +13,10 @@
   </c:otherwise>
 </c:choose>
 
+  <c:if test="${ not empty comment.avatar}">
+    <img class="avatar" src="${comment.avatar}">
+  </c:if>
+
   <%@ include file="/WEB-INF/fragments/commentLinks.jspf" %>
 
   <h1>

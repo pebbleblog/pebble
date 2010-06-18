@@ -301,6 +301,7 @@ public class FileBlogEntryDAO implements BlogEntryDAO {
     Element authorNode = doc.createElement("author");
     Element emailNode = doc.createElement("email");
     Element websiteNode = doc.createElement("website");
+    Element avatarNode = doc.createElement("avatar");
     Element ipAddressNode = doc.createElement("ipAddress");
     Element dateNode = doc.createElement("date");
     Element parentNode = doc.createElement("parent");
@@ -312,6 +313,7 @@ public class FileBlogEntryDAO implements BlogEntryDAO {
     commentNode.appendChild(authorNode);
     commentNode.appendChild(emailNode);
     commentNode.appendChild(websiteNode);
+    commentNode.appendChild(avatarNode);
     commentNode.appendChild(ipAddressNode);
     commentNode.appendChild(dateNode);
     commentNode.appendChild(stateNode);
@@ -322,6 +324,7 @@ public class FileBlogEntryDAO implements BlogEntryDAO {
     authorNode.appendChild(createTextNode(doc, comment.getAuthor()));
     emailNode.appendChild(createTextNode(doc, comment.getEmail()));
     websiteNode.appendChild(createTextNode(doc, comment.getWebsite()));
+    avatarNode.appendChild(createTextNode(doc, comment.getAvatar()));
     ipAddressNode.appendChild(createTextNode(doc, comment.getIpAddress()));
     SimpleDateFormat sdf = new SimpleDateFormat(NEW_PERSISTENT_DATETIME_FORMAT, Locale.ENGLISH);
     sdf.setTimeZone(GMT);

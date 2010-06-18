@@ -108,6 +108,21 @@
 
   <tag>
     <description>
+      Renders a renderable plugin
+    </description>
+    <name>pluginrenderer</name>
+    <tag-class>net.sourceforge.pebble.web.tagext.PluginRendererTag</tag-class>
+    <body-content>empty</body-content>
+
+    <attribute>
+      <name>plugin</name>
+      <required>true</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <description>
       Includes the body content only if the current user is a blog admin user.
     </description>
     <name>isBlogAdmin</name>

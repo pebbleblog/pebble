@@ -20,6 +20,12 @@
       <plugins:single name="permalinkProviderName" plugins="${availablePlugins.permalinkProviders}"
                      enabled="${blog.permalinkProviderName}" properties="${pluginProperties}"/>
 
+      <a name="pageDecorators"></a>
+      Page Decorators
+      <br />
+      <plugins:multiple name="pageDecorators" plugins="${availablePlugins.pageDecorators}" orderable="${true}"
+                       enabled="${blog.pageDecoratorNames}" properties="${pluginProperties}"/>
+
       <a name="contentDecorators"></a>
       Content Decorators (<span class="help"><a href="./help/contentDecorators.html" target="_blank">Help</a></span>)
       <br />
@@ -49,6 +55,12 @@
       <br />
       <plugins:single name="commentConfirmationStrategy" plugins="${availablePlugins.commentConfirmationStrategies}"
                          enabled="${blog.commentConfirmationStrategyName}" properties="${pluginProperties}"/>
+
+      <a name="openIdCommentAuthorProviders"></a>
+      Page Decorators
+      <br />
+      <plugins:multiple name="openIdCommentAuthorProviders" plugins="${availablePlugins.openIdCommentAuthorProviders}" orderable="${true}"
+                       enabled="${blog.openIdCommentAuthorProviderNames}" properties="${pluginProperties}"/>
 
       <a name="trackbackListeners"></a>
       TrackBack Listeners (<span class="help"><a href="./help/trackbackListeners.html" target="_blank">Help</a></span>)

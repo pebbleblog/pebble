@@ -83,7 +83,7 @@ public class ViewResponsesActionTest extends SecureActionTestCase {
     blogEntry = service.getBlogEntry(blog, blogEntry.getId());
 
     for (int i = 0; i < numberOfComments; i++) {
-      Comment comment = blogEntry.createComment("title", "body"+i, "author", "email", "website", "127.0.0.1");
+      Comment comment = blogEntry.createComment("title", "body"+i, "author", "email", "website", "avatar", "127.0.0.1");
       blogEntry.addComment(comment);
     }
     service.putBlogEntry(blogEntry);

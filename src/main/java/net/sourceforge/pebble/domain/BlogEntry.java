@@ -524,8 +524,8 @@ public class BlogEntry extends PageBasedContent {
    * @param state     the state of the comment
    * @return a new Comment instance with the specified properties
    */
-  public Comment createComment(String title, String body, String author, String email, String website, String ipAddress, Date date, State state) {
-    return new Comment(title, body, author, email, website, ipAddress, date, state, this);
+  public Comment createComment(String title, String body, String author, String email, String website, String avatar, String ipAddress, Date date, State state) {
+    return new Comment(title, body, author, email, website, avatar, ipAddress, date, state, this);
   }
 
   /**
@@ -540,9 +540,9 @@ public class BlogEntry extends PageBasedContent {
    * @param ipAddress the IP address of the author
    * @return a new Comment instance with the specified properties
    */
-  public Comment createComment(String title, String body, String author, String email, String website, String ipAddress) {
+  public Comment createComment(String title, String body, String author, String email, String website, String avatar, String ipAddress) {
     Calendar cal = getBlog().getCalendar();
-    return createComment(title, body, author, email, website, ipAddress, cal.getTime(), State.APPROVED);
+    return createComment(title, body, author, email, website, avatar, ipAddress, cal.getTime(), State.APPROVED);
   }
 
   /**

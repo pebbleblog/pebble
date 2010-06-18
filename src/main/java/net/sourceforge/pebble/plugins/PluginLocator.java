@@ -97,6 +97,10 @@ public class PluginLocator {
     // Sort the decorators
     plugins.put(AvailablePlugins.CONTENT_DECORATOR, sortPlugins(plugins.get(AvailablePlugins.CONTENT_DECORATOR),
             blog.getContentDecorators()));
+    plugins.put(AvailablePlugins.PAGE_DECORATOR, sortPlugins(plugins.get(AvailablePlugins.PAGE_DECORATOR),
+            blog.getPageDecoratorNames()));
+    plugins.put(AvailablePlugins.OPEN_ID_COMMENT_AUTHOR_PROVIDER, sortPlugins(plugins.get(AvailablePlugins.OPEN_ID_COMMENT_AUTHOR_PROVIDER),
+            blog.getOpenIdCommentAuthorProviderNames()));
     return new AvailablePlugins(plugins);
   }
 

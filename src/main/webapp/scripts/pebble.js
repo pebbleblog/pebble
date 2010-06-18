@@ -125,8 +125,12 @@ function previewComment() {
     } else {
       dwr.util.setValue("previewComment.author", dwr.util.getValue("author"));
     }
+    var avatar = dwr.util.getValue("avatar");
+    if (avatar != null && avatar != "") {
+      Element.insert("previewComment", {top: "<img src='" + avatar + "' class='avatar'/>"});
+    }
   });
-  new Effect.Highlight('previewComment');
+  Effect.Highlight('previewComment');
 }
 
 function updatePluginProperty(event) {
@@ -171,4 +175,41 @@ function initSingleSelect(element) {
       }
     }
   })
+}
+
+// Update the form
+function updateOpenIdCommentAuthor(author, website, email, avatar, logoutCallback) {
+  var form = document.forms["commentForm"];
+  form.elements["author"].value = author;
+  form.elements["website"].value = website;
+  form.elements["email"].value = email;
+  form.elements["avatar"].value = avatar;
+  // Hide everything that doesn't need to be seen
+  $("commentAuthorDetails").setStyle({display : "none"});
+  $("openIdCommentAuthorProviders").setStyle({display : "none"});
+  // Show the user in place of the open id buttons
+  Element.update("openIdCommentAuthorDetails", "<img class='avatar' src='" + avatar + "'/><a href='" + website + "'>" +
+                                            author + "</a>");
+  Effect.Appear("openIdCommentAuthor");
+  if (logoutCallback) {
+    $("openIdCommentAuthor").openIdLogoutCallback = logoutCallback;
+  }
+}
+
+function logoutOpenIdCommentAuthor() {
+  // Clear the form
+  var form = document.forms["commentForm"];
+  form.elements["author"].value = "";
+  form.elements["website"].value = "";
+  form.elements["email"].value = "";
+  form.elements["avatar"].value = "";
+  // Hide the open id div
+  $("openIdCommentAuthor").setStyle({display : "none"});
+  // Show the providers div and author details
+  Effect.Appear("openIdCommentAuthorProviders");
+  Effect.Appear("commentAuthorDetails");
+  // Call the callback to log the user out of the open id provider
+  if ($("openIdCommentAuthor").openIdLogoutCallback) {
+    $("openIdCommentAuthor").openIdLogoutCallback()
+  }
 }

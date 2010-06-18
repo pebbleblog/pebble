@@ -81,7 +81,7 @@ public class PublishBlogEntryActionTest extends SecureActionTestCase {
     blogEntry.setPublished(false);
     service.putBlogEntry(blogEntry);
 
-    Comment comment = blogEntry.createComment("title", "body", "author", "email", "website", "127.0.0.1");
+    Comment comment = blogEntry.createComment("title", "body", "author", "email", "website", "avatar", "127.0.0.1");
     blogEntry.addComment(comment);
     service.putBlogEntry(blogEntry);
 
@@ -110,7 +110,7 @@ public class PublishBlogEntryActionTest extends SecureActionTestCase {
     blogEntry.setPublished(false);
     service.putBlogEntry(blogEntry);
 
-    Comment comment = blogEntry.createComment("title", "body", "author", "email", "website", "127.0.0.1");
+    Comment comment = blogEntry.createComment("title", "body", "author", "email", "website", "avatar", "127.0.0.1");
     blogEntry.addComment(comment);
     service.putBlogEntry(blogEntry);
 

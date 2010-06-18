@@ -63,6 +63,7 @@ public class SaveCommentActionTest extends SingleBlogActionTestCase {
     request.setParameter("commentBody", "Test Body");
     request.setParameter("author", "Test Author");
     request.setParameter("website", "http://www.somedomain.com");
+    request.setParameter("avatar", "http://www.somedomain.com/avatar");
     request.setParameter("submit", "Add Comment");
 
     SecurityUtils.runAsBlogContributor();
@@ -78,6 +79,7 @@ public class SaveCommentActionTest extends SingleBlogActionTestCase {
     assertEquals("Test Body", comment.getBody());
     assertEquals("Test Author", comment.getAuthor());
     assertEquals("http://www.somedomain.com", comment.getWebsite());
+    assertEquals("http://www.somedomain.com/avatar", comment.getAvatar());
   }
 
   public void testProcessAsBlogContributorWhenReplyingToComment() throws Exception {
@@ -85,7 +87,7 @@ public class SaveCommentActionTest extends SingleBlogActionTestCase {
     BlogEntry blogEntry = new BlogEntry(blog);
     service.putBlogEntry(blogEntry);
 
-    Comment comment1 = blogEntry.createComment("Title", "Body", "Author", "me@somedomain.com", "http://www.google.com", "127.0.0.1");
+    Comment comment1 = blogEntry.createComment("Title", "Body", "Author", "me@somedomain.com", "http://www.google.com", "http://graph.facebook.com/user/picture", "127.0.0.1");
     blogEntry.addComment(comment1);
     service.putBlogEntry(blogEntry);
 
@@ -95,6 +97,7 @@ public class SaveCommentActionTest extends SingleBlogActionTestCase {
     request.setParameter("commentBody", "Test Body");
     request.setParameter("author", "Test Author");
     request.setParameter("website", "http://www.somedomain.com");
+    request.setParameter("avatar", "http://www.somedomain.com/avatar");
     request.setParameter("submit", "Add Comment");
 
     SecurityUtils.runAsBlogContributor();
@@ -110,6 +113,7 @@ public class SaveCommentActionTest extends SingleBlogActionTestCase {
     assertEquals("Test Body", comment2.getBody());
     assertEquals("Test Author", comment2.getAuthor());
     assertEquals("http://www.somedomain.com", comment2.getWebsite());
+    assertEquals("http://www.somedomain.com/avatar", comment2.getAvatar());
     assertEquals(comment1.getId(), comment2.getParent().getId());
   }
 
@@ -124,6 +128,7 @@ public class SaveCommentActionTest extends SingleBlogActionTestCase {
     request.setParameter("commentBody", "Test Body");
     request.setParameter("author", "Test Author");
     request.setParameter("website", "http://www.somedomain.com");
+    request.setParameter("avatar", "http://www.somedomain.com/avatar");
     request.setParameter("submit", "Add Comment");
 
     SecurityUtils.runAsBlogContributor();
@@ -139,6 +144,7 @@ public class SaveCommentActionTest extends SingleBlogActionTestCase {
     assertEquals("Test Body", comment.getBody());
     assertEquals("Test Author", comment.getAuthor());
     assertEquals("http://www.somedomain.com", comment.getWebsite());
+    assertEquals("http://www.somedomain.com/avatar", comment.getAvatar());    
     assertNull(comment.getParent());
   }
 
@@ -153,6 +159,7 @@ public class SaveCommentActionTest extends SingleBlogActionTestCase {
     request.setParameter("commentBody", "Test Body");
     request.setParameter("author", "Test Author");
     request.setParameter("website", "http://www.somedomain.com");
+    request.setParameter("avatar", "http://www.somedomain.com/avatar");
     request.setParameter("submit", "Add Comment");
 
     SecurityUtils.runAsAnonymous();
@@ -174,6 +181,7 @@ public class SaveCommentActionTest extends SingleBlogActionTestCase {
     request.setParameter("commentBody", "Test Body");
     request.setParameter("author", "Test Author");
     request.setParameter("website", "Test Website");
+    request.setParameter("avatar", "http://www.somedomain.com/avatar");
     request.setParameter("submit", "Add Comment");
 
     View view = action.process(request, response);

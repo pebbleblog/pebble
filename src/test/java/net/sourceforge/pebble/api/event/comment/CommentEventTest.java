@@ -49,7 +49,7 @@ public class CommentEventTest extends SingleBlogTestCase {
    * Tests that a CommentEvent instance is correctly constructed.
    */
   public void testConstruction() {
-    Comment comment = new BlogEntry(blog).createComment("Title", "Body", "Author", "me@somedomain.com", "http://www.google.com", "127.0.0.1");
+    Comment comment = new BlogEntry(blog).createComment("Title", "Body", "Author", "me@somedomain.com", "http://www.google.com", "http://graph.facebook.com/user/picture", "127.0.0.1");
     event = new CommentEvent(comment, CommentEvent.COMMENT_ADDED);
 
     assertEquals(comment, event.getSource());

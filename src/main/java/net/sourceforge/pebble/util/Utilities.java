@@ -250,6 +250,8 @@ public class Utilities {
       blog.removeProperty(Blog.TRACKBACK_CONFIRMATION_STRATEGY_KEY);
       blog.removeProperty(Blog.LUCENE_ANALYZER_KEY);
       blog.removeProperty(Blog.LOGGER_KEY);
+      blog.removeProperty(Blog.PAGE_DECORATORS_KEY);
+      blog.removeProperty(Blog.OPEN_ID_COMMENT_AUTHOR_PROVIDERS_KEY);
       blog.storeProperties();
     } catch (BlogServiceException e) {
       e.printStackTrace();

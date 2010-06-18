@@ -62,9 +62,9 @@ public class NoFollowDecoratorTest extends SingleBlogTestCase {
     ContentDecoratorContext context = new ContentDecoratorContext();
     context.setView(ContentDecoratorContext.DETAIL_VIEW);
 
-    Comment comment1 = blogEntry.createComment("title1", "body1", "author", "email", "website", "127.0.0.1");
+    Comment comment1 = blogEntry.createComment("title1", "body1", "author", "email", "website", "avatar", "127.0.0.1");
     blogEntry.addComment(comment1);
-    Comment comment2 = blogEntry.createComment("title2", "body2", "author", "email", "website", "127.0.0.1");
+    Comment comment2 = blogEntry.createComment("title2", "body2", "author", "email", "website", "avatar", "127.0.0.1");
     blogEntry.addComment(comment2);
 
     comment1.setBody("<p>Here is some body.</p>");

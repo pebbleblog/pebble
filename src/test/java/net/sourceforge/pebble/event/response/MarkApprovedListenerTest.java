@@ -27,7 +27,7 @@ public class MarkApprovedListenerTest extends SingleBlogTestCase {
     super.setUp();
 
     listener = new MarkApprovedListener();
-    comment = new BlogEntry(blog).createComment("Title", "Body", "Author", "me@somedomain.com", "http://www.google.com", "127.0.0.1");
+    comment = new BlogEntry(blog).createComment("Title", "Body", "Author", "me@somedomain.com", "http://www.google.com", "http://graph.facebook.com/user/picture", "127.0.0.1");
     commentEvent = new CommentEvent(comment, CommentEvent.COMMENT_ADDED);
     trackBack = new BlogEntry(blog).createTrackBack("Title", "Excerpt", "url", "blogName", "127.0.0.1");
     trackBackEvent = new TrackBackEvent(trackBack, TrackBackEvent.TRACKBACK_ADDED);

@@ -19,6 +19,19 @@
     <description>Generates permalinks of the form /each_word_in_the_title.html</description>
   </permalink-provider>
 
+  <!-- Page decoraters -->
+  <page-decorator name="Facebook Connect Support" class="net.sourceforge.pebble.openid.FacebookOpenIdSupportDecorator">
+    <description>
+      <![CDATA[
+      Provides support for other Facebook Connect plugins. This plugin is required to be enabled for the Facebook OpenId
+      Comment Author Provider plugin to work. In order for this integration, you need a Facebook application ID, which
+      needs to be configured below. For instructions on setting up a Facebook application, see
+      <a href="http://wiki.developers.facebook.com/index.php/Connect/Setting_Up_Your_Site">here</a>.
+    ]]>
+    </description>
+    <config key="facebook.app.id" name="Facebook Application ID" required="true"/>
+  </page-decorator>
+
   <!-- Content decorators -->
   <content-decorator name="Blog Categories Decorator" class="net.sourceforge.pebble.decorator.BlogCategoriesDecorator">
     <description>
@@ -331,6 +344,15 @@
       multiplication of two numbers between 1 and 10.
     </description>
   </comment-confirmation-strategy>
+
+  <!-- OpenID comment author providers -->
+  <open-id-comment-author-provider name="Facebook OpenID Comment Author Provider"
+                                   class="net.sourceforge.pebble.openid.FacebookOpenIdCommentAuthorProvider">
+    <description>
+      Provides the ability for users to supply their user details from Facebook when commenting. Requires Facebook
+      Connect Support page decorator to be enabled and configured in order to work.
+    </description>
+  </open-id-comment-author-provider>
 
   <!-- Trackback listeners -->
   <trackback-listener name="Mark all TrackBacks pending"

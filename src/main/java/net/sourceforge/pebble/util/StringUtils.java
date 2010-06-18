@@ -568,13 +568,16 @@ public final class StringUtils {
   }
 
   public static String validateUrl(String url) {
+    if (url == null || url.length() == 0) {
+      return null;
+    }
     // whitelist, don't blacklist.
     for (String scheme : allowedSchemes) {
       if (url.startsWith(scheme)) {
         return url;
       }
     }
-    return "";
+    return "http://" + url;
   }
 
 }

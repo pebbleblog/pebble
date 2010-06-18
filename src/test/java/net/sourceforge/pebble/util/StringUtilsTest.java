@@ -86,7 +86,7 @@ public class StringUtilsTest extends TestCase {
     assertEquals("Here is a <a href=\"https://www.google.com\">link</a> to Google", StringUtils.transformToHTMLSubset("Here is a &lt;a href=&quot;https://www.google.com&quot;&gt;link&lt;/a&gt; to Google"));
     assertEquals("Here is a <a href=\"ftp://www.google.com\">link</a> to Google", StringUtils.transformToHTMLSubset("Here is a &lt;a href=&quot;ftp://www.google.com&quot;&gt;link&lt;/a&gt; to Google"));
     // block javascript
-    assertEquals("Here is a <a href=\"\">link</a> to Google", StringUtils.transformToHTMLSubset("Here is a &lt;a href=&quot;javascript:alert('Hi')&quot;&gt;link&lt;/a&gt; to Google"));
+    assertEquals("Here is a <a href=\"http://javascript:alert('Hi')\">link</a> to Google", StringUtils.transformToHTMLSubset("Here is a &lt;a href=&quot;javascript:alert('Hi')&quot;&gt;link&lt;/a&gt; to Google"));
   }
 
   public void testFilterNewLines() {

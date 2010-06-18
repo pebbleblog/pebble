@@ -17,6 +17,7 @@
   <input type="hidden" name="blogId" value="<c:out value="${blogEntry.blog.id}"/>" />
   <input type="hidden" name="entry" value="<c:out value="${blogEntry.id}"/>" />
   <input type="hidden" name="comment" value="<c:out value="${undecoratedComment.parent.id}"/>" />
+  <input type="hidden" name="avatar" value="<c:out value="${comment.avatar}"/>"/>
 
 <table width="99%">
 
@@ -71,21 +72,34 @@
 
   <pebble:isNotAuthenticated>
   <tr>
-    <td valign="top"><b><fmt:message key="comment.name" /></b></td>
-    <td><input type="text" id="author" name="author" size="40" value="<c:out value="${comment.author}"/>"/></td>
+    <td valign="top"><b><fmt:message key="comment.openid.login" /></b></td>
+    <td><div id="openIdCommentAuthorProviders">
+      <pebble:pluginrenderer plugin="openidcommentauthorprovider"/>
+    </div>
+      <div id="openIdCommentAuthor" style="display:none">
+        <div id="openIdCommentAuthorDetails"> </div>
+        (<a href="javascript:logoutOpenIdCommentAuthor()"><fmt:message key="comment.openid.notme"/></a>)
+      </div></td>
   </tr>
 
-  <tr>
-    <td valign="top"><b><fmt:message key="comment.emailAddress" /></b></td>
-    <td>
-      <input type="text" name="email" size="40" value="<c:out value="${comment.email}"/>"/>
-    </td>
-  </tr>
+  <tbody id="commentAuthorDetails">
+    <tr>
+      <td valign="top"><b><fmt:message key="comment.name" /></b></td>
+      <td><input type="text" id="author" name="author" size="40" value="<c:out value="${comment.author}"/>"/></td>
+    </tr>
 
-  <tr>
-    <td valign="top"><b><fmt:message key="comment.website" /></b></td>
-    <td><input type="text" name="website" size="40" value="<c:out value="${comment.website}"/>"/></td>
-  </tr>
+    <tr>
+      <td valign="top"><b><fmt:message key="comment.emailAddress" /></b></td>
+      <td>
+        <input type="text" name="email" size="40" value="<c:out value="${comment.email}"/>"/>
+      </td>
+    </tr>
+
+    <tr>
+      <td valign="top"><b><fmt:message key="comment.website" /></b></td>
+      <td><input type="text" name="website" size="40" value="<c:out value="${comment.website}"/>"/></td>
+    </tr>
+  </tbody>
   </pebble:isNotAuthenticated>
 
   <pebble:isAuthenticated>
@@ -134,7 +148,7 @@
 
   <tr>
     <td colspan="2" align="right">
-      <input name="submit" type="submit" value="<fmt:message key="comment.previewButton"/>" onclick="previewComment(); return false;"/>
+      <input name="submit" type="button" value="<fmt:message key="comment.previewButton"/>" onclick="previewComment();"/>
       <input name="submit" type="submit" value="<fmt:message key="comment.addCommentButton"/>" />
     </td>
   </tr>

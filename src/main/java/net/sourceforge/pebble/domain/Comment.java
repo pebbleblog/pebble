@@ -60,6 +60,9 @@ public class Comment extends Response {
   /** the parent comment, if applicable */
   private Comment parent;
 
+  /** the URL of the avatar */
+  private String avatar;
+
   /** the collection of nested comments */
   private List comments = new ArrayList();
 
@@ -81,13 +84,14 @@ public class Comment extends Response {
    * @param state       the state of the comment
    * @param blogEntry   the owning blog entry
    */
-  Comment(String title, String body, String author, String email, String website, String ipAddress, Date date, State state, BlogEntry blogEntry) {
+  Comment(String title, String body, String author, String email, String website, String avatar, String ipAddress, Date date, State state, BlogEntry blogEntry) {
     super(title, ipAddress, date, state, blogEntry);
 
     setBody(body);
     setAuthor(author);
     setEmail(email);
     setWebsite(website);
+    setAvatar(avatar);
   }
 
   /**
@@ -225,18 +229,7 @@ public class Comment extends Response {
    * @param website   the website url
    */
   public void setWebsite(String website) {
-    website = StringUtils.filterHTML(website);
-    if (website == null || website.length() == 0) {
-      this.website = null;
-    } else if (
-        !website.startsWith("http://") &&
-        !website.startsWith("https://") &&
-        !website.startsWith("ftp://") &&
-        !website.startsWith("mailto:")) {
-      this.website = "http://" + website;
-    } else {
-      this.website = website;
-    }
+    this.website = StringUtils.validateUrl(StringUtils.filterHTML(website));
   }
 
   /**
@@ -250,6 +243,24 @@ public class Comment extends Response {
     } else {
       return "";
     }
+  }
+
+  /**
+   * Gets the avatar URL
+   *
+   * @return a URL as a String
+   */
+  public String getAvatar() {
+    return avatar;
+  }
+
+  /**
+   * Sets the avatar URL
+   *
+   * @param avatar a URL as a String
+   */
+  public void setAvatar(String avatar) {
+    this.avatar = StringUtils.validateUrl(StringUtils.filterHTML(avatar));
   }
 
   /**
@@ -336,7 +347,7 @@ public class Comment extends Response {
    * @see Cloneable
    */
   public Object clone() {
-    Comment comment = new Comment(title, body, author, email, website, ipAddress, date, getState(), blogEntry);
+    Comment comment = new Comment(title, body, author, email, website, avatar, ipAddress, date, getState(), blogEntry);
     comment.setParent(parent);
     comment.setAuthenticated(authenticated);
     return comment;

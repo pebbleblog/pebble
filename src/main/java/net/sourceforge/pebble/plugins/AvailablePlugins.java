@@ -47,6 +47,8 @@ public class AvailablePlugins {
   public static final String TRACKBACK_CONFIRMATION_STRATEGY = "trackback-confirmation-strategy";
   public static final String LUCENCE_ANALYZER = "lucene-analyzer";
   public static final String LOGGER = "logger";
+  public static final String PAGE_DECORATOR = "page-decorator";
+  public static final String OPEN_ID_COMMENT_AUTHOR_PROVIDER = "open-id-comment-author-provider";
 
   private final Map<String, List<Plugin>> plugins;
 
@@ -102,6 +104,14 @@ public class AvailablePlugins {
 
   public Collection<Plugin> getLoggers() {
     return getEmptyIfNull(LOGGER);
+  }
+
+  public Collection<Plugin> getPageDecorators() {
+    return getEmptyIfNull(PAGE_DECORATOR);
+  }
+  
+  public Collection<Plugin> getOpenIdCommentAuthorProviders() {
+    return getEmptyIfNull(OPEN_ID_COMMENT_AUTHOR_PROVIDER);
   }
 
   private Collection<Plugin> getEmptyIfNull(String key) {

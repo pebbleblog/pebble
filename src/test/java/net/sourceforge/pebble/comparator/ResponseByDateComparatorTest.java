@@ -46,8 +46,8 @@ public class ResponseByDateComparatorTest extends SingleBlogTestCase {
     ResponseByDateComparator comp = new ResponseByDateComparator();
     BlogEntry b1 = new BlogEntry(blog);
 
-    Comment c1 = b1.createComment("", "", "", "", "", "", new Date(1000), State.APPROVED);
-    Comment c2 = b1.createComment("", "", "", "", "", "", new Date(2000), State.APPROVED);
+    Comment c1 = b1.createComment("", "", "", "", "", "", "", new Date(1000), State.APPROVED);
+    Comment c2 = b1.createComment("", "", "", "", "", "", "", new Date(2000), State.APPROVED);
 
     assertTrue(comp.compare(c1, c1) == 0);
     assertTrue(comp.compare(c1, c2) != 0);

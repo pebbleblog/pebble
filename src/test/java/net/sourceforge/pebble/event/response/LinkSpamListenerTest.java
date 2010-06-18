@@ -55,7 +55,7 @@ public class LinkSpamListenerTest extends SingleBlogTestCase {
     super.setUp();
 
     listener = new LinkSpamListener();
-    comment = new BlogEntry(blog).createComment("Title", "Body", "Author", "me@somedomain.com", "http://www.google.com", "127.0.0.1");
+    comment = new BlogEntry(blog).createComment("Title", "Body", "Author", "me@somedomain.com", "http://www.google.com", "http://graph.facebook.com/user/picture", "127.0.0.1");
     commentEvent = new CommentEvent(comment, CommentEvent.COMMENT_ADDED);
   }
 

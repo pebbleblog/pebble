@@ -143,13 +143,13 @@ public class SearchIndexTest extends SingleBlogTestCase {
        assertEquals(0, results.getNumberOfHits());
 
        // now add some comments
-       Comment comment = blogEntry.createComment("Comment title", "Comment body", "Some author", "me@somedomain.com", "http://www.google.com", "127.0.0.1");
+     Comment comment = blogEntry.createComment("Comment title", "Comment body", "Some author", "me@somedomain.com", "http://www.google.com", "http://graph.facebook.com/user/picture", "127.0.0.1");
        blogEntry.addComment(comment);
        index.index(blogEntry);
        results = index.search("swing");
        assertEquals(0, results.getNumberOfHits());
 
-       comment = blogEntry.createComment("Comment title", "Comment body with Swing in it", "Some author", "me@somedomain.com", "http://www.google.com", "127.0.0.1");
+       comment = blogEntry.createComment("Comment title", "Comment body with Swing in it", "Some author", "me@somedomain.com", "http://www.google.com", "http://graph.facebook.com/user/picture", "127.0.0.1");
        blogEntry.addComment(comment);
        index.index(blogEntry);
        results = index.search("swing");

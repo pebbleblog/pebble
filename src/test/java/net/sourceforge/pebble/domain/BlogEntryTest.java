@@ -289,7 +289,7 @@ public class BlogEntryTest extends SingleBlogTestCase {
     assertEquals(0, blogEntry.getComments().size());
 
     // now create a new comment
-    blogComment1 = blogEntry.createComment("", "Body", "Author", "me@somedomain.com", "http://www.google.com", "127.0.0.1", cal1.getTime(), State.APPROVED);
+    blogComment1 = blogEntry.createComment("", "Body", "Author", "me@somedomain.com", "http://www.google.com", "http://graph.facebook.com/user/picture", "127.0.0.1", cal1.getTime(), State.APPROVED);
     assertNotNull(blogComment1);
     assertEquals("Re: " + blogEntry.getTitle(), blogComment1.getTitle());
     assertEquals("Body", blogComment1.getBody());
@@ -310,7 +310,7 @@ public class BlogEntryTest extends SingleBlogTestCase {
     assertTrue(blogEntry.getComments().contains(blogComment1));
 
     // and now add another comment
-    blogComment2 = blogEntry.createComment("Title 2", "Body 2", "Author 2", "me2@somedomain.com", "http://www.yahoo.com", "127.0.0.1", cal2.getTime(), State.APPROVED);
+    blogComment2 = blogEntry.createComment("Title 2", "Body 2", "Author 2", "me2@somedomain.com", "http://www.yahoo.com", "http://graph.facebook.com/user/picture", "127.0.0.1", cal2.getTime(), State.APPROVED);
     assertEquals("Title 2", blogComment2.getTitle());
     assertEquals(1, blogEntry.getNumberOfComments());
     assertTrue(blogEntry.getComments().contains(blogComment1));
@@ -342,7 +342,7 @@ public class BlogEntryTest extends SingleBlogTestCase {
    */
   public void testTwoCommentsAddedAtTheSameTime() {
     Comment blogComment1, blogComment2;
-    blogComment1 = blogEntry.createComment("", "Body", "Author", "me@somedomain.com", "http://www.google.com", "127.0.0.1");
+    blogComment1 = blogEntry.createComment("", "Body", "Author", "me@somedomain.com", "http://www.google.com", "http://graph.facebook.com/user/picture", "127.0.0.1");
     blogComment2 = (Comment)blogComment1.clone();
     assertEquals(blogComment1.getId(), blogComment2.getId());
     blogEntry.addComment(blogComment1);
@@ -364,10 +364,10 @@ public class BlogEntryTest extends SingleBlogTestCase {
     Date date1 = new Date(0);
     Date date2 = new Date(1000);
 
-    comment1 = blogEntry.createComment("", "Body", "Author", "me@somedomain.com", "http://www.google.com", "127.0.0.1", date1, State.APPROVED);
+    comment1 = blogEntry.createComment("", "Body", "Author", "me@somedomain.com", "http://www.google.com", "http://graph.facebook.com/user/picture", "127.0.0.1", date1, State.APPROVED);
     blogEntry.addComment(comment1);
 
-    comment2 = blogEntry.createComment("", "Body", "Author", "me@somedomain.com", "http://www.google.com", "127.0.0.1", date2, State.APPROVED);
+    comment2 = blogEntry.createComment("", "Body", "Author", "me@somedomain.com", "http://www.google.com", "http://graph.facebook.com/user/picture", "127.0.0.1", date2, State.APPROVED);
     comment2.setParent(comment1);
     blogEntry.addComment(comment2);
 
@@ -391,10 +391,10 @@ public class BlogEntryTest extends SingleBlogTestCase {
     cal2 = blog.getCalendar();
     cal2.set(Calendar.DAY_OF_MONTH, 2);
 
-    comment1 = blogEntry.createComment("", "Body", "Author", "me@somedomain.com", "http://www.google.com", "127.0.0.1", cal1.getTime(), State.APPROVED);
+    comment1 = blogEntry.createComment("", "Body", "Author", "me@somedomain.com", "http://www.google.com", "http://graph.facebook.com/user/picture", "127.0.0.1", cal1.getTime(), State.APPROVED);
     blogEntry.addComment(comment1);
 
-    comment2 = blogEntry.createComment("", "Body", "Author", "me@somedomain.com", "http://www.google.com", "127.0.0.1", cal2.getTime(), State.APPROVED);
+    comment2 = blogEntry.createComment("", "Body", "Author", "me@somedomain.com", "http://www.google.com", "http://graph.facebook.com/user/picture", "127.0.0.1", cal2.getTime(), State.APPROVED);
     comment2.setParent(comment1);
     blogEntry.addComment(comment2);
 
@@ -409,10 +409,10 @@ public class BlogEntryTest extends SingleBlogTestCase {
     Date date1 = new Date(0);
     Date date2 = new Date(1000);
 
-    comment1 = blogEntry.createComment("", "Body", "Author", "me@somedomain.com", "http://www.google.com", "127.0.0.1", date1, State.APPROVED);
+    comment1 = blogEntry.createComment("", "Body", "Author", "me@somedomain.com", "http://www.google.com", "http://graph.facebook.com/user/picture", "127.0.0.1", date1, State.APPROVED);
     blogEntry.addComment(comment1);
 
-    comment2 = blogEntry.createComment("", "Body", "Author", "me@somedomain.com", "http://www.google.com", "127.0.0.1", date2, State.APPROVED);
+    comment2 = blogEntry.createComment("", "Body", "Author", "me@somedomain.com", "http://www.google.com", "http://graph.facebook.com/user/picture", "127.0.0.1", date2, State.APPROVED);
     comment2.setParent(comment1);
     blogEntry.addComment(comment2);
 
@@ -429,10 +429,10 @@ public class BlogEntryTest extends SingleBlogTestCase {
     Date date1 = new Date(0);
     Date date2 = new Date(1000);
 
-    comment1 = blogEntry.createComment("", "Body", "Author", "me@somedomain.com", "http://www.google.com", "127.0.0.1", date1, State.APPROVED);
+    comment1 = blogEntry.createComment("", "Body", "Author", "me@somedomain.com", "http://www.google.com", "http://graph.facebook.com/user/picture", "127.0.0.1", date1, State.APPROVED);
     blogEntry.addComment(comment1);
 
-    comment2 = blogEntry.createComment("", "Body", "Author", "me@somedomain.com", "http://www.google.com", "127.0.0.1", date2, State.APPROVED);
+    comment2 = blogEntry.createComment("", "Body", "Author", "me@somedomain.com", "http://www.google.com", "http://graph.facebook.com/user/picture", "127.0.0.1", date2, State.APPROVED);
     comment2.setParent(comment1);
     blogEntry.addComment(comment2);
 
@@ -448,7 +448,7 @@ public class BlogEntryTest extends SingleBlogTestCase {
   public void testCommentPermalink() {
     Comment blogComment;
 
-    blogComment = blogEntry.createComment("Title", "Body", "Author", "me@somedomain.com", "http://www.google.com", "127.0.0.1");
+    blogComment = blogEntry.createComment("Title", "Body", "Author", "me@somedomain.com", "http://www.google.com", "http://graph.facebook.com/user/picture", "127.0.0.1");
     blogEntry.addComment(blogComment);
     assertEquals(blogEntry.getLocalPermalink() + "#comment" + blogComment.getId(), blogComment.getPermalink());
   }
@@ -528,7 +528,7 @@ public class BlogEntryTest extends SingleBlogTestCase {
   }
 
   public void testTopLevelCommentsClonedProperly() {
-    Comment comment = blogEntry.createComment("Title", "Body", "Author", "me@somedomain.com", "http://www.google.com", "127.0.0.1");
+    Comment comment = blogEntry.createComment("Title", "Body", "Author", "me@somedomain.com", "http://www.google.com", "http://graph.facebook.com/user/picture", "127.0.0.1");
     blogEntry.addComment(comment);
 
     BlogEntry clonedBlogEntry = (BlogEntry)blogEntry.clone();
@@ -538,9 +538,9 @@ public class BlogEntryTest extends SingleBlogTestCase {
   }
 
   public void testNestedCommentsClonedProperly() {
-    Comment comment1 = blogEntry.createComment("Title", "Body", "Author", "me@somedomain.com", "http://www.google.com", "127.0.0.1");
+    Comment comment1 = blogEntry.createComment("Title", "Body", "Author", "me@somedomain.com", "http://www.google.com", "http://graph.facebook.com/user/picture", "127.0.0.1");
     blogEntry.addComment(comment1);
-    Comment comment2 = blogEntry.createComment("Title", "Body", "Author", "me@somedomain.com", "http://www.google.com", "127.0.0.1");
+    Comment comment2 = blogEntry.createComment("Title", "Body", "Author", "me@somedomain.com", "http://www.google.com", "http://graph.facebook.com/user/picture", "127.0.0.1");
     comment2.setParent(comment1);
     blogEntry.addComment(comment2);
 
@@ -664,7 +664,7 @@ public class BlogEntryTest extends SingleBlogTestCase {
    * Tests that listeners are not fired when a comment is added/removed on a clone.
    */
   public void testCommentListenersNotFiredFromClone() {
-    final Comment comment = blogEntry.createComment("title", "body", "author", "email", "website", "127.0.0.1");
+    final Comment comment = blogEntry.createComment("title", "body", "author", "email", "website", "avatar", "127.0.0.1");
     blogEntry = (BlogEntry)blogEntry.clone();
     blogEntry.addComment(comment);
     assertTrue(blogEntry.getEvents().isEmpty());
@@ -960,9 +960,9 @@ public class BlogEntryTest extends SingleBlogTestCase {
 
   public void testLastModifiedDate() {
     blogEntry.setDate(new Date(100));
-    blogEntry.addComment(blogEntry.createComment("", "Body", "Author", "me@somedomain.com", "http://www.google.com", "127.0.0.1", new Date(123), State.APPROVED));
-    blogEntry.addComment(blogEntry.createComment("", "Body", "Author", "me@somedomain.com", "http://www.google.com", "127.0.0.1", new Date(456), State.APPROVED));
-    blogEntry.addComment(blogEntry.createComment("", "Body", "Author", "me@somedomain.com", "http://www.google.com", "127.0.0.1", new Date(789), State.APPROVED));
+    blogEntry.addComment(blogEntry.createComment("", "Body", "Author", "me@somedomain.com", "http://www.google.com", "http://graph.facebook.com/user/picture", "127.0.0.1", new Date(123), State.APPROVED));
+    blogEntry.addComment(blogEntry.createComment("", "Body", "Author", "me@somedomain.com", "http://www.google.com", "http://graph.facebook.com/user/picture", "127.0.0.1", new Date(456), State.APPROVED));
+    blogEntry.addComment(blogEntry.createComment("", "Body", "Author", "me@somedomain.com", "http://www.google.com", "http://graph.facebook.com/user/picture", "127.0.0.1", new Date(789), State.APPROVED));
 
     assertEquals(new Date(789), blogEntry.getLastModified());
 
@@ -974,7 +974,7 @@ public class BlogEntryTest extends SingleBlogTestCase {
    }
 
   public void testRemoveCommentViaRemoveResponse() {
-    Comment comment = blogEntry.createComment("", "Body", "Author", "me@somedomain.com", "http://www.google.com", "127.0.0.1", new Date(123), State.APPROVED);
+    Comment comment = blogEntry.createComment("", "Body", "Author", "me@somedomain.com", "http://www.google.com", "http://graph.facebook.com/user/picture", "127.0.0.1", new Date(123), State.APPROVED);
     blogEntry.addComment(comment);
     assertEquals(1, blogEntry.getNumberOfComments());
     blogEntry.removeResponse(comment);

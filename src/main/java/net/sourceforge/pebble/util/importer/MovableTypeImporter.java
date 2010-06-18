@@ -257,7 +257,7 @@ public class MovableTypeImporter {
           }
         }
 
-        Comment comment = entry.createComment(null, commentBody.toString(), commentAuthor, commentEmail, commentUrl, commentIpAddress, commentDate, State.APPROVED);
+        Comment comment = entry.createComment(null, commentBody.toString(), commentAuthor, commentEmail, commentUrl, "", commentIpAddress, commentDate, State.APPROVED);
         entry.addComment(comment);
       } else if (line.equals("PING:")) {
         String pingTitle = reader.readLine().substring("TITLE: ".length());

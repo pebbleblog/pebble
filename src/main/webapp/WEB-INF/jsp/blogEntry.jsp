@@ -103,7 +103,7 @@
     <div align="center">
       <br />
       <c:if test="${blogEntry.commentsEnabled}">
-        <a href="replyToBlogEntry.action?entry=${blogEntry.id}" onclick="showCommentForm(); return false;"><fmt:message key="comment.addComment"/></a>
+        <a href="javascript: showCommentForm();"><fmt:message key="comment.addComment"/></a>
       </c:if>
       <c:if test="${blogEntry.trackBacksEnabled}">
         <a href="generateTrackBackLink.action?entry=${blogEntry.id}"><fmt:message key="trackback.sendTrackBack"/></a>

@@ -43,13 +43,19 @@
     <script type='text/javascript' src='${pageContext.request.contextPath}/dwr/util.js'></script>
     <script type='text/javascript' src='${pageContext.request.contextPath}/dwr/interface/Pebble.js'></script>
 
+    <pebble:pluginrenderer plugin="head"/>
+    
   </head>
 
   <body>
 
+  <pebble:pluginrenderer plugin="header"/>
+
   <%@ include file="/WEB-INF/fragments/admin.jspf" %>
 
   <jsp:doBody/>
+
+  <pebble:pluginrenderer plugin="footer"/>
 
   </body>
 </html>

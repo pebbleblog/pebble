@@ -44,6 +44,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 import java.util.StringTokenizer;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -56,12 +57,14 @@ import net.sourceforge.pebble.aggregator.NewsFeedEntry;
 import net.sourceforge.pebble.api.confirmation.CommentConfirmationStrategy;
 import net.sourceforge.pebble.api.confirmation.TrackBackConfirmationStrategy;
 import net.sourceforge.pebble.api.decorator.ContentDecorator;
+import net.sourceforge.pebble.api.decorator.PageDecorator;
 import net.sourceforge.pebble.api.event.EventDispatcher;
 import net.sourceforge.pebble.api.event.blog.BlogEvent;
 import net.sourceforge.pebble.api.event.blog.BlogListener;
 import net.sourceforge.pebble.api.event.blogentry.BlogEntryListener;
 import net.sourceforge.pebble.api.event.comment.CommentListener;
 import net.sourceforge.pebble.api.event.trackback.TrackBackListener;
+import net.sourceforge.pebble.api.openid.OpenIdCommentAuthorProvider;
 import net.sourceforge.pebble.api.permalink.PermalinkProvider;
 import net.sourceforge.pebble.confirmation.DefaultConfirmationStrategy;
 import net.sourceforge.pebble.dao.CategoryDAO;
@@ -124,6 +127,8 @@ public class Blog extends AbstractBlog {
   public static final String TRACKBACK_CONFIRMATION_STRATEGY_KEY = "trackBackConfirmationStrategy";
   public static final String RICH_TEXT_EDITOR_FOR_COMMENTS_ENABLED_KEY = "richTextEditorForCommentsEnabled";
   public static final String HOME_PAGE_KEY = "homePage";
+  public static final String PAGE_DECORATORS_KEY = "pageDecorators";
+  public static final String OPEN_ID_COMMENT_AUTHOR_PROVIDERS_KEY = "openIdCommentAuthorProviders";
 
   /** the ID of this blog */
   private String id = "default";
@@ -168,6 +173,9 @@ public class Blog extends AbstractBlog {
   private CategoryIndex categoryIndex;
   private AuthorIndex authorIndex;
   private StaticPageIndex staticPageIndex;
+
+  private final List<PageDecorator> pageDecorators = new CopyOnWriteArrayList<PageDecorator>();
+  private final List<OpenIdCommentAuthorProvider> openIdCommentAuthorProviders = new CopyOnWriteArrayList<OpenIdCommentAuthorProvider>();
 
   private EmailSubscriptionList emailSubscriptionList;
 
@@ -255,6 +263,8 @@ public class Blog extends AbstractBlog {
     initCommentListeners();
     initTrackBackListeners();
     initDecorators();
+    initPageDecorators();
+    initOpenIdCommentAuthorProviders();
   }
 
   /**
@@ -409,6 +419,42 @@ public class Blog extends AbstractBlog {
         error("Could not start decorator \"" + className + "\" - check the class name is correct on the <a href=\"viewPlugins.secureaction#contentDecorators\">plugins page</a>.");
         e.printStackTrace();
         log.error(className + " could not be started", e);
+      }
+    }
+  }
+
+  /**
+   * Initialises any page decorators for this blog
+   */
+  private void initPageDecorators() {
+    log.debug("Registering page decorators");
+
+    for (String className : getPageDecoratorNames()) {
+      try {
+        Class c = Class.forName(className.trim());
+        PageDecorator decorator = (PageDecorator) c.newInstance();
+        pageDecorators.add(decorator);
+      } catch (Exception e) {
+        error("Could not start page decorator \"" + className + "\".");
+        log.error("Page decorator " + className + " could not be registered", e);
+      }
+    }
+  }
+
+  /**
+   * Initialises any open id comment author providers for this blog
+   */
+  private void initOpenIdCommentAuthorProviders() {
+    log.debug("Registering OpenID comment author providers");
+
+    for (String className : getOpenIdCommentAuthorProviderNames()) {
+      try {
+        Class c = Class.forName(className.trim());
+        OpenIdCommentAuthorProvider provider = (OpenIdCommentAuthorProvider) c.newInstance();
+        openIdCommentAuthorProviders.add(provider);
+      } catch (Exception e) {
+        error("Could not start OpenID comment author provider \"" + className + "\".");
+        log.error("OpenID comment author provider " + className + " could not be registered", e);
       }
     }
   }
@@ -1678,6 +1724,24 @@ public class Blog extends AbstractBlog {
   }
 
   /**
+   * Gets the list of page decorators as Strings
+   *
+   * @return  The list of class names
+   */
+  public List<String> getPageDecoratorNames() {
+    return getStringsFromProperty(PAGE_DECORATORS_KEY);
+  }
+
+  /**
+   * Gets the list of OpenID comment author providers as Strings
+   *
+   * @return  The list of class names
+   */
+  public List<String> getOpenIdCommentAuthorProviderNames() {
+    return getStringsFromProperty(OPEN_ID_COMMENT_AUTHOR_PROVIDERS_KEY);
+  }
+
+  /**
    * Gets the name the event dispatcher.
    *
    * @return  a String
@@ -1732,6 +1796,14 @@ public class Blog extends AbstractBlog {
   public void setPermalinkProvider(PermalinkProvider provider) {
     this.permalinkProvider = provider;
     this.permalinkProvider.setBlog(this);
+  }
+
+  public List<PageDecorator> getPageDecorators() {
+    return pageDecorators;
+  }
+
+  public List<OpenIdCommentAuthorProvider> getOpenIdCommentAuthorProviders() {
+    return openIdCommentAuthorProviders;
   }
 
   public void reindex() {
