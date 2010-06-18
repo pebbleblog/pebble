@@ -155,6 +155,12 @@ public class TitlePermalinkProvider extends PermalinkProviderSupport {
     BlogService service = new BlogService();
     Day day = getDay(uri);
 
+    // Strip off query parameters
+    int query = uri.indexOf('?');
+    if (query >= 0) {
+      uri = uri.substring(query);
+    }
+
     Iterator it = day.getBlogEntries().iterator();
     while (it.hasNext()) {
       try {
