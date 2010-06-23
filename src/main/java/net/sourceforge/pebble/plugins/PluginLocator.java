@@ -176,7 +176,10 @@ public class PluginLocator {
             plugins.put(type, list);
           }
           Collection<PluginConfig> pluginConfig = parsePluginConfig(element);
-          list.add(new Plugin(name, description, className, weight, pluginConfig));
+          Plugin plugin = new Plugin(name, description, className, weight, pluginConfig);
+          if (!list.contains(plugin)) {
+            list.add(plugin);
+          }
         } catch (ClassNotFoundException e) {
           log.error("Plugin class " + className + " of type " + type + " from descriptor " + resource +
                   " could not be found.");

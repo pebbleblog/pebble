@@ -47,11 +47,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Iterator;
 
 /**
- * Adds a comment to an existing blog entry.
+ * Removes an email address subscription to blog comments
  *
  * @author    Simon Brown
  */
-@RequireSecurityToken
 public class RemoveEmailAddressAction extends Action {
 
   /** the log used by this class */

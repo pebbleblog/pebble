@@ -35,9 +35,12 @@ import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.domain.TrackBack;
 import net.sourceforge.pebble.util.MailUtils;
 import net.sourceforge.pebble.api.event.trackback.TrackBackEvent;
+import net.sourceforge.pebble.web.security.SecurityTokenValidator;
 
 import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Base class for listeners that send an e-mail notification when new
@@ -71,15 +74,20 @@ public abstract class AbstractEmailNotificationListener extends TrackBackListene
     message += "\n\n<br><br>";
     message += "<a href=\"" + trackBack.getPermalink() + "\">Permalink</a>";
 
+    SecurityTokenValidator validator = new SecurityTokenValidator();
+
     if (trackBack.isPending()) {
       message += " | ";
-      message += "<a href=\"" + blog.getUrl() + "manageResponses.secureaction?response=" + trackBack.getGuid() + "&submit=Approve" + "\">Approve</a>";
+      message += "<a href=\"" + blog.getUrl() + validator.generateSignedQueryString("manageResponses.secureaction",
+              createMap("response", trackBack.getGuid(), "submit", "Approve"), blog.getXsrfSigningSalt()) + "\">Approve</a>";
       message += " | ";
-      message += "<a href=\"" + blog.getUrl() + "manageResponses.secureaction?response=" + trackBack.getGuid() + "&submit=Reject" + "\">Reject</a>";
+      message += "<a href=\"" + blog.getUrl() + validator.generateSignedQueryString("manageResponses.secureaction",
+              createMap("response", trackBack.getGuid(), "submit", "Reject"), blog.getXsrfSigningSalt()) + "\">Reject</a>";
     }
 
     message += " | ";
-    message += "<a href=\"" + blog.getUrl() + "manageResponses.secureaction?response=" + trackBack.getGuid() + "&submit=Remove" + "\">Remove</a>";
+    message += "<a href=\"" + blog.getUrl() + validator.generateSignedQueryString("manageResponses.secureaction",
+            createMap("response", trackBack.getGuid(), "submit", "Remove"), blog.getXsrfSigningSalt()) + "\">Remove</a>";
 
     Collection to = getEmailAddresses(trackBack);
 
@@ -90,11 +98,19 @@ public abstract class AbstractEmailNotificationListener extends TrackBackListene
     }
   }
 
+  private Map<String, String[]> createMap(String... values) {
+    Map<String, String[]> map = new HashMap<String, String[]>();
+    for (int i = 0; i < values.length - 1; i += 2) {
+      map.put(values[i], new String[]{values[i + 1]});
+    }
+    return map;
+  }
+
   /**
    * Returns the collection of recipients.
    *
-   * @param trackBack   the TrackBack from the event
-   * @return  a Collection of e-mail addresses (Strings)
+   * @param trackBack the TrackBack from the event
+   * @return a Collection of e-mail addresses (Strings)
    */
   protected abstract Collection getEmailAddresses(TrackBack trackBack);
 

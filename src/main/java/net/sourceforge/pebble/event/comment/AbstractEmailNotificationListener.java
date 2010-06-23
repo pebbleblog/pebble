@@ -37,11 +37,14 @@ import net.sourceforge.pebble.api.decorator.ContentDecoratorContext;
 import net.sourceforge.pebble.api.event.comment.CommentEvent;
 import net.sourceforge.pebble.util.MailUtils;
 import net.sourceforge.pebble.util.StringUtils;
+import net.sourceforge.pebble.web.security.SecurityTokenValidator;
 
 import javax.mail.Session;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Base class for listeners that send an e-mail notification when new
@@ -51,7 +54,9 @@ import java.util.Iterator;
  */
 public abstract class AbstractEmailNotificationListener extends CommentListenerSupport {
 
-  /** a token to be replaced when sending e-mails */
+  /**
+   * a token to be replaced when sending e-mails
+   */
   private static final String EMAIL_ADDRESS_TOKEN = "EMAIL_ADDRESS";
 
   /**
@@ -109,7 +114,7 @@ public abstract class AbstractEmailNotificationListener extends CommentListenerS
     Iterator it = comment.getBlogEntry().getComments().iterator();
     Comment blogComment;
     while (it.hasNext()) {
-      blogComment = (Comment)it.next();
+      blogComment = (Comment) it.next();
       if (blogComment.getEmail() != null && blogComment.getEmail().length() > 0) {
         to.add(blogComment.getEmail());
       }
@@ -121,11 +126,11 @@ public abstract class AbstractEmailNotificationListener extends CommentListenerS
       Session session = MailUtils.createSession();
       Iterator emailAddresses = to.iterator();
       while (emailAddresses.hasNext()) {
-        String emailAddress = (String)emailAddresses.next();
+        String emailAddress = (String) emailAddresses.next();
 
         // customize the opt-out link and send the message
         MailUtils.sendMail(session, blog, emailAddress, subject,
-            message.replaceAll(EMAIL_ADDRESS_TOKEN, emailAddress));
+                message.replaceAll(EMAIL_ADDRESS_TOKEN, emailAddress));
       }
     } catch (Exception e) {
       e.printStackTrace();
@@ -144,6 +149,8 @@ public abstract class AbstractEmailNotificationListener extends CommentListenerS
       author = "<a href=\"" + comment.getWebsite() + "\">" + author + "</a>";
     }
 
+    SecurityTokenValidator validator = new SecurityTokenValidator();
+
     String message = "Comment from " + author + " on " + sdf.format(comment.getDate());
     message += " in response to " + comment.getBlogEntry().getTitle();
     message += "\n\n<br><br>";
@@ -151,11 +158,14 @@ public abstract class AbstractEmailNotificationListener extends CommentListenerS
     message += "\n\n<br><br>";
     message += "<a href=\"" + comment.getPermalink() + "\">Permalink</a>";
     message += " | ";
-    message += "<a href=\"" + blog.getUrl() + "manageResponses.secureaction?response=" + comment.getGuid() + "&submit=Approve" + "\">Approve</a>";
+    message += "<a href=\"" + blog.getUrl() + validator.generateSignedQueryString("manageResponses.secureaction",
+            createMap("response", comment.getGuid(), "submit", "Approve"), blog.getXsrfSigningSalt()) + "\">Approve</a>";
     message += " | ";
-    message += "<a href=\"" + blog.getUrl() + "manageResponses.secureaction?response=" + comment.getGuid() + "&submit=Reject" + "\">Reject</a>";
+    message += "<a href=\"" + blog.getUrl() + validator.generateSignedQueryString("manageResponses.secureaction",
+            createMap("response", comment.getGuid(), "submit", "Reject"), blog.getXsrfSigningSalt()) + "\">Reject</a>";
     message += " | ";
-    message += "<a href=\"" + blog.getUrl() + "manageResponses.secureaction?response=" + comment.getGuid() + "&submit=Remove" + "\">Remove</a>";
+    message += "<a href=\"" + blog.getUrl() + validator.generateSignedQueryString("manageResponses.secureaction",
+            createMap("response", comment.getGuid(), "submit", "Remove"), blog.getXsrfSigningSalt()) + "\">Remove</a>";
 
     Collection to = getEmailAddresses(comment);
 
@@ -166,11 +176,19 @@ public abstract class AbstractEmailNotificationListener extends CommentListenerS
     }
   }
 
+  private Map<String, String[]> createMap(String... values) {
+    Map<String, String[]> map = new HashMap<String, String[]>();
+    for (int i = 0; i < values.length - 1; i += 2) {
+      map.put(values[i], new String[]{values[i + 1]});
+    }
+    return map;
+  }
+
   /**
    * Returns the collection of recipients.
    *
-   * @param comment   the Comment from the event
-   * @return  a Collection of e-mail addresses (Strings)
+   * @param comment the Comment from the event
+   * @return a Collection of e-mail addresses (Strings)
    */
   protected abstract Collection getEmailAddresses(Comment comment);
 

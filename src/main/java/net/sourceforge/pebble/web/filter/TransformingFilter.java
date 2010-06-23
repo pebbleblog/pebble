@@ -106,10 +106,13 @@ public class TransformingFilter implements Filter {
     }
     log.trace("uri : " + uri);
 
+    // Only add the query string to external URI, otherwise each parameter in the query string will end up being put in
+    // twice to the parameter map.
+    String externalUri = uri;
     if (httpRequest.getQueryString() != null) {
-      uri += "?" + httpRequest.getQueryString();
+      externalUri += "?" + httpRequest.getQueryString();
     }
-    httpRequest.setAttribute(Constants.EXTERNAL_URI, uri);
+    httpRequest.setAttribute(Constants.EXTERNAL_URI, externalUri);
 
     UriTransformer transformer = new UriTransformer();
     String internalUri;

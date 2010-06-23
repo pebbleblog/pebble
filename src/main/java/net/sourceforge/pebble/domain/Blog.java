@@ -33,6 +33,7 @@ package net.sourceforge.pebble.domain;
 
 import java.io.File;
 import java.lang.reflect.Constructor;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -95,6 +96,7 @@ import net.sourceforge.pebble.logging.CombinedLogFormatLogger;
 import net.sourceforge.pebble.permalink.DefaultPermalinkProvider;
 import net.sourceforge.pebble.util.StringUtils;
 
+import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -129,6 +131,7 @@ public class Blog extends AbstractBlog {
   public static final String HOME_PAGE_KEY = "homePage";
   public static final String PAGE_DECORATORS_KEY = "pageDecorators";
   public static final String OPEN_ID_COMMENT_AUTHOR_PROVIDERS_KEY = "openIdCommentAuthorProviders";
+  public static final String XSRF_SIGNING_SALT_KEY = "signingSalt";
 
   /** the ID of this blog */
   private String id = "default";
@@ -1908,6 +1911,23 @@ public class Blog extends AbstractBlog {
       entries = entries.subList(0, getRecentBlogEntriesOnHomePage());
     }
     return entries;
+  }
+
+  public String getXsrfSigningSalt() {
+    String salt = getProperty(XSRF_SIGNING_SALT_KEY);
+    if (salt == null) {
+      // Generate salt
+      byte[] saltBytes = new byte[8];
+      new SecureRandom().nextBytes(saltBytes);
+      salt = new String(Hex.encodeHex(saltBytes));
+      setProperty(XSRF_SIGNING_SALT_KEY, salt);
+      try {
+        storeProperties();
+      } catch (BlogServiceException e) {
+        log.error("Error saving XSRF salt", e);
+      }
+    }
+    return salt;
   }
 
   private List<String> getStringsFromProperty(String key) {
