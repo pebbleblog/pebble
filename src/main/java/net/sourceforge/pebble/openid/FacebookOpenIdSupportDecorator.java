@@ -36,7 +36,8 @@ public class FacebookOpenIdSupportDecorator implements PageDecorator {
           out.append("<div id=\"fb-root\"></div>\n" +
                   "<script src=\"http://connect.facebook.net/en_US/all.js\"></script>\n" +
                   "<script>\n" +
-                  "FB.init({appId: '").append(appId).append("', status: false, cookie: true, xfbml: true});\n" +
+                  "FB.init({appId: '").append(appId).append("', status: false, cookie: true, xfbml: true, channelUrl: '")
+                  .append(abstractBlog.getUrl()).append("facebook_channel.html'});\n" +
                   "</script>");
         } else {
           // Probably should warn that you need an APP id....

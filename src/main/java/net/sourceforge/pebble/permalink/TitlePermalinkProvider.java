@@ -56,7 +56,7 @@ import java.util.List;
 public class TitlePermalinkProvider extends PermalinkProviderSupport {
 
   /** the regex used to check for a blog entry permalink */
-  private static final String BLOG_ENTRY_PERMALINK_REGEX = "/\\d\\d\\d\\d/\\d\\d/\\d\\d/[\\w]*\\.html.*";
+  private static final String BLOG_ENTRY_PERMALINK_REGEX = "/\\d\\d\\d\\d/\\d\\d/\\d\\d/[\\w]*.html";
 
   /**
    * Gets the permalink for a blog entry.
@@ -154,12 +154,6 @@ public class TitlePermalinkProvider extends PermalinkProviderSupport {
   public BlogEntry getBlogEntry(String uri) {
     BlogService service = new BlogService();
     Day day = getDay(uri);
-
-    // Strip off query parameters
-    int query = uri.indexOf('?');
-    if (query >= 0) {
-      uri = uri.substring(query);
-    }
 
     Iterator it = day.getBlogEntries().iterator();
     while (it.hasNext()) {
