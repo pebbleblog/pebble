@@ -18,8 +18,10 @@
         <td valign="top">
           <b><fmt:formatDate value="${year.date}" pattern="yyyy"/></b><br />
           <c:forEach var="month" items="${year.archives}">
+            <c:if test="${month.numberOfBlogEntries > 0}">
           <a href="${url:rewrite(month.permalink)}" title="Blog archive for ${month.date}"><fmt:formatDate value="${month.date}" pattern="MMMM"/></a> (<fmt:formatNumber value="${month.numberOfBlogEntries}" type="number" />)
           <br />
+            </c:if>
           </c:forEach>
           <br />
         </td>
