@@ -143,9 +143,9 @@
       <input name="submit" type="submit" Value="Create Directory" />
     </p>
   </form>
-
-  <form name="uploadFile" enctype="multipart/form-data" action="${uploadAction}" method="post">
-    <pebble:token/>
+  <%-- Note, pebble token must be in the action URL, because HttpController can't read a multipart/form-data request
+    to find the token --%>
+  <form name="uploadFile" enctype="multipart/form-data" action="${uploadAction}?<pebble:token query="true"/>" method="post">
     <input type="hidden" name="path" value="${directory.absolutePath}" />
     <h3>Upload file (files must be less than <fmt:formatNumber value="${pebbleContext.configuration.fileUploadSize}" type="number" />&nbsp;KB each)</h3>
     <p>
