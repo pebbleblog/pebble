@@ -121,6 +121,32 @@
       can be configured using the <code>ExcerptDecorator.maxLength</code> plugin property.
     </p>
 
+    <p>
+      <strong>net.sourceforge.pebble.decorator.ThumbnailDecorator</strong><br/>
+      Simple image thumbnail generator. Converts <code>&lt;thumbnail&gt</code>
+      tags into image thumbnails with a link to the original image, which will
+      be displayed in a popup window when clicked.  The following tag attributes
+      are available:
+    </p>
+    <ul>
+      <li><strong>src</strong> (mandatory) the URL of the image to be thumbnailed,
+          which must be a locally-stored file, usually under <code>/images</code></li>
+      <li><strong>thumbSize</strong> the maximum dimension of the generated thumbnail</li>
+      <li><strong>popupSize</strong> the size of the popup window</li>
+      <li><strong>alt</strong> the alt attribute for the thumbnail</li>
+    </ul>
+    <p>
+      The following plugin properties are available:
+    </p>
+    <ul>
+        <li><strong>Thumbnail.thumbnailSize</strong> the default thumbnail size</li>
+        <li><strong>Thumbnail.popupSize</strong> the default popup size</li>
+    </ul>
+    <p>
+      The CSS class for the thumbnail <code>A</code> tag is <code>thumbnailLink</code>
+      and the class for the <code>IMG</code> tag is <code>thumbnailImage</code>.
+    </p>
+
     <h3>Configuring content decorators</h3>
 
     <p>
@@ -129,6 +155,5 @@
       following blog listeners.
     </p>
     <pre class="codeSample"><c:forEach var="decorator" items="${blog.contentDecoratorChain.contentDecorators}">${decorator.class.name}<br /></c:forEach></pre>
-    </p>
   </div>
 </div>

@@ -147,6 +147,32 @@
       Adds links from your blog entry back to tags on Technorati, for those tags associated with the blog entry.
     </description>
   </content-decorator>
+  <content-decorator name="Thumbnails Decorator" class="net.sourceforge.pebble.decorator.ThumbnailDecorator">
+    <description>
+      <![CDATA[
+    <p>
+      Simple image thumbnail generator. Converts <code>&lt;thumbnail&gt</code>
+      tags into image thumbnails with a link to the original image, which will
+      be displayed in a popup window when clicked.  The following tag attributes
+      are available:
+    </p>
+    <ul>
+      <li><strong>src</strong> (mandatory) the URL of the image to be thumbnailed,
+          which must be a locally-stored file, usually under <code>/images</code></li>
+      <li><strong>thumbSize</strong> the maximum dimension of the generated thumbnail</li>
+      <li><strong>popupSize</strong> the size of the popup window</li>
+      <li><strong>alt</strong> the alt attribute for the thumbnail</li>
+    </ul>
+    <p>
+      The CSS class for the thumbnail <code>A</code> tag is <code>thumbnailLink</code>
+      and the class for the <code>IMG</code> tag is <code>thumbnailImage</code>.
+    </p>
+        ]]>
+    </description>
+    <config key="Thumbnail.thumbnailSize" name="Default thumbnail size"/>
+    <config key="Thumbnail.popupSize" name="Default popup size"/>
+  </content-decorator>
+
   <content-decorator name="TrackBack Auto-Discovery Decorator"
                      class="net.sourceforge.pebble.decorator.TrackBackAutoDiscoveryDecorator">
     <description>
