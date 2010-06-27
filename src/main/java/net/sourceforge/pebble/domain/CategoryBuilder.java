@@ -186,10 +186,10 @@ public class CategoryBuilder {
   }
 
   /**
-   * Gets (and creates if necessary), the specified category.
+   * Gets the specified category.
    *
    * @param id          the id of the category to find
-   * @return  a Category instance
+   * @return  a Category instance, or null if not found
    */
   public Category getCategory(String id) {
     return getCategory(id, false);
