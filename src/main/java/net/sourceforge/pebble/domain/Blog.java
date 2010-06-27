@@ -278,8 +278,8 @@ public class Blog extends AbstractBlog {
 
     try {
       Class c = Class.forName(getLoggerName());
-      Constructor cons = c.getConstructor(new Class[] {Blog.class});
-      this.logger = (AbstractLogger)cons.newInstance(new Object[] {this});
+      Constructor cons = c.getConstructor(Blog.class);
+      this.logger = (AbstractLogger)cons.newInstance(this);
     } catch (Exception e) {
       error("Could not start logger \"" + getLoggerName() + "\"");
       e.printStackTrace();
@@ -964,12 +964,12 @@ public class Blog extends AbstractBlog {
    *
    * @return  a List of BlogEntry objects
    */
-  public List getBlogEntries() {
-    List blogEntries = new ArrayList();
+  public List<BlogEntry> getBlogEntries() {
+    List<BlogEntry> blogEntries = new ArrayList<BlogEntry>();
     BlogService service = new BlogService();
 
     for (int year = years.size()-1; year >= 0; year--) {
-      Year y = (Year)years.get(year);
+      Year y = years.get(year);
       Month[] months = y.getMonths();
       for (int month = 11; month >= 0; month--) {
         try {
