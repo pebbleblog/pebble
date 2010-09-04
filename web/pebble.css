@@ -1,0 +1,66 @@
+#admin {
+  background: black;
+  color: white;
+  padding: 0px;
+  font-size: 11px;
+  border: black solid 1px;
+}
+#admin a {
+  color: white;
+}
+.adminLevel1 {
+  background: black;
+  padding: 4px;
+}
+.adminLevel1 span {
+  text-decoration: underline;  
+  padding-left: 4px;
+  padding-right: 4px;
+}
+.adminLevel1 span:hover {
+  background: #606060;
+  color: white;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+.adminLevel2 {
+  background: #606060;
+  padding: 4px;
+}
+.inlineAdminLinks {
+  background: #f0f0f0;
+  border: gray solid 1px;
+  padding: 8px;
+  color: black;
+}
+#messages {
+  background: white;
+  font-size: 11px;
+  border-top: black solid 1px;
+}
+.ERROR {
+  background: red;
+  color: white;
+  padding: 4px;
+}
+.ERROR a {
+  color: white;
+}
+.WARN {
+  background: orange;
+  color: white;
+  padding: 4px;
+}
+.WARN a {
+  color: white;
+}
+.INFO {
+  background: gray;
+  color: white;
+  padding: 4px;
+}
+.INFO a {
+  color: white;
+}

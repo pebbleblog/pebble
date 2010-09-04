@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Pebble</title>
+    <link rel="stylesheet" href="screen.css" type="text/css" media="screen" />
+  </head>
+
+  <body>
+
+    <div id="body">
+
+      <div id="header">
+        <div id="blogName"><span>Pebble</span></div>
+        <div id="blogDescription"><span>A lightweight, open source, Java EE blogging tool</span></div>
+      </div>
+
+      <div id="linearNavigation">
+        <a href="http://sourceforge.net/projects/pebble/">SourceForge.net project page</a> |
+        <a href="index.html">Home</a> |
+        <a href="http://lists.sourceforge.net/mailman/listinfo/pebble-user/">pebble-user mailing list</a> |
+        <a href="https://open.jira.com/browse/PEBBLE">Issues on open.jira.com</a>
+      </div>
+
+      <div id="sidebar">
+      </div>
+
+      <div id="content">
+
+        <div class="contentItem published">
+          <h1>Installation</h1>
+          <h2>How do I deploy Pebble?</h2>
+
+          <div class="contentItemBody">
+            <p>
+              Installation on most JSP 2.0/Servlet 2.4 containers should be as simple as dropping the <code>pebble.war</code>
+              file into a specific directory in order to deploy it. Here are the steps required to deploy Pebble into Tomcat 5.5.x.
+            </p>
+            <ol>
+              <li>Take the <code>pebble.war</code> file from the distribution and deploy it, by copying it to <code>$TOMCAT_HOME/webapps</code>.</li>
+              <li>Restart Tomcat and point your browser to <code>http://localhost:8080/pebble/</code>.</li>
+              <li>Start blogging by logging in with a username of <code>username</code> and a password of <code>password</code>.</li>
+            </ol>
+
+            <p>
+              What follows are some instructions for specific web/application servers.
+            </p>
+
+            <h3>Tomcat 5.5.x</h3>
+            <p>
+              To enable e-mail integration so that Pebble can send e-mails whenever people leave comments, copy the <code>activation.jar</code> and <code>mail.jar</code>
+              files from the <code>lib</code> directory of the Pebble distribution into <code>$TOMCAT_HOME/common/lib/</code>.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      <div id="footer">
+        Pebble is written by <a href="http://www.simongbrown.com/blog/">Simon Brown</a> and maintained by <a href="http://www.olafkock.de/">Olaf Kock</a> and <a href="credits.html">many contributors</a>
+      </div>
+
+    </div>
+  </body>
+</html>
