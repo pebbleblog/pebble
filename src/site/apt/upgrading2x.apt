@@ -2,6 +2,12 @@
     Upgrading from Pebble 2.x
     ---
 
+Upgrading from Pebble 2.4
+    
+    Pebble 2.5 introduces a new plugin system.  If you have any custom plugins in pebble, you will need to write
+    a plugin descriptor for them.  Instructions on writing a plugin descriptor can be found on the
+    {{{http://open.jira.com/wiki/display/PEBBLE/Plugin+Development}Pebble wiki}}.
+
 Upgrading from Pebble 2.x
 
     There are no specific upgrade intsructions if you are upgrading from a previous 2.0 version of Pebble (including
@@ -22,7 +28,7 @@ Upgrading from Pebble 2.x
           * TrackBack Listeners
           * TrackBack Confirmation Strategy
           * Lucene Analyzer
-          C Logger
+          * Logger
 
     Once you are happy that Pebble is working as expected, you should set your theme back to the one you were using
     prior to the upgrade (via the blog properties page) and customize the plugins as required (via the plugins page).
