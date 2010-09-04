@@ -31,11 +31,10 @@
  */
 package net.sourceforge.pebble.security;
 
-import org.acegisecurity.intercept.AbstractSecurityInterceptor;
-import org.acegisecurity.intercept.InterceptorStatusToken;
-import org.acegisecurity.intercept.ObjectDefinitionSource;
-import org.acegisecurity.intercept.web.FilterInvocation;
-import org.acegisecurity.intercept.web.FilterInvocationDefinitionSource;
+import org.springframework.security.access.SecurityMetadataSource;
+import org.springframework.security.access.intercept.AbstractSecurityInterceptor;
+import org.springframework.security.access.intercept.InterceptorStatusToken;
+import org.springframework.security.web.FilterInvocation;
 
 import javax.servlet.*;
 import java.io.IOException;
@@ -49,7 +48,7 @@ import java.io.IOException;
  */
 public class PrivateBlogSecurityInterceptor extends AbstractSecurityInterceptor implements Filter {
 
-  private static final String FILTER_APPLIED = "__acegi_privateBlogSecurityInterceptor_filterApplied";
+  private static final String FILTER_APPLIED = "__spring_security_privateBlogSecurityInterceptor_filterApplied";
 
   //~ Instance fields ================================================================================================
 
@@ -132,12 +131,8 @@ public class PrivateBlogSecurityInterceptor extends AbstractSecurityInterceptor 
       this.observeOncePerRequest = observeOncePerRequest;
   }
 
-  public FilterInvocationDefinitionSource getObjectDefinitionSource() {
-    return new PrivateBlogFilterInvocationDefinitionSource();
+  @Override
+  public SecurityMetadataSource obtainSecurityMetadataSource() {
+    return new PrivateBlogSecurityMetadataSource();
   }
-
-  public ObjectDefinitionSource obtainObjectDefinitionSource() {
-    return new PrivateBlogFilterInvocationDefinitionSource();
-  }
-
 }

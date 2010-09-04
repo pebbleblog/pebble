@@ -10,7 +10,7 @@
         <table>
           <tr><td><fmt:message key="login.username"/></td><td><input id="j_username" type="text" name="j_username" /></td></tr>
           <tr><td><fmt:message key="login.password"/></td><td><input type="password" name="j_password" /></td></tr>
-          <tr><td><fmt:message key='login.rememberMe' /></td><td><input type="checkbox" name="_acegi_security_remember_me" /></td></tr>
+          <tr><td><fmt:message key='login.rememberMe' /></td><td><input type="checkbox" name="_spring_security_remember_me" /></td></tr>
           <tr><td colspan="2" align="right"><input type="submit" value="<fmt:message key='login.button' />" /></td></tr>
         </table>
       </form>

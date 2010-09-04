@@ -33,7 +33,6 @@ package net.sourceforge.pebble.comparator;
 
 import net.sourceforge.pebble.domain.SingleBlogTestCase;
 import net.sourceforge.pebble.security.PebbleUserDetails;
-import org.acegisecurity.GrantedAuthorityImpl;
 
 import java.util.HashMap;
 

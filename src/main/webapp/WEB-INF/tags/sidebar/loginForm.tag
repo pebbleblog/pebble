@@ -24,7 +24,7 @@
         </tr>
         <tr>
           <td colspan="2" align="center">
-            <fmt:message key='login.rememberMe' /><input type="checkbox" name="_acegi_security_remember_me" />
+            <fmt:message key='login.rememberMe' /><input type="checkbox" name="_spring_security_remember_me" />
             <input type="submit" value="<fmt:message key='login.button' />" />
           </td>
         </tr>

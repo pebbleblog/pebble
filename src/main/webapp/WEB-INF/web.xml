@@ -11,9 +11,9 @@
   <context-param>
     <param-name>contextConfigLocation</param-name>
     <param-value>
-      /WEB-INF/applicationContext-acegi-security.xml
-      /WEB-INF/applicationContext-xmlrpc.xml
       /WEB-INF/applicationContext-pebble.xml
+      /WEB-INF/applicationContext-security.xml
+      /WEB-INF/applicationContext-xmlrpc.xml
     </param-value>
   </context-param>
 
@@ -49,12 +49,8 @@
   </filter>
 
   <filter>
-    <filter-name>Acegi Filter Chain Proxy</filter-name>
-    <filter-class>org.acegisecurity.util.FilterToBeanProxy</filter-class>
-    <init-param>
-      <param-name>targetClass</param-name>
-      <param-value>org.acegisecurity.util.FilterChainProxy</param-value>
-    </init-param>
+    <filter-name>filterChainProxy</filter-name>
+    <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
   </filter>
 
   <filter>
@@ -103,7 +99,7 @@
   </filter-mapping>
 
   <filter-mapping>
-    <filter-name>Acegi Filter Chain Proxy</filter-name>
+    <filter-name>filterChainProxy</filter-name>
     <url-pattern>/*</url-pattern>
     <dispatcher>REQUEST</dispatcher>
   </filter-mapping>

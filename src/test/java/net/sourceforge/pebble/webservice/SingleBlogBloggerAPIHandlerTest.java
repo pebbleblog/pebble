@@ -33,12 +33,11 @@ package net.sourceforge.pebble.webservice;
 
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.domain.*;
-import org.acegisecurity.GrantedAuthority;
-import org.acegisecurity.GrantedAuthorityImpl;
-import org.acegisecurity.MockAuthenticationManager;
+import net.sourceforge.pebble.mock.MockAuthenticationManager;
 import org.apache.xmlrpc.XmlRpcException;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.GrantedAuthorityImpl;
 
-import java.util.Calendar;
 import java.util.Hashtable;
 import java.util.Vector;
 

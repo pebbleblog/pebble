@@ -34,10 +34,10 @@ package net.sourceforge.pebble.webservice;
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.domain.*;
 import net.sourceforge.pebble.mock.MockAuthenticationManager;
-import org.acegisecurity.GrantedAuthority;
-import org.acegisecurity.GrantedAuthorityImpl;
-import org.acegisecurity.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.apache.xmlrpc.XmlRpcException;
+import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Calendar;
 import java.util.Hashtable;

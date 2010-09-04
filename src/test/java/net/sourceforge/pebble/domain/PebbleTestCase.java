@@ -35,7 +35,7 @@ import junit.framework.TestCase;
 import net.sourceforge.pebble.util.FileUtils;
 import net.sourceforge.pebble.PebbleContext;
 import net.sourceforge.pebble.Configuration;
-import org.acegisecurity.context.SecurityContextHolder;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.io.File;
 

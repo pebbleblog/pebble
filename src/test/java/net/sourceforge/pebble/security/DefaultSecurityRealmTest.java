@@ -3,15 +3,13 @@ package net.sourceforge.pebble.security;
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.PebbleContext;
 import net.sourceforge.pebble.domain.SingleBlogTestCase;
-import org.acegisecurity.providers.dao.salt.ReflectionSaltSource;
-import org.acegisecurity.providers.encoding.PasswordEncoder;
-import org.acegisecurity.providers.encoding.PlaintextPasswordEncoder;
-import org.acegisecurity.GrantedAuthorityImpl;
+import org.springframework.security.authentication.dao.ReflectionSaltSource;
+import org.springframework.security.authentication.encoding.PasswordEncoder;
+import org.springframework.security.authentication.encoding.PlaintextPasswordEncoder;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.GrantedAuthorityImpl;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Tests for the DefaultSecurityRealm class.
@@ -66,7 +64,7 @@ public class DefaultSecurityRealmTest extends SingleBlogTestCase {
     assertEquals("profile", user.getProfile());
     assertEquals("true", user.getPreference("testPreference"));
 
-    List authorities = Arrays.asList(user.getAuthorities());
+    Collection<GrantedAuthority> authorities = user.getAuthorities();
     assertEquals(2, authorities.size());
     assertTrue(authorities.contains(new GrantedAuthorityImpl(Constants.BLOG_OWNER_ROLE)));
     assertTrue(authorities.contains(new GrantedAuthorityImpl(Constants.BLOG_READER_ROLE)));

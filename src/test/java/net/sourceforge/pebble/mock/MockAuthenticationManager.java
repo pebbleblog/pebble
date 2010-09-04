@@ -31,8 +31,13 @@
  */
 package net.sourceforge.pebble.mock;
 
-import org.acegisecurity.*;
-import org.acegisecurity.providers.TestingAuthenticationToken;
+import org.springframework.security.authentication.AbstractAuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.TestingAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.GrantedAuthorityImpl;
 
 /**
  * A mock AuthenticationManager implementation, based upon the ships with Acegi.

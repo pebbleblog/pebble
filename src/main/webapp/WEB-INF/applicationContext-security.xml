@@ -1,0 +1,197 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/security
+           http://www.springframework.org/schema/security/spring-security-3.0.3.xsd">
+
+  <!-- ======================== FILTER CHAIN ======================= -->
+  <bean id="filterChainProxy" class="org.springframework.security.web.FilterChainProxy">
+    <security:filter-chain-map path-type="ant">
+      <security:filter-chain pattern="/xmlrpc/**" filters="anonymousProcessingFilter"/>
+      <security:filter-chain pattern="/**/*.xml" filters="
+        securityContextPersistenceFilter,
+        basicProcessingFilter,
+        rememberMeProcessingFilter,
+        basicExceptionTranslationFilter,
+        privateBlogInvocationInterceptor,
+        filterInvocationInterceptor
+        "/>
+      <security:filter-chain pattern="/**" filters="
+        securityContextPersistenceFilter,
+        formProcessingFilter,
+        rememberMeProcessingFilter,
+        exceptionTranslationFilter,
+        privateBlogInvocationInterceptor,
+        filterInvocationInterceptor
+        "/>
+    </security:filter-chain-map>
+  </bean>
+
+  <!-- ======================== AUTHENTICATION ======================= -->
+
+  <bean id="authenticationManager" class="org.springframework.security.authentication.ProviderManager">
+    <property name="providers">
+      <list>
+        <ref local="daoAuthenticationProvider"/>
+        <ref local="rememberMeAuthenticationProvider"/>
+      </list>
+    </property>
+  </bean>
+
+  <bean id="daoAuthenticationProvider"
+        class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+    <property name="userDetailsService" ref="pebbleUserDetailsService"/>
+    <property name="passwordEncoder" ref="passwordEncoder"/>
+    <property name="saltSource" ref="saltSource"/>
+  </bean>
+
+  <!-- this is a default implementation of Acegi's UserDetailsService that plugs into the
+       daoAuthenticationProvider - you don't need this if you are using an alternative
+       UserDetailsService or another AuthenticationProvider -->
+  <bean id="pebbleUserDetailsService" class="net.sourceforge.pebble.security.DefaultUserDetailsService">
+    <property name="securityRealm" ref="pebbleSecurityRealm"/>
+  </bean>
+
+  <!-- an implementation of net.sourceforge.pebble.security.SecurityRealm is required
+       to provide detailed user information and manage users
+       it is plugged into other components outside the context of this file -->
+  <bean id="pebbleSecurityRealm" class="net.sourceforge.pebble.security.DefaultSecurityRealm" init-method="init">
+    <property name="configuration" ref="pebbleConfiguration"/>
+    <property name="passwordEncoder" ref="passwordEncoder"/>
+    <property name="saltSource" ref="saltSource"/>
+  </bean>
+
+  <bean id="passwordEncoder" class="org.springframework.security.authentication.encoding.ShaPasswordEncoder"/>
+
+  <bean id="saltSource" class="org.springframework.security.authentication.dao.ReflectionSaltSource">
+    <property name="userPropertyToUse" value="getUsername"/>
+  </bean>
+
+  <!-- Automatically receives AuthenticationEvent messages -->
+  <bean id="loggerListener" class="org.springframework.security.authentication.event.LoggerListener"/>
+
+  <bean id="securityContextPersistenceFilter"
+        class="org.springframework.security.web.context.SecurityContextPersistenceFilter"/>
+
+  <bean id="rememberMeProcessingFilter" class="org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter">
+    <property name="rememberMeServices" ref="rememberMeServices"/>
+    <property name="authenticationManager" ref="authenticationManager"/>
+  </bean>
+
+  <bean id="rememberMeServices" class="org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices">
+    <property name="userDetailsService" ref="pebbleUserDetailsService"/>
+    <property name="key" value="pebble"/>
+  </bean>
+
+  <bean id="rememberMeAuthenticationProvider"
+        class="org.springframework.security.authentication.RememberMeAuthenticationProvider">
+    <property name="key" value="pebble"/>
+  </bean>
+
+  <bean id="roleVoter" class="org.springframework.security.access.vote.RoleVoter"/>
+
+  <!-- ===================== HTTP REQUEST SECURITY ==================== -->
+
+  <bean id="anonymousProcessingFilter"
+        class="org.springframework.security.web.authentication.AnonymousAuthenticationFilter">
+    <property name="key" value="anonymous"/>
+    <property name="userAttribute" value="anonymousUser,ROLE_ANONYMOUS"/>
+  </bean>
+
+  <bean id="formProcessingFilter" class="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter">
+    <property name="authenticationManager" ref="authenticationManager"/>
+    <property name="authenticationFailureHandler" ref="authenticationFailureHandler"/>
+    <property name="filterProcessesUrl" value="/j_acegi_security_check"/>
+    <property name="rememberMeServices" ref="rememberMeServices"/>
+    <property name="authenticationSuccessHandler" ref="authenticationSuccessHandler"/>
+  </bean>
+  
+  <bean id="authenticationSuccessHandler" class="org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler">
+    <property name="targetUrlParameter" value="redirectUrl"/>
+  </bean>
+
+  <bean id="authenticationFailureHandler" class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
+    <property name="defaultFailureUrl" value="/loginPage.action?error=true"/>
+  </bean>
+
+  <bean id="authenticationEntryPoint"
+        class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
+    <property name="loginFormUrl" value="/loginPage.action"/>
+    <property name="forceHttps" value="false"/>
+  </bean>
+
+  <bean id="exceptionTranslationFilter" class="org.springframework.security.web.access.ExceptionTranslationFilter">
+    <property name="authenticationEntryPoint" ref="authenticationEntryPoint"/>
+  </bean>
+
+  <bean id="accessDecisionManager" class="org.springframework.security.access.vote.AffirmativeBased">
+    <property name="allowIfAllAbstainDecisions" value="false"/>
+    <property name="decisionVoters">
+      <list>
+        <ref bean="roleVoter"/>
+      </list>
+    </property>
+  </bean>
+
+  <bean id="basicProcessingFilter" class="org.springframework.security.web.authentication.www.BasicAuthenticationFilter">
+    <property name="authenticationManager" ref="authenticationManager"/>
+    <property name="authenticationEntryPoint" ref="basicAuthenticationEntryPoint"/>
+  </bean>
+
+  <bean id="basicAuthenticationEntryPoint"
+        class="org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint">
+    <property name="realmName" value="Secured newsfeeds"/>
+  </bean>
+
+  <bean id="basicExceptionTranslationFilter" class="org.springframework.security.web.access.ExceptionTranslationFilter">
+    <property name="authenticationEntryPoint" ref="basicAuthenticationEntryPoint"/>
+  </bean>
+
+  <!-- Note the order that entries are placed against the objectDefinitionSource is critical.
+  The FilterSecurityInterceptor will work from the top of the list down to the FIRST pattern that matches the request URL.
+  Accordingly, you should place MOST SPECIFIC (ie a/b/c/d.*) expressions first, with LEAST SPECIFIC (ie a/.*) expressions last -->
+  <bean id="filterInvocationInterceptor" class="org.springframework.security.web.access.intercept.FilterSecurityInterceptor">
+    <property name="authenticationManager" ref="authenticationManager"/>
+    <property name="accessDecisionManager" ref="accessDecisionManager"/>
+    <property name="securityMetadataSource">
+      <security:filter-security-metadata-source lowercase-comparisons="true" path-type="ant">
+        <security:intercept-url pattern="/**/*.secureaction" access="
+          ROLE_BLOG_OWNER,
+          ROLE_BLOG_PUBLISHER,
+          ROLE_BLOG_CONTRIBUTOR,
+          ROLE_BLOG_ADMIN,
+          ROLE_BLOG_READER
+        "/>
+        <security:intercept-url pattern="/**/files/" access="ROLE_BLOG_CONTRIBUTOR"/>
+        <security:intercept-url pattern="/**/images/" access="ROLE_BLOG_CONTRIBUTOR"/>
+        <security:intercept-url pattern="/**/theme/**" access="ROLE_BLOG_OWNER"/>
+        <security:intercept-url pattern="/**/help/**" access="
+          ROLE_BLOG_OWNER,
+          ROLE_BLOG_PUBLISHER,
+          ROLE_BLOG_CONTRIBUTOR
+        "/>
+      </security:filter-security-metadata-source>
+    </property>
+  </bean>
+
+  <!-- ===================== PRIVATE BLOG SECURITY ==================== -->
+
+  <bean id="privateBlogRoleVoter" class="net.sourceforge.pebble.security.PrivateBlogVoter"/>
+
+  <bean id="privateBlogAccessDecisionManager" class="org.springframework.security.access.vote.AffirmativeBased">
+    <property name="allowIfAllAbstainDecisions" value="false"/>
+    <property name="decisionVoters">
+      <list>
+        <ref bean="privateBlogRoleVoter"/>
+      </list>
+    </property>
+  </bean>
+
+  <bean id="privateBlogInvocationInterceptor" class="net.sourceforge.pebble.security.PrivateBlogSecurityInterceptor">
+    <property name="authenticationManager" ref="authenticationManager"/>
+    <property name="accessDecisionManager" ref="privateBlogAccessDecisionManager"/>
+  </bean>
+
+</beans>

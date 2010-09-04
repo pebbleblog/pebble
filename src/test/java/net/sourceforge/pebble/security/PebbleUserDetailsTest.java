@@ -2,10 +2,10 @@ package net.sourceforge.pebble.security;
 
 import junit.framework.TestCase;
 import net.sourceforge.pebble.Constants;
-import org.acegisecurity.GrantedAuthorityImpl;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.GrantedAuthorityImpl;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.Collection;
 import java.util.HashMap;
 
 /**
@@ -28,7 +28,7 @@ public class PebbleUserDetailsTest extends TestCase {
     assertEquals("emailAddress", user.getEmailAddress());
     assertEquals("website", user.getWebsite());
 
-    List authorities = Arrays.asList(user.getAuthorities());
+    Collection<GrantedAuthority> authorities = user.getAuthorities();
     assertEquals(2, authorities.size());
     assertTrue(authorities.contains(new GrantedAuthorityImpl(Constants.BLOG_OWNER_ROLE)));
     assertTrue(authorities.contains(new GrantedAuthorityImpl(Constants.BLOG_READER_ROLE)));
@@ -43,7 +43,7 @@ public class PebbleUserDetailsTest extends TestCase {
     assertEquals("emailAddress", user.getEmailAddress());
     assertEquals("website", user.getWebsite());
 
-    List authorities = Arrays.asList(user.getAuthorities());
+    Collection<GrantedAuthority> authorities = user.getAuthorities();
     assertEquals(1, authorities.size());
     assertTrue(authorities.contains(new GrantedAuthorityImpl(Constants.BLOG_READER_ROLE)));
   }

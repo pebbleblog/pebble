@@ -34,15 +34,14 @@ package net.sourceforge.pebble.security;
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.domain.AbstractBlog;
 import net.sourceforge.pebble.domain.Blog;
-import org.acegisecurity.ConfigAttributeDefinition;
-import org.acegisecurity.intercept.web.FilterInvocation;
-import org.acegisecurity.intercept.web.FilterInvocationDefinitionSource;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.security.access.ConfigAttribute;
+import org.springframework.security.access.SecurityMetadataSource;
+import org.springframework.security.web.FilterInvocation;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /**
  * Bespoke FilterInvocationDefinitionSource that holds a mapping between blog
@@ -54,9 +53,9 @@ import java.util.List;
  *
  * @author Simon Brown
  */
-public class PrivateBlogFilterInvocationDefinitionSource implements FilterInvocationDefinitionSource {
+public class PrivateBlogSecurityMetadataSource implements SecurityMetadataSource {
 
-  private static final Log log = LogFactory.getLog(PrivateBlogFilterInvocationDefinitionSource.class);
+  private static final Log log = LogFactory.getLog(PrivateBlogSecurityMetadataSource.class);
 
 
   /**
@@ -68,7 +67,7 @@ public class PrivateBlogFilterInvocationDefinitionSource implements FilterInvoca
    * @throws IllegalArgumentException if the passed object is not of a type supported by the
    *                                  <code>ObjectDefinitionSource</code> implementation
    */
-  public ConfigAttributeDefinition getAttributes(Object object) throws IllegalArgumentException {
+  public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
     if ((object == null) || !this.supports(object.getClass())) {
         throw new IllegalArgumentException("Object must be a FilterInvocation");
     }
@@ -95,7 +94,7 @@ public class PrivateBlogFilterInvocationDefinitionSource implements FilterInvoca
       Blog blog = (Blog)ab;
       List<String> blogReaders = blog.getBlogReaders();
       if (blogReaders != null && blogReaders.size() > 0) {
-        return new PrivateBlogConfigAttributeDefinition(blog);
+        return Arrays.<ConfigAttribute>asList(new PrivateBlogConfigAttributeDefinition(blog));
       }
     }
 
@@ -104,12 +103,12 @@ public class PrivateBlogFilterInvocationDefinitionSource implements FilterInvoca
 
   /**
    * If available, all of the <code>ConfigAttributeDefinition</code>s defined by the implementing class.<P>This
-   * is used by the {@link org.acegisecurity.intercept.AbstractSecurityInterceptor} to perform startup time validation of each
+   * is used by the {@link org.springframework.security.access.intercept.AbstractSecurityInterceptor} to perform startup time validation of each
    * <code>ConfigAttribute</code> configured against it.</p>
    *
    * @return an iterator over all the <code>ConfigAttributeDefinition</code>s or <code>null</code> if unsupported
    */
-  public Iterator getConfigAttributeDefinitions() {
+  public Collection<ConfigAttribute> getAllConfigAttributes() {
     return null;
   }
 
@@ -121,10 +120,6 @@ public class PrivateBlogFilterInvocationDefinitionSource implements FilterInvoca
    * @return true if the implementation can process the indicated class
    */
   public boolean supports(Class clazz) {
-    if (FilterInvocation.class.isAssignableFrom(clazz)) {
-        return true;
-    } else {
-        return false;
-    }
+    return FilterInvocation.class.isAssignableFrom(clazz);
   }
 }

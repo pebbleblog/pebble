@@ -37,20 +37,20 @@ import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.security.PebbleUserDetails;
 import net.sourceforge.pebble.security.SecurityRealm;
 import net.sourceforge.pebble.security.SecurityRealmException;
-import org.acegisecurity.Authentication;
-import org.acegisecurity.GrantedAuthority;
-import org.acegisecurity.GrantedAuthorityImpl;
-import org.acegisecurity.context.SecurityContext;
-import org.acegisecurity.context.SecurityContextHolder;
-import org.acegisecurity.providers.TestingAuthenticationToken;
-import org.acegisecurity.providers.encoding.Md5PasswordEncoder;
-import org.acegisecurity.providers.encoding.PasswordEncoder;
-import org.acegisecurity.providers.encoding.PlaintextPasswordEncoder;
-import org.acegisecurity.providers.encoding.ShaPasswordEncoder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.security.authentication.TestingAuthenticationToken;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
+import org.springframework.security.authentication.encoding.PasswordEncoder;
+import org.springframework.security.authentication.encoding.PlaintextPasswordEncoder;
+import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.GrantedAuthorityImpl;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * A collection of utility methods for security.
@@ -93,7 +93,7 @@ public final class SecurityUtils {
 
   public static boolean isUserInRole(Authentication auth, String role) {
     if (auth != null) {
-      GrantedAuthority[] authorities = auth.getAuthorities();
+      Collection<GrantedAuthority> authorities = auth.getAuthorities();
       if (authorities != null) {
         for (GrantedAuthority authority : authorities) {
           if (authority.getAuthority().equals(role)) {

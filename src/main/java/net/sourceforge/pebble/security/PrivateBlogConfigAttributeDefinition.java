@@ -31,8 +31,8 @@
  */
 package net.sourceforge.pebble.security;
 
-import org.acegisecurity.ConfigAttributeDefinition;
 import net.sourceforge.pebble.domain.Blog;
+import org.springframework.security.access.ConfigAttribute;
 
 /**
  * Specialised ConfigAttributeDefinition that has a reference to the
@@ -40,7 +40,7 @@ import net.sourceforge.pebble.domain.Blog;
  *
  * @author Simon Brown
  */
-public class PrivateBlogConfigAttributeDefinition extends ConfigAttributeDefinition {
+public class PrivateBlogConfigAttributeDefinition implements ConfigAttribute {
 
   private Blog blog;
 
@@ -52,4 +52,7 @@ public class PrivateBlogConfigAttributeDefinition extends ConfigAttributeDefinit
     return blog;
   }
 
+  public String getAttribute() {
+    return null;
+  }
 }

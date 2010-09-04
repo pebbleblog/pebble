@@ -33,7 +33,7 @@ package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.web.view.RedirectView;
 import net.sourceforge.pebble.web.view.View;
-import org.acegisecurity.ui.rememberme.TokenBasedRememberMeServices;
+import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -58,7 +58,7 @@ public class LogoutAction extends Action {
     String redirectUrl = request.getParameter("redirectUrl");
     request.getSession().invalidate();
 
-    Cookie terminate = new Cookie(TokenBasedRememberMeServices.ACEGI_SECURITY_HASHED_REMEMBER_ME_COOKIE_KEY, null);
+    Cookie terminate = new Cookie(TokenBasedRememberMeServices.SPRING_SECURITY_REMEMBER_ME_COOKIE_KEY, null);
     terminate.setMaxAge(-1);
     response.addCookie(terminate);
     

@@ -33,10 +33,11 @@ package net.sourceforge.pebble.security;
 
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.util.SecurityUtils;
-import org.acegisecurity.Authentication;
-import org.acegisecurity.ConfigAttribute;
-import org.acegisecurity.ConfigAttributeDefinition;
-import org.acegisecurity.vote.AccessDecisionVoter;
+import org.springframework.security.access.AccessDecisionVoter;
+import org.springframework.security.access.ConfigAttribute;
+import org.springframework.security.core.Authentication;
+
+import java.util.Collection;
 
 /**
  * AccessDecisionVoter that votes ACCESS_GRANTED if the user is :
@@ -61,7 +62,7 @@ public class PrivateBlogVoter implements AccessDecisionVoter {
    * @return true if this <code>AccessDecisionVoter</code> can support the passed configuration attribute
    */
   public boolean supports(ConfigAttribute attribute) {
-    return true;
+    return attribute instanceof PrivateBlogConfigAttributeDefinition;
   }
 
   /**
@@ -80,7 +81,7 @@ public class PrivateBlogVoter implements AccessDecisionVoter {
    * (<code>ACCESS_GRANTED</code>), negative (<code>ACCESS_DENIED</code>) or the <code>AccessDecisionVoter</code>
    * can abstain (<code>ACCESS_ABSTAIN</code>) from voting. Under no circumstances should implementing classes
    * return any other value. If a weighting of results is desired, this should be handled in a custom {@link
-   * org.acegisecurity.AccessDecisionManager} instead.</p>
+   * org.springframework.security.access.AccessDecisionManager} instead.</p>
    * <P>Unless an <code>AccessDecisionVoter</code> is specifically intended to vote on an access control
    * decision due to a passed method invocation or configuration attribute parameter, it must return
    * <code>ACCESS_ABSTAIN</code>. This prevents the coordinating <code>AccessDecisionManager</code> from counting
@@ -95,21 +96,25 @@ public class PrivateBlogVoter implements AccessDecisionVoter {
    * @param config         the configuration attributes associated with the method being invoked
    * @return either {@link #ACCESS_GRANTED}, {@link #ACCESS_ABSTAIN} or {@link #ACCESS_DENIED}
    */
-  public int vote(Authentication authentication, Object object, ConfigAttributeDefinition config) {
-    PrivateBlogConfigAttributeDefinition cad = (PrivateBlogConfigAttributeDefinition)config;
-    Blog blog = cad.getBlog();
-
-    if (SecurityUtils.isBlogAdmin(authentication)) {
-      // admin users need access to all blogs
-      return ACCESS_GRANTED;
-    } else if (SecurityUtils.isUserAuthorisedForBlog(authentication, blog)) {
-      // blog owners/publishers/contributors need access, if they have it
-      return ACCESS_GRANTED;
-    } else if (SecurityUtils.isUserAuthorisedForBlogAsBlogReader(authentication, blog)) {
-      // the user is an authorised blog reader
-        return ACCESS_GRANTED;
+  public int vote(Authentication authentication, Object object, Collection<ConfigAttribute> config) {
+    // Ok, the way this has been implemented is bad... but it's 2am and I'm not about to fix it.
+    for (ConfigAttribute attribute : config) {
+      if (attribute instanceof PrivateBlogConfigAttributeDefinition) {
+        PrivateBlogConfigAttributeDefinition cad = (PrivateBlogConfigAttributeDefinition) attribute;
+        Blog blog = cad.getBlog();
+        if (SecurityUtils.isBlogAdmin(authentication)) {
+          // admin users need access to all blogs
+          return ACCESS_GRANTED;
+        } else if (SecurityUtils.isUserAuthorisedForBlog(authentication, blog)) {
+          // blog owners/publishers/contributors need access, if they have it
+          return ACCESS_GRANTED;
+        } else if (SecurityUtils.isUserAuthorisedForBlogAsBlogReader(authentication, blog)) {
+          // the user is an authorised blog reader
+            return ACCESS_GRANTED;
+        }
+        return ACCESS_DENIED;
+      }
     }
-
-    return ACCESS_DENIED;
+    return ACCESS_ABSTAIN;
   }
 }

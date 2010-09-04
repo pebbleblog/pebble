@@ -1,22 +1,22 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
-
-<beans>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
   <bean id="bloggerApiHandler" class="net.sourceforge.pebble.webservice.BloggerAPIHandler">
-    <property name="authenticationManager"><ref bean="authenticationManager"/></property>
+    <property name="authenticationManager" ref="authenticationManager"/>
   </bean>
 
   <bean id="metaweblogApiHandler" class="net.sourceforge.pebble.webservice.MetaWeblogAPIHandler">
-    <property name="authenticationManager"><ref bean="authenticationManager"/></property>
+    <property name="authenticationManager" ref="authenticationManager"/>
   </bean>
 
   <bean id="pebbleApiHandler" class="net.sourceforge.pebble.webservice.PebbleAPIHandler">
-    <property name="authenticationManager"><ref bean="authenticationManager"/></property>
+    <property name="authenticationManager" ref="authenticationManager"/>
   </bean>
 
   <bean id="searchApiHandler" class="net.sourceforge.pebble.webservice.SearchAPIHandler">
-    <property name="authenticationManager"><ref bean="authenticationManager"/></property>
+    <property name="authenticationManager" ref="authenticationManager"/>
   </bean>
 
 </beans>

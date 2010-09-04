@@ -1,10 +1,10 @@
 package net.sourceforge.pebble.security;
 
-import org.acegisecurity.userdetails.UserDetails;
-import org.acegisecurity.userdetails.UserDetailsService;
-import org.acegisecurity.userdetails.UsernameNotFoundException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 /**
  * Implementation of the UserDetailsService that gets authentication
@@ -23,7 +23,7 @@ public class DefaultUserDetailsService implements UserDetailsService {
    *
    * @param username    the username to find details for
    * @return  a PebbleUserDetails instance
-   * @throws org.acegisecurity.userdetails.UsernameNotFoundException
+   * @throws org.springframework.security.core.userdetails.UsernameNotFoundException
    */
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
     try {

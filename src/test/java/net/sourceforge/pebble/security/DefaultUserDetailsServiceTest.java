@@ -2,12 +2,12 @@ package net.sourceforge.pebble.security;
 
 import junit.framework.TestCase;
 import net.sourceforge.pebble.Constants;
-import org.acegisecurity.userdetails.UserDetails;
-import org.acegisecurity.userdetails.UsernameNotFoundException;
-import org.acegisecurity.GrantedAuthorityImpl;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.GrantedAuthorityImpl;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.Collection;
 import java.util.HashMap;
 
 /**
@@ -39,7 +39,7 @@ public class DefaultUserDetailsServiceTest extends TestCase {
     assertEquals("username", user.getUsername());
     assertEquals("password", user.getPassword());
 
-    List authorities = Arrays.asList(user.getAuthorities());
+    Collection<GrantedAuthority> authorities = user.getAuthorities();
     assertEquals(2, authorities.size());
     assertTrue(authorities.contains(new GrantedAuthorityImpl(Constants.BLOG_OWNER_ROLE)));
     assertTrue(authorities.contains(new GrantedAuthorityImpl(Constants.BLOG_READER_ROLE)));
