@@ -482,9 +482,9 @@
     </distributionManagement>
 
     <scm>
-        <connection>scm:svn:https://open.jira.com/svn/PEBBLE/trunk</connection>
-        <developerConnection>scm:svn:https://open.jira.com/svn/PEBBLE/trunk</developerConnection>
-        <url>http://open.jira.com/source/browse/PEBBLE/trunk</url>
+        <connection>scm:svn:https://open.jira.com/svn/PEBBLE/branches/2.5-stable</connection>
+        <developerConnection>scm:svn:https://open.jira.com/svn/PEBBLE/branches/2.5-stable</developerConnection>
+        <url>http://open.jira.com/source/browse/PEBBLE/branches/2.5-stable</url>
     </scm>
 
     <issueManagement>
