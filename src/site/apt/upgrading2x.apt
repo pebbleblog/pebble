@@ -16,18 +16,29 @@ Upgrading from Pebble 2.x
     upgrading.>>
 
     * Restructure the directory hierarchy in which blog entries are stored to be GMT based.
+
     * Set your theme back to "default".
+
     * Reset the following plugins back to their default configuration.
 
           * Permalink Provider
+
           * Content Decorators
+
           * Blog Listeners
+
           * Blog Entry Listeners
+
           * Comment Listeners
+
           * Comment Confirmation Strategy
+
           * TrackBack Listeners
+
           * TrackBack Confirmation Strategy
+
           * Lucene Analyzer
+
           * Logger
 
     Once you are happy that Pebble is working as expected, you should set your theme back to the one you were using

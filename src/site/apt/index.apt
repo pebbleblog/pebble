@@ -43,34 +43,51 @@ Features
 ** Content
 
     * Posting and management of content through your web browser, including rich text editor support.
+
     * Blogger and MetaWeblog API interface included for posting content via compatible tools.
+
     * Categorisation of content into multiple hierarchical categories.
+
     * Tagging of content and a generation of a tagcloud.
+
     * RSS enclosures for distributing files or podcasting.
+
     * Simple content publication workflow.
+
     * Pinging websites via XML-RPC when new blog entries are added.
+
     * Publication of static content alongside your blog entries.
+
     * Link to your favorite social bookmarking site
 
 ** Reader responses
 
     * Reader responses, in the form of threaded comments and MovableType TrackBacks.
+
     * E-mail notifications when new responses are received.
+
     * Pluggable moderation, spam detection and CAPTCHA support.
+
     * Bulk response management features to approve/reject/remove comments and TrackBacks.
 
 ** Web-based Adminstration
 
     * Management of your blog via a web browser.
+
     * File management and the ability to upload arbitary files and images.
+
     * Capture of blog referers, requests and logs for viewing or export.
+
     * Customizable regex based referer filters to combat referer spam.
+
     * Integrated help and documentation.
 
 ** Newsfeeds
 
     * RSS 2.0, RDF and Atom 1.0 feeds for blog entries and responses.
+
     * Category and tag specific newsfeeds.
+
     * Syndicate external newsfeeds.
 
 ** Navigation
@@ -82,14 +99,19 @@ Features
 ** Team, project, multi-user blogs and security
 
     * Multiple people can contribute to a single blog.
+
     * Host more than a single blog for a project, group or community.
+
     * Integrate Pebble with your existing security infrastructure (e.g. LDAP, Active Directory, RDBMS, etc).
 
 ** i18n
 
     * Content in international character sets such as UTF-8.
+
     * Publication of content aligned with your timezone, regardless of where your host is based.
+
     * Locale sensitive delivery of dates, times and numbers.
+
     * Translated public-facing text (and partially to the admin interface) provides a consistent user experience in a
       single language, including:
 
