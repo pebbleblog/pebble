@@ -1,0 +1,57 @@
+    ---
+    Single-blog vs multi-blog
+    ---
+
+Single-blog vs multi-blog
+
+    Pebble has the ability to host one or many blogs from a single web application deployment. This page details the key
+    differences between running Pebble either way.
+    
+* Single-blog (multiBlog=false)
+
+    By default, a single Pebble web application instance hosts a single blog, which is specified by setting the
+    <<<multiBlog>>> property in the <<</WEB-INF/applicationContext-pebble.xml>>> file to false. In this mode, the home
+    page of the Pebble web application represents the home page of the blog and all URLs are relative to this. For
+    example, assuming Pebble is deployed at <<<http://localhost:8080/blog/>>>:
+
+    * http://localhost:8080/blog/ : the home page of the blog
+    
+    * http://localhost:8080/blog/<<rss.xml>> : the main RSS feed for the blog
+    
+    * http://localhost:8080/blog/<<2006/01.html>> : the permalink to content for January 2006 for the blog
+
+* Multi-blog (multiBlog=true)
+
+    By changing the <<<multiBlog>>> property in the <<</WEB-INF/applicationContext-pebble.xml>>> file to true, a single
+    Pebble web application can host multiple blogs. In this case, the home page of the Pebble web application represents
+    an aggregated view over the blogs managed by the Pebble instance, and each blog has a slightly different home page
+    URL. Assuming Pebble is deployed at <<<http://localhost:8080/blogs/>>> and manages 3 blogs (blog1, blog2 and blog3):
+
+    * http://localhost:8080/blogs/ : shows an aggregated view, showing the N most recent blog entries across all blogs
+
+    * http://localhost:8080/blogs/<<rss.xml>> : the aggregated RSS feed, containing the N most recent blog entries across all blogs
+
+    * http://localhost:8080/blogs/blog1/ : the home page of blog1
+
+    * http://localhost:8080/blogs/blog2/ : the home page of blog2
+
+    * http://localhost:8080/blogs/blog3/ : the home page of blog3
+    
+    * http://localhost:8080/blogs/blog1/<<rss.xml>> : the main RSS feed for blog1
+    
+    * http://localhost:8080/blogs/blog1/<<2006/01.html>> : the permalink to content for January 2006 for blog1
+
+** Switching modes
+
+    The rationale for providing two different modes of operation is to keep the URLs as short as possible when only
+    running a single blog. Behind the scenes, the data for all blogs (regardless of whether Pebble is hosting one or
+    more than one blog) is stored in exactly the same way. For this reason, you can start with Pebble running in
+    single-blog mode and switch to multi-blog in the future. If you do this, your blog URL will change as follows:
+
+    * Before (single-blog mode) : http://localhost:8080/blog/
+    
+    * After (multi-blog mode) : http://localhost:8080/blog/default/
+
+    After switching to multi-blog mode, you can create additional blogs by logging into Pebble as a blog admin and use
+    the administration features. This process is detailed in the online help, which can be accessed after logging in.
+

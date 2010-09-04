@@ -1,0 +1,26 @@
+    ---
+    Installation
+    ---
+
+Installation
+
+* How do I deploy Pebble?
+
+    Installation on most JSP 2.0/Servlet 2.4 containers should be as simple as dropping the <<<pebble.war>>> file into a
+    specific directory in order to deploy it. Here are the steps required to deploy Pebble into Tomcat 5.5.x.
+
+    [[1]] Take the <<<pebble.war>>> file from the distribution and deploy it, by copying it to
+          <<<$TOMCAT_HOME/webapps>>>.
+    
+    [[2]] Restart Tomcat and point your browser to <<<http://localhost:8080/pebble/>>>.
+    
+    [[3]] Start blogging by logging in with a username of <<<username>>> and a password of <<<password>>>.
+
+    What follows are some instructions for specific web/application servers.
+
+* Tomcat 5.5.x
+
+    To enable e-mail integration so that Pebble can send e-mails whenever people leave comments, copy the
+    <<<activation.jar>>> and <<<mail.jar>>> files from the <<<lib>>> directory of the Pebble distribution into
+    <<<$TOMCAT_HOME/common/lib/>>>.
+

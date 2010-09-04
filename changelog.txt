@@ -3,6 +3,14 @@ Version 2.5 - TBC
 PEBBLE-17 integrated twitter4j (Yusuke Yamamoto's library for twitter - http://yusuke.homeip.net/twitter4j/en/index.html) (in progress, target is to use OAuth)
 More Internatinalization for messages, info etc, that are triggered from within classes (based on PEBBLE-16)
 PEBBLE-15 new BlogEntryListener to post to twitter whenever a new blogentry is published (Steve Carton)
+PEBBLE-1 Implemented XSRF prevention (James Roper)
+PEBBLE-27 Added SEO permalink provider (Mattias Reichel)
+PEBBLE-28 Updated Swedish language file (Mattias Reichel)
+PEBBLE-29 A few HTML fixes in admin bar (Mattias Reichel)
+PEBBLE-30 Fixed HTML decorator mangling in anchor tags (James Roper)
+PEBBLE-31 Improved plugin management system UI (James Roper)
+PEBBLE-32 Implemented URL sanitisation in comments, removing javascript: urls (James Roper)
+Converted pebble to use maven (James Roper and Yusuke Yamamoto)
 
 Version 2.4 - 13.12.2009
 ------------------------
