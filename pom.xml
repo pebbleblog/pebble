@@ -482,9 +482,9 @@
     </distributionManagement>
 
     <scm>
-        <connection>scm:svn:https://open.jira.com/svn/PEBBLE/branches/mavenised</connection>
-        <developerConnection>scm:svn:https://open.jira.com/svn/PEBBLE/branches/mavenised</developerConnection>
-        <url>http://open.jira.com/source/browse/PEBBLE/branches/mavenised</url>
+        <connection>scm:svn:https://open.jira.com/svn/PEBBLE/trunk</connection>
+        <developerConnection>scm:svn:https://open.jira.com/svn/PEBBLE/trunk</developerConnection>
+        <url>http://open.jira.com/source/browse/PEBBLE/trunk</url>
     </scm>
 
     <issueManagement>
