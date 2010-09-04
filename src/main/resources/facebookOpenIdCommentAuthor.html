@@ -1,0 +1,19 @@
+<fb:login-button> </fb:login-button>
+<script type="text/javascript">
+  function updateFacebookCommentAuthor(response) {
+    if (response.session) {
+      FB.api("/me", function(response) {
+        var avatar = "http://graph.facebook.com/" + response.id + "/picture?type=square";
+        updateOpenIdCommentAuthor(response.name, response.link, "", avatar, logoutFacebookCommentAuthor);
+      });
+    }
+  }
+  function logoutFacebookCommentAuthor() {
+    FB.logout();
+  }
+  Event.observe(window, "load", function() {
+    FB.Event.subscribe('auth.sessionChange', updateFacebookCommentAuthor);
+    FB.getLoginStatus(updateFacebookCommentAuthor);
+  });
+</script>
+        

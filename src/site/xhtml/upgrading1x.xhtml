@@ -1,0 +1,111 @@
+<html>
+    <head>
+        <title>Upgrading from Pebble 1.x</title>
+    </head>
+    <body>
+        <h2>Upgrading from Pebble 1.x</h2>
+
+            <p>
+            If you're upgrading from a previous 1.x version of Pebble, you'll need to follow these instructions.  </p>
+
+           <h4>Directory structure</h4>
+            
+            <p>
+            Pebble 2.0 introduces a new directory structure for the storage of its data so, if you are upgrading from a
+            previous version, you'll need to restructure your directories very slightly. Pebble will automatically
+            create this structure if the data directory specified in the configuration doesn't exist.  </p>
+
+            <h4>Single blog</h4>
+
+            <p>
+            The following diagrams show the directory structure when Pebble is hosting a single blog, in Pebble 1.x and
+            Pebble 2.x respectively. You will need to restructure your existing directories to match this new layout.
+            </p>
+
+            <table width="99%" border="0">
+              <tr>
+                <td valign="top">
+                  <pre class="codeSample">- <b>Blog directory</b>
+
+|-- blog.properties
+|-- 2006
+|-- files
+|-- images
+|-- ...</pre>
+                </td>
+                <td valign="top">
+                  <pre class="codeSample">- Pebble data directory
+|-- blogs
+| |-- <b>default</b>
+|   |-- blog.properties
+|   |-- 2006
+|   |-- files
+|   |-- images
+|   |-- ...
+|-- realm
+  |-- {username1}.properties
+  |-- {usernameN}.properties</pre>
+                </td>
+              </tr>
+            </table>
+
+            <h4>Multi-blog</h4>
+            <p>
+              The following diagrams show the directory structure when Pebble is hosting more than a single blog, in
+              Pebble 1.x and Pebble 2.x respectively. You will need to restructure your existing directories to match
+              this new layout.  </p>
+
+            <table width="99%" border="0">
+              <tr>
+                <td valign="top">
+                  <pre class="codeSample">- Blog directory
+|-- blog.properties
+|-- <b>blog1</b>
+
+| |-- blog.properties
+| |-- 2006
+| |-- files
+| |-- images
+| |-- ...
+|-- <b>blogN</b>
+| |-- blog.properties
+| |-- 2006
+| |-- files
+| |-- images
+| |-- ...</pre>
+                </td>
+                <td valign="top">
+                  <pre class="codeSample">- Pebble data directory
+|-- blogs
+| |-- blog.properties
+| |-- <b>blog1</b>
+|   |-- blog.properties
+|   |-- 2006
+|   |-- files
+|   |-- images
+|   |-- ...
+| |-- <b>blogN</b>
+|   |-- blog.properties
+|   |-- 2006
+|   |-- files
+|   |-- images
+|   |-- ...
+|-- realm
+  |-- {username1}.properties
+  |-- {usernameN}.properties</pre>
+
+                </td>
+              </tr>
+            </table>
+
+            <h4>Themes</h4>
+            <p>
+            The way Pebble themes are implemented has been simplified and Pebble 1.x themes are not compatible. For this reason, the following steps should be followed before starting up Pebble.
+            </p>
+
+            <ul>
+
+              <li>Remove the backup theme : remove the directory called <code>theme</code> underneath each blog</li>
+            </ul>
+    </body>
+</html>

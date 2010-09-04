@@ -1,0 +1,54 @@
+<%@ taglib prefix="pebble" uri="http://pebble.sourceforge.net/pebble" %>
+<div class="contentItemLinks">
+  <c:if test="${displayMode != 'preview'}">
+
+    <pebble:isAuthorisedForBlog>
+    <div class="inlineAdminLinks">
+    <form name="blogEntryForm" action="manageBlogEntry.secureaction" method="post">
+      <pebble:token/>
+      <input type="hidden" name="entry" value="${blogEntry.id}" />
+    </pebble:isAuthorisedForBlog>
+
+    <pebble:isBlogContributor>
+      <button type="submit" name="submit" value="Edit"><fmt:message key="common.edit"/></button>
+    </pebble:isBlogContributor>
+
+    <pebble:isBlogPublisher>
+    <c:if test="${blogEntry.unpublished}">
+      <button type="submit" name="submit" value="Publish" ><fmt:message key="common.publish"/></button>
+    </c:if>
+    <c:if test="${blogEntry.published}">
+      <button type="submit" name="submit" value="Unpublish" ><fmt:message key="common.unpublish"/></button>
+    </c:if>
+    </pebble:isBlogPublisher>
+
+    <pebble:isBlogContributor>
+      <button type="submit" name="submit" value="Clone" ><fmt:message key="common.clone"/></button>
+      &nbsp;
+      <input type="checkbox" name="confirm" value="true" />
+      <button type="submit" name="submit" value="Remove" ><fmt:message key="common.remove"/></button>
+    </pebble:isBlogContributor>
+
+    <pebble:isAuthorisedForBlog>
+    </form>
+    </pebble:isAuthorisedForBlog>
+
+    <pebble:isBlogContributor>
+      <form action="sendTrackBack.secureaction" method="post">
+        <pebble:token/>
+        <input type="hidden" name="entry" value="${blogEntry.id}" />
+          <button type="submit" value="Send TrackBack" ><fmt:message key="common.sendTrackback"/></button>
+      </form>
+    </pebble:isBlogContributor>
+
+    <c:if test="${blogEntry.unpublished}">
+      <br />
+      <fmt:message key="blogEntry.notYetPublished"/>
+    </c:if>
+
+    <pebble:isAuthorisedForBlog>
+    </div>
+    </pebble:isAuthorisedForBlog>
+
+  </c:if>
+</div>

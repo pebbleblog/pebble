@@ -1,0 +1,17 @@
+<pebble-plugins>
+  <plugin-type name="Unweighted" class="java.util.ArrayList"/>
+  <plugin-type name="Weighted" class="java.util.ArrayList" weight="20"/>
+  <description-plugin-type name="Described" class="java.util.ArrayList">
+    <description>My description</description>
+  </description-plugin-type>
+  <configured-plugin-type name="Configured" class="java.util.ArrayList">
+    <config key="notype" name="No type"/>
+    <config key="stringtype" name="String Type" type="string"/>
+    <config key="passwordtype" name="Password Type" type="password"/>
+    <config key="textareatype" name="Text Area Type" type="textarea"/>
+    <config key="required" name="Required" required="true"/>
+    <config key="property" name="Property">
+      <property>value</property>
+    </config>
+  </configured-plugin-type>
+</pebble-plugins>

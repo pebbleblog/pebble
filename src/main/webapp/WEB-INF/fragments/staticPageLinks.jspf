@@ -1,0 +1,44 @@
+<%@ taglib prefix="pebble" uri="http://pebble.sourceforge.net/pebble" %>
+<div class="contentItemLinks">
+  <c:if test="${displayMode != 'preview'}">
+
+  <pebble:isAuthorisedForBlog>
+    <div class="inlineAdminLinks">
+    <c:choose>
+      <c:when test="${empty staticPage.lockedBy or staticPage.lockedBy == authenticatedUser.username}">
+        <pebble:isBlogContributor>
+          <form name="staticPageForm" action="manageStaticPage.secureaction#form" method="post">
+            <pebble:token/>            
+            <input type="hidden" name="page" value="${staticPage.id}" />
+            <button type="submit" name="submit" value="Edit"><fmt:message key="common.edit"/></button>
+            <input type="checkbox" name="confirm" value="true" />
+            <c:if test="${staticPage.lockedBy == authenticatedUser.username}">
+            <button type="submit" name="submit" value="Unlock" ><fmt:message key="common.unlock"/></button>
+            </c:if>
+            <button type="submit" name="submit" value="Remove"><fmt:message key="common.remove"/></button>
+          </form>
+          <c:if test="${staticPage.lockedBy == authenticatedUser.username}">
+            <br /><fmt:message key="staticPage.lockedByCurrentUser"/>
+          </c:if>
+        </pebble:isBlogContributor>
+      </c:when>
+      <c:otherwise>
+        <pebble:isBlogAdminOrBlogOwner>
+        <form name="staticPageForm" action="manageStaticPage.secureaction#form" method="post">
+          <pebble:token/>
+          <input type="hidden" name="page" value="${staticPage.id}" />
+          <input type="checkbox" name="confirm" value="true" />
+          <button type="submit" name="submit" value="Unlock" ><fmt:message key="common.unlock"/></button>
+        </form>
+        <br />
+        </pebble:isBlogAdminOrBlogOwner>
+		<fmt:message key="staticPage.lockedByUser">
+			<fmt:param>${staticPage.lockedBy}</fmt:param>		
+		</fmt:message>
+      </c:otherwise>
+    </c:choose>
+    </div>
+  </pebble:isAuthorisedForBlog>
+
+  </c:if>
+</div>

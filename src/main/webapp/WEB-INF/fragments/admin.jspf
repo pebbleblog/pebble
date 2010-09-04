@@ -1,0 +1,143 @@
+<%--
+  Displays the administration links that are available after logging in.
+--%>
+<pebble:isAuthenticated>
+<div id="admin">
+
+  <div class="adminLevel1">
+    <table width="99%" cellspacing="0" cellpadding="0">
+    <tr>
+    <td>
+    <b><fmt:message key="admin.loggedInAs"><fmt:param>${authenticatedUser.username}</fmt:param></fmt:message></b> :
+
+    <pebble:isBlogContributor>
+    <span id="admin-content-group" class="adminGroup" onmouseover="showMenu('admin-content'); hideMenu('admin-user'); hideMenu('admin-responses'); hideMenu('admin-blog'); hideMenu('admin-logs'); hideMenu('admin-admin')"><fmt:message key="admin.content" /></span> |
+    <span id="admin-responses-group" class="adminGroup" onmouseover="showMenu('admin-responses'); hideMenu('admin-user'); hideMenu('admin-content'); hideMenu('admin-blog'); hideMenu('admin-logs'); hideMenu('admin-admin')"><fmt:message key="admin.commentsAndTrackbacks"/></span> |
+    </pebble:isBlogContributor>
+
+    <pebble:isBlogAdminOrBlogOwner>
+    <span id="admin-blog-group" class="adminGroup" onmouseover="showMenu('admin-blog'); hideMenu('admin-user'); hideMenu('admin-content'); hideMenu('admin-responses'); hideMenu('admin-logs'); hideMenu('admin-admin')"><fmt:message key="admin.configuration"/></span> |
+    </pebble:isBlogAdminOrBlogOwner>
+
+    <pebble:isAuthorisedForBlog>
+    <span id="admin-logs-group" class="adminGroup" onmouseover="showMenu('admin-logs'); hideMenu('admin-user'); hideMenu('admin-content'); hideMenu('admin-responses'); hideMenu('admin-blog'); hideMenu('admin-admin')"><fmt:message key="admin.logs"/></span> |
+    </pebble:isAuthorisedForBlog>
+
+    <pebble:isBlogAdmin>
+    <span id="admin-admin-group" class="adminGroup" onmouseover="showMenu('admin-admin'); hideMenu('admin-user'); hideMenu('admin-content'); hideMenu('admin-responses'); hideMenu('admin-blog'); hideMenu('admin-logs')"><fmt:message key="admin.administration"/></span> |
+    </pebble:isBlogAdmin>
+
+    <c:if test="${authenticatedUser.detailsUpdateable == true}">
+    <span id="admin-user-group" class="adminGroup" onmouseover="showMenu('admin-user'); hideMenu('admin-content'); hideMenu('admin-responses'); hideMenu('admin-blog'); hideMenu('admin-logs'); hideMenu('admin-admin')""><fmt:message key="admin.user"/></span> |
+    </c:if>
+
+    <span><a href="${pebbleContext.configuration.secureUrl}logout.action?redirectUrl=${blogUrl}" onmouseover="hideMenu('admin-admin'); hideMenu('admin-user'); hideMenu('admin-content'); hideMenu('admin-responses'); hideMenu('admin-blog'); hideMenu('admin-logs')"><fmt:message key="admin.logout"/></a></span>
+    </td>
+    <td align="right">
+    <span><a href="./help/index.html" title="<fmt:message key="common.help"/>" onmouseover="hideMenu('admin-admin'); hideMenu('admin-user'); hideMenu('admin-content'); hideMenu('admin-responses'); hideMenu('admin-blog'); hideMenu('admin-logs')"><fmt:message key="common.help"/></a></span>
+    </td>
+    </tr>
+    </table>
+  </div>
+
+  <div class="adminLevel2">
+
+    <span id="admin-content">
+      <pebble:isBlogContributor>
+      <a href="addBlogEntry.secureaction#form" title="<fmt:message key="admin.tooltip.addNewEntry"/>"><fmt:message key="admin.newBlogEntry"/></a> (<fmt:formatNumber value="${blog.numberOfBlogEntries}"/>) |
+      <a href="viewUnpublishedBlogEntries.secureaction" title="<fmt:message key="admin.tooltip.viewUnpublishedBlogEntries"/>"><fmt:message key="admin.unpublishedBlogEntries"/></a> (<fmt:formatNumber value="${blog.numberOfUnpublishedBlogEntries}"/>) |
+      <a href="addStaticPage.secureaction#form" title="<fmt:message key="admin.tooltip.addNewStaticPage"/>"><fmt:message key="admin.newStaticPage"/></a> |
+      <a href="viewStaticPages.secureaction" title="<fmt:message key="admin.tooltip.manageStaticPages"/>"><fmt:message key="admin.staticPages"/></a> |
+      <a href="viewCategories.secureaction" title="<fmt:message key="admin.tooltip.editCategories"/>"><fmt:message key="admin.categories"/></a> |
+      <a href="files/" title="<fmt:message key="admin.tooltip.manageFiles"/>"><fmt:message key="admin.files"/></a> |
+      <a href="images/" title="<fmt:message key="admin.tooltip.manageImages"/>"><fmt:message key="admin.images"/></a>
+      </pebble:isBlogContributor>
+    </span>
+
+    <span id="admin-responses">
+      <pebble:isBlogContributor>
+      <a href="viewResponses.secureaction" title="<fmt:message key="admin.tooltip.manageApprovedResponses"/>"><fmt:message key="admin.approved"/> (<fmt:formatNumber value="${blog.numberOfApprovedResponses}"/>)</a> |
+      <a href="viewResponses.secureaction?type=pending" title="<fmt:message key="admin.tooltip.managePendingResponses"/>"><fmt:message key="admin.pending"/> (<fmt:formatNumber value="${blog.numberOfPendingResponses}"/>)</a> |
+      <a href="viewResponses.secureaction?type=rejected" title="<fmt:message key="admin.tooltip.manageRejectedResponses"/>"><fmt:message key="admin.rejected"/> (<fmt:formatNumber value="${blog.numberOfRejectedResponses}"/>)</a>
+      </pebble:isBlogContributor>
+    </span>
+
+    <span id="admin-blog">
+    <pebble:isBlogAdminOrBlogOwner>
+      <a href="viewBlogProperties.secureaction" title="<fmt:message key="admin.tooltip.manageYourBlogProperties"/>"><fmt:message key="admin.properties"/></a> |
+      <a href="viewBlogSecurity.secureaction" title="<fmt:message key="admin.tooltip.manageYourBlogSecurity"/>"><fmt:message key="admin.security"/></a> |
+      <a href="viewPlugins.secureaction" title="<fmt:message key="admin.tooltip.manageYourPlugins"/>"><fmt:message key="admin.plugins"/></a>
+      <c:if test="${pebbleContext.configuration.userThemesEnabled}">
+        | <a href="theme/" title="<fmt:message key="admin.tooltip.manageYourTheme"/>"><fmt:message key="admin.themes"/></a> |
+      </c:if>
+      <a href="viewMessages.secureaction"><fmt:message key="admin.messages"/> (<fmt:formatNumber value="${blog.numberOfMessages}" type="number" />)</a> |
+      <a href="utilities.secureaction" title="<fmt:message key="admin.tooltip.maintenanceAndUpgradeUtilities"/>"><fmt:message key="admin.utilities"/></a> |
+      <a href="aboutBlog.secureaction" title="<fmt:message key="admin.tooltip.aboutThisBlog"/>"><fmt:message key="admin.about"/></a>
+    </pebble:isBlogAdminOrBlogOwner>
+    </span>
+
+    <span id="admin-logs">
+    <pebble:isAuthorisedForBlog>
+      <a href="viewReferers.secureaction" title="<fmt:message key="admin.tooltip.viewReferrersForToday"/>"><fmt:message key="admin.referrers"/></a> 
+      (<a href="viewReferers.secureaction?filter=false" title="<fmt:message key="admin.tooltip.viewReferrersForTodayUnfiltered"/>"/><fmt:message key="admin.viewReferrersForTodayUnfiltered"/></a>) |
+      <a href="viewRequests.secureaction" title="<fmt:message key="admin.tooltip.viewRequestsForToday"/>"><fmt:message key="admin.requests"/></a> |
+      <a href="viewLogSummary.secureaction" title="<fmt:message key="admin.tooltip.viewLogSummaryForThisMonth"/>"><fmt:message key="admin.logSummary"/></a> |
+      <a href="viewLogSummary.secureaction?year=<%= java.util.Calendar.getInstance().get(java.util.Calendar.YEAR) %>" title="<fmt:message key="admin.tooltip.yearlyLogs"/>"><fmt:message key="admin.yearlyLogs"/></a> |
+      <a href="viewRefererFilters.secureaction" title="<fmt:message key="admin.tooltip.viewReferrerFilters"/>"><fmt:message key="admin.referrerFilters"/></a>
+    </pebble:isAuthorisedForBlog>
+    </span>
+
+    <span id="admin-admin">
+    <pebble:isBlogAdmin>
+      <c:if test="${blogManager.multiBlog}">
+      <a href="${multiBlogUrl}viewPebbleProperties.secureaction" title="<fmt:message key="admin.tooltip.managePebbleProperties"/>"><fmt:message key="admin.properties"/></a> |
+      </c:if>
+      <a href="${multiBlogUrl}viewBlogs.secureaction" title="<fmt:message key="admin.tooltip.viewBlogs"/>"><fmt:message key="admin.blogs"/></a> |
+      <a href="${multiBlogUrl}addUser.secureaction" title="<fmt:message key="admin.tooltip.addUser"/>"><fmt:message key="admin.addUser"/></a> |
+      <a href="${multiBlogUrl}viewUsers.secureaction" title="<fmt:message key="admin.tooltip.viewUsers"/>"><fmt:message key="admin.users"/></a>
+    </pebble:isBlogAdmin>
+    </span>
+
+    <span id="admin-user">
+    <c:if test="${authenticatedUser.detailsUpdateable == true}">
+      <a href="editUserDetails.secureaction" title="<fmt:message key="admin.tooltip.editUserDetails"/>"><fmt:message key="admin.userDetails"/></a> |
+      <a href="changePassword.secureaction" title="<fmt:message key="admin.tooltip.changePassword"/>"><fmt:message key="admin.changePassword"/></a> |
+      <a href="editUserPreferences.secureaction" title="<fmt:message key="admin.tooltip.preferences"/>"><fmt:message key="admin.preferences"/></a>
+    </c:if>
+    </span>
+
+    &nbsp;
+  </div>
+
+  <script type="text/javascript">
+    hideMenu('admin-content');
+    hideMenu('admin-responses');
+    hideMenu('admin-blog');
+    hideMenu('admin-logs');
+    hideMenu('admin-admin');
+    hideMenu('admin-user');
+  </script>
+
+<c:if test="${blog.numberOfMessages > 0}">
+<div id="messages">
+  <div class="${blog.messages[0].type}">
+    <table width="99%" cellspacing="0" cellpadding="0">
+      <tr>
+        <td>
+          ${blog.messages[0].text}
+        </td>
+        <td align="right" valign="top">
+          <c:choose>
+            <c:when test="${blog.numberOfMessages == 1}"><a href="viewMessages.secureaction"><fmt:message key="admin.oneMessage"/></a></c:when>
+            <c:otherwise><a href="viewMessages.secureaction"><fmt:message key="admin.someMessages"><fmt:param>${blog.numberOfMessages}</fmt:param></fmt:message></a></c:otherwise>
+          </c:choose>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</c:if>
+
+</div>
+
+</pebble:isAuthenticated>

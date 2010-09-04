@@ -1,0 +1,35 @@
+<%@ taglib prefix="pebble" uri="http://pebble.sourceforge.net/pebble" %>
+<c:if test="${blogEntry.trackBacksEnabled}" >
+  <pebble:isBlogContributor>
+
+    <div>
+    <b><fmt:message key="trackback.sendTrackBack"/></b> (<span class="help"><a href="./help/trackbacks.html" target="_blank"><fmt:message key="common.help"/></a></span>)
+    <br /><br />
+
+    <form name="sendTrackBack" action="sendTrackBack.secureaction" method="post" accept-charset="<c:out value="${blog.characterEncoding}" />">
+      <pebble:token/>
+    <input type="hidden" name="entry" value="<c:out value="${blogEntry.id}"/>" />
+    <table width="99%">
+      <tr>
+        <td valign="top"><b><fmt:message key="trackback.url"/></b></td>
+        <td><input type="text" name="url" size="50" /></td>
+      </tr>
+
+      <tr>
+        <td valign="top"><b><fmt:message key="blogentry.excerpt"/></b></td>
+        <td>
+          <textarea name="excerpt" rows="8" cols="40"><c:out value="${blogEntry.truncatedContent}"/></textarea>
+        </td>
+      </tr>
+
+      <tr>
+        <td colspan="2" align="right">
+          <button name="submit" type="submit" Value="Send TrackBack" ><fmt:message key="common.sendTrackback"/></button>
+        </td>
+      </tr>
+    </table>
+    </form>
+    </div>
+
+  </pebble:isBlogContributor>
+</c:if>

@@ -1,0 +1,50 @@
+    ---
+    Configuration
+    ---
+
+Configuration
+
+* What do I need to configure?
+
+    There are several pieces of information that you may want to configure with Pebble, all of which are specified in
+    the <<</WEB-INF/pebble.properties>>> file.
+
+    * Data directory (dataDirectory) : the location where your Pebble data is stored. The default is
+      <<<${user.home}/pebble>>>, and this directory is created automatically if it doesn't exist. If running as a secure
+      user under *nix, the value of <<<${user.home}>>> may point to <<</dev/null>>> so be sure to check and change the
+      data directory property as appropriate.
+
+    * URL (url) : the URL (starting http:// or https://) where your blog is hosted. The default value is blank, which
+      means "auto-discover at runtime".
+
+    * Secure URL (secureUrl) : the secure URL (starting https://), which should only be set if you intend to use secure login.
+
+    * Multi-blog (multiBlog) : a flag to indicate whether Pebble is running in multi-blog mode, default is false.
+
+    * SMTP host (smtpHost) : the name/IP address of the server through which e-mail is sent, or a JNDI name starting
+      <<<java:/comp/env>>> pointing to a preconfigured <<<javax.mail.Session instance>>>. The default is
+      <<<java:comp/env/mail/Session>>>.
+
+    * Maximum file upload size (fileUploadSize) : the maximum file upload size in KB.
+
+    * User themes enabled (userThemesEnabled) : a flag to indicate whether user themes are enabled, default is true. Set
+      this value to <<<false>>> to ensure all blogs in a multi-blog installation use the default theme and look consistent.
+
+** E-mail notifications
+
+    To enable e-mail notifications using a JNDI based mail session, you'll need to follow these steps.
+
+    [[1]] Uncomment the JavaMail resource reference at the bottom of the Pebble <<<web.xml>>> file.
+    
+    [[2]] Ensure the JavaMail libraries are installed into your web/application server.
+   
+    [[3]] Configure the JavaMail session in your web/application server.
+
+    See {{{./installation.html}Installation}} for instructions related to specific web/application servers.
+
+** Logging
+
+    Out-of-the-box, Pebble uses log4j (via Jakarta Commons logging) and logs everything from INFO and above to a file
+    called <<<pebble.log>>> in the directory where the web/application server is started from. To alter this, open the
+    <<<WEB-INF/classes/log4j.properties>>> file and edit as appropriate.
+
