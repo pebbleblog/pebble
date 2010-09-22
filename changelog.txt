@@ -12,6 +12,7 @@ PEBBLE-31 Improved plugin management system UI (James Roper)
 PEBBLE-32 Implemented URL sanitisation in comments, removing javascript: urls (James Roper)
 Converted pebble to use maven (James Roper and Yusuke Yamamoto)
 Facebook OpenID Authentication for comments (James Roper)
+Updated Finnish transation (Sam Widlund)
 
 Version 2.4 - 13.12.2009
 ------------------------
