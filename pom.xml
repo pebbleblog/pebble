@@ -102,6 +102,11 @@
             <version>3.0.3.RELEASE</version>
         </dependency>
         <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-openid</artifactId>
+            <version>3.0.3.RELEASE</version>
+        </dependency>
+        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
             <version>3.0.3.RELEASE</version>
@@ -111,6 +116,11 @@
                 <artifactId>aopalliance</artifactId>
               </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+          <groupId>javax.inject</groupId>
+          <artifactId>javax.inject</artifactId>
+          <version>1</version>
         </dependency>
         <dependency>
             <groupId>lucene</groupId>

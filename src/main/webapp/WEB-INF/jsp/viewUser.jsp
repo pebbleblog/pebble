@@ -22,6 +22,8 @@
 
     <form name="user" action="saveUser.secureaction" method="post">
       <pebble:token/>
+      <input type="hidden" name="preference.openids"
+             value="<c:out value="${user.preferences['openids']}"/>"/>
 
       <table width="99%" cellspacing="0" cellpadding="4">
         <c:choose>

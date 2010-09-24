@@ -55,7 +55,7 @@ public abstract class MultiBlogTestCase extends PebbleTestCase {
     PebbleContext.getInstance().getConfiguration().setUrl("http://www.yourdomain.com/blog/");
     BlogManager.getInstance().setMultiBlog(true);
 
-    PebbleContext.getInstance().getConfiguration().setSecurityRealm(new MockSecurityRealm());
+    //PebbleContext.getInstance().getConfiguration().setSecurityRealm(new MockSecurityRealm());
 
     // and set up some blogs
     File blogDirectory1 = new File(TEST_BLOG_LOCATION, "blogs/blog1");

@@ -3,6 +3,9 @@ package net.sourceforge.pebble.security;
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.PebbleContext;
 import net.sourceforge.pebble.domain.SingleBlogTestCase;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.event.ContextStartedEvent;
+import org.springframework.context.support.StaticApplicationContext;
 import org.springframework.security.authentication.dao.ReflectionSaltSource;
 import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.security.authentication.encoding.PlaintextPasswordEncoder;
@@ -34,7 +37,7 @@ public class DefaultSecurityRealmTest extends SingleBlogTestCase {
     saltSource.setUserPropertyToUse("getUsername");
     realm.setSaltSource(saltSource);
 
-    realm.init();
+    realm.onApplicationEvent(new ContextStartedEvent(contextForEvents));
   }
 
   protected void tearDown() throws Exception {

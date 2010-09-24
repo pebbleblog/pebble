@@ -32,6 +32,7 @@
 package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
+import net.sourceforge.pebble.PebbleContext;
 import net.sourceforge.pebble.security.PebbleUserDetails;
 import net.sourceforge.pebble.util.SecurityUtils;
 import net.sourceforge.pebble.web.view.View;
@@ -58,6 +59,7 @@ public class EditUserPreferencesAction extends SecureAction {
    */
   public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
     PebbleUserDetails currentUserDetails = SecurityUtils.getUserDetails();
+
     getModel().put("user", currentUserDetails);
 
     // can the user change their user details?

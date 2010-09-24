@@ -10,7 +10,7 @@
 <c:if test="${empty isLoginPage}">
 <div class="sidebarItem">
   <div class="sidebarItemTitle"><span><fmt:message key='login.login' /></span></div>
-  <form id="loginForm" name="loginForm" method="post" action="${pebbleContext.configuration.secureUrl}j_acegi_security_check">
+  <form id="loginForm" name="loginForm" method="post" action="${pebbleContext.configuration.secureUrl}j_spring_security_check">
     <div class="sidebarItemBody">
     <input type="hidden" name="redirectUrl" value="${blog.relativeUrl}"/>
       <table>

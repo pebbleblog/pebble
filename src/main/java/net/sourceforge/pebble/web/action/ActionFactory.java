@@ -31,8 +31,12 @@
  */
 package net.sourceforge.pebble.web.action;
 
+import net.sourceforge.pebble.PebbleContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
+import org.springframework.context.ApplicationContext;
 
 import java.io.InputStream;
 import java.util.Enumeration;
@@ -57,11 +61,15 @@ public class ActionFactory {
   /** the name of the action mapping file */
   private String actionMappingFileName;
 
+  /** the ApplicationContext to instantiate actions with */
+  private AutowireCapableBeanFactory beanFactory;
+
   /**
    * Creates a new instance, using the given configuration file.
    */
   public ActionFactory(String actionMappingFileName) {
     this.actionMappingFileName = actionMappingFileName;
+    this.beanFactory = PebbleContext.getInstance().getApplicationContext().getAutowireCapableBeanFactory();
     init();
   }
 
@@ -106,8 +114,8 @@ public class ActionFactory {
       // instantiate the appropriate class to handle the request
       if (actions.containsKey(name)) {
         Class c = getClass().getClassLoader().loadClass((String)actions.get(name));
-        Action action = (Action)c.newInstance();
-
+        Class<? extends Action> actionClass = c.asSubclass(Action.class);
+        Action action = (Action) beanFactory.autowire(actionClass, AutowireCapableBeanFactory.AUTOWIRE_NO, false);
         return action;
       } else {
         throw new ActionNotFoundException("An action called " + name + " could not be found");
@@ -115,12 +123,9 @@ public class ActionFactory {
     } catch (ClassNotFoundException cnfe) {
       log.error(cnfe.getMessage(), cnfe);
       throw new ActionNotFoundException("An action called " + name + " could not be loaded : " + cnfe.getMessage());
-    } catch (IllegalAccessException iae) {
-      log.error(iae.getMessage(), iae);
-      throw new ActionNotFoundException("An action called " + name + " could not be created : " + iae.getMessage());
-    } catch (InstantiationException ie) {
-      log.error(ie.getMessage(), ie);
-      throw new ActionNotFoundException("An action called " + name + " could not be created : " + ie.getMessage());
+    } catch (BeansException be) {
+      log.error(be.getMessage(), be);
+      throw new ActionNotFoundException("An action called " + name + " could not be instantiated : " + be.getMessage());
     }
   }
 

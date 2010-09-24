@@ -1,10 +1,15 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:security="http://www.springframework.org/schema/security"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
            http://www.springframework.org/schema/security
-           http://www.springframework.org/schema/security/spring-security-3.0.3.xsd">
+           http://www.springframework.org/schema/security/spring-security-3.0.3.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd">
+
+  <context:annotation-config/>
 
   <!-- ======================== FILTER CHAIN ======================= -->
   <bean id="filterChainProxy" class="org.springframework.security.web.FilterChainProxy">
@@ -12,6 +17,7 @@
       <security:filter-chain pattern="/xmlrpc/**" filters="anonymousProcessingFilter"/>
       <security:filter-chain pattern="/**/*.xml" filters="
         securityContextPersistenceFilter,
+        openIdAuthenticationFilter,
         basicProcessingFilter,
         rememberMeProcessingFilter,
         basicExceptionTranslationFilter,
@@ -20,6 +26,7 @@
         "/>
       <security:filter-chain pattern="/**" filters="
         securityContextPersistenceFilter,
+        openIdAuthenticationFilter,
         formProcessingFilter,
         rememberMeProcessingFilter,
         exceptionTranslationFilter,
@@ -36,6 +43,7 @@
       <list>
         <ref local="daoAuthenticationProvider"/>
         <ref local="rememberMeAuthenticationProvider"/>
+        <ref local="openIdAuthenticationProvider"/>
       </list>
     </property>
   </bean>
@@ -57,7 +65,7 @@
   <!-- an implementation of net.sourceforge.pebble.security.SecurityRealm is required
        to provide detailed user information and manage users
        it is plugged into other components outside the context of this file -->
-  <bean id="pebbleSecurityRealm" class="net.sourceforge.pebble.security.DefaultSecurityRealm" init-method="init">
+  <bean id="pebbleSecurityRealm" class="net.sourceforge.pebble.security.DefaultSecurityRealm">
     <property name="configuration" ref="pebbleConfiguration"/>
     <property name="passwordEncoder" ref="passwordEncoder"/>
     <property name="saltSource" ref="saltSource"/>
@@ -75,12 +83,14 @@
   <bean id="securityContextPersistenceFilter"
         class="org.springframework.security.web.context.SecurityContextPersistenceFilter"/>
 
-  <bean id="rememberMeProcessingFilter" class="org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter">
+  <bean id="rememberMeProcessingFilter"
+        class="org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter">
     <property name="rememberMeServices" ref="rememberMeServices"/>
     <property name="authenticationManager" ref="authenticationManager"/>
   </bean>
 
-  <bean id="rememberMeServices" class="org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices">
+  <bean id="rememberMeServices"
+        class="org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices">
     <property name="userDetailsService" ref="pebbleUserDetailsService"/>
     <property name="key" value="pebble"/>
   </bean>
@@ -100,20 +110,23 @@
     <property name="userAttribute" value="anonymousUser,ROLE_ANONYMOUS"/>
   </bean>
 
-  <bean id="formProcessingFilter" class="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter">
+  <bean id="formProcessingFilter"
+        class="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter">
     <property name="authenticationManager" ref="authenticationManager"/>
     <property name="authenticationFailureHandler" ref="authenticationFailureHandler"/>
-    <property name="filterProcessesUrl" value="/j_acegi_security_check"/>
+    <property name="filterProcessesUrl" value="/j_spring_security_check"/>
     <property name="rememberMeServices" ref="rememberMeServices"/>
     <property name="authenticationSuccessHandler" ref="authenticationSuccessHandler"/>
   </bean>
-  
-  <bean id="authenticationSuccessHandler" class="org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler">
+
+  <bean id="authenticationSuccessHandler"
+        class="org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler">
     <property name="targetUrlParameter" value="redirectUrl"/>
   </bean>
 
-  <bean id="authenticationFailureHandler" class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
-    <property name="defaultFailureUrl" value="/loginPage.action?error=true"/>
+  <bean id="authenticationFailureHandler"
+        class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
+    <property name="defaultFailureUrl" value="/loginPage.action?error=login.incorrect"/>
   </bean>
 
   <bean id="authenticationEntryPoint"
@@ -135,7 +148,8 @@
     </property>
   </bean>
 
-  <bean id="basicProcessingFilter" class="org.springframework.security.web.authentication.www.BasicAuthenticationFilter">
+  <bean id="basicProcessingFilter"
+        class="org.springframework.security.web.authentication.www.BasicAuthenticationFilter">
     <property name="authenticationManager" ref="authenticationManager"/>
     <property name="authenticationEntryPoint" ref="basicAuthenticationEntryPoint"/>
   </bean>
@@ -149,10 +163,32 @@
     <property name="authenticationEntryPoint" ref="basicAuthenticationEntryPoint"/>
   </bean>
 
+  <!-- ===================== OPEN ID SUPPORT ==================== -->
+
+  <bean id="openIdConsumer" class="org.springframework.security.openid.OpenID4JavaConsumer"/>
+
+  <bean id="openIdAuthenticationFilter" class="org.springframework.security.openid.OpenIDAuthenticationFilter">
+    <property name="authenticationManager" ref="authenticationManager"/>
+    <property name="rememberMeServices" ref="rememberMeServices"/>
+    <property name="consumer" ref="openIdConsumer"/>
+    <property name="authenticationFailureHandler" ref="openIdAuthenticationFailureHandler"/>
+  </bean>
+
+  <bean id="openIdAuthenticationProvider" class="org.springframework.security.openid.OpenIDAuthenticationProvider">
+    <property name="userDetailsService" ref="openIdUserDetailsService"/>
+  </bean>
+
+  <bean id="openIdUserDetailsService" class="net.sourceforge.pebble.security.OpenIdUserDetailsService">
+    <property name="securityRealm" ref="pebbleSecurityRealm"/>
+  </bean>
+
+  <bean id="openIdAuthenticationFailureHandler" class="net.sourceforge.pebble.security.OpenIdAuthenticationFailureHandler"/>
+
   <!-- Note the order that entries are placed against the objectDefinitionSource is critical.
   The FilterSecurityInterceptor will work from the top of the list down to the FIRST pattern that matches the request URL.
   Accordingly, you should place MOST SPECIFIC (ie a/b/c/d.*) expressions first, with LEAST SPECIFIC (ie a/.*) expressions last -->
-  <bean id="filterInvocationInterceptor" class="org.springframework.security.web.access.intercept.FilterSecurityInterceptor">
+  <bean id="filterInvocationInterceptor"
+        class="org.springframework.security.web.access.intercept.FilterSecurityInterceptor">
     <property name="authenticationManager" ref="authenticationManager"/>
     <property name="accessDecisionManager" ref="accessDecisionManager"/>
     <property name="securityMetadataSource">

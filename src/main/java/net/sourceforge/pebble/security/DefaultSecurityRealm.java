@@ -6,6 +6,9 @@ import net.sourceforge.pebble.comparator.PebbleUserDetailsComparator;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.context.ApplicationEvent;
+import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.security.authentication.dao.SaltSource;
 import org.springframework.security.authentication.encoding.PasswordEncoder;
 
@@ -18,7 +21,7 @@ import java.util.*;
  *
  * @author    Simon Brown
  */
-public class DefaultSecurityRealm implements SecurityRealm {
+public class DefaultSecurityRealm implements SecurityRealm, ApplicationListener {
 
   private static final Log log = LogFactory.getLog(DefaultSecurityRealm.class);
 
@@ -39,23 +42,44 @@ public class DefaultSecurityRealm implements SecurityRealm {
 
   private SaltSource saltSource;
 
-  /**
-   * Creates the underlying security realm upon creation, if necessary.
-   */
-  public void init() {
-    try {
-      File realm = getFileForRealm();
-      if (!realm.exists()) {
-        realm.mkdirs();
-        log.warn("*** Creating default user (username/password)");
-        log.warn("*** Don't forget to delete this user in a production deployment!");
-        PebbleUserDetails defaultUser = new PebbleUserDetails("username", "password", "Default User", "username@domain.com", "http://www.domain.com", "Default User...", new String[] {Constants.BLOG_OWNER_ROLE, Constants.BLOG_PUBLISHER_ROLE, Constants.BLOG_CONTRIBUTOR_ROLE, Constants.BLOG_ADMIN_ROLE}, new HashMap<String,String>(), true);
-        createUser(defaultUser);
-      }
-    } catch (SecurityRealmException e) {
-      log.error("Error while creating security realm", e);
-    }
+  /** Map of open ids to users, cached in a copy on write map */
+  private volatile Map<String, String> openIdMap;
 
+  /**
+   * Creates the underlying security realm upon creation, if necessary, and initialises the openIdMap.
+   *
+   * Note, this used to be an init method for the bean, however, due to a circular dependency between this bean and the
+   * Pebble configuration bean, it was possible for the Pebble configuration to have been injected and the init method
+   * called before the configuration had the home directory set.  This bug exhibited itself when we upgraded to Spring
+   * 3.  So, we initialise on framework start.
+   */
+  public void onApplicationEvent(ApplicationEvent event) {
+    if (event instanceof ContextRefreshedEvent) {
+      try {
+        File realm = getFileForRealm();
+        if (!realm.exists()) {
+          realm.mkdirs();
+          log.warn("*** Creating default user (username/password)");
+          log.warn("*** Don't forget to delete this user in a production deployment!");
+          PebbleUserDetails defaultUser = new PebbleUserDetails("username", "password", "Default User", "username@domain.com", "http://www.domain.com", "Default User...", new String[] {Constants.BLOG_OWNER_ROLE, Constants.BLOG_PUBLISHER_ROLE, Constants.BLOG_CONTRIBUTOR_ROLE, Constants.BLOG_ADMIN_ROLE}, new HashMap<String,String>(), true);
+          createUser(defaultUser);
+        }
+      } catch (SecurityRealmException e) {
+        log.error("Error while creating security realm", e);
+      }
+
+      try {
+        // Initialise open id map
+        openIdMap = new HashMap<String, String>();
+        for (PebbleUserDetails user : getUsers()) {
+          for (String openId : user.getOpenIds()) {
+            openIdMap.put(openId, user.getUsername());
+          }
+        }
+      } catch (SecurityRealmException e) {
+        log.error("Error initialising open ids map", e);
+      }
+    }
   }
 
   /**
@@ -135,6 +159,38 @@ public class DefaultSecurityRealm implements SecurityRealm {
     } catch (IOException ioe) {
       throw new SecurityRealmException(ioe);
     }
+  }
+
+  public PebbleUserDetails getUserForOpenId(String openId) throws SecurityRealmException {
+    String username = openIdMap.get(openId);
+    if (username == null) {
+      return null;
+    } else {
+      return getUser(username);
+    }
+  }
+
+  public synchronized void addOpenIdToUser(PebbleUserDetails pud, String openId) throws SecurityRealmException {
+    Collection<String> openIds = new ArrayList<String>(pud.getOpenIds());
+    openIds.add(openId);
+    pud.setOpenIds(openIds);
+    updateUser(pud);
+    // Update open id map
+    HashMap<String, String> newOpenIdMap = new HashMap<String, String>(openIdMap);
+    newOpenIdMap.put(openId, pud.getUsername());
+    openIdMap = newOpenIdMap;
+  }
+
+  public synchronized void removeOpenIdFromUser(PebbleUserDetails pud, String openId) throws SecurityRealmException {
+    // Update open id map
+    HashMap<String, String> newOpenIdMap = new HashMap<String, String>(openIdMap);
+    newOpenIdMap.remove(openId);
+    openIdMap = newOpenIdMap;
+    
+    Collection<String> openIds = new ArrayList<String>(pud.getOpenIds());
+    openIds.remove(openId);
+    pud.setOpenIds(openIds);
+    updateUser(pud);
   }
 
   /**

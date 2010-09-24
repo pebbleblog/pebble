@@ -25,6 +25,32 @@ public interface SecurityRealm {
   public PebbleUserDetails getUser(String username) throws SecurityRealmException;
 
   /**
+   * Looks up and returns user details for the given username.
+   *
+   * @param openId    the openId to find details for
+   * @return  a PebbleUserDetails instance
+   */
+  public PebbleUserDetails getUserForOpenId(String openId) throws SecurityRealmException;
+
+  /**
+   * Adds an OpenID to a user
+   *
+   * @param pud The user details of the user
+   * @param openId The openId to add to them
+   * @throws SecurityRealmException If an error occurred
+   */
+  public void addOpenIdToUser(PebbleUserDetails pud, String openId) throws SecurityRealmException;
+
+  /**
+   * Removes an OpenID from a user
+   *
+   * @param pud The user details of the user
+   * @param openId The openId to remove from them
+   * @throws SecurityRealmException If an error occurred
+   */
+  public void removeOpenIdFromUser(PebbleUserDetails pud, String openId) throws SecurityRealmException;
+
+  /**
    * Creates a new user.
    *
    * @param pud   a PebbleUserDetails instance

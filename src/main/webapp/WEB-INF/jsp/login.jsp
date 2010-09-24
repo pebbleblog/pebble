@@ -1,27 +1,52 @@
-<table width="99%" cellspacing="0" cellpadding="8">
-  <tr>
-    <td width="50%" align="right" valign="top" style="border-right: #c0c0c0 solid 1px">
-      <h1><fmt:message key="login.title" /></h1>
-    </td>
-    <td width="50%" align="left">
-      <c:if test="${param.error eq true}" ><div><fmt:message key="login.incorrect" /></div><br /></c:if>
-      <form id="loginForm" name="loginForm" method="post" action="${pebbleContext.configuration.secureUrl}j_acegi_security_check">
-        <input type="hidden" name="redirectUrl" value="${blog.relativeUrl}"/>
-        <table>
-          <tr><td><fmt:message key="login.username"/></td><td><input id="j_username" type="text" name="j_username" /></td></tr>
-          <tr><td><fmt:message key="login.password"/></td><td><input type="password" name="j_password" /></td></tr>
-          <tr><td><fmt:message key='login.rememberMe' /></td><td><input type="checkbox" name="_spring_security_remember_me" /></td></tr>
-          <tr><td colspan="2" align="right"><input type="submit" value="<fmt:message key='login.button' />" /></td></tr>
-        </table>
-      </form>
-    </td>
-  </tr>
+<c:if test="${not empty param.error}"><div class="loginError"><fmt:message key="${param.error}"/></div></c:if>
 
-</table>
+<div id="loginPage">
+  <ul id="loginOptions">
+    <li id="loginOptionPassword" class="loginOption loginOptionSelected"><fmt:message key="password.login" /></li>
+    <li id="loginOptionOpenId" class="loginOption">OpenID</li>
+    <li id="loginOptionGoogle" class="loginOption">Google</li>
+  </ul>
 
+  <div id="loginOptionPasswordArea" class="loginOptionArea">
+    <form id="passwordLoginForm" name="passwordLoginForm" method="post"
+          action="${pebbleContext.configuration.secureUrl}j_spring_security_check">
+      <input type="hidden" name="redirectUrl" value="${blog.relativeUrl}"/>
+      <div class="field">
+        <label for="username"><fmt:message key="login.username"/></label>
+        <input id="username" type="text" name="j_username" />
+      </div>
+      <div class="field">
+        <label for="password"><fmt:message key="login.password"/></label>
+        <input id="password" type="password" name="j_password" />
+      </div>
+      <div class="field">
+         <label for="rememberMe"><fmt:message key='login.rememberMe' /></label>
+         <input id="rememberMe" type="checkbox" name="_spring_security_remember_me" />
+      </div>
+      <div class="loginButtons"><input type="submit" value="<fmt:message key='login.button' />" /></div>
+    </form>
+  </div>
+
+  <div id="loginOptionOpenIdArea" class="loginOptionArea">
+    <form id="openIdLoginForm" name="openIdloginForm" method="post" 
+          action="${pebbleContext.configuration.secureUrl}j_spring_openid_security_check">
+      <input type="hidden" name="redirectUrl" value="${blog.relativeUrl}"/>
+      <div class="field">
+        <label for="openIdIdentifier">OpenId</label>
+        <input id="openIdIdentifier" type="text" name="openid_identifier" />
+      </div>
+      <div class="field">
+        <label for="openIdRememberMe"><fmt:message key='login.rememberMe' /></label>
+        <input id="openIdRememberMe" type="checkbox" name="_spring_security_remember_me" />
+      </div>
+      <div class="loginButtons"><input type="submit" value="<fmt:message key='login.button' />" /></div>
+    </form>
+  </div>
+
+  <div id="loginOptionGoogleArea" class="loginOptionArea">
+    <div id="loginUsingGoogle">Log me in using <img src="common/images/google_logo.jpg" alt="Google"/></div>
+  </div>
+</div>
 <script type="text/javascript">
-window.onload = function()
-{
-  document.loginForm.j_username.focus();
-}
+  Event.observe(window, "load", initLoginScreen);
 </script>

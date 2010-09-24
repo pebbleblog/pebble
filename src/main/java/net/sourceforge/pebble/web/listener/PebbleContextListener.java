@@ -70,6 +70,7 @@ public class PebbleContextListener implements ServletContextListener {
     PebbleContext ctx = PebbleContext.getInstance();
     ctx.setConfiguration(config);
     ctx.setWebApplicationRoot(event.getServletContext().getRealPath("/"));
+    ctx.setApplicationContext(applicationContext);
 
     BlogManager.getInstance().setMultiBlog(config.isMultiBlog());
     BlogManager.getInstance().startBlogs();

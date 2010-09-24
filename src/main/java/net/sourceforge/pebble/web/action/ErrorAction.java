@@ -61,6 +61,12 @@ public class ErrorAction extends Action {
    */
   public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
     Exception e = (Exception)request.getAttribute("exception");
+    if (e == null) {
+      Object exceptionAttribute = request.getAttribute("javax.servlet.error.exception");
+      if (exceptionAttribute instanceof Exception) {
+        e = (Exception) exceptionAttribute;
+      }
+    }
     if (e != null) {
       log.error("Request URL = " + request.getRequestURL());
       log.error("Request URI = " + request.getRequestURI());

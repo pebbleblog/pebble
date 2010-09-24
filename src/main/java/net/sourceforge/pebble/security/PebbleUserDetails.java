@@ -15,6 +15,10 @@ import java.util.*;
  */
 public class PebbleUserDetails implements UserDetails {
 
+  public static final String OPEN_IDS_PREFERENCE = "openids";
+  // Reserved unwise character from RFC-2396
+  private static final String OPEN_IDS_SEPARATOR = "|";
+
   private String username;
   private String password;
 
@@ -36,6 +40,8 @@ public class PebbleUserDetails implements UserDetails {
   private Collection<GrantedAuthority> grantedAuthories;
 
   private boolean detailsUpdateable = true;
+
+  private Collection<String> openIds;
 
   public PebbleUserDetails() {
   }
@@ -238,5 +244,31 @@ public class PebbleUserDetails implements UserDetails {
   public void setPreferences(Map<String,String> preferences) {
     this.preferences = new HashMap<String,String>(preferences);
   }
-  
+
+  public Collection<String> getOpenIds()
+  {
+    String openIds = getPreference(OPEN_IDS_PREFERENCE);
+    if (openIds == null || openIds.trim().length() == 0) {
+      return Collections.emptyList();
+    } else {
+      // Use a regular expression that will automatically trim whitespace
+      return Arrays.asList(openIds.split("\\s*\\" + OPEN_IDS_SEPARATOR + "\\s*"));
+    }
+  }
+
+  public void setOpenIds(Collection<String> openIds)
+  {
+    if (openIds.isEmpty()) {
+      preferences.remove(OPEN_IDS_PREFERENCE);
+    } else {
+      StringBuilder builder = new StringBuilder();
+      String sep = "";
+      for (String openId : openIds) {
+        builder.append(sep);
+        sep = OPEN_IDS_SEPARATOR;
+        builder.append(openId);
+      }
+      preferences.put(OPEN_IDS_PREFERENCE, builder.toString());
+    }
+  }
 }

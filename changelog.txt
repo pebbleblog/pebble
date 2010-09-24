@@ -1,3 +1,8 @@
+Version 2.6 - TBC
+-----------------
+PEBBLE-38 Upgraded to spring security 3
+PEBBLE-39 Added OpenID support to Pebble (James Roper)
+
 Version 2.5 - TBC
 -----------------
 PEBBLE-17 integrated twitter4j (Yusuke Yamamoto's library for twitter - http://yusuke.homeip.net/twitter4j/en/index.html) (in progress, target is to use OAuth)

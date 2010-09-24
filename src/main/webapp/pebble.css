@@ -125,3 +125,85 @@
 .singlePluginBox .pluginConfig {
     padding: 10px;
 }
+#loginPage {
+  margin-left: 100px;
+}
+/* Login */
+#loginOptions {
+  float: left;
+  padding: 0;
+  margin: 0;
+  border-right: 1px solid #888;
+  height: 200px;
+}
+
+.loginOption {
+  text-align: right;
+  list-style-type: none;
+  width: 100px;
+  margin: 5px -1px 5px 0;
+  padding: 3px 24px 3px 0;
+  background-color: #EEE;
+  background-position: 97% 50%;
+  background-repeat: no-repeat;
+  border: 1px solid #888;
+  -moz-border-radius-topleft: 5px;
+  -moz-border-radius-bottomleft: 5px;
+  -webkit-top-left-border-radius: 5px;
+  -webkit-bottom-left-border-radius: 5px;
+  top-left-border-radius: 5px;
+  bottom-left-border-radius: 5px;
+  cursor: pointer;
+}
+.loginOption:hover {
+  background-color: white;
+}
+.loginOptionSelected {
+  background-color: white;
+  border-right: 1px solid white;
+}
+#loginOptionPassword {
+  background-image: url("common/images/pebble.png");
+}
+#loginOptionOpenId {
+  background-image: url("common/images/openid.png");
+}
+#loginOptionGoogle {
+  background-image: url("common/images/google.png");
+}
+.loginOptionArea {
+  margin-left: 140px;
+  padding-top: 20px;
+}
+.loginOptionArea div {
+  padding: 5px 0;
+}
+.loginOptionArea label {
+  width: 130px;
+  float: left;
+  padding-right: 10px;
+  text-align: right;
+}
+.loginOptionArea .loginButtons {
+  padding-left: 130px;
+}
+#loginUsingGoogle {
+  width: 150px;
+  padding: 10px;
+  margin-left: 50px;
+  border: 1px solid #888;
+  -moz-border-radius: 8px;
+  -webkit-border-radius: 8px;
+  bordor-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+}
+#loginUsingGoogle img {
+  display: block;
+  margin: 5px auto;
+}
+.loginError {
+  color: red;
+  font-weight: bold;
+  padding: 0 0 20px 100px;
+}

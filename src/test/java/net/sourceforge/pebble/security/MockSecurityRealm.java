@@ -12,6 +12,7 @@ import java.util.Map;
 public class MockSecurityRealm implements SecurityRealm {
 
   private Map<String,PebbleUserDetails> users = new HashMap<String,PebbleUserDetails>();
+  private Map<String,String> openIdMap = new HashMap<String, String>();
 
   /**
    * Looks up and returns a collection of all users.
@@ -30,6 +31,18 @@ public class MockSecurityRealm implements SecurityRealm {
    */
   public PebbleUserDetails getUser(String username) {
     return users.get(username);
+  }
+
+  public PebbleUserDetails getUserForOpenId(String openId) throws SecurityRealmException {
+    return users.get(openIdMap.get(openId));
+  }
+
+  public void addOpenIdToUser(PebbleUserDetails pud, String openId) throws SecurityRealmException {
+    openIdMap.put(openId, pud.getUsername());
+  }
+
+  public void removeOpenIdFromUser(PebbleUserDetails pud, String openId) throws SecurityRealmException {
+    openIdMap.remove(openId);
   }
 
   /**

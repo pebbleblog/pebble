@@ -47,7 +47,7 @@ public class Configuration {
   /** the log used by this class */
   private static Log log = LogFactory.getLog(Configuration.class);
 
-  private String dataDirectory = "${user.home}/pebble";
+  private String dataDirectory = evaluateDirectory("${user.home}/pebble");
   private String url;
   private String secureUrl;
   private boolean multiBlog = false;

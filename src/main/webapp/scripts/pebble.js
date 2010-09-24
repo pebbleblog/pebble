@@ -213,3 +213,45 @@ function logoutOpenIdCommentAuthor() {
     $("openIdCommentAuthor").openIdLogoutCallback()
   }
 }
+
+/**
+ * LOGIN
+ */
+function initLoginScreen() {
+  var first = true;
+  $$(".loginOption").each(function(option) {
+    var loginOption = $(option);
+    if (first) {
+      loginOption.addClassName("loginOptionSelected");
+      first = false;
+    } else {
+      $(loginOption.id + "Area").setStyle({display : "none"});
+    }
+    loginOption.observe("click", selectLoginOption);
+  });
+  $("loginUsingGoogle").observe("click", loginUsingGoogle);
+}
+function selectLoginOption(event) {
+  var id = this.id;
+  $$(".loginOption").each(function(option) {
+    var loginOption = $(option);
+    var area = $(loginOption.id + "Area");
+    if (loginOption.id == id) {
+      if (!loginOption.hasClassName("loginOptionSelected"))
+      {
+        loginOption.addClassName("loginOptionSelected");
+        Effect.BlindDown(area);
+      }
+    } else {
+      if (loginOption.hasClassName("loginOptionSelected")) {
+        loginOption.removeClassName("loginOptionSelected");
+        Effect.BlindUp(area);
+      }
+    }
+  });
+}
+function loginUsingGoogle(event) {
+  // This is the URL for google openids
+  $("openIdIdentifier").value = "https://www.google.com/accounts/o8/id";
+  $("openIdLoginForm").submit();
+}

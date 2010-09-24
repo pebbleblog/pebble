@@ -35,6 +35,8 @@ import junit.framework.TestCase;
 import net.sourceforge.pebble.util.FileUtils;
 import net.sourceforge.pebble.PebbleContext;
 import net.sourceforge.pebble.Configuration;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.StaticApplicationContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.io.File;
@@ -48,6 +50,7 @@ public abstract class PebbleTestCase extends TestCase {
 
   protected static final File TEST_BLOG_LOCATION;
   protected static final File TEST_RESOURCE_LOCATION;
+  protected static final ApplicationContext contextForEvents = new StaticApplicationContext();
 
   static {
     TEST_BLOG_LOCATION = new File(System.getProperty("java.io.tmpdir"), "pebble");
