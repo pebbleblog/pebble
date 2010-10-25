@@ -17,7 +17,7 @@
   <input type="hidden" name="blogId" value="<c:out value="${blogEntry.blog.id}"/>" />
   <input type="hidden" name="entry" value="<c:out value="${blogEntry.id}"/>" />
   <input type="hidden" name="comment" value="<c:out value="${undecoratedComment.parent.id}"/>" />
-  <input type="hidden" name="avatar" value="<c:out value="${comment.avatar}"/>"/>
+  <input type="hidden" name="avatar" value="<c:out value="${undecoratedComment.avatar}"/>"/>
 
 <table width="99%">
 
