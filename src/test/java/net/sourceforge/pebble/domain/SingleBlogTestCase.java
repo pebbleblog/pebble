@@ -69,7 +69,7 @@ public abstract class SingleBlogTestCase extends PebbleTestCase {
     config.setUrl("http://www.yourdomain.com/blog/");
     PebbleContext.getInstance().setConfiguration(config);
 
-//    PebbleContext.getInstance().getConfiguration().setSecurityRealm(new MockSecurityRealm());
+    PebbleContext.getInstance().getConfiguration().setSecurityRealm(new MockSecurityRealm());
 
     BlogManager.getInstance().addBlog(blog);
     blog.start();

@@ -32,13 +32,15 @@
 package net.sourceforge.pebble.web.action;
 
 import junit.framework.TestCase;
+import net.sourceforge.pebble.domain.PebbleTestCase;
 
 /**
  * Tests for the ActionFactory class.
  *
  * @author    Simon Brown
  */
-public class ActionFactoryTest extends TestCase {
+public class ActionFactoryTest extends PebbleTestCase
+{
 
   public void testGetAction() {
     ActionFactory factory = new ActionFactory("action.properties");

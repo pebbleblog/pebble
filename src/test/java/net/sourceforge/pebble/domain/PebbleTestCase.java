@@ -50,12 +50,13 @@ public abstract class PebbleTestCase extends TestCase {
 
   protected static final File TEST_BLOG_LOCATION;
   protected static final File TEST_RESOURCE_LOCATION;
-  protected static final ApplicationContext contextForEvents = new StaticApplicationContext();
 
   static {
     TEST_BLOG_LOCATION = new File(System.getProperty("java.io.tmpdir"), "pebble");
     TEST_RESOURCE_LOCATION = new File("src/test/resources");
   }
+
+  protected ApplicationContext testApplicationContext;
 
   protected void setUp() throws Exception {
     super.setUp();
@@ -66,10 +67,13 @@ public abstract class PebbleTestCase extends TestCase {
     TEST_BLOG_LOCATION.mkdir();
     new File(TEST_BLOG_LOCATION, "blogs").mkdir();
 
+    testApplicationContext = new StaticApplicationContext();
+
     Configuration config = new Configuration();
     config.setUrl("http://www.yourdomain.com/blog/");
     config.setDataDirectory(TEST_BLOG_LOCATION.getAbsolutePath());
     PebbleContext.getInstance().setConfiguration(config);
+    PebbleContext.getInstance().setApplicationContext(testApplicationContext);
   }
 
   protected void tearDown() throws Exception {
