@@ -4,7 +4,7 @@
     <groupId>org.sourceforge.pebble</groupId>
     <artifactId>pebble</artifactId>
     <packaging>war</packaging>
-    <version>2.6-SNAPSHOT</version>
+    <version>2.6-M1</version>
 
     <name>Pebble</name>
     <description>A lightweight, open source, Java EE blogging tool</description>
@@ -457,9 +457,9 @@
     </distributionManagement>
 
     <scm>
-        <connection>scm:svn:https://open.jira.com/svn/PEBBLE/trunk</connection>
-        <developerConnection>scm:svn:https://open.jira.com/svn/PEBBLE/trunk</developerConnection>
-        <url>http://open.jira.com/source/browse/PEBBLE/trunk</url>
+        <connection>scm:svn:https://open.jira.com/svn/PEBBLE/tags/pebble-2.6-M1</connection>
+        <developerConnection>scm:svn:https://open.jira.com/svn/PEBBLE/tags/pebble-2.6-M1</developerConnection>
+        <url>http://open.jira.com/source/browse/PEBBLE/tags/pebble-2.6-M1</url>
     </scm>
 
     <issueManagement>
