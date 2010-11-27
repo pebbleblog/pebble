@@ -40,17 +40,36 @@ import java.io.PrintWriter;
 
 public class GZIPResponseWrapper extends HttpServletResponseWrapper {
 
-  protected HttpServletResponse wrappedResponse = null;
-  protected ServletOutputStream stream = null;
-  protected PrintWriter writer = null;
+  private final HttpServletResponse wrappedResponse;
+  private final String encoding;
 
-  public GZIPResponseWrapper(HttpServletResponse response) {
-    super(response);
-    wrappedResponse = response;
+  private ServletOutputStream stream;
+  private PrintWriter writer;
+  private int status;
+  private Integer contentLength;
+
+  public GZIPResponseWrapper(HttpServletResponse wrappedResponse, String encoding) {
+    super(wrappedResponse);
+    this.wrappedResponse = wrappedResponse;
+    this.encoding = encoding;
   }
 
   public ServletOutputStream createOutputStream() throws IOException {
-    return (new GZIPResponseStream(wrappedResponse));
+    if (shouldGzipResponse()) {
+      return (new GZIPResponseStream(wrappedResponse));
+    } else {
+      // If we aren't zipping the response, then we need to pass on the content length
+      if (contentLength != null) {
+        wrappedResponse.setContentLength(contentLength);
+      }
+      return wrappedResponse.getOutputStream();
+    }
+  }
+
+  private boolean shouldGzipResponse() {
+    // PEBBLE-43 We shouldn't zip responses that are not allowed to have any content, because a zipped
+    // empty response is actually 20 bytes long
+    return status != HttpServletResponse.SC_NOT_MODIFIED && status != HttpServletResponse.SC_NO_CONTENT;
   }
 
   public void finishResponse() {
@@ -63,6 +82,7 @@ public class GZIPResponseWrapper extends HttpServletResponseWrapper {
         }
       }
     } catch (IOException e) {
+      // Ignore
     }
   }
 
@@ -92,11 +112,35 @@ public class GZIPResponseWrapper extends HttpServletResponseWrapper {
     }
 
     stream = createOutputStream();
-    writer = new PrintWriter(new OutputStreamWriter(stream, "UTF-8"));
+    writer = new PrintWriter(new OutputStreamWriter(stream, encoding));
     return (writer);
   }
 
   public void setContentLength(int length) {
+    contentLength = length;
   }
 
+  @Override
+  public void setStatus(int sc) {
+    this.status = sc;
+    super.setStatus(sc);
+  }
+
+  @Override
+  public void setStatus(int sc, String sm) {
+    this.status = sc;
+    super.setStatus(sc, sm);
+  }
+
+  @Override
+  public void sendError(int sc, String msg) throws IOException {
+    this.status = sc;
+    super.sendError(sc, msg);
+  }
+
+  @Override
+  public void sendError(int sc) throws IOException {
+    this.status = sc;
+    super.sendError(sc);
+  }
 }
