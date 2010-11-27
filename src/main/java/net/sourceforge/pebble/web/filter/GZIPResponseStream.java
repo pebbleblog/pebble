@@ -93,12 +93,4 @@ public class GZIPResponseStream extends ServletOutputStream {
     }
     gzipstream.write(b, off, len);
   }
-
-  public boolean closed() {
-    return (this.closed);
-  }
-
-  public void reset() {
-  }
-
 }

@@ -69,6 +69,14 @@
   </filter>
 
   <filter-mapping>
+    <filter-name>BlogLookupFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+    <dispatcher>REQUEST</dispatcher>
+  </filter-mapping>
+
+  <!-- gzip filter *must* come after the blog lookup filter, because it uses the encoding of the
+      currently set blog -->
+  <filter-mapping>
     <filter-name>GZIPFilter</filter-name>
     <url-pattern>*.html</url-pattern>
     <dispatcher>REQUEST</dispatcher>
@@ -83,12 +91,6 @@
   <filter-mapping>
     <filter-name>GZIPFilter</filter-name>
     <url-pattern>*.css</url-pattern>
-    <dispatcher>REQUEST</dispatcher>
-  </filter-mapping>
-
-  <filter-mapping>
-    <filter-name>BlogLookupFilter</filter-name>
-    <url-pattern>/*</url-pattern>
     <dispatcher>REQUEST</dispatcher>
   </filter-mapping>
 

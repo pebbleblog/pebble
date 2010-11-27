@@ -31,6 +31,9 @@
  */
 package net.sourceforge.pebble.web.filter;
 
+import net.sourceforge.pebble.Constants;
+import net.sourceforge.pebble.domain.AbstractBlog;
+
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -46,7 +49,8 @@ public class GZIPFilter implements Filter {
 
       String ae = request.getHeader("Accept-Encoding");
       if (ae != null && ae.indexOf("gzip") != -1) {
-        GZIPResponseWrapper wrappedResponse = new GZIPResponseWrapper(response);
+        String encoding = ((AbstractBlog)request.getAttribute(Constants.BLOG_KEY)).getCharacterEncoding();
+        GZIPResponseWrapper wrappedResponse = new GZIPResponseWrapper(response, encoding);
         chain.doFilter(req, wrappedResponse);
         wrappedResponse.finishResponse();
       } else {
