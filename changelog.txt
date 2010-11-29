@@ -3,6 +3,11 @@ Version 2.6 - TBC
 PEBBLE-38 Upgraded to spring security 3
 PEBBLE-39 Added OpenID support to Pebble (James Roper)
 
+Version 2.5.1 - 30.11.2010
+--------------------------
+PEBBLE-43 Fixed gzip filter bug where no content responses were being zipped
+Fixed gzip encoding so it sets it to the blogs encoding rather than hard coded UTF-8
+
 Version 2.5 - 19.11.2010
 -----------------
 PEBBLE-17 integrated twitter4j (Yusuke Yamamoto's library for twitter - http://yusuke.homeip.net/twitter4j/en/index.html) (in progress, target is to use OAuth)
