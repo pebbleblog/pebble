@@ -39,7 +39,7 @@ import net.sourceforge.pebble.domain.AbstractBlog;
  *
  * @author    Simon Brown
  */
-public class AtomView extends AbstractFeedView {
+public class AtomView extends AbstractRomeFeedView {
 
   /**
    * Gets the content type of this view. Overidden because Atom feeds
@@ -52,13 +52,11 @@ public class AtomView extends AbstractFeedView {
     return "application/atom+xml; charset=" + blog.getCharacterEncoding();
   }
 
-  /**
-   * Gets the URI that implements this view.
-   *
-   * @return the URI as a String
-   */
-  public String getUri() {
-    return "/WEB-INF/xml/feeds/main/atom.xml";
+  protected String getFileName() {
+    return "atom.xml";
   }
 
+  protected String getFeedType() {
+    return "atom_1.0";
+  }
 }

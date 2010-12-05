@@ -36,15 +36,13 @@ package net.sourceforge.pebble.web.view.impl;
  *
  * @author    Simon Brown
  */
-public class RssView extends AbstractFeedView {
+public class RssView extends AbstractRomeFeedView {
 
-  /**
-   * Gets the URI that implements this view.
-   *
-   * @return the URI as a String
-   */
-  public String getUri() {
-    return "/WEB-INF/xml/feeds/main/rss.xml";
+  protected String getFileName() {
+    return "rss.xml";
   }
 
+  protected String getFeedType() {
+    return "rss_2.0";
+  }
 }

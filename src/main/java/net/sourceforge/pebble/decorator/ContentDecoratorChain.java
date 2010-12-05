@@ -37,7 +37,6 @@ import net.sourceforge.pebble.api.decorator.ContentDecoratorContext;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Iterator;
 
 /**
  * Manages a list of content decorators at runtime.
@@ -54,6 +53,8 @@ public class ContentDecoratorChain implements ContentDecorator {
 
   /**
    * Creates a new chain.
+   *
+   * @param blog The blog to decorate for
    */
   public ContentDecoratorChain(Blog blog) {
     setBlog(blog);
@@ -70,9 +71,11 @@ public class ContentDecoratorChain implements ContentDecorator {
 
   /**
    * Gets the list of decorators in use.
+   *
+   * @return The content decorators
    */
-  public List getContentDecorators() {
-    return new ArrayList(decorators);
+  public List<ContentDecorator> getContentDecorators() {
+    return new ArrayList<ContentDecorator>(decorators);
   }
 
   /**
@@ -164,13 +167,12 @@ public class ContentDecoratorChain implements ContentDecorator {
   /**
    * Decorates the specified blog entries.
    *
+   * @param context       the context
    * @param blogEntries   a List of BlogEntry instances
    */
-  public static void decorate(ContentDecoratorContext context, List blogEntries) {
+  public static void decorate(ContentDecoratorContext context, List<BlogEntry> blogEntries) {
     if (blogEntries != null) {
-      Iterator it = blogEntries.iterator();
-      while (it.hasNext()) {
-        BlogEntry blogEntry = (BlogEntry)it.next();
+      for (BlogEntry blogEntry : blogEntries) {
         blogEntry.getBlog().getContentDecoratorChain().decorate(context, blogEntry);
       }
     }
