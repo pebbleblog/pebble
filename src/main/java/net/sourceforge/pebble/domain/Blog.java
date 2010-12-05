@@ -1047,10 +1047,10 @@ public class Blog extends AbstractBlog {
    * @param numberOfEntries the number of entries to get
    * @return a List containing the most recent blog entries
    */
-  public List getRecentBlogEntries(int numberOfEntries) {
+  public List<BlogEntry> getRecentBlogEntries(int numberOfEntries) {
     BlogService service = new BlogService();
     List<String> blogEntryIds = blogEntryIndex.getBlogEntries();
-    List blogEntries = new ArrayList();
+    List<BlogEntry> blogEntries = new ArrayList<BlogEntry>();
     for (String blogEntryId : blogEntryIds) {
       try {
         BlogEntry blogEntry = service.getBlogEntry(this, blogEntryId);
@@ -1073,7 +1073,7 @@ public class Blog extends AbstractBlog {
    *
    * @return a List containing the most recent blog entries
    */
-  public List getRecentPublishedBlogEntries() {
+  public List<BlogEntry> getRecentPublishedBlogEntries() {
     return getRecentPublishedBlogEntries(getRecentBlogEntriesOnHomePage());
   }
 
@@ -1084,10 +1084,10 @@ public class Blog extends AbstractBlog {
    * @param number    the number of blog entries to get
    * @return a List containing the most recent blog entries
    */
-  public List getRecentPublishedBlogEntries(int number) {
+  public List<BlogEntry> getRecentPublishedBlogEntries(int number) {
     BlogService service = new BlogService();
     List<String> blogEntryIds = blogEntryIndex.getPublishedBlogEntries();
-    List blogEntries = new ArrayList();
+    List<BlogEntry> blogEntries = new ArrayList<BlogEntry>();
     for (String blogEntryId : blogEntryIds) {
       if (blogEntries.size() == number) {
         break;
@@ -1136,10 +1136,10 @@ public class Blog extends AbstractBlog {
    * @param   category          a category
    * @return  a List containing the most recent blog entries
    */
-  public List getRecentPublishedBlogEntries(Category category) {
+  public List<BlogEntry> getRecentPublishedBlogEntries(Category category) {
     BlogService service = new BlogService();
     List<String> blogEntryIds = categoryIndex.getRecentBlogEntries(category);
-    List blogEntries = new ArrayList();
+    List<BlogEntry> blogEntries = new ArrayList<BlogEntry>();
     for (String blogEntryId : blogEntryIds) {
       try {
         BlogEntry blogEntry = service.getBlogEntry(this, blogEntryId);
@@ -1165,10 +1165,10 @@ public class Blog extends AbstractBlog {
    * @param   author    the author's username
    * @return  a List containing the most recent blog entries
    */
-  public List getRecentPublishedBlogEntries(String author) {
+  public List<BlogEntry> getRecentPublishedBlogEntries(String author) {
     BlogService service = new BlogService();
     List<String> blogEntryIds = authorIndex.getRecentBlogEntries(author);
-    List blogEntries = new ArrayList();
+    List<BlogEntry> blogEntries = new ArrayList<BlogEntry>();
     for (String blogEntryId : blogEntryIds) {
       try {
         BlogEntry blogEntry = service.getBlogEntry(this, blogEntryId);
@@ -1194,10 +1194,10 @@ public class Blog extends AbstractBlog {
    * @param tag             a tag
    * @return a List containing the most recent blog entries
    */
-  public List getRecentPublishedBlogEntries(Tag tag) {
+  public List<BlogEntry> getRecentPublishedBlogEntries(Tag tag) {
     BlogService service = new BlogService();
     List<String> blogEntryIds = tagIndex.getRecentBlogEntries(tag);
-    List blogEntries = new ArrayList();
+    List<BlogEntry> blogEntries = new ArrayList<BlogEntry>();
     for (String blogEntryId : blogEntryIds) {
       try {
         BlogEntry blogEntry = service.getBlogEntry(this, blogEntryId);

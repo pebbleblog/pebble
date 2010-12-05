@@ -35,19 +35,19 @@ import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.domain.MultiBlog;
 import net.sourceforge.pebble.domain.FileManager;
 import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.service.LastModifiedService;
 import net.sourceforge.pebble.util.FileUtils;
 import net.sourceforge.pebble.web.view.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.TimeZone;
 
 /**
  * Gets a file/image from a blog.
@@ -58,6 +58,9 @@ public class FileAction extends Action {
 
   /** the log used by this class */
   private static final Log log = LogFactory.getLog(FileAction.class);
+
+  @Inject
+  private LastModifiedService lastModifiedService;
 
   /**
    * Peforms the processing associated with this action.
@@ -95,23 +98,11 @@ public class FileAction extends Action {
       return new ForwardView("/viewFiles.secureaction?type=" + type + "&path=" + name);
     }
 
-    SimpleDateFormat httpFormat = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z");
-    httpFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
-    String ifModifiedSince = request.getHeader("If-Modified-Since");
-    String ifNoneMatch = request.getHeader("If-None-Match");
     Date lastModified = new Date(file.lastModified());
-    response.setDateHeader("Last-Modified", lastModified.getTime());
-    response.setHeader("ETag", "\"" + httpFormat.format(lastModified) + "\"");
-
-    // and finally the last modified date
-    SimpleDateFormat sdf = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z");
     Calendar expires = blog.getCalendar();
     expires.add(Calendar.MONTH, 1);
-    response.setHeader("Expires", sdf.format(expires.getTime()));
 
-    if (ifModifiedSince != null && ifModifiedSince.equals(httpFormat.format(lastModified))) {
-      return new NotModifiedView();
-    } else if (ifNoneMatch != null && ifNoneMatch.equals("\"" + httpFormat.format(lastModified) + "\"")) {
+    if (lastModifiedService.checkAndProcessLastModified(request, response, lastModified, expires.getTime())) {
       return new NotModifiedView();
     } else {
       return new FileView(file);

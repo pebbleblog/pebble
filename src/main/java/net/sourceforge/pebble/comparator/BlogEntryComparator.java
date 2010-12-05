@@ -41,20 +41,17 @@ import java.util.Comparator;
  *
  * @author    Simon Brown
  */
-public class BlogEntryComparator implements Comparator {
+public class BlogEntryComparator implements Comparator<BlogEntry> {
 
   /**
    * Compares two objects.
    *
-   * @param o1  object 1
-   * @param o2  object 2
+   * @param b1  object 1
+   * @param b2  object 2
    * @return  -n, 0 or +n if the date represented by the second blog entry is less than,
    *          the same as or greater than the first, respectively
    */
-  public int compare(Object o1, Object o2) {
-    BlogEntry b1 = (BlogEntry)o1;
-    BlogEntry b2 = (BlogEntry)o2;
-
+  public int compare(BlogEntry b1, BlogEntry b2) {
     return b2.getDate().compareTo(b1.getDate());
   }
 

@@ -138,8 +138,8 @@ public class MultiBlog extends AbstractBlog {
    * @param numberOfEntries the number of entries to get
    * @return a List containing the most recent blog entries
    */
-  public List getRecentBlogEntries(int numberOfEntries) {
-    List blogEntries = new ArrayList();
+  public List<BlogEntry> getRecentBlogEntries(int numberOfEntries) {
+    List<BlogEntry> blogEntries = new ArrayList<BlogEntry>();
 
     for (Blog blog : BlogManager.getInstance().getPublicBlogs()) {
       blogEntries.addAll(blog.getRecentPublishedBlogEntries());
@@ -148,9 +148,9 @@ public class MultiBlog extends AbstractBlog {
     Collections.sort(blogEntries, new BlogEntryComparator());
 
     if (blogEntries.size() >= numberOfEntries) {
-      return new ArrayList(blogEntries).subList(0, numberOfEntries);
+      return new ArrayList<BlogEntry>(blogEntries).subList(0, numberOfEntries);
     } else {
-      return new ArrayList(blogEntries);
+      return new ArrayList<BlogEntry>(blogEntries);
     }
   }
 

@@ -34,24 +34,28 @@ package net.sourceforge.pebble.web.action;
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.comparator.BlogEntryComparator;
 import net.sourceforge.pebble.domain.*;
+import net.sourceforge.pebble.service.LastModifiedService;
 import net.sourceforge.pebble.web.view.NotModifiedView;
 import net.sourceforge.pebble.web.view.View;
-import net.sourceforge.pebble.web.view.impl.AtomView;
+import net.sourceforge.pebble.web.view.impl.AbstractRomeFeedView;
+import net.sourceforge.pebble.web.view.impl.FeedView;
 import net.sourceforge.pebble.web.view.impl.RdfView;
-import net.sourceforge.pebble.web.view.impl.RssView;
 
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
  * Gets the RSS for a blog.
  *
- * @author    Simon Brown
+ * @author Simon Brown
  */
 public class FeedAction extends Action {
+
+  @Inject
+  private LastModifiedService lastModifiedService;
 
   /**
    * Peforms the processing associated with this action.
@@ -61,94 +65,71 @@ public class FeedAction extends Action {
    * @return the name of the next view
    */
   public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
-    AbstractBlog blog = (AbstractBlog)getModel().get(Constants.BLOG_KEY);
+    AbstractBlog blog = (AbstractBlog) getModel().get(Constants.BLOG_KEY);
     String flavor = request.getParameter("flavor");
 
-    SimpleDateFormat httpFormat = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z");
-    httpFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
-
-    String ifModifiedSince = request.getHeader("If-Modified-Since");
-    String ifNoneMatch = request.getHeader("If-None-Match");
-
-    if (flavor != null && flavor.equalsIgnoreCase("atom")) {
-      response.setContentType("application/atom+xml; charset=" + blog.getCharacterEncoding());
-    } else {
-      response.setContentType("application/xml; charset=" + blog.getCharacterEncoding());
+    if (lastModifiedService.checkAndProcessLastModified(request, response, blog.getLastModified(), null)) {
+      return new NotModifiedView();
     }
 
-    Date lastModified = blog.getLastModified();
-    response.setDateHeader("Last-Modified", lastModified.getTime());
-    response.setHeader("ETag", "\"" + httpFormat.format(lastModified) + "\"");
+    List<BlogEntry> blogEntries;
+    String s = request.getParameter("includeAggregatedContent");
+    boolean includeAggregatedContent = (s == null || s.equalsIgnoreCase("true"));
 
-    if (ifModifiedSince != null && ifModifiedSince.equals(httpFormat.format(lastModified))) {
-      return new NotModifiedView();
-    } else if (ifNoneMatch != null && ifNoneMatch.equals("\"" + httpFormat.format(lastModified) + "\"")) {
-      return new NotModifiedView();
+    if (blog instanceof Blog) {
+      Tag tag = getTag((Blog) blog, request);
+      Category category = getCategory((Blog) blog, request);
+      String author = getAuthor(request);
+
+      if (tag != null) {
+        blogEntries = ((Blog) blog).getRecentPublishedBlogEntries(tag);
+        getModel().put("tag", tag);
+      } else if (category != null) {
+        blogEntries = ((Blog) blog).getRecentPublishedBlogEntries(category);
+        getModel().put("category", category);
+      } else if (author != null) {
+        blogEntries = ((Blog) blog).getRecentPublishedBlogEntries(author);
+        getModel().put("author", author);
+      } else {
+        blogEntries = ((Blog) blog).getRecentPublishedBlogEntries();
+      }
     } else {
-      List blogEntries;
-      String s = request.getParameter("includeAggregatedContent");
-      boolean includeAggregatedContent = (s == null || s.equalsIgnoreCase("true"));
+      blogEntries = blog.getRecentBlogEntries();
+    }
 
-      if (blog instanceof Blog) {
-        Tag tag = getTag((Blog)blog, request);
-        Category category = getCategory((Blog)blog, request);
-        String author = getAuthor(request);
-
-        if (tag != null) {
-          blogEntries = ((Blog)blog).getRecentPublishedBlogEntries(tag);
-          getModel().put("tag", tag);
-        } else if (category != null) {
-          blogEntries = ((Blog)blog).getRecentPublishedBlogEntries(category);
-          getModel().put("category", category);
-        } else if (author != null) {
-          blogEntries = ((Blog)blog).getRecentPublishedBlogEntries(author);
-          getModel().put("author", author);
-        } else {
-          blogEntries = ((Blog)blog).getRecentPublishedBlogEntries();
-        }
-      } else {
-        blogEntries = blog.getRecentBlogEntries();
+    List<BlogEntry> blogEntriesForFeed = new ArrayList<BlogEntry>();
+    for (BlogEntry entry : blogEntries) {
+      if (includeAggregatedContent || !entry.isAggregated()) {
+        blogEntriesForFeed.add(entry);
       }
+    }
 
-      List blogEntriesForFeed = new ArrayList();
-      Iterator it = blogEntries.iterator();
-      while (it.hasNext()) {
-        BlogEntry entry = (BlogEntry)it.next();
+    Collections.sort(blogEntriesForFeed, new BlogEntryComparator());
 
-        if (!includeAggregatedContent && entry.isAggregated()) {
-          continue;
-        } else {
-          blogEntriesForFeed.add(entry);
-        }
-      }
+    getModel().put(Constants.BLOG_ENTRIES, blogEntriesForFeed);
 
-      Collections.sort(blogEntriesForFeed, new BlogEntryComparator());
+    // set the locale of this feed request to be English
+    javax.servlet.jsp.jstl.core.Config.set(
+        request,
+        javax.servlet.jsp.jstl.core.Config.FMT_LOCALE,
+        Locale.ENGLISH);
 
-      getModel().put(Constants.BLOG_ENTRIES, blogEntriesForFeed);
-
-      // set the locale of this feed request to be English
-      javax.servlet.jsp.jstl.core.Config.set(
-          request,
-          javax.servlet.jsp.jstl.core.Config.FMT_LOCALE,
-          Locale.ENGLISH);
-
-      if (flavor != null && flavor.equalsIgnoreCase("atom")) {
-        return new AtomView();
-      } else if (flavor != null && flavor.equalsIgnoreCase("rdf")) {
-        return new RdfView();
-      } else {
-        return new RssView();
-      }
+    if (flavor != null && flavor.equalsIgnoreCase("atom")) {
+      return new FeedView(AbstractRomeFeedView.FeedType.ATOM);
+    } else if (flavor != null && flavor.equalsIgnoreCase("rdf")) {
+      return new RdfView();
+    } else {
+      return new FeedView(AbstractRomeFeedView.FeedType.RSS);
     }
   }
 
   /**
    * Helper method to find a named tag from a request parameter.
    *
-   * @param blog      the blog for which the feed is for
-   * @param request   the HTTP request containing the tag parameter
-   * @return  a Tag instance, or null if the tag isn't
-   *          specified or can't be found
+   * @param blog    the blog for which the feed is for
+   * @param request the HTTP request containing the tag parameter
+   * @return a Tag instance, or null if the tag isn't
+   *         specified or can't be found
    */
   private Tag getTag(Blog blog, HttpServletRequest request) {
     String tag = request.getParameter("tag");
@@ -162,10 +143,10 @@ public class FeedAction extends Action {
   /**
    * Helper method to find a named category from a request parameter.
    *
-   * @param blog      the blog for which the feed is for
-   * @param request   the HTTP request containing the category parameter
-   * @return  a Category instance, or null if the category isn't
-   *          specified or can't be found
+   * @param blog    the blog for which the feed is for
+   * @param request the HTTP request containing the category parameter
+   * @return a Category instance, or null if the category isn't
+   *         specified or can't be found
    */
   private Category getCategory(Blog blog, HttpServletRequest request) {
     String categoryId = request.getParameter("category");
@@ -179,8 +160,8 @@ public class FeedAction extends Action {
   /**
    * Helper method to find a named author from a request parameter.
    *
-   * @param request   the HTTP request containing the tag parameter
-   * @return  a String username, or null if the author isn't specified
+   * @param request the HTTP request containing the tag parameter
+   * @return a String username, or null if the author isn't specified
    */
   private String getAuthor(HttpServletRequest request) {
     return request.getParameter("author");

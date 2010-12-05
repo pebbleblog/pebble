@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2003-2006, Simon Brown
+ * Copyright (c) 2003-2010, Simon Brown
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,34 +29,44 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package net.sourceforge.pebble.web.view.impl;
+package net.sourceforge.pebble.service;
 
-import net.sourceforge.pebble.Constants;
-import net.sourceforge.pebble.domain.AbstractBlog;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
 
 /**
- * Represents an Atom newsfeed.
+ * Default implementation of the last modified service
  *
- * @author    Simon Brown
+ * @author James Roper
  */
-public class AtomView extends AbstractRomeFeedView {
+public class DefaultLastModifiedService implements LastModifiedService {
 
-  /**
-   * Gets the content type of this view. Overidden because Atom feeds
-   * require a specific content type of "application/atom+xml".
-   *
-   * @return the content type as a String
-   */
-  public String getContentType() {
-    AbstractBlog blog = (AbstractBlog)getModel().get(Constants.BLOG_KEY);
-    return "application/atom+xml; charset=" + blog.getCharacterEncoding();
-  }
+  public boolean checkAndProcessLastModified(HttpServletRequest request, HttpServletResponse response,
+                                             Date lastModified, Date expires) {
 
-  protected String getFileName() {
-    return "atom.xml";
-  }
+    SimpleDateFormat httpFormat = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z");
+    httpFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
 
-  protected String getFeedType() {
-    return "atom_1.0";
+    // Set the headers
+    response.setDateHeader("Last-Modified", lastModified.getTime());
+    response.setHeader("ETag", "\"" + httpFormat.format(lastModified) + "\"");
+    if (expires != null) {
+      response.setHeader("Expires", httpFormat.format(expires));
+    }
+
+    // Get the headers to check
+    String ifModifiedSince = request.getHeader("If-Modified-Since");
+    String ifNoneMatch = request.getHeader("If-None-Match");
+
+    if (ifModifiedSince != null && ifModifiedSince.equals(httpFormat.format(lastModified))) {
+      return true;
+    } else if (ifNoneMatch != null && ifNoneMatch.equals("\"" + httpFormat.format(lastModified) + "\"")) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

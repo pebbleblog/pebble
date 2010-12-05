@@ -38,7 +38,6 @@ import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.api.decorator.ContentDecoratorContext;
 import net.sourceforge.pebble.decorator.ContentDecoratorChain;
 import net.sourceforge.pebble.domain.*;
-import net.sourceforge.pebble.security.PebbleUserDetails;
 import net.sourceforge.pebble.web.view.View;
 
 import javax.servlet.ServletContext;
@@ -56,9 +55,19 @@ import java.util.*;
  */
 public abstract class AbstractRomeFeedView extends View {
 
+  private final FeedType feedType;
+  private final SimpleDateFormat idDateFormat;
+
+  protected AbstractRomeFeedView(FeedType feedType) {
+    this.feedType = feedType;
+    this.idDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    idDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+  }
+
   /**
    * Prepares the view for presentation.
    */
+  @SuppressWarnings("unchecked")
   public void prepare() {
     ContentDecoratorContext context = new ContentDecoratorContext();
     context.setView(ContentDecoratorContext.SUMMARY_VIEW);
@@ -76,7 +85,7 @@ public abstract class AbstractRomeFeedView extends View {
    */
   public String getContentType() {
     Blog blog = (Blog) getModel().get(Constants.BLOG_KEY);
-    return "application/xml; charset=" + blog.getCharacterEncoding();
+    return feedType.getContentType() + "; charset=" + blog.getCharacterEncoding();
   }
 
   /**
@@ -88,128 +97,9 @@ public abstract class AbstractRomeFeedView extends View {
    * @throws ServletException
    */
   public void dispatch(HttpServletRequest request, HttpServletResponse response, ServletContext context) throws ServletException {
-    AbstractBlog blog = (AbstractBlog) getModel().get(Constants.BLOG_KEY);
-    List<BlogEntry> blogEntries = (List<BlogEntry>) getModel().get(Constants.BLOG_ENTRIES);
-    SyndFeed syndFeed = new SyndFeedImpl();
+    SyndFeed syndFeed = getFeed();
+    syndFeed.setFeedType(getFeedType().getFeedType());
 
-    String blogUrl = blog.getUrl();
-
-    Tag tag = (Tag) getModel().get("tag");
-    Category category = (Category) getModel().get("category");
-    String author = (String) getModel().get("author");
-
-    String permalink;
-    String feedAuthor = blog.getAuthor();
-    String title = blog.getName();
-
-    if (tag != null) {
-      permalink = tag.getPermalink();
-      title += tag.getName();
-    } else if (category != null) {
-      permalink = category.getPermalink();
-      title += category.getName();
-    } else if (author != null) {
-      permalink = blogUrl + "authors/" + author;
-      title += author;
-    } else {
-      permalink = blogUrl;
-      syndFeed.setTitle(blog.getName());
-    }
-    String xmlLink;
-    if (permalink.endsWith("/")) {
-      xmlLink = permalink + getFileName();
-    } else {
-      xmlLink = permalink + "/" + getFileName();
-    }
-    syndFeed.setUri(xmlLink);
-    syndFeed.setTitle(title);
-    syndFeed.setDescription(blog.getDescription());
-    syndFeed.setLink(permalink);
-    // Alternate link, used in favour of the above link for atom
-    SyndLink alternate = new SyndLinkImpl();
-    alternate.setHref(permalink);
-    alternate.setRel("alternate");
-    alternate.setType("text/html");
-
-    SyndLink self = new SyndLinkImpl();
-    self.setHref(xmlLink);
-    self.setRel("self");
-    self.setType(getContentType());
-    syndFeed.setLinks(Arrays.asList(alternate, self));
-
-    syndFeed.setPublishedDate(blog.getLastModified());
-    syndFeed.setAuthor(feedAuthor);
-
-    if (blog.getImage() != null) {
-      SyndImage syndImage = new SyndImageImpl();
-      syndImage.setUrl(blog.getImage());
-      syndImage.setTitle(title);
-      syndImage.setUrl(permalink);
-      syndFeed.setImage(syndImage);
-      // Unfortunately, ROME doesn't support the logo attribute for Atom in a feed agnostic way
-    }
-
-    syndFeed.setCopyright(feedAuthor);
-    syndFeed.setLanguage(blog.getLanguage());
-
-    List<SyndEntry> feedEntries = new ArrayList<SyndEntry>();
-
-    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-    format.setTimeZone(TimeZone.getTimeZone("UTC"));
-    for (BlogEntry entry : blogEntries) {
-      SyndEntry feedEntry = new SyndEntryImpl();
-      feedEntry.setUri("tag:" + blog.getDomainName() + ":" + format.format(entry.getDate()) + ":" + blog.getId() +
-          "/" + entry.getId());
-      feedEntry.setTitle(entry.getTitle());
-      feedEntry.setLink(entry.getPermalink());
-      PebbleUserDetails entryUser = entry.getUser();
-      if (entryUser == null) {
-        feedEntry.setAuthor(entry.getAuthor());
-      } else {
-        SyndPerson entryAuthor = new SyndPersonImpl();
-        entryAuthor.setName(entryUser.getName());
-        entryAuthor.setUri(entryUser.getWebsite());
-        feedEntry.setAuthors(Collections.singletonList(entryAuthor));
-      }
-      feedEntry.setUpdatedDate(entry.getLastModified());
-      feedEntry.setPublishedDate(entry.getDate());
-
-      List<SyndCategory> feedCategories = new ArrayList<SyndCategory>();
-      for (Category cat : entry.getCategories()) {
-        SyndCategory feedCategory = new SyndCategoryImpl();
-        feedCategory.setName(cat.getName());
-        feedCategory.setTaxonomyUri(cat.getPermalink());
-        feedCategories.add(feedCategory);
-      }
-      for (Tag entryTag : entry.getAllTags()) {
-        SyndCategory feedCategory = new SyndCategoryImpl();
-        feedCategory.setName(entryTag.getName());
-        feedCategory.setTaxonomyUri(entryTag.getPermalink());
-        feedCategories.add(feedCategory);
-      }
-      feedEntry.setCategories(feedCategories);
-
-      SyndContent content = new SyndContentImpl();
-      content.setType("text/html");
-      if (entry.getExcerpt() == null || entry.getExcerpt().length() == 0) {
-        content.setValue(entry.getBody());
-      } else {
-        content.setValue(entry.getExcerpt());
-      }
-      feedEntry.setContents(Collections.singletonList(content));
-
-      if (entry.getAttachment() != null) {
-        SyndEnclosure enclosure = new SyndEnclosureImpl();
-        enclosure.setUrl(entry.getAttachment().getUrl());
-        enclosure.setType(entry.getAttachment().getType());
-        enclosure.setLength(entry.getAttachment().getSize());
-        feedEntry.setEnclosures(Collections.singletonList(enclosure));
-      }
-      feedEntries.add(feedEntry);
-    }
-    syndFeed.setEntries(feedEntries);
-
-    syndFeed.setFeedType(getFeedType());
     SyndFeedOutput output = new SyndFeedOutput();
 
     try {
@@ -222,16 +112,83 @@ public abstract class AbstractRomeFeedView extends View {
   }
 
   /**
-   * Get the file name for the feed URL, eg atom.xml, rss.xml
+   * Get the feed to return.
    *
-   * @return The file name for the feed URL
+   * @return The feed to return.
    */
-  protected abstract String getFileName();
+  protected abstract SyndFeed getFeed();
 
   /**
-   * Get the feed type, eg atom_1.0, rss_2.0
+   * Get the feed type for this view
    *
    * @return The feed type
    */
-  protected abstract String getFeedType();
+  public FeedType getFeedType() {
+    return feedType;
+  }
+
+  protected SimpleDateFormat getIdDateFormat() {
+    return idDateFormat;
+  }
+
+  protected String generateId(AbstractBlog blog, Date date, String contentId) {
+    StringBuilder id = new StringBuilder("tag:");
+    id.append(blog.getDomainName()).append(",");
+    if (date != null) {
+      id.append(getIdDateFormat().format(date));
+    } else {
+      id.append("0000-00-00");
+    }
+    id.append(":").append(blog.getId());
+    if (contentId != null) {
+      id.append("/").append(contentId);
+    }
+    return id.toString();
+  }
+
+  /**
+   * The type of feed
+   */
+  public enum FeedType {
+    ATOM("atom_1.0", "atom.xml", "application/atom+xml"),
+    RSS("rss_2.0", "rss.xml", "application/xml");
+
+    private final String feedType;
+    private final String fileName;
+    private final String contentType;
+
+    FeedType(String feedType, String fileName, String contentType) {
+      this.feedType = feedType;
+      this.fileName = fileName;
+      this.contentType = contentType;
+    }
+
+    /**
+     * Get the ROME feed type, eg atom_1.0
+     *
+     * @return The ROME feed type
+     */
+    public String getFeedType() {
+      return feedType;
+    }
+
+    /**
+     * Get the file name that this feed uses, eg atom.xml, rss.xml
+     *
+     * @return The filename
+     */
+    public String getFileName() {
+      return fileName;
+    }
+
+    /**
+     * Get the content type to set when sending this feed
+     *
+     * @return The content type
+     */
+    public String getContentType() {
+      return contentType;
+    }
+  }
+
 }

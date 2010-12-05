@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2003-2006, Simon Brown
+ * Copyright (c) 2003-2010, Simon Brown
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,36 +29,29 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package net.sourceforge.pebble.web.view.impl;
+package net.sourceforge.pebble.service;
 
-import net.sourceforge.pebble.Constants;
-import net.sourceforge.pebble.domain.AbstractBlog;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 
 /**
- * Represents an Atom newsfeed for blog entry responses.
+ * Service that does all the logic around working out whether a request should return not modified
  *
- * @author    Simon Brown
+ * @author James Roper
  */
-public class AtomResponsesView extends AbstractFeedView {
-
+public interface LastModifiedService {
+  
   /**
-   * Gets the content type of this view. Overidden because Atom feeds
-   * require a specific content type of "application/atom+xml".
+   * Work out whether this request should return not modified, given the date
    *
-   * @return the content type as a String
+   * @param request      The request to check and process
+   * @param response     The response to go with the request.  This can be used to set the etag and last modified
+   *                     headers, but should not be used to set the status code.
+   * @param lastModified The date to check and process
+   * @param expires      The date the content expires, may be null
+   * @return True        If it should return not modified
    */
-  public String getContentType() {
-    AbstractBlog blog = (AbstractBlog)getModel().get(Constants.BLOG_KEY);
-    return "application/atom+xml; charset=" + blog.getCharacterEncoding();
-  }
-
-  /**
-   * Gets the URI that implements this view.
-   *
-   * @return the URI as a String
-   */
-  public String getUri() {
-    return "/WEB-INF/xml/feeds/responses/atom.xml";
-  }
-
+  boolean checkAndProcessLastModified(HttpServletRequest request, HttpServletResponse response, Date lastModified,
+                                      Date expires);
 }

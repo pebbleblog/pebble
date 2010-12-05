@@ -37,4 +37,6 @@
     <property name="userThemesEnabled" value="${userThemesEnabled}" />
   </bean>
 
+  <bean id="lastModifiedService" class="net.sourceforge.pebble.service.DefaultLastModifiedService"/>
+
 </beans>

@@ -34,11 +34,12 @@ package net.sourceforge.pebble.web.action;
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.comparator.BlogEntryComparator;
 import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.domain.BlogEntry;
 import net.sourceforge.pebble.web.view.ForwardView;
 import net.sourceforge.pebble.web.view.View;
-import net.sourceforge.pebble.web.view.impl.AtomView;
+import net.sourceforge.pebble.web.view.impl.AbstractRomeFeedView;
+import net.sourceforge.pebble.web.view.impl.FeedView;
 import net.sourceforge.pebble.web.view.impl.RdfView;
-import net.sourceforge.pebble.web.view.impl.RssView;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -72,7 +73,7 @@ public class ExportBlogAction extends SecureAction {
 
     response.setContentType("application/xml; charset=" + blog.getCharacterEncoding());
 
-    List blogEntries = blog.getBlogEntries();
+    List<BlogEntry> blogEntries = blog.getBlogEntries();
     Collections.sort(blogEntries, new BlogEntryComparator());
     getModel().put(Constants.BLOG_ENTRIES, blogEntries);
 
@@ -83,11 +84,11 @@ public class ExportBlogAction extends SecureAction {
         Locale.ENGLISH);
 
     if (flavor != null && flavor.equalsIgnoreCase("atom")) {
-      return new AtomView();
+      return new FeedView(AbstractRomeFeedView.FeedType.ATOM);
     } else if (flavor != null && flavor.equalsIgnoreCase("rdf")) {
       return new RdfView();
     } else {
-      return new RssView();
+      return new FeedView(AbstractRomeFeedView.FeedType.RSS);
     }
   }
 
@@ -95,7 +96,7 @@ public class ExportBlogAction extends SecureAction {
    * Gets a list of all roles that are allowed to access this action.
    *
    * @return  an array of Strings representing role names
-   * @param request
+   * @param request The request
    */
   public String[] getRoles(HttpServletRequest request) {
     return new String[]{Constants.BLOG_ADMIN_ROLE, Constants.BLOG_OWNER_ROLE};

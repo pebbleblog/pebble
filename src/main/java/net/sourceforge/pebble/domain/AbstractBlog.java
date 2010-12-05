@@ -170,6 +170,7 @@ public abstract class AbstractBlog extends TimePeriod {
    * Gets a named property for this blog.
    *
    * @param key     the property name/key
+   * @return        the property value
    */
   public String getProperty(String key) {
     return properties.getProperty(key);
@@ -435,7 +436,7 @@ public abstract class AbstractBlog extends TimePeriod {
    * @param   numberOfEntries   the number of entries to get
    * @return  a List containing the most recent blog entries
    */
-  public abstract List getRecentBlogEntries(int numberOfEntries);
+  public abstract List<BlogEntry> getRecentBlogEntries(int numberOfEntries);
 
   /**
    * Gets the most recent blog entries, the number of which is taken from
@@ -443,7 +444,7 @@ public abstract class AbstractBlog extends TimePeriod {
    *
    * @return  a List containing the most recent blog entries
    */
-  public List getRecentBlogEntries() {
+  public List<BlogEntry> getRecentBlogEntries() {
     return getRecentBlogEntries(getRecentBlogEntriesOnHomePage());
   }
 
@@ -453,7 +454,7 @@ public abstract class AbstractBlog extends TimePeriod {
    * 
    * @param entries
    */
-  public void setRecentBlogEntries(List entries) {
+  public void setRecentBlogEntries(List<BlogEntry> entries) {
     // do nothing
   }
 
