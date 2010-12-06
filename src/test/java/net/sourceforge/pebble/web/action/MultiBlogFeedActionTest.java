@@ -35,11 +35,12 @@ import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.domain.*;
 import net.sourceforge.pebble.mock.MockHttpServletRequest;
 import net.sourceforge.pebble.mock.MockHttpServletResponse;
-import net.sourceforge.pebble.web.action.FeedAction;
+import net.sourceforge.pebble.service.LastModifiedService;
 import net.sourceforge.pebble.web.model.Model;
 
-import java.util.Calendar;
 import java.util.Collection;
+
+import static org.mockito.Mockito.*;
 
 /**
  * Tests for the FeedAction class.
@@ -51,6 +52,7 @@ public class MultiBlogFeedActionTest extends MultiBlogTestCase {
   private FeedAction action;
   private MockHttpServletRequest request;
   private MockHttpServletResponse response;
+  private LastModifiedService lastModifiedService;
 
   protected void setUp() throws Exception {
     super.setUp();
@@ -61,6 +63,8 @@ public class MultiBlogFeedActionTest extends MultiBlogTestCase {
     Model model = new Model();
     model.put(Constants.BLOG_KEY, blog1);
     action.setModel(model);
+    lastModifiedService = mock(LastModifiedService.class);
+    action.setLastModifiedService(lastModifiedService);
   }
 
   public void testCategoriesExcludedFromFeedInMultiUserMode() throws Exception {

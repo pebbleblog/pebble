@@ -31,11 +31,11 @@
  */
 package net.sourceforge.pebble.web.action;
 
+import net.sourceforge.pebble.service.LastModifiedService;
 import net.sourceforge.pebble.web.view.NotModifiedView;
-import net.sourceforge.pebble.web.view.View;
+import net.sourceforge.pebble.web.view.impl.FeedView;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletResponse;
+import static org.mockito.Mockito.*;
 
 /**
  * Tests for the FeedAction class.
@@ -44,55 +44,23 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class SingleBlogFeedActionTest extends SingleBlogActionTestCase {
 
+  private LastModifiedService lastModifiedService;
+
   protected void setUp() throws Exception {
+    lastModifiedService = mock(LastModifiedService.class);
     action = new FeedAction();
+    ((FeedAction) action).setLastModifiedService(lastModifiedService);
 
     super.setUp();
   }
 
-  public void testContentTypeIsXml() {
-    try {
-      action.process(request, response);
-      assertEquals("application/xml; charset=UTF-8", response.getContentType());
-    } catch (ServletException e) {
-      fail();
-    }
+  public void testStatusIsOkay() throws Exception {
+    assertTrue(action.process(request, response) instanceof FeedView);
   }
 
-  public void testStatusIsOkay() {
-    try {
-      action.process(request, response);
-      assertEquals(HttpServletResponse.SC_OK, response.getStatus());
-    } catch (ServletException e) {
-      fail();
-    }
-  }
-
-  public void testStatusIsNotModifiedWhenBlogNotChanged() {
-    try {
-      action.process(request, response);
-      assertEquals(HttpServletResponse.SC_OK, response.getStatus());
-
-      System.out.println(response.getHeader("Last-Modified"));
-      request.setHeader("If-Modified-Since", response.getHeader("Last-Modified"));
-      View view = action.process(request, response);
-      assertTrue(view instanceof NotModifiedView);
-    } catch (Exception e) {
-      fail();
-    }
-  }
-
-  public void testStatusIfNoneMatchWhenBlogNotChanged() {
-    try {
-      action.process(request, response);
-      assertEquals(HttpServletResponse.SC_OK, response.getStatus());
-
-      request.setHeader("If-None-Match", response.getHeader("ETag"));
-      View view = action.process(request, response);
-      assertTrue(view instanceof NotModifiedView);
-    } catch (Exception e) {
-      fail();
-    }
+  public void testStatusIsNotModifiedWhenBlogNotChanged() throws Exception {
+    when(lastModifiedService.checkAndProcessLastModified(request, response, blog.getLastModified(), null)).thenReturn(true);
+    assertTrue(action.process(request, response) instanceof NotModifiedView);
   }
 
 }

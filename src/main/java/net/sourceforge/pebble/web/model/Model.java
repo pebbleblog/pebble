@@ -41,7 +41,7 @@ import java.util.Set;
  */
 public class Model {
 
-  private HashMap data = new HashMap();
+  private HashMap<String, Object> data = new HashMap<String, Object>();
 
   /**
    * Puts data into the model.

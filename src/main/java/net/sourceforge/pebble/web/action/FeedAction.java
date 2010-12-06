@@ -167,4 +167,7 @@ public class FeedAction extends Action {
     return request.getParameter("author");
   }
 
+  public void setLastModifiedService(LastModifiedService lastModifiedService) {
+    this.lastModifiedService = lastModifiedService;
+  }
 }

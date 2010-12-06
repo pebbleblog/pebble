@@ -37,6 +37,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.io.Writer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -147,6 +148,11 @@ public class MockHttpServletResponse implements HttpServletResponse {
 
   public PrintWriter getWriter() throws IOException {
     return this.writer;
+  }
+
+  public void setWriter(PrintWriter writer)
+  {
+    this.writer = writer;
   }
 
   public void setContentLength(int i) {

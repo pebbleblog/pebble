@@ -55,7 +55,7 @@ public class FeedView extends AbstractRomeFeedView {
   @SuppressWarnings("unchecked")
   protected SyndFeed getFeed() {
     AbstractBlog blog = (AbstractBlog) getModel().get(Constants.BLOG_KEY);
-    List<BlogEntry> blogEntries = (List<BlogEntry>) getModel().get(Constants.BLOG_ENTRIES);
+    Collection<BlogEntry> blogEntries = (Collection<BlogEntry>) getModel().get(Constants.BLOG_ENTRIES);
     SyndFeed syndFeed = new SyndFeedImpl();
 
     populateFeedInfo(blog, syndFeed);
