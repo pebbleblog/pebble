@@ -54,7 +54,7 @@ public class EmailNotificationListener extends BlogEntryListenerSupport {
    */
   public void blogEntryAdded(BlogEntryEvent event) {
     BlogEntry blogEntry = event.getBlogEntry();
-    sendNotification(blogEntry);
+    sendNotification((BlogEntry)blogEntry.clone());
   }
 
   /**
@@ -64,7 +64,7 @@ public class EmailNotificationListener extends BlogEntryListenerSupport {
    */
   public void blogEntryChanged(BlogEntryEvent event) {
     BlogEntry blogEntry = event.getBlogEntry();
-    sendNotification(blogEntry);
+    sendNotification((BlogEntry)blogEntry.clone());
   }
 
   /**
@@ -74,7 +74,7 @@ public class EmailNotificationListener extends BlogEntryListenerSupport {
    */
   public void blogEntryPublished(BlogEntryEvent event) {
     BlogEntry blogEntry = event.getBlogEntry();
-    sendNotification(blogEntry);
+    sendNotification((BlogEntry)blogEntry.clone());
   }
 
   private void sendNotification(BlogEntry blogEntry) {
