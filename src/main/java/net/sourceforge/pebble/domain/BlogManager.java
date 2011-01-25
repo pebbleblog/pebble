@@ -178,9 +178,11 @@ public class BlogManager {
       if (blogVersion == null || !blogVersion.equals(currentVersion)) {
         UpgradeUtilities.upgradeBlog(blog, blogVersion, currentVersion);
 
-        BufferedWriter writer = new BufferedWriter(new FileWriter(versionFile));
-        writer.write(currentVersion);
-        writer.close();
+        if (currentVersion != null) {
+          BufferedWriter writer = new BufferedWriter(new FileWriter(versionFile));
+          writer.write(currentVersion);
+          writer.close();
+        }
 
         // now that the upgrade is complete, reload the blog
         reloadBlog(blog);
