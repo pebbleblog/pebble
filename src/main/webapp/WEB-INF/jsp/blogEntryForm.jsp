@@ -40,7 +40,7 @@
   <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
-    <form name="editBlogEntry" action="saveBlogEntry.secureaction#preview" method="POST" accept-charset="${blog.characterEncoding}">
+    <form class="editBlogEntryForm" name="editBlogEntry" action="saveBlogEntry.secureaction#preview" method="POST" accept-charset="${blog.characterEncoding}">
     <pebble:token/>
     <input type="hidden" name="entry" value="${blogEntry.id}" />
     <input type="hidden" name="persistent" value="${blogEntry.persistent}" />
@@ -59,32 +59,32 @@
     <table width="99%" cellspacing="0" cellpadding="4">
       <tr>
         <td valign="top"><b><fmt:message key="blogentry.title"/></b></td>
-        <td><input type="text" name="title" size="60" value="${fn:escapeXml(blogEntry.title)}"></td>
+        <td><input type="text" name="title" class="fullWidthText" value="${fn:escapeXml(blogEntry.title)}"></td>
       </tr>
 
       <tr>
         <td valign="top"><b><fmt:message key="blogentry.subtitle"/></b></td>
-        <td><input type="text" name="subtitle" size="60" value="${fn:escapeXml(blogEntry.subtitle)}"></td>
+        <td><input type="text" name="subtitle" class="fullWidthText" value="${fn:escapeXml(blogEntry.subtitle)}"></td>
       </tr>
 
       <tr>
         <td colspan="2"><b><fmt:message key="blogentry.excerpt"/></b></td>
       </tr>
       <tr>
-        <td colspan="2"><textarea name="excerpt" rows="20" cols="60"><c:out value="${blogEntry.excerpt}" escapeXml="true"/></textarea>        <div class="small">(optional, short version of body for home/month/day pages)</div></td>
+        <td colspan="2"><textarea name="excerpt" class="excerptTextArea"><c:out value="${blogEntry.excerpt}" escapeXml="true"/></textarea>        <div class="small">(optional, short version of body for home/month/day pages)</div></td>
       </tr>
 
       <tr>
         <td colspan="2"><b><fmt:message key="blogentry.body"/></b></td>
       </tr>
       <tr>
-        <td colspan="2"><textarea name="body" rows="40" cols="60"><c:out value="${blogEntry.body}" escapeXml="true"/></textarea></td>
+        <td colspan="2"><textarea name="body" class="bodyTextArea"><c:out value="${blogEntry.body}" escapeXml="true"/></textarea></td>
       </tr>
 
       <tr>
         <td valign="top"><b><fmt:message key="blogentry.originalPermalink"/></b></td>
         <td>
-          <input type="text" name="originalPermalink" size="60" value="${blogEntry.originalPermalink}">
+          <input type="text" name="originalPermalink" class="fullWidthText" value="${blogEntry.originalPermalink}">
           <div class="small"><fmt:message key="blogentry.originalPermalink.description"/></div>
         </td>
       </tr>
@@ -151,7 +151,7 @@
       <tr>
         <td valign="top"><b><fmt:message key="blogentry.tags"/></b></td>
         <td>
-          <input type="text" name="tags" size="60" value="${blogEntry.tags}">
+          <input type="text" name="tags" class="fullWidthText" value="${blogEntry.tags}">
           <div class="small"><fmt:message key="blogentry.tags.usePlusToSeparate"/></div>
         </td>
       </tr>
@@ -179,7 +179,7 @@
       </tr>
       <tr>
         <td valign="top"><b><fmt:message key="blogentry.attachment.url"/></b></td>
-        <td><input type="text" name="attachmentUrl" size="60" value="${blogEntry.attachment.url}"></td>
+        <td><input type="text" name="attachmentUrl" class="fullWidthText" value="${blogEntry.attachment.url}"></td>
       </tr>
       <tr>
         <td valign="top"><b><fmt:message key="blogentry.attachment.size"/></b></td>

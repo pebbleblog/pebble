@@ -28,9 +28,9 @@
     <link rel="alternate" type="application/rdf+xml" title="RDF" href="${blog.url}rdf.xml" />
     <link rel="alternate" type="application/atom+xml" title="Atom" href="${blog.url}atom.xml" />
 
-    <link rel="stylesheet" href="themes/${theme}/screen.css" type="text/css" media="screen" />
     <link rel="stylesheet" href="pebble.css" type="text/css" media="screen" />
     <link rel="stylesheet" href="themes/_pebble/handheld.css" type="text/css" media="handheld" />
+    <link rel="stylesheet" href="themes/${theme}/screen.css" type="text/css" media="screen" />
     <link rel="stylesheet" href="themes/${theme}/print.css" type="text/css" media="print" />
 
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/themes/${theme}/images/favicon.ico" type="image/x-icon" />

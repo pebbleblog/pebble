@@ -31,7 +31,7 @@
   <h2>&nbsp;</h2>
 
   <div class="contentItemBody">
-    <form name="editStaticPage" action="saveStaticPage.secureaction#preview" method="POST" accept-charset="${blog.characterEncoding}">
+    <form class="editStaticPageForm" name="editStaticPage" action="saveStaticPage.secureaction#preview" method="POST" accept-charset="${blog.characterEncoding}">
     <pebble:token/>
     <input type="hidden" name="page" value="${staticPage.id}" />
     <input type="hidden" name="persistent" value="${staticPage.persistent}" />
@@ -55,25 +55,25 @@
 
       <tr>
         <td valign="top"><b>Title</b></td>
-        <td><input type="text" name="title" size="60" value="${staticPage.title}"></td>
+        <td><input type="text" name="title" class="fullWidthText" value="${staticPage.title}"></td>
       </tr>
 
       <tr>
         <td valign="top"><b>Subtitle</b></td>
-        <td><input type="text" name="subtitle" size="60" value="${staticPage.subtitle}"></td>
+        <td><input type="text" name="subtitle" class="fullWidthText" value="${staticPage.subtitle}"></td>
       </tr>
 
       <tr>
         <td colspan="2"><b>Body</b></td>
       </tr>
       <tr>
-        <td colspan="2"><textarea name="body" rows="40" cols="60"><c:out value="${staticPage.body}" escapeXml="true"/></textarea></td>
+        <td colspan="2"><textarea name="body" class="bodyTextArea"><c:out value="${staticPage.body}" escapeXml="true"/></textarea></td>
       </tr>
 
       <tr>
         <td valign="top"><b>Tags</b></td>
         <td>
-          <input type="text" name="tags" size="60" value="${staticPage.tags}">
+          <input type="text" name="tags" class="fullWidthText" value="${staticPage.tags}">
           <div class="small">(use a + character to represent a space in a tag)</div>
         </td>
       </tr>
@@ -81,14 +81,14 @@
       <tr>
         <td valign="top"><b>Original permalink</b></td>
         <td>
-          <input type="text" name="originalPermalink" size="60" value="${staticPage.originalPermalink}">
+          <input type="text" name="originalPermalink" class="fullWidthText" value="${staticPage.originalPermalink}">
           <div class="small">(optional, this will become the permalink for your static page)</div>
         </td>
       </tr>
 
       <tr>
         <td valign="top"><b>Template</b></td>
-        <td><input type="text" name="template" size="60" value="${staticPage.template}"></td>
+        <td><input type="text" name="template" class="fullWidthText" value="${staticPage.template}"></td>
       </tr>
 
       <tr>
