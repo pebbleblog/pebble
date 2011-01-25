@@ -15,8 +15,8 @@
     </links>
 
     <menu name="Download">
-        <item alt="Current stable release" name="Pebble 2.5.1"
-            href="http://prdownloads.sourceforge.net/pebble/pebble-2.5.1.zip?download"/>
+        <item alt="Current stable release" name="Pebble 2.5.2"
+            href="http://prdownloads.sourceforge.net/pebble/pebble-2.5.2.zip?download"/>
         <item alt="Current testing release" name="Pebble 2.6-M1"
             href="http://prdownloads.sourceforge.net/pebble/pebble-2.6-M1.zip?download"/>
         <item alt="Latest code" name="/trunk on open.jira.com"
