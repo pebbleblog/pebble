@@ -53,6 +53,8 @@ import java.util.Properties;
 @RequireSecurityToken
 public class SavePluginsAction extends SecureAction {
 
+  public static final String PLUGIN_TYPE_PLACEHOLDER_PREFIX = "pluginType_";
+
   /**
    * Peforms the processing associated with this action.
    *
@@ -75,29 +77,27 @@ public class SavePluginsAction extends SecureAction {
         } else if (key.startsWith(PluginConfigType.PLUGIN_PROPERTY_NAME_PREFIX)) {
           String value = request.getParameterValues(key)[0];
           String property = key.substring(PluginConfigType.PLUGIN_PROPERTY_NAME_PREFIX.length());
-          if (value == null || value.length() == 0)
-          {
+          if (value == null || value.length() == 0) {
             pluginProperties.remove(property);
-          }
-          else
-          {
+          } else {
             pluginProperties.setProperty(property, value);
+          }
+        } else if (key.startsWith(PLUGIN_TYPE_PLACEHOLDER_PREFIX)) {
+          // Place holder for checking if all plugins of a particular type have been disabled
+          String pluginType = key.substring(PLUGIN_TYPE_PLACEHOLDER_PREFIX.length());
+          if (request.getParameter(pluginType) == null) {
+            blog.setProperty(pluginType, "");
           }
         } else {
           // this is an existing parameter - save or remove it
           String[] values = request.getParameterValues(key);
-          if (values == null || values.length == 0) {
-            blog.removeProperty(key);
-          } else {
-            StringBuilder builder = new StringBuilder();
-            String separator = "";
-            for (String value : values)
-            {
-              builder.append(separator).append(value);
-              separator = "\n";
-            }
-            blog.setProperty(key, builder.toString());
+          StringBuilder builder = new StringBuilder();
+          String separator = "";
+          for (String value : values) {
+            builder.append(separator).append(value);
+            separator = "\n";
           }
+          blog.setProperty(key, builder.toString());
         }
       }
 

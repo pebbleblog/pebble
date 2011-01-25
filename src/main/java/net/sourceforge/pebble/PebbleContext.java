@@ -90,6 +90,7 @@ public class PebbleContext {
         in.close();
       } else {
         log.warn("No maven pom.properties found, build version set for development");
+        this.buildVersion = "dev";
       }
     } catch (IOException e) {
       log.error(e.getMessage(), e);

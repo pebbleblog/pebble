@@ -8,6 +8,7 @@
 <%@ taglib prefix="plugins" tagdir="/WEB-INF/tags/plugins" %>
 <%@ taglib prefix="pebble" uri="http://pebble.sourceforge.net/pebble" %>
 
+<input type="hidden" name="pluginType_${name}" value="true"/>
 <ul id="pluginsBox_${name}" class="pluginsBox">
     <c:forEach items="${plugins}" var="plugin">
         <c:set var="id" value="pluginsBox_${name}_${plugin.pluginClass}"/>

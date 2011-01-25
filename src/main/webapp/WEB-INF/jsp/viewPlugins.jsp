@@ -57,7 +57,7 @@
                          enabled="${blog.commentConfirmationStrategyName}" properties="${pluginProperties}"/>
 
       <a name="openIdCommentAuthorProviders"></a>
-      Page Decorators
+      Open ID Comment Author Providers
       <br />
       <plugins:multiple name="openIdCommentAuthorProviders" plugins="${availablePlugins.openIdCommentAuthorProviders}" orderable="${true}"
                        enabled="${blog.openIdCommentAuthorProviderNames}" properties="${pluginProperties}"/>
