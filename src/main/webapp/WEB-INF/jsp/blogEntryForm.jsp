@@ -16,6 +16,9 @@
   }
   </script>
 </c:if>
+<script type="text/javascript">
+  etPhoneHome("${pageContext.request.contextPath}");
+</script>
 
 <c:set var="originalBlogEntry" scope="request" value="${blogEntry}" />
 <c:set var="blogEntry" scope="request" value="${previewBlogEntry}" />

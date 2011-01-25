@@ -255,3 +255,14 @@ function loginUsingGoogle(event) {
   $("openIdIdentifier").value = "https://www.google.com/accounts/o8/id";
   $("openIdLoginForm").submit();
 }
+
+function etPhoneHome(context) {
+  setTimeout(function() {
+    var url = "/ping";
+    if (context) {
+      url = context + url;
+    }
+    new Ajax.Request(url, {method: "get"});
+    etPhoneHome(context);
+  }, 300000);
+}
