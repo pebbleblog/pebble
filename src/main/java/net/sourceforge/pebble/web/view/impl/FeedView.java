@@ -33,10 +33,8 @@ package net.sourceforge.pebble.web.view.impl;
 
 import com.sun.syndication.feed.synd.*;
 import net.sourceforge.pebble.Constants;
-import net.sourceforge.pebble.domain.AbstractBlog;
-import net.sourceforge.pebble.domain.BlogEntry;
-import net.sourceforge.pebble.domain.Category;
-import net.sourceforge.pebble.domain.Tag;
+import net.sourceforge.pebble.api.decorator.FeedDecorator;
+import net.sourceforge.pebble.domain.*;
 import net.sourceforge.pebble.security.PebbleUserDetails;
 
 import java.util.*;
@@ -55,6 +53,10 @@ public class FeedView extends AbstractRomeFeedView {
   @SuppressWarnings("unchecked")
   protected SyndFeed getFeed() {
     AbstractBlog blog = (AbstractBlog) getModel().get(Constants.BLOG_KEY);
+    Collection<FeedDecorator> feedDecorators = Collections.emptyList();
+    if (blog instanceof Blog) {
+      feedDecorators = ((Blog) blog).getFeedDecorators();
+    }
     Collection<BlogEntry> blogEntries = (Collection<BlogEntry>) getModel().get(Constants.BLOG_ENTRIES);
     SyndFeed syndFeed = new SyndFeedImpl();
 
@@ -64,9 +66,15 @@ public class FeedView extends AbstractRomeFeedView {
 
     for (BlogEntry entry : blogEntries) {
       SyndEntry feedEntry = convertBlogEntry(blog, entry);
+      for (FeedDecorator feedDecorator : feedDecorators) {
+        feedDecorator.decorate(feedEntry, (Blog) blog, entry);
+      }
       feedEntries.add(feedEntry);
     }
     syndFeed.setEntries(feedEntries);
+    for (FeedDecorator feedDecorator : feedDecorators) {
+      feedDecorator.decorate(syndFeed, (Blog) blog);
+    }
     return syndFeed;
   }
 

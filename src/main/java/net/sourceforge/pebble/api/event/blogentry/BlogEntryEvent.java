@@ -34,6 +34,7 @@ package net.sourceforge.pebble.api.event.blogentry;
 import net.sourceforge.pebble.domain.BlogEntry;
 import net.sourceforge.pebble.api.event.PebbleEvent;
 
+import java.beans.PropertyChangeEvent;
 import java.util.List;
 
 /**
@@ -59,7 +60,7 @@ public class BlogEntryEvent extends PebbleEvent {
   public static final int BLOG_ENTRY_UNPUBLISHED = 4;
 
   /** the list of property change events that caused this event */
-  private List propertyChangeEvents;
+  private List<PropertyChangeEvent> propertyChangeEvents;
 
   /**
    * Creates a new instance with the specified source and type.
@@ -77,7 +78,7 @@ public class BlogEntryEvent extends PebbleEvent {
    * @param blogEntry   the blog entry that created this event
    * @param propertyChangeEvents    the type of this event
    */
-  public BlogEntryEvent(BlogEntry blogEntry, List propertyChangeEvents) {
+  public BlogEntryEvent(BlogEntry blogEntry, List<PropertyChangeEvent> propertyChangeEvents) {
     super(blogEntry, BLOG_ENTRY_CHANGED);
     this.propertyChangeEvents = propertyChangeEvents;
   }
@@ -97,7 +98,7 @@ public class BlogEntryEvent extends PebbleEvent {
    * @return  a List of PropertyChangeEvent objects, or null if the type of
    *          this event is not BLOG_ENTRY_CHANGED
    */
-  public List getPropertyChangeEvents() {
+  public List<PropertyChangeEvent> getPropertyChangeEvents() {
     return this.propertyChangeEvents;
   }
 

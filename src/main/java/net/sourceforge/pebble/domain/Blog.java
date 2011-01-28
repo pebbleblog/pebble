@@ -58,6 +58,7 @@ import net.sourceforge.pebble.aggregator.NewsFeedEntry;
 import net.sourceforge.pebble.api.confirmation.CommentConfirmationStrategy;
 import net.sourceforge.pebble.api.confirmation.TrackBackConfirmationStrategy;
 import net.sourceforge.pebble.api.decorator.ContentDecorator;
+import net.sourceforge.pebble.api.decorator.FeedDecorator;
 import net.sourceforge.pebble.api.decorator.PageDecorator;
 import net.sourceforge.pebble.api.event.EventDispatcher;
 import net.sourceforge.pebble.api.event.blog.BlogEvent;
@@ -130,6 +131,7 @@ public class Blog extends AbstractBlog {
   public static final String RICH_TEXT_EDITOR_FOR_COMMENTS_ENABLED_KEY = "richTextEditorForCommentsEnabled";
   public static final String HOME_PAGE_KEY = "homePage";
   public static final String PAGE_DECORATORS_KEY = "pageDecorators";
+  public static final String FEED_DECORATORS_KEY = "feedDecorators";
   public static final String OPEN_ID_COMMENT_AUTHOR_PROVIDERS_KEY = "openIdCommentAuthorProviders";
   public static final String XSRF_SIGNING_SALT_KEY = "signingSalt";
 
@@ -179,6 +181,7 @@ public class Blog extends AbstractBlog {
 
   private final List<PageDecorator> pageDecorators = new CopyOnWriteArrayList<PageDecorator>();
   private final List<OpenIdCommentAuthorProvider> openIdCommentAuthorProviders = new CopyOnWriteArrayList<OpenIdCommentAuthorProvider>();
+  private final List<FeedDecorator> feedDecorators = new CopyOnWriteArrayList<FeedDecorator>();
 
   private EmailSubscriptionList emailSubscriptionList;
 
@@ -226,7 +229,7 @@ public class Blog extends AbstractBlog {
 
     refererFilterManager = new RefererFilterManager(this);
     pluginProperties = new PluginProperties(this);
-    years = new ArrayList();
+    years = new ArrayList<Year>();
 
     // create the various indexes for this blog
     searchIndex = new SearchIndex(this);
@@ -266,8 +269,10 @@ public class Blog extends AbstractBlog {
     initCommentListeners();
     initTrackBackListeners();
     initDecorators();
-    initPageDecorators();
-    initOpenIdCommentAuthorProviders();
+    initPluginList(getPageDecoratorNames(), PageDecorator.class, getPageDecorators(), "Page Decorator");
+    initPluginList(getOpenIdCommentAuthorProviderNames(), OpenIdCommentAuthorProvider.class,
+        getOpenIdCommentAuthorProviders(), "OpenID Comment Author Provider");
+    initPluginList(getFeedDecoratorNames(), FeedDecorator.class, getFeedDecorators(), "Feed Decorator");
   }
 
   /**
@@ -427,37 +432,26 @@ public class Blog extends AbstractBlog {
   }
 
   /**
-   * Initialises any page decorators for this blog
+   * Initialises the list of string plugins into the specified list of plugin instances
+   *
+   * @param pluginNameList  The list of plugin class names
+   * @param pluginClass     The type of the plugin
+   * @param pluginList      The list of plugins to put the instantiated plugins into
+   * @param description   A description of the plugin point for logging
    */
-  private void initPageDecorators() {
-    log.debug("Registering page decorators");
+  @SuppressWarnings("unchecked")
+  private <P> void initPluginList(Collection<String> pluginNameList, Class<P> pluginClass, List<P> pluginList, String description) {
+    log.debug("Registering " + description + "s");
 
-    for (String className : getPageDecoratorNames()) {
+    for (String className : pluginNameList) {
       try {
         Class c = Class.forName(className.trim());
-        PageDecorator decorator = (PageDecorator) c.newInstance();
-        pageDecorators.add(decorator);
+        Class<? extends P> concreteClass = c.asSubclass(pluginClass);
+        P plugin = concreteClass.newInstance();
+        pluginList.add(plugin);
       } catch (Exception e) {
-        error("Could not start page decorator \"" + className + "\".");
-        log.error("Page decorator " + className + " could not be registered", e);
-      }
-    }
-  }
-
-  /**
-   * Initialises any open id comment author providers for this blog
-   */
-  private void initOpenIdCommentAuthorProviders() {
-    log.debug("Registering OpenID comment author providers");
-
-    for (String className : getOpenIdCommentAuthorProviderNames()) {
-      try {
-        Class c = Class.forName(className.trim());
-        OpenIdCommentAuthorProvider provider = (OpenIdCommentAuthorProvider) c.newInstance();
-        openIdCommentAuthorProviders.add(provider);
-      } catch (Exception e) {
-        error("Could not start OpenID comment author provider \"" + className + "\".");
-        log.error("OpenID comment author provider " + className + " could not be registered", e);
+        error("Could not start " + description + " \"" + className + "\".");
+        log.error(description + " " + className + " could not be registered", e);
       }
     }
   }
@@ -755,9 +749,10 @@ public class Blog extends AbstractBlog {
    * Gets a Collection containing the names of users that are blog owners
    * for this blog.
    *
+   * @param roleName The role to get users for
    * @return  a Collection containng user names as Strings
    */
-  public Collection getUsersInRole(String roleName) {
+  public Collection<String> getUsersInRole(String roleName) {
     List<String> users = new LinkedList<String>();
 
     if (roleName.equals(Constants.BLOG_OWNER_ROLE)) {
@@ -783,11 +778,7 @@ public class Blog extends AbstractBlog {
    */
   public boolean isUserInRole(String roleName, String user) {
     Collection users = getUsersInRole(roleName);
-    if (users.isEmpty() || users.contains(user)) {
-      return true;
-    }
-
-    return false;
+    return users.isEmpty() || users.contains(user);
   }
 
   /**
@@ -828,7 +819,7 @@ public class Blog extends AbstractBlog {
    *
    * @return  a Collection of Year instances
    */
-  public List getYears() {
+  public List<Year> getYears() {
     return years;
   }
 
@@ -842,7 +833,6 @@ public class Blog extends AbstractBlog {
     int firstYear = getBlogForFirstMonth().getYear().getYear();
     int thisYear = getBlogForThisYear().getYear();
     // only add years that are in range
-    Calendar cal = getCalendar();
     for (Year year : years) {
       if (year.getYear() >= firstYear && year.getYear() <= thisYear) {
         list.add(year);
@@ -1349,8 +1339,7 @@ public class Blog extends AbstractBlog {
     if (blogEntryId != null) {
       BlogService service = new BlogService();
       try {
-        BlogEntry previousBlogEntry = service.getBlogEntry(this, blogEntryId);
-        return previousBlogEntry;
+        return service.getBlogEntry(this, blogEntryId);
       } catch (BlogServiceException e) {
         // do nothing
       }
@@ -1372,8 +1361,7 @@ public class Blog extends AbstractBlog {
     if (blogEntryId != null) {
       BlogService service = new BlogService();
       try {
-        BlogEntry nextBlogEntry = service.getBlogEntry(this, blogEntryId);
-        return nextBlogEntry;
+        return service.getBlogEntry(this, blogEntryId);
       } catch (BlogServiceException e) {
         // do nothing
       }
@@ -1395,6 +1383,7 @@ public class Blog extends AbstractBlog {
   /**
    * Gets a specific category.
    *
+   * @param id The id of the category
    * @return  a Category instance
    */
   public Category getCategory(String id) {
@@ -1446,6 +1435,8 @@ public class Blog extends AbstractBlog {
 
   /**
    * Gets the list of tags associated with this blog.
+   *
+   * @return The list of tags
    */
   public List<Tag> getTags() {
     return tagIndex.getTags();
@@ -1736,6 +1727,15 @@ public class Blog extends AbstractBlog {
   }
 
   /**
+   * Gets the list of feed decorators as Strings
+   *
+   * @return  The list of class names
+   */
+  public List<String> getFeedDecoratorNames() {
+    return getStringsFromProperty(FEED_DECORATORS_KEY);
+  }
+
+  /**
    * Gets the list of OpenID comment author providers as Strings
    *
    * @return  The list of class names
@@ -1764,6 +1764,8 @@ public class Blog extends AbstractBlog {
 
   /**
    * Gets the event listsner list.
+   *
+   * @return The event listener list
    */
   public EventListenerList getEventListenerList() {
     return this.eventListenerList;
@@ -1807,6 +1809,10 @@ public class Blog extends AbstractBlog {
 
   public List<OpenIdCommentAuthorProvider> getOpenIdCommentAuthorProviders() {
     return openIdCommentAuthorProviders;
+  }
+
+  public List<FeedDecorator> getFeedDecorators() {
+    return feedDecorators;
   }
 
   public void reindex() {
@@ -1935,9 +1941,9 @@ public class Blog extends AbstractBlog {
     String value = getProperty(key);
     if (value != null && value.length() > 0) {
       String values[] = value.split("\\s+");
-      for (int i = 0; i < values.length; i++) {
-        if (!values[i].startsWith("#")) {
-          strings.add(values[i].trim());
+      for (String val :  values) {
+        if (!val.startsWith("#")) {
+          strings.add(val.trim());
         }
       }
     }

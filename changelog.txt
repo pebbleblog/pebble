@@ -2,6 +2,10 @@ Version 2.6 - TBC
 -----------------
 PEBBLE-38 Upgraded to spring security 3
 PEBBLE-39 Added OpenID support to Pebble (James Roper)
+PEBBLE-46 Added server ping so session doesn't time out when editing blog posts
+PEBBLE-49 PubSubHubBub support (James Roper)
+PEBBLE-45 Detected ClassCastExceptions thrown by actions that only support single blogs, and displayed an appropriate
+error message
 
 Version 2.5.2 - 25.01.2011
 --------------------------

@@ -1,6 +1,7 @@
 <%@ taglib prefix="plugins" tagdir="/WEB-INF/tags/plugins" %>
 <%--@elvariable id="blog" type="net.sourceforge.pebble.domain.Blog"--%>
 <%--@elvariable id="availablePlugins" type="net.sourceforge.pebble.plugins.AvailablePlugins"--%>
+<%--@elvariable id="pluginProperties" type="java.util.Properties"--%>
 <div class="contentItem">
 
   <div class="contentItemLinks">
@@ -31,6 +32,12 @@
       <br />
       <plugins:multiple name="decorators" plugins="${availablePlugins.contentDecorators}" orderable="${true}"
                        enabled="${blog.contentDecorators}" properties="${pluginProperties}"/>
+
+      <a name="feedDecorators"></a>
+      Feed Decorators
+      <br />
+      <plugins:multiple name="feedDecorators" plugins="${availablePlugins.feedDecorators}" orderable="${true}"
+                       enabled="${blog.feedDecoratorNames}" properties="${pluginProperties}"/>
 
       <a name="blogListeners"></a>
       Blog Listeners (<span class="help"><a href="./help/blogListeners.html" target="_blank">Help</a></span>)

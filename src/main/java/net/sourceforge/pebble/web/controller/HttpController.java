@@ -34,23 +34,22 @@ package net.sourceforge.pebble.web.controller;
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.domain.AbstractBlog;
 import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.domain.MultiBlog;
 import net.sourceforge.pebble.util.SecurityUtils;
-import net.sourceforge.pebble.util.Utilities;
 import net.sourceforge.pebble.web.action.Action;
 import net.sourceforge.pebble.web.action.ActionFactory;
 import net.sourceforge.pebble.web.action.ActionNotFoundException;
 import net.sourceforge.pebble.web.action.SecureAction;
 import net.sourceforge.pebble.web.model.Model;
-import net.sourceforge.pebble.web.security.RequireSecurityToken;
 import net.sourceforge.pebble.web.security.SecurityTokenValidator;
 import net.sourceforge.pebble.web.view.View;
+import net.sourceforge.pebble.web.view.impl.MultiBlogNotSupportedView;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import java.io.IOException;
-import java.security.SecureRandom;
 
 /**
  * An implementation of the front controller pattern, using the command
@@ -95,6 +94,8 @@ public class HttpController extends HttpServlet {
    *
    * @param request  the HttpServletRequest instance
    * @param response the HttpServletResponse instance
+   * @throws ServletException if an error occured
+   * @throws IOException if an error occured writing/reading the response/request
    */
   protected void processRequest(HttpServletRequest request,
                                 HttpServletResponse response)
@@ -133,10 +134,20 @@ public class HttpController extends HttpServlet {
         try {
           Model model = new Model();
           model.put(Constants.BLOG_KEY, blog);
-          String calculatedBaseUrl = Utilities.calcBaseUrl(request.getScheme(), blog.getUrl());
           model.put(Constants.BLOG_URL, blog.getUrl());
           action.setModel(model);
-          View view = action.process(request, response);
+          View view;
+          try {
+            view = action.process(request, response);
+          } catch (ClassCastException cce) {
+            // PEBBLE-45 Actions intended for single blog mode should fail nicely.  This is a simple method that will
+            // allow has to handle all actions with minimal effort
+            if (cce.getMessage().contains(MultiBlog.class.getName()) && cce.getMessage().contains(Blog.class.getName())) {
+              view = new MultiBlogNotSupportedView();
+            } else {
+              throw cce;
+            }
+          }
           if (view != null) {
 
             view.setModel(model);

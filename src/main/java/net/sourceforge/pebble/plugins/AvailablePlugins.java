@@ -49,6 +49,7 @@ public class AvailablePlugins {
   public static final String LOGGER = "logger";
   public static final String PAGE_DECORATOR = "page-decorator";
   public static final String OPEN_ID_COMMENT_AUTHOR_PROVIDER = "open-id-comment-author-provider";
+  public static final String FEED_DECORATOR = "feed-decorator";
 
   private final Map<String, List<Plugin>> plugins;
 
@@ -112,6 +113,10 @@ public class AvailablePlugins {
   
   public Collection<Plugin> getOpenIdCommentAuthorProviders() {
     return getEmptyIfNull(OPEN_ID_COMMENT_AUTHOR_PROVIDER);
+  }
+
+  public Collection<Plugin> getFeedDecorators() {
+    return getEmptyIfNull(FEED_DECORATOR);
   }
 
   private Collection<Plugin> getEmptyIfNull(String key) {

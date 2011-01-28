@@ -232,6 +232,15 @@
   </blog-entry-listener>
   <blog-entry-listener name="Run blog entries through W3C Tidy"
                        class="net.sourceforge.pebble.event.blogentry.TidyListener"/>
+  <blog-entry-listener name="Publish blog entries to PubSubHubBub"
+                       class="net.sourceforge.pebble.event.blogentry.PubSubHubBubBlogEntryListener">
+    <description>
+      <![CDATA[
+      Notifies a PubSubHubBub Hub that a blog feed has changed.
+      ]]>
+    </description>
+    <config key="pubsubhubbub.hubs" name="Hub List"/>
+  </blog-entry-listener>
 
   <!-- Comment listeners -->
   <comment-listener name="Mark all comments pending" class="net.sourceforge.pebble.event.response.MarkPendingListener"
@@ -527,5 +536,17 @@
       the necessary logging already. Pebble will not capture any statistics when this logger is used.
     </description>
   </logger>
+
+
+  <!-- Feed Decorators -->
+  <feed-decorator name="PubSubHubBub Feed Decorator" class="net.sourceforge.pebble.decorator.PubSubHubBubFeedDecorator">
+    <description>
+      Decorates Atom feeds with PubSubHubBub hub links, so that subscribers can subscribe to a hub for PUSH updates to
+      feeds.  Note, if you enable this plugin, you MUST enable both the PubSubHubBub blog entry listener, and the
+      PubSubHubBub comment listener, otherwise feed aggregators will not poll, but rather expect push updates from the
+      hub.
+    </description>
+    <config key="pubsubhubbub.hubs" name="Hub List"/>
+  </feed-decorator>
 
 </pebble-plugins>

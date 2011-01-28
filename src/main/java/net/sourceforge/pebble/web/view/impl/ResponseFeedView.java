@@ -33,13 +33,11 @@ package net.sourceforge.pebble.web.view.impl;
 
 import com.sun.syndication.feed.synd.*;
 import net.sourceforge.pebble.Constants;
+import net.sourceforge.pebble.api.decorator.FeedDecorator;
 import net.sourceforge.pebble.domain.*;
 import net.sourceforge.pebble.security.PebbleUserDetails;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * The view for the feed responses
@@ -57,6 +55,8 @@ public class ResponseFeedView extends AbstractRomeFeedView {
     Blog blog = (Blog) getModel().get(Constants.BLOG_KEY);
     BlogEntry blogEntry = (BlogEntry) getModel().get(Constants.BLOG_ENTRY_KEY);
     List<Response> responses = (List<Response>) getModel().get(Constants.RESPONSES);
+
+    Collection<FeedDecorator> feedDecorators = blog.getFeedDecorators();
 
     SyndFeed syndFeed = new SyndFeedImpl();
     syndFeed.setUri(generateId(blog, null, "responses"));
@@ -81,9 +81,15 @@ public class ResponseFeedView extends AbstractRomeFeedView {
 
     for (Response response : responses) {
       SyndEntry feedEntry = convertResponse(response);
+      for (FeedDecorator feedDecorator : feedDecorators) {
+        feedDecorator.decorate(feedEntry, blog, response);
+      }
       feedEntries.add(feedEntry);
     }
     syndFeed.setEntries(feedEntries);
+    for (FeedDecorator feedDecorator : feedDecorators) {
+      feedDecorator.decorate(syndFeed, blog, blogEntry);
+    }
     return syndFeed;
   }
 
