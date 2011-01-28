@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2003-2010, Simon Brown
+ * Copyright (c) 2003-2011, Simon Brown
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without

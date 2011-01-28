@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2003-2006, Simon Brown
+ * Copyright (c) 2003-2011, Simon Brown
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,6 +29,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+
 package net.sourceforge.pebble.aggregator;
 
 import com.sun.syndication.feed.WireFeed;
