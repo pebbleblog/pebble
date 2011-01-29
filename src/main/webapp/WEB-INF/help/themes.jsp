@@ -23,6 +23,7 @@
       <li>screen.css : the stylesheet.</li>
       <li>images : the directory containing images used by the theme.</li>
       <li>template.jsp : the main template (including header, body, footer, sidebar, etc).</li>
+      <li>head.jsp : extensions to be added to the pebble head section.</li>
     </ul>
 
     <c:if test="${pebbleContext.configuration.userThemesEnabled}">

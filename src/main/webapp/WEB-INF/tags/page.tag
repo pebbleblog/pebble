@@ -44,7 +44,7 @@
     <script type='text/javascript' src='${pageContext.request.contextPath}/dwr/interface/Pebble.js'></script>
 
     <pebble:pluginrenderer plugin="head"/>
-    
+    <c:if test="${not empty themeHeadUri}"><jsp:include page="${themeHeadUri}"/></c:if>
   </head>
 
   <body>

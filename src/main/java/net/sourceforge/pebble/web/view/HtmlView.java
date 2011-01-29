@@ -120,6 +120,9 @@ public abstract class HtmlView extends JspView {
     request.setAttribute(Constants.TITLE_KEY, getTitle());
     log.debug("Content is " + getUri());
     request.setAttribute("content", getUri());
+    if (hasThemeHeadUri()) {
+      request.setAttribute("themeHeadUri", "/themes/" + theme + "/head.jsp");
+    }
     String uri = "/themes/" + theme + "/" + getTemplate() + ".jsp";
     log.debug("Dispatching to " + uri);
 
@@ -153,5 +156,14 @@ public abstract class HtmlView extends JspView {
       return staticPage.getTemplate();
     }
     return "template";
+  }
+
+  private boolean hasThemeHeadUri() {
+    if (!(getModel().get(Constants.BLOG_KEY) instanceof Blog)) {
+      return false;
+    }
+    Blog blog = (Blog) getModel().get(Constants.BLOG_KEY);
+    String headFile = blog.getThemeDirectory() + File.separator + "head.jsp";
+    return new File(headFile).canRead();
   }
 }

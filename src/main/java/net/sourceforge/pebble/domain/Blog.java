@@ -34,21 +34,15 @@ package net.sourceforge.pebble.domain;
 import java.io.File;
 import java.lang.reflect.Constructor;
 import java.security.SecureRandom;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Properties;
-import java.util.StringTokenizer;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.google.common.base.Supplier;
+import com.google.common.base.Suppliers;
 import net.sourceforge.pebble.Configuration;
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.PebbleContext;
@@ -100,6 +94,7 @@ import net.sourceforge.pebble.util.StringUtils;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 
 /**
  * Represents a blog.
@@ -185,6 +180,12 @@ public class Blog extends AbstractBlog {
 
   private EmailSubscriptionList emailSubscriptionList;
 
+  /** the ApplicationContext to instantiate plugins with */
+  private final AutowireCapableBeanFactory beanFactory;
+
+  /** the Cache that can be used by services to cache arbitrary config */
+  private final ConcurrentMap<String, Supplier<?>> serviceCache = new ConcurrentHashMap<String, Supplier<?>>();
+
   /**
    * Creates a new Blog instance, based at the specified location.
    *
@@ -192,6 +193,8 @@ public class Blog extends AbstractBlog {
    */
   public Blog(String root) {
     super(root);
+
+    beanFactory = PebbleContext.getInstance().getApplicationContext().getAutowireCapableBeanFactory();
 
     // probably Blog should be made a final class if init is called from here - 
     // see javadoc comment on AbstractBlog.init() for reasons
@@ -210,8 +213,8 @@ public class Blog extends AbstractBlog {
     super.init();
 
     try {
-      Class c = Class.forName(getPermalinkProviderName());
-      setPermalinkProvider((PermalinkProvider)c.newInstance());
+      Class<?> c = Class.forName(getPermalinkProviderName());
+      setPermalinkProvider(instantiate(c.asSubclass(PermalinkProvider.class)));
     } catch (Exception e) {
       error("Could not load permalink provider \"" + getPermalinkProviderName() + "\"");
       e.printStackTrace();
@@ -243,8 +246,8 @@ public class Blog extends AbstractBlog {
     decoratorChain = new ContentDecoratorChain(this);
 
     try {
-      Class c = Class.forName(getCommentConfirmationStrategyName());
-      commentConfirmationStrategy = (CommentConfirmationStrategy)c.newInstance();
+      Class<?> c = Class.forName(getCommentConfirmationStrategyName());
+      commentConfirmationStrategy = instantiate(c.asSubclass(CommentConfirmationStrategy.class));
     } catch (Exception e) {
       error("Could not load comment confirmation strategy \"" + getCommentConfirmationStrategyName() + "\"");
       e.printStackTrace();
@@ -252,8 +255,8 @@ public class Blog extends AbstractBlog {
     }
 
     try {
-      Class c = Class.forName(getTrackBackConfirmationStrategyName());
-      trackBackConfirmationStrategy = (TrackBackConfirmationStrategy)c.newInstance();
+      Class<?> c = Class.forName(getTrackBackConfirmationStrategyName());
+      trackBackConfirmationStrategy = instantiate(c.asSubclass(TrackBackConfirmationStrategy.class));
     } catch (Exception e) {
       error("Could not load TrackBack confirmation strategy \"" + getTrackBackConfirmationStrategyName() + "\"");
       e.printStackTrace();
@@ -300,8 +303,8 @@ public class Blog extends AbstractBlog {
     eventListenerList = new EventListenerList();
 
     try {
-      Class c = Class.forName(getEventDispatcherName());
-      this.eventDispatcher = (EventDispatcher)c.newInstance();
+      Class<?> c = Class.forName(getEventDispatcherName());
+      this.eventDispatcher = instantiate(c.asSubclass(EventDispatcher.class));
     } catch (Exception e) {
       e.printStackTrace();
       this.eventDispatcher = new DefaultEventDispatcher();
@@ -318,8 +321,8 @@ public class Blog extends AbstractBlog {
 
     for (String className : getBlogListeners()) {
       try {
-        Class c = Class.forName(className.trim());
-        BlogListener listener = (BlogListener) c.newInstance();
+        Class<?> c = Class.forName(className.trim());
+        BlogListener listener = instantiate(c.asSubclass(BlogListener.class));
         eventListenerList.addBlogListener(listener);
       } catch (Exception e) {
         error("Could not start blog listener \"" + className + "\" - check the class name is correct on the <a href=\"viewPlugins.secureaction#blogListeners\">plugins page</a>.");
@@ -336,8 +339,8 @@ public class Blog extends AbstractBlog {
 
     for (String className : getBlogEntryListeners()) {
       try {
-        Class c = Class.forName(className.trim());
-        BlogEntryListener listener = (BlogEntryListener) c.newInstance();
+        Class<?> c = Class.forName(className.trim());
+        BlogEntryListener listener = instantiate(c.asSubclass(BlogEntryListener.class));
         eventListenerList.addBlogEntryListener(listener);
       } catch (Exception e) {
         error("Could not start blog entry listener \"" + className + "\" - check the class name is correct on the <a href=\"viewPlugins.secureaction#blogEntryListeners\">plugins page</a>.");
@@ -375,8 +378,8 @@ public class Blog extends AbstractBlog {
 
     for (String className : getCommentListeners()) {
       try {
-        Class c = Class.forName(className.trim());
-        CommentListener listener = (CommentListener) c.newInstance();
+        Class<?> c = Class.forName(className.trim());
+        CommentListener listener = instantiate(c.asSubclass(CommentListener.class));
         eventListenerList.addCommentListener(listener);
       } catch (Exception e) {
         error("Could not start comment listener \"" + className + "\" - check the class name is correct on the <a href=\"viewPlugins.secureaction#commentListeners\">plugins page</a>.");
@@ -396,8 +399,8 @@ public class Blog extends AbstractBlog {
 
     for (String className : getTrackBackListeners()) {
       try {
-        Class c = Class.forName(className.trim());
-        TrackBackListener listener = (TrackBackListener) c.newInstance();
+        Class<?> c = Class.forName(className.trim());
+        TrackBackListener listener = instantiate(c.asSubclass(TrackBackListener.class));
         eventListenerList.addTrackBackListener(listener);
       } catch (Exception e) {
         error("Could not start TrackBack listener \"" + className + "\" - check the class name is correct on the <a href=\"viewPlugins.secureaction#trackbackListeners\">plugins page</a>.");
@@ -419,8 +422,8 @@ public class Blog extends AbstractBlog {
 
     for (String className : getContentDecorators()) {
       try {
-        Class c = Class.forName(className.trim());
-        ContentDecorator decorator = (ContentDecorator) c.newInstance();
+        Class<?> c = Class.forName(className.trim());
+        ContentDecorator decorator = instantiate(c.asSubclass(ContentDecorator.class));
         decorator.setBlog(this);
         decoratorChain.add(decorator);
       } catch (Exception e) {
@@ -447,7 +450,7 @@ public class Blog extends AbstractBlog {
       try {
         Class c = Class.forName(className.trim());
         Class<? extends P> concreteClass = c.asSubclass(pluginClass);
-        P plugin = concreteClass.newInstance();
+        P plugin = instantiate(concreteClass);
         pluginList.add(plugin);
       } catch (Exception e) {
         error("Could not start " + description + " \"" + className + "\".");
@@ -1936,6 +1939,34 @@ public class Blog extends AbstractBlog {
     return salt;
   }
 
+  /**
+   * Get an item from the cache
+   *
+   * @param key The key in the cache
+   * @param supplier The supplier of the item.  This would usually be a memoized supplier, created using Suppliers.memoize()
+   * @param <T> The type of the time
+   *
+   * @return The item
+   */
+  public <T> T getServiceCacheItem(String key, Supplier<T> supplier) {
+    Supplier<T> memoizedSupplier = Suppliers.memoize(supplier);
+    Supplier<T> cachedSupplier = (Supplier<T>) serviceCache.putIfAbsent(key, memoizedSupplier);
+    if (cachedSupplier == null) {
+      return memoizedSupplier.get();
+    } else {
+      return cachedSupplier.get();
+    }
+  }
+
+  /**
+   * Reset an item in the cache
+   *
+   * @param key The item to reset
+   */
+  public void resetServiceCacheItem(String key) {
+    serviceCache.remove(key);
+  }
+
   private List<String> getStringsFromProperty(String key) {
     List<String> strings = new ArrayList<String>();
     String value = getProperty(key);
@@ -1948,5 +1979,9 @@ public class Blog extends AbstractBlog {
       }
     }
     return strings;
+  }
+
+  private <T> T instantiate(Class<T> clazz) {
+    return (T) beanFactory.autowire(clazz, AutowireCapableBeanFactory.AUTOWIRE_NO, false);
   }
 }
