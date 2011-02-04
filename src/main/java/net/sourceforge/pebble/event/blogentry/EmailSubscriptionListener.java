@@ -75,7 +75,7 @@ public class EmailSubscriptionListener extends BlogEntryListenerSupport {
     SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy HH:mm:ss z");
     sdf.setTimeZone(blog.getTimeZone());
 
-    String subject = "[Blog entry] " + blogEntry.getTitle();
+    String subject = MailUtils.getBlogEntryPrefix(blog) + " " + blogEntry.getTitle();
 
     String message = "Blog entry posted by " + (blogEntry.getUser() != null ? blogEntry.getUser().getName() : blogEntry.getAuthor()) + " on " + sdf.format(blogEntry.getDate());
     message += "\n<br>";

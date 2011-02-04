@@ -65,7 +65,7 @@ public abstract class AbstractEmailNotificationListener extends TrackBackListene
     SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy HH:mm:ss z");
     sdf.setTimeZone(blog.getTimeZone());
 
-    String subject = "[TrackBack-" + trackBack.getState().getName() + "] " + trackBack.getTitle();
+    String subject = MailUtils.getTrackbackPrefix(blog, trackBack.getState()) + " " + trackBack.getTitle();
 
     String message = "TrackBack from <a href=\"" + trackBack.getUrl() + "\">" + trackBack.getBlogName() + "</a> on " + sdf.format(trackBack.getDate());
     message += " in response to " + trackBack.getBlogEntry().getTitle();

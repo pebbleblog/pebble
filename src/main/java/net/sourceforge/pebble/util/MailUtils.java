@@ -32,6 +32,7 @@
 package net.sourceforge.pebble.util;
 
 import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.domain.State;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import net.sourceforge.pebble.web.validation.ValidationContext;
@@ -63,6 +64,75 @@ public class MailUtils {
 
   /** thread pool used to send e-mail */
   private static ExecutorService pool = Executors.newFixedThreadPool(1);
+
+  /**
+   * Get the prefix to be used for blog entry emails
+   *
+   * @param blog The blog to get the prefix for
+   * @return The prefix
+   */
+  public static String getBlogEntryPrefix(Blog blog) {
+    return getPrefix(blog, "notification.prefix.blog.entry", "blogentry.blogentry");
+  }
+
+  /**
+   * Get the prefix to be used for blog entry emails in the given state
+   *
+   * @param blog The blog to get the prefix for
+   * @param state The state the blog entry is in
+   * @return The prefix
+   */
+  public static String getBlogEntryPrefix(Blog blog, State state) {
+    return getPrefix(blog, "notification.prefix.blog.entry", "blogentry.blogentry", state);
+  }
+
+  /**
+   * Get the prefix to be used for comment emails
+   *
+   * @param blog The blog to get the prefix for
+   * @return The prefix
+   */
+  public static String getCommentPrefix(Blog blog) {
+    return getPrefix(blog, "notification.prefix.comment", "blogentry.comment");
+  }
+
+  /**
+   * Get the prefix to be used for comment emails
+   *
+   * @param blog The blog to get the prefix for
+   * @param state The state the comment is in
+   * @return The prefix
+   */
+  public static String getCommentPrefix(Blog blog, State state) {
+    return getPrefix(blog, "notification.prefix.comment", "blogentry.comment", state);
+  }
+
+  /**
+   * Get the prefix to be used for trackback emails
+   *
+   * @param blog The blog to get the prefix for
+   * @param state The state the trackback is in
+   * @return The prefix
+   */
+  public static String getTrackbackPrefix(Blog blog, State state) {
+    return getPrefix(blog, "notification.prefix.trackback", "blogentry.trackback", state);
+  }
+
+  private static String getPrefix(Blog blog, String key, String defaultValue, State state) {
+    String i18nKey = blog.getProperty(key);
+    if (i18nKey == null) {
+      i18nKey = defaultValue;
+    }
+    return "[" + I18n.getMessage(blog, i18nKey) + " - " + I18n.getMessage(blog, "admin." + state.getName()) + "]";
+  }
+
+  private static String getPrefix(Blog blog, String key, String defaultValue) {
+    String i18nKey = blog.getProperty(key);
+    if (i18nKey == null) {
+      i18nKey = defaultValue;
+    }
+    return "[" + I18n.getMessage(blog, i18nKey) + "]";
+  }
 
   /**
    * Sends an e-mail.

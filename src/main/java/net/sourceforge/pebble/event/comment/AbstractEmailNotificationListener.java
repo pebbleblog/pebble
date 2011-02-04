@@ -95,7 +95,7 @@ public abstract class AbstractEmailNotificationListener extends CommentListenerS
     SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy HH:mm:ss z");
     sdf.setTimeZone(blog.getTimeZone());
 
-    String subject = "[Comment] " + comment.getTitle();
+    String subject = MailUtils.getCommentPrefix(blog) + " " + comment.getTitle();
     String author = StringUtils.transformHTML(comment.getAuthor());
     if (comment.getWebsite() != null) {
       author = "<a href=\"" + comment.getWebsite() + "\">" + author + "</a>";
@@ -143,7 +143,8 @@ public abstract class AbstractEmailNotificationListener extends CommentListenerS
     SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy HH:mm:ss z");
     sdf.setTimeZone(blog.getTimeZone());
 
-    String subject = "[Comment-" + comment.getState().getName() + "] " + comment.getTitle();
+    String subject = MailUtils.getCommentPrefix(blog, comment.getState()) + " " + comment.getTitle();
+
     String author = StringUtils.transformHTML(comment.getAuthor());
     if (comment.getWebsite() != null) {
       author = "<a href=\"" + comment.getWebsite() + "\">" + author + "</a>";
