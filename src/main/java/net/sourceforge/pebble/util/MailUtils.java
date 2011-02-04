@@ -119,19 +119,19 @@ public class MailUtils {
   }
 
   private static String getPrefix(Blog blog, String key, String defaultValue, State state) {
-    String i18nKey = blog.getProperty(key);
-    if (i18nKey == null) {
-      i18nKey = defaultValue;
+    String value = blog.getProperty(key);
+    if (value == null) {
+      value = I18n.getMessage(blog, defaultValue);
     }
-    return "[" + I18n.getMessage(blog, i18nKey) + " - " + I18n.getMessage(blog, "admin." + state.getName()) + "]";
+    return "[" + value + " - " + I18n.getMessage(blog, "admin." + state.getName()) + "]";
   }
 
   private static String getPrefix(Blog blog, String key, String defaultValue) {
-    String i18nKey = blog.getProperty(key);
-    if (i18nKey == null) {
-      i18nKey = defaultValue;
+    String value = blog.getProperty(key);
+    if (value == null) {
+      value = I18n.getMessage(blog, defaultValue);
     }
-    return "[" + I18n.getMessage(blog, i18nKey) + "]";
+    return "[" + value + "]";
   }
 
   /**
