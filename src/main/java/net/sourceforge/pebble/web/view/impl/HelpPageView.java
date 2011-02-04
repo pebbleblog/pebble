@@ -29,6 +29,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+
 package net.sourceforge.pebble.web.view.impl;
 
 import net.sourceforge.pebble.web.view.HtmlView;
@@ -53,7 +54,7 @@ public class HelpPageView extends HtmlView {
    * @return the title as a String
    */
   public String getTitle() {
-	return getLocalizedString("view.help");
+    return getLocalizedString("view.help");
   }
 
   /**

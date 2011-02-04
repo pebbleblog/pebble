@@ -29,6 +29,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+
 package net.sourceforge.pebble.domain;
 
 import java.io.File;
@@ -43,10 +44,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.google.common.base.Supplier;
 import com.google.common.base.Suppliers;
-import net.sourceforge.pebble.Configuration;
-import net.sourceforge.pebble.Constants;
-import net.sourceforge.pebble.PebbleContext;
-import net.sourceforge.pebble.PluginProperties;
+import net.sourceforge.pebble.*;
 import net.sourceforge.pebble.aggregator.NewsFeedCache;
 import net.sourceforge.pebble.aggregator.NewsFeedEntry;
 import net.sourceforge.pebble.api.confirmation.CommentConfirmationStrategy;
@@ -166,6 +164,9 @@ public class Blog extends AbstractBlog {
   /** the plugin properties */
   private PluginProperties pluginProperties;
 
+  /** the blog companion */
+  private BlogCompanion blogCompanion;
+
   private SearchIndex searchIndex;
   private BlogEntryIndex blogEntryIndex;
   private ResponseIndex responseIndex;
@@ -232,6 +233,7 @@ public class Blog extends AbstractBlog {
 
     refererFilterManager = new RefererFilterManager(this);
     pluginProperties = new PluginProperties(this);
+    blogCompanion = new BlogCompanion(this);
     years = new ArrayList<Year>();
 
     // create the various indexes for this blog
@@ -1589,6 +1591,15 @@ public class Blog extends AbstractBlog {
   }
 
   /**
+   * Gets the location where the plugin properties file is stored.
+   *
+   * @return    an absolute, local path on the filing system
+   */
+  public String getCompanionFile() {
+    return getRoot() + File.separator + "companion.txt";
+  }
+
+  /**
    * Determines whether this blog is public.
    *
    * @return  true if public, false otherwise
@@ -1776,6 +1787,9 @@ public class Blog extends AbstractBlog {
 
   public PluginProperties getPluginProperties() {
     return this.pluginProperties;
+  }
+  public BlogCompanion getBlogCompanion() {
+    return this.blogCompanion;
   }
 
   /**

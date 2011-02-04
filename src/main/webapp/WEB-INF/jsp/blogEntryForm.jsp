@@ -68,6 +68,19 @@
       </tr>
 
       <tr>
+        <td colspan="2" id="companionContainerOpenLink"><a href="#" onclick="openCompanion();return false;"><fmt:message key="blogentry.openCompanion"/></a></td>
+      </tr>
+      <tr>
+        <td colspan="2"><div id="companionContainer">
+          <textarea id="companionData"><c:out value="${blog.blogCompanion.content}" escapeXml="true"/></textarea>
+          <br />
+          <input type="button" value="<fmt:message key="common.close"/>" onClick="closeCompanion();" />
+          <input type="button" value="<fmt:message key="common.save"/>" onClick="saveCompanion();" />
+          <span id="companionResult"></span>
+        </div></td> 
+      </tr>
+      
+      <tr>
         <td colspan="2"><b><fmt:message key="blogentry.excerpt"/></b></td>
       </tr>
       <tr>

@@ -266,3 +266,35 @@ function etPhoneHome(context) {
     etPhoneHome(context);
   }, 300000);
 }
+
+
+/* Companion utils */
+function openCompanion() {
+  $("companionContainer").setStyle({display:"block"});
+  $("companionContainerOpenLink").setStyle({display:"none"});
+}
+function closeCompanion() {
+  $("companionContainer").setStyle({display:"none"});
+  $("companionContainerOpenLink").style.display="";
+}
+function saveCompanion() {
+  $("companionResult").innerHTML = "...";
+  
+  var form = document.forms["editBlogEntry"];
+  if (!form) form = document.forms["editStaticPage"];
+  var sToken = form.elements["pebbleSecurityToken"].value;
+  
+  new Ajax.Request('saveBlogCompanion.secureaction',
+  {
+    method:'post',
+    parameters: {content: $("companionData").value, pebbleSecurityToken: sToken},
+    onSuccess: function(transport){
+      var response = transport.responseText;
+      $("companionResult").innerHTML = response;
+    },
+    onFailure: function(){ 
+      $("companionResult").innerHTML = "KO";
+    }
+  });
+  
+}

@@ -29,33 +29,20 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+
 package net.sourceforge.pebble.web.view.impl;
 
-import net.sourceforge.pebble.web.view.HtmlView;
+import net.sourceforge.pebble.Constants;
+import net.sourceforge.pebble.domain.AbstractBlog;
+import net.sourceforge.pebble.web.view.PlainTextView;
 
-/**
- * Represents the plugin configuration view.
- *
- * @author    Simon Brown
- */
-public class PluginsView extends HtmlView {
+public class SaveBlogCompanionView extends PlainTextView {
 
-  /**
-   * Gets the title of this view.
-   *
-   * @return the title as a String
-   */
-  public String getTitle() {
-    return getLocalizedString("view.plugins");
-  }
 
-  /**
-   * Gets the URI that this view represents.
-   *
-   * @return the URI as a String
-   */
-  public String getUri() {
-    return "/WEB-INF/jsp/viewPlugins.jsp";
+  @Override
+  public String getContentType() {
+    AbstractBlog blog = (AbstractBlog)getModel().get(Constants.BLOG_KEY);
+    return "text/html; charset=" + blog.getCharacterEncoding();
   }
 
 }

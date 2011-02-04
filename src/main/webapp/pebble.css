@@ -125,6 +125,21 @@
 .singlePluginBox .pluginConfig {
     padding: 10px;
 }
+
+/* Companion style */
+#companionContainer {
+  display:none;
+	padding:15px 5px;
+	background-color:#ddd;
+	border:3px solid #ccc;
+	text-align:center;
+	width:100%;
+}
+#companionData {
+	width:90%;
+	height:200px;
+}
+
 #loginPage {
   margin-left: 100px;
 }

@@ -6,6 +6,7 @@ PEBBLE-46 Added server ping so session doesn't time out when editing blog posts
 PEBBLE-49 PubSubHubBub support (James Roper)
 PEBBLE-45 Detected ClassCastExceptions thrown by actions that only support single blogs, and displayed an appropriate
 error message
+PEBBLE-50 Added blog companion (Pierre Grimaud)
 
 Version 2.5.2 - 25.01.2011
 --------------------------
