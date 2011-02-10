@@ -8,6 +8,10 @@ PEBBLE-45 Detected ClassCastExceptions thrown by actions that only support singl
 error message
 PEBBLE-50 Added blog companion (Pierre Grimaud)
 
+Version 2.5.3 - TBC
+-------------------
+PEBBLE-51 Fixed change password no security token bug
+
 Version 2.5.2 - 25.01.2011
 --------------------------
 PEBBLE-47 Fixed bug where email notification listener was rendering content before it was being saved
