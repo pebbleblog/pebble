@@ -38,6 +38,7 @@ import net.sourceforge.pebble.security.SecurityRealm;
 import net.sourceforge.pebble.security.SecurityRealmException;
 import net.sourceforge.pebble.util.SecurityUtils;
 import net.sourceforge.pebble.web.security.RequireSecurityToken;
+import net.sourceforge.pebble.web.security.SecurityTokenValidatorCondition;
 import net.sourceforge.pebble.web.validation.ValidationContext;
 import net.sourceforge.pebble.web.view.ForbiddenView;
 import net.sourceforge.pebble.web.view.View;
@@ -55,7 +56,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author    Simon Brown
  */
-@RequireSecurityToken
+@RequireSecurityToken(ChangePasswordAction.ChangePasswordCondition.class)
 public class ChangePasswordAction extends SecureAction {
 
   /** the log used by this class */
@@ -114,6 +115,17 @@ public class ChangePasswordAction extends SecureAction {
    */
   public String[] getRoles(HttpServletRequest request) {
     return new String[]{Constants.ANY_ROLE};
+  }
+
+  /**
+   * The same action is used for viewing the password changed screen as changing the password.  Displaying the screen
+   * is detected by the lack of a submit parameter above, so validate the security token if there is a submit parameter.
+   */
+  public static class ChangePasswordCondition implements SecurityTokenValidatorCondition
+  {
+    public boolean shouldValidate(HttpServletRequest request) {
+      return request.getParameter("submit") != null;
+    }
   }
 
 }
