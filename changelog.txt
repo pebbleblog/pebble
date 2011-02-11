@@ -8,7 +8,7 @@ PEBBLE-45 Detected ClassCastExceptions thrown by actions that only support singl
 error message
 PEBBLE-50 Added blog companion (Pierre Grimaud)
 
-Version 2.5.3 - TBC
+Version 2.5.3 - 12.02.2011
 -------------------
 PEBBLE-51 Fixed change password no security token bug
 
