@@ -124,16 +124,16 @@ Features
 *-------------------------+----------------+-------------------+
  <<Dutch>>                | <<Japanese>>   | <<Slovak>>
 *-------------------------+----------------+-------------------+
- <<English>>              | Mongolian      | <<Spanish>>
+ <<English>>              | <<Macedonian>> | <<Spanish>>
 *-------------------------+----------------+-------------------+
- Finnish                  | <<Norwegian>>  | <<Spanish/Spain>>
+ Finnish                  | Mongolian      | <<Spanish/Spain>>
 *-------------------------+----------------+-------------------+
- <<French>>               | <<Russian>>    | Swedish
+ <<French>>               | <<Norwegian>>  | Swedish
 *-------------------------+----------------+-------------------+
- <<German>>               |                |
+ <<German>>               |  <<Russian>>   |
 *-------------------------+----------------+-------------------+
         
-    Entries in <<bold>> are as-complete-as-possible in version 2.4.0. If you want to provide translations to more
+    Entries in <<bold>> are as-complete-as-possible in version 2.5.0. If you want to provide translations to more
     languages, please contact the {{{http://lists.sourceforge.net/mailman/listinfo/pebble-user/}pebble-user mailing
     list}}.
 
