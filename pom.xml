@@ -477,7 +477,7 @@
     <distributionManagement>
         <site>
             <id>pebble.sf.net</id>
-            <url>scp://shell.sourceforge.net/home/groups/p/pe/pebble/htdocs</url>
+            <url>scp://shell.sourceforge.net/home/project-web/pebble/htdocs</url>
         </site>
     </distributionManagement>
 
