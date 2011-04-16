@@ -35,7 +35,9 @@ import junit.framework.TestCase;
 import net.sourceforge.pebble.util.FileUtils;
 import net.sourceforge.pebble.PebbleContext;
 import net.sourceforge.pebble.Configuration;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.StaticApplicationContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -56,7 +58,7 @@ public abstract class PebbleTestCase extends TestCase {
     TEST_RESOURCE_LOCATION = new File("src/test/resources");
   }
 
-  protected ApplicationContext testApplicationContext;
+  protected StaticApplicationContext testApplicationContext;
 
   protected void setUp() throws Exception {
     super.setUp();
@@ -80,6 +82,20 @@ public abstract class PebbleTestCase extends TestCase {
     FileUtils.deleteFile(TEST_BLOG_LOCATION);
 
     super.tearDown();
+  }
+
+  protected void addComponents(Object... components) {
+    for (Object component : components) {
+      testApplicationContext.getBeanFactory().registerSingleton(component.toString(), component);
+    }
+  }
+
+  protected <T> T createBean(Class<T> clazz) {
+    return (T) testApplicationContext.getAutowireCapableBeanFactory().createBean(clazz, AutowireCapableBeanFactory.AUTOWIRE_NO, false);
+  }
+
+  protected <T> T autowire(Class<T> clazz) {
+    return (T) testApplicationContext.getAutowireCapableBeanFactory().autowire(clazz, AutowireCapableBeanFactory.AUTOWIRE_NO, false);
   }
 
 }

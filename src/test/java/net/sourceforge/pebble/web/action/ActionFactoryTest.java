@@ -31,7 +31,6 @@
  */
 package net.sourceforge.pebble.web.action;
 
-import junit.framework.TestCase;
 import net.sourceforge.pebble.domain.PebbleTestCase;
 
 /**
@@ -39,21 +38,26 @@ import net.sourceforge.pebble.domain.PebbleTestCase;
  *
  * @author    Simon Brown
  */
-public class ActionFactoryTest extends PebbleTestCase
-{
+public class ActionFactoryTest extends PebbleTestCase {
+  private ActionFactory factory;
 
-  public void testGetAction() {
-    ActionFactory factory = new ActionFactory("action.properties");
-    try {
-      assertNotNull(factory.getAction("viewDay"));
-      assertTrue(factory.getAction("viewDay") instanceof ViewDayAction);
-    } catch (ActionNotFoundException e) {
-      fail();
-    }
+  @Override
+  protected void setUp() throws Exception {
+    super.setUp();
+    DefaultActionFactory factory = new DefaultActionFactory();
+    factory.setApplicationContext(testApplicationContext);
+    factory.setActionMappingFileName("action.properties");
+    factory.init();
+    this.factory = factory;
+  }
+
+  public void testGetAction() throws Exception {
+
+    assertNotNull(factory.getAction("viewDay"));
+    assertTrue(factory.getAction("viewDay") instanceof ViewDayAction);
   }
 
   public void testActionNotFound() {
-    ActionFactory factory = new ActionFactory("action.properties");
     try {
       assertNotNull(factory.getAction("SomeUnknownAction"));
       fail();

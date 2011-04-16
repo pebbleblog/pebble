@@ -31,7 +31,7 @@
  */
 package net.sourceforge.pebble.web.tagext;
 
-import net.sourceforge.pebble.web.security.SecurityTokenValidator;
+import net.sourceforge.pebble.web.security.SecurityTokenValidatorImpl;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
@@ -50,13 +50,13 @@ public class SecurityTokenTag extends TagSupport {
   @Override
   public int doStartTag() throws JspException {
     JspWriter out = pageContext.getOut();
-    String token = (String) pageContext.getRequest().getAttribute(SecurityTokenValidator.PEBBLE_SECURITY_TOKEN_PARAMETER);
+    String token = (String) pageContext.getRequest().getAttribute(SecurityTokenValidatorImpl.PEBBLE_SECURITY_TOKEN_PARAMETER);
     if (token != null) {
       try {
         if (query) {
-          out.append(SecurityTokenValidator.PEBBLE_SECURITY_TOKEN_PARAMETER).append("=").append(token);
+          out.append(SecurityTokenValidatorImpl.PEBBLE_SECURITY_TOKEN_PARAMETER).append("=").append(token);
         } else {
-          out.append("<input type=\"hidden\" name=\"").append(SecurityTokenValidator.PEBBLE_SECURITY_TOKEN_PARAMETER);
+          out.append("<input type=\"hidden\" name=\"").append(SecurityTokenValidatorImpl.PEBBLE_SECURITY_TOKEN_PARAMETER);
           out.append("\" value=\"").append(token).append("\"/>");
         }
       } catch (IOException ioe) {

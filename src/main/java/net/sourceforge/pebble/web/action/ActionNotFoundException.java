@@ -48,4 +48,14 @@ public class ActionNotFoundException extends Exception {
     super(message);
   }
 
+  /**
+   * Creates an instance with the specified message.
+   *
+   * @param message   the message
+   * @param cause     the cause
+   */
+  public ActionNotFoundException(String message, Throwable cause) {
+    super(message, cause);
+  }
+
 }

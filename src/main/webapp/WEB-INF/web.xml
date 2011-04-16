@@ -132,31 +132,21 @@
 
   <servlet>
     <servlet-name>HttpController</servlet-name>
-    <servlet-class>net.sourceforge.pebble.web.controller.HttpController</servlet-class>
+    <servlet-class>net.sourceforge.pebble.web.controller.HttpControllerServlet</servlet-class>
 
     <init-param>
-      <param-name>actions</param-name>
-      <param-value>action.properties</param-value>
-    </init-param>
-
-    <init-param>
-      <param-name>actionExtension</param-name>
-      <param-value>.action</param-value>
+      <param-name>httpControllerBeanName</param-name>
+      <param-value>httpController</param-value>
     </init-param>
   </servlet>
 
   <servlet>
     <servlet-name>SecureController</servlet-name>
-    <servlet-class>net.sourceforge.pebble.web.controller.HttpController</servlet-class>
+    <servlet-class>net.sourceforge.pebble.web.controller.HttpControllerServlet</servlet-class>
 
     <init-param>
-      <param-name>actions</param-name>
-      <param-value>secure-action.properties</param-value>
-    </init-param>
-
-    <init-param>
-      <param-name>actionExtension</param-name>
-      <param-value>.secureaction</param-value>
+      <param-name>httpControllerBeanName</param-name>
+      <param-value>secureHttpController</param-value>
     </init-param>
   </servlet>
 

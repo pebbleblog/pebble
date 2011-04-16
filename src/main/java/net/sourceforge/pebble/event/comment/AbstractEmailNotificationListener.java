@@ -38,6 +38,7 @@ import net.sourceforge.pebble.api.event.comment.CommentEvent;
 import net.sourceforge.pebble.util.MailUtils;
 import net.sourceforge.pebble.util.StringUtils;
 import net.sourceforge.pebble.web.security.SecurityTokenValidator;
+import net.sourceforge.pebble.web.security.SecurityTokenValidatorImpl;
 
 import javax.mail.Session;
 import java.text.SimpleDateFormat;
@@ -150,7 +151,7 @@ public abstract class AbstractEmailNotificationListener extends CommentListenerS
       author = "<a href=\"" + comment.getWebsite() + "\">" + author + "</a>";
     }
 
-    SecurityTokenValidator validator = new SecurityTokenValidator();
+    SecurityTokenValidator validator = new SecurityTokenValidatorImpl();
 
     String message = "Comment from " + author + " on " + sdf.format(comment.getDate());
     message += " in response to " + comment.getBlogEntry().getTitle();

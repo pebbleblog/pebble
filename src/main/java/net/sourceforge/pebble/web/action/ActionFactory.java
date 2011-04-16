@@ -31,102 +31,20 @@
  */
 package net.sourceforge.pebble.web.action;
 
-import net.sourceforge.pebble.PebbleContext;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
-import org.springframework.context.ApplicationContext;
-
-import java.io.InputStream;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
-
 /**
- * A factory class from which to look up and retrieve an instance
- * of an Action class to process a specific request.
+ * Factory for getting actions
  *
- * @author    Simon Brown
+ * @author James Roper
  */
-public class ActionFactory {
-
-  /** the log used by this class */
-  private static Log log = LogFactory.getLog(ActionFactory.class);
-
-  /** the collection of actions that we know about */
-  private Map actions = new HashMap();
-
-  /** the name of the action mapping file */
-  private String actionMappingFileName;
-
-  /** the ApplicationContext to instantiate actions with */
-  private AutowireCapableBeanFactory beanFactory;
-
-  /**
-   * Creates a new instance, using the given configuration file.
-   */
-  public ActionFactory(String actionMappingFileName) {
-    this.actionMappingFileName = actionMappingFileName;
-    this.beanFactory = PebbleContext.getInstance().getApplicationContext().getAutowireCapableBeanFactory();
-    init();
-  }
-
-  /**
-   * Initialises this component, reading in and creating the map
-   * of action names to action classes.
-   */
-  private void init() {
-    try {
-      // load the properties file containing the name -> class name mapping
-      InputStream in = getClass().getClassLoader().getResourceAsStream(actionMappingFileName);
-      Properties props = new Properties();
-      props.load(in);
-
-      // and store them in a HashMap
-      Enumeration e = props.propertyNames();
-      String actionName;
-      String className;
-
-      while (e.hasMoreElements()) {
-        actionName = (String)e.nextElement();
-        className = props.getProperty(actionName);
-
-        actions.put(actionName, className);
-      }
-
-    } catch (Exception e) {
-      log.error(e.getMessage(), e);
-      e.printStackTrace();
-    }
-  }
+public interface ActionFactory {
 
   /**
    * Given the name/type of request, this method returns the Action
    * instance appropriate to process the request.
    *
-   * @param name    the name (type) of the request
-   * @return  an instance of Action (could be null if no mapping has been defined)
+   * @param name the name (type) of the request
+   * @return an instance of Action (could be null if no mapping has been defined)
+   * @throws ActionNotFoundException If the action was not found
    */
-  public Action getAction(String name) throws ActionNotFoundException {
-    try {
-      // instantiate the appropriate class to handle the request
-      if (actions.containsKey(name)) {
-        Class c = getClass().getClassLoader().loadClass((String)actions.get(name));
-        Class<? extends Action> actionClass = c.asSubclass(Action.class);
-        Action action = (Action) beanFactory.autowire(actionClass, AutowireCapableBeanFactory.AUTOWIRE_NO, false);
-        return action;
-      } else {
-        throw new ActionNotFoundException("An action called " + name + " could not be found");
-      }
-    } catch (ClassNotFoundException cnfe) {
-      log.error(cnfe.getMessage(), cnfe);
-      throw new ActionNotFoundException("An action called " + name + " could not be loaded : " + cnfe.getMessage());
-    } catch (BeansException be) {
-      log.error(be.getMessage(), be);
-      throw new ActionNotFoundException("An action called " + name + " could not be instantiated : " + be.getMessage());
-    }
-  }
-
+  Action getAction(String name) throws ActionNotFoundException;
 }

@@ -36,6 +36,7 @@ import net.sourceforge.pebble.domain.TrackBack;
 import net.sourceforge.pebble.util.MailUtils;
 import net.sourceforge.pebble.api.event.trackback.TrackBackEvent;
 import net.sourceforge.pebble.web.security.SecurityTokenValidator;
+import net.sourceforge.pebble.web.security.SecurityTokenValidatorImpl;
 
 import java.text.SimpleDateFormat;
 import java.util.Collection;
@@ -74,7 +75,7 @@ public abstract class AbstractEmailNotificationListener extends TrackBackListene
     message += "\n\n<br><br>";
     message += "<a href=\"" + trackBack.getPermalink() + "\">Permalink</a>";
 
-    SecurityTokenValidator validator = new SecurityTokenValidator();
+    SecurityTokenValidator validator = new SecurityTokenValidatorImpl();
 
     if (trackBack.isPending()) {
       message += " | ";

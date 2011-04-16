@@ -1,10 +1,15 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
-  xmlns:security="http://www.springframework.org/schema/security"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://www.springframework.org/schema/beans
+       xmlns:security="http://www.springframework.org/schema/security"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
           http://www.springframework.org/schema/security
-          http://www.springframework.org/schema/security/spring-security-3.0.3.xsd">
+          http://www.springframework.org/schema/security/spring-security-3.0.3.xsd
+          http://www.springframework.org/schema/context
+          http://www.springframework.org/schema/context/spring-context.xsd">
+
+  <context:component-scan base-package="net.sourceforge.pebble"/>
 
   <bean id="configurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
     <property name="location" value="/WEB-INF/pebble.properties"/>
@@ -31,12 +36,29 @@
     <property name="securityRealm" ref="pebbleSecurityRealm"/>
 
     <!-- the maximum file upload size in KB -->
-    <property name="fileUploadSize" value="${fileUploadSize}" />
+    <property name="fileUploadSize" value="${fileUploadSize}"/>
 
     <!-- a flag to indicate whether user themes are enabled, default is true -->
-    <property name="userThemesEnabled" value="${userThemesEnabled}" />
+    <property name="userThemesEnabled" value="${userThemesEnabled}"/>
   </bean>
 
   <bean id="lastModifiedService" class="net.sourceforge.pebble.service.DefaultLastModifiedService"/>
+
+  <bean id="httpController" class="net.sourceforge.pebble.web.controller.DefaultHttpController">
+    <property name="actionFactory" ref="actionFactory"/>
+  </bean>
+
+  <bean id="actionFactory" class="net.sourceforge.pebble.web.action.DefaultActionFactory">
+    <property name="actionMappingFileName" value="action.properties"/>
+  </bean>
+
+  <bean id="secureHttpController" class="net.sourceforge.pebble.web.controller.DefaultHttpController">
+    <property name="actionExtension" value=".secureaction"/>
+    <property name="actionFactory" ref="secureActionFactory"/>
+  </bean>
+
+  <bean id="secureActionFactory" class="net.sourceforge.pebble.web.action.DefaultActionFactory">
+    <property name="actionMappingFileName" value="secure-action.properties"/>
+  </bean>
 
 </beans>

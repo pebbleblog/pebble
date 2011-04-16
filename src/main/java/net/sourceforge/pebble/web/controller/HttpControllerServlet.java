@@ -29,37 +29,39 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+package net.sourceforge.pebble.web.controller;
 
-package net.sourceforge.pebble.web.security;
+import net.sourceforge.pebble.PebbleContext;
 
-import junit.framework.TestCase;
-
-import java.util.HashMap;
-import java.util.Map;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
+ * Servlet for handling HTTP requests
+ *
  * @author James Roper
  */
-public class SecurityTokenValidatorTest extends TestCase {
+public class HttpControllerServlet extends HttpServlet {
 
-  private SecurityTokenValidator validator;
+  private HttpController httpController;
 
-  protected void setUp() {
-    validator = new SecurityTokenValidatorImpl();
+  @Override
+  public void init() throws ServletException {
+    super.init();
+    String beanName = getServletConfig().getInitParameter("httpControllerBeanName");
+    httpController = (HttpController) PebbleContext.getInstance().getApplicationContext().getBean(beanName);
   }
 
-  public void testGenerateHash() {
-    Map<String, String[]> map1 = new HashMap<String, String[]>();
-    map1.put("key", new String[] {"value"});
-    map1.put("zed", new String[] {"value2"});
-    String hash1 = validator.hashRequest("path", map1, "salt");
-    Map<String, String[]> map2 = new HashMap<String, String[]>();
-    map2.put("zed", new String[] {"value2"});
-    map2.put("key", new String[] {"value"});
-    String hash2 = validator.hashRequest("path", map2, "salt");
-    assertEquals(hash1, hash2);
-    String hash3 = validator.hashRequest("path", map1, "badsalt");
-    assertFalse(hash1.equals(hash3));
+  @Override
+  protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    httpController.processRequest(req, resp, getServletContext());
   }
 
+  @Override
+  protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    httpController.processRequest(req, resp, getServletContext());
+  }
 }
