@@ -1,6 +1,6 @@
 <c:if test="${not empty param.error}"><div class="loginError"><fmt:message key="${param.error}"/></div></c:if>
 
-<div id="loginPage">
+<div id="loginPage" class="loginPageForm">
   <ul id="loginOptions">
     <li id="loginOptionPassword" class="loginOption loginOptionSelected"><fmt:message key="password.login" /></li>
     <li id="loginOptionOpenId" class="loginOption">OpenID</li>
@@ -44,7 +44,7 @@
   </div>
 
   <div id="loginOptionGoogleArea" class="loginOptionArea">
-    <div id="loginUsingGoogle">Log me in using <img src="common/images/google_logo.jpg" alt="Google"/></div>
+    <div class="loginUsingGoogle">Log me in using <img src="common/images/google_logo.jpg" alt="Google"/></div>
   </div>
 </div>
 <script type="text/javascript">

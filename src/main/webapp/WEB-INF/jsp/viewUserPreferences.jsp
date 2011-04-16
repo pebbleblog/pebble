@@ -81,7 +81,7 @@
     </c:if>
 
     <p><fmt:message key="openid.add.description"/></p>
-    <div>
+    <div class="loginPageForm">
       <ul id="loginOptions">
         <li id="loginOptionOpenId" class="loginOption">OpenID</li>
         <li id="loginOptionGoogle" class="loginOption">Google</li>
@@ -100,7 +100,7 @@
       </div>
 
       <div id="loginOptionGoogleArea" class="loginOptionArea">
-        <div id="loginUsingGoogle">Add my OpenID for <img src="common/images/google_logo.jpg" alt="Google"/></div>
+        <div class="loginUsingGoogle">Add my OpenID for <img src="common/images/google_logo.jpg" alt="Google"/></div>
       </div>
     </div>
     <script type="text/javascript">

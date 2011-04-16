@@ -143,29 +143,16 @@
 #loginPage {
   margin-left: 100px;
 }
-/* Login */
+
+/* Login - generic*/
 #loginOptions {
-  float: left;
   padding: 0;
   margin: 0;
-  border-right: 1px solid #888;
-  height: 200px;
 }
-
 .loginOption {
-  text-align: right;
   list-style-type: none;
-  width: 100px;
-  margin: 5px -1px 5px 0;
-  padding: 3px 24px 3px 0;
   background-color: #EEE;
-  background-position: 97% 50%;
   background-repeat: no-repeat;
-  border: 1px solid #888;
-  -moz-border-radius-topleft: 5px;
-  -moz-border-radius-bottomleft: 5px;
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
   cursor: pointer;
 }
 .loginOption:hover {
@@ -173,7 +160,6 @@
 }
 .loginOptionSelected {
   background-color: white;
-  border-right: 1px solid white;
 }
 #loginOptionPassword {
   background-image: url("common/images/pebble.png");
@@ -184,23 +170,50 @@
 #loginOptionGoogle {
   background-image: url("common/images/google.png");
 }
-.loginOptionArea {
+.loginError {
+  color: red;
+  font-weight: bold;
+  padding: 0 0 20px 100px;
+}
+
+/* Login - Page */
+.loginPageForm #loginOptions {
+  float: left;
+  border-right: 1px solid #888;
+  height: 200px;
+}
+.loginPageForm .loginOption {
+  text-align: right;
+  width: 100px;
+  margin: 5px -1px 5px 0;
+  padding: 3px 24px 3px 0;
+  background-position: 97% 50%;
+  border: 1px solid #888;
+  -moz-border-radius-topleft: 5px;
+  -moz-border-radius-bottomleft: 5px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+.loginPageForm .loginOptionSelected {
+  border-right: 1px solid white;
+}
+.loginPageForm .loginOptionArea {
   margin-left: 140px;
   padding-top: 20px;
 }
-.loginOptionArea div {
+.loginPageForm .loginOptionArea div {
   padding: 5px 0;
 }
-.loginOptionArea label {
+.loginPageForm .loginOptionArea label {
   width: 130px;
   float: left;
   padding-right: 10px;
   text-align: right;
 }
-.loginOptionArea .loginButtons {
+.loginPageForm .loginOptionArea .loginButtons {
   padding-left: 130px;
 }
-#loginUsingGoogle {
+.loginPageForm .loginUsingGoogle {
   width: 150px;
   padding: 10px;
   margin-left: 50px;
@@ -210,14 +223,58 @@
   text-align: center;
   cursor: pointer;
 }
-#loginUsingGoogle img {
+.loginUsingGoogle img {
   display: block;
   margin: 5px auto;
 }
-.loginError {
-  color: red;
-  font-weight: bold;
-  padding: 0 0 20px 100px;
+/* Login - Sidebar */
+.loginSideForm #loginOptions {
+  border-top: 1px solid #888;
+  padding-left: 30px;
+}
+.loginSideForm .loginOption {
+  margin: -1px 2px 2px 2px;
+  padding: 0;
+  border: 1px solid #888;
+  width: 20px;
+  height: 20px;
+  background-position: 2px;
+  -moz-border-radius-bottomright: 5px;
+  -moz-border-radius-bottomleft: 5px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  float: left;
+}
+.loginSideForm .loginOptionSelected {
+  border-top: 1px solid white;  
+}
+.loginSideForm .loginOptionArea {
+  height: 120px;
+}
+.loginSideForm .loginOptionArea label {
+  width: 80px;
+  float: left;
+  padding-right: 5px;
+  text-align: right;
+}
+.loginSideForm .loginOptionArea .loginButtons {
+  padding-left: 80px;
+}
+.loginSideForm input {
+  width: 100px;
+}
+.loginSideForm .loginOptionArea div {
+  padding: 2px 0;
+}
+.loginSideForm .loginUsingGoogle {
+  width: 140px;
+  padding: 10px;
+  margin: auto;
+  border: 1px solid #888;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  text-align: center;
+  cursor: pointer;
 }
 
 .excerptTextArea {

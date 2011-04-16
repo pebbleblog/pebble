@@ -225,7 +225,7 @@ function initLoginScreen() {
       loginOption.addClassName("loginOptionSelected");
       first = false;
     } else {
-      $(loginOption.id + "Area").setStyle({display : "none"});
+      $(loginOption.id + "Area").hide();
     }
     loginOption.observe("click", selectLoginOption);
   });
@@ -240,12 +240,12 @@ function selectLoginOption(event) {
       if (!loginOption.hasClassName("loginOptionSelected"))
       {
         loginOption.addClassName("loginOptionSelected");
-        Effect.BlindDown(area);
+        area.show()
       }
     } else {
       if (loginOption.hasClassName("loginOptionSelected")) {
         loginOption.removeClassName("loginOptionSelected");
-        Effect.BlindUp(area);
+        area.hide()
       }
     }
   });
