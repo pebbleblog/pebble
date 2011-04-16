@@ -1,4 +1,5 @@
-<c:if test="${not empty param.error}"><div class="loginError"><fmt:message key="${param.error}"/></div></c:if>
+
+<c:if test="${not empty param.error}"><div class="loginError"><fmt:message key="${fn:escapeXml(param.error)}"/></div></c:if>
 
 <div id="loginPage" class="loginPageForm">
   <ul id="loginOptions">
