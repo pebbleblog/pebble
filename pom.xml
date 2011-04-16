@@ -485,7 +485,7 @@
             <archive>http://sourceforge.net/mailarchive/forum.php?forum_name=pebble-user</archive>
         </mailingList>
     </mailingLists>
-    
+
     <licenses>
         <license>
             <name>Simon Brown</name>
@@ -503,15 +503,23 @@
         <developer>
             <name>Simon Brown</name>
             <url>http://www.simongbrown.com</url>
-        </developer>
-        <developer>
-            <name>Olaf Kock</name>
-            <url>http://www.olafkock.de</url>
+            <roles>
+              <role>Original Author</role>
+            </roles>
         </developer>
         <developer>
             <name>James Roper</name>
             <url>http://jazzy.id.au</url>
-            <email>jroper2@gmail.com</email>
+            <roles>
+              <role>Lead Developer</role>
+            </roles>
+        </developer>
+        <developer>
+            <name>Olaf Kock</name>
+            <url>http://www.olafkock.de</url>
+            <roles>
+              <role>Developer</role>
+            </roles>
         </developer>
     </developers>
 

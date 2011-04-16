@@ -70,6 +70,8 @@ Features
 
     * Bulk response management features to approve/reject/remove comments and TrackBacks.
 
+    * Gravatar and Facebook Connect support
+
 ** Web-based Adminstration
 
     * Management of your blog via a web browser.
@@ -90,6 +92,8 @@ Features
 
     * Syndicate external newsfeeds.
 
+    * PubSubHubBub support via plugin
+
 ** Navigation
 
     * View blog entries by permalink, day or month.
@@ -103,6 +107,8 @@ Features
     * Host more than a single blog for a project, group or community.
 
     * Integrate Pebble with your existing security infrastructure (e.g. LDAP, Active Directory, RDBMS, etc).
+
+    * Login using any OpenID provider.
 
 ** i18n
 

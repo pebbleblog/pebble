@@ -8,12 +8,12 @@ Security
 
 ** Authentication
 
-    Pebble uses the Acegi Security Framework for Spring, which is a very flexible security implementation that provides
+    Pebble uses the Spring Security Framework for Spring, which is a very flexible security implementation that provides
     a way to configure almost every aspect of the security infrastructure.
 
     User information is stored underneath the Pebble data directory, in a sub-directory called realm. In here there is
     one file per user, with the filename convention of <<<{username}.properties>>>. Each file contains a series of
-    name=value pairs that correspond to the information stored about each user. The out-of-the-box Acegi configuration
+    name=value pairs that correspond to the information stored about each user. The out-of-the-box Spring configuration
     uses an SHA encoded password with the username used as the salt, although this is configurable. An example file (the
     default <<<username.properties>>>) is as follows.
 
@@ -45,7 +45,7 @@ emailAddress=username@domain.com
     next to the blog data. It is, however, possible to change this and configure Pebble to use another realm
     implementation, such as one that stores user information in a relational database or LDAP.
 
-    In addition to configuring Acegi's <<<authenticationManager>>> bean, you'll additionally need to provide an
+    In addition to configuring Spring's <<<authenticationManager>>> bean, you'll additionally need to provide an
     implementation of, and configure the <<<pebbleSecurityRealm>>> bean. This needs to implement the
     <<<net.sourceforge.pebble.security.SecurityRealm>>> interface, which specifies the various CRUD operations on the
     underlying security realm that are required so that user information can be updated through Pebble's web UI.
