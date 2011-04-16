@@ -233,5 +233,10 @@
     <function-signature>boolean contains(java.util.Collection, java.lang.Object)</function-signature>    
   </function>
 
+  <function>
+    <name>gravatar</name>
+    <function-class>net.sourceforge.pebble.web.tagext.Util</function-class>
+    <function-signature>java.lang.String createGravatar(java.lang.String)</function-signature>
+  </function>
 
 </taglib>

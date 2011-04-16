@@ -1,3 +1,5 @@
+<jsp:useBean id="comment" scope="request" type="net.sourceforge.pebble.domain.Comment"/>
+<jsp:useBean id="blogEntry" scope="request" type="net.sourceforge.pebble.domain.BlogEntry"/>
 <%--
   renders a single comment
 --%>
@@ -13,12 +15,8 @@
   </c:otherwise>
 </c:choose>
 
-  <c:if test="${ not empty comment.avatar}">
-    <img class="avatar" src="${comment.avatar}">
-  </c:if>
-
+  <template:avatar comment="${comment}" blogEntry="${blogEntry}"/>
   <%@ include file="/WEB-INF/fragments/commentLinks.jspf" %>
-
   <h1>
     <span id="${param.commentIdentifier}.title"><a name="comment${comment.id}"></a>${comment.title}</span>
   </h1>
@@ -26,13 +24,13 @@
   <div class="metadata">
     <c:set var="commentAuthor" scope="page">
       <c:if test="${!empty comment.website}">
-        <a href="<c:out value="${comment.website}" escapeXml="true"/>" target="_blank" title="<c:out value="${comment.website}"/>" rel="nofollow"><c:out value="${comment.author}" escapeXml="true"/></a>
+        <a href="<c:out value="${comment.website}"/>" target="_blank" title="<c:out value="${comment.website}"/>" rel="nofollow"><c:out value="${comment.author}"/></a>
       </c:if>
       <c:if test="${empty comment.website}">
         ${comment.author}
       </c:if>
       <pebble:isAuthorisedForBlog>
-        (<c:out value="${comment.email}" escapeXml="true" default="-" />/<c:out value="${comment.ipAddress}" default="-" />)
+        (<c:out value="${comment.email}" default="-" />/<c:out value="${comment.ipAddress}" default="-" />)
       </pebble:isAuthorisedForBlog>
     </c:set>
     <fmt:formatDate var="commentDate" scope="page" value="${comment.date}" timeZone="${blogEntry.timeZoneId}" type="both" dateStyle="long" timeStyle="long"/>

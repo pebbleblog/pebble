@@ -1,3 +1,4 @@
+<jsp:useBean id="blog" scope="request" type="net.sourceforge.pebble.domain.Blog"/>
 <div class="contentItem">
 
   <div class="contentItemLinks">
@@ -87,6 +88,7 @@
         </td>
       </tr>
 
+
       <c:if test="${pebbleContext.configuration.userThemesEnabled}">
       <tr>
         <td>
@@ -124,6 +126,17 @@
           <input type="checkbox" name="richTextEditorForCommentsEnabled" value="true"
                  <c:if test="${blog.richTextEditorForCommentsEnabled == true}">checked="true"</c:if>
           />&nbsp;<fmt:message key="blogproperties.comments"/>
+        </td>
+      </tr>
+
+      <tr>
+        <td valign="top">
+          <fmt:message key="blogproperties.gravatarSupport"/>
+        </td>
+        <td>
+          <input type="checkbox" name="gravatarSupportForCommentsEnabled" value="true"
+                 <c:if test="${blog.gravatarSupportForCommentsEnabled == true}">checked="true"</c:if>
+          />
         </td>
       </tr>
 

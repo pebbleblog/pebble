@@ -122,6 +122,7 @@ public class Blog extends AbstractBlog {
   public static final String COMMENT_CONFIRMATION_STRATEGY_KEY = "commentConfirmationStrategy";
   public static final String TRACKBACK_CONFIRMATION_STRATEGY_KEY = "trackBackConfirmationStrategy";
   public static final String RICH_TEXT_EDITOR_FOR_COMMENTS_ENABLED_KEY = "richTextEditorForCommentsEnabled";
+  public static final String GRAVATAR_SUPPORT_FOR_COMMENTS_ENABLED_KEY = "gravatarSupportForCommentsEnabled";
   public static final String HOME_PAGE_KEY = "homePage";
   public static final String PAGE_DECORATORS_KEY = "pageDecorators";
   public static final String FEED_DECORATORS_KEY = "feedDecorators";
@@ -513,6 +514,7 @@ public class Blog extends AbstractBlog {
     defaultProperties.setProperty(COMMENT_CONFIRMATION_STRATEGY_KEY, "net.sourceforge.pebble.confirmation.DefaultConfirmationStrategy");
     defaultProperties.setProperty(TRACKBACK_CONFIRMATION_STRATEGY_KEY, "net.sourceforge.pebble.confirmation.DefaultConfirmationStrategy");
     defaultProperties.setProperty(RICH_TEXT_EDITOR_FOR_COMMENTS_ENABLED_KEY, "true");
+    defaultProperties.setProperty(GRAVATAR_SUPPORT_FOR_COMMENTS_ENABLED_KEY, "true");
 
     return defaultProperties;
   }
@@ -1916,8 +1918,11 @@ public class Blog extends AbstractBlog {
   }
 
   public boolean isRichTextEditorForCommentsEnabled() {
-    String s = getProperty(RICH_TEXT_EDITOR_FOR_COMMENTS_ENABLED_KEY);
-    return s != null && s.equalsIgnoreCase("true");
+    return Boolean.parseBoolean(getProperty(RICH_TEXT_EDITOR_FOR_COMMENTS_ENABLED_KEY));
+  }
+
+  public boolean isGravatarSupportForCommentsEnabled() {
+    return Boolean.parseBoolean(getProperty(GRAVATAR_SUPPORT_FOR_COMMENTS_ENABLED_KEY));
   }
 
   public EmailSubscriptionList getEmailSubscriptionList() {

@@ -32,13 +32,42 @@
 
 package net.sourceforge.pebble.web.tagext;
 
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.codec.binary.Hex;
+
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Collection;
 
 /**
  * @author James Roper
  */
 public class Util {
+  static final String GRAVATAR_URL = "http://www.gravatar.com/avatar/%s?s=50";
+
   public static boolean contains(Collection collection, Object object) {
     return collection.contains(object);
+  }
+
+  /**
+   * Create a Gravatar URL for the given email address
+   *
+   * @param email The email address to create the Gravatar URL for
+   * @return The Gravatar URL
+   */
+  public static String createGravatar(String email) {
+    if (email == null) {
+      return null;
+    }
+    try {
+      MessageDigest md = MessageDigest.getInstance("MD5");
+      md.update(email.getBytes("CP1252"));
+      return String.format(GRAVATAR_URL, new String(Hex.encodeHex(md.digest())));
+    } catch (NoSuchAlgorithmException e) {
+      return null;
+    } catch (UnsupportedEncodingException e) {
+      return null;
+    }
   }
 }

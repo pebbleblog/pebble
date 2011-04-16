@@ -99,6 +99,11 @@ public class SaveBlogPropertiesAction extends SecureAction {
       if (checkbox == null) {
         blog.setProperty(name, "false");
       }
+      name = "gravatarSupportForCommentsEnabled";
+      checkbox = request.getParameter(name);
+      if (checkbox == null) {
+        blog.setProperty(name, "false");
+      }
 
       try {
         blog.storeProperties();
