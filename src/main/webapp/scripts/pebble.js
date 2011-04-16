@@ -229,7 +229,9 @@ function initLoginScreen() {
     }
     loginOption.observe("click", selectLoginOption);
   });
-  $$(".loginUsingGoogle").observe("click", loginUsingGoogle);
+  $$(".loginUsingGoogle").each(function(div) {
+    div.observe("click", loginUsingGoogle);
+  });
 }
 function selectLoginOption(event) {
   var id = this.id;
