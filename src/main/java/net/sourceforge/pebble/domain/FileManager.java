@@ -34,6 +34,7 @@ package net.sourceforge.pebble.domain;
 import net.sourceforge.pebble.comparator.FileMetaDataComparator;
 import net.sourceforge.pebble.util.FileUtils;
 import net.sourceforge.pebble.PebbleContext;
+import org.apache.commons.io.IOUtils;
 
 import java.io.*;
 import java.util.*;
@@ -297,8 +298,9 @@ public class FileManager {
       throw new IllegalFileAccessException();
     }
 
+    BufferedReader reader = null;
     try {
-      BufferedReader reader = new BufferedReader(new FileReader(fileToLoad));
+      reader = new BufferedReader(new FileReader(fileToLoad));
       String line = reader.readLine();
       while (line != null) {
         content.append(line);
@@ -308,9 +310,10 @@ public class FileManager {
           content.append(System.getProperty("line.separator"));
         }
       }
-      reader.close();
     } catch (IOException ioe) {
       ioe.printStackTrace();
+    } finally {
+      IOUtils.closeQuietly(reader);
     }
 
     return content.toString();
@@ -331,10 +334,14 @@ public class FileManager {
       throw new IllegalFileAccessException();
     }
 
-    BufferedWriter writer = new BufferedWriter(new FileWriter(fileToSave));
-    writer.write(content);
-    writer.flush();
-    writer.close();
+    BufferedWriter writer = null;
+    try {
+      writer = new BufferedWriter(new FileWriter(fileToSave));
+      writer.write(content);
+      writer.flush();
+    } finally {
+      IOUtils.closeQuietly(writer);
+    }
   }
 
   /**
@@ -352,10 +359,14 @@ public class FileManager {
       throw new IllegalFileAccessException();
     }
 
-    BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(fileToSave));
-    out.write(content);
-    out.flush();
-    out.close();
+    BufferedOutputStream out = null;
+    try {
+      out = new BufferedOutputStream(new FileOutputStream(fileToSave));
+      out.write(content);
+      out.flush();
+    } finally {
+      IOUtils.closeQuietly(out);
+    }
 
     return file;
   }
