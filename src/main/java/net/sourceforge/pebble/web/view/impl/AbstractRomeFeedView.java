@@ -84,7 +84,7 @@ public abstract class AbstractRomeFeedView extends View {
    * @return the content type as a String
    */
   public String getContentType() {
-    Blog blog = (Blog) getModel().get(Constants.BLOG_KEY);
+    AbstractBlog blog = (AbstractBlog) getModel().get(Constants.BLOG_KEY);
     return feedType.getContentType() + "; charset=" + blog.getCharacterEncoding();
   }
 
