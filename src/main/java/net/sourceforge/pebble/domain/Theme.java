@@ -32,6 +32,7 @@
 package net.sourceforge.pebble.domain;
 
 import net.sourceforge.pebble.util.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -44,31 +45,41 @@ import java.nio.channels.FileChannel;
 /**
  * Represents the user's editable theme.
  *
- * @author    Simon Brown
+ * @author Simon Brown
  */
 public class Theme {
 
-  /** the log used by this class */
+  /**
+   * the log used by this class
+   */
   private static Log log = LogFactory.getLog(Theme.class);
 
-  /** the name of the theme that should be used as a default */
+  /**
+   * the name of the theme that should be used as a default
+   */
   public static final String DEFAULT_THEME_NAME = "default";
 
-  /** the blog to which this theme belongs */
+  /**
+   * the blog to which this theme belongs
+   */
   private Blog blog;
 
-  /** the name of the theme */
+  /**
+   * the name of the theme
+   */
   private String name;
 
-  /** the path of the live theme (under the webapp root) */
+  /**
+   * the path of the live theme (under the webapp root)
+   */
   private String pathToLiveThemes;
 
   /**
    * Creates a new Theme instance with the specified details.
    *
-   * @param blog                the owning Blog instance
-   * @param name                the name of the theme
-   * @param pathToLiveThemes    the path to the live themes
+   * @param blog             the owning Blog instance
+   * @param name             the name of the theme
+   * @param pathToLiveThemes the path to the live themes
    */
   public Theme(Blog blog, String name, String pathToLiveThemes) {
     this.blog = blog;
@@ -80,7 +91,7 @@ public class Theme {
    * Gets the location where the backup version of the blog theme is stored -
    * under the blog.dir directory, in a sub-directory called "theme".
    *
-   * @return    an absolute, local path on the filing system
+   * @return an absolute, local path on the filing system
    */
   String getBackupThemeDirectory() {
     return blog.getRoot() + File.separator + "theme";
@@ -130,13 +141,13 @@ public class Theme {
   /**
    * Backs up the named theme from the webapp to the blog.dir.
    *
-   * @param themeName   the name of the theme to backup
+   * @param themeName the name of the theme to backup
    */
   private void backup(String themeName) {
     log.debug("Backing up " + themeName + " theme to " + getBackupThemeDirectory());
     File liveTheme = new File(pathToLiveThemes, themeName);
     File blogTheme = new File(getBackupThemeDirectory());
-    File blogThemeBackup = new File(getBackupThemeDirectory() + ".bak");
+    File blogThemeBackup = getUniqueBackupBackupDirectory();
 
     if (blogTheme.exists()) {
       blogTheme.renameTo(blogThemeBackup);
@@ -148,13 +159,13 @@ public class Theme {
   /**
    * Copies the named theme from the webapp to blog.dir/theme.
    *
-   * @param themeName   the name of the theme to backup
+   * @param themeName the name of the theme to backup
    */
   private void copy(String themeName) {
     log.info("Copying " + themeName + " theme to " + getBackupThemeDirectory());
     File liveTheme = new File(pathToLiveThemes, themeName);
     File blogTheme = new File(getBackupThemeDirectory());
-    File blogThemeBackup = new File(getBackupThemeDirectory() + ".bak");
+    File blogThemeBackup = getUniqueBackupBackupDirectory();
 
     if (blogTheme.exists()) {
       blogTheme.renameTo(blogThemeBackup);
@@ -166,8 +177,8 @@ public class Theme {
   /**
    * Copies one file to another.
    *
-   * @param source        the source
-   * @param destination   the destination
+   * @param source      the source
+   * @param destination the destination
    */
   private void copy(File source, File destination) {
     if (!destination.exists()) {
@@ -180,14 +191,31 @@ public class Theme {
         if (files[i].isDirectory()) {
           copy(files[i], new File(destination, files[i].getName()));
         } else {
+          FileInputStream is = null;
+          FileOutputStream os = null;
           try {
-              FileChannel srcChannel = new FileInputStream(files[i]).getChannel();
-              FileChannel dstChannel = new FileOutputStream(new File(destination, files[i].getName())).getChannel();
-              dstChannel.transferFrom(srcChannel, 0, srcChannel.size());
-              srcChannel.close();
-              dstChannel.close();
+            is = new FileInputStream(files[i]);
+            FileChannel srcChannel = is.getChannel();
+            long size = srcChannel.size();
+            os = new FileOutputStream(new File(destination, files[i].getName()));
+            FileChannel dstChannel = os.getChannel();
+            dstChannel.transferFrom(srcChannel, 0, size);
           } catch (IOException ioe) {
-            log.error("Could not write to " + destination.getAbsolutePath(), ioe);
+            // We MUST throw an exception here, otherwise very bad things will happen.  For example, if some error
+            // prevented us from copying a theme file from the blog directory to the live directory, if we don't
+            // complain now, Pebble will happily start up, and that file will end up blank.  Then, when pebble shuts
+            // down, backup will be called, and the blank file will be copied over the file in the blog directory, and
+            // so that file will be lost.  It's simple to reproduce this, just shutdown pebble while its coming up,
+            // Tomcat will interrupt the thread that is bringing it up and consequently all NIO the operations above will
+            // throw exceptions.  Pebble never checks if the threads been interrupted, so if you ignore the exceptions,
+            // pebble keeps on coming up, each time writing a blank file to the webapp directory.  Then Tomcat shuts
+            // down the context listener, and that causes backup to be called, the thread is now not interrupted, and
+            // so backup successfully writes all our blank files back to the blog directory, and all your themes are
+            // lost.  I speak from experience.  Thankfully I had backups.
+            throw new RuntimeException("Error copying files", ioe);
+          } finally {
+            IOUtils.closeQuietly(is);
+            IOUtils.closeQuietly(os);
           }
         }
       }
@@ -195,9 +223,24 @@ public class Theme {
   }
 
   /**
+   * If there is still a backup directory lying around, it means that something went wrong in a previous shutdown.  We
+   * don't want to use it in case a user is starting/restarting pebble multiple times and hasn't realised they've
+   * corrupted their theme yet.
+   *
+   * @return A unique directory name
+   */
+  private File getUniqueBackupBackupDirectory() {
+    File dir = new File(getBackupThemeDirectory() + ".bak");
+    if (dir.exists()) {
+      dir = new File(getBackupThemeDirectory() + "-" + System.currentTimeMillis() + ".bak");
+    }
+    return dir;
+  }
+
+  /**
    * Gets the name of this theme.
    *
-   * @return    the name
+   * @return the name
    */
   public String getName() {
     return name;
