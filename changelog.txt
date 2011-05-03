@@ -1,4 +1,4 @@
-Version 2.6.1 - TBD
+Version 2.6.1 - 03.05.2011
 -----------------
 PEBBLE-55 Fixed aggregated blog feed
 PEBBLE-57 Fixed head.jsp not existing error
