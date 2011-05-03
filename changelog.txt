@@ -3,6 +3,7 @@ Version 2.6.1 - TBD
 PEBBLE-55 Fixed aggregated blog feed
 PEBBLE-57 Fixed head.jsp not existing error
 PEBBLE-54 Improved Pebbles handling of themes so that it doesn't wipe them accidentally
+PEBBLE-58 Fixed lack of XSRF token in reset theme link on error page
 
 Version 2.6 - 16.04.2011
 -----------------

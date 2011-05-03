@@ -11,7 +11,7 @@
 
       <pebble:isAuthenticated>
       <p>
-        If you were editing your theme and have caused this error, click <a href="resetTheme.secureaction">here</a>
+        If you were editing your theme and have caused this error, click <a href="resetTheme.secureaction?<pebble:token query="true"/>">here</a>
         to switch back to the default theme.
       </p>
       </pebble:isAuthenticated>
