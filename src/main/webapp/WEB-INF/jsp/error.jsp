@@ -14,6 +14,12 @@
         If you were editing your theme and have caused this error, click <a href="resetTheme.secureaction?<pebble:token query="true"/>">here</a>
         to switch back to the default theme.
       </p>
+        <p>
+          StackTrace for the exception was:
+        </p>
+        <pre>
+          <c:out value="${stackTrace}"/>
+        </pre>
       </pebble:isAuthenticated>
     </td>
   </tr>

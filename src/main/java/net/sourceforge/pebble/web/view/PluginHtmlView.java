@@ -36,7 +36,8 @@ package net.sourceforge.pebble.web.view;
  *
  * @author James Roper
  */
-public abstract class PluginHtmlView extends HtmlView {
+public abstract class
+    PluginHtmlView extends HtmlView {
 
   /**
    * Get the JSP file from the classpath
@@ -48,11 +49,11 @@ public abstract class PluginHtmlView extends HtmlView {
   @Override
   public void prepare() {
     super.prepare();
-    PluginJspMaintainer.checkJsp(getClasspathJsp(), getClass(), getServletContext());
+    PluginResourceMaintainer.checkJsp(getClasspathJsp(), getClass(), getServletContext());
   }
 
   @Override
   public final String getUri() {
-    return "/WEB-INF/" + PluginJspMaintainer.PLUGINS_JSP + "/" + getClasspathJsp();
+    return "/WEB-INF/" + PluginResourceMaintainer.PLUGINS_JSP + "/" + getClasspathJsp();
   }
 }

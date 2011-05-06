@@ -48,11 +48,11 @@ public abstract class PluginJspView extends JspView {
   @Override
   public void prepare() {
     super.prepare();
-    PluginJspMaintainer.checkJsp(getClasspathJsp(), getClass(), getServletContext());
+    PluginResourceMaintainer.checkJsp(getClasspathJsp(), getClass(), getServletContext());
   }
 
   @Override
   public final String getUri() {
-    return "/WEB-INF/" + PluginJspMaintainer.PLUGINS_JSP + "/" + getClasspathJsp();
+    return "/WEB-INF/" + PluginResourceMaintainer.PLUGINS_JSP + "/" + getClasspathJsp();
   }
 }
