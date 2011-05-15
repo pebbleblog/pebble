@@ -81,9 +81,9 @@ public class TransformingFilter implements Filter {
     HttpServletRequest httpRequest = (HttpServletRequest)request;
     AbstractBlog blog = (AbstractBlog)request.getAttribute(Constants.BLOG_KEY);
 
+    String originalUri = httpRequest.getRequestURI();
     // get URI and strip off the context (e.g. /blog)
-    String uri = httpRequest.getRequestURI();
-    uri = uri.substring(httpRequest.getContextPath().length(), uri.length());
+    String uri = originalUri.substring(httpRequest.getContextPath().length(), originalUri.length());
 
     // now we're left with a URI
     if (BlogManager.getInstance().isMultiBlog()) {
@@ -111,7 +111,9 @@ public class TransformingFilter implements Filter {
     String externalUri = uri;
     if (httpRequest.getQueryString() != null) {
       externalUri += "?" + httpRequest.getQueryString();
+      originalUri += "?" + httpRequest.getQueryString();
     }
+    httpRequest.setAttribute(Constants.ORIGINAL_URI, originalUri);
     httpRequest.setAttribute(Constants.EXTERNAL_URI, externalUri);
 
     UriTransformer transformer = new UriTransformer();

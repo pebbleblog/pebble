@@ -69,6 +69,7 @@ public class Constants {
 
   public static final String EXTERNAL_URI = "externalUri";
   public static final String INTERNAL_URI = "internalUri";
+  public static final String ORIGINAL_URI = "originalUri";
   public static String FILTERS_APPLIED = "filtersApplied";
   public static String AUTHENTICATED_USER = "authenticatedUser";
 
