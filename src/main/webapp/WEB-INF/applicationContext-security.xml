@@ -116,7 +116,7 @@
   </bean>
 
   <bean id="authenticationSuccessHandler"
-        class="org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler">
+        class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
     <property name="targetUrlParameter" value="redirectUrl"/>
   </bean>
 
@@ -167,6 +167,7 @@
     <property name="authenticationManager" ref="authenticationManager"/>
     <property name="rememberMeServices" ref="rememberMeServices"/>
     <property name="consumer" ref="openIdConsumer"/>
+    <property name="authenticationSuccessHandler" ref="authenticationSuccessHandler"/>
     <property name="authenticationFailureHandler" ref="openIdAuthenticationFailureHandler"/>
   </bean>
 
