@@ -34,6 +34,10 @@ package net.sourceforge.pebble.web.tagext;
 
 import net.sourceforge.pebble.util.StringUtils;
 import net.sourceforge.pebble.util.UrlRewriter;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 /**
  * Used from jsp taglib url.tld 
  * @author Olaf Kock
@@ -46,9 +50,17 @@ public class UrlFunctions {
 		// for all cases, but gives an idea where rewriting an
 		// url is done (and has succeeded)
 		return UrlRewriter.doRewrite(url); // + "\" style=\"background-color:blue";
-	};
+	}
 
 	public static String escape(String url) {
 		return StringUtils.transformHTML(url); 
-	};
+	}
+
+  public static String urlEncode(String url) {
+    try {
+      return URLEncoder.encode(url, "UTF-8");
+    } catch (UnsupportedEncodingException e) {
+      throw new Error("JVM does not have UTF-8", e);
+    }
+  }
 }

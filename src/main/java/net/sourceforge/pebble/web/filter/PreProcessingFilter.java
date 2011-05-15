@@ -37,7 +37,6 @@ import net.sourceforge.pebble.PebbleContext;
 import net.sourceforge.pebble.security.PebbleUserDetails;
 import net.sourceforge.pebble.util.HttpsURLRewriter;
 import net.sourceforge.pebble.util.SecurityUtils;
-import net.sourceforge.pebble.util.CookieUtils;
 import net.sourceforge.pebble.util.UrlRewriter;
 import net.sourceforge.pebble.util.Utilities;
 import net.sourceforge.pebble.api.decorator.ContentDecoratorContext;
@@ -50,11 +49,8 @@ import org.apache.commons.logging.LogFactory;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.jstl.core.Config;
 import java.io.IOException;
-import java.net.URLDecoder;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -69,16 +65,12 @@ public class PreProcessingFilter implements Filter {
   /** the log used by this class */
   private static Log log = LogFactory.getLog(PreProcessingFilter.class);
 
-  /** the config of this filter */
-  private FilterConfig filterConfig;
-
   /**
    * Initialises this instance.
    *
    * @param config    a FilterConfig instance
    */
   public void init(FilterConfig config) {
-    this.filterConfig = config;
   }
 
   /**
@@ -125,7 +117,7 @@ public class PreProcessingFilter implements Filter {
         context.setView(ContentDecoratorContext.SUMMARY_VIEW);
         context.setMedia(ContentDecoratorContext.HTML_PAGE);
 
-        List blogEntries = b.getRecentPublishedBlogEntries();
+        List<BlogEntry> blogEntries = b.getRecentPublishedBlogEntries();
         ContentDecoratorChain.decorate(context, blogEntries);
         Collections.sort(blogEntries, new BlogEntryComparator());
         httpRequest.setAttribute(Constants.RECENT_BLOG_ENTRIES, blogEntries);
@@ -153,7 +145,7 @@ public class PreProcessingFilter implements Filter {
         httpRequest.setAttribute(Constants.MULTI_BLOG_KEY, BlogManager.getInstance().getMultiBlog());
         httpRequest.setAttribute(Constants.MULTI_BLOG_URL, Utilities.calcBaseUrl(request.getScheme(), BlogManager.getInstance().getMultiBlog().getUrl()));
 
-        List blogs = BlogManager.getInstance().getPublicBlogs();
+        List<Blog> blogs = BlogManager.getInstance().getPublicBlogs();
         Collections.sort(blogs, new BlogByLastModifiedDateComparator());
         httpRequest.setAttribute(Constants.BLOGS, blogs);
       }

@@ -1,3 +1,7 @@
+Version 2.6.3 - TBA
+-----------------
+PEBBLE-60 Ensure Pebble redirects to the right places after login
+
 Version 2.6.1 - 03.05.2011
 -----------------
 PEBBLE-55 Fixed aggregated blog feed
