@@ -58,7 +58,7 @@
       <template:poweredByPebble/>
       <pebble:isNotAuthenticated>
       |
-      <a href="${pebbleContext.configuration.secureUrl}login.secureaction?redirectUrl=${url:urlEncode(externalUri)}"><fmt:message key="login.title" /></a>
+      <a href="${pebbleContext.configuration.secureUrl}login.secureaction?redirectUrl=${url:urlEncode(originalUri)}"><fmt:message key="login.title" /></a>
       </pebble:isNotAuthenticated>
       <pebble:isAuthenticated>
       |
