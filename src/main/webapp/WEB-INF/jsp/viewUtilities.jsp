@@ -27,7 +27,7 @@
         <a href="exportBlog.secureaction?flavor=rdf&amp;<pebble:token query="true"/>" title="Export blog as RDF 1.0">RDF</a> or
         <a href="exportBlog.secureaction?flavor=atom&amp;<pebble:token query="true"/>" title="Export blog as Atom 1.0">Atom</a>.
       </li>
-      <li><a href="zipDirectory.secureaction?type=blogData&amp;path=/logs&amp;<pebble:token query="true"/>" title="Export logs as ZIP file">Export logs</a> : export your logs as a ZIP file.</li>
+      <li><a href="zipDirectory.secureaction?type=blogData&amp;path=/logs" title="Export logs as ZIP file">Export logs</a> : export your logs as a ZIP file.</li>
     </ul>
 
     <h3>Theme utilities</h3>
