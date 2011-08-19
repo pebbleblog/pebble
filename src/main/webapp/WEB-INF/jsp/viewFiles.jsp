@@ -4,7 +4,7 @@
     <c:if test='${not empty parent}'>
       <a href="${url:rewrite(parent.url)}"><fmt:message key="admin.backToParent"/></a> |
     </c:if>
-    <a href="zipDirectory.secureaction?path=${directory.absolutePath}&type=${type}"><fmt:message key="admin.exportAsZip"/></a> |
+    <a href="zipDirectory.secureaction?path=${directory.absolutePath}&amp;type=${type}"><fmt:message key="admin.exportAsZip"/></a> |
     <c:choose>
       <c:when test="${type == 'blogImage'}"><a href="./help/images.html" target="_blank"><fmt:message key="common.help"/></a></c:when>
       <c:when test="${type == 'blogFile'}"><a href="./help/files.html" target="_blank"><fmt:message key="common.help"/></a></c:when>
