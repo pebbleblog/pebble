@@ -29,16 +29,18 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package net.sourceforge.pebble.index;
+package net.sourceforge.pebble.index.file;
 
 import net.sourceforge.pebble.domain.*;
+import net.sourceforge.pebble.index.CategoryIndex;
+import net.sourceforge.pebble.index.file.FileCategoryIndex;
 
 /**
  * Tests for the CategoryIndex class.
  *
  * @author    Simon Brown
  */
-public class CategoryIndexTest extends SingleBlogTestCase {
+public class FileCategoryIndexTest extends SingleBlogTestCase {
 
   private CategoryIndex index;
   private Category javaCategory;
@@ -46,7 +48,7 @@ public class CategoryIndexTest extends SingleBlogTestCase {
   protected void setUp() throws Exception {
     super.setUp();
 
-    this.index = new CategoryIndex(blog);
+    this.index = new FileCategoryIndex(blog);
     javaCategory = new Category("/java", "Java");
     blog.addCategory(javaCategory);
   }

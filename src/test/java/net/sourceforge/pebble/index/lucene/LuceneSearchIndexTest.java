@@ -29,9 +29,11 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package net.sourceforge.pebble.index;
+package net.sourceforge.pebble.index.lucene;
 
 import net.sourceforge.pebble.domain.*;
+import net.sourceforge.pebble.index.SearchIndex;
+import net.sourceforge.pebble.index.lucene.LuceneSearchIndex;
 import net.sourceforge.pebble.search.SearchResults;
 
 /**
@@ -39,14 +41,14 @@ import net.sourceforge.pebble.search.SearchResults;
  *
  * @author    Simon Brown
  */
-public class SearchIndexTest extends SingleBlogTestCase {
+public class LuceneSearchIndexTest extends SingleBlogTestCase {
 
   private SearchIndex index;
 
   protected void setUp() throws Exception {
     super.setUp();
 
-    index = new SearchIndex(blog);
+    index = new LuceneSearchIndex(blog);
     index.clear();
   }
 

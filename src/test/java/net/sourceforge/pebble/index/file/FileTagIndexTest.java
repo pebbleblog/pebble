@@ -29,23 +29,24 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package net.sourceforge.pebble.index;
+package net.sourceforge.pebble.index.file;
 
 import net.sourceforge.pebble.domain.*;
+import net.sourceforge.pebble.index.file.FileTagIndex;
 
 /**
  * Tests for the TagIndex class.
  *
  * @author    Simon Brown
  */
-public class TagIndexTest extends SingleBlogTestCase {
+public class FileTagIndexTest extends SingleBlogTestCase {
 
-  private TagIndex index;
+  private FileTagIndex index;
 
   protected void setUp() throws Exception {
     super.setUp();
 
-    this.index = new TagIndex(blog);
+    this.index = new FileTagIndex(blog);
   }
 
   /**

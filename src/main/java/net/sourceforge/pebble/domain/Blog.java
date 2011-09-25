@@ -32,16 +32,6 @@
 
 package net.sourceforge.pebble.domain;
 
-import java.io.File;
-import java.lang.reflect.Constructor;
-import java.security.SecureRandom;
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.CopyOnWriteArrayList;
-
-import javax.servlet.http.HttpServletRequest;
-
 import com.google.common.base.Supplier;
 import com.google.common.base.Suppliers;
 import net.sourceforge.pebble.*;
@@ -70,29 +60,26 @@ import net.sourceforge.pebble.event.AuditListener;
 import net.sourceforge.pebble.event.DefaultEventDispatcher;
 import net.sourceforge.pebble.event.EventListenerList;
 import net.sourceforge.pebble.event.blogentry.EmailSubscriptionListener;
-import net.sourceforge.pebble.index.AuthorIndex;
-import net.sourceforge.pebble.index.AuthorIndexListener;
-import net.sourceforge.pebble.index.BlogEntryIndex;
-import net.sourceforge.pebble.index.BlogEntryIndexListener;
-import net.sourceforge.pebble.index.CategoryIndex;
-import net.sourceforge.pebble.index.CategoryIndexListener;
-import net.sourceforge.pebble.index.EmailSubscriptionList;
-import net.sourceforge.pebble.index.ResponseIndex;
-import net.sourceforge.pebble.index.ResponseIndexListener;
-import net.sourceforge.pebble.index.SearchIndex;
-import net.sourceforge.pebble.index.SearchIndexListener;
-import net.sourceforge.pebble.index.StaticPageIndex;
-import net.sourceforge.pebble.index.TagIndex;
-import net.sourceforge.pebble.index.TagIndexListener;
+import net.sourceforge.pebble.index.*;
+import net.sourceforge.pebble.index.file.*;
+import net.sourceforge.pebble.index.lucene.LuceneSearchIndex;
 import net.sourceforge.pebble.logging.AbstractLogger;
 import net.sourceforge.pebble.logging.CombinedLogFormatLogger;
 import net.sourceforge.pebble.permalink.DefaultPermalinkProvider;
 import net.sourceforge.pebble.util.StringUtils;
-
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
+
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.lang.reflect.Constructor;
+import java.security.SecureRandom;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Represents a blog.
@@ -238,13 +225,13 @@ public class Blog extends AbstractBlog {
     years = new ArrayList<Year>();
 
     // create the various indexes for this blog
-    searchIndex = new SearchIndex(this);
-    blogEntryIndex = new BlogEntryIndex(this);
-    responseIndex = new ResponseIndex(this);
-    tagIndex = new TagIndex(this);
-    categoryIndex = new CategoryIndex(this);
-    authorIndex = new AuthorIndex(this);
-    staticPageIndex = new StaticPageIndex(this);
+    searchIndex = new LuceneSearchIndex(this);
+    blogEntryIndex = new FileBlogEntryIndex(this);
+    responseIndex = new FileResponseIndex(this);
+    tagIndex = new FileTagIndex(this);
+    categoryIndex = new FileCategoryIndex(this);
+    authorIndex = new FileAuthorIndex(this);
+    staticPageIndex = new FileStaticPageIndex(this);
 
     decoratorChain = new ContentDecoratorChain(this);
 
@@ -266,7 +253,7 @@ public class Blog extends AbstractBlog {
       trackBackConfirmationStrategy = new DefaultConfirmationStrategy();
     }
 
-    emailSubscriptionList = new EmailSubscriptionList(this);
+    emailSubscriptionList = new FileEmailSubscriptionList(this);
 
     initLogger();
     initEventDispatcher();

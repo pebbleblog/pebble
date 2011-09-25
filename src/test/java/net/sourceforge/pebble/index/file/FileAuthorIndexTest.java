@@ -29,24 +29,26 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package net.sourceforge.pebble.index;
+package net.sourceforge.pebble.index.file;
 
 import net.sourceforge.pebble.domain.BlogEntry;
 import net.sourceforge.pebble.domain.SingleBlogTestCase;
+import net.sourceforge.pebble.index.AuthorIndex;
+import net.sourceforge.pebble.index.file.FileAuthorIndex;
 
 /**
  * Tests for the AuthorIndex class.
  *
  * @author    Simon Brown
  */
-public class AuthorIndexTest extends SingleBlogTestCase {
+public class FileAuthorIndexTest extends SingleBlogTestCase {
 
   private AuthorIndex index;
 
   protected void setUp() throws Exception {
     super.setUp();
 
-    this.index = new AuthorIndex(blog);
+    this.index = new FileAuthorIndex(blog);
   }
 
   /**
