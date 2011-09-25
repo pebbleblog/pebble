@@ -31,13 +31,11 @@
  */
 package net.sourceforge.pebble.domain;
 
-import net.sourceforge.pebble.dao.DAOFactory;
-import net.sourceforge.pebble.dao.mock.MockDAOFactory;
 import net.sourceforge.pebble.Configuration;
 import net.sourceforge.pebble.PebbleContext;
+import net.sourceforge.pebble.dao.DAOFactory;
+import net.sourceforge.pebble.dao.mock.MockDAOFactory;
 import net.sourceforge.pebble.security.MockSecurityRealm;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.StaticApplicationContext;
 
 import java.io.File;
 
@@ -67,6 +65,7 @@ public abstract class SingleBlogTestCase extends PebbleTestCase {
     Configuration config = new Configuration();
     config.setDataDirectory(TEST_BLOG_LOCATION.getAbsolutePath());
     config.setUrl("http://www.yourdomain.com/blog/");
+    config.afterPropertiesSet();
     PebbleContext.getInstance().setConfiguration(config);
 
     PebbleContext.getInstance().getConfiguration().setSecurityRealm(new MockSecurityRealm());

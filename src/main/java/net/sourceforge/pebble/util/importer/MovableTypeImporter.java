@@ -80,6 +80,7 @@ public class MovableTypeImporter {
       Configuration config = new Configuration();
       config.setDataDirectory(args[1]);
       config.setUrl("http://www.yourdomain.com/blog/");
+      config.afterPropertiesSet();
       PebbleContext.getInstance().setConfiguration(config);
     }
 

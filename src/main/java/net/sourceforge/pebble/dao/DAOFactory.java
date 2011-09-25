@@ -31,6 +31,8 @@
  */
 package net.sourceforge.pebble.dao;
 
+import net.sourceforge.pebble.domain.Blog;
+
 /**
  * Represents a strategy used to load and store blog entries
  * in the filing system.
@@ -69,6 +71,15 @@ public abstract class DAOFactory {
    * @return  a RefererFilterDAO instance
    */
   public abstract RefererFilterDAO getRefererFilterDAO();
+
+  /**
+   * Inits the DAO for the given blog
+   *
+   * @param blog The blog to init
+   */
+  public void init(Blog blog) {
+
+  }
 
   public static void setConfiguredFactory(DAOFactory factory) {
     configuredFactory = factory;

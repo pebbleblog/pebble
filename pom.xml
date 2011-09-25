@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.sourceforge.pebble</groupId>
     <artifactId>pebble</artifactId>
@@ -25,6 +26,15 @@
             <name>java.net Maven Repository</name>
             <url>http://download.java.net/maven/2</url>
         </repository>
+        <repository>
+            <id>orientechnologies-repository</id>
+            <name>Orient Technologies Maven2 Repository</name>
+            <url>http://www.orientechnologies.com/listing/m2</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </repository>
     </repositories>
     <dependencies>
         <dependency>
@@ -32,12 +42,12 @@
             <artifactId>commons-logging</artifactId>
             <version>1.0.4</version>
         </dependency>
-      <dependency>
-           <groupId>net.homeip.yusuke</groupId>
-           <artifactId>twitter4j</artifactId>
-           <version>2.0.10</version>
-       </dependency>
-       <dependency>
+        <dependency>
+            <groupId>net.homeip.yusuke</groupId>
+            <artifactId>twitter4j</artifactId>
+            <version>2.0.10</version>
+        </dependency>
+        <dependency>
             <groupId>commons-collections</groupId>
             <artifactId>commons-collections</artifactId>
             <version>3.1</version>
@@ -86,14 +96,14 @@
             <artifactId>spring-security-web</artifactId>
             <version>3.0.3.RELEASE</version>
             <exclusions>
-              <exclusion>
-                <groupId>org.aspectj</groupId>
-                <artifactId>aspectjrt</artifactId>
-              </exclusion>
-              <exclusion>
-                <groupId>org.aspectj</groupId>
-                <artifactId>aspectjweaver</artifactId>
-              </exclusion>
+                <exclusion>
+                    <groupId>org.aspectj</groupId>
+                    <artifactId>aspectjrt</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.aspectj</groupId>
+                    <artifactId>aspectjweaver</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
@@ -111,21 +121,21 @@
             <artifactId>spring-web</artifactId>
             <version>3.0.3.RELEASE</version>
             <exclusions>
-              <exclusion>
-                <groupId>aopalliance</groupId>
-                <artifactId>aopalliance</artifactId>
-              </exclusion>
+                <exclusion>
+                    <groupId>aopalliance</groupId>
+                    <artifactId>aopalliance</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
-          <groupId>javax.inject</groupId>
-          <artifactId>javax.inject</artifactId>
-          <version>1</version>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
+            <version>1</version>
         </dependency>
         <dependency>
-          <groupId>javax.annotation</groupId>
-          <artifactId>jsr250-api</artifactId>
-          <version>1.0</version>
+            <groupId>javax.annotation</groupId>
+            <artifactId>jsr250-api</artifactId>
+            <version>1.0</version>
         </dependency>
         <dependency>
             <groupId>lucene</groupId>
@@ -276,6 +286,16 @@
             <version>1.4</version>
         </dependency>
         <dependency>
+            <groupId>com.orientechnologies</groupId>
+            <artifactId>orient-commons</artifactId>
+            <version>1.0rc5</version>
+        </dependency>
+        <dependency>
+            <groupId>com.orientechnologies</groupId>
+            <artifactId>orientdb-core</artifactId>
+            <version>1.0rc5</version>
+        </dependency>
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.6</version>
@@ -366,7 +386,7 @@
                             <tasks>
                                 <copy todir="${basedir}/target/${project.artifactId}-${project.version}">
                                     <fileset dir="${basedir}">
-                                        <include name="*.txt" />
+                                        <include name="*.txt"/>
                                     </fileset>
                                 </copy>
                             </tasks>
@@ -416,11 +436,17 @@
                                 <configuration>
                                     <tasks>
                                         <echo>Setting up directory...</echo>
-                                        <sshexec host="shell.sourceforge.net" username="${pebble.sf.net.username}" password="${pebble.sf.net.password}" trust="true" command="mkdir -p /home/frs/project/p/pe/pebble/pebble/${project.version}" />
+                                        <sshexec host="shell.sourceforge.net" username="${pebble.sf.net.username}"
+                                                 password="${pebble.sf.net.password}" trust="true"
+                                                 command="mkdir -p /home/frs/project/p/pe/pebble/pebble/${project.version}"/>
                                         <echo>Uploading pebble zip to sourceforge...</echo>
-                                        <scp todir="${pebble.sf.net.username}@frs.sourceforge.net:/home/frs/project/p/pe/pebble/pebble/${project.version}/" password="${pebble.sf.net.password}" trust="true" sftp="true" file="target/pebble-${project.version}.zip" />
+                                        <scp todir="${pebble.sf.net.username}@frs.sourceforge.net:/home/frs/project/p/pe/pebble/pebble/${project.version}/"
+                                             password="${pebble.sf.net.password}" trust="true" sftp="true"
+                                             file="target/pebble-${project.version}.zip"/>
                                         <echo>Updating permissions...</echo>
-                                        <sshexec host="shell.sourceforge.net" username="${pebble.sf.net.username}" password="${pebble.sf.net.password}" trust="true" command="chmod -R g+w /home/frs/project/p/pe/pebble/pebble/${project.version}" />
+                                        <sshexec host="shell.sourceforge.net" username="${pebble.sf.net.username}"
+                                                 password="${pebble.sf.net.password}" trust="true"
+                                                 command="chmod -R g+w /home/frs/project/p/pe/pebble/pebble/${project.version}"/>
                                     </tasks>
                                 </configuration>
                             </execution>
@@ -504,21 +530,21 @@
             <name>Simon Brown</name>
             <url>http://www.simongbrown.com</url>
             <roles>
-              <role>Original Author</role>
+                <role>Original Author</role>
             </roles>
         </developer>
         <developer>
             <name>James Roper</name>
             <url>http://jazzy.id.au</url>
             <roles>
-              <role>Lead Developer</role>
+                <role>Lead Developer</role>
             </roles>
         </developer>
         <developer>
             <name>Olaf Kock</name>
             <url>http://www.olafkock.de</url>
             <roles>
-              <role>Developer</role>
+                <role>Developer</role>
             </roles>
         </developer>
     </developers>

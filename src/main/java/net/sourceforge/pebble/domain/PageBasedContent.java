@@ -147,7 +147,6 @@ public abstract class PageBasedContent extends Content {
    * @param newTitle  the title as a String
    */
   public void setTitle(String newTitle) {
-	newTitle = newTitle;
     propertyChangeSupport.firePropertyChange(TITLE_PROPERTY, title, newTitle);
     this.title = newTitle;
   }

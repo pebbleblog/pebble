@@ -210,6 +210,8 @@ public class Blog extends AbstractBlog {
       setPermalinkProvider(new DefaultPermalinkProvider());
     }
 
+    DAOFactory.getConfiguredFactory().init(this);
+
     // load categories
     try {
       DAOFactory factory = DAOFactory.getConfiguredFactory();

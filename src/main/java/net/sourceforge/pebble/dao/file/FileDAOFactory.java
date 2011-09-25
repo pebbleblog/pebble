@@ -41,6 +41,8 @@ import net.sourceforge.pebble.dao.*;
  */
 public class FileDAOFactory extends DAOFactory {
 
+  public static final String FILE_STORAGE_TYPE = "file";
+
   private BlogEntryDAO blogEntryDAO;
   private StaticPageDAO staticPageDAO;
   private CategoryDAO categoryDAO;

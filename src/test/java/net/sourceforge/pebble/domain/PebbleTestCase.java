@@ -32,12 +32,10 @@
 package net.sourceforge.pebble.domain;
 
 import junit.framework.TestCase;
-import net.sourceforge.pebble.util.FileUtils;
-import net.sourceforge.pebble.PebbleContext;
 import net.sourceforge.pebble.Configuration;
+import net.sourceforge.pebble.PebbleContext;
+import net.sourceforge.pebble.util.FileUtils;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.StaticApplicationContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -74,6 +72,7 @@ public abstract class PebbleTestCase extends TestCase {
     Configuration config = new Configuration();
     config.setUrl("http://www.yourdomain.com/blog/");
     config.setDataDirectory(TEST_BLOG_LOCATION.getAbsolutePath());
+    config.afterPropertiesSet();
     PebbleContext.getInstance().setConfiguration(config);
     PebbleContext.getInstance().setApplicationContext(testApplicationContext);
   }

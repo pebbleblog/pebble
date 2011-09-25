@@ -34,19 +34,26 @@ package net.sourceforge.pebble;
 
 import net.sourceforge.pebble.dao.DAOFactory;
 import net.sourceforge.pebble.dao.file.FileDAOFactory;
+import net.sourceforge.pebble.dao.orient.OrientDAOFactory;
 import net.sourceforge.pebble.security.SecurityRealm;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.InitializingBean;
+
+import java.io.File;
+import java.util.Locale;
 
 /**
  * A bean representing configurable properties for Pebble.
  *
- * @author    Simon Brown
+ * @author Simon Brown
  */
-public class Configuration {
+public class Configuration implements InitializingBean {
 
-  /** the log used by this class */
-  private static Log log = LogFactory.getLog(Configuration.class);
+  /**
+   * the log used by this class
+   */
+  private static final Log log = LogFactory.getLog(Configuration.class);
 
   private String dataDirectory = evaluateDirectory("${user.home}/pebble");
   private String url;
@@ -57,10 +64,21 @@ public class Configuration {
   private String smtpHost = "java:comp/env/mail/Session";
   private long fileUploadSize = 2048;
   private long fileUploadQuota = -1;
-  private DAOFactory daoFactory = new FileDAOFactory();
+  private String storageType = FileDAOFactory.FILE_STORAGE_TYPE;
+  private DAOFactory daoFactory;
   private SecurityRealm securityRealm;
 
   public Configuration() {
+  }
+
+  public void afterPropertiesSet() throws Exception {
+    if (storageType.toLowerCase(Locale.ENGLISH).equals(FileDAOFactory.FILE_STORAGE_TYPE)) {
+      daoFactory = new FileDAOFactory();
+    } else if (storageType.toLowerCase(Locale.ENGLISH).equals(OrientDAOFactory.ORIENT_STORAGE_TYPE)) {
+      daoFactory = new OrientDAOFactory(new File(dataDirectory));
+    } else {
+      throw new IllegalArgumentException("Unknown storage type: " + storageType);
+    }
   }
 
   public String getUrl() {
@@ -79,7 +97,7 @@ public class Configuration {
     // and set the domain name
     String url = PebbleContext.getInstance().getConfiguration().getUrl();
     int index = url.indexOf("://");
-    String domainName = url.substring(index+3);
+    String domainName = url.substring(index + 3);
     index = domainName.indexOf("/");
     domainName = domainName.substring(0, index);
 
@@ -172,13 +190,21 @@ public class Configuration {
     this.securityRealm = securityRealm;
   }
 
+  public String getStorageType() {
+    return storageType;
+  }
+
+  public void setStorageType(String storageType) {
+    this.storageType = storageType;
+  }
+
   /**
    * Replaces ${some.property} at the start of the string with the value
    * from System.getProperty(some.property).
    *
-   * @param s   the String to transform
-   * @return  a new String, or the same String if it doesn't start with a
-   *          property name delimited by ${...}
+   * @param s the String to transform
+   * @return a new String, or the same String if it doesn't start with a
+   *         property name delimited by ${...}
    */
   private String evaluateDirectory(String s) {
     log.debug("Raw string is " + s);
@@ -187,7 +213,7 @@ public class Configuration {
       String propertyName = s.substring(2, index);
       String propertyValue = System.getProperty(propertyName);
       log.debug(propertyName + " = " + propertyValue);
-      return propertyValue + s.substring(index+1);
+      return propertyValue + s.substring(index + 1);
     } else {
       return s;
     }
@@ -196,7 +222,7 @@ public class Configuration {
   /**
    * Determines whether user themes are enabled.
    *
-   * @return    true if user themes are enabled, false otherwise
+   * @return true if user themes are enabled, false otherwise
    */
   public boolean isUserThemesEnabled() {
     return userThemesEnabled;
@@ -205,8 +231,8 @@ public class Configuration {
   /**
    * Sets whether user themes are enabled.
    *
-   * @param userThemesEnabled   true if user themes are enabled,
-   *                            false otherwise
+   * @param userThemesEnabled true if user themes are enabled,
+   *                          false otherwise
    */
   public void setUserThemesEnabled(boolean userThemesEnabled) {
     this.userThemesEnabled = userThemesEnabled;
