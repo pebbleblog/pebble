@@ -1,6 +1,7 @@
 Version 2.6.3 - TBA
 -----------------
 PEBBLE-60 Ensure Pebble redirects to the right places after login
+PEBBLE-67 Added classes to titles and subtitles
 
 Version 2.6.1 - 03.05.2011
 -----------------
