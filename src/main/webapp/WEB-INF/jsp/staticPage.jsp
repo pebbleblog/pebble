@@ -7,8 +7,8 @@
 
   <a name="a${staticPage.id}"></a>
   <c:if test="${not empty staticPage.title}">
-  <h1><a href="${url:rewrite(staticPage.permalink)}">${staticPage.title}</a></h1>
-  <h2>${staticPage.subtitle}</h2>
+  <h1 class="contentItemTitle"><a href="${url:rewrite(staticPage.permalink)}">${staticPage.title}</a></h1>
+  <h2 class="contentItemSubtitle">${staticPage.subtitle}</h2>
   </c:if>
 
   <div class="contentItemBody">

@@ -13,8 +13,8 @@
   <%@ include file="/WEB-INF/fragments/blogEntryLinks.jspf" %>
 
   <a name="a${blogEntry.id}"></a>
-  <h1><a href="${url:rewrite(blogEntry.permalink)}">${blogEntry.title}</a></h1>
-  <h2>${blogEntry.subtitle}</h2>
+  <h1 class="contentItemTitle"><a href="${url:rewrite(blogEntry.permalink)}">${blogEntry.title}</a></h1>
+  <h2 class="contentItemSubtitle">${blogEntry.subtitle}</h2>
 
   <div class="contentItemBody">
     <c:choose>
