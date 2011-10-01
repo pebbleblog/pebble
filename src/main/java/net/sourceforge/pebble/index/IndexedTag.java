@@ -56,7 +56,7 @@ public class IndexedTag extends Tag {
    * @param blog    a Blog instance
    */
   public IndexedTag(String name, Blog blog) {
-    super(name, blog);
+    super(name, blog, 0, 0);
   }
 
   /**
@@ -108,19 +108,4 @@ public class IndexedTag extends Tag {
   public int getRank() {
     return this.rank;
   }
-
-  /**
-   * Sets the rank for this tag.
-   *
-   */
-  public void calculateRank(int[] thresholds) {
-    for (int i = 0; i < thresholds.length; i++) {
-      int numberOfBlogEntries = getNumberOfBlogEntries();
-      if (numberOfBlogEntries <= thresholds[i]) {
-        this.rank = i+1;
-        return;
-      }
-    }
-  }
-
 }

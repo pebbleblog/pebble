@@ -40,6 +40,8 @@
 
     <!-- a flag to indicate whether user themes are enabled, default is true -->
     <property name="userThemesEnabled" value="${userThemesEnabled}"/>
+
+    <property name="storageType" value="${storageType}"/>
   </bean>
 
   <bean id="lastModifiedService" class="net.sourceforge.pebble.service.DefaultLastModifiedService"/>

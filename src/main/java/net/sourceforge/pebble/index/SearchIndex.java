@@ -8,11 +8,7 @@ import net.sourceforge.pebble.search.SearchResults;
 import java.util.Collection;
 
 /**
- * Created by IntelliJ IDEA.
- * User: jroper
- * Date: 25.09.11
- * Time: 20:03
- * To change this template use File | Settings | File Templates.
+ * The search index
  */
 public interface SearchIndex {
     /**

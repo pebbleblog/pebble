@@ -31,8 +31,10 @@
  */
 package net.sourceforge.pebble.dao.orient;
 
+import com.orientechnologies.orient.core.Orient;
 import com.orientechnologies.orient.core.db.object.ODatabaseObjectTx;
 import com.orientechnologies.orient.core.metadata.schema.OClass;
+import com.orientechnologies.orient.core.metadata.schema.OProperty;
 import com.orientechnologies.orient.core.metadata.schema.OSchema;
 import com.orientechnologies.orient.core.metadata.schema.OType;
 import com.orientechnologies.orient.core.sql.OCommandSQL;
@@ -42,6 +44,8 @@ import net.sourceforge.pebble.dao.file.FileRefererFilterDAO;
 import net.sourceforge.pebble.dao.file.FileStaticPageDAO;
 import net.sourceforge.pebble.dao.orient.model.OrientBlogEntry;
 import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.index.TagIndex;
+import net.sourceforge.pebble.index.orient.OrientTagIndex;
 
 import java.io.File;
 
@@ -49,7 +53,7 @@ import java.io.File;
  * Represents a strategy used to load and store blog entries
  * in OrientDB
  *
- * @author Simon Brown
+ * @author James Roper
  */
 public class OrientDAOFactory extends DAOFactory {
 
@@ -77,13 +81,19 @@ public class OrientDAOFactory extends DAOFactory {
       if (!db.exists()) {
         db.create();
       }
-      createIndex(db, OrientBlogEntry.class, "id", OType.STRING);
+      createIndex(db, OrientBlogEntry.class, "id", OType.STRING, null, OProperty.INDEX_TYPE.UNIQUE);
+      createIndex(db, OrientBlogEntry.class, "tags", OType.EMBEDDEDLIST, OType.STRING, OProperty.INDEX_TYPE.NOTUNIQUE);
     } finally {
       db.close();
     }
   }
 
-  private void createIndex(ODatabaseObjectTx db, Class clazz, String property, OType type) {
+  @Override
+  public void shutdown() {
+    Orient.instance().shutdown();
+  }
+
+  private void createIndex(ODatabaseObjectTx db, Class clazz, String property, OType type, OType linkedType, OProperty.INDEX_TYPE indexType) {
     OSchema schema = db.getMetadata().getSchema();
     OClass oclass;
     if (!schema.existsClass(clazz.getSimpleName())) {
@@ -91,12 +101,24 @@ public class OrientDAOFactory extends DAOFactory {
     } else {
       oclass = schema.getClass(clazz);
     }
+    OProperty oproperty;
     if (!oclass.existsProperty(property)) {
-      oclass.createProperty(property, type);
+      if (linkedType == null) {
+        oproperty = oclass.createProperty(property, type);
+      } else {
+        oproperty = oclass.createProperty(property, type, linkedType);
+      }
+    } else {
+      oproperty = oclass.getProperty(property);
     }
-    String indexName = clazz.getSimpleName() + "." + property;
+    if (!oproperty.isIndexed()) {
+      oproperty.createIndex(indexType);
+    }
+  }
+
+  private void createIndex(ODatabaseObjectTx db, String indexName, OType type, OProperty.INDEX_TYPE indexType) {
     if (db.getMetadata().getIndexManager().getIndex(indexName) == null) {
-      db.command(new OCommandSQL("create index " + indexName + " unique")).execute();
+      db.command(new OCommandSQL("create index " + indexName + " " + indexType.name() + " " + type.name())).execute();
     }
   }
 
@@ -145,4 +167,8 @@ public class OrientDAOFactory extends DAOFactory {
     return this.refererFilterDAO;
   }
 
+  @Override
+  public TagIndex createTagIndex(Blog blog) {
+    return new OrientTagIndex(this, blog);
+  }
 }

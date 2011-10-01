@@ -41,32 +41,24 @@ import java.util.List;
  */
 public class TagTest extends SingleBlogTestCase {
 
-  private Tag tag;
-
   protected void setUp() throws Exception {
     super.setUp();
 
-    tag = new Tag("java", blog);
   }
 
   public void testConstruction() {
+    Tag tag = new Tag("java", blog);
     assertEquals("java", tag.getName());
 
     assertEquals("http://www.yourdomain.com/blog/tags/java/", tag.getPermalink());
   }
 
   public void testNameWithSpaces() {
-    tag.setName("automated+unit+testing");
-    assertEquals("automated unit testing", tag.getName());
-
-    assertEquals("http://www.yourdomain.com/blog/tags/automated unit testing/", tag.getPermalink());
+    assertEquals("automated unit testing", Tag.encode("automated+unit+testing"));
   }
 
   public void testNameWithMixedCase() {
-    tag.setName("automatedUnitTesting");
-    assertEquals("automatedunittesting", tag.getName());
-
-    assertEquals("http://www.yourdomain.com/blog/tags/automatedunittesting/", tag.getPermalink());
+    assertEquals("automatedunittesting", Tag.encode("automatedUnitTesting"));
   }
 
   public void testParse() {

@@ -33,9 +33,6 @@ package net.sourceforge.pebble.domain;
 
 import net.sourceforge.pebble.util.StringUtils;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import java.util.*;
 
 /**
@@ -44,18 +41,32 @@ import java.util.*;
  * @author    Simon Brown
  */
 public class Tag implements Permalinkable, Comparable {
-
-  /** the log used by this class */
-  private static final Log log = LogFactory.getLog(Tag.class);
-
   /** the owning blog */
-  private Blog blog;
+  private final Blog blog;
 
   /** the name of the tag */
-  private String name = "";
+  private final String name;
 
   /** the rank for this tag */
-  protected int rank;
+  private final int rank;
+
+  /** the number of blog entries for this tag */
+  private final int numberOfBlogEntries;
+
+  /**
+   * Creates a new tag with the specified properties.
+   *
+   * @param name    the name
+   * @param blog    a Blog instance
+   * @param rank    the rank of the tag
+   * @param numberOfBlogEntries the number of blog entries for the tag
+   */
+  public Tag(String name, Blog blog, int rank, int numberOfBlogEntries) {
+    this.name = name;
+    this.blog = blog;
+    this.rank = rank;
+    this.numberOfBlogEntries = numberOfBlogEntries;
+  }
 
   /**
    * Creates a new tag with the specified properties.
@@ -64,8 +75,7 @@ public class Tag implements Permalinkable, Comparable {
    * @param blog    a Blog instance
    */
   public Tag(String name, Blog blog) {
-    setName(name);
-    this.blog = blog;
+    this(name, blog, 0, 0);
   }
 
   /**
@@ -75,15 +85,6 @@ public class Tag implements Permalinkable, Comparable {
    */
   public String getName() {
     return name;
-  }
-
-  /**
-   * Sets the name of this tag.
-   *
-   * @param name    the new tag name
-   */
-  public void setName(String name) {
-    this.name = Tag.encode(name);
   }
 
   /**
@@ -154,6 +155,14 @@ public class Tag implements Permalinkable, Comparable {
     return this.rank;
   }
 
+  public int getNumberOfBlogEntries() {
+    return numberOfBlogEntries;
+  }
+
+  public Blog getBlog() {
+    return blog;
+  }
+
   /**
    * Given a string containing whitespace separated tags, this method returns a
    * List containing the tags.
@@ -167,7 +176,7 @@ public class Tag implements Permalinkable, Comparable {
     if (tags != null && tags.trim().length() > 0) {
       String s[] = tags.trim().split(" ");
       for (int i = 0; i < s.length; i++) {
-        Tag tag = new Tag(StringUtils.transformHTML(s[i].trim()), blog);
+        Tag tag = new Tag(Tag.encode(StringUtils.transformHTML(s[i].trim())), blog);
         if (!list.contains(tag)) {
           list.add(tag);
         }

@@ -11,6 +11,11 @@
     <description>A lightweight, open source, Java EE blogging tool</description>
     <url>http://pebble.sourceforge.net</url>
 
+    <properties>
+        <spring.version>3.0.3.RELEASE</spring.version>
+        <orient.version>1.0rc6-SNAPSHOT</orient.version>
+    </properties>
+
     <pluginRepositories>
         <!-- This is for the jaxb-maven-plugin -->
         <pluginRepository>
@@ -94,7 +99,7 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-web</artifactId>
-            <version>3.0.3.RELEASE</version>
+            <version>${spring.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.aspectj</groupId>
@@ -109,17 +114,17 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-config</artifactId>
-            <version>3.0.3.RELEASE</version>
+            <version>${spring.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-openid</artifactId>
-            <version>3.0.3.RELEASE</version>
+            <version>${spring.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
-            <version>3.0.3.RELEASE</version>
+            <version>${spring.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>aopalliance</groupId>
@@ -288,12 +293,12 @@
         <dependency>
             <groupId>com.orientechnologies</groupId>
             <artifactId>orient-commons</artifactId>
-            <version>1.0rc5</version>
+            <version>${orient.version}</version>
         </dependency>
         <dependency>
             <groupId>com.orientechnologies</groupId>
             <artifactId>orientdb-core</artifactId>
-            <version>1.0rc5</version>
+            <version>${orient.version}</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>

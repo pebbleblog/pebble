@@ -32,6 +32,7 @@
 package net.sourceforge.pebble.dao;
 
 import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.index.TagIndex;
 
 /**
  * Represents a strategy used to load and store blog entries
@@ -73,14 +74,26 @@ public abstract class DAOFactory {
   public abstract RefererFilterDAO getRefererFilterDAO();
 
   /**
+   * Creates the tag index responsible for indexing tags, for the given blog
+   *
+   * @return the Tag index
+   */
+  public abstract TagIndex createTagIndex(Blog blog);
+
+  /**
    * Inits the DAO for the given blog
    *
    * @param blog The blog to init
    */
   public void init(Blog blog) {
-
   }
 
+  /**
+   * Shuts down the DAO
+   */
+  public void shutdown() {
+  }
+  
   public static void setConfiguredFactory(DAOFactory factory) {
     configuredFactory = factory;
   }

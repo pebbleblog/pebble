@@ -32,6 +32,9 @@
 package net.sourceforge.pebble.dao.file;
 
 import net.sourceforge.pebble.dao.*;
+import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.index.TagIndex;
+import net.sourceforge.pebble.index.file.FileTagIndex;
 
 /**
  * Represents a strategy used to load and store blog entries
@@ -94,4 +97,8 @@ public class FileDAOFactory extends DAOFactory {
     return this.refererFilterDAO;
   }
 
+  @Override
+  public TagIndex createTagIndex(Blog blog) {
+    return new FileTagIndex(blog);
+  }
 }

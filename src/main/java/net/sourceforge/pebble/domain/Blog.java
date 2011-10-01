@@ -213,8 +213,8 @@ public class Blog extends AbstractBlog {
     DAOFactory.getConfiguredFactory().init(this);
 
     // load categories
+    DAOFactory factory = DAOFactory.getConfiguredFactory();
     try {
-      DAOFactory factory = DAOFactory.getConfiguredFactory();
       CategoryDAO dao = factory.getCategoryDAO();
       rootCategory = dao.getCategories(this);
     } catch (PersistenceException pe) {
@@ -230,7 +230,7 @@ public class Blog extends AbstractBlog {
     searchIndex = new LuceneSearchIndex(this);
     blogEntryIndex = new FileBlogEntryIndex(this);
     responseIndex = new FileResponseIndex(this);
-    tagIndex = new FileTagIndex(this);
+    tagIndex = factory.createTagIndex(this);
     categoryIndex = new FileCategoryIndex(this);
     authorIndex = new FileAuthorIndex(this);
     staticPageIndex = new FileStaticPageIndex(this);
@@ -1434,7 +1434,7 @@ public class Blog extends AbstractBlog {
    *
    * @return The list of tags
    */
-  public List<Tag> getTags() {
+  public Collection<Tag> getTags() {
     return tagIndex.getTags();
   }
 
@@ -1445,7 +1445,7 @@ public class Blog extends AbstractBlog {
    * @return  a Tag instance
    */
   public Tag getTag(String name) {
-    return new Tag(name, this);
+    return new Tag(Tag.encode(name), this);
   }
 
   /**

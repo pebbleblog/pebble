@@ -38,6 +38,7 @@ import net.sourceforge.pebble.dao.orient.OrientDAOFactory;
 import net.sourceforge.pebble.security.SecurityRealm;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 
 import java.io.File;
@@ -48,7 +49,7 @@ import java.util.Locale;
  *
  * @author Simon Brown
  */
-public class Configuration implements InitializingBean {
+public class Configuration implements InitializingBean, DisposableBean {
 
   /**
    * the log used by this class
@@ -79,6 +80,10 @@ public class Configuration implements InitializingBean {
     } else {
       throw new IllegalArgumentException("Unknown storage type: " + storageType);
     }
+  }
+
+  public void destroy() throws Exception {
+    daoFactory.shutdown();
   }
 
   public String getUrl() {

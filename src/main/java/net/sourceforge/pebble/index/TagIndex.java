@@ -38,8 +38,10 @@ public interface TagIndex {
 
     /**
      * Gets the list of tags associated with this blog.
+     *
+     * @return The list of tags
      */
-    List<Tag> getTags();
+    Collection<Tag> getTags();
 
     /**
      * Gets the blog entries for a given tag.

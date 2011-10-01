@@ -246,7 +246,7 @@ public class BlogEntry extends PageBasedContent {
    */
   public boolean hasTag(String s) {
     if (s != null) {
-      return getAllTags().contains(new Tag(s, getBlog()));
+      return getAllTags().contains(new Tag(Tag.encode(s), getBlog()));
     } else {
       return false;
     }

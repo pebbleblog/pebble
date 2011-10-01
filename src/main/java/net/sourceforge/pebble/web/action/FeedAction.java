@@ -134,7 +134,7 @@ public class FeedAction extends Action {
   private Tag getTag(Blog blog, HttpServletRequest request) {
     String tag = request.getParameter("tag");
     if (tag != null) {
-      return new Tag(tag, blog);
+      return new Tag(Tag.encode(tag), blog);
     } else {
       return null;
     }

@@ -36,6 +36,7 @@ import net.sourceforge.pebble.domain.BlogEntry;
 import net.sourceforge.pebble.domain.Tag;
 import net.sourceforge.pebble.index.IndexedTag;
 import net.sourceforge.pebble.index.TagIndex;
+import net.sourceforge.pebble.util.TagRanker;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -54,10 +55,10 @@ public class FileTagIndex implements TagIndex {
   private Blog blog;
 
   /** the map containing the tags */
-  private Map<String,IndexedTag> tags = new HashMap<String,IndexedTag>();
+  private Map<String, IndexedTag> tags = new HashMap<String, IndexedTag>();
 
   /** a view onto the map, ordered by tag name */
-  private List<Tag> orderedTags = new ArrayList<Tag>();
+  private Collection<Tag> orderedTags = new ArrayList<Tag>();
 
   public FileTagIndex(Blog blog) {
     this.blog = blog;
@@ -197,41 +198,14 @@ public class FileTagIndex implements TagIndex {
   }
 
   private synchronized void recalculateTagRankings() {
-    if (tags.size() > 0) {
-      // find the maximum
-      int maxBlogEntries = 0;
-      for (IndexedTag tag : tags.values()) {
-        if (tag.getNumberOfBlogEntries() > maxBlogEntries) {
-          maxBlogEntries = tag.getNumberOfBlogEntries();
-        }
-      }
-
-      int[] thresholds = new int[10];
-      for (int i = 0; i < 10; i++) {
-        thresholds[i] = (int)Math.round((maxBlogEntries/10.0) * (i+1));
-      }
-
-      orderedTags = new ArrayList<Tag>();
-
-      // now rank the tags
-      for (IndexedTag tag : tags.values()) {
-        tag.calculateRank(thresholds);
-
-        if (tag.getNumberOfBlogEntries() > 0) {
-          orderedTags.add(tag);
-        }
-      }
-
-      Collections.sort(orderedTags);
-    }
-
+    orderedTags = TagRanker.calculateTagRankings(tags.values());
   }
 
   /**
    * Gets the list of tags associated with this blog.
    */
-  public List<Tag> getTags() {
-    return new ArrayList<Tag>(orderedTags);
+  public Collection<Tag> getTags() {
+    return orderedTags;
   }
 
   /**

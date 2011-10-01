@@ -32,6 +32,9 @@
 package net.sourceforge.pebble.dao.mock;
 
 import net.sourceforge.pebble.dao.*;
+import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.index.TagIndex;
+import net.sourceforge.pebble.index.file.FileTagIndex;
 
 /**
  * Represents a strategy used to load and store blog entries
@@ -85,4 +88,8 @@ public class MockDAOFactory extends DAOFactory {
     return new MockRefererFilterDAO();
   }
 
+  @Override
+  public TagIndex createTagIndex(Blog blog) {
+    return new FileTagIndex(blog);
+  }
 }
