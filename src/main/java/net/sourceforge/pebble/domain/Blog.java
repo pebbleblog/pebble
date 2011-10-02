@@ -232,7 +232,7 @@ public class Blog extends AbstractBlog {
     responseIndex = new FileResponseIndex(this);
     tagIndex = factory.createTagIndex(this);
     categoryIndex = new FileCategoryIndex(this);
-    authorIndex = new FileAuthorIndex(this);
+    authorIndex = factory.createAuthorIndex(this);
     staticPageIndex = new FileStaticPageIndex(this);
 
     decoratorChain = new ContentDecoratorChain(this);

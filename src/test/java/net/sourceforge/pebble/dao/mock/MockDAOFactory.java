@@ -33,7 +33,9 @@ package net.sourceforge.pebble.dao.mock;
 
 import net.sourceforge.pebble.dao.*;
 import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.index.AuthorIndex;
 import net.sourceforge.pebble.index.TagIndex;
+import net.sourceforge.pebble.index.file.FileAuthorIndex;
 import net.sourceforge.pebble.index.file.FileTagIndex;
 
 /**
@@ -91,5 +93,10 @@ public class MockDAOFactory extends DAOFactory {
   @Override
   public TagIndex createTagIndex(Blog blog) {
     return new FileTagIndex(blog);
+  }
+
+  @Override
+  public AuthorIndex createAuthorIndex(Blog blog) {
+    return new FileAuthorIndex(blog);
   }
 }

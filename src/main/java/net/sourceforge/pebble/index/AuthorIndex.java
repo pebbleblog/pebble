@@ -37,8 +37,10 @@ public interface AuthorIndex {
 
     /**
      * Gets the list of authors associated with this blog.
+     *
+     * The list of authors associated with this blog.
      */
-    List<String> getAuthors();
+    Collection<String> getAuthors();
 
     /**
      * Gets the blog entries for a given author.

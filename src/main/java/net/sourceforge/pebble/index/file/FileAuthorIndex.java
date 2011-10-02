@@ -191,7 +191,7 @@ public class FileAuthorIndex implements AuthorIndex {
   /**
    * Gets the list of authors associated with this blog.
    */
-  public List<String> getAuthors() {
+  public Collection<String> getAuthors() {
     return new LinkedList<String>(authors.keySet());
   }
 

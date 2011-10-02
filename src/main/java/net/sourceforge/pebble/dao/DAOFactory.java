@@ -32,6 +32,7 @@
 package net.sourceforge.pebble.dao;
 
 import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.index.AuthorIndex;
 import net.sourceforge.pebble.index.TagIndex;
 
 /**
@@ -76,9 +77,18 @@ public abstract class DAOFactory {
   /**
    * Creates the tag index responsible for indexing tags, for the given blog
    *
+   * @param blog the Blog for the tag index
    * @return the Tag index
    */
   public abstract TagIndex createTagIndex(Blog blog);
+
+  /**
+   * Creates the author index responsible for indexing authors, for the given blog
+   *
+   * @param blog the Blog for the author index
+   * @return the author index
+   */
+  public abstract AuthorIndex createAuthorIndex(Blog blog);
 
   /**
    * Inits the DAO for the given blog

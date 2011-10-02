@@ -44,7 +44,10 @@ import net.sourceforge.pebble.dao.file.FileRefererFilterDAO;
 import net.sourceforge.pebble.dao.file.FileStaticPageDAO;
 import net.sourceforge.pebble.dao.orient.model.OrientBlogEntry;
 import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.index.AuthorIndex;
 import net.sourceforge.pebble.index.TagIndex;
+import net.sourceforge.pebble.index.file.FileAuthorIndex;
+import net.sourceforge.pebble.index.orient.OrientAuthorIndex;
 import net.sourceforge.pebble.index.orient.OrientTagIndex;
 
 import java.io.File;
@@ -82,6 +85,7 @@ public class OrientDAOFactory extends DAOFactory {
         db.create();
       }
       createIndex(db, OrientBlogEntry.class, "id", OType.STRING, null, OProperty.INDEX_TYPE.UNIQUE);
+      createIndex(db, OrientBlogEntry.class, "author", OType.STRING, null, OProperty.INDEX_TYPE.NOTUNIQUE);
       createIndex(db, OrientBlogEntry.class, "tags", OType.EMBEDDEDLIST, OType.STRING, OProperty.INDEX_TYPE.NOTUNIQUE);
     } finally {
       db.close();
@@ -170,5 +174,10 @@ public class OrientDAOFactory extends DAOFactory {
   @Override
   public TagIndex createTagIndex(Blog blog) {
     return new OrientTagIndex(this, blog);
+  }
+
+  @Override
+  public AuthorIndex createAuthorIndex(Blog blog) {
+    return new OrientAuthorIndex(this, blog);
   }
 }
