@@ -73,4 +73,6 @@
     <property name="actionMappingFileName" value="secure-action.properties"/>
   </bean>
 
+  <bean id="commentsDwrService" class="net.sourceforge.pebble.web.dwr.Comments" autowire="constructor"/>
+
 </beans>

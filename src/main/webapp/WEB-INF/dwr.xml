@@ -5,9 +5,8 @@
 
   <allow>
 
-    <create creator="new" javascript="Pebble">
-      <param name="class" value="net.sourceforge.pebble.web.dwr.Comments"/>
-      
+    <create creator="spring" javascript="Pebble">
+      <param name="beanName" value="commentsDwrService"/>
     </create>
 
     <convert converter="bean" match="net.sourceforge.pebble.domain.Comment">
