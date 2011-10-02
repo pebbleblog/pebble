@@ -34,6 +34,7 @@ package net.sourceforge.pebble.web.action;
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.dao.CategoryDAO;
 import net.sourceforge.pebble.domain.BlogService;
+import net.sourceforge.pebble.domain.BlogServiceException;
 import net.sourceforge.pebble.domain.Category;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.util.Utilities;
@@ -73,30 +74,34 @@ public class UtilitiesAction extends SecureAction {
   public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
     String action = request.getParameter("action");
-    if (action == null) {
-      // do nothing
-    } else if (action.equalsIgnoreCase("ipAddressListener")) {
-      Utilities.buildIpAddressLists(blog);
-      return new ForwardView("/reloadBlog.secureaction");
-    } else if (action.equalsIgnoreCase("fixHtmlInResponses")) {
-      Utilities.fixHtmlInResponses(blog, blogService);
-      return new ForwardView("/reloadBlog.secureaction");
-    } else if (action.equalsIgnoreCase("buildIndexes")) {
-      Utilities.buildIndexes(blog);
-      return new ForwardView("/reloadBlog.secureaction");
-    } else if (action.equalsIgnoreCase("convertCategories")) {
-      Utilities.convertCategories(blog, categoryDAO);
-      return new ForwardView("/reloadBlog.secureaction");
-    } else if (action.equalsIgnoreCase("restructureBlogToGMT")) {
-      Utilities.restructureBlogToGMT(blog);
-      Utilities.buildIndexes(blog);
-      return new ForwardView("/reloadBlog.secureaction");
-    } else if (action.equalsIgnoreCase("moveBlogEntriesFromCategory")) {
-      Category from = blog.getCategory(request.getParameter("from"));
-      Category to = blog.getCategory(request.getParameter("to"));
-      if (from != null && to != null) {
-        Utilities.moveBlogEntriesFromCategory(blogService, blog, from, to);
+    try {
+      if (action == null) {
+        // do nothing
+      } else if (action.equalsIgnoreCase("ipAddressListener")) {
+        Utilities.buildIpAddressLists(blogService, blog);
+        return new ForwardView("/reloadBlog.secureaction");
+      } else if (action.equalsIgnoreCase("fixHtmlInResponses")) {
+        Utilities.fixHtmlInResponses(blogService, blog);
+        return new ForwardView("/reloadBlog.secureaction");
+      } else if (action.equalsIgnoreCase("buildIndexes")) {
+        Utilities.buildIndexes(blog);
+        return new ForwardView("/reloadBlog.secureaction");
+      } else if (action.equalsIgnoreCase("convertCategories")) {
+        Utilities.convertCategories(blog, categoryDAO);
+        return new ForwardView("/reloadBlog.secureaction");
+      } else if (action.equalsIgnoreCase("restructureBlogToGMT")) {
+        Utilities.restructureBlogToGMT(blog);
+        Utilities.buildIndexes(blog);
+        return new ForwardView("/reloadBlog.secureaction");
+      } else if (action.equalsIgnoreCase("moveBlogEntriesFromCategory")) {
+        Category from = blog.getCategory(request.getParameter("from"));
+        Category to = blog.getCategory(request.getParameter("to"));
+        if (from != null && to != null) {
+          Utilities.moveBlogEntriesFromCategory(blogService, blog, from, to);
+        }
       }
+    } catch (BlogServiceException e) {
+      throw new ServletException(e);
     }
 
     return new UtilitiesView();

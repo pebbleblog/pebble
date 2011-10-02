@@ -32,20 +32,21 @@
 
 package net.sourceforge.pebble.decorator;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.pebble.PluginProperties;
 import net.sourceforge.pebble.api.decorator.ContentDecoratorContext;
-import net.sourceforge.pebble.domain.Blog;
-import net.sourceforge.pebble.domain.BlogEntry;
-import net.sourceforge.pebble.domain.Tag;
+import net.sourceforge.pebble.domain.*;
 import net.sourceforge.pebble.util.I18n;
 import net.sourceforge.pebble.util.StringUtils;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
+import javax.inject.Inject;
 
 /**
  * Adds related posts to the current post. The posts are selected by matching
@@ -62,6 +63,9 @@ public class RelatedPostsDecorator extends ContentDecoratorSupport {
 
   /** the name of the max number of posts property */
   public static final String MAX_POSTS = "RelatedPostsDecorator.maxPosts";
+
+  @Inject
+  private BlogService blogService;
 
   /**
    * Decorates the specified blog entry.
@@ -99,7 +103,12 @@ public class RelatedPostsDecorator extends ContentDecoratorSupport {
       List<Tag> currentEntryTags = blogEntry.getAllTags();
 
       // all blog entries of the current blog
-      List<BlogEntry> allBlogEntries = (List<BlogEntry>) blog.getBlogEntries();
+      Collection<BlogEntry> allBlogEntries = null;
+      try {
+        allBlogEntries = blogService.getBlogEntries(blog);
+      } catch (BlogServiceException e) {
+        log.error("Error loading all blog entries", e);
+      }
 
       // temporary holder for accumulated unique related posts.
       // using hash set assures that we wont have same related post twice for

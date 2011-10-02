@@ -38,6 +38,7 @@ import net.sourceforge.pebble.domain.*;
 
 import javax.inject.Inject;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -107,12 +108,16 @@ public class Latin1SeoPermalinkProvider implements PermalinkProvider {
     if (blogEntry.getTitle() == null || blogEntry.getTitle().length() == 0) {
       return buildPermalink(blogEntry);
     } else {
-      List<BlogEntry> entries = getBlog().getBlogEntries();
       int count = 0;
-      for (int i = entries.size() - 1; i >= 0 && !entries.get(i).getId().equals(blogEntry.getId()); i--) {
-        if (entries.get(i).getTitle().equals(blogEntry.getTitle())) {
-          count++;
+      try {
+        List<BlogEntry> entries = blogService.getBlogEntries(getBlog());
+        for (int i = entries.size() - 1; i >= 0 && !entries.get(i).getId().equals(blogEntry.getId()); i--) {
+          if (entries.get(i).getTitle().equals(blogEntry.getTitle())) {
+            count++;
+          }
         }
+      } catch (BlogServiceException e) {
+        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
       }
 
       if (count == 0) {
@@ -157,20 +162,17 @@ public class Latin1SeoPermalinkProvider implements PermalinkProvider {
   }
 
   public BlogEntry getBlogEntry(String uri) {
-    Iterator it = getBlog().getBlogEntries().iterator();
-    while (it.hasNext()) {
-      try {
-        BlogEntry blogEntry = blogService.getBlogEntry(getBlog(), "" + ((BlogEntry) it.next()).getId());
+    try {
+      for (BlogEntry blogEntry : blogService.getBlogEntries(getBlog())) {
         // use the local permalink, just in case the entry has been aggregated
         // and an original permalink assigned
         if (blogEntry.getLocalPermalink().endsWith(uri)) {
           return blogEntry;
         }
-      } catch (BlogServiceException e) {
-        // do nothing
       }
+    } catch (BlogServiceException e) {
+      // do nothing
     }
-
     return null;
   }
 
@@ -336,9 +338,5 @@ public class Latin1SeoPermalinkProvider implements PermalinkProvider {
     characterSubstitutions.put("\u00FD", "y");
     characterSubstitutions.put("\u00FE", "p");
     characterSubstitutions.put("\u00FF", "y");
-  }
-
-  void setBlogService(BlogService blogService) {
-    this.blogService = blogService;
   }
 }

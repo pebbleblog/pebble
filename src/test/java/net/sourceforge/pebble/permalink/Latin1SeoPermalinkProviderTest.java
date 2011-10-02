@@ -52,9 +52,7 @@ public class Latin1SeoPermalinkProviderTest extends PermalinkProviderSupportTest
    * @return a PermalinkProvider instance
    */
   protected PermalinkProvider getPermalinkProvider() {
-    Latin1SeoPermalinkProvider provider = new Latin1SeoPermalinkProvider();
-    provider.setBlogService(blogService);
-    return provider;
+    return autowire(Latin1SeoPermalinkProvider.class);
   }
 
   /**
@@ -266,8 +264,6 @@ public class Latin1SeoPermalinkProviderTest extends PermalinkProviderSupportTest
    * Tests that a permalink is changed when the blog entry title changes.
    */
   public void testBlogEntryPermalinkChangesWithTitle() throws Exception {
-    blog.setPermalinkProvider(new Latin1SeoPermalinkProvider());
-
     BlogEntry blogEntry = new BlogEntry(blog);
     blogService.putBlogEntry(blogEntry);
 

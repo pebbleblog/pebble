@@ -35,12 +35,15 @@ import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.comparator.BlogEntryComparator;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.domain.BlogEntry;
+import net.sourceforge.pebble.domain.BlogService;
+import net.sourceforge.pebble.domain.BlogServiceException;
 import net.sourceforge.pebble.web.view.ForwardView;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.impl.AbstractRomeFeedView;
 import net.sourceforge.pebble.web.view.impl.FeedView;
 import net.sourceforge.pebble.web.view.impl.RdfView;
 
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -54,6 +57,9 @@ import java.util.Locale;
  * @author    Simon Brown
  */
 public class ExportBlogAction extends SecureAction {
+
+  @Inject
+  private BlogService blogService;
 
   /**
    * Peforms the processing associated with this action.
@@ -73,9 +79,13 @@ public class ExportBlogAction extends SecureAction {
 
     response.setContentType("application/xml; charset=" + blog.getCharacterEncoding());
 
-    List<BlogEntry> blogEntries = blog.getBlogEntries();
-    Collections.sort(blogEntries, new BlogEntryComparator());
-    getModel().put(Constants.BLOG_ENTRIES, blogEntries);
+    try {
+      List<BlogEntry> blogEntries = blogService.getBlogEntries(blog);
+      Collections.sort(blogEntries, new BlogEntryComparator());
+      getModel().put(Constants.BLOG_ENTRIES, blogEntries);
+    } catch (BlogServiceException e) {
+      throw new ServletException(e);
+    }
 
     // set the locale of this feed request to be English
     javax.servlet.jsp.jstl.core.Config.set(

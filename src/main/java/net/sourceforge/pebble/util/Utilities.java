@@ -77,8 +77,8 @@ public class Utilities {
    *
    * @param blog    a Blog instance
    */
-  public static void buildIpAddressLists(Blog blog) {
-    Iterator blogEntries = blog.getBlogEntries().iterator();
+  public static void buildIpAddressLists(BlogService blogService, Blog blog) throws BlogServiceException {
+    Iterator blogEntries = blogService.getBlogEntries(blog).iterator();
     IpAddressListener ipAddressListener = new IpAddressListener();
 
     while (blogEntries.hasNext()) {
@@ -121,8 +121,8 @@ public class Utilities {
    *
    * @param blog    a Blog instance
    */
-  public static void fixHtmlInResponses(Blog blog, BlogService blogService) {
-    Iterator blogEntries = blog.getBlogEntries().iterator();
+  public static void fixHtmlInResponses(BlogService blogService, Blog blog) throws BlogServiceException {
+    Iterator blogEntries = blogService.getBlogEntries(blog).iterator();
     while (blogEntries.hasNext()) {
       BlogEntry blogEntry = (BlogEntry)blogEntries.next();
       log.info("Processing " + blogEntry.getTitle() + " (" + blogEntry.getDate() + ")");
@@ -187,12 +187,12 @@ public class Utilities {
   /**
    * Moves blog entries from one category to another.
    *
+   * @param blogService  The blog service
    * @param blog    a Blog instance
+   * @throws BlogServiceException If an error occured
    */
-  public static void moveBlogEntriesFromCategory(BlogService blogService, Blog blog, Category from, Category to) {
-    Iterator blogEntries = blog.getBlogEntries().iterator();
-    while (blogEntries.hasNext()) {
-      BlogEntry blogEntry = (BlogEntry)blogEntries.next();
+  public static void moveBlogEntriesFromCategory(BlogService blogService, Blog blog, Category from, Category to) throws BlogServiceException {
+    for (BlogEntry blogEntry : blogService.getBlogEntries(blog)) {
       log.info("Processing " + blogEntry.getTitle() + " (" + blogEntry.getDate() + ")");
 
       Collection categories = blogEntry.getCategories();
@@ -353,9 +353,9 @@ public class Utilities {
     if (action == null) {
       // do nothing
     } else if (action.equalsIgnoreCase("ipAddressListener")) {
-      buildIpAddressLists(blog);
+      buildIpAddressLists(blogService, blog);
     } else if (action.equalsIgnoreCase("fixHtmlInResponses")) {
-      fixHtmlInResponses(blog, blogService);
+      fixHtmlInResponses(blogService, blog);
     } else if (action.equalsIgnoreCase("buildIndexes")) {
       buildIndexes(blog);
     } else if (action.equalsIgnoreCase("convertCategories")) {

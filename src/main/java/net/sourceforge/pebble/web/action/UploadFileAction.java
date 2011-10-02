@@ -36,7 +36,6 @@ import net.sourceforge.pebble.PebbleContext;
 import net.sourceforge.pebble.domain.FileManager;
 import net.sourceforge.pebble.domain.FileMetaData;
 import net.sourceforge.pebble.domain.Blog;
-import net.sourceforge.pebble.domain.BlogManager;
 import net.sourceforge.pebble.web.view.RedirectView;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.impl.FileTooLargeView;

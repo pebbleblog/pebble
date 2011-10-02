@@ -72,7 +72,7 @@ public class RelatedPostsDecoratorTest extends SingleBlogTestCase {
     blogEntrySeven = new BlogEntry(blog);
     blogEntryEight = new BlogEntry(blog);
 
-    decorator = new RelatedPostsDecorator();
+    decorator = autowire(RelatedPostsDecorator.class);
     context = new ContentDecoratorContext();
   }
 

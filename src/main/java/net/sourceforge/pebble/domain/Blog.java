@@ -955,29 +955,6 @@ public class Blog extends AbstractBlog {
   }
 
   /**
-   * Gets all blog entries for this blog.
-   *
-   * @return  a List of BlogEntry objects
-   */
-  public List<BlogEntry> getBlogEntries() {
-    List<BlogEntry> blogEntries = new ArrayList<BlogEntry>();
-
-    for (int year = years.size()-1; year >= 0; year--) {
-      Year y = years.get(year);
-      Month[] months = y.getMonths();
-      for (int month = 11; month >= 0; month--) {
-        try {
-          blogEntries.addAll(blogService.getBlogEntries(this, y.getYear(), months[month].getMonth()));
-        } catch (BlogServiceException e) {
-          log.error("Exception encountered", e);
-        }
-      }
-    }
-
-    return blogEntries;
-  }
-
-  /**
    * Gets all unpublished blog entries for this blog.
    *
    * @return  a List of BlogEntry objects

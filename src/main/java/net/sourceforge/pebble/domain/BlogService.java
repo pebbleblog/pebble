@@ -34,17 +34,14 @@ package net.sourceforge.pebble.domain;
 import net.sourceforge.pebble.api.event.blogentry.BlogEntryEvent;
 import net.sourceforge.pebble.api.event.comment.CommentEvent;
 import net.sourceforge.pebble.api.event.trackback.TrackBackEvent;
+import net.sourceforge.pebble.comparator.BlogEntryComparator;
 import net.sourceforge.pebble.dao.BlogEntryDAO;
-import net.sourceforge.pebble.dao.DAOFactory;
 import net.sourceforge.pebble.dao.PersistenceException;
 import net.sourceforge.pebble.ContentCache;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Collection;
+import java.util.*;
 
 /**
  * Service that encompasses all functionality related to getting, putting
@@ -90,14 +87,7 @@ public class BlogService {
         throw new BlogServiceException(blog, pe);
       }
     }
-
-    if (blogEntry != null) {
-      blogEntry = (BlogEntry)blogEntry.clone();
-      blogEntry.setEventsEnabled(true);
-      blogEntry.setPersistent(true);
-    }
-
-    return blogEntry;
+    return cloneBlogEntry(blogEntry);
   }
 
   public List<BlogEntry> getBlogEntries(Blog blog, int year, int month, int day) throws BlogServiceException {
@@ -115,20 +105,21 @@ public class BlogService {
   /**
    * Gets all blog entries for the specified blog.
    *
+   * @param blog The blog to get entries for
    * @return  a List of BlogEntry objects
+   * @throws BlogServiceException When an error occurs
    */
-  public Collection<BlogEntry> getBlogEntries(Blog blog) throws BlogServiceException {
-    Collection<BlogEntry> blogEntries;
+  public List<BlogEntry> getBlogEntries(Blog blog) throws BlogServiceException {
+    List<BlogEntry> blogEntries = new ArrayList<BlogEntry>();
     try {
-      blogEntries = blogEntryDAO.loadBlogEntries(blog);
-      for (BlogEntry blogEntry : blogEntries) {
-        blogEntry.setPersistent(true);
+      for (BlogEntry blogEntry : blogEntryDAO.loadBlogEntries(blog)) {
+        blogEntries.add(cloneBlogEntry(blogEntry));
       }
-
     } catch (PersistenceException pe) {
       throw new BlogServiceException(blog, pe);
     }
 
+    Collections.sort(blogEntries, new BlogEntryComparator());
     return blogEntries;
   }
 
@@ -237,5 +228,14 @@ public class BlogService {
     } else {
       return null;
     }
+  }
+
+  private BlogEntry cloneBlogEntry(BlogEntry blogEntry) {
+    if (blogEntry != null) {
+      blogEntry = (BlogEntry)blogEntry.clone();
+      blogEntry.setEventsEnabled(true);
+      blogEntry.setPersistent(true);
+    }
+    return blogEntry;
   }
 }

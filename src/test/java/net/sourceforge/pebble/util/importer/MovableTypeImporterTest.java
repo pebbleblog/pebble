@@ -38,6 +38,7 @@ import net.sourceforge.pebble.domain.Comment;
 import net.sourceforge.pebble.domain.SingleBlogTestCase;
 
 import java.io.File;
+import java.util.Collection;
 import java.util.List;
 
 public class MovableTypeImporterTest extends SingleBlogTestCase {
@@ -48,9 +49,9 @@ public class MovableTypeImporterTest extends SingleBlogTestCase {
     File source = new File(testCasesDir, "exported.txt");
     MovableTypeImporter.importBlog(blog, source, daoFactory, blogService);
     blog.reindex();
-    List list = blog.getBlogEntries();
+    Collection<BlogEntry> list = blogService.getBlogEntries(blog);
     assertEquals("size of entry", 1, list.size());
-    BlogEntry entry = (BlogEntry) list.get(0);
+    BlogEntry entry = list.iterator().next();
     assertEquals("excerpt", "excerpt", entry.getContent());
     assertEquals("excerpt", "excerpt", entry.getExcerpt());
     //body part needs to include extended body
@@ -62,7 +63,7 @@ public class MovableTypeImporterTest extends SingleBlogTestCase {
     File source = new File(testCasesDir, "noprimarycategory.txt");
     MovableTypeImporter.importBlog(blog, source, daoFactory, blogService);
     blog.reindex();
-    List list = blog.getBlogEntries();
+    Collection<BlogEntry> list = blogService.getBlogEntries(blog);
     assertEquals("size of entry", 1, list.size());
   }
 
@@ -72,9 +73,9 @@ public class MovableTypeImporterTest extends SingleBlogTestCase {
     MovableTypeImporter.importBlog(blog, source, daoFactory, blogService);
     blog.reindex();
     blog.reindex();
-    List list = blog.getBlogEntries();
+    Collection<BlogEntry> list = blogService.getBlogEntries(blog);
     assertEquals("size of entry", 1, list.size());
-//    BlogEntry entry = (BlogEntry)list.get(0);
+//    BlogEntry entry = list.iterator().next();
 //    Set<Category> categories = entry.getCategories();
 //    assertEquals("# of categories",3, categories.size());
 //    assertTrue(categories.contains("mycategory"));
@@ -87,9 +88,9 @@ public class MovableTypeImporterTest extends SingleBlogTestCase {
     File source = new File(testCasesDir, "noexcerpt.txt");
     MovableTypeImporter.importBlog(blog, source, daoFactory, blogService);
     blog.reindex();
-    List list = blog.getBlogEntries();
+    Collection<BlogEntry> list = blogService.getBlogEntries(blog);
     assertEquals("size of entry", 1, list.size());
-    BlogEntry entry = (BlogEntry) list.get(0);
+    BlogEntry entry = list.iterator().next();
     assertEquals("content", "body", entry.getContent());
     assertEquals("excerpt", "body", entry.getExcerpt());
     //body part needs to include extended body
@@ -101,9 +102,9 @@ public class MovableTypeImporterTest extends SingleBlogTestCase {
     File source = new File(testCasesDir, "noexcerpt_noextendedbody.txt");
     MovableTypeImporter.importBlog(blog, source, daoFactory, blogService);
     blog.reindex();
-    List list = blog.getBlogEntries();
+    Collection<BlogEntry> list = blogService.getBlogEntries(blog);
     assertEquals("size of entry", 1, list.size());
-    BlogEntry entry = (BlogEntry) list.get(0);
+    BlogEntry entry = list.iterator().next();
     assertEquals("content", "body", entry.getContent());
     assertEquals("excerpt", "", entry.getExcerpt());
     //body part needs to include extended body
@@ -115,9 +116,9 @@ public class MovableTypeImporterTest extends SingleBlogTestCase {
     File source = new File(testCasesDir, "utf8.txt");
     MovableTypeImporter.importBlog(blog, source, daoFactory, blogService);
     blog.reindex();
-    List list = blog.getBlogEntries();
+    Collection<BlogEntry> list = blogService.getBlogEntries(blog);
     assertEquals("size of entry", 1, list.size());
-    BlogEntry entry = (BlogEntry) list.get(0);
+    BlogEntry entry = list.iterator().next();
     assertEquals("content", "\u65E5\u672C\u8A9Eexcerpt", entry.getContent());
     assertEquals("title", "\u65E5\u672C\u8A9E", entry.getTitle());
   }
@@ -127,9 +128,9 @@ public class MovableTypeImporterTest extends SingleBlogTestCase {
     File source = new File(testCasesDir, "exported.txt");
     MovableTypeImporter.importBlog(blog, source, daoFactory, blogService);
     blog.reindex();
-    List list = blog.getBlogEntries();
+    Collection<BlogEntry> list = blogService.getBlogEntries(blog);
     assertEquals("size of entry", 1, list.size());
-    BlogEntry entry = (BlogEntry) list.get(0);
+    BlogEntry entry = list.iterator().next();
     assertTrue("publised", entry.isPublished());
   }
   public void testComment() throws Exception {
@@ -137,9 +138,9 @@ public class MovableTypeImporterTest extends SingleBlogTestCase {
     File source = new File(testCasesDir, "withcomment.txt");
     MovableTypeImporter.importBlog(blog, source, daoFactory, blogService);
     blog.reindex();
-    List list = blog.getBlogEntries();
+    Collection<BlogEntry> list = blogService.getBlogEntries(blog);
     assertEquals("size of entry", 1, list.size());
-    BlogEntry entry = (BlogEntry) list.get(0);
+    BlogEntry entry = list.iterator().next();
     assertTrue("publised", entry.isPublished());
     List<Comment> comments = entry.getComments();
     assertEquals("size of comments", 1, comments.size());
