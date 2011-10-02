@@ -438,27 +438,26 @@ public class CommentTest extends SingleBlogTestCase {
   }
 
   public void testNestedCommentsAreUnindexedWhenParentDeleted() throws Exception {
-    BlogService service = new BlogService();
     Comment comment2 = blogEntry.createComment("Title", "Body", "Author", "me@somedomain.com", "http://www.google.com", "http://graph.facebook.com/user/picture", "127.0.0.1");
     Comment comment3 = blogEntry.createComment("Title", "Body", "Author", "me@somedomain.com", "http://www.google.com", "http://graph.facebook.com/user/picture", "127.0.0.1");
 
-    service.putBlogEntry(blogEntry);
+    blogService.putBlogEntry(blogEntry);
     blogEntry.addComment(comment);
 
     comment2.setParent(comment);
     blogEntry.addComment(comment2);
-    service.putBlogEntry(blogEntry);
+    blogService.putBlogEntry(blogEntry);
 
     comment3.setParent(comment);
     blogEntry.addComment(comment3);
-    service.putBlogEntry(blogEntry);
+    blogService.putBlogEntry(blogEntry);
 
     assertTrue(blog.getResponseIndex().getPendingResponses().contains(comment.getGuid()));
     assertTrue(blog.getResponseIndex().getPendingResponses().contains(comment2.getGuid()));
     assertTrue(blog.getResponseIndex().getPendingResponses().contains(comment3.getGuid()));
 
     blogEntry.removeComment(comment.getId());
-    service.putBlogEntry(blogEntry);
+    blogService.putBlogEntry(blogEntry);
 
     assertFalse(blog.getResponseIndex().getPendingResponses().contains(comment.getGuid()));
     assertFalse(blog.getResponseIndex().getPendingResponses().contains(comment2.getGuid()));

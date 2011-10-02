@@ -35,6 +35,7 @@ import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.dao.DAOFactory;
 import net.sourceforge.pebble.domain.BlogManager;
 import net.sourceforge.pebble.domain.AbstractBlog;
+import net.sourceforge.pebble.domain.BlogService;
 import net.sourceforge.pebble.web.security.RequireSecurityToken;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.RedirectView;
@@ -55,6 +56,9 @@ public class AddBlogAction extends SecureAction {
   @Inject
   private DAOFactory daoFactory;
 
+  @Inject
+  private BlogService blogService;
+
   /**
    * Peforms the processing associated with this action.
    *
@@ -68,7 +72,7 @@ public class AddBlogAction extends SecureAction {
     String blogId = request.getParameter("id");
 
     if (blogId != null && blogId.length() > 0 && blogId.matches("[\\w-~]*") && blogManager.getBlog(blogId) == null) {
-      blogManager.addBlog(daoFactory, blogId);
+      blogManager.addBlog(daoFactory, blogService, blogId);
     }
 
     return new RedirectView(blog.getUrl() + "viewBlogs.secureaction");

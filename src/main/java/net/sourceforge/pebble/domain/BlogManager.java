@@ -102,7 +102,7 @@ public class BlogManager {
   /**
    * Configures this instance to manage the blog(s) in the specified directory.
    */
-  public void startBlogs(DAOFactory daoFactory) {
+  public void startBlogs(DAOFactory daoFactory, BlogService blogService) {
     File blogsDirectory = getBlogsDirectory();
     File defaultBlog = new File(blogsDirectory, DEFAULT_BLOG);
 
@@ -117,13 +117,13 @@ public class BlogManager {
       if (files != null) {
         for (File file : files) {
           if (file.isDirectory()) {
-            startBlog(daoFactory, file.getAbsolutePath(), file.getName());
+            startBlog(daoFactory, blogService, file.getAbsolutePath(), file.getName());
           }
         }
       }
     } else {
       // start the default blog only
-      startBlog(daoFactory, defaultBlog.getAbsolutePath(), DEFAULT_BLOG);
+      startBlog(daoFactory, blogService, defaultBlog.getAbsolutePath(), DEFAULT_BLOG);
     }
   }
 
@@ -137,11 +137,11 @@ public class BlogManager {
     blog.stop();
   }
 
-  public void reloadBlog(DAOFactory daoFactory, Blog blog) {
+  public void reloadBlog(DAOFactory daoFactory, BlogService blogService, Blog blog) {
     stopBlog(blog);
 
     File f = new File(getBlogsDirectory(), blog.getId());
-    startBlog(daoFactory, f.getAbsolutePath(), blog.getId());
+    startBlog(daoFactory, blogService, f.getAbsolutePath(), blog.getId());
   }
 
   /**
@@ -150,8 +150,8 @@ public class BlogManager {
    * @param blogDir   the blog.dir for the blog
    * @param blogId    the ID for the blog
    */
-  private void startBlog(DAOFactory daoFactory, String blogDir, String blogId) {
-    Blog blog = new Blog(daoFactory, blogDir);
+  private void startBlog(DAOFactory daoFactory, BlogService blogService, String blogDir, String blogId) {
+    Blog blog = new Blog(daoFactory, blogService, blogDir);
     blog.setId(blogId);
 
     File pathToLiveThemes = new File(PebbleContext.getInstance().getWebApplicationRoot(), THEMES_PATH);
@@ -186,17 +186,17 @@ public class BlogManager {
         }
 
         // now that the upgrade is complete, reload the blog
-        reloadBlog(daoFactory, blog);
+        reloadBlog(daoFactory, blogService, blog);
       }
     } catch (Exception e) {
       log.error("Exception encountered", e);
     }
   }
 
-  public void addBlog(DAOFactory daoFactory, String blogId) {
+  public void addBlog(DAOFactory daoFactory, BlogService blogService, String blogId) {
     File file = new File(getBlogsDirectory(), blogId);
     file.mkdirs();
-    startBlog(daoFactory, file.getAbsolutePath(), blogId);
+    startBlog(daoFactory, blogService, file.getAbsolutePath(), blogId);
   }
 
   /**

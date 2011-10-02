@@ -35,6 +35,7 @@ import net.sourceforge.pebble.domain.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.xmlrpc.XmlRpcException;
+import org.springframework.security.authentication.AuthenticationManager;
 
 import java.util.*;
 
@@ -61,6 +62,13 @@ public class BloggerAPIHandler extends AbstractAPIHandler {
 
   /** the log used by this class */
   private static Log log = LogFactory.getLog(BloggerAPIHandler.class);
+
+  private final BlogService blogService;
+
+  public BloggerAPIHandler(AuthenticationManager authenticationManager, BlogService blogService) {
+    super(authenticationManager);
+    this.blogService = blogService;
+  }
 
   /**
    * Gets information about the user logging in.
@@ -174,10 +182,9 @@ public class BloggerAPIHandler extends AbstractAPIHandler {
     Blog blog = getBlogWithPostId(postid);
     postid = getPostId(postid);
     authenticate(blog, username, password);
-    BlogService service = new BlogService();
     BlogEntry entry = null;
     try {
-      entry = service.getBlogEntry(blog, postid);
+      entry = blogService.getBlogEntry(blog, postid);
     } catch (BlogServiceException e) {
       throw new XmlRpcException(0, "Blog entry with ID of " + postid + " was not found.");
     }
@@ -218,8 +225,7 @@ public class BloggerAPIHandler extends AbstractAPIHandler {
       populateEntry(blogEntry, content, username);
       blogEntry.setPublished(publish);
 
-      BlogService service = new BlogService();
-      service.putBlogEntry(blogEntry);
+      blogService.putBlogEntry(blogEntry);
 
       return formatPostId(blogid, blogEntry.getId());
     } catch (BlogServiceException be) {
@@ -253,13 +259,12 @@ public class BloggerAPIHandler extends AbstractAPIHandler {
       Blog blog = getBlogWithPostId(postid);
       postid = getPostId(postid);
       authenticate(blog, username, password);
-      BlogService service = new BlogService();
-      BlogEntry entry = service.getBlogEntry(blog, postid);
+      BlogEntry entry = blogService.getBlogEntry(blog, postid);
 
       if (entry != null) {
         populateEntry(entry, content, username);
         entry.setPublished(publish);
-        service.putBlogEntry(entry);
+        blogService.putBlogEntry(entry);
       } else {
         throw new XmlRpcException(0, "Blog entry with ID of " + postid + " was not found.");
       }
@@ -294,11 +299,10 @@ public class BloggerAPIHandler extends AbstractAPIHandler {
       Blog blog = getBlogWithPostId(postid);
       postid = getPostId(postid);
       authenticate(blog, username, password);
-      BlogService service = new BlogService();
-      BlogEntry blogEntry = service.getBlogEntry(blog, postid);
+      BlogEntry blogEntry = blogService.getBlogEntry(blog, postid);
 
       if (blogEntry != null) {
-        service.removeBlogEntry(blogEntry);
+        blogService.removeBlogEntry(blogEntry);
         return true;
       } else {
         throw new XmlRpcException(0, "Blog entry with ID of " + postid + " was not found.");
@@ -447,14 +451,13 @@ public class BloggerAPIHandler extends AbstractAPIHandler {
       Blog blog = getBlogWithPostId(postid);
       postid = getPostId(postid);
       authenticate(blog, username, password);
-      BlogService service = new BlogService();
-      BlogEntry entry = service.getBlogEntry(blog, postid);
+      BlogEntry entry = blogService.getBlogEntry(blog, postid);
 
       if (entry != null) {
         Category c = entry.getBlog().getCategory(category);
         if (c != null) {
           entry.addCategory(c);
-          service.putBlogEntry(entry);
+          blogService.putBlogEntry(entry);
 
           return true;
         }

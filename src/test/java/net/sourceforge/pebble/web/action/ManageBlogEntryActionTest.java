@@ -46,16 +46,13 @@ import net.sourceforge.pebble.web.view.impl.PublishBlogEntryView;
 public class ManageBlogEntryActionTest extends SecureActionTestCase {
 
   protected void setUp() throws Exception {
-    action = new ManageBlogEntryAction();
-
-    super.setUp();
+    setUp(ManageBlogEntryAction.class);
   }
 
   public void testPublishBlogEntry() throws Exception {
-    BlogService service = new BlogService();
     BlogEntry blogEntry = new BlogEntry(blog);
     blogEntry.setPublished(false);
-    service.putBlogEntry(blogEntry);
+    blogService.putBlogEntry(blogEntry);
 
     // now execute the action
     request.setParameter("entry", blogEntry.getId());
@@ -67,10 +64,9 @@ public class ManageBlogEntryActionTest extends SecureActionTestCase {
   }
 
   public void testUnpublishBlogEntry() throws Exception {
-    BlogService service = new BlogService();
     BlogEntry blogEntry = new BlogEntry(blog);
     blogEntry.setPublished(true);
-    service.putBlogEntry(blogEntry);
+    blogService.putBlogEntry(blogEntry);
 
     // now execute the action
     request.setParameter("entry", blogEntry.getId());

@@ -366,27 +366,25 @@ public class BlogTest extends SingleBlogTestCase {
   }
 
   public void testGetRecentBlogEntries() throws BlogServiceException {
-    BlogService service = new BlogService();
-
     BlogEntry entry1 = new BlogEntry(blog);
     entry1.setTitle("title1");
     entry1.setBody("body1");
-    service.putBlogEntry(entry1);
+    blogService.putBlogEntry(entry1);
 
     BlogEntry entry2 = new BlogEntry(blog);
     entry2.setTitle("title2");
     entry2.setBody("body2");
-    service.putBlogEntry(entry2);
+    blogService.putBlogEntry(entry2);
 
     BlogEntry entry3 = new BlogEntry(blog);
     entry3.setTitle("title3");
     entry3.setBody("body3");
-    service.putBlogEntry(entry3);
+    blogService.putBlogEntry(entry3);
 
     BlogEntry entry4 = new BlogEntry(blog);
     entry4.setTitle("title4");
     entry4.setBody("body4");
-    service.putBlogEntry(entry4);
+    blogService.putBlogEntry(entry4);
 
     List entries = blog.getRecentBlogEntries(3);
 
@@ -538,17 +536,16 @@ public class BlogTest extends SingleBlogTestCase {
   }
 
   public void testApprovedCommentsForUnpublishedBlogEntriesDontShowUp() throws BlogServiceException {
-    BlogService service = new BlogService();
 
     BlogEntry blogEntry = new BlogEntry(blog);
     blogEntry.setTitle("title1");
     blogEntry.setBody("body1");
     blogEntry.setPublished(false);
-    service.putBlogEntry(blogEntry);
+    blogService.putBlogEntry(blogEntry);
 
     Comment comment = blogEntry.createComment("title", "body", "author", "email", "website", "avatar", "127.0.0.1");
     blogEntry.addComment(comment);
-    service.putBlogEntry(blogEntry);
+    blogService.putBlogEntry(blogEntry);
 
     assertFalse(blog.getRecentApprovedResponses().contains(comment));
   }

@@ -40,6 +40,7 @@ import net.sourceforge.pebble.web.view.NotFoundView;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.impl.BlogEntryView;
 
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -65,9 +66,8 @@ public class ViewBlogEntryAction extends AbstractCommentAction {
 
     BlogEntry blogEntry = null;
     if (entryId != null) {
-      BlogService service = new BlogService();
       try {
-        blogEntry = service.getBlogEntry(blog, entryId);
+        blogEntry = blogService.getBlogEntry(blog, entryId);
       } catch (BlogServiceException e) {
         throw new ServletException(e);
       }

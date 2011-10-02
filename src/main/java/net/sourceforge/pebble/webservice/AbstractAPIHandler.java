@@ -51,14 +51,14 @@ public abstract class AbstractAPIHandler {
   /** character used to separate blog and post IDs in multi-user mode */
   static final char BLOG_ID_SEPARATOR = '/';
 
-  private AuthenticationManager authenticationManager;
+  private final AuthenticationManager authenticationManager;
+
+  protected AbstractAPIHandler(AuthenticationManager authenticationManager) {
+    this.authenticationManager = authenticationManager;
+  }
 
   public AuthenticationManager getAuthenticationManager() {
     return authenticationManager;
-  }
-
-  public void setAuthenticationManager(AuthenticationManager authenticationManager) {
-    this.authenticationManager = authenticationManager;
   }
 
   /**

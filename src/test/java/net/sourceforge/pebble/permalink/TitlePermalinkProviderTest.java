@@ -32,7 +32,6 @@
 package net.sourceforge.pebble.permalink;
 
 import net.sourceforge.pebble.domain.BlogEntry;
-import net.sourceforge.pebble.domain.BlogService;
 import net.sourceforge.pebble.api.permalink.PermalinkProvider;
 
 import java.text.SimpleDateFormat;
@@ -50,16 +49,17 @@ public class TitlePermalinkProviderTest extends PermalinkProviderSupportTestCase
    * @return a PermalinkProvider instance
    */
   protected PermalinkProvider getPermalinkProvider() {
-    return new TitlePermalinkProvider();
+    TitlePermalinkProvider provider = new TitlePermalinkProvider();
+    provider.setBlogService(blogService);
+    return provider;
   }
 
   /**
    * Tests that a permalink can be generated for a blog entry.
    */
   public void testBlogEntryPermalink() throws Exception {
-    BlogService service = new BlogService();
     BlogEntry blogEntry = new BlogEntry(blog);
-    service.putBlogEntry(blogEntry);
+    blogService.putBlogEntry(blogEntry);
 
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy'/'MM'/'dd'/'");
     sdf.setTimeZone(blog.getTimeZone());
@@ -124,11 +124,9 @@ public class TitlePermalinkProviderTest extends PermalinkProviderSupportTestCase
    * duplicate titles for the same day.
    */
   public void testBlogEntryPermalinkForEntriesWithSameTitle() throws Exception {
-    BlogService service = new BlogService();
-
     BlogEntry blogEntry1 = new BlogEntry(blog);
     blogEntry1.setTitle("A Title");
-    service.putBlogEntry(blogEntry1);
+    blogService.putBlogEntry(blogEntry1);
 
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy'/'MM'/'dd'/'");
     sdf.setTimeZone(blog.getTimeZone());
@@ -140,7 +138,7 @@ public class TitlePermalinkProviderTest extends PermalinkProviderSupportTestCase
     // now add another with the same name
     BlogEntry blogEntry2 = new BlogEntry(blog);
     blogEntry2.setTitle("A Title");
-    service.putBlogEntry(blogEntry2);
+    blogService.putBlogEntry(blogEntry2);
 
     assertEquals(prefix + "a_title" + suffix, permalinkProvider.getPermalink(blogEntry1));
     assertEquals(prefix + "a_title_" + blogEntry2.getId() + suffix, permalinkProvider.getPermalink(blogEntry2));
@@ -160,19 +158,17 @@ public class TitlePermalinkProviderTest extends PermalinkProviderSupportTestCase
    * Tests that the correct blog entry can be found from a permalink.
    */
   public void testGetBlogEntry() throws Exception {
-    BlogService service = new BlogService();
-
     BlogEntry blogEntry1 = new BlogEntry(blog);
     blogEntry1.setTitle("A Title");
-    service.putBlogEntry(blogEntry1);
+    blogService.putBlogEntry(blogEntry1);
 
     BlogEntry blogEntry2 = new BlogEntry(blog);
     blogEntry2.setTitle("Some other title");
-    service.putBlogEntry(blogEntry2);
+    blogService.putBlogEntry(blogEntry2);
 
     BlogEntry blogEntry3 = new BlogEntry(blog);
     blogEntry3.setTitle("Some other itle");
-    service.putBlogEntry(blogEntry3);
+    blogService.putBlogEntry(blogEntry3);
 
     String uri = permalinkProvider.getPermalink(blogEntry1);
     assertEquals(blogEntry1, permalinkProvider.getBlogEntry(uri));
@@ -186,12 +182,10 @@ public class TitlePermalinkProviderTest extends PermalinkProviderSupportTestCase
    * Tests that the correct aggregated blog entry can be found from a permalink.
    */
   public void testGetAggregatedBlogEntry() throws Exception {
-    BlogService service = new BlogService();
-
     BlogEntry blogEntry = new BlogEntry(blog);
     blogEntry.setTitle("A Title");
     blogEntry.setOriginalPermalink("http://www.someotherdomain.com/blog/abc.html");
-    service.putBlogEntry(blogEntry);
+    blogService.putBlogEntry(blogEntry);
 
     String uri = permalinkProvider.getPermalink(blogEntry);
     assertEquals(blogEntry, permalinkProvider.getBlogEntry(uri));
@@ -203,10 +197,8 @@ public class TitlePermalinkProviderTest extends PermalinkProviderSupportTestCase
   public void testBlogEntryPermalinkChangesWithTitle() throws Exception {
     blog.setPermalinkProvider(new TitlePermalinkProvider());
 
-    BlogService service = new BlogService();
-
     BlogEntry blogEntry = new BlogEntry(blog);
-    service.putBlogEntry(blogEntry);
+    blogService.putBlogEntry(blogEntry);
 
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy'/'MM'/'dd'/'");
     sdf.setTimeZone(blog.getTimeZone());

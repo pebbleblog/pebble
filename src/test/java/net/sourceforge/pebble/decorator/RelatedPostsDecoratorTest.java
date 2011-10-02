@@ -32,10 +32,9 @@
 package net.sourceforge.pebble.decorator;
 
 import java.util.Date;
-import net.sourceforge.pebble.domain.Blog;
+
 import net.sourceforge.pebble.domain.BlogService;
 import net.sourceforge.pebble.domain.BlogEntry;
-import net.sourceforge.pebble.domain.Category;
 import net.sourceforge.pebble.domain.SingleBlogTestCase;
 import net.sourceforge.pebble.api.decorator.ContentDecorator;
 import net.sourceforge.pebble.api.decorator.ContentDecoratorContext;
@@ -56,7 +55,6 @@ public class RelatedPostsDecoratorTest extends SingleBlogTestCase {
   private BlogEntry blogEntrySix;
   private BlogEntry blogEntrySeven;
   private BlogEntry blogEntryEight;
-  private BlogService service;
   private ContentDecoratorContext context;
 
   protected void setUp() throws Exception {
@@ -74,8 +72,6 @@ public class RelatedPostsDecoratorTest extends SingleBlogTestCase {
     blogEntrySeven = new BlogEntry(blog);
     blogEntryEight = new BlogEntry(blog);
 
-    service = new BlogService();
-
     decorator = new RelatedPostsDecorator();
     context = new ContentDecoratorContext();
   }
@@ -91,19 +87,19 @@ public class RelatedPostsDecoratorTest extends SingleBlogTestCase {
     blogEntryOne.setExcerpt("Excerpt - except one");
     blogEntryOne.setBody("Body - body one");
     blogEntryOne.setTags("one two");
-    service.putBlogEntry(blogEntryOne);
+    blogService.putBlogEntry(blogEntryOne);
 
     blogEntryTwo.setTitle("Title - title two");
     blogEntryTwo.setExcerpt("Excerpt - except two");
     blogEntryTwo.setBody("Body - body two");
     blogEntryTwo.setTags("one two");
-    service.putBlogEntry(blogEntryTwo);
+    blogService.putBlogEntry(blogEntryTwo);
 
     blogEntryThree.setTitle("Title - title three");
     blogEntryThree.setExcerpt("Excerpt - except three");
     blogEntryThree.setBody("Body - body three");
     blogEntryThree.setTags("three");
-    service.putBlogEntry(blogEntryThree);
+    blogService.putBlogEntry(blogEntryThree);
 
     decorator.decorate(context, blogEntryThree);
 
@@ -132,21 +128,21 @@ public class RelatedPostsDecoratorTest extends SingleBlogTestCase {
     blogEntryOne.setExcerpt("Excerpt - except one");
     blogEntryOne.setBody("Body - body one");
     blogEntryOne.setTags("one, two");
-    service.putBlogEntry(blogEntryOne);
+    blogService.putBlogEntry(blogEntryOne);
 
     blogEntryTwo.setDate(date);
     blogEntryTwo.setTitle("Title - title two");
     blogEntryTwo.setExcerpt("Excerpt - except two");
     blogEntryTwo.setBody("Body - body two");
     blogEntryTwo.setTags("one, two");
-    service.putBlogEntry(blogEntryTwo);
+    blogService.putBlogEntry(blogEntryTwo);
 
     blogEntryThree.setDate(date);
     blogEntryThree.setTitle("Title - title three");
     blogEntryThree.setExcerpt("Excerpt - except three");
     blogEntryThree.setBody("Body - body three");
     blogEntryThree.setTags("two, three");
-    service.putBlogEntry(blogEntryThree);
+    blogService.putBlogEntry(blogEntryThree);
 
     decorator.decorate(context, blogEntryThree);
 
@@ -160,9 +156,9 @@ public class RelatedPostsDecoratorTest extends SingleBlogTestCase {
 
     assertEquals("Body - body three" + relatedPosts, blogEntryThree.getBody());
 
-    service.removeBlogEntry(blogEntryOne);
-    service.removeBlogEntry(blogEntryTwo);
-    service.removeBlogEntry(blogEntryThree);
+    blogService.removeBlogEntry(blogEntryOne);
+    blogService.removeBlogEntry(blogEntryTwo);
+    blogService.removeBlogEntry(blogEntryThree);
 
   }
 
@@ -183,56 +179,56 @@ public class RelatedPostsDecoratorTest extends SingleBlogTestCase {
     blogEntryOne.setExcerpt("Excerpt - except one");
     blogEntryOne.setBody("Body - body one");
     blogEntryOne.setTags("one");
-    service.putBlogEntry(blogEntryOne);
+    blogService.putBlogEntry(blogEntryOne);
 
     blogEntryTwo.setDate(date);
     blogEntryTwo.setTitle("Title - title two");
     blogEntryTwo.setExcerpt("Excerpt - except two");
     blogEntryTwo.setBody("Body - body two");
     blogEntryTwo.setTags("one, two");
-    service.putBlogEntry(blogEntryTwo);
+    blogService.putBlogEntry(blogEntryTwo);
 
     blogEntryThree.setDate(date);
     blogEntryThree.setTitle("Title - title three");
     blogEntryThree.setExcerpt("Excerpt - except three");
     blogEntryThree.setBody("Body - body three");
     blogEntryThree.setTags("one, two, three");
-    service.putBlogEntry(blogEntryThree);
+    blogService.putBlogEntry(blogEntryThree);
 
     blogEntryFour.setDate(date);
     blogEntryFour.setTitle("Title - title four");
     blogEntryFour.setExcerpt("Excerpt - except four");
     blogEntryFour.setBody("Body - body four");
     blogEntryFour.setTags("one, two, three, four");
-    service.putBlogEntry(blogEntryFour);
+    blogService.putBlogEntry(blogEntryFour);
 
     blogEntryFive.setDate(date);
     blogEntryFive.setTitle("Title - title five");
     blogEntryFive.setExcerpt("Excerpt - except five");
     blogEntryFive.setBody("Body - body five");
     blogEntryFive.setTags("one, two, three, four, five");
-    service.putBlogEntry(blogEntryFive);
+    blogService.putBlogEntry(blogEntryFive);
 
     blogEntrySix.setDate(date);
     blogEntrySix.setTitle("Title - title six");
     blogEntrySix.setExcerpt("Excerpt - except six");
     blogEntrySix.setBody("Body - body six");
     blogEntrySix.setTags("one, two, three, four, five, six");
-    service.putBlogEntry(blogEntrySix);
+    blogService.putBlogEntry(blogEntrySix);
 
     blogEntrySeven.setDate(date);
     blogEntrySeven.setTitle("Title - title seven");
     blogEntrySeven.setExcerpt("Excerpt - except seven");
     blogEntrySeven.setBody("Body - body seven");
     blogEntrySeven.setTags("one, two, three, four, five, six, seven");
-    service.putBlogEntry(blogEntrySeven);
+    blogService.putBlogEntry(blogEntrySeven);
 
     blogEntryEight.setDate(date);
     blogEntryEight.setTitle("Title - title eight");
     blogEntryEight.setExcerpt("Excerpt - except eight");
     blogEntryEight.setBody("Body - body eight");
     blogEntryEight.setTags("one, two, three, four, five, six, seven, eight");
-    service.putBlogEntry(blogEntryEight);
+    blogService.putBlogEntry(blogEntryEight);
 
     decorator.decorate(context, blogEntryOne);
 

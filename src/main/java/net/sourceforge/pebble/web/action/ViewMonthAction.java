@@ -38,6 +38,7 @@ import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.NotFoundView;
 import net.sourceforge.pebble.web.view.impl.BlogEntriesByMonthView;
 
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -51,6 +52,9 @@ import java.util.ArrayList;
  * @author    Simon Brown
  */
 public class ViewMonthAction extends Action {
+
+  @Inject
+  private BlogService blogService;
 
   /**
    * Peforms the processing associated with this action.
@@ -72,11 +76,9 @@ public class ViewMonthAction extends Action {
       return new NotFoundView();
     }
 
-    BlogService service = new BlogService();
-
-    List<BlogEntry> blogEntries = null;
+    List<BlogEntry> blogEntries;
     try {
-      blogEntries = service.getBlogEntries(blog, Integer.parseInt(year), Integer.parseInt(month));
+      blogEntries = blogService.getBlogEntries(blog, Integer.parseInt(year), Integer.parseInt(month));
     } catch (BlogServiceException e) {
       throw new ServletException(e);
     }

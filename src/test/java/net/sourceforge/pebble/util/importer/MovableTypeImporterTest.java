@@ -46,7 +46,7 @@ public class MovableTypeImporterTest extends SingleBlogTestCase {
   public void testImport() throws Exception {
     blog.setProperty(Blog.TIMEZONE_KEY, "Japan/Tokyo");
     File source = new File(testCasesDir, "exported.txt");
-    MovableTypeImporter.importBlog(blog, source, daoFactory);
+    MovableTypeImporter.importBlog(blog, source, daoFactory, blogService);
     blog.reindex();
     List list = blog.getBlogEntries();
     assertEquals("size of entry", 1, list.size());
@@ -60,7 +60,7 @@ public class MovableTypeImporterTest extends SingleBlogTestCase {
   public void testNoPrimaryCategory() throws Exception {
     blog.setProperty(Blog.TIMEZONE_KEY, "Japan/Tokyo");
     File source = new File(testCasesDir, "noprimarycategory.txt");
-    MovableTypeImporter.importBlog(blog, source, daoFactory);
+    MovableTypeImporter.importBlog(blog, source, daoFactory, blogService);
     blog.reindex();
     List list = blog.getBlogEntries();
     assertEquals("size of entry", 1, list.size());
@@ -69,7 +69,7 @@ public class MovableTypeImporterTest extends SingleBlogTestCase {
   public void testMultipleSubCategory() throws Exception {
     blog.setProperty(Blog.TIMEZONE_KEY, "Japan/Tokyo");
     File source = new File(testCasesDir, "multiplesubcategory.txt");
-    MovableTypeImporter.importBlog(blog, source, daoFactory);
+    MovableTypeImporter.importBlog(blog, source, daoFactory, blogService);
     blog.reindex();
     blog.reindex();
     List list = blog.getBlogEntries();
@@ -85,7 +85,7 @@ public class MovableTypeImporterTest extends SingleBlogTestCase {
   public void testNoExcerpt() throws Exception {
     blog.setProperty(Blog.TIMEZONE_KEY, "Japan/Tokyo");
     File source = new File(testCasesDir, "noexcerpt.txt");
-    MovableTypeImporter.importBlog(blog, source, daoFactory);
+    MovableTypeImporter.importBlog(blog, source, daoFactory, blogService);
     blog.reindex();
     List list = blog.getBlogEntries();
     assertEquals("size of entry", 1, list.size());
@@ -99,7 +99,7 @@ public class MovableTypeImporterTest extends SingleBlogTestCase {
   public void testNoExcerptNoExtendedBody() throws Exception {
     blog.setProperty(Blog.TIMEZONE_KEY, "Japan/Tokyo");
     File source = new File(testCasesDir, "noexcerpt_noextendedbody.txt");
-    MovableTypeImporter.importBlog(blog, source, daoFactory);
+    MovableTypeImporter.importBlog(blog, source, daoFactory, blogService);
     blog.reindex();
     List list = blog.getBlogEntries();
     assertEquals("size of entry", 1, list.size());
@@ -113,7 +113,7 @@ public class MovableTypeImporterTest extends SingleBlogTestCase {
   public void testUTF8() throws Exception {
     blog.setProperty(Blog.TIMEZONE_KEY, "Japan/Tokyo");
     File source = new File(testCasesDir, "utf8.txt");
-    MovableTypeImporter.importBlog(blog, source, daoFactory);
+    MovableTypeImporter.importBlog(blog, source, daoFactory, blogService);
     blog.reindex();
     List list = blog.getBlogEntries();
     assertEquals("size of entry", 1, list.size());
@@ -125,7 +125,7 @@ public class MovableTypeImporterTest extends SingleBlogTestCase {
   public void testPublished() throws Exception {
     blog.setProperty(Blog.TIMEZONE_KEY, "Japan/Tokyo");
     File source = new File(testCasesDir, "exported.txt");
-    MovableTypeImporter.importBlog(blog, source, daoFactory);
+    MovableTypeImporter.importBlog(blog, source, daoFactory, blogService);
     blog.reindex();
     List list = blog.getBlogEntries();
     assertEquals("size of entry", 1, list.size());
@@ -135,7 +135,7 @@ public class MovableTypeImporterTest extends SingleBlogTestCase {
   public void testComment() throws Exception {
     blog.setProperty(Blog.TIMEZONE_KEY, "Japan/Tokyo");
     File source = new File(testCasesDir, "withcomment.txt");
-    MovableTypeImporter.importBlog(blog, source, daoFactory);
+    MovableTypeImporter.importBlog(blog, source, daoFactory, blogService);
     blog.reindex();
     List list = blog.getBlogEntries();
     assertEquals("size of entry", 1, list.size());

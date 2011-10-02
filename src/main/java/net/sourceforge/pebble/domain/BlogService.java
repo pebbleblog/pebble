@@ -56,6 +56,12 @@ public class BlogService {
 
   private static final Log log = LogFactory.getLog(BlogService.class);
 
+  private final BlogEntryDAO blogEntryDAO;
+
+  public BlogService(BlogEntryDAO blogEntryDAO) {
+    this.blogEntryDAO = blogEntryDAO;
+  }
+
   /**
    * Gets the blog entry with the specified id.
    *
@@ -72,9 +78,8 @@ public class BlogService {
       log.debug("Got blog entry " + blogEntryId + " from cache");
     } else {
       log.debug("Loading blog entry " + blogEntryId + " from disk");
-      BlogEntryDAO dao = DAOFactory.getConfiguredFactory().getBlogEntryDAO();
       try {
-        blogEntry = dao.loadBlogEntry(blog, blogEntryId);
+        blogEntry = blogEntryDAO.loadBlogEntry(blog, blogEntryId);
 
         if (blogEntry != null) {
           // place in the cache for faster lookup next time
@@ -112,10 +117,9 @@ public class BlogService {
    * @return  a List of BlogEntry objects
    */
   public Collection<BlogEntry> getBlogEntries(Blog blog) throws BlogServiceException {
-    BlogEntryDAO dao = DAOFactory.getConfiguredFactory().getBlogEntryDAO();
     Collection<BlogEntry> blogEntries;
     try {
-      blogEntries = dao.loadBlogEntries(blog);
+      blogEntries = blogEntryDAO.loadBlogEntries(blog);
       for (BlogEntry blogEntry : blogEntries) {
         blogEntry.setPersistent(true);
       }
@@ -142,8 +146,6 @@ public class BlogService {
    * Puts the blog entry with the specified id.
    */
   public void putBlogEntry(BlogEntry blogEntry) throws BlogServiceException {
-    DAOFactory factory = DAOFactory.getConfiguredFactory();
-    BlogEntryDAO dao = factory.getBlogEntryDAO();
     Blog blog = blogEntry.getBlog();
     ContentCache cache = ContentCache.getInstance();
 
@@ -158,7 +160,7 @@ public class BlogService {
           putBlogEntry(blogEntry);
         } else {
           if (!blogEntry.isPersistent()) {
-            dao.storeBlogEntry(blogEntry);
+            blogEntryDAO.storeBlogEntry(blogEntry);
             blogEntry.insertEvent(new BlogEntryEvent(blogEntry, BlogEntryEvent.BLOG_ENTRY_ADDED));
 
             for (Comment comment : blogEntry.getComments()) {
@@ -168,7 +170,7 @@ public class BlogService {
               blogEntry.addEvent(new TrackBackEvent(trackBack, TrackBackEvent.TRACKBACK_ADDED));
             }
           } else {
-            dao.storeBlogEntry(blogEntry);
+            blogEntryDAO.storeBlogEntry(blogEntry);
             if (blogEntry.isDirty()) {
               blogEntry.insertEvent(new BlogEntryEvent(blogEntry, blogEntry.getPropertyChangeEvents()));
             }
@@ -177,7 +179,7 @@ public class BlogService {
           blogEntry.getBlog().getEventDispatcher().fireEvents(blogEntry);
 
           // and store the blog entry now that listeners have been fired
-          dao.storeBlogEntry(blogEntry);
+          blogEntryDAO.storeBlogEntry(blogEntry);
           cache.removeBlogEntry(blogEntry);
         }
 
@@ -196,13 +198,10 @@ public class BlogService {
    * Removes this blog entry.
    */
   public void removeBlogEntry(BlogEntry blogEntry) throws BlogServiceException {
-    Blog blog = blogEntry.getBlog();
     ContentCache cache = ContentCache.getInstance();
 
     try {
-      DAOFactory factory = DAOFactory.getConfiguredFactory();
-      BlogEntryDAO dao = factory.getBlogEntryDAO();
-      dao.removeBlogEntry(blogEntry);
+      blogEntryDAO.removeBlogEntry(blogEntry);
       blogEntry.setPersistent(false);
 
       // remove from cache
@@ -240,5 +239,4 @@ public class BlogService {
       return null;
     }
   }
-
 }

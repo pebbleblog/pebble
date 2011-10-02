@@ -40,6 +40,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.xmlrpc.XmlRpcClient;
 
+import javax.inject.Inject;
 import java.util.*;
 
 /**
@@ -62,6 +63,9 @@ public abstract class PebbleAPIBlogEntryAggregator extends TimerTask implements 
 
   private Blog blog;
   private Timer timer = new Timer();
+
+  @Inject
+  private BlogService blogService;
 
   /**
    * Called when a blog has been started.
@@ -125,13 +129,12 @@ public abstract class PebbleAPIBlogEntryAggregator extends TimerTask implements 
 
         log.info("Aggregating " + title + " [ " + id + " | " + permalink + " ]");
 
-        BlogService service = new BlogService();
-        BlogEntry blogEntry = service.getBlogEntry(blog, id);
+        BlogEntry blogEntry = blogService.getBlogEntry(blog, id);
         if (blogEntry == null) {
           // create a new blog entry if one doesn't exist
           blogEntry = new BlogEntry(blog);
           blogEntry.setDate(new Date(Long.parseLong(id)));
-          service.putBlogEntry(blogEntry);
+          blogService.putBlogEntry(blogEntry);
         }
 
         // now ensure the local blog entry is in sync
@@ -173,7 +176,7 @@ public abstract class PebbleAPIBlogEntryAggregator extends TimerTask implements 
 
         postAggregate(blogEntry);
 
-        service.putBlogEntry(blogEntry);
+        blogService.putBlogEntry(blogEntry);
       }
     } catch (Exception e) {
       log.error("Exception encountered", e);

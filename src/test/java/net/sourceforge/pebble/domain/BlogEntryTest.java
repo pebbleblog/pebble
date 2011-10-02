@@ -585,7 +585,6 @@ public class BlogEntryTest extends SingleBlogTestCase {
    * Tests that the next blog entry can be accessed.
    */
   public void testGetNextBlogEntry() throws Exception {
-    BlogService service = new BlogService();
     Day today = blog.getBlogForToday();
     Day oneDayAgo = today.getPreviousDay();
     Day twoDaysAgo = today.getPreviousDay().getPreviousDay();
@@ -602,9 +601,9 @@ public class BlogEntryTest extends SingleBlogTestCase {
     b3.setDate(today.getDate());
     b3.setPublished(true);
 
-    service.putBlogEntry(b1);
-    service.putBlogEntry(b2);
-    service.putBlogEntry(b3);
+    blogService.putBlogEntry(b1);
+    blogService.putBlogEntry(b2);
+    blogService.putBlogEntry(b3);
 
     assertNull(b3.getNextBlogEntry());
     assertEquals(b3, b2.getNextBlogEntry());
@@ -615,7 +614,6 @@ public class BlogEntryTest extends SingleBlogTestCase {
    * Tests that the previous blog entry can be accessed.
    */
   public void testGetPreviousBlogEntry() throws Exception {
-    BlogService service = new BlogService();
     Day today = blog.getBlogForToday();
     Day oneDayAgo = today.getPreviousDay();
     Day twoDaysAgo = today.getPreviousDay().getPreviousDay();
@@ -632,9 +630,9 @@ public class BlogEntryTest extends SingleBlogTestCase {
     b3.setDate(today.getDate());
     b3.setPublished(true);
 
-    service.putBlogEntry(b1);
-    service.putBlogEntry(b2);
-    service.putBlogEntry(b3);
+    blogService.putBlogEntry(b1);
+    blogService.putBlogEntry(b2);
+    blogService.putBlogEntry(b3);
 
     assertNull(b1.getPreviousBlogEntry());
     assertEquals(b1, b2.getPreviousBlogEntry());

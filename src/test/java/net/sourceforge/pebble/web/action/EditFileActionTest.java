@@ -48,9 +48,7 @@ import java.io.FileWriter;
 public class EditFileActionTest extends SecureActionTestCase {
 
   protected void setUp() throws Exception {
-    action = new EditFileAction();
-
-    super.setUp();
+    super.setUp(EditFileAction.class);
   }
 
   /**

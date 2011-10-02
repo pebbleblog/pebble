@@ -44,7 +44,7 @@ import net.sourceforge.pebble.index.file.FileTagIndex;
  *
  * @author    Simon Brown
  */
-public class MockDAOFactory extends DAOFactory {
+public class MockDAOFactory implements DAOFactory {
 
   private BlogEntryDAO blogEntryDAO = new MockBlogEntryDAO();
 
@@ -90,13 +90,17 @@ public class MockDAOFactory extends DAOFactory {
     return new MockRefererFilterDAO();
   }
 
-  @Override
   public TagIndex createTagIndex(Blog blog) {
     return new FileTagIndex(blog);
   }
 
-  @Override
   public AuthorIndex createAuthorIndex(Blog blog) {
     return new FileAuthorIndex(blog);
+  }
+
+  public void init(Blog blog) {
+  }
+
+  public void shutdown() {
   }
 }

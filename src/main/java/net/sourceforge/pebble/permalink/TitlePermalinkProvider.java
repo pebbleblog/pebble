@@ -33,6 +33,7 @@ package net.sourceforge.pebble.permalink;
 
 import net.sourceforge.pebble.domain.*;
 
+import javax.inject.Inject;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -58,6 +59,9 @@ public class TitlePermalinkProvider extends PermalinkProviderSupport {
   /** the regex used to check for a blog entry permalink */
   private static final String BLOG_ENTRY_PERMALINK_REGEX = "/\\d\\d\\d\\d/\\d\\d/\\d\\d/[\\w]*.html";
 
+  @Inject
+  private BlogService blogService;
+
   /**
    * Gets the permalink for a blog entry.
    *
@@ -67,13 +71,12 @@ public class TitlePermalinkProvider extends PermalinkProviderSupport {
     if (blogEntry.getTitle() == null || blogEntry.getTitle().length() == 0) {
       return buildPermalink(blogEntry) + ".html";
     } else {
-      BlogService service = new BlogService();
       Day day = getBlog().getBlogForDay(blogEntry.getDate());
       List entries = day.getBlogEntries();
       int count = 0;
       for (int i = entries.size()-1; i > entries.indexOf(blogEntry.getId()); i--) {
         try {
-          BlogEntry entry = service.getBlogEntry(getBlog(), (String)entries.get(i));
+          BlogEntry entry = blogService.getBlogEntry(getBlog(), (String)entries.get(i));
           if (entry.getTitle().equals(blogEntry.getTitle())) {
             count++;
           }
@@ -152,13 +155,12 @@ public class TitlePermalinkProvider extends PermalinkProviderSupport {
    * @return  a BlogEntry instance, or null if one can't be found
    */
   public BlogEntry getBlogEntry(String uri) {
-    BlogService service = new BlogService();
     Day day = getDay(uri);
 
     Iterator it = day.getBlogEntries().iterator();
     while (it.hasNext()) {
       try {
-        BlogEntry blogEntry = service.getBlogEntry(getBlog(), (String)it.next());
+        BlogEntry blogEntry = blogService.getBlogEntry(getBlog(), (String)it.next());
         // use the local permalink, just in case the entry has been aggregated
         // and an original permalink assigned
         if (blogEntry.getLocalPermalink().endsWith(uri)) {
@@ -172,4 +174,7 @@ public class TitlePermalinkProvider extends PermalinkProviderSupport {
     return null;
   }
 
+  void setBlogService(BlogService blogService) {
+    this.blogService = blogService;
+  }
 }

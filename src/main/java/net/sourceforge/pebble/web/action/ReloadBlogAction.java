@@ -35,6 +35,7 @@ import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.dao.DAOFactory;
 import net.sourceforge.pebble.domain.BlogManager;
 import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.domain.BlogService;
 import net.sourceforge.pebble.web.security.RequireSecurityToken;
 import net.sourceforge.pebble.web.view.RedirectView;
 import net.sourceforge.pebble.web.view.View;
@@ -55,6 +56,9 @@ public class ReloadBlogAction extends SecureAction {
   @Inject
   private DAOFactory daoFactory;
 
+  @Inject
+  private BlogService blogService;
+
   /**
    * Peforms the processing associated with this action.
    *
@@ -64,7 +68,7 @@ public class ReloadBlogAction extends SecureAction {
    */
   public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
-    BlogManager.getInstance().reloadBlog(daoFactory, blog);
+    BlogManager.getInstance().reloadBlog(daoFactory, blogService, blog);
 
     String redirectUrl = request.getParameter("redirectUrl");
     if (redirectUrl != null && redirectUrl.length() > 0) {

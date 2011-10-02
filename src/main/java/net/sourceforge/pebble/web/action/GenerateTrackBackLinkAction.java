@@ -42,6 +42,7 @@ import net.sourceforge.pebble.web.view.impl.TrackBackLinkView;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -56,6 +57,9 @@ public class GenerateTrackBackLinkAction extends AbstractTrackBackAction {
   /** the log used by this class */
   private static Log log = LogFactory.getLog(GenerateTrackBackLinkAction.class);
 
+  @Inject
+  private BlogService blogService;
+
   /**
    * Peforms the processing associated with this action.
    *
@@ -68,9 +72,8 @@ public class GenerateTrackBackLinkAction extends AbstractTrackBackAction {
     BlogEntry blogEntry;
 
     String entry = request.getParameter("entry");
-    BlogService service = new BlogService();
     try {
-      blogEntry = service.getBlogEntry(blog, entry);
+      blogEntry = blogService.getBlogEntry(blog, entry);
     } catch (BlogServiceException e) {
       throw new ServletException(e);
     }

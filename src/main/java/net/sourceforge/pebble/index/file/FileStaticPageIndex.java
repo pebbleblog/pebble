@@ -43,7 +43,7 @@ import java.util.*;
 /**
  * Maintains an index of all static pages
  *
- * @author    Simon Brown
+ * @author Simon Brown
  */
 public class FileStaticPageIndex implements StaticPageIndex {
 
@@ -54,36 +54,39 @@ public class FileStaticPageIndex implements StaticPageIndex {
   private static final String LOCK_FILE_NAME = "pages.lock";
   private static final int MAXIMUM_LOCK_ATTEMPTS = 3;
 
-  /** the owning blog */
+  /**
+   * the owning blog
+   */
   private Blog blog;
 
-  /** the collection of all static pages */
-  private Map<String,String> index = new HashMap<String,String>();
+  /**
+   * the collection of all static pages
+   */
+  private Map<String, String> index = new HashMap<String, String>();
   private int lockAttempts = 0;
 
   public FileStaticPageIndex(Blog blog) {
     this.blog = blog;
-
-    // create the directory structure if it doesn't exist
-    File indexDirectory = new File(blog.getIndexesDirectory(), PAGES_INDEX_DIRECTORY_NAME);
-    if (!indexDirectory.exists()) {
-      indexDirectory.mkdirs();
-    }
-
     readIndex();
   }
 
   /**
    * Indexes one or more blog entries.
    *
-   * @param staticPages   a List of Page instances
+   * @param staticPages a List of Page instances
    */
   public synchronized void reindex(Collection<StaticPage> staticPages) {
     if (lock()) {
       // clear the index and add all static pages
-      index = new HashMap<String,String>();
+      index = new HashMap<String, String>();
       for (StaticPage staticPage : staticPages) {
         index.put(staticPage.getName(), staticPage.getId());
+      }
+
+      // create the directory structure if it doesn't exist
+      File indexDirectory = new File(blog.getIndexesDirectory(), PAGES_INDEX_DIRECTORY_NAME);
+      if (!indexDirectory.exists()) {
+        indexDirectory.mkdirs();
       }
 
       // and finally, write the index
@@ -95,7 +98,7 @@ public class FileStaticPageIndex implements StaticPageIndex {
   /**
    * Indexes a single page.
    *
-   * @param staticPage    a Page instance
+   * @param staticPage a Page instance
    */
   public synchronized void index(StaticPage staticPage) {
     if (lock()) {
@@ -104,7 +107,7 @@ public class FileStaticPageIndex implements StaticPageIndex {
       // remove the old entry for this static page
       Iterator it = index.keySet().iterator();
       while (it.hasNext()) {
-        String key = (String)it.next();
+        String key = (String) it.next();
         String value = index.get(key);
         if (value.equals(staticPage.getId())) {
           it.remove();
@@ -132,7 +135,7 @@ public class FileStaticPageIndex implements StaticPageIndex {
   /**
    * Unindexes a single page.
    *
-   * @param staticPage    a Page instance
+   * @param staticPage a Page instance
    */
   public synchronized void unindex(StaticPage staticPage) {
     if (lock()) {
@@ -201,9 +204,9 @@ public class FileStaticPageIndex implements StaticPageIndex {
   /**
    * Gets the page ID for the specified named page.
    *
-   * @param name    a String
-   * @return  a String instance, or null if no page exists
-   *          with the specified name
+   * @param name a String
+   * @return a String instance, or null if no page exists
+   *         with the specified name
    */
   public String getStaticPage(String name) {
     return index.get(name);
@@ -212,7 +215,7 @@ public class FileStaticPageIndex implements StaticPageIndex {
   /**
    * Gets the list of static page IDs.
    *
-   * @return    a List<String>
+   * @return a List<String>
    */
   public List<String> getStaticPages() {
     return new LinkedList<String>(index.values());
@@ -221,8 +224,8 @@ public class FileStaticPageIndex implements StaticPageIndex {
   /**
    * Determines whether a page with the specified permalink exists.
    *
-   * @param name   the name as a String
-   * @return  true if the page exists, false otherwise
+   * @param name the name as a String
+   * @return true if the page exists, false otherwise
    */
   public boolean contains(String name) {
     return index.containsKey(name);
@@ -231,7 +234,7 @@ public class FileStaticPageIndex implements StaticPageIndex {
   /**
    * Gets the number of static pages.
    *
-   * @return  an int
+   * @return an int
    */
   public int getNumberOfStaticPages() {
     return index.size();

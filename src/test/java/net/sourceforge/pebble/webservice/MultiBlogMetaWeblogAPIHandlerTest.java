@@ -48,12 +48,13 @@ import java.util.Vector;
  */
 public class MultiBlogMetaWeblogAPIHandlerTest extends MultiBlogTestCase {
 
-  private MetaWeblogAPIHandler handler = new MetaWeblogAPIHandler();
+  private MetaWeblogAPIHandler handler;
 
   protected void setUp() throws Exception {
     super.setUp();
 
-    handler.setAuthenticationManager(new net.sourceforge.pebble.mock.MockAuthenticationManager(true, new GrantedAuthority[] {new GrantedAuthorityImpl(Constants.BLOG_CONTRIBUTOR_ROLE)}));
+    handler = new MetaWeblogAPIHandler(new net.sourceforge.pebble.mock.MockAuthenticationManager(true, new GrantedAuthority[] {new GrantedAuthorityImpl(Constants.BLOG_CONTRIBUTOR_ROLE)}),
+        blogService);
     blog1.setProperty(Blog.BLOG_CONTRIBUTORS_KEY, "username");
   }
 
@@ -61,7 +62,7 @@ public class MultiBlogMetaWeblogAPIHandlerTest extends MultiBlogTestCase {
    * Tests that authentication fails properly.
    */
   public void testAuthenticationFailure() {
-    handler.setAuthenticationManager(new MockAuthenticationManager(false));
+    handler = new MetaWeblogAPIHandler(new MockAuthenticationManager(false), blogService);
     try {
       handler.getCategories("blog1/123", "username", "password");
       fail();
@@ -146,27 +147,25 @@ public class MultiBlogMetaWeblogAPIHandlerTest extends MultiBlogTestCase {
 
   public void testGetRecentPosts() {
     try {
-      BlogService service = new BlogService();
-
       BlogEntry entry1 = new BlogEntry(blog1);
       entry1.setTitle("title1");
       entry1.setBody("body1");
-      service.putBlogEntry(entry1);
+      blogService.putBlogEntry(entry1);
 
       BlogEntry entry2 = new BlogEntry(blog1);
       entry2.setTitle("title2");
       entry2.setBody("body2");
-      service.putBlogEntry(entry2);
+      blogService.putBlogEntry(entry2);
 
       BlogEntry entry3 = new BlogEntry(blog1);
       entry3.setTitle("title3");
       entry3.setBody("body3");
-      service.putBlogEntry(entry3);
+      blogService.putBlogEntry(entry3);
 
       BlogEntry entry4 = new BlogEntry(blog1);
       entry4.setTitle("title4");
       entry4.setBody("body4");
-      service.putBlogEntry(entry4);
+      blogService.putBlogEntry(entry4);
 
       Vector posts = handler.getRecentPosts("blog1", "username", "password", 3);
 
@@ -195,13 +194,12 @@ public class MultiBlogMetaWeblogAPIHandlerTest extends MultiBlogTestCase {
       Category category = new Category("/aCategory", "A Category");
       blog1.addCategory(category);
 
-      BlogService service = new BlogService();
       BlogEntry entry = new BlogEntry(blog1);
       entry.setTitle("title");
       entry.setBody("body");
       entry.setAuthor("simon");
       entry.addCategory(category);
-      service.putBlogEntry(entry);
+      blogService.putBlogEntry(entry);
 
       Hashtable post = handler.getPost("blog1/" + entry.getId(), "username", "password");
       assertEquals("title", post.get(MetaWeblogAPIHandler.TITLE));
@@ -250,8 +248,7 @@ public class MultiBlogMetaWeblogAPIHandlerTest extends MultiBlogTestCase {
 
       String postid = handler.newPost("blog1", "username", "password", struct, true);
 
-      BlogService service = new BlogService();
-      BlogEntry entry = service.getBlogEntry(blog1, postid.substring("blog1".length()+1));
+      BlogEntry entry = blogService.getBlogEntry(blog1, postid.substring("blog1".length()+1));
 
       assertEquals("blog1/" + entry.getId(), postid);
       assertEquals("Title", entry.getTitle());
@@ -279,8 +276,7 @@ public class MultiBlogMetaWeblogAPIHandlerTest extends MultiBlogTestCase {
 
       String postid = handler.newPost("blog1", "username", "password", struct, true);
 
-      BlogService service = new BlogService();
-      BlogEntry entry = service.getBlogEntry(blog1, postid.substring("blog1".length()+1));
+      BlogEntry entry = blogService.getBlogEntry(blog1, postid.substring("blog1".length()+1));
 
       assertEquals("blog1/" + entry.getId(), postid);
       assertEquals("Title", entry.getTitle());
@@ -295,11 +291,10 @@ public class MultiBlogMetaWeblogAPIHandlerTest extends MultiBlogTestCase {
 
   public void testEditPost() {
     try {
-      BlogService service = new BlogService();
       BlogEntry entry = new BlogEntry(blog1);
       entry.setTitle("title");
       entry.setBody("body");
-      service.putBlogEntry(entry);
+      blogService.putBlogEntry(entry);
 
       Hashtable struct = new Hashtable();
       struct.put(MetaWeblogAPIHandler.TITLE, "Title");
@@ -307,7 +302,7 @@ public class MultiBlogMetaWeblogAPIHandlerTest extends MultiBlogTestCase {
       boolean result = handler.editPost("blog1/" + entry.getId(), "username", "password", struct, true);
 
       assertTrue(result);
-      entry = service.getBlogEntry(blog1, entry.getId());
+      entry = blogService.getBlogEntry(blog1, entry.getId());
       assertEquals("Title", entry.getTitle());
       assertEquals("<p>Content</p>", entry.getBody());
       assertEquals("username", entry.getAuthor());

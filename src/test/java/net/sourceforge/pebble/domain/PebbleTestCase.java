@@ -36,6 +36,7 @@ import net.sourceforge.pebble.Configuration;
 import net.sourceforge.pebble.PebbleContext;
 import net.sourceforge.pebble.util.FileUtils;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
+import org.springframework.context.annotation.AnnotationConfigUtils;
 import org.springframework.context.support.StaticApplicationContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -68,6 +69,9 @@ public abstract class PebbleTestCase extends TestCase {
     new File(TEST_BLOG_LOCATION, "blogs").mkdir();
 
     testApplicationContext = new StaticApplicationContext();
+    // Make sure it uses annotation injection
+    AnnotationConfigUtils.registerAnnotationConfigProcessors(testApplicationContext);
+    testApplicationContext.refresh();
 
     Configuration config = new Configuration();
     config.setUrl("http://www.yourdomain.com/blog/");
@@ -84,8 +88,12 @@ public abstract class PebbleTestCase extends TestCase {
 
   protected void addComponents(Object... components) {
     for (Object component : components) {
-      testApplicationContext.getBeanFactory().registerSingleton(component.toString(), component);
+      testApplicationContext.getBeanFactory().registerSingleton(component.getClass().getSimpleName(), component);
     }
+  }
+
+  protected void addComponent(String name, Object component) {
+      testApplicationContext.getBeanFactory().registerSingleton(name, component);
   }
 
   protected <T> T createBean(Class<T> clazz) {

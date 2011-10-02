@@ -36,7 +36,6 @@ import net.sourceforge.pebble.event.response.IpAddressListener;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.RedirectView;
 import net.sourceforge.pebble.domain.BlogEntry;
-import net.sourceforge.pebble.domain.BlogService;
 import net.sourceforge.pebble.domain.Comment;
 
 import java.util.Date;
@@ -49,17 +48,14 @@ import java.util.Date;
 public class PublishBlogEntryActionTest extends SecureActionTestCase {
 
   protected void setUp() throws Exception {
-    action = new PublishBlogEntryAction();
-
-    super.setUp();
+    super.setUp(PublishBlogEntryAction.class);
   }
 
   public void testPublishBlogEntryNow() throws Exception {
-    BlogService service = new BlogService();
     BlogEntry blogEntry = new BlogEntry(blog);
     blogEntry.setDate(new Date(100000));
     blogEntry.setPublished(false);
-    service.putBlogEntry(blogEntry);
+    blogService.putBlogEntry(blogEntry);
 
     // now execute the action
     request.setParameter("entry", blogEntry.getId());
@@ -67,7 +63,7 @@ public class PublishBlogEntryActionTest extends SecureActionTestCase {
     request.setParameter("submit", "Publish");
     View view = action.process(request, response);
 
-    blogEntry = (BlogEntry)blog.getRecentBlogEntries(1).get(0);
+    blogEntry = blog.getRecentBlogEntries(1).get(0);
     assertTrue(blogEntry.isPublished());
     assertEquals(new Date().getTime(), blogEntry.getDate().getTime(), 1000);
     assertTrue(view instanceof RedirectView);
@@ -75,15 +71,14 @@ public class PublishBlogEntryActionTest extends SecureActionTestCase {
 
   public void testPublishBlogEntryAsIsAndCheckCommentsStaysIndexed() throws Exception {
     blog.getPluginProperties().setProperty(IpAddressListener.WHITELIST_KEY, "127.0.0.1");
-    BlogService service = new BlogService();
     BlogEntry blogEntry = new BlogEntry(blog);
     blogEntry.setDate(new Date(100000));
     blogEntry.setPublished(false);
-    service.putBlogEntry(blogEntry);
+    blogService.putBlogEntry(blogEntry);
 
     Comment comment = blogEntry.createComment("title", "body", "author", "email", "website", "avatar", "127.0.0.1");
     blogEntry.addComment(comment);
-    service.putBlogEntry(blogEntry);
+    blogService.putBlogEntry(blogEntry);
 
     String commentId = comment.getGuid();
     assertTrue(blog.getResponseIndex().getApprovedResponses().contains(commentId));
@@ -92,9 +87,9 @@ public class PublishBlogEntryActionTest extends SecureActionTestCase {
     request.setParameter("entry", blogEntry.getId());
     request.setParameter("publishDate", "as-is");
     request.setParameter("submit", "Publish");
-    View view = action.process(request, response);
+    action.process(request, response);
 
-    blogEntry = service.getBlogEntry(blog, blogEntry.getId());
+    blogEntry = blogService.getBlogEntry(blog, blogEntry.getId());
     assertTrue(blogEntry.isPublished());
     assertEquals(new Date(100000), blogEntry.getDate());
 
@@ -104,15 +99,14 @@ public class PublishBlogEntryActionTest extends SecureActionTestCase {
 
   public void testPublishBlogEntryNowAndCheckCommentsReindexed() throws Exception {
     blog.getPluginProperties().setProperty(IpAddressListener.WHITELIST_KEY, "127.0.0.1");
-    BlogService service = new BlogService();
     BlogEntry blogEntry = new BlogEntry(blog);
     blogEntry.setDate(new Date(100000));
     blogEntry.setPublished(false);
-    service.putBlogEntry(blogEntry);
+    blogService.putBlogEntry(blogEntry);
 
     Comment comment = blogEntry.createComment("title", "body", "author", "email", "website", "avatar", "127.0.0.1");
     blogEntry.addComment(comment);
-    service.putBlogEntry(blogEntry);
+    blogService.putBlogEntry(blogEntry);
 
     String commentId = comment.getGuid();
     assertTrue(blog.getResponseIndex().getApprovedResponses().contains(commentId));
@@ -121,9 +115,9 @@ public class PublishBlogEntryActionTest extends SecureActionTestCase {
     request.setParameter("entry", blogEntry.getId());
     request.setParameter("publishDate", "now");
     request.setParameter("submit", "Publish");
-    View view = action.process(request, response);
+    action.process(request, response);
 
-    blogEntry = (BlogEntry)blog.getRecentBlogEntries(1).get(0);
+    blogEntry = blog.getRecentBlogEntries(1).get(0);
     assertTrue(blogEntry.isPublished());
     assertEquals(new Date().getTime(), blogEntry.getDate().getTime(), 1000);
 
@@ -133,17 +127,16 @@ public class PublishBlogEntryActionTest extends SecureActionTestCase {
   }
 
   public void testUnpublishBlogEntry() throws Exception {
-    BlogService service = new BlogService();
     BlogEntry blogEntry = new BlogEntry(blog);
     blogEntry.setPublished(true);
-    service.putBlogEntry(blogEntry);
+    blogService.putBlogEntry(blogEntry);
 
     // now execute the action
     request.setParameter("entry", blogEntry.getId());
     request.setParameter("submit", "Unpublish");
     View view = action.process(request, response);
 
-    blogEntry = service.getBlogEntry(blog, blogEntry.getId());
+    blogEntry = blogService.getBlogEntry(blog, blogEntry.getId());
     assertTrue(blogEntry.isUnpublished());
     assertTrue(view instanceof RedirectView);
   }

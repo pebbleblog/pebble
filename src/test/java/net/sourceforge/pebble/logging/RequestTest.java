@@ -150,8 +150,7 @@ public class RequestTest extends SingleBlogTestCase {
   public void testFriendlyNamesForBlogEntries() throws Exception {
     BlogEntry be = new BlogEntry(blog);
     be.setTitle("Test blog entry");
-    BlogService service = new BlogService();
-    service.putBlogEntry(be);
+    blogService.putBlogEntry(be);
     String permalink = "/" + be.getPermalink().substring(PebbleContext.getInstance().getConfiguration().getUrl().length());
     url = new Request(permalink, blog);
     assertEquals("Blog Entry : Test blog entry", url.getName());
@@ -160,10 +159,9 @@ public class RequestTest extends SingleBlogTestCase {
   public void testFriendlyNamesForBlogEntriesUsingDefaultPermalinkProvider() throws Exception {
     BlogEntry be = new BlogEntry(blog);
     be.setTitle("Test blog entry");
-    BlogService service = new BlogService();
-    service.putBlogEntry(be);
+    blogService.putBlogEntry(be);
     String permalink = "/" + be.getPermalink().substring(PebbleContext.getInstance().getConfiguration().getUrl().length());
-    blog.setPermalinkProvider(new TitlePermalinkProvider());
+    blog.setPermalinkProvider(autowire(TitlePermalinkProvider.class));
     url = new Request(permalink, blog);
     assertEquals("Blog Entry : Test blog entry", url.getName());
   }

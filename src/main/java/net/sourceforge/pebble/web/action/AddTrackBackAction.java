@@ -39,6 +39,7 @@ import net.sourceforge.pebble.web.view.impl.TrackBackResponseView;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -52,6 +53,9 @@ public class AddTrackBackAction extends Action {
 
   /** the log used by this class */
   private static Log log = LogFactory.getLog(AddTrackBackAction.class);
+
+  @Inject
+  private BlogService blogService;
 
   /**
    * Peforms the processing associated with this action.
@@ -82,14 +86,13 @@ public class AddTrackBackAction extends Action {
         getModel().put("message", "The token has expired or is invalid");
         return new TrackBackResponseView();
       } else {
-        BlogService service = new BlogService();
-        blogEntry = service.getBlogEntry(blog, entry);
+        blogEntry = blogService.getBlogEntry(blog, entry);
 
         // only add the TrackBack if they are enabled for the entry
         if (blogEntry.isTrackBacksEnabled()) {
           TrackBack trackBack = blogEntry.createTrackBack(title, excerpt, url, blogName, ipAddress);
           blogEntry.addTrackBack(trackBack);
-          service.putBlogEntry(blogEntry);
+          blogService.putBlogEntry(blogEntry);
           TrackBackTokenManager.getInstance().expire(token);
 
           getModel().put("errorCode", new Integer(0));

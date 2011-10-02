@@ -36,6 +36,8 @@ import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.domain.BlogService;
 import net.sourceforge.pebble.domain.BlogServiceException;
 
+import javax.inject.Inject;
+
 
 /**
  * Generates permalinks using the pattern <time-in-millis>.
@@ -46,6 +48,9 @@ public class ShortPermalinkProvider extends PermalinkProviderSupport {
 
   /** the regex used to check for a blog entry permalink */
   private static final String BLOG_ENTRY_PERMALINK_REGEX = "/\\d*.html";
+
+  @Inject
+  private BlogService blogService;
 
   /**
    * Gets the permalink for a blog entry.
@@ -81,9 +86,8 @@ public class ShortPermalinkProvider extends PermalinkProviderSupport {
     // uri is of the form /1234567890123.html, so extract the 13-digit ID
     // and use it to find the correct blog entry
     Blog blog = getBlog();
-    BlogService service = new BlogService();
     try {
-      return service.getBlogEntry(blog, uri.substring(1, 14));
+      return blogService.getBlogEntry(blog, uri.substring(1, 14));
     } catch (BlogServiceException e) {
       return null;
     }

@@ -54,10 +54,9 @@ public class MultiBlogTest extends MultiBlogTestCase {
   public void testLastModified() throws Exception {
     assertEquals(new Date(0), blog.getLastModified());
 
-    BlogService service = new BlogService();
     BlogEntry blogEntry = new BlogEntry(blog1);
     blogEntry.setPublished(true);
-    service.putBlogEntry(blogEntry);
+    blogService.putBlogEntry(blogEntry);
 
     assertEquals(blogEntry.getDate(), blog.getLastModified());
   }
@@ -70,10 +69,9 @@ public class MultiBlogTest extends MultiBlogTestCase {
     assertTrue(blog.getRecentBlogEntries(0).isEmpty());
 
     // now add an entry
-    BlogService service = new BlogService();
     BlogEntry blogEntry = new BlogEntry(blog1);
     blogEntry.setPublished(true);
-    service.putBlogEntry(blogEntry);
+    blogService.putBlogEntry(blogEntry);
 
     // ask for zero entries
     assertTrue(blog.getRecentBlogEntries(0).isEmpty());

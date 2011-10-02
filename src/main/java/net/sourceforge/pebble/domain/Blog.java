@@ -134,6 +134,9 @@ public class Blog extends AbstractBlog {
   /** the permalink provider in use */
   private PermalinkProvider permalinkProvider;
 
+  /** the default permalink provider, for fallback */
+  private PermalinkProvider defaultPermalinkProvider;
+
   /** the log used to log referers, requests, etc */
   private AbstractLogger logger;
 
@@ -176,14 +179,17 @@ public class Blog extends AbstractBlog {
   private final ConcurrentMap<String, Supplier<?>> serviceCache = new ConcurrentHashMap<String, Supplier<?>>();
 
   private final DAOFactory daoFactory;
+
+  private final BlogService blogService;
   /**
    * Creates a new Blog instance, based at the specified location.
    *
    * @param root    an absolute path pointing to the root directory of the blog
    */
-  public Blog(DAOFactory daoFactory, String root) {
+  public Blog(DAOFactory daoFactory, BlogService blogService, String root) {
     super(root);
     this.daoFactory = daoFactory;
+    this.blogService = blogService;
     beanFactory = PebbleContext.getInstance().getApplicationContext().getAutowireCapableBeanFactory();
 
     // probably Blog should be made a final class if init is called from here - 
@@ -202,13 +208,15 @@ public class Blog extends AbstractBlog {
   protected void init() {
     super.init();
 
+    setPermalinkProvider(instantiate(DefaultPermalinkProvider.class));
+    defaultPermalinkProvider = permalinkProvider;
     try {
+      // Override with configured permalink provider
       Class<?> c = Class.forName(getPermalinkProviderName());
       setPermalinkProvider(instantiate(c.asSubclass(PermalinkProvider.class)));
     } catch (Exception e) {
       error("Could not load permalink provider \"" + getPermalinkProviderName() + "\"");
       e.printStackTrace();
-      setPermalinkProvider(new DefaultPermalinkProvider());
     }
 
     daoFactory.init(this);
@@ -952,14 +960,13 @@ public class Blog extends AbstractBlog {
    */
   public List<BlogEntry> getBlogEntries() {
     List<BlogEntry> blogEntries = new ArrayList<BlogEntry>();
-    BlogService service = new BlogService();
 
     for (int year = years.size()-1; year >= 0; year--) {
       Year y = years.get(year);
       Month[] months = y.getMonths();
       for (int month = 11; month >= 0; month--) {
         try {
-          blogEntries.addAll(service.getBlogEntries(this, y.getYear(), months[month].getMonth()));
+          blogEntries.addAll(blogService.getBlogEntries(this, y.getYear(), months[month].getMonth()));
         } catch (BlogServiceException e) {
           log.error("Exception encountered", e);
         }
@@ -976,12 +983,11 @@ public class Blog extends AbstractBlog {
    */
   public List<BlogEntry> getUnpublishedBlogEntries() {
     List<BlogEntry> blogEntries = new ArrayList<BlogEntry>();
-    BlogService service = new BlogService();
 
     List<String> blogEntryIds = blogEntryIndex.getUnpublishedBlogEntries();
     for (String blogEntryId : blogEntryIds) {
       try {
-        blogEntries.add(service.getBlogEntry(this, blogEntryId));
+        blogEntries.add(blogService.getBlogEntry(this, blogEntryId));
       } catch (BlogServiceException e) {
         log.error("Exception encountered", e);
       }
@@ -1034,12 +1040,11 @@ public class Blog extends AbstractBlog {
    * @return a List containing the most recent blog entries
    */
   public List<BlogEntry> getRecentBlogEntries(int numberOfEntries) {
-    BlogService service = new BlogService();
     List<String> blogEntryIds = blogEntryIndex.getBlogEntries();
     List<BlogEntry> blogEntries = new ArrayList<BlogEntry>();
     for (String blogEntryId : blogEntryIds) {
       try {
-        BlogEntry blogEntry = service.getBlogEntry(this, blogEntryId);
+        BlogEntry blogEntry = blogService.getBlogEntry(this, blogEntryId);
         blogEntries.add(blogEntry);
       } catch (BlogServiceException e) {
         log.error("Exception encountered", e);
@@ -1071,7 +1076,6 @@ public class Blog extends AbstractBlog {
    * @return a List containing the most recent blog entries
    */
   public List<BlogEntry> getRecentPublishedBlogEntries(int number) {
-    BlogService service = new BlogService();
     List<String> blogEntryIds = blogEntryIndex.getPublishedBlogEntries();
     List<BlogEntry> blogEntries = new ArrayList<BlogEntry>();
     for (String blogEntryId : blogEntryIds) {
@@ -1080,7 +1084,7 @@ public class Blog extends AbstractBlog {
       }
 
       try {
-        BlogEntry blogEntry = service.getBlogEntry(this, blogEntryId);
+        BlogEntry blogEntry = blogService.getBlogEntry(this, blogEntryId);
         if (blogEntry != null) {
           blogEntries.add(blogEntry);
         }
@@ -1099,11 +1103,10 @@ public class Blog extends AbstractBlog {
    * @return a List containing the blog entries
    */
   public List<BlogEntry> getBlogEntries(List<String> blogEntryIds) {
-    BlogService service = new BlogService();
     List<BlogEntry> blogEntries = new LinkedList<BlogEntry>();
     for (String blogEntryId : blogEntryIds) {
       try {
-        BlogEntry blogEntry = service.getBlogEntry(this, blogEntryId);
+        BlogEntry blogEntry = blogService.getBlogEntry(this, blogEntryId);
         if (blogEntry != null) {
           blogEntries.add(blogEntry);
         }
@@ -1123,12 +1126,11 @@ public class Blog extends AbstractBlog {
    * @return  a List containing the most recent blog entries
    */
   public List<BlogEntry> getRecentPublishedBlogEntries(Category category) {
-    BlogService service = new BlogService();
     List<String> blogEntryIds = categoryIndex.getRecentBlogEntries(category);
     List<BlogEntry> blogEntries = new ArrayList<BlogEntry>();
     for (String blogEntryId : blogEntryIds) {
       try {
-        BlogEntry blogEntry = service.getBlogEntry(this, blogEntryId);
+        BlogEntry blogEntry = blogService.getBlogEntry(this, blogEntryId);
         if (blogEntry != null && blogEntry.isPublished()) {
           blogEntries.add(blogEntry);
         }
@@ -1152,12 +1154,11 @@ public class Blog extends AbstractBlog {
    * @return  a List containing the most recent blog entries
    */
   public List<BlogEntry> getRecentPublishedBlogEntries(String author) {
-    BlogService service = new BlogService();
     List<String> blogEntryIds = authorIndex.getRecentBlogEntries(author);
     List<BlogEntry> blogEntries = new ArrayList<BlogEntry>();
     for (String blogEntryId : blogEntryIds) {
       try {
-        BlogEntry blogEntry = service.getBlogEntry(this, blogEntryId);
+        BlogEntry blogEntry = blogService.getBlogEntry(this, blogEntryId);
         if (blogEntry != null && blogEntry.isPublished()) {
           blogEntries.add(blogEntry);
         }
@@ -1181,12 +1182,11 @@ public class Blog extends AbstractBlog {
    * @return a List containing the most recent blog entries
    */
   public List<BlogEntry> getRecentPublishedBlogEntries(Tag tag) {
-    BlogService service = new BlogService();
     List<String> blogEntryIds = tagIndex.getRecentBlogEntries(tag);
     List<BlogEntry> blogEntries = new ArrayList<BlogEntry>();
     for (String blogEntryId : blogEntryIds) {
       try {
-        BlogEntry blogEntry = service.getBlogEntry(this, blogEntryId);
+        BlogEntry blogEntry = blogService.getBlogEntry(this, blogEntryId);
         if (blogEntry != null && blogEntry.isPublished()) {
           blogEntries.add(blogEntry);
         }
@@ -1208,12 +1208,11 @@ public class Blog extends AbstractBlog {
    * @return a List containing the most recent blog entries
    */
   public List<Response> getRecentApprovedResponses() {
-    BlogService service = new BlogService();
     List<String> responseIds = responseIndex.getApprovedResponses();
     List<Response> responses = new ArrayList<Response>();
     for (String responseId : responseIds) {
       try {
-        Response response = service.getResponse(this, responseId);
+        Response response = blogService.getResponse(this, responseId);
         if (response != null && response.getBlogEntry().isPublished()) {
           responses.add(response);
         }
@@ -1333,9 +1332,8 @@ public class Blog extends AbstractBlog {
     }
 
     if (blogEntryId != null) {
-      BlogService service = new BlogService();
       try {
-        return service.getBlogEntry(this, blogEntryId);
+        return blogService.getBlogEntry(this, blogEntryId);
       } catch (BlogServiceException e) {
         // do nothing
       }
@@ -1355,9 +1353,8 @@ public class Blog extends AbstractBlog {
     }
 
     if (blogEntryId != null) {
-      BlogService service = new BlogService();
       try {
-        return service.getBlogEntry(this, blogEntryId);
+        return blogService.getBlogEntry(this, blogEntryId);
       } catch (BlogServiceException e) {
         // do nothing
       }
@@ -1799,6 +1796,15 @@ public class Blog extends AbstractBlog {
    */
   public PermalinkProvider getPermalinkProvider() {
     return this.permalinkProvider;
+  }
+
+  /**
+   * Gets the default permalink provider to fallback to in case the permalink provider fails.
+   *
+   * @return  a PermalinkProvider instance
+   */
+  public PermalinkProvider getDefaultPermalinkProvider() {
+    return this.defaultPermalinkProvider;
   }
 
   /**

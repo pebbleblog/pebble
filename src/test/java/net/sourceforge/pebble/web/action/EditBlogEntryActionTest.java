@@ -45,16 +45,13 @@ import net.sourceforge.pebble.web.view.impl.BlogEntryFormView;
 public class EditBlogEntryActionTest extends SecureActionTestCase {
 
   protected void setUp() throws Exception {
-    action = new EditBlogEntryAction();
-
-    super.setUp();
+    super.setUp(EditBlogEntryAction.class);
   }
 
   public void testProcess() throws Exception {
     // first of all add a blog entry to be edited
-    BlogService service = new BlogService();
     BlogEntry newBlogEntry = new BlogEntry(blog);
-    service.putBlogEntry(newBlogEntry);
+    blogService.putBlogEntry(newBlogEntry);
 
     // now execute the action
     request.setParameter("entry", newBlogEntry.getId());

@@ -32,10 +32,14 @@
 package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.domain.FileMetaData;
+import net.sourceforge.pebble.service.LastModifiedService;
 import net.sourceforge.pebble.web.view.ForwardView;
 import net.sourceforge.pebble.web.view.View;
+import org.mockito.Mock;
 
 import javax.servlet.ServletException;
+
+import static org.mockito.MockitoAnnotations.initMocks;
 
 /**
  * Tests for the FileAction class.
@@ -44,10 +48,12 @@ import javax.servlet.ServletException;
  */
 public class FileActionTest extends SingleBlogActionTestCase {
 
-  protected void setUp() throws Exception {
-    action = new FileAction();
+  @Mock
+  private LastModifiedService lastModifiedService;
 
-    super.setUp();
+  protected void setUp() throws Exception {
+    initMocks(this);
+    super.setUp(FileAction.class, lastModifiedService);
   }
 
   public void testBrowsingForbiddenByAnonymousUsers() {

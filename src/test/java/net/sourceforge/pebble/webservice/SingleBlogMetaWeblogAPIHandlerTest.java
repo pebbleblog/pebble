@@ -52,14 +52,14 @@ import java.text.SimpleDateFormat;
  */
 public class SingleBlogMetaWeblogAPIHandlerTest extends SingleBlogTestCase {
 
-  private MetaWeblogAPIHandler handler = new MetaWeblogAPIHandler();
+  private MetaWeblogAPIHandler handler;
   private AuthenticationManager authenticationManager;
 
   protected void setUp() throws Exception {
     super.setUp();
 
     authenticationManager = new MockAuthenticationManager(true, new GrantedAuthority[] {new GrantedAuthorityImpl(Constants.BLOG_CONTRIBUTOR_ROLE)});
-    handler.setAuthenticationManager(authenticationManager);
+    handler = new MetaWeblogAPIHandler(authenticationManager, blogService);
     blog.setProperty(Blog.BLOG_CONTRIBUTORS_KEY, "username");
   }
 
@@ -71,7 +71,7 @@ public class SingleBlogMetaWeblogAPIHandlerTest extends SingleBlogTestCase {
    * Tests that authentication fails properly.
    */
   public void testAuthenticationFailure() {
-    handler.setAuthenticationManager(new MockAuthenticationManager(false));
+    handler = new MetaWeblogAPIHandler(new MockAuthenticationManager(false), blogService);
     try {
       handler.getCategories("default", "username", "password");
       fail();
@@ -156,27 +156,25 @@ public class SingleBlogMetaWeblogAPIHandlerTest extends SingleBlogTestCase {
 
   public void testGetRecentPosts() {
     try {
-      BlogService service = new BlogService();
-
       BlogEntry entry1 = new BlogEntry(blog);
       entry1.setTitle("title1");
       entry1.setBody("body1");
-      service.putBlogEntry(entry1);
+      blogService.putBlogEntry(entry1);
 
       BlogEntry entry2 = new BlogEntry(blog);
       entry2.setTitle("title2");
       entry2.setBody("body2");
-      service.putBlogEntry(entry2);
+      blogService.putBlogEntry(entry2);
 
       BlogEntry entry3 = new BlogEntry(blog);
       entry3.setTitle("title3");
       entry3.setBody("body3");
-      service.putBlogEntry(entry3);
+      blogService.putBlogEntry(entry3);
 
       BlogEntry entry4 = new BlogEntry(blog);
       entry4.setTitle("title4");
       entry4.setBody("body4");
-      service.putBlogEntry(entry4);
+      blogService.putBlogEntry(entry4);
 
       Vector posts = handler.getRecentPosts("default", "username", "password", 3);
 
@@ -205,13 +203,12 @@ public class SingleBlogMetaWeblogAPIHandlerTest extends SingleBlogTestCase {
       Category category = new Category("/acategory", "A category");
       blog.addCategory(category);
 
-      BlogService service = new BlogService();
       BlogEntry entry = new BlogEntry(blog);
       entry.setTitle("title");
       entry.setBody("body");
       entry.setAuthor("simon");
       entry.addCategory(category);
-      service.putBlogEntry(entry);
+      blogService.putBlogEntry(entry);
 
       Hashtable post = handler.getPost("default/" + entry.getId(), "username", "password");
       assertEquals("title", post.get(MetaWeblogAPIHandler.TITLE));
@@ -261,8 +258,7 @@ public class SingleBlogMetaWeblogAPIHandlerTest extends SingleBlogTestCase {
 
       String postid = handler.newPost("default", "username", "password", struct, true);
 
-      BlogService service = new BlogService();
-      BlogEntry entry = service.getBlogEntry(blog, postid.substring("default".length()+1));
+      BlogEntry entry = blogService.getBlogEntry(blog, postid.substring("default".length()+1));
 
       assertEquals("default/" + entry.getId(), postid);
       assertEquals("Title", entry.getTitle());
@@ -290,8 +286,7 @@ public class SingleBlogMetaWeblogAPIHandlerTest extends SingleBlogTestCase {
 
       String postid = handler.newPost("default", "username", "password", struct, true);
 
-      BlogService service = new BlogService();
-      BlogEntry entry = service.getBlogEntry(blog, postid.substring("default".length()+1));
+      BlogEntry entry = blogService.getBlogEntry(blog, postid.substring("default".length()+1));
 
       assertEquals("default/" + entry.getId(), postid);
       assertEquals("Title", entry.getTitle());
@@ -306,11 +301,10 @@ public class SingleBlogMetaWeblogAPIHandlerTest extends SingleBlogTestCase {
 
   public void testEditPost() {
     try {
-      BlogService service = new BlogService();
       BlogEntry entry = new BlogEntry(blog);
       entry.setTitle("title");
       entry.setBody("body");
-      service.putBlogEntry(entry);
+      blogService.putBlogEntry(entry);
 
       Hashtable struct = new Hashtable();
       struct.put(MetaWeblogAPIHandler.TITLE, "Title");
@@ -318,7 +312,7 @@ public class SingleBlogMetaWeblogAPIHandlerTest extends SingleBlogTestCase {
       boolean result = handler.editPost("default/" + entry.getId(), "username", "password", struct, true);
 
       assertTrue(result);
-      entry = service.getBlogEntry(blog, entry.getId());
+      entry = blogService.getBlogEntry(blog, entry.getId());
       assertEquals("Title", entry.getTitle());
       assertEquals("<p>Content</p>", entry.getBody());
       assertEquals("username", entry.getAuthor());
@@ -385,8 +379,7 @@ public class SingleBlogMetaWeblogAPIHandlerTest extends SingleBlogTestCase {
 
       String postid = handler.newPost("default", "username", "password", struct, true);
 
-      BlogService service = new BlogService();
-      BlogEntry entry = service.getBlogEntry(blog, postid.substring("default".length()+1));
+      BlogEntry entry = blogService.getBlogEntry(blog, postid.substring("default".length()+1));
 
       DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
       format.setTimeZone(blog.getTimeZone());

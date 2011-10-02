@@ -47,15 +47,12 @@ import net.sourceforge.pebble.util.SecurityUtils;
 public class SaveCommentActionTest extends SingleBlogActionTestCase {
 
   protected void setUp() throws Exception {
-    action = new SaveCommentAction();
-
-    super.setUp();
+    super.setUp(SaveCommentAction.class);
   }
 
   public void testProcessAsBlogContributorWhenReplyingToBlogEntry() throws Exception {
-    BlogService service = new BlogService();
     BlogEntry blogEntry = new BlogEntry(blog);
-    service.putBlogEntry(blogEntry);
+    blogService.putBlogEntry(blogEntry);
 
     request.setParameter("entry", "" + blogEntry.getId());
     request.setParameter("comment", "");
@@ -71,7 +68,7 @@ public class SaveCommentActionTest extends SingleBlogActionTestCase {
     View view = action.process(request, response);
     assertTrue(view instanceof CommentConfirmationView);
 
-    blogEntry = service.getBlogEntry(blog, blogEntry.getId());
+    blogEntry = blogService.getBlogEntry(blog, blogEntry.getId());
     assertEquals(1, blogEntry.getComments().size());
 
     Comment comment = blogEntry.getComments().get(0);
@@ -83,13 +80,12 @@ public class SaveCommentActionTest extends SingleBlogActionTestCase {
   }
 
   public void testProcessAsBlogContributorWhenReplyingToComment() throws Exception {
-    BlogService service = new BlogService();
     BlogEntry blogEntry = new BlogEntry(blog);
-    service.putBlogEntry(blogEntry);
+    blogService.putBlogEntry(blogEntry);
 
     Comment comment1 = blogEntry.createComment("Title", "Body", "Author", "me@somedomain.com", "http://www.google.com", "http://graph.facebook.com/user/picture", "127.0.0.1");
     blogEntry.addComment(comment1);
-    service.putBlogEntry(blogEntry);
+    blogService.putBlogEntry(blogEntry);
 
     request.setParameter("entry", "" + blogEntry.getId());
     request.setParameter("comment", "" + comment1.getId());
@@ -105,7 +101,7 @@ public class SaveCommentActionTest extends SingleBlogActionTestCase {
     View view = action.process(request, response);
     assertTrue(view instanceof CommentConfirmationView);
 
-    blogEntry = service.getBlogEntry(blog, blogEntry.getId());
+    blogEntry = blogService.getBlogEntry(blog, blogEntry.getId());
     assertEquals(2, blogEntry.getComments().size());
 
     Comment comment2 = blogEntry.getComments().get(1);
@@ -118,9 +114,8 @@ public class SaveCommentActionTest extends SingleBlogActionTestCase {
   }
 
   public void testProcessAsBlogContributorWhenReplyingToCommentThatDoesntExist() throws Exception {
-    BlogService service = new BlogService();
     BlogEntry blogEntry = new BlogEntry(blog);
-    service.putBlogEntry(blogEntry);
+    blogService.putBlogEntry(blogEntry);
 
     request.setParameter("entry", "" + blogEntry.getId());
     request.setParameter("comment", "123456789");
@@ -136,7 +131,7 @@ public class SaveCommentActionTest extends SingleBlogActionTestCase {
     View view = action.process(request, response);
     assertTrue(view instanceof CommentConfirmationView);
 
-    blogEntry = service.getBlogEntry(blog, blogEntry.getId());
+    blogEntry = blogService.getBlogEntry(blog, blogEntry.getId());
     assertEquals(1, blogEntry.getComments().size());
 
     Comment comment = blogEntry.getComments().get(0);
@@ -149,9 +144,8 @@ public class SaveCommentActionTest extends SingleBlogActionTestCase {
   }
 
   public void testProcessAsAnonymousUser() throws Exception {
-    BlogService service = new BlogService();
     BlogEntry blogEntry = new BlogEntry(blog);
-    service.putBlogEntry(blogEntry);
+    blogService.putBlogEntry(blogEntry);
 
     request.setParameter("entry", "" + blogEntry.getId());
     request.setParameter("comment", "");
@@ -170,10 +164,9 @@ public class SaveCommentActionTest extends SingleBlogActionTestCase {
   }
 
   public void testProcessWhenCommentsDisabled() throws Exception {
-    BlogService service = new BlogService();
     BlogEntry blogEntry = new BlogEntry(blog);
     blogEntry.setCommentsEnabled(false);
-    service.putBlogEntry(blogEntry);
+    blogService.putBlogEntry(blogEntry);
 
     request.setParameter("entry", "" + blogEntry.getId());
     request.setParameter("comment", "");

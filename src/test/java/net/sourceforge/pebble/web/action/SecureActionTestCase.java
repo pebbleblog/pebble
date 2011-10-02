@@ -49,14 +49,17 @@ public abstract class SecureActionTestCase extends SingleBlogTestCase {
   protected MockHttpServletResponse response;
   protected Model model;
 
-  protected void setUp() throws Exception {
+  protected void setUp(Class<? extends SecureAction> actionClass, Object... dependencies) throws Exception {
     super.setUp();
+
+    addComponents(dependencies);
 
     request = new MockHttpServletRequest();
     response = new MockHttpServletResponse();
 
     model = new Model();
     model.put(Constants.BLOG_KEY, blog);
+    action = autowire(actionClass);
     action.setModel(model);
   }
 

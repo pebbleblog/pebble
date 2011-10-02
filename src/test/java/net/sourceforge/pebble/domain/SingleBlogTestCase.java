@@ -36,6 +36,7 @@ import net.sourceforge.pebble.PebbleContext;
 import net.sourceforge.pebble.dao.DAOFactory;
 import net.sourceforge.pebble.dao.mock.MockDAOFactory;
 import net.sourceforge.pebble.security.MockSecurityRealm;
+import net.sourceforge.pebble.service.StaticPageService;
 
 import java.io.File;
 
@@ -48,28 +49,33 @@ public abstract class SingleBlogTestCase extends PebbleTestCase {
 
   protected Blog blog;
   protected DAOFactory daoFactory;
+  protected BlogService blogService;
+  protected StaticPageService staticPageService;
 
   protected void setUp() throws Exception {
     super.setUp();
 
+    Configuration config = new Configuration();
+    config.setDataDirectory(TEST_BLOG_LOCATION.getAbsolutePath());
+    config.setUrl("http://www.yourdomain.com/blog/");
+    config.setSecurityRealm(new MockSecurityRealm());
+    PebbleContext.getInstance().setConfiguration(config);
+
     daoFactory = new MockDAOFactory();
-    DAOFactory.setConfiguredFactory(daoFactory);
     BlogManager.getInstance().setMultiBlog(false);
+
+    blogService = new BlogService(daoFactory.getBlogEntryDAO());
+    addComponents(daoFactory, daoFactory.getBlogEntryDAO(), daoFactory.getCategoryDAO(),
+        daoFactory.getRefererFilterDAO(), daoFactory.getStaticPageDAO());
+    addComponents(blogService, autowire(StaticPageService.class));
 
     File blogDirectory = new File(TEST_BLOG_LOCATION, "blogs/default");
     blogDirectory.mkdir();
-    blog = new Blog(daoFactory, blogDirectory.getAbsolutePath());
+    blog = new Blog(daoFactory, blogService, blogDirectory.getAbsolutePath());
     Theme theme = new Theme(blog, "user-default", TEST_BLOG_LOCATION.getAbsolutePath());
     blog.setEditableTheme(theme);
     // There is some code that does i18n and runs assertions assuming that the locale is English
     blog.setProperty(Blog.LANGUAGE_KEY, "en");
-
-    Configuration config = new Configuration();
-    config.setDataDirectory(TEST_BLOG_LOCATION.getAbsolutePath());
-    config.setUrl("http://www.yourdomain.com/blog/");
-    PebbleContext.getInstance().setConfiguration(config);
-
-    PebbleContext.getInstance().getConfiguration().setSecurityRealm(new MockSecurityRealm());
 
     BlogManager.getInstance().addBlog(blog);
     blog.start();

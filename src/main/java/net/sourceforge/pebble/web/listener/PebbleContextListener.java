@@ -66,14 +66,14 @@ public class PebbleContextListener implements ServletContextListener {
     ApplicationContext applicationContext = WebApplicationContextUtils.getRequiredWebApplicationContext(event.getServletContext());
     Configuration config = (Configuration)applicationContext.getBean("pebbleConfiguration");
     DAOFactory daoFactory = (DAOFactory)applicationContext.getBean("daoFactory");
-    DAOFactory.setConfiguredFactory(daoFactory);
+    BlogService blogService = (BlogService)applicationContext.getBean("blogService");
     PebbleContext ctx = PebbleContext.getInstance();
     ctx.setConfiguration(config);
     ctx.setWebApplicationRoot(event.getServletContext().getRealPath("/"));
     ctx.setApplicationContext(applicationContext);
 
     BlogManager.getInstance().setMultiBlog(config.isMultiBlog());
-    BlogManager.getInstance().startBlogs(daoFactory);
+    BlogManager.getInstance().startBlogs(daoFactory, blogService);
 
     // find those blogs with no entries and add a welcome note
     Collection<Blog> blogs = (Collection<Blog>)BlogManager.getInstance().getBlogs();
@@ -104,8 +104,7 @@ public class PebbleContextListener implements ServletContextListener {
               "</p>");
           blogEntry.setAuthor("username");
           blogEntry.setPublished(true);
-          BlogService service = new BlogService();
-          service.putBlogEntry(blogEntry);
+          blogService.putBlogEntry(blogEntry);
         }
       } catch (BlogServiceException e) {
         log.warn("Could not store 'welcome note' blog entry for " + blog.getId());

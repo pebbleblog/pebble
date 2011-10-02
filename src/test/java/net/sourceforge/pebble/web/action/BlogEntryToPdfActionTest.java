@@ -31,12 +31,9 @@
  */
 package net.sourceforge.pebble.web.action;
 
-import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.domain.BlogEntry;
-import net.sourceforge.pebble.domain.BlogService;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.PdfView;
-import net.sourceforge.pebble.web.view.BinaryView;
 import net.sourceforge.pebble.web.view.NotFoundView;
 
 
@@ -49,13 +46,10 @@ public class BlogEntryToPdfActionTest extends SingleBlogActionTestCase {
 
 	private BlogEntry unpublishedEntry;
 	private BlogEntry publishedEntry;
-	private BlogService service;
 
   protected void setUp() throws Exception {
 
-    action = new BlogEntryToPdfAction();
-
-    super.setUp();
+    super.setUp(BlogEntryToPdfAction.class);
 
 	unpublishedEntry = new BlogEntry(blog);
 	unpublishedEntry.setTitle("This is some unpublished entry title");
@@ -64,9 +58,8 @@ public class BlogEntryToPdfActionTest extends SingleBlogActionTestCase {
 	publishedEntry.setTitle("This is some published entry title that is very important");
 	publishedEntry.setPublished(true);
 
-	service = new BlogService();
-	service.putBlogEntry(publishedEntry);
-	service.putBlogEntry(unpublishedEntry);
+	blogService.putBlogEntry(publishedEntry);
+	blogService.putBlogEntry(unpublishedEntry);
   }
 
   public void testPdfViewForNonExistingBlogEntryId() throws Exception {

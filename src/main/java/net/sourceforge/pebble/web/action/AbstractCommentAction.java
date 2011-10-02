@@ -36,6 +36,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 
+import javax.inject.Inject;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -63,6 +64,9 @@ import org.apache.commons.logging.LogFactory;
 public abstract class AbstractCommentAction extends Action {
 
   private static final Log log = LogFactory.getLog(AbstractCommentAction.class);
+
+  @Inject
+  protected BlogService blogService;
 
   protected Comment createComment(HttpServletRequest request, BlogEntry blogEntry) {
     String author = StringUtils.transformHTML(request.getParameter("author"));
@@ -180,8 +184,7 @@ public abstract class AbstractCommentAction extends Action {
     Blog blog = blogEntry.getBlog();
     blogEntry.addComment(comment);
 
-    BlogService service = new BlogService();
-    service.putBlogEntry(blogEntry);
+    blogService.putBlogEntry(blogEntry);
 
     // remember me functionality
     String rememberMe = (String)request.getSession().getAttribute("rememberMe");

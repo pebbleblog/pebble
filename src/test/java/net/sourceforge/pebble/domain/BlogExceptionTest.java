@@ -42,6 +42,7 @@ public class BlogExceptionTest extends SingleBlogTestCase {
    * Tests that a BlogServiceException can be correctly instantiated.
    */
   public void testConstruction() {
+    blog.clearMessages();
     assertEquals(0, blog.getMessages().size());
     BlogServiceException exception = new BlogServiceException(blog, "A nasty error message");
     assertEquals("A nasty error message", exception.getMessage());

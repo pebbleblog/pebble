@@ -164,9 +164,7 @@ public class Request extends CountedUrl {
 
         if (getName() == null) {
           // try with the default permalink provider
-          DefaultPermalinkProvider defaultPermalinkProvider = new DefaultPermalinkProvider();
-          defaultPermalinkProvider.setBlog(blog);
-          matchOnPermalinkProvider(url, defaultPermalinkProvider);
+          matchOnPermalinkProvider(url, blog.getDefaultPermalinkProvider());
         }
       }
     }

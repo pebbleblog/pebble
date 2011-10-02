@@ -49,6 +49,7 @@ import net.sourceforge.pebble.util.Pageable;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.security.authentication.AuthenticationManager;
 
 
 /**
@@ -74,8 +75,14 @@ public class SearchAPIHandler extends AbstractAPIHandler {
 
     static final int PAGE_SIZE = 20;
 
+    private final BlogService blogService;
 
-    /** the log used by this class */
+  public SearchAPIHandler(AuthenticationManager authenticationManager, BlogService blogService) {
+    super(authenticationManager);
+    this.blogService = blogService;
+  }
+
+  /** the log used by this class */
     private static Log log = LogFactory.getLog(SearchAPIHandler.class);
 
 
@@ -107,10 +114,9 @@ public class SearchAPIHandler extends AbstractAPIHandler {
             }
 
             List<SearchHit> hits = result.getHits();
-            BlogService service = new BlogService();
 
             for (SearchHit hit : hits) {
-                BlogEntry entry = service.getBlogEntry(hit.getBlog(), hit.getId());
+                BlogEntry entry = blogService.getBlogEntry(hit.getBlog(), hit.getId());
                 adaptBlogEntry(entry);
                 posts.add(adaptBlogEntry(entry));
             }
@@ -159,10 +165,8 @@ public class SearchAPIHandler extends AbstractAPIHandler {
             pageable.setPage(offset);
             List<SearchHit> subList = pageable.getListForPage();
 
-            BlogService service = new BlogService();
-
             for (SearchHit hit : subList ) {
-                BlogEntry entry = service.getBlogEntry(hit.getBlog(), hit.getId());
+                BlogEntry entry = blogService.getBlogEntry(hit.getBlog(), hit.getId());
                 adaptBlogEntry(entry);
                 posts.add(adaptBlogEntry(entry));
             }

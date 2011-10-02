@@ -41,38 +41,35 @@ import net.sourceforge.pebble.index.TagIndex;
  *
  * @author    Simon Brown
  */
-public abstract class DAOFactory {
-
-  /** the configured DAO factory */
-  private static DAOFactory configuredFactory;
+public interface DAOFactory {
 
   /**
    * Gets a DAO instance responsible for the dao of blog entries.
    *
    * @return  a BlogEntryDAO instance
    */
-  public abstract BlogEntryDAO getBlogEntryDAO();
+  BlogEntryDAO getBlogEntryDAO();
 
   /**
    * Gets a DAO instance responsible for the dao of static pages.
    *
    * @return  a StaticPageDAO instance
    */
-  public abstract StaticPageDAO getStaticPageDAO();
+  StaticPageDAO getStaticPageDAO();
 
   /**
    * Gets a DAO instance responsible for the dao of categories.
    *
    * @return  a CategoryDAO instance
    */
-  public abstract CategoryDAO getCategoryDAO();
+  CategoryDAO getCategoryDAO();
 
   /**
    * Gets a DAO instance responsible for the dao of referer filters.
    *
    * @return  a RefererFilterDAO instance
    */
-  public abstract RefererFilterDAO getRefererFilterDAO();
+  RefererFilterDAO getRefererFilterDAO();
 
   /**
    * Creates the tag index responsible for indexing tags, for the given blog
@@ -80,7 +77,7 @@ public abstract class DAOFactory {
    * @param blog the Blog for the tag index
    * @return the Tag index
    */
-  public abstract TagIndex createTagIndex(Blog blog);
+  TagIndex createTagIndex(Blog blog);
 
   /**
    * Creates the author index responsible for indexing authors, for the given blog
@@ -88,33 +85,18 @@ public abstract class DAOFactory {
    * @param blog the Blog for the author index
    * @return the author index
    */
-  public abstract AuthorIndex createAuthorIndex(Blog blog);
+  AuthorIndex createAuthorIndex(Blog blog);
 
   /**
    * Inits the DAO for the given blog
    *
    * @param blog The blog to init
    */
-  public void init(Blog blog) {
-  }
+  void init(Blog blog);
 
   /**
    * Shuts down the DAO
    */
-  public void shutdown() {
-  }
-  
-  public static void setConfiguredFactory(DAOFactory factory) {
-    configuredFactory = factory;
-  }
-
-  /**
-   *
-   * @deprecated Use injection instead
-   */
-  @Deprecated
-  public static DAOFactory getConfiguredFactory() {
-    return configuredFactory;
-  }
+  void shutdown();
 
 }

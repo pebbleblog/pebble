@@ -53,6 +53,7 @@ import net.sourceforge.pebble.domain.Tag;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.xmlrpc.XmlRpcException;
+import org.springframework.security.authentication.AuthenticationManager;
 
 /**
  * A handler for the MetaWeblog API (accessed via XML-RPC).
@@ -89,6 +90,13 @@ public class MetaWeblogAPIHandler extends AbstractAPIHandler {
 
   /** the log used by this class */
   private static Log log = LogFactory.getLog(MetaWeblogAPIHandler.class);
+
+  private final BlogService blogService;
+
+  public MetaWeblogAPIHandler(AuthenticationManager authenticationManager, BlogService blogService) {
+    super(authenticationManager);
+    this.blogService = blogService;
+  }
 
   /**
    * Creates a new media object on the server.
@@ -231,10 +239,9 @@ public class MetaWeblogAPIHandler extends AbstractAPIHandler {
     Blog blog = getBlogWithPostId(postid);
     postid = getPostId(postid);
     authenticate(blog, username, password);
-    BlogService service = new BlogService();
     BlogEntry entry = null;
     try {
-      entry = service.getBlogEntry(blog, postid);
+      entry = blogService.getBlogEntry(blog, postid);
     } catch (BlogServiceException e) {
       throw new XmlRpcException(0, "Blog entry with ID of " + postid + " could not be loaded");
     }
@@ -279,8 +286,7 @@ public class MetaWeblogAPIHandler extends AbstractAPIHandler {
       populateEntry(entry, struct, username);
       entry.setPublished(publish);
 
-      BlogService service = new BlogService();
-      service.putBlogEntry(entry);
+      blogService.putBlogEntry(entry);
 
       return formatPostId(blogid, entry.getId());
     } catch (BlogServiceException be) {
@@ -311,14 +317,13 @@ public class MetaWeblogAPIHandler extends AbstractAPIHandler {
       Blog blog = getBlogWithPostId(postid);
       postid = getPostId(postid);
       authenticate(blog, username, password);
-      BlogService service = new BlogService();
-      BlogEntry entry = service.getBlogEntry(blog, postid);
+      BlogEntry entry = blogService.getBlogEntry(blog, postid);
 
       if (entry != null) {
         populateEntry(entry, struct, username);
         entry.setPublished(publish);
 
-        service.putBlogEntry(entry);
+        blogService.putBlogEntry(entry);
       } else {
         throw new XmlRpcException(0, "Blog entry with ID of " + postid + " was not found.");
       }

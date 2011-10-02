@@ -47,12 +47,12 @@ import java.util.Vector;
  */
 public class MultiBlogBloggerAPIHandlerTest extends MultiBlogTestCase {
 
-  private BloggerAPIHandler handler = new BloggerAPIHandler();
-
+  private BloggerAPIHandler handler;
   protected void setUp() throws Exception {
     super.setUp();
 
-    handler.setAuthenticationManager(new net.sourceforge.pebble.mock.MockAuthenticationManager(true, new GrantedAuthority[] {new GrantedAuthorityImpl(Constants.BLOG_CONTRIBUTOR_ROLE)}));
+    handler = new BloggerAPIHandler(new net.sourceforge.pebble.mock.MockAuthenticationManager(true, new GrantedAuthority[] {new GrantedAuthorityImpl(Constants.BLOG_CONTRIBUTOR_ROLE)}),
+        blogService);
     blog1.setProperty(Blog.BLOG_CONTRIBUTORS_KEY, "username");
     blog2.setProperty(Blog.BLOG_CONTRIBUTORS_KEY, "username2");
   }
@@ -78,27 +78,25 @@ public class MultiBlogBloggerAPIHandlerTest extends MultiBlogTestCase {
 
   public void testGetRecentPosts() {
     try {
-      BlogService service = new BlogService();
-
       BlogEntry entry1 = new BlogEntry(blog1);
       entry1.setTitle("title1");
       entry1.setBody("body1");
-      service.putBlogEntry(entry1);
+      blogService.putBlogEntry(entry1);
 
       BlogEntry entry2 = new BlogEntry(blog1);
       entry2.setTitle("title2");
       entry2.setBody("body2");
-      service.putBlogEntry(entry2);      
+      blogService.putBlogEntry(entry2);      
 
       BlogEntry entry3 = new BlogEntry(blog1);
       entry3.setTitle("title3");
       entry3.setBody("body3");
-      service.putBlogEntry(entry3);
+      blogService.putBlogEntry(entry3);
 
       BlogEntry entry4 = new BlogEntry(blog1);
       entry4.setTitle("title4");
       entry4.setBody("body4");
-      service.putBlogEntry(entry4);
+      blogService.putBlogEntry(entry4);
 
       Vector posts = handler.getRecentPosts("appkey", "blog1", "username", "password", 3);
 
@@ -120,12 +118,11 @@ public class MultiBlogBloggerAPIHandlerTest extends MultiBlogTestCase {
 
   public void testGetPost() {
     try {
-      BlogService service = new BlogService();
       BlogEntry entry = new BlogEntry(blog1);
       entry.setTitle("title");
       entry.setBody("body");
       entry.setAuthor("simon");
-      service.putBlogEntry(entry);
+      blogService.putBlogEntry(entry);
 
       Hashtable post = handler.getPost("appkey", "blog1/" + entry.getId(), "username", "password");
       assertEquals("<title>title</title><category></category>body", post.get(BloggerAPIHandler.CONTENT));
@@ -140,13 +137,12 @@ public class MultiBlogBloggerAPIHandlerTest extends MultiBlogTestCase {
 
   public void testGetPostWithCategory() {
     try {
-      BlogService service = new BlogService();
       BlogEntry entry = new BlogEntry(blog1);
       entry.setTitle("title");
       entry.setBody("body");
       entry.setAuthor("simon");
       entry.addCategory(new Category("java", "Java"));
-      service.putBlogEntry(entry);
+      blogService.putBlogEntry(entry);
 
       Hashtable post = handler.getPost("appkey", "blog1/" + entry.getId(), "username", "password");
       assertEquals("<title>title</title><category>/java</category>body", post.get(BloggerAPIHandler.CONTENT));
@@ -181,16 +177,15 @@ public class MultiBlogBloggerAPIHandlerTest extends MultiBlogTestCase {
 
   public void testDeletePost() {
     try {
-      BlogService service = new BlogService();
       BlogEntry entry = new BlogEntry(blog1);
       entry.setTitle("title");
       entry.setBody("body");
       entry.setAuthor("simon");
-      service.putBlogEntry(entry);
+      blogService.putBlogEntry(entry);
 
       boolean result = handler.deletePost("appkey", "blog1/" + entry.getId(), "username", "password", true);
       assertTrue("deletePost() returned false instead of true", result);
-      assertNull(service.getBlogEntry(blog1, entry.getId()));
+      assertNull(blogService.getBlogEntry(blog1, entry.getId()));
     } catch (Exception e) {
       e.printStackTrace();
       fail();
@@ -244,18 +239,17 @@ public class MultiBlogBloggerAPIHandlerTest extends MultiBlogTestCase {
 
   public void testAddCategory() {
     try {
-      BlogService service = new BlogService();
       BlogEntry entry = new BlogEntry(blog1);
-      service.putBlogEntry(entry);
+      blogService.putBlogEntry(entry);
       blog1.addCategory(new Category("/aCategory", "A Category"));
 
       boolean result = handler.addCategory("appkey", "blog1/" + entry.getId(), "username", "password", "/aCategory");
-      entry = service.getBlogEntry(blog1, entry.getId());
+      entry = blogService.getBlogEntry(blog1, entry.getId());
       assertTrue("Category wasn't added", result);
       assertTrue(entry.inCategory(blog1.getCategory("aCategory")));
 
       result = handler.addCategory("appkey", "blog1/" + entry.getId(), "username", "password", "/aNonExistentCategory");
-      entry = service.getBlogEntry(blog1, entry.getId());
+      entry = blogService.getBlogEntry(blog1, entry.getId());
       assertFalse("Category was added", result);
     } catch (Exception e) {
       e.printStackTrace();

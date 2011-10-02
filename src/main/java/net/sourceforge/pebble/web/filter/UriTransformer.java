@@ -76,8 +76,6 @@ public class UriTransformer {
    */
   public String getUri(String uri, Blog blog) {
     PermalinkProvider permalinkProvider = blog.getPermalinkProvider();
-    DefaultPermalinkProvider defaultPermalinkProvider = new DefaultPermalinkProvider();
-    defaultPermalinkProvider.setBlog(permalinkProvider.getBlog());
 
     log.trace("URI before transformation : " + uri);
 
@@ -89,7 +87,7 @@ public class UriTransformer {
     String result = getUri(uri, permalinkProvider);
     if (result == null) {
       // for backwards compatibility, try the default permalink provider
-      result = getUri(uri, defaultPermalinkProvider);
+      result = getUri(uri, blog.getDefaultPermalinkProvider());
     }
 
     // if the result is still null, try the other URL patterns to transform the URI

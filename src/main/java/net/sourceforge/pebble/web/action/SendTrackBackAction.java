@@ -46,6 +46,7 @@ import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -59,6 +60,9 @@ public class SendTrackBackAction extends SecureAction {
 
   /** the log used by this class */
   private static Log log = LogFactory.getLog(SendTrackBackAction.class);
+
+  @Inject
+  private BlogService blogService;
 
   /**
    * Peforms the processing associated with this action.
@@ -76,11 +80,10 @@ public class SendTrackBackAction extends SecureAction {
     String trackBackResponseMessage;
     Integer trackBackResponseCode;
 
-    BlogService service = new BlogService();
     BlogEntry blogEntry = null;
     if (entryId != null) {
       try {
-        blogEntry = service.getBlogEntry(blog, entryId);
+        blogEntry = blogService.getBlogEntry(blog, entryId);
       } catch (BlogServiceException e) {
         throw new ServletException(e);
       }

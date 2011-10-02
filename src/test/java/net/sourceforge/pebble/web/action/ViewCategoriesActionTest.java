@@ -44,9 +44,7 @@ import net.sourceforge.pebble.Constants;
 public class ViewCategoriesActionTest extends SecureActionTestCase {
 
   protected void setUp() throws Exception {
-    action = new ViewCategoriesAction();
-
-    super.setUp();
+    super.setUp(ViewCategoriesAction.class);
   }
 
   public void testViewTags() throws Exception {

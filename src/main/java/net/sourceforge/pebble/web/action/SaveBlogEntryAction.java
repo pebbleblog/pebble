@@ -46,6 +46,7 @@ import org.apache.commons.httpclient.methods.HeadMethod;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -69,6 +70,9 @@ public class SaveBlogEntryAction extends SecureAction {
 
   /** the value used if the blog entry is being previewed rather than added */
   private static final String PREVIEW = "Preview";
+
+  @Inject
+  private BlogService blogService;
 
   /**
    * Peforms the processing associated with this action.
@@ -115,9 +119,8 @@ public class SaveBlogEntryAction extends SecureAction {
     if (context.hasErrors())  {
       return new BlogEntryFormView();
     } else {
-      BlogService service = new BlogService();
       try {
-        service.putBlogEntry(blogEntry);
+        blogService.putBlogEntry(blogEntry);
         blog.info("Blog entry <a href=\"" + blogEntry.getLocalPermalink() + "\">" + blogEntry.getTitle() + "</a> saved.");
         getModel().put(Constants.BLOG_ENTRY_KEY, blogEntry);
         return new RedirectView(blogEntry.getLocalPermalink());
@@ -136,9 +139,8 @@ public class SaveBlogEntryAction extends SecureAction {
     String persistent = request.getParameter("persistent");
 
     if (persistent != null && persistent.equalsIgnoreCase("true")) {
-      BlogService service = new BlogService();
       try {
-        return service.getBlogEntry(blog, id);
+        return blogService.getBlogEntry(blog, id);
       } catch (BlogServiceException e) {
         throw new ServletException(e);
       }

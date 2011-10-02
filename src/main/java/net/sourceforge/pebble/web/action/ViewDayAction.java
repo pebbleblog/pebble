@@ -37,6 +37,7 @@ import net.sourceforge.pebble.domain.*;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.impl.BlogEntriesByDayView;
 
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -49,6 +50,9 @@ import java.util.ArrayList;
  * @author    Simon Brown
  */
 public class ViewDayAction extends Action {
+
+  @Inject
+  private BlogService blogService;
 
   /**
    * Peforms the processing associated with this action.
@@ -72,10 +76,9 @@ public class ViewDayAction extends Action {
       daily = blog.getBlogForToday();
     }
 
-    BlogService service = new BlogService();
     List<BlogEntry> blogEntries;
     try {
-      blogEntries = service.getBlogEntries(blog, Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day));
+      blogEntries = blogService.getBlogEntries(blog, Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day));
     } catch (BlogServiceException e) {
       throw new ServletException(e);
     }

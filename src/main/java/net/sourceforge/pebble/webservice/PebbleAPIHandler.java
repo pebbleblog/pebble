@@ -40,6 +40,7 @@ import net.sourceforge.pebble.Constants;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.xmlrpc.XmlRpcException;
+import org.springframework.security.authentication.AuthenticationManager;
 
 import java.util.Collection;
 import java.util.Hashtable;
@@ -71,6 +72,10 @@ public class PebbleAPIHandler extends AbstractAPIHandler {
 
   /** the log used by this class */
   private static Log log = LogFactory.getLog(PebbleAPIHandler.class);
+
+  public PebbleAPIHandler(AuthenticationManager authenticationManager) {
+    super(authenticationManager);
+  }
 
   /**
    * Gets a list of the recent blog entries.

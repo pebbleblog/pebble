@@ -36,6 +36,7 @@ import net.sourceforge.pebble.domain.BlogEntry;
 import net.sourceforge.pebble.domain.BlogService;
 import net.sourceforge.pebble.domain.BlogServiceException;
 
+import javax.inject.Inject;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -49,6 +50,9 @@ public class DefaultPermalinkProvider extends PermalinkProviderSupport {
 
   /** the regex used to check for a blog entry permalink : /yyyy/mm/dd/blogentryid.html */
   private static final String BLOG_ENTRY_PERMALINK_REGEX = "/\\d\\d\\d\\d/\\d\\d/\\d\\d/\\d*.html";
+
+  @Inject
+  private BlogService blogService;
 
   /**
    * Gets the permalink for a blog entry.
@@ -102,12 +106,14 @@ public class DefaultPermalinkProvider extends PermalinkProviderSupport {
    */
   public BlogEntry getBlogEntry(String uri) {
     Blog blog = getBlog();
-    BlogService service = new BlogService();
     try {
-      return service.getBlogEntry(blog, uri.substring(12, uri.lastIndexOf(".")));
+      return blogService.getBlogEntry(blog, uri.substring(12, uri.lastIndexOf(".")));
     } catch (BlogServiceException e) {
       return null;
     }
   }
 
+  void setBlogService(BlogService blogService) {
+    this.blogService = blogService;
+  }
 }

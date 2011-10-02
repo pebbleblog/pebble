@@ -44,9 +44,7 @@ import net.sourceforge.pebble.web.view.impl.BlogEntriesView;
 public class ViewHomePageActionTest extends SingleBlogActionTestCase {
 
   protected void setUp() throws Exception {
-    action = new ViewBlogEntriesByPageAction();
-
-    super.setUp();
+    super.setUp(ViewBlogEntriesByPageAction.class);
   }
 
   /**

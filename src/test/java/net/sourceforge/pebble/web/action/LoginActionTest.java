@@ -41,9 +41,7 @@ import net.sourceforge.pebble.web.view.RedirectView;
 public class LoginActionTest extends SingleBlogActionTestCase {
 
   protected void setUp() throws Exception {
-    action = new LoginAction();
-
-    super.setUp();
+    super.setUp(LoginAction.class);
   }
 
   public void testUserRedirectedToBlogHomePage() throws Exception {

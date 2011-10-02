@@ -109,9 +109,8 @@ public class UriTransformerTest extends SingleBlogTestCase {
   }
 
   public void testPermalinkUrlsForSingleUserBlog() throws Exception {
-    BlogService service = new BlogService();
     BlogEntry blogEntry = new BlogEntry(blog);
-    service.putBlogEntry(blogEntry);
+    blogService.putBlogEntry(blogEntry);
 
     // test a url to request a single blog entry
     String url = blogEntry.getLocalPermalink();
@@ -193,32 +192,29 @@ public class UriTransformerTest extends SingleBlogTestCase {
   }
 
   public void testBlogEntryWithDefaultPermalinkProvider() throws Exception {
-    BlogService service = new BlogService();
     BlogEntry blogEntry = new BlogEntry(blog);
-    service.putBlogEntry(blogEntry);
+    blogService.putBlogEntry(blogEntry);
     assertEquals("/viewBlogEntry.action?entry=" + blogEntry.getId(), transformer.getUri(blog.getPermalinkProvider().getPermalink(blogEntry), blog));
   }
 
   public void testBlogEntryWithTitlePermalinkProvider() throws Exception {
-    blog.setPermalinkProvider(new TitlePermalinkProvider());
+    blog.setPermalinkProvider(autowire(TitlePermalinkProvider.class));
 
-    BlogService service = new BlogService();
     BlogEntry blogEntry = new BlogEntry(blog);
     blogEntry.setTitle("Some title");
-    service.putBlogEntry(blogEntry);
+    blogService.putBlogEntry(blogEntry);
 
     assertEquals("/viewBlogEntry.action?entry=" + blogEntry.getId(), transformer.getUri(blog.getPermalinkProvider().getPermalink(blogEntry), blog));
   }
 
   public void testBlogEntryFallsBackToDefaultPermalinkProvider() throws Exception {
-    DefaultPermalinkProvider defaultProvider = new DefaultPermalinkProvider();
+    DefaultPermalinkProvider defaultProvider = autowire(DefaultPermalinkProvider.class);
     defaultProvider.setBlog(blog);
-    blog.setPermalinkProvider(new TitlePermalinkProvider());
+    blog.setPermalinkProvider(autowire(TitlePermalinkProvider.class));
 
-    BlogService service = new BlogService();
     BlogEntry blogEntry = new BlogEntry(blog);
     blogEntry.setTitle("Some title");
-    service.putBlogEntry(blogEntry);
+    blogService.putBlogEntry(blogEntry);
 
     assertEquals("/viewBlogEntry.action?entry=" + blogEntry.getId(), transformer.getUri(defaultProvider.getPermalink(blogEntry), blog));
   }

@@ -33,7 +33,6 @@ package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.domain.*;
-import net.sourceforge.pebble.web.security.RequireSecurityToken;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.NotFoundView;
 import net.sourceforge.pebble.web.view.impl.RemoveEmailAddressConfirmationView;
@@ -41,6 +40,7 @@ import net.sourceforge.pebble.web.view.impl.RemoveEmailAddressView;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -55,6 +55,9 @@ public class RemoveEmailAddressAction extends Action {
 
   /** the log used by this class */
   private static Log log = LogFactory.getLog(RemoveEmailAddressAction.class);
+
+  @Inject
+  private BlogService blogService;
 
   /**
    * Peforms the processing associated with this action.
@@ -71,9 +74,8 @@ public class RemoveEmailAddressAction extends Action {
     String entry = request.getParameter("entry");
     String email = request.getParameter("email");
 
-    BlogService service = new BlogService();
     try {
-      blogEntry = service.getBlogEntry(blog, entry);
+      blogEntry = blogService.getBlogEntry(blog, entry);
     } catch (BlogServiceException e) {
       throw new ServletException(e);
     }
@@ -95,7 +97,7 @@ public class RemoveEmailAddressAction extends Action {
       }
 
       try {
-        service.putBlogEntry(blogEntry);
+        blogService.putBlogEntry(blogEntry);
       } catch (BlogServiceException be) {
         log.error(be.getMessage(), be);
         throw new ServletException(be);

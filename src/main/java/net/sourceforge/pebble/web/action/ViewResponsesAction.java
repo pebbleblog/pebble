@@ -39,6 +39,7 @@ import net.sourceforge.pebble.util.Pageable;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.impl.ResponsesView;
 
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -55,6 +56,9 @@ public class ViewResponsesAction extends SecureAction {
 
   /** the number of responses to show per page */
   static final int PAGE_SIZE = 20;
+
+  @Inject
+  private BlogService blogService;
 
   /**
    * Peforms the processing associated with this action.
@@ -94,11 +98,10 @@ public class ViewResponsesAction extends SecureAction {
     Pageable pageable = new Pageable(responses) {
       public List getListForPage() {
         List responses = new ArrayList();
-        BlogService service = new BlogService();
         Iterator it = super.getListForPage().iterator();
         while (it.hasNext()) {
           try {
-            responses.add(service.getResponse(blog, (String)it.next()));
+            responses.add(blogService.getResponse(blog, (String)it.next()));
           } catch (BlogServiceException e) {
             // do nothing - some responses just won't get shown,
             // but a message will be sent to the blog

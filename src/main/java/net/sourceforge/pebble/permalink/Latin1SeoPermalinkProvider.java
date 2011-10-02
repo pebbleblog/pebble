@@ -33,8 +33,10 @@
 package net.sourceforge.pebble.permalink;
 
 import net.sourceforge.pebble.api.permalink.PermalinkProvider;
+import net.sourceforge.pebble.dao.DAOFactory;
 import net.sourceforge.pebble.domain.*;
 
+import javax.inject.Inject;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -54,6 +56,9 @@ import java.util.List;
  * @author Mattias Reichel
  */
 public class Latin1SeoPermalinkProvider implements PermalinkProvider {
+
+  @Inject
+  private BlogService blogService;
 
   /**
    * the regex used to check for a day request
@@ -102,7 +107,6 @@ public class Latin1SeoPermalinkProvider implements PermalinkProvider {
     if (blogEntry.getTitle() == null || blogEntry.getTitle().length() == 0) {
       return buildPermalink(blogEntry);
     } else {
-      BlogService service = new BlogService();
       List<BlogEntry> entries = getBlog().getBlogEntries();
       int count = 0;
       for (int i = entries.size() - 1; i >= 0 && !entries.get(i).getId().equals(blogEntry.getId()); i--) {
@@ -153,11 +157,10 @@ public class Latin1SeoPermalinkProvider implements PermalinkProvider {
   }
 
   public BlogEntry getBlogEntry(String uri) {
-    BlogService service = new BlogService();
     Iterator it = getBlog().getBlogEntries().iterator();
     while (it.hasNext()) {
       try {
-        BlogEntry blogEntry = service.getBlogEntry(getBlog(), "" + ((BlogEntry) it.next()).getId());
+        BlogEntry blogEntry = blogService.getBlogEntry(getBlog(), "" + ((BlogEntry) it.next()).getId());
         // use the local permalink, just in case the entry has been aggregated
         // and an original permalink assigned
         if (blogEntry.getLocalPermalink().endsWith(uri)) {
@@ -333,5 +336,9 @@ public class Latin1SeoPermalinkProvider implements PermalinkProvider {
     characterSubstitutions.put("\u00FD", "y");
     characterSubstitutions.put("\u00FE", "p");
     characterSubstitutions.put("\u00FF", "y");
+  }
+
+  void setBlogService(BlogService blogService) {
+    this.blogService = blogService;
   }
 }

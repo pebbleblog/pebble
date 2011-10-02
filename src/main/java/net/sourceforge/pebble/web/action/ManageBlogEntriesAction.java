@@ -43,6 +43,7 @@ import net.sourceforge.pebble.web.view.View;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -58,6 +59,9 @@ public class ManageBlogEntriesAction extends SecureAction {
   /** the log used by this class */
   private static final Log log = LogFactory.getLog(ManageBlogEntriesAction.class);
 
+  @Inject
+  private BlogService blogService;
+
   /**
    * Peforms the processing associated with this action.
    *
@@ -72,10 +76,9 @@ public class ManageBlogEntriesAction extends SecureAction {
 
     if (ids != null) {
       for (String id : ids) {
-        BlogService service = new BlogService();
-        BlogEntry blogEntry = null;
+        BlogEntry blogEntry;
         try {
-          blogEntry = service.getBlogEntry(blog, id);
+          blogEntry = blogService.getBlogEntry(blog, id);
         } catch (BlogServiceException e) {
           throw new ServletException(e);
         }
@@ -83,7 +86,7 @@ public class ManageBlogEntriesAction extends SecureAction {
         if (blogEntry != null) {
           if (submit.equalsIgnoreCase("Remove")) {
             try {
-              service.removeBlogEntry(blogEntry);
+              blogService.removeBlogEntry(blogEntry);
               blog.info("Blog entry \"" + StringUtils.transformHTML(blogEntry.getTitle()) + "\" removed.");
             } catch (BlogServiceException be) {
               throw new ServletException(be);
@@ -93,7 +96,7 @@ public class ManageBlogEntriesAction extends SecureAction {
             // date/time it already has)
             try {
               blogEntry.setPublished(true);
-              service.putBlogEntry(blogEntry);
+              blogService.putBlogEntry(blogEntry);
               blog.info("Blog entry <a href=\"" + blogEntry.getLocalPermalink() + "\">" + blogEntry.getTitle() + "</a> published.");
             } catch (BlogServiceException be) {
               throw new ServletException(be);

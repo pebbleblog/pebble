@@ -33,6 +33,7 @@ package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.dao.CategoryDAO;
+import net.sourceforge.pebble.domain.BlogService;
 import net.sourceforge.pebble.domain.Category;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.util.Utilities;
@@ -59,6 +60,9 @@ public class UtilitiesAction extends SecureAction {
   @Inject
   private CategoryDAO categoryDAO;
 
+  @Inject
+  private BlogService blogService;
+
   /**
    * Peforms the processing associated with this action.
    *
@@ -75,7 +79,7 @@ public class UtilitiesAction extends SecureAction {
       Utilities.buildIpAddressLists(blog);
       return new ForwardView("/reloadBlog.secureaction");
     } else if (action.equalsIgnoreCase("fixHtmlInResponses")) {
-      Utilities.fixHtmlInResponses(blog);
+      Utilities.fixHtmlInResponses(blog, blogService);
       return new ForwardView("/reloadBlog.secureaction");
     } else if (action.equalsIgnoreCase("buildIndexes")) {
       Utilities.buildIndexes(blog);
@@ -91,7 +95,7 @@ public class UtilitiesAction extends SecureAction {
       Category from = blog.getCategory(request.getParameter("from"));
       Category to = blog.getCategory(request.getParameter("to"));
       if (from != null && to != null) {
-        Utilities.moveBlogEntriesFromCategory(blog, from, to);
+        Utilities.moveBlogEntriesFromCategory(blogService, blog, from, to);
       }
     }
 

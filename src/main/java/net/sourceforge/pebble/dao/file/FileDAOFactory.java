@@ -44,7 +44,7 @@ import net.sourceforge.pebble.index.file.FileTagIndex;
  *
  * @author    Simon Brown
  */
-public class FileDAOFactory extends DAOFactory {
+public class FileDAOFactory implements DAOFactory {
 
   public static final String FILE_STORAGE_TYPE = "file";
 
@@ -99,13 +99,17 @@ public class FileDAOFactory extends DAOFactory {
     return this.refererFilterDAO;
   }
 
-  @Override
   public TagIndex createTagIndex(Blog blog) {
     return new FileTagIndex(blog);
   }
 
-  @Override
   public AuthorIndex createAuthorIndex(Blog blog) {
     return new FileAuthorIndex(blog);
+  }
+
+  public void init(Blog blog) {
+  }
+
+  public void shutdown() {
   }
 }

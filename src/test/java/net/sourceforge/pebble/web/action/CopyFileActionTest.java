@@ -48,9 +48,7 @@ import java.io.FileWriter;
 public class CopyFileActionTest extends SecureActionTestCase {
 
   protected void setUp() throws Exception {
-    action = new CopyFileAction();
-
-    super.setUp();
+    super.setUp(CopyFileAction.class);
   }
 
   /**

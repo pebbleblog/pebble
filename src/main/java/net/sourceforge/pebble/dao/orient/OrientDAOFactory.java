@@ -46,7 +46,6 @@ import net.sourceforge.pebble.dao.orient.model.OrientBlogEntry;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.index.AuthorIndex;
 import net.sourceforge.pebble.index.TagIndex;
-import net.sourceforge.pebble.index.file.FileAuthorIndex;
 import net.sourceforge.pebble.index.orient.OrientAuthorIndex;
 import net.sourceforge.pebble.index.orient.OrientTagIndex;
 
@@ -58,7 +57,7 @@ import java.io.File;
  *
  * @author James Roper
  */
-public class OrientDAOFactory extends DAOFactory {
+public class OrientDAOFactory implements DAOFactory {
 
   public static final String ORIENT_STORAGE_TYPE = "orient";
 
@@ -77,7 +76,6 @@ public class OrientDAOFactory extends DAOFactory {
     this.refererFilterDAO = new FileRefererFilterDAO();
   }
 
-  @Override
   public void init(Blog blog) {
     ODatabaseObjectTx db = getDb(blog);
     try {
@@ -92,7 +90,6 @@ public class OrientDAOFactory extends DAOFactory {
     }
   }
 
-  @Override
   public void shutdown() {
     Orient.instance().shutdown();
   }
@@ -171,12 +168,10 @@ public class OrientDAOFactory extends DAOFactory {
     return this.refererFilterDAO;
   }
 
-  @Override
   public TagIndex createTagIndex(Blog blog) {
     return new OrientTagIndex(this, blog);
   }
 
-  @Override
   public AuthorIndex createAuthorIndex(Blog blog) {
     return new OrientAuthorIndex(this, blog);
   }

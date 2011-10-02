@@ -40,6 +40,7 @@ import net.sourceforge.pebble.web.view.View;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -61,6 +62,9 @@ public class ManageResponsesAction extends SecureAction {
   /** constant used to represent a TrackBack */
   private static final String TRACKBACK = "t";
 
+  @Inject
+  private BlogService blogService;
+
   /**
    * Peforms the processing associated with this action.
    *
@@ -72,7 +76,6 @@ public class ManageResponsesAction extends SecureAction {
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
     String ids[] = request.getParameterValues("response");
     String submit = request.getParameter("submit");
-    BlogService service = new BlogService();
 
     if (ids != null && submit != null) {
       for (String id : ids) {
@@ -85,7 +88,7 @@ public class ManageResponsesAction extends SecureAction {
         if (submit.equalsIgnoreCase("Approve")) {
           try {
             ber.setApproved();
-            service.putBlogEntry(ber.getBlogEntry());
+            blogService.putBlogEntry(ber.getBlogEntry());
             blog.info("Response <a href=\"" + ber.getPermalink() + "\">" + ber.getTitle() + " (" + ber.getSourceName() + ")</a> approved.");
           } catch (BlogServiceException be) {
             log.error("Error updating state for response", be);
@@ -93,7 +96,7 @@ public class ManageResponsesAction extends SecureAction {
         } else if (submit.equalsIgnoreCase("Reject")) {
           try {
             ber.setRejected();
-            service.putBlogEntry(ber.getBlogEntry());
+            blogService.putBlogEntry(ber.getBlogEntry());
             blog.info("Response \"" + ber.getTitle() + "\" (" + ber.getSourceName() + ") rejected.");
           } catch (BlogServiceException be) {
             log.error("Error updating state for response", be);
@@ -101,7 +104,7 @@ public class ManageResponsesAction extends SecureAction {
         } else if (submit.equalsIgnoreCase("Remove")) {
           try {
             ber.getBlogEntry().removeResponse(ber);
-            service.putBlogEntry(ber.getBlogEntry());
+            blogService.putBlogEntry(ber.getBlogEntry());
             blog.info("Response \"" + ber.getTitle() + "\" (" + ber.getSourceName() + ") removed.");
           } catch (BlogServiceException be) {
             log.error("Error updating state for response", be);
@@ -135,10 +138,9 @@ public class ManageResponsesAction extends SecureAction {
     String blogEntryId = guid.substring(2, guid.indexOf("/", 2));
     String responseId = guid.substring(guid.lastIndexOf("/")+1);
 
-    BlogService service = new BlogService();
-    BlogEntry blogEntry = null;
+    BlogEntry blogEntry;
     try {
-      blogEntry = service.getBlogEntry(blog, blogEntryId);
+      blogEntry = blogService.getBlogEntry(blog, blogEntryId);
     } catch (BlogServiceException e) {
       throw new ServletException(e);
     }

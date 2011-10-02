@@ -54,6 +54,9 @@ public class ResponseFeedAction extends Action {
   @Inject
   private LastModifiedService lastModifiedService;
 
+  @Inject
+  private BlogService blogService;
+
   /**
    * Peforms the processing associated with this action.
    *
@@ -72,10 +75,9 @@ public class ResponseFeedAction extends Action {
 
     String entryId = request.getParameter("entry");
     if (entryId != null) {
-      BlogService service = new BlogService();
       BlogEntry blogEntry;
       try {
-        blogEntry = service.getBlogEntry(blog, entryId);
+        blogEntry = blogService.getBlogEntry(blog, entryId);
       } catch (BlogServiceException e) {
         throw new ServletException(e);
       }

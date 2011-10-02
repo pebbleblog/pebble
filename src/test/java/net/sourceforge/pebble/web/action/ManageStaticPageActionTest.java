@@ -31,10 +31,6 @@
  */
 package net.sourceforge.pebble.web.action;
 
-import net.sourceforge.pebble.domain.BlogService;
-import net.sourceforge.pebble.domain.BlogEntry;
-import net.sourceforge.pebble.web.view.View;
-import net.sourceforge.pebble.web.view.impl.PublishBlogEntryView;
 import net.sourceforge.pebble.Constants;
 
 /**
@@ -45,9 +41,7 @@ import net.sourceforge.pebble.Constants;
 public class ManageStaticPageActionTest extends SecureActionTestCase {
 
   protected void setUp() throws Exception {
-    action = new ManageStaticPageAction();
-
-    super.setUp();
+    super.setUp(ManageStaticPageAction.class);
   }
 
   /**

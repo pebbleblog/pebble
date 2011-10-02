@@ -34,11 +34,9 @@ package net.sourceforge.pebble.permalink;
 
 import net.sourceforge.pebble.api.permalink.PermalinkProvider;
 import net.sourceforge.pebble.domain.BlogEntry;
-import net.sourceforge.pebble.domain.BlogService;
 import net.sourceforge.pebble.domain.Day;
 import net.sourceforge.pebble.domain.Month;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
@@ -54,7 +52,9 @@ public class Latin1SeoPermalinkProviderTest extends PermalinkProviderSupportTest
    * @return a PermalinkProvider instance
    */
   protected PermalinkProvider getPermalinkProvider() {
-    return new Latin1SeoPermalinkProvider();
+    Latin1SeoPermalinkProvider provider = new Latin1SeoPermalinkProvider();
+    provider.setBlogService(blogService);
+    return provider;
   }
 
   /**
@@ -99,9 +99,8 @@ public class Latin1SeoPermalinkProviderTest extends PermalinkProviderSupportTest
    * Tests that a permalink can be generated for a blog entry.
    */
   public void testBlogEntryPermalink() throws Exception {
-    BlogService service = new BlogService();
     BlogEntry blogEntry = new BlogEntry(blog);
-    service.putBlogEntry(blogEntry);
+    blogService.putBlogEntry(blogEntry);
 
     String prefix = "/";
     String suffix = "";
@@ -154,7 +153,7 @@ public class Latin1SeoPermalinkProviderTest extends PermalinkProviderSupportTest
     blogEntry.setTitle("");
     assertEquals(prefix + blogEntry.getId() + suffix, permalinkProvider.getPermalink(blogEntry));
 
-    blogEntry.setTitle("./:!@£$%^&*()");
+    blogEntry.setTitle("./:!@ï¿½$%^&*()");
     assertEquals(prefix + blogEntry.getId() + suffix, permalinkProvider.getPermalink(blogEntry));
 
     blogEntry.setTitle("Here is a title with chars from the latin1 supplemental charset: \u00a0 \u00a1 \u00a2 \u00a3 \u00a4 \u00a5 \u00a6 \u00a7 \u00a8 \u00a9 \u00aa \u00ab \u00ac \u00ad \u00ae \u00af");
@@ -181,11 +180,9 @@ public class Latin1SeoPermalinkProviderTest extends PermalinkProviderSupportTest
    * duplicate titles for the same day.
    */
   public void testBlogEntryPermalinkForEntriesWithSameTitle() throws Exception {
-    BlogService service = new BlogService();
-
     BlogEntry blogEntry1 = new BlogEntry(blog);
     blogEntry1.setTitle("A Title");
-    service.putBlogEntry(blogEntry1);
+    blogService.putBlogEntry(blogEntry1);
 
     String prefix = "/";
     String suffix = "";
@@ -194,7 +191,7 @@ public class Latin1SeoPermalinkProviderTest extends PermalinkProviderSupportTest
     // now add another with the same name
     BlogEntry blogEntry2 = new BlogEntry(blog);
     blogEntry2.setTitle("A Title");
-    service.putBlogEntry(blogEntry2);
+    blogService.putBlogEntry(blogEntry2);
 
     assertEquals(prefix + "a-title" + suffix, permalinkProvider.getPermalink(blogEntry1));
     assertEquals(prefix + "a-title_" + blogEntry2.getId() + suffix, permalinkProvider.getPermalink(blogEntry2));
@@ -205,7 +202,7 @@ public class Latin1SeoPermalinkProviderTest extends PermalinkProviderSupportTest
     Calendar cal = Calendar.getInstance();
     cal.add(Calendar.YEAR, 1);
     blogEntry3.setDate(cal.getTime());
-    service.putBlogEntry(blogEntry3);
+    blogService.putBlogEntry(blogEntry3);
 
     assertEquals(prefix + "a-title" + suffix, permalinkProvider.getPermalink(blogEntry1));
     assertEquals(prefix + "a-title_" + blogEntry2.getId() + suffix, permalinkProvider.getPermalink(blogEntry2));
@@ -226,23 +223,21 @@ public class Latin1SeoPermalinkProviderTest extends PermalinkProviderSupportTest
    * Tests that the correct blog entry can be found from a permalink.
    */
   public void testGetBlogEntry() throws Exception {
-    BlogService service = new BlogService();
-
     BlogEntry blogEntry1 = new BlogEntry(blog);
     blogEntry1.setTitle("A Title");
-    service.putBlogEntry(blogEntry1);
+    blogService.putBlogEntry(blogEntry1);
 
     BlogEntry blogEntry2 = new BlogEntry(blog);
     blogEntry2.setTitle("Some other title");
-    service.putBlogEntry(blogEntry2);
+    blogService.putBlogEntry(blogEntry2);
 
     BlogEntry blogEntry3 = new BlogEntry(blog);
     blogEntry3.setTitle("Some other itle");
-    service.putBlogEntry(blogEntry3);
+    blogService.putBlogEntry(blogEntry3);
 
     BlogEntry blogEntry4 = new BlogEntry(blog);
-    blogEntry4.setTitle("åäöÅÄÖ");
-    service.putBlogEntry(blogEntry4);
+    blogEntry4.setTitle("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
+    blogService.putBlogEntry(blogEntry4);
 
     String uri = permalinkProvider.getPermalink(blogEntry1);
     assertEquals(blogEntry1, permalinkProvider.getBlogEntry(uri));
@@ -258,12 +253,10 @@ public class Latin1SeoPermalinkProviderTest extends PermalinkProviderSupportTest
    * Tests that the correct aggregated blog entry can be found from a permalink.
    */
   public void testGetAggregatedBlogEntry() throws Exception {
-    BlogService service = new BlogService();
-
     BlogEntry blogEntry = new BlogEntry(blog);
     blogEntry.setTitle("A Title");
     blogEntry.setOriginalPermalink("http://www.someotherdomain.com/blog/abc.html");
-    service.putBlogEntry(blogEntry);
+    blogService.putBlogEntry(blogEntry);
 
     String uri = permalinkProvider.getPermalink(blogEntry);
     assertEquals(blogEntry, permalinkProvider.getBlogEntry(uri));
@@ -275,10 +268,8 @@ public class Latin1SeoPermalinkProviderTest extends PermalinkProviderSupportTest
   public void testBlogEntryPermalinkChangesWithTitle() throws Exception {
     blog.setPermalinkProvider(new Latin1SeoPermalinkProvider());
 
-    BlogService service = new BlogService();
-
     BlogEntry blogEntry = new BlogEntry(blog);
-    service.putBlogEntry(blogEntry);
+    blogService.putBlogEntry(blogEntry);
 
     String prefix = blog.getUrl();
     String suffix = "";

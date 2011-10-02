@@ -82,9 +82,8 @@ public class SaveCommentAction extends AbstractCommentAction {
     String rememberMe = request.getParameter("rememberMe");
     String submitType = request.getParameter("submit");
 
-    BlogService service = new BlogService();
     try {
-      blogEntry = service.getBlogEntry(blog, entry);
+      blogEntry = blogService.getBlogEntry(blog, entry);
     } catch (BlogServiceException e) {
       throw new ServletException(e);
     }

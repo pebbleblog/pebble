@@ -45,9 +45,7 @@ import net.sourceforge.pebble.web.view.View;
 public class AddCategoryActionTest extends SecureActionTestCase {
 
   protected void setUp() throws Exception {
-    action = new AddCategoryAction();
-
-    super.setUp();
+    super.setUp(AddCategoryAction.class);
   }
 
   public void testProcess() throws Exception {

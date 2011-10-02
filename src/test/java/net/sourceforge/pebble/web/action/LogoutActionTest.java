@@ -43,9 +43,7 @@ import net.sourceforge.pebble.web.view.RedirectView;
 public class LogoutActionTest extends SingleBlogActionTestCase {
 
   protected void setUp() throws Exception {
-    action = new LogoutAction();
-
-    super.setUp();
+    super.setUp(LogoutAction.class);
   }
 
   public void testUserLoggedOutAndRedirectedToBlogHomePage() throws Exception {

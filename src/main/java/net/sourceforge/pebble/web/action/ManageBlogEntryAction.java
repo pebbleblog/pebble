@@ -43,6 +43,7 @@ import net.sourceforge.pebble.web.view.impl.PublishBlogEntryView;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -58,6 +59,9 @@ public class ManageBlogEntryAction extends SecureAction {
   /** the log used by this class */
   private static final Log log = LogFactory.getLog(ManageBlogEntryAction.class);
 
+  @Inject
+  private BlogService blogService;
+
   /**
    * Peforms the processing associated with this action.
    *
@@ -71,10 +75,9 @@ public class ManageBlogEntryAction extends SecureAction {
     String confirm = request.getParameter("confirm");
     String submit = request.getParameter("submit");
 
-    BlogService service = new BlogService();
     BlogEntry blogEntry = null;
     try {
-      blogEntry = service.getBlogEntry(blog, id);
+      blogEntry = blogService.getBlogEntry(blog, id);
     } catch (BlogServiceException e) {
       throw new ServletException(e);
     }
@@ -93,7 +96,7 @@ public class ManageBlogEntryAction extends SecureAction {
     } else if (confirm != null && confirm.equals("true")) {
       if (submit.equalsIgnoreCase("Remove")) {
         try {
-          service.removeBlogEntry(blogEntry);
+          blogService.removeBlogEntry(blogEntry);
           blog.info("Blog entry \"" + StringUtils.transformHTML(blogEntry.getTitle()) + "\" removed.");
         } catch (BlogServiceException be) {
           throw new ServletException(be);

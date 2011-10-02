@@ -121,7 +121,7 @@ public class Utilities {
    *
    * @param blog    a Blog instance
    */
-  public static void fixHtmlInResponses(Blog blog) {
+  public static void fixHtmlInResponses(Blog blog, BlogService blogService) {
     Iterator blogEntries = blog.getBlogEntries().iterator();
     while (blogEntries.hasNext()) {
       BlogEntry blogEntry = (BlogEntry)blogEntries.next();
@@ -145,8 +145,7 @@ public class Utilities {
         }
       }
       try {
-        BlogService service = new BlogService();
-        service.putBlogEntry(blogEntry);
+        blogService.putBlogEntry(blogEntry);
       } catch (BlogServiceException e) {
         log.error("Error storing " + blogEntry.getTitle() + " (" + blogEntry.getDate() + ")");
       }
@@ -190,7 +189,7 @@ public class Utilities {
    *
    * @param blog    a Blog instance
    */
-  public static void moveBlogEntriesFromCategory(Blog blog, Category from, Category to) {
+  public static void moveBlogEntriesFromCategory(BlogService blogService, Blog blog, Category from, Category to) {
     Iterator blogEntries = blog.getBlogEntries().iterator();
     while (blogEntries.hasNext()) {
       BlogEntry blogEntry = (BlogEntry)blogEntries.next();
@@ -203,8 +202,7 @@ public class Utilities {
         blogEntry.setCategories(categories);
 
         try {
-          BlogService service = new BlogService();
-          service.putBlogEntry(blogEntry);
+          blogService.putBlogEntry(blogEntry);
         } catch (BlogServiceException e) {
           log.info("Error storing " + blogEntry.getTitle() + " (" + blogEntry.getDate() + ")");
         }
@@ -346,8 +344,8 @@ public class Utilities {
     }
 
     DAOFactory daoFactory = new FileDAOFactory();
-    DAOFactory.setConfiguredFactory(daoFactory);
-    Blog blog = new Blog(daoFactory, args[0]);
+    BlogService blogService = new BlogService(daoFactory.getBlogEntryDAO());
+    Blog blog = new Blog(daoFactory, blogService, args[0]);
 
     String action = args[1];
     if (action == null) {
@@ -355,7 +353,7 @@ public class Utilities {
     } else if (action.equalsIgnoreCase("ipAddressListener")) {
       buildIpAddressLists(blog);
     } else if (action.equalsIgnoreCase("fixHtmlInResponses")) {
-      fixHtmlInResponses(blog);
+      fixHtmlInResponses(blog, blogService);
     } else if (action.equalsIgnoreCase("buildIndexes")) {
       buildIndexes(blog);
     } else if (action.equalsIgnoreCase("convertCategories")) {

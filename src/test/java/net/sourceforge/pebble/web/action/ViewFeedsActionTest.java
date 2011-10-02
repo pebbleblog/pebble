@@ -44,9 +44,7 @@ import java.util.Collection;
 public class ViewFeedsActionTest extends SingleBlogActionTestCase {
 
   protected void setUp() throws Exception {
-    action = new ViewFeedsAction();
-
-    super.setUp();
+    super.setUp(ViewFeedsAction.class);
   }
 
   /**

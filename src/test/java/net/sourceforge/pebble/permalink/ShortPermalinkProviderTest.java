@@ -48,16 +48,15 @@ public class ShortPermalinkProviderTest extends PermalinkProviderSupportTestCase
    * @return a PermalinkProvider instance
    */
   protected PermalinkProvider getPermalinkProvider() {
-    return new ShortPermalinkProvider();
+    return autowire(ShortPermalinkProvider.class);
   }
 
   /**
    * Tests that a permalink can be generated for a blog entry.
    */
   public void testBlogEntryPermalink() throws Exception {
-    BlogService service = new BlogService();
     BlogEntry blogEntry = new BlogEntry(blog);
-    service.putBlogEntry(blogEntry);
+    blogService.putBlogEntry(blogEntry);
 
     assertEquals("/" + blogEntry.getId() + ".html", permalinkProvider.getPermalink(blogEntry));
   }
@@ -77,11 +76,10 @@ public class ShortPermalinkProviderTest extends PermalinkProviderSupportTestCase
    * Tests that the correct blog entry can be found from a permalink.
    */
   public void testGetBlogEntry() throws Exception {
-    BlogService service = new BlogService();
     BlogEntry blogEntry1 = new BlogEntry(blog);
     BlogEntry blogEntry2 = new BlogEntry(blog);
-    service.putBlogEntry(blogEntry1);
-    service.putBlogEntry(blogEntry2);
+    blogService.putBlogEntry(blogEntry1);
+    blogService.putBlogEntry(blogEntry2);
 
     String uri = permalinkProvider.getPermalink(blogEntry1);
     assertEquals(blogEntry1, permalinkProvider.getBlogEntry(uri));

@@ -48,10 +48,7 @@ public class SingleBlogFeedActionTest extends SingleBlogActionTestCase {
 
   protected void setUp() throws Exception {
     lastModifiedService = mock(LastModifiedService.class);
-    action = new FeedAction();
-    ((FeedAction) action).setLastModifiedService(lastModifiedService);
-
-    super.setUp();
+    super.setUp(FeedAction.class, lastModifiedService);
   }
 
   public void testStatusIsOkay() throws Exception {

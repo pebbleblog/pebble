@@ -43,6 +43,7 @@ import net.sourceforge.pebble.web.view.impl.CommentFormView;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -69,11 +70,10 @@ public class ReplyToBlogEntryAction extends AbstractCommentAction {
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
     String entryId = request.getParameter("entry");
 
-    BlogService service = new BlogService();
     BlogEntry blogEntry = null;
     if (entryId != null) {
       try {
-        blogEntry = service.getBlogEntry(blog, entryId);
+        blogEntry = blogService.getBlogEntry(blog, entryId);
       } catch (BlogServiceException e) {
         throw new ServletException(e);
       }

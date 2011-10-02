@@ -51,16 +51,17 @@ public class DefaultPermalinkProviderTest extends PermalinkProviderSupportTestCa
    * @return a PermalinkProvider instance
    */
   protected PermalinkProvider getPermalinkProvider() {
-    return new DefaultPermalinkProvider();
+    DefaultPermalinkProvider provider = new DefaultPermalinkProvider();
+    provider.setBlogService(blogService);
+    return provider;
   }
 
   /**
    * Tests that a permalink can be generated for a blog entry.
    */
   public void testBlogEntryPermalink() throws Exception {
-    BlogService service = new BlogService();
     BlogEntry blogEntry = new BlogEntry(blog);
-    service.putBlogEntry(blogEntry);
+    blogService.putBlogEntry(blogEntry);
 
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy'/'MM'/'dd'/'");
     sdf.setTimeZone(blog.getTimeZone());
@@ -88,15 +89,14 @@ public class DefaultPermalinkProviderTest extends PermalinkProviderSupportTestCa
    * Tests that the correct blog entry can be found from a permalink.
    */
   public void testGetBlogEntry() throws Exception {
-    BlogService service = new BlogService();
     BlogEntry blogEntry1 = new BlogEntry(blog);
     BlogEntry blogEntry2 = new BlogEntry(blog);
-    service.putBlogEntry(blogEntry1);
+    blogService.putBlogEntry(blogEntry1);
 
     Calendar cal = blog.getCalendar();
     cal.set(Calendar.YEAR, 2000);
     blogEntry2.setDate(cal.getTime());
-    service.putBlogEntry(blogEntry2);
+    blogService.putBlogEntry(blogEntry2);
 
     String uri = permalinkProvider.getPermalink(blogEntry1);
     assertEquals(blogEntry1, permalinkProvider.getBlogEntry(uri));

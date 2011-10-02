@@ -48,9 +48,7 @@ import net.sourceforge.pebble.domain.BlogService;
 public class ViewBlogEntryActionTest extends SingleBlogActionTestCase {
 
   protected void setUp() throws Exception {
-    action = new ViewBlogEntryAction();
-
-    super.setUp();
+    setUp(ViewBlogEntryAction.class);
   }
 
   public void testViewBlogEntryWithNullId() throws Exception {
@@ -69,8 +67,7 @@ public class ViewBlogEntryActionTest extends SingleBlogActionTestCase {
   public void testPublishedViewBlogEntry() throws Exception {
     BlogEntry blogEntry1 = new BlogEntry(blog);
     blogEntry1.setPublished(true);
-    BlogService service = new BlogService();
-    service.putBlogEntry(blogEntry1);
+    blogService.putBlogEntry(blogEntry1);
 
     SecurityUtils.runAsUnauthenticated();
     request.setParameter("entry", blogEntry1.getId());
@@ -84,8 +81,7 @@ public class ViewBlogEntryActionTest extends SingleBlogActionTestCase {
   public void testUnpublishedViewBlogEntryAsAnonymousUser() throws Exception {
     BlogEntry blogEntry1 = new BlogEntry(blog);
     blogEntry1.setPublished(false);
-    BlogService service = new BlogService();
-    service.putBlogEntry(blogEntry1);
+    blogService.putBlogEntry(blogEntry1);
 
     SecurityUtils.runAsAnonymous();
     request.setParameter("entry", blogEntry1.getId());
@@ -99,8 +95,7 @@ public class ViewBlogEntryActionTest extends SingleBlogActionTestCase {
   public void testUnpublishedViewBlogEntryAsUserThatIsAuthorisedForBlog() throws Exception {
     BlogEntry blogEntry1 = new BlogEntry(blog);
     blogEntry1.setPublished(false);
-    BlogService service = new BlogService();
-    service.putBlogEntry(blogEntry1);
+    blogService.putBlogEntry(blogEntry1);
 
     SecurityUtils.runAsBlogContributor();
     request.setParameter("entry", blogEntry1.getId());

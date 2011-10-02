@@ -47,9 +47,7 @@ import net.sourceforge.pebble.web.view.impl.ResponsesView;
 public class ViewResponsesActionTest extends SecureActionTestCase {
 
   protected void setUp() throws Exception {
-    action = new ViewResponsesAction();
-
-    super.setUp();
+    super.setUp(ViewResponsesAction.class);
   }
 
   /**
@@ -77,21 +75,20 @@ public class ViewResponsesActionTest extends SecureActionTestCase {
 
   public void testActionCalledWithDefaultParametersAndLessThanAPageOfResponses() throws Exception {
     int numberOfComments = ViewResponsesAction.PAGE_SIZE - 1;
-    BlogService service = new BlogService();
     BlogEntry blogEntry = new BlogEntry(blog);
-    service.putBlogEntry(blogEntry);
-    blogEntry = service.getBlogEntry(blog, blogEntry.getId());
+    blogService.putBlogEntry(blogEntry);
+    blogEntry = blogService.getBlogEntry(blog, blogEntry.getId());
 
     for (int i = 0; i < numberOfComments; i++) {
       Comment comment = blogEntry.createComment("title", "body"+i, "author", "email", "website", "avatar", "127.0.0.1");
       blogEntry.addComment(comment);
     }
-    service.putBlogEntry(blogEntry);
+    blogService.putBlogEntry(blogEntry);
 
     for (Comment comment : blogEntry.getComments()) {
       comment.setApproved();
     }
-    service.putBlogEntry(blogEntry);
+    blogService.putBlogEntry(blogEntry);
     
 
     View view = action.process(request, response);

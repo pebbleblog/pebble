@@ -53,8 +53,8 @@ public class ActionFactoryTest extends PebbleTestCase {
 
   public void testGetAction() throws Exception {
 
-    assertNotNull(factory.getAction("viewDay"));
-    assertTrue(factory.getAction("viewDay") instanceof ViewDayAction);
+    assertNotNull(factory.getAction("404"));
+    assertTrue(factory.getAction("404") instanceof FourZeroFourAction);
   }
 
   public void testActionNotFound() {

@@ -37,6 +37,7 @@ import net.sourceforge.pebble.util.SecurityUtils;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.impl.BlogEntryFormView;
 
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -49,6 +50,9 @@ import java.util.Iterator;
  * @author    Simon Brown
  */
 public class AddBlogEntryAction extends SecureAction {
+
+  @Inject
+  private BlogService blogService;
 
   /**
    * Peforms the processing associated with this action.
@@ -63,9 +67,8 @@ public class AddBlogEntryAction extends SecureAction {
 
     String entryToClone = request.getParameter("entryToClone");
     if (entryToClone != null && entryToClone.length() > 0) {
-      BlogService service = new BlogService();
       try {
-        blogEntryToClone = service.getBlogEntry(blog, entryToClone);
+        blogEntryToClone = blogService.getBlogEntry(blog, entryToClone);
       } catch (BlogServiceException e) {
         throw new ServletException(e);
       }

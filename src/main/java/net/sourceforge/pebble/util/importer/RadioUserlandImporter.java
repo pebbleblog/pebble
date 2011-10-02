@@ -63,16 +63,16 @@ public class RadioUserlandImporter {
     File root = new File(args[0]);
     File sources[] = root.listFiles();
     DAOFactory daoFactory = new FileDAOFactory();
-    DAOFactory.setConfiguredFactory(daoFactory);
-    Blog blog = new Blog(daoFactory, args[1]);
+    BlogService blogService = new BlogService(daoFactory.getBlogEntryDAO());
+    Blog blog = new Blog(daoFactory, blogService, args[1]);
     blog.setProperty(Blog.TIMEZONE_KEY, args[2]);
 
     for (int i = 0; i < sources.length; i++) {
-      importFile(blog, sources[i]);
+      importFile(blogService, blog, sources[i]);
     }
   }
 
-  private static void importFile(Blog blog, File source) throws Exception {
+  private static void importFile(BlogService blogService, Blog blog, File source) throws Exception {
     System.out.println("Importing " + source.getName());
     // create a factory and builder - an abstraction for an XML parser
     DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -133,8 +133,7 @@ public class RadioUserlandImporter {
     entry.setBody(body);
     entry.setDate(date);
 
-    BlogService service = new BlogService();
-    service.putBlogEntry(entry);
+    blogService.putBlogEntry(entry);
   }
 
 }

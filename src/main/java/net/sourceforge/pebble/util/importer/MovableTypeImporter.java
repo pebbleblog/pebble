@@ -83,11 +83,11 @@ public class MovableTypeImporter {
     }
 
     DAOFactory daoFactory = new FileDAOFactory();
-    DAOFactory.setConfiguredFactory(daoFactory);
-    Blog blog = new Blog(daoFactory, args[1]);
+    BlogService blogService = new BlogService(daoFactory.getBlogEntryDAO());
+    Blog blog = new Blog(daoFactory, blogService, args[1]);
     blog.setProperty(Blog.TIMEZONE_KEY, args[2]);
 
-    importBlog(blog, file, daoFactory);
+    importBlog(blog, file, daoFactory, blogService);
   }
 
   /**
@@ -97,19 +97,19 @@ public class MovableTypeImporter {
    * @param file    the Movable Type export file
    * @throws Exception  if something goes wrong
    */
-  static void importBlog(Blog blog, File file, DAOFactory daoFactory) throws Exception {
+  static void importBlog(Blog blog, File file, DAOFactory daoFactory, BlogService blogService) throws Exception {
     System.out.println("Importing " + file.getName());
 
     BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file),"UTF8"));
     BlogEntry blogEntry = null;
     do {
-      blogEntry = readBlogEntry(blog, reader, daoFactory);
+      blogEntry = readBlogEntry(blog, reader, daoFactory, blogService);
     } while (blogEntry != null);
 
     System.out.println(" " + blog.getNumberOfBlogEntries());
   }
 
-  private static BlogEntry readBlogEntry(Blog blog, BufferedReader reader, DAOFactory daoFactory) throws Exception {
+  private static BlogEntry readBlogEntry(Blog blog, BufferedReader reader, DAOFactory daoFactory, BlogService blogService) throws Exception {
     String line = reader.readLine();
     if (line == null) {
       return null;
@@ -233,8 +233,7 @@ public class MovableTypeImporter {
     }
     entry.setPublished("Publish".equals(status));
 
-    BlogService service = new BlogService();
-    service.putBlogEntry(entry);
+    blogService.putBlogEntry(entry);
 
     line = reader.readLine();
     while (!line.equals("--------")) {
@@ -280,7 +279,7 @@ public class MovableTypeImporter {
       line = reader.readLine();
     }
 
-    service.putBlogEntry(entry);
+    blogService.putBlogEntry(entry);
 
 //    System.out.println("--------------------------------------------------");
     System.out.print(".");

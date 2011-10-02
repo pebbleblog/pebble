@@ -41,6 +41,7 @@ import net.sourceforge.pebble.web.view.View;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -59,6 +60,9 @@ public class PublishBlogEntryAction extends SecureAction {
   /** the log used by this class */
   private static final Log log = LogFactory.getLog(PublishBlogEntryAction.class);
 
+  @Inject
+  private BlogService blogService;
+
   /**
    * Peforms the processing associated with this action.
    *
@@ -72,10 +76,9 @@ public class PublishBlogEntryAction extends SecureAction {
     String submit = request.getParameter("submit");
     String publishDate = request.getParameter("publishDate");
 
-    BlogService service = new BlogService();
-    BlogEntry blogEntry = null;
+    BlogEntry blogEntry;
     try {
-      blogEntry = service.getBlogEntry(blog, id);
+      blogEntry = blogService.getBlogEntry(blog, id);
     } catch (BlogServiceException e) {
       throw new ServletException(e);
     }
@@ -94,7 +97,7 @@ public class PublishBlogEntryAction extends SecureAction {
         // TODO: localization
         try {
           blogEntry.setPublished(true);
-          service.putBlogEntry(blogEntry);
+          blogService.putBlogEntry(blogEntry);
           blog.info("Blog entry <a href=\"" + blogEntry.getLocalPermalink() + "\">" + blogEntry.getTitle() + "</a> published.");
         } catch (BlogServiceException be) {
           // give feedback to the user that something bad has happened
@@ -121,12 +124,12 @@ public class PublishBlogEntryAction extends SecureAction {
         // now save the published entry and remove the unpublished version
         try {
           log.info("Removing blog entry dated " + blogEntry.getDate());
-          service.removeBlogEntry(blogEntry);
+          blogService.removeBlogEntry(blogEntry);
 
           blogEntry.setDate(date);
           blogEntry.setPublished(true);
           log.info("Putting blog entry dated " + blogEntry.getDate());
-          service.putBlogEntry(blogEntry);
+          blogService.putBlogEntry(blogEntry);
           blog.info("Blog entry <a href=\"" + blogEntry.getLocalPermalink() + "\">" + blogEntry.getTitle() + "</a> published.");
         } catch (BlogServiceException be) {
           log.error(be);
@@ -135,7 +138,7 @@ public class PublishBlogEntryAction extends SecureAction {
     } else if (submit.equals("Unpublish")) {
       blogEntry.setPublished(false);
       try {
-        service.putBlogEntry(blogEntry);
+        blogService.putBlogEntry(blogEntry);
         blog.info("Blog entry <a href=\"" + blogEntry.getLocalPermalink() + "\">" + blogEntry.getTitle() + "</a> unpublished.");
       } catch (BlogServiceException be) {
         log.error(be);
