@@ -46,7 +46,7 @@ public class BlogManagerTest extends TestCase {
   private BlogManager manager;
 
   protected void setUp() throws Exception {
-    this.manager = BlogManager.getInstance();
+    //this.manager = new BlogManager();
   }
 
   public void testGetBlogs() {

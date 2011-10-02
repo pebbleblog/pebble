@@ -52,9 +52,11 @@ public abstract class AbstractAPIHandler {
   static final char BLOG_ID_SEPARATOR = '/';
 
   private final AuthenticationManager authenticationManager;
+  private final BlogManager blogManager;
 
-  protected AbstractAPIHandler(AuthenticationManager authenticationManager) {
+  protected AbstractAPIHandler(AuthenticationManager authenticationManager, BlogManager blogManager) {
     this.authenticationManager = authenticationManager;
+    this.blogManager = blogManager;
   }
 
   public AuthenticationManager getAuthenticationManager() {
@@ -68,6 +70,7 @@ public abstract class AbstractAPIHandler {
    * @param blog      the Blog instance to test against
    * @param username  the username used for logging in via XML-RPC
    * @param password  the password used for logging in via XML-RPC
+   * @throws XmlRpcAuthenticationException If an error occured
    */
   protected void authenticate(Blog blog, String username, String password) throws XmlRpcAuthenticationException {
     try {
@@ -92,6 +95,7 @@ public abstract class AbstractAPIHandler {
    *
    * @param s   the String containing the post ID
    * @return  the post ID (blog entry ID)
+   * @throws XmlRpcException If an error occured
    */
   protected Blog getBlogWithPostId(String s) throws XmlRpcException {
     if (s == null) {
@@ -106,7 +110,7 @@ public abstract class AbstractAPIHandler {
       blogId = s.substring(0, index);
     }
 
-    blog = BlogManager.getInstance().getBlog(blogId);
+    blog = blogManager.getBlog(blogId);
     if (blog == null) {
       throw new XmlRpcException(0, "Blog with ID of " + blogId + " not found.");
     } else {
@@ -124,9 +128,10 @@ public abstract class AbstractAPIHandler {
    *
    * @param blogId   the String containing the post ID
    * @return  the blog ID
+   * @throws XmlRpcException If an error occured
    */
   protected Blog getBlogWithBlogId(String blogId) throws XmlRpcException {
-    Blog blog = BlogManager.getInstance().getBlog(blogId);
+    Blog blog = blogManager.getBlog(blogId);
     if (blog == null) {
       throw new XmlRpcException(0, "Blog with ID of " + blogId + " not found.");
     } else {

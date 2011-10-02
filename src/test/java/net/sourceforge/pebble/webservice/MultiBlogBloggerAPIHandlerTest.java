@@ -52,7 +52,7 @@ public class MultiBlogBloggerAPIHandlerTest extends MultiBlogTestCase {
     super.setUp();
 
     handler = new BloggerAPIHandler(new net.sourceforge.pebble.mock.MockAuthenticationManager(true, new GrantedAuthority[] {new GrantedAuthorityImpl(Constants.BLOG_CONTRIBUTOR_ROLE)}),
-        blogService);
+        blogManager, blogService);
     blog1.setProperty(Blog.BLOG_CONTRIBUTORS_KEY, "username");
     blog2.setProperty(Blog.BLOG_CONTRIBUTORS_KEY, "username2");
   }

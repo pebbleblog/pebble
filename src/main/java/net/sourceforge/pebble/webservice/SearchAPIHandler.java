@@ -39,10 +39,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
-import net.sourceforge.pebble.domain.Blog;
-import net.sourceforge.pebble.domain.BlogEntry;
-import net.sourceforge.pebble.domain.BlogService;
-import net.sourceforge.pebble.domain.Category;
+import net.sourceforge.pebble.domain.*;
 import net.sourceforge.pebble.search.SearchHit;
 import net.sourceforge.pebble.search.SearchResults;
 import net.sourceforge.pebble.util.Pageable;
@@ -77,8 +74,8 @@ public class SearchAPIHandler extends AbstractAPIHandler {
 
     private final BlogService blogService;
 
-  public SearchAPIHandler(AuthenticationManager authenticationManager, BlogService blogService) {
-    super(authenticationManager);
+  public SearchAPIHandler(AuthenticationManager authenticationManager, BlogManager blogManager, BlogService blogService) {
+    super(authenticationManager, blogManager);
     this.blogService = blogService;
   }
 

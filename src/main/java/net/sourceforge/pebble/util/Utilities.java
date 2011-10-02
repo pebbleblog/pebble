@@ -32,6 +32,7 @@
 package net.sourceforge.pebble.util;
 
 import net.sourceforge.pebble.Configuration;
+import net.sourceforge.pebble.ContentCache;
 import net.sourceforge.pebble.PebbleContext;
 import net.sourceforge.pebble.dao.CategoryDAO;
 import net.sourceforge.pebble.dao.DAOFactory;
@@ -344,8 +345,10 @@ public class Utilities {
     }
 
     DAOFactory daoFactory = new FileDAOFactory();
-    BlogService blogService = new BlogService(daoFactory.getBlogEntryDAO());
-    Blog blog = new Blog(daoFactory, blogService, args[0]);
+    ContentCache contentCache = new ContentCache();
+    BlogService blogService = new BlogService(daoFactory.getBlogEntryDAO(), contentCache);
+    BlogManager blogManager = new BlogManager(blogService, daoFactory, contentCache);
+    Blog blog = new Blog(blogManager, daoFactory, blogService, args[0]);
 
     String action = args[1];
     if (action == null) {

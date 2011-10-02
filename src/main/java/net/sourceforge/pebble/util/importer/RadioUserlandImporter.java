@@ -31,10 +31,12 @@
  */
 package net.sourceforge.pebble.util.importer;
 
+import net.sourceforge.pebble.ContentCache;
 import net.sourceforge.pebble.dao.DAOFactory;
 import net.sourceforge.pebble.dao.file.FileDAOFactory;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.domain.BlogEntry;
+import net.sourceforge.pebble.domain.BlogManager;
 import net.sourceforge.pebble.domain.BlogService;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -63,8 +65,10 @@ public class RadioUserlandImporter {
     File root = new File(args[0]);
     File sources[] = root.listFiles();
     DAOFactory daoFactory = new FileDAOFactory();
-    BlogService blogService = new BlogService(daoFactory.getBlogEntryDAO());
-    Blog blog = new Blog(daoFactory, blogService, args[1]);
+    ContentCache contentCache = new ContentCache();
+    BlogService blogService = new BlogService(daoFactory.getBlogEntryDAO(), contentCache);
+    BlogManager blogManager = new BlogManager(blogService, daoFactory, contentCache);
+    Blog blog = new Blog(blogManager, daoFactory, blogService, args[1]);
     blog.setProperty(Blog.TIMEZONE_KEY, args[2]);
 
     for (int i = 0; i < sources.length; i++) {

@@ -52,28 +52,20 @@ import net.sf.ehcache.CacheManager;
  * @author    Simon Brown
  */
 public class ContentCache {
-
-  private static final ContentCache instance = new ContentCache();
-
   /** the log used by this class */
   private static Log log = LogFactory.getLog(ContentCache.class);
 
-  private Cache cache;
+  private final Cache cache;
 
-  private ContentCache() {
+  public ContentCache() {
     URL url = BlogService.class.getResource("/ehcache.xml");
     CacheManager cacheManager = new CacheManager(url);
     cache = cacheManager.getCache("contentCache");
-
-    // size the cache (number of blogs * max elements in memory configured in the ehcache.xml file)
-    // Fix: Previously the number of blogs was calculated through blogManager.getBlogs().getSize() which
-    // caused the blog to load and access the Cache that is just now being initialized.
-    // This lead to NPE because instance is not yet set to this instance.
-    cache.getCacheConfiguration().setMaxElementsInMemory(cache.getCacheConfiguration().getMaxElementsInMemory() * BlogManager.getInstance().getNumberOfBlogs());
   }
 
-  public static ContentCache getInstance() {
-    return instance;
+  public synchronized void setNumberOfBlogs(int numberOfBlogs) {
+    // size the cache (number of blogs * max elements in memory configured in the ehcache.xml file)
+    cache.getCacheConfiguration().setMaxElementsInMemory(cache.getCacheConfiguration().getMaxElementsInMemory() * numberOfBlogs);
   }
 
   public synchronized void putBlogEntry(BlogEntry blogEntry) {

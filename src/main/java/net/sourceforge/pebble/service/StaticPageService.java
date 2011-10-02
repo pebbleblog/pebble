@@ -60,6 +60,9 @@ public class StaticPageService {
   @Inject
   private StaticPageDAO staticPageDAO;
 
+  @Inject
+  private ContentCache contentCache;
+
   /**
    * Gets the list of static pages for the given blog.
    *
@@ -90,10 +93,9 @@ public class StaticPageService {
    */
   public StaticPage getStaticPageById(Blog blog, String pageId) throws StaticPageServiceException {
     StaticPage staticPage;
-    ContentCache cache = ContentCache.getInstance();
 
     try {
-      staticPage = cache.getStaticPage(blog, pageId);
+      staticPage = contentCache.getStaticPage(blog, pageId);
       if (staticPage != null) {
         log.debug("Got static page " + pageId+ " from cache");
       } else {
@@ -102,7 +104,7 @@ public class StaticPageService {
         staticPage = staticPageDAO.loadStaticPage(blog, pageId);
         if (staticPage != null) {
           staticPage.setPersistent(true);
-          cache.putStaticPage(staticPage);
+          contentCache.putStaticPage(staticPage);
         }
       }
     } catch (PersistenceException pe) {
@@ -136,7 +138,6 @@ public class StaticPageService {
    * @throws  StaticPageServiceException if something goes wrong
    */
   public void putStaticPage(StaticPage staticPage) throws StaticPageServiceException {
-    ContentCache cache = ContentCache.getInstance();
     Blog blog = staticPage.getBlog();
 
     synchronized (blog) {
@@ -151,7 +152,7 @@ public class StaticPageService {
         } else {
           staticPageDAO.storeStaticPage(staticPage);
           staticPage.setPersistent(true);
-          cache.removeStaticPage(staticPage);
+          contentCache.removeStaticPage(staticPage);
         }
 
         staticPage.getBlog().getSearchIndex().index(staticPage);
@@ -169,17 +170,15 @@ public class StaticPageService {
    * @throws  StaticPageServiceException if something goes wrong
    */
   public void removeStaticPage(StaticPage staticPage) throws StaticPageServiceException {
-    ContentCache cache = ContentCache.getInstance();
-
     try {
       staticPageDAO.removeStaticPage(staticPage);
-      cache.removeStaticPage(staticPage);
+      contentCache.removeStaticPage(staticPage);
 
       staticPage.getBlog().getSearchIndex().unindex(staticPage);
       staticPage.getBlog().getStaticPageIndex().unindex(staticPage);
     } catch (PersistenceException pe) {
       // remove from the cache so that it's picked up from storage when accessed next
-      cache.removeStaticPage(staticPage);
+      contentCache.removeStaticPage(staticPage);
 
       throw new StaticPageServiceException(staticPage.getBlog(), pe);
     }
@@ -194,7 +193,7 @@ public class StaticPageService {
   public boolean lock(StaticPage staticPage) {
     if (staticPage.isPersistent()) {
       boolean success = staticPageDAO.lock(staticPage);
-      ContentCache.getInstance().removeStaticPage(staticPage);
+      contentCache.removeStaticPage(staticPage);
 
       return success;
     } else {
@@ -211,7 +210,7 @@ public class StaticPageService {
   public boolean unlock(StaticPage staticPage) {
     if (staticPage.isPersistent()) {
       boolean success = staticPageDAO.unlock(staticPage);
-      ContentCache.getInstance().removeStaticPage(staticPage);
+      contentCache.removeStaticPage(staticPage);
 
       return success;
     } else {

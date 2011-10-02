@@ -54,10 +54,7 @@ import javax.servlet.http.HttpServletResponse;
 public class AddBlogAction extends SecureAction {
 
   @Inject
-  private DAOFactory daoFactory;
-
-  @Inject
-  private BlogService blogService;
+  private BlogManager blogManager;
 
   /**
    * Peforms the processing associated with this action.
@@ -68,11 +65,10 @@ public class AddBlogAction extends SecureAction {
    */
   public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
     AbstractBlog blog = (AbstractBlog)getModel().get(Constants.BLOG_KEY);
-    BlogManager blogManager = BlogManager.getInstance();
     String blogId = request.getParameter("id");
 
     if (blogId != null && blogId.length() > 0 && blogId.matches("[\\w-~]*") && blogManager.getBlog(blogId) == null) {
-      blogManager.addBlog(daoFactory, blogService, blogId);
+      blogManager.addBlog(blogId);
     }
 
     return new RedirectView(blog.getUrl() + "viewBlogs.secureaction");

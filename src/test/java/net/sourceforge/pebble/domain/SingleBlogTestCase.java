@@ -32,6 +32,7 @@
 package net.sourceforge.pebble.domain;
 
 import net.sourceforge.pebble.Configuration;
+import net.sourceforge.pebble.ContentCache;
 import net.sourceforge.pebble.PebbleContext;
 import net.sourceforge.pebble.dao.DAOFactory;
 import net.sourceforge.pebble.dao.mock.MockDAOFactory;
@@ -50,7 +51,9 @@ public abstract class SingleBlogTestCase extends PebbleTestCase {
   protected Blog blog;
   protected DAOFactory daoFactory;
   protected BlogService blogService;
+  protected BlogManager blogManager;
   protected StaticPageService staticPageService;
+  protected ContentCache contentCache;
 
   protected void setUp() throws Exception {
     super.setUp();
@@ -62,28 +65,31 @@ public abstract class SingleBlogTestCase extends PebbleTestCase {
     PebbleContext.getInstance().setConfiguration(config);
 
     daoFactory = new MockDAOFactory();
-    BlogManager.getInstance().setMultiBlog(false);
 
-    blogService = new BlogService(daoFactory.getBlogEntryDAO());
+    contentCache = new ContentCache();
+    blogService = new BlogService(daoFactory.getBlogEntryDAO(), contentCache);
+    blogManager = new BlogManager(blogService, daoFactory, contentCache);
+    blogManager.setMultiBlog(false);
+    addComponent("blogManager", blogManager);
     addComponents(daoFactory, daoFactory.getBlogEntryDAO(), daoFactory.getCategoryDAO(),
-        daoFactory.getRefererFilterDAO(), daoFactory.getStaticPageDAO());
+        daoFactory.getRefererFilterDAO(), daoFactory.getStaticPageDAO(), contentCache);
     addComponents(blogService, autowire(StaticPageService.class));
 
     File blogDirectory = new File(TEST_BLOG_LOCATION, "blogs/default");
     blogDirectory.mkdir();
-    blog = new Blog(daoFactory, blogService, blogDirectory.getAbsolutePath());
+    blog = new Blog(blogManager, daoFactory, blogService, blogDirectory.getAbsolutePath());
     Theme theme = new Theme(blog, "user-default", TEST_BLOG_LOCATION.getAbsolutePath());
     blog.setEditableTheme(theme);
     // There is some code that does i18n and runs assertions assuming that the locale is English
     blog.setProperty(Blog.LANGUAGE_KEY, "en");
 
-    BlogManager.getInstance().addBlog(blog);
+    blogManager.addBlog(blog);
     blog.start();
   }
 
   protected void tearDown() throws Exception {
     blog.stop();
-    BlogManager.getInstance().removeAllBlogs();
+    blogManager.removeAllBlogs();
 
     super.tearDown();
   }

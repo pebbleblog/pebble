@@ -178,16 +178,17 @@ public class Blog extends AbstractBlog {
   /** the Cache that can be used by services to cache arbitrary config */
   private final ConcurrentMap<String, Supplier<?>> serviceCache = new ConcurrentHashMap<String, Supplier<?>>();
 
+  private final BlogManager blogManager;
   private final DAOFactory daoFactory;
-
   private final BlogService blogService;
   /**
    * Creates a new Blog instance, based at the specified location.
    *
    * @param root    an absolute path pointing to the root directory of the blog
    */
-  public Blog(DAOFactory daoFactory, BlogService blogService, String root) {
+  public Blog(BlogManager blogManager, DAOFactory daoFactory, BlogService blogService, String root) {
     super(root);
+    this.blogManager = blogManager;
     this.daoFactory = daoFactory;
     this.blogService = blogService;
     beanFactory = PebbleContext.getInstance().getApplicationContext().getAutowireCapableBeanFactory();
@@ -545,7 +546,7 @@ public class Blog extends AbstractBlog {
 
     if (url == null || url.length() == 0) {
       return "";
-    } else if (BlogManager.getInstance().isMultiBlog()) {
+    } else if (blogManager.isMultiBlog()) {
       if (config.isVirtualHostingEnabled()) {
         return url.substring(0, url.indexOf("://")+3) + getId() + "." + url.substring(url.indexOf("://")+3);
       } else {
@@ -562,7 +563,7 @@ public class Blog extends AbstractBlog {
    * @return  a URL as a String
    */
   public String getRelativeUrl() {
-    if (BlogManager.getInstance().isMultiBlog()) {
+    if (blogManager.isMultiBlog()) {
       return "/" + getId() + "/";
     } else {
       return "/";

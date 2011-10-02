@@ -31,6 +31,7 @@
  */
 package net.sourceforge.pebble.domain;
 
+import net.sourceforge.pebble.ContentCache;
 import net.sourceforge.pebble.dao.DAOFactory;
 import net.sourceforge.pebble.dao.mock.MockDAOFactory;
 import net.sourceforge.pebble.PebbleContext;
@@ -48,43 +49,50 @@ public abstract class MultiBlogTestCase extends PebbleTestCase {
   protected Blog blog1, blog2;
   protected DAOFactory daoFactory;
   protected BlogService blogService;
+  protected BlogManager blogManager;
+  protected ContentCache contentCache;
 
   protected void setUp() throws Exception {
     super.setUp();
 
     daoFactory = new MockDAOFactory();
-    blogService = new BlogService(daoFactory.getBlogEntryDAO());
-    addComponents(blogService);
+    addComponents(daoFactory, daoFactory.getBlogEntryDAO(), daoFactory.getCategoryDAO(),
+        daoFactory.getRefererFilterDAO(), daoFactory.getStaticPageDAO());
+    contentCache = new ContentCache();
+    blogService = new BlogService(daoFactory.getBlogEntryDAO(), contentCache);
+    blogManager = new BlogManager(blogService, daoFactory, contentCache);
+    blogManager.setMultiBlog(true);
+    addComponent("blogManager", blogManager);
+    addComponents(blogService, contentCache);
 
     PebbleContext.getInstance().getConfiguration().setUrl("http://www.yourdomain.com/blog/");
-    BlogManager.getInstance().setMultiBlog(true);
 
     PebbleContext.getInstance().getConfiguration().setSecurityRealm(new MockSecurityRealm());
 
     // and set up some blogs
     File blogDirectory1 = new File(TEST_BLOG_LOCATION, "blogs/blog1");
     blogDirectory1.mkdir();
-    blog1 = new Blog(daoFactory, blogService, blogDirectory1.getAbsolutePath());
+    blog1 = new Blog(blogManager, daoFactory, blogService, blogDirectory1.getAbsolutePath());
     blog1.setId("blog1");
     Theme theme = new Theme(blog1, "user-blog1", TEST_BLOG_LOCATION.getAbsolutePath());
     blog1.setEditableTheme(theme);
-    BlogManager.getInstance().addBlog(blog1);
+    blogManager.addBlog(blog1);
     blog1.start();
 
     File blogDirectory2 = new File(TEST_BLOG_LOCATION, "blogs/blog2");
     blogDirectory2.mkdir();
-    blog2 = new Blog(daoFactory, blogService, blogDirectory2.getAbsolutePath());
+    blog2 = new Blog(blogManager, daoFactory, blogService, blogDirectory2.getAbsolutePath());
     blog2.setId("blog2");
     theme = new Theme(blog2, "user-blog2", TEST_BLOG_LOCATION.getAbsolutePath());
     blog2.setEditableTheme(theme);
-    BlogManager.getInstance().addBlog(blog2);
+    blogManager.addBlog(blog2);
     blog2.start();
   }
 
   protected void tearDown() throws Exception {
     blog1.stop();
     blog2.stop();
-    BlogManager.getInstance().removeAllBlogs();
+    blogManager.removeAllBlogs();
 
     super.tearDown();
   }

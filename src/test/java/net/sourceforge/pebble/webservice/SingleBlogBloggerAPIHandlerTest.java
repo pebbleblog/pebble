@@ -53,12 +53,12 @@ public class SingleBlogBloggerAPIHandlerTest extends SingleBlogTestCase {
   protected void setUp() throws Exception {
     super.setUp();
     handler = new BloggerAPIHandler(new net.sourceforge.pebble.mock.MockAuthenticationManager(true, new GrantedAuthority[] {new GrantedAuthorityImpl(Constants.BLOG_CONTRIBUTOR_ROLE)}),
-        blogService);
+        blogManager, blogService);
     blog.setProperty(Blog.BLOG_CONTRIBUTORS_KEY, "username");
   }
 
   public void testAuthenticationFailure() {
-    handler = new BloggerAPIHandler(new MockAuthenticationManager(false), blogService);
+    handler = new BloggerAPIHandler(new MockAuthenticationManager(false), blogManager, blogService);
     try {
       handler.getUserInfo("", "username", "password");
       fail();

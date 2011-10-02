@@ -50,13 +50,16 @@ import java.util.*;
  */
 public class MultiBlog extends AbstractBlog {
 
+  private final BlogManager blogManager;
+
   /**
    * Creates a new Blog instance, based at the specified location.
    *
    * @param root    an absolute path pointing to the root directory of the blog
    */
-  public MultiBlog(String root) {
+  public MultiBlog(BlogManager blogManager, String root) {
     super(root);
+    this.blogManager = blogManager;
 
     // probably MultiBlog should be made a final class if init is called from here - 
     // see javadoc comment on AbstractBlog.init() for reasons
@@ -119,7 +122,7 @@ public class MultiBlog extends AbstractBlog {
   public Date getLastModified() {
     Date date = new Date(0);
 
-    Iterator it = BlogManager.getInstance().getPublicBlogs().iterator();
+    Iterator it = blogManager.getPublicBlogs().iterator();
     Blog blog;
     while (it.hasNext()) {
       blog = (Blog)it.next();
@@ -141,7 +144,7 @@ public class MultiBlog extends AbstractBlog {
   public List<BlogEntry> getRecentBlogEntries(int numberOfEntries) {
     List<BlogEntry> blogEntries = new ArrayList<BlogEntry>();
 
-    for (Blog blog : BlogManager.getInstance().getPublicBlogs()) {
+    for (Blog blog : blogManager.getPublicBlogs()) {
       blogEntries.addAll(blog.getRecentPublishedBlogEntries());
     }
 

@@ -32,11 +32,11 @@
 package net.sourceforge.pebble.web.filter;
 
 import net.sourceforge.pebble.domain.SingleBlogTestCase;
-import net.sourceforge.pebble.mock.MockFilterConfig;
 import net.sourceforge.pebble.mock.MockHttpServletRequest;
 import net.sourceforge.pebble.mock.MockHttpServletResponse;
 import net.sourceforge.pebble.mock.MockFilterChain;
 import net.sourceforge.pebble.Constants;
+import org.springframework.mock.web.MockFilterConfig;
 
 /**
  * Tests for the BlogLookupFilter class.
@@ -54,7 +54,7 @@ public class SingleBlogBlogLookupFilterTest extends SingleBlogTestCase {
     super.setUp();
 
     filter = new BlogLookupFilter();
-    config = new MockFilterConfig();
+    config = new MockFilterConfig(servletContext);
     filter.init(config);
     request = new MockHttpServletRequest();
     request.setContextPath("/somecontext");

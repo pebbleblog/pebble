@@ -54,10 +54,7 @@ import javax.servlet.http.HttpServletResponse;
 public class ReloadBlogAction extends SecureAction {
 
   @Inject
-  private DAOFactory daoFactory;
-
-  @Inject
-  private BlogService blogService;
+  private BlogManager blogManager;
 
   /**
    * Peforms the processing associated with this action.
@@ -68,7 +65,7 @@ public class ReloadBlogAction extends SecureAction {
    */
   public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
-    BlogManager.getInstance().reloadBlog(daoFactory, blogService, blog);
+    blogManager.reloadBlog(blog);
 
     String redirectUrl = request.getParameter("redirectUrl");
     if (redirectUrl != null && redirectUrl.length() > 0) {

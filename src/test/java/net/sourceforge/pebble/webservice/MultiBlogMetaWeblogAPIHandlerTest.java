@@ -54,7 +54,7 @@ public class MultiBlogMetaWeblogAPIHandlerTest extends MultiBlogTestCase {
     super.setUp();
 
     handler = new MetaWeblogAPIHandler(new net.sourceforge.pebble.mock.MockAuthenticationManager(true, new GrantedAuthority[] {new GrantedAuthorityImpl(Constants.BLOG_CONTRIBUTOR_ROLE)}),
-        blogService);
+        blogManager, blogService);
     blog1.setProperty(Blog.BLOG_CONTRIBUTORS_KEY, "username");
   }
 
@@ -62,7 +62,7 @@ public class MultiBlogMetaWeblogAPIHandlerTest extends MultiBlogTestCase {
    * Tests that authentication fails properly.
    */
   public void testAuthenticationFailure() {
-    handler = new MetaWeblogAPIHandler(new MockAuthenticationManager(false), blogService);
+    handler = new MetaWeblogAPIHandler(new MockAuthenticationManager(false), blogManager, blogService);
     try {
       handler.getCategories("blog1/123", "username", "password");
       fail();

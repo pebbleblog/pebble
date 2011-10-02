@@ -46,6 +46,8 @@ import net.sourceforge.pebble.decorator.ContentDecoratorChain;
 import net.sourceforge.pebble.domain.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -65,12 +67,16 @@ public class PreProcessingFilter implements Filter {
   /** the log used by this class */
   private static Log log = LogFactory.getLog(PreProcessingFilter.class);
 
+  private BlogManager blogManager;
+
   /**
    * Initialises this instance.
    *
    * @param config    a FilterConfig instance
    */
   public void init(FilterConfig config) {
+    ApplicationContext applicationContext = WebApplicationContextUtils.getRequiredWebApplicationContext(config.getServletContext());
+    blogManager = (BlogManager) applicationContext.getBean("blogManager");
   }
 
   /**
@@ -142,10 +148,10 @@ public class PreProcessingFilter implements Filter {
       }
 
       if (PebbleContext.getInstance().getConfiguration().isMultiBlog()) {
-        httpRequest.setAttribute(Constants.MULTI_BLOG_KEY, BlogManager.getInstance().getMultiBlog());
-        httpRequest.setAttribute(Constants.MULTI_BLOG_URL, Utilities.calcBaseUrl(request.getScheme(), BlogManager.getInstance().getMultiBlog().getUrl()));
+        httpRequest.setAttribute(Constants.MULTI_BLOG_KEY, blogManager.getMultiBlog());
+        httpRequest.setAttribute(Constants.MULTI_BLOG_URL, Utilities.calcBaseUrl(request.getScheme(), blogManager.getMultiBlog().getUrl()));
 
-        List<Blog> blogs = BlogManager.getInstance().getPublicBlogs();
+        List<Blog> blogs = blogManager.getPublicBlogs();
         Collections.sort(blogs, new BlogByLastModifiedDateComparator());
         httpRequest.setAttribute(Constants.BLOGS, blogs);
       }

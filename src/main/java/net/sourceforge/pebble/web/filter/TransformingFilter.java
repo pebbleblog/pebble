@@ -38,6 +38,8 @@ import net.sourceforge.pebble.domain.BlogManager;
 import net.sourceforge.pebble.domain.MultiBlog;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -57,6 +59,8 @@ public class TransformingFilter implements Filter {
   /** the log used by this class */
   private static Log log = LogFactory.getLog(TransformingFilter.class);
 
+  private BlogManager blogManager;
+
   /**
    * Initialises this instance.
    *
@@ -64,6 +68,8 @@ public class TransformingFilter implements Filter {
    */
   public void init(FilterConfig config) {
     this.filterConfig = config;
+    ApplicationContext applicationContext = WebApplicationContextUtils.getRequiredWebApplicationContext(config.getServletContext());
+    blogManager = (BlogManager) applicationContext.getBean("blogManager");
   }
 
   /**
@@ -86,7 +92,7 @@ public class TransformingFilter implements Filter {
     String uri = originalUri.substring(httpRequest.getContextPath().length(), originalUri.length());
 
     // now we're left with a URI
-    if (BlogManager.getInstance().isMultiBlog()) {
+    if (blogManager.isMultiBlog()) {
       if (uri.length() == 0) {
         uri = "/";
       }
@@ -96,7 +102,7 @@ public class TransformingFilter implements Filter {
       }
       String blogName = uri.substring(1, index);
       blogName = URLDecoder.decode(blogName, "UTF-8");
-      if (BlogManager.getInstance().hasBlog(blogName)) {
+      if (blogManager.hasBlog(blogName)) {
         uri = uri.substring(index, uri.length());
       }
     }

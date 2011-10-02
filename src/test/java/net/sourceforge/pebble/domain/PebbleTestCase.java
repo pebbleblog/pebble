@@ -38,8 +38,13 @@ import net.sourceforge.pebble.util.FileUtils;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.annotation.AnnotationConfigUtils;
 import org.springframework.context.support.StaticApplicationContext;
+import org.springframework.mock.web.MockServletContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.StaticWebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
+import javax.servlet.ServletContext;
 import java.io.File;
 
 /**
@@ -58,6 +63,7 @@ public abstract class PebbleTestCase extends TestCase {
   }
 
   protected StaticApplicationContext testApplicationContext;
+  protected ServletContext servletContext;
 
   protected void setUp() throws Exception {
     super.setUp();
@@ -68,10 +74,13 @@ public abstract class PebbleTestCase extends TestCase {
     TEST_BLOG_LOCATION.mkdir();
     new File(TEST_BLOG_LOCATION, "blogs").mkdir();
 
-    testApplicationContext = new StaticApplicationContext();
+    testApplicationContext = new StaticWebApplicationContext();
     // Make sure it uses annotation injection
     AnnotationConfigUtils.registerAnnotationConfigProcessors(testApplicationContext);
     testApplicationContext.refresh();
+
+    servletContext = new MockServletContext();
+    servletContext.setAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE, testApplicationContext);
 
     Configuration config = new Configuration();
     config.setUrl("http://www.yourdomain.com/blog/");

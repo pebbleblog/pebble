@@ -57,9 +57,11 @@ public class BlogService {
   private static final Log log = LogFactory.getLog(BlogService.class);
 
   private final BlogEntryDAO blogEntryDAO;
+  private final ContentCache contentCache;
 
-  public BlogService(BlogEntryDAO blogEntryDAO) {
+  public BlogService(BlogEntryDAO blogEntryDAO, ContentCache contentCache) {
     this.blogEntryDAO = blogEntryDAO;
+    this.contentCache = contentCache;
   }
 
   /**
@@ -70,10 +72,9 @@ public class BlogService {
    */
   public BlogEntry getBlogEntry(Blog blog, String blogEntryId) throws BlogServiceException {
     BlogEntry blogEntry = null;
-    ContentCache cache = ContentCache.getInstance();
 
     // is the blog entry already in the cache?                                                  
-    blogEntry = cache.getBlogEntry(blog, blogEntryId);
+    blogEntry = contentCache.getBlogEntry(blog, blogEntryId);
     if (blogEntry != null) {
       log.debug("Got blog entry " + blogEntryId + " from cache");
     } else {
@@ -83,7 +84,7 @@ public class BlogService {
 
         if (blogEntry != null) {
           // place in the cache for faster lookup next time
-          cache.putBlogEntry(blogEntry);
+          contentCache.putBlogEntry(blogEntry);
         }
       } catch (PersistenceException pe) {
         throw new BlogServiceException(blog, pe);
@@ -147,7 +148,6 @@ public class BlogService {
    */
   public void putBlogEntry(BlogEntry blogEntry) throws BlogServiceException {
     Blog blog = blogEntry.getBlog();
-    ContentCache cache = ContentCache.getInstance();
 
     synchronized (blog) {
       try {
@@ -180,7 +180,7 @@ public class BlogService {
 
           // and store the blog entry now that listeners have been fired
           blogEntryDAO.storeBlogEntry(blogEntry);
-          cache.removeBlogEntry(blogEntry);
+          contentCache.removeBlogEntry(blogEntry);
         }
 
         blogEntry.setPersistent(true);
@@ -198,14 +198,13 @@ public class BlogService {
    * Removes this blog entry.
    */
   public void removeBlogEntry(BlogEntry blogEntry) throws BlogServiceException {
-    ContentCache cache = ContentCache.getInstance();
 
     try {
       blogEntryDAO.removeBlogEntry(blogEntry);
       blogEntry.setPersistent(false);
 
       // remove from cache
-      cache.removeBlogEntry(blogEntry);
+      contentCache.removeBlogEntry(blogEntry);
 
       blogEntry.insertEvent(new BlogEntryEvent(blogEntry, BlogEntryEvent.BLOG_ENTRY_REMOVED));
 

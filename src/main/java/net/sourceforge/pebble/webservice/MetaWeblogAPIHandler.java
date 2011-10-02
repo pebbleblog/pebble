@@ -39,16 +39,7 @@ import java.util.Iterator;
 import java.util.Vector;
 
 import net.sourceforge.pebble.PebbleContext;
-import net.sourceforge.pebble.domain.Blog;
-import net.sourceforge.pebble.domain.BlogEntry;
-import net.sourceforge.pebble.domain.BlogService;
-import net.sourceforge.pebble.domain.BlogServiceException;
-import net.sourceforge.pebble.domain.Category;
-import net.sourceforge.pebble.domain.Comment;
-import net.sourceforge.pebble.domain.FileManager;
-import net.sourceforge.pebble.domain.FileMetaData;
-import net.sourceforge.pebble.domain.IllegalFileAccessException;
-import net.sourceforge.pebble.domain.Tag;
+import net.sourceforge.pebble.domain.*;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -93,8 +84,8 @@ public class MetaWeblogAPIHandler extends AbstractAPIHandler {
 
   private final BlogService blogService;
 
-  public MetaWeblogAPIHandler(AuthenticationManager authenticationManager, BlogService blogService) {
-    super(authenticationManager);
+  public MetaWeblogAPIHandler(AuthenticationManager authenticationManager, BlogManager blogManager, BlogService blogService) {
+    super(authenticationManager, blogManager);
     this.blogService = blogService;
   }
 

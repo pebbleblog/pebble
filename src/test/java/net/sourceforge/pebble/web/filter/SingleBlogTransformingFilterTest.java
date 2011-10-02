@@ -33,11 +33,10 @@ package net.sourceforge.pebble.web.filter;
 
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.domain.SingleBlogTestCase;
-import net.sourceforge.pebble.domain.BlogManager;
 import net.sourceforge.pebble.mock.MockFilterChain;
-import net.sourceforge.pebble.mock.MockFilterConfig;
 import net.sourceforge.pebble.mock.MockHttpServletRequest;
 import net.sourceforge.pebble.mock.MockHttpServletResponse;
+import org.springframework.mock.web.MockFilterConfig;
 
 /**
  * Tests for the TransformingFilter class.
@@ -55,7 +54,7 @@ public class SingleBlogTransformingFilterTest extends SingleBlogTestCase {
     super.setUp();
 
     filter = new TransformingFilter();
-    config = new MockFilterConfig();
+    config = new MockFilterConfig(servletContext);
     filter.init(config);
     request = new MockHttpServletRequest();
     request.setContextPath("/somecontext");

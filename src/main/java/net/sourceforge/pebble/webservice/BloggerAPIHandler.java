@@ -63,10 +63,12 @@ public class BloggerAPIHandler extends AbstractAPIHandler {
   /** the log used by this class */
   private static Log log = LogFactory.getLog(BloggerAPIHandler.class);
 
+  private final BlogManager blogManager;
   private final BlogService blogService;
 
-  public BloggerAPIHandler(AuthenticationManager authenticationManager, BlogService blogService) {
-    super(authenticationManager);
+  public BloggerAPIHandler(AuthenticationManager authenticationManager, BlogManager blogManager, BlogService blogService) {
+    super(authenticationManager, blogManager);
+    this.blogManager = blogManager;
     this.blogService = blogService;
   }
 
@@ -108,7 +110,7 @@ public class BloggerAPIHandler extends AbstractAPIHandler {
         username + ", " +
         "********)");
 
-    Collection<Blog> blogs = BlogManager.getInstance().getBlogs();
+    Collection<Blog> blogs = blogManager.getBlogs();
     Vector usersBlogs = new Vector();
 
     for (Blog blog : blogs) {

@@ -39,6 +39,7 @@ import net.sourceforge.pebble.web.view.RedirectView;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.impl.BlogEntriesView;
 
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -51,6 +52,9 @@ import java.util.List;
  * @author    Simon Brown
  */
 public class ViewBlogEntriesByPageAction extends Action {
+
+  @Inject
+  private BlogManager blogManager;
 
   /**
    * Peforms the processing associated with this action.
@@ -66,7 +70,7 @@ public class ViewBlogEntriesByPageAction extends Action {
     AbstractBlog abstractBlog = (AbstractBlog)getModel().get(Constants.BLOG_KEY);
 
     if (abstractBlog instanceof MultiBlog) {
-      List publicBlogs = BlogManager.getInstance().getPublicBlogs();
+      List publicBlogs = blogManager.getPublicBlogs();
       if (publicBlogs.size() == 1) {
         Blog blog = (Blog)publicBlogs.get(0);
         return new RedirectView(blog.getUrl());

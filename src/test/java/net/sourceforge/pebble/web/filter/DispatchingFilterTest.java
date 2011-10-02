@@ -33,10 +33,10 @@ package net.sourceforge.pebble.web.filter;
 
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.domain.SingleBlogTestCase;
-import net.sourceforge.pebble.mock.MockFilterConfig;
 import net.sourceforge.pebble.mock.MockHttpServletRequest;
 import net.sourceforge.pebble.mock.MockHttpServletResponse;
 import net.sourceforge.pebble.mock.MockRequestDispatcher;
+import org.springframework.mock.web.MockFilterConfig;
 
 /**
  * Tests for the DispatchingFilter class.
@@ -54,7 +54,7 @@ public class DispatchingFilterTest extends SingleBlogTestCase {
     super.setUp();
 
     filter = new DispatchingFilter();
-    config = new MockFilterConfig();
+    config = new MockFilterConfig(servletContext);
     filter.init(config);
     request = new MockHttpServletRequest();
     request.setContextPath("/somecontext");

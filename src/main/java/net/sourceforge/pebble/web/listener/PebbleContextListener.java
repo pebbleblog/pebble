@@ -64,19 +64,19 @@ public class PebbleContextListener implements ServletContextListener {
     log.info("Starting Pebble");
 
     ApplicationContext applicationContext = WebApplicationContextUtils.getRequiredWebApplicationContext(event.getServletContext());
+    BlogManager blogManager = (BlogManager) applicationContext.getBean("blogManager");
     Configuration config = (Configuration)applicationContext.getBean("pebbleConfiguration");
-    DAOFactory daoFactory = (DAOFactory)applicationContext.getBean("daoFactory");
     BlogService blogService = (BlogService)applicationContext.getBean("blogService");
     PebbleContext ctx = PebbleContext.getInstance();
     ctx.setConfiguration(config);
     ctx.setWebApplicationRoot(event.getServletContext().getRealPath("/"));
     ctx.setApplicationContext(applicationContext);
 
-    BlogManager.getInstance().setMultiBlog(config.isMultiBlog());
-    BlogManager.getInstance().startBlogs(daoFactory, blogService);
+    blogManager.setMultiBlog(config.isMultiBlog());
+    blogManager.startBlogs();
 
     // find those blogs with no entries and add a welcome note
-    Collection<Blog> blogs = (Collection<Blog>)BlogManager.getInstance().getBlogs();
+    Collection<Blog> blogs = blogManager.getBlogs();
     for (Blog blog : blogs) {
       try {
         // and add a default entry, if one doesn't exist
@@ -122,7 +122,9 @@ public class PebbleContextListener implements ServletContextListener {
    */
   public void contextDestroyed(ServletContextEvent event) {
     log.info("Stopping Pebble");
-    BlogManager.getInstance().stopBlogs();
+    ApplicationContext applicationContext = WebApplicationContextUtils.getRequiredWebApplicationContext(event.getServletContext());
+    BlogManager blogManager = (BlogManager) applicationContext.getBean("blogManager");
+    blogManager.stopBlogs();
 
     log.info("Pebble stopped");
   }

@@ -31,12 +31,8 @@
  */
 package net.sourceforge.pebble.webservice;
 
-import net.sourceforge.pebble.domain.Blog;
-import net.sourceforge.pebble.domain.BlogEntry;
-import net.sourceforge.pebble.domain.Category;
-import net.sourceforge.pebble.domain.Tag;
+import net.sourceforge.pebble.domain.*;
 import net.sourceforge.pebble.api.decorator.ContentDecoratorContext;
-import net.sourceforge.pebble.Constants;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.xmlrpc.XmlRpcException;
@@ -73,8 +69,8 @@ public class PebbleAPIHandler extends AbstractAPIHandler {
   /** the log used by this class */
   private static Log log = LogFactory.getLog(PebbleAPIHandler.class);
 
-  public PebbleAPIHandler(AuthenticationManager authenticationManager) {
-    super(authenticationManager);
+  public PebbleAPIHandler(AuthenticationManager authenticationManager, BlogManager blogManager) {
+    super(authenticationManager, blogManager);
   }
 
   /**

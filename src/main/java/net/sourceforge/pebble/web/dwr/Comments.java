@@ -41,6 +41,8 @@ import java.util.ResourceBundle;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import javax.inject.Inject;
+
 /**
  * Service interface for DWR.
  *
@@ -50,8 +52,11 @@ public class Comments {
 
   private static final Log log = LogFactory.getLog(Comments.class);
 
+  @Inject
+  private BlogManager blogManager;
+
   public Comment previewComment(String blogId, Comment comment) {
-    Blog blog = BlogManager.getInstance().getBlog(blogId);
+    Blog blog = blogManager.getBlog(blogId);
 
     ContentDecoratorContext decoratorContext = new ContentDecoratorContext();
     decoratorContext.setView(ContentDecoratorContext.DETAIL_VIEW);
@@ -63,7 +68,7 @@ public class Comments {
   }
 
   public Comment saveComment(String blogId, Comment comment) {
-    Blog blog = BlogManager.getInstance().getBlog(blogId);
+    Blog blog = blogManager.getBlog(blogId);
 
     ContentDecoratorContext decoratorContext = new ContentDecoratorContext();
     decoratorContext.setView(ContentDecoratorContext.DETAIL_VIEW);

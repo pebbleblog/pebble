@@ -49,6 +49,8 @@ import net.sourceforge.pebble.comparator.BlogEntryComparator;
 import net.sourceforge.pebble.decorator.ContentDecoratorChain;
 import net.sourceforge.pebble.api.decorator.ContentDecoratorContext;
 import net.sourceforge.pebble.domain.*;
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 /**
  * A filter respsonsible for setting up the blog object.
@@ -63,6 +65,8 @@ public class BlogLookupFilter implements Filter {
   /** the config of this filter */
   private FilterConfig filterConfig;
 
+  private BlogManager blogManager;
+
   /**
    * Initialises this instance.
    *
@@ -70,6 +74,8 @@ public class BlogLookupFilter implements Filter {
    */
   public void init(FilterConfig config) {
     this.filterConfig = config;
+    ApplicationContext applicationContext = WebApplicationContextUtils.getRequiredWebApplicationContext(config.getServletContext());
+    blogManager = (BlogManager) applicationContext.getBean("blogManager");
   }
 
   /**
@@ -101,7 +107,7 @@ public class BlogLookupFilter implements Filter {
     uri = uri.substring(httpRequest.getContextPath().length(), uri.length());
 
     // now we're left with a URI
-    if (BlogManager.getInstance().isMultiBlog()) {
+    if (blogManager.isMultiBlog()) {
       if (uri.length() == 0) {
         uri = "/";
       }
@@ -119,18 +125,18 @@ public class BlogLookupFilter implements Filter {
       }
 
       blogName = URLDecoder.decode(blogName, "UTF-8");
-      if (BlogManager.getInstance().hasBlog(blogName)) {
-        blog = BlogManager.getInstance().getBlog(blogName);
+      if (blogManager.hasBlog(blogName)) {
+        blog = blogManager.getBlog(blogName);
         uri = uri.substring(index, uri.length());
       } else {
-        blog = BlogManager.getInstance().getMultiBlog();
+        blog = blogManager.getMultiBlog();
       }
     } else {
-      blog = BlogManager.getInstance().getBlog();
+      blog = blogManager.getBlog();
     }
 
     httpRequest.setAttribute(Constants.BLOG_KEY, blog);
-    httpRequest.setAttribute(Constants.BLOG_MANAGER, BlogManager.getInstance());
+    httpRequest.setAttribute(Constants.BLOG_MANAGER, blogManager);
     httpRequest.setAttribute(Constants.PEBBLE_CONTEXT, pebbleContext);
 
     if (blog instanceof Blog) {

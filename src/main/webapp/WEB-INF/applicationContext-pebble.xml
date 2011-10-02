@@ -44,6 +44,9 @@
     <property name="storageType" value="${storageType}"/>
   </bean>
 
+  <bean id="blogManager" class="net.sourceforge.pebble.domain.BlogManager" autowire="constructor"/>
+  <bean id="contentCache" class="net.sourceforge.pebble.ContentCache" autowire="constructor"/>
+
   <bean id="daoFactory" class="net.sourceforge.pebble.dao.DAOFactoryFactory"/>
 
   <bean id="blogEntryDAO" factory-bean="daoFactory" factory-method="getBlogEntryDAO"/>

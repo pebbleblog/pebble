@@ -36,6 +36,7 @@ import net.sourceforge.pebble.domain.BlogManager;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.impl.BlogsView;
 
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -47,6 +48,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class ViewBlogsAction extends SecureAction {
 
+  @Inject
+  private BlogManager blogManager;
+
   /**
    * Peforms the processing associated with this action.
    *
@@ -55,7 +59,6 @@ public class ViewBlogsAction extends SecureAction {
    * @return the name of the next view
    */
   public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
-    BlogManager blogManager = BlogManager.getInstance();
     getModel().put(Constants.BLOGS, blogManager.getBlogs());
 
     return new BlogsView();

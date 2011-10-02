@@ -59,7 +59,7 @@ public class SingleBlogMetaWeblogAPIHandlerTest extends SingleBlogTestCase {
     super.setUp();
 
     authenticationManager = new MockAuthenticationManager(true, new GrantedAuthority[] {new GrantedAuthorityImpl(Constants.BLOG_CONTRIBUTOR_ROLE)});
-    handler = new MetaWeblogAPIHandler(authenticationManager, blogService);
+    handler = new MetaWeblogAPIHandler(authenticationManager, blogManager, blogService);
     blog.setProperty(Blog.BLOG_CONTRIBUTORS_KEY, "username");
   }
 
@@ -71,7 +71,7 @@ public class SingleBlogMetaWeblogAPIHandlerTest extends SingleBlogTestCase {
    * Tests that authentication fails properly.
    */
   public void testAuthenticationFailure() {
-    handler = new MetaWeblogAPIHandler(new MockAuthenticationManager(false), blogService);
+    handler = new MetaWeblogAPIHandler(new MockAuthenticationManager(false), blogManager, blogService);
     try {
       handler.getCategories("default", "username", "password");
       fail();

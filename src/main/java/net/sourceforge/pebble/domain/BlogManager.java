@@ -31,6 +31,8 @@
  */
 package net.sourceforge.pebble.domain;
 
+import com.google.common.collect.Maps;
+import net.sourceforge.pebble.ContentCache;
 import net.sourceforge.pebble.PebbleContext;
 import net.sourceforge.pebble.dao.DAOFactory;
 import net.sourceforge.pebble.util.UpgradeUtilities;
@@ -51,30 +53,22 @@ public class BlogManager {
   /** the log used by this class */
   private static Log log = LogFactory.getLog(BlogManager.class);
 
-  /** the singleton instance of this class */
-  private static BlogManager instance = new BlogManager();
-
   private static final String THEMES_PATH = "themes";
   private static final String DEFAULT_BLOG = "default";
 
   /** the blogs that are currently being managed */
-  private Map<String,Blog> blogs = new HashMap<String,Blog>();
+  private final Map<String,Blog> blogs = Maps.newConcurrentMap();
 
   private boolean multiBlog = false;
 
-  /**
-   * Creates a new instance - private constructor for the singleton pattern.
-   */
-  private BlogManager() {
-  }
+  private final BlogService blogService;
+  private final DAOFactory daoFactory;
+  private final ContentCache contentCache;
 
-  /**
-   * Gets the singleton instance of this class.
-   *
-   * @return    the singleton BlogManager instance
-   */
-  public static BlogManager getInstance() {
-    return instance;
+  public BlogManager(BlogService blogService, DAOFactory daoFactory, ContentCache contentCache) {
+    this.blogService = blogService;
+    this.daoFactory = daoFactory;
+    this.contentCache = contentCache;
   }
 
   /**
@@ -96,13 +90,16 @@ public class BlogManager {
    * @return  a Blog instance
    */
   public Blog getBlog(String id) {
+    if (id == null) {
+      return null;
+    }
     return blogs.get(id);
   }
 
   /**
    * Configures this instance to manage the blog(s) in the specified directory.
    */
-  public void startBlogs(DAOFactory daoFactory, BlogService blogService) {
+  public void startBlogs() {
     File blogsDirectory = getBlogsDirectory();
     File defaultBlog = new File(blogsDirectory, DEFAULT_BLOG);
 
@@ -117,13 +114,21 @@ public class BlogManager {
       if (files != null) {
         for (File file : files) {
           if (file.isDirectory()) {
-            startBlog(daoFactory, blogService, file.getAbsolutePath(), file.getName());
+            Blog blog = new Blog(this, daoFactory, blogService, file.getAbsolutePath());
+            blog.setId(file.getName());
+            blogs.put(file.getName(), blog);
           }
         }
       }
     } else {
       // start the default blog only
-      startBlog(daoFactory, blogService, defaultBlog.getAbsolutePath(), DEFAULT_BLOG);
+      Blog blog = new Blog(this, daoFactory, blogService, defaultBlog.getAbsolutePath());
+      blog.setId(DEFAULT_BLOG);
+      blogs.put(DEFAULT_BLOG, blog);
+    }
+    contentCache.setNumberOfBlogs(blogs.size());
+    for (Blog blog : blogs.values()) {
+      startBlog(blog);
     }
   }
 
@@ -137,32 +142,32 @@ public class BlogManager {
     blog.stop();
   }
 
-  public void reloadBlog(DAOFactory daoFactory, BlogService blogService, Blog blog) {
+  public void reloadBlog(Blog blog) {
     stopBlog(blog);
 
     File f = new File(getBlogsDirectory(), blog.getId());
-    startBlog(daoFactory, blogService, f.getAbsolutePath(), blog.getId());
+    Blog newBlog = new Blog(this, daoFactory, blogService, f.getAbsolutePath());
+    newBlog.setId(blog.getId());
+    blogs.put(blog.getId(), newBlog);
+
+    startBlog(newBlog);
   }
 
   /**
    * Loads a blog that is a part of a larger composite blog.
    *
-   * @param blogDir   the blog.dir for the blog
-   * @param blogId    the ID for the blog
+   * @param blog The blog to start
    */
-  private void startBlog(DAOFactory daoFactory, BlogService blogService, String blogDir, String blogId) {
-    Blog blog = new Blog(daoFactory, blogService, blogDir);
-    blog.setId(blogId);
+  private void startBlog(Blog blog) {
 
     File pathToLiveThemes = new File(PebbleContext.getInstance().getWebApplicationRoot(), THEMES_PATH);
-    Theme theme = new Theme(blog, "user-" + blogId, pathToLiveThemes.getAbsolutePath());
+    Theme theme = new Theme(blog, "user-" + blog.getId(), pathToLiveThemes.getAbsolutePath());
     blog.setEditableTheme(theme);
 
     blog.start();
-    blogs.put(blog.getId(), blog);
 
     // which version are we at and do we need to upgrade?
-    File versionFile = new File(blogDir, "pebble.version");
+    File versionFile = new File(blog.getRoot(), "pebble.version");
     String blogVersion = null;
     String currentVersion = PebbleContext.getInstance().getBuildVersion();
     try {
@@ -186,17 +191,20 @@ public class BlogManager {
         }
 
         // now that the upgrade is complete, reload the blog
-        reloadBlog(daoFactory, blogService, blog);
+        reloadBlog(blog);
       }
     } catch (Exception e) {
       log.error("Exception encountered", e);
     }
   }
 
-  public void addBlog(DAOFactory daoFactory, BlogService blogService, String blogId) {
+  public void addBlog(String blogId) {
     File file = new File(getBlogsDirectory(), blogId);
     file.mkdirs();
-    startBlog(daoFactory, blogService, file.getAbsolutePath(), blogId);
+    Blog blog = new Blog(this, daoFactory, blogService, file.getAbsolutePath());
+    blog.setId(blogId);
+    blogs.put(blogId, blog);
+    startBlog(blog);
   }
 
   /**
@@ -217,7 +225,7 @@ public class BlogManager {
   }
 
   public void removeAllBlogs() {
-    blogs = new HashMap<String,Blog>();
+    blogs.clear();
   }
 
   /**
@@ -269,7 +277,7 @@ public class BlogManager {
   }
 
   public MultiBlog getMultiBlog() {
-    return new MultiBlog(PebbleContext.getInstance().getConfiguration().getDataDirectory());
+    return new MultiBlog(this, PebbleContext.getInstance().getConfiguration().getDataDirectory());
   }
 
   private File getBlogsDirectory() {

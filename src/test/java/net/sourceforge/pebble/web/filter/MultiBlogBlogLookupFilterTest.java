@@ -35,9 +35,9 @@ import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.domain.MultiBlog;
 import net.sourceforge.pebble.domain.MultiBlogTestCase;
 import net.sourceforge.pebble.mock.MockFilterChain;
-import net.sourceforge.pebble.mock.MockFilterConfig;
 import net.sourceforge.pebble.mock.MockHttpServletRequest;
 import net.sourceforge.pebble.mock.MockHttpServletResponse;
+import org.springframework.mock.web.MockFilterConfig;
 
 /**
  * Tests for the BlogLookupFilter class, in multi-blog mode.
@@ -55,7 +55,7 @@ public class MultiBlogBlogLookupFilterTest extends MultiBlogTestCase {
     super.setUp();
 
     filter = new BlogLookupFilter();
-    config = new MockFilterConfig();
+    config = new MockFilterConfig(servletContext);
     filter.init(config);
     request = new MockHttpServletRequest();
     request.setContextPath("/somecontext");
