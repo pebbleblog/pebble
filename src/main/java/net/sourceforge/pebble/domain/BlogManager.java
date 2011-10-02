@@ -32,6 +32,7 @@
 package net.sourceforge.pebble.domain;
 
 import com.google.common.collect.Maps;
+import net.sourceforge.pebble.Configuration;
 import net.sourceforge.pebble.ContentCache;
 import net.sourceforge.pebble.PebbleContext;
 import net.sourceforge.pebble.dao.DAOFactory;
@@ -59,16 +60,16 @@ public class BlogManager {
   /** the blogs that are currently being managed */
   private final Map<String,Blog> blogs = Maps.newConcurrentMap();
 
-  private boolean multiBlog = false;
-
   private final BlogService blogService;
   private final DAOFactory daoFactory;
   private final ContentCache contentCache;
+  private final Configuration configuration;
 
-  public BlogManager(BlogService blogService, DAOFactory daoFactory, ContentCache contentCache) {
+  public BlogManager(BlogService blogService, DAOFactory daoFactory, ContentCache contentCache, Configuration configuration) {
     this.blogService = blogService;
     this.daoFactory = daoFactory;
     this.contentCache = contentCache;
+    this.configuration = configuration;
   }
 
   /**
@@ -213,11 +214,7 @@ public class BlogManager {
    * @return  true if multiple blogs are supported, false otherwise
    */
   public boolean isMultiBlog() {
-    return this.multiBlog;
-  }
-
-  public void setMultiBlog(boolean multiBlog) {
-    this.multiBlog = multiBlog;
+    return configuration.isMultiBlog();
   }
 
   public void addBlog(Blog blog) {
@@ -239,16 +236,6 @@ public class BlogManager {
     return sortedBlogs;
   }
 
-  /**
-   * Gets the number of blogs that are currently being managed.
-   *
-   * @return the number of managed blogs
-   */
-  public int getNumberOfBlogs() {
-	  return blogs.size();
-  }
-  
-  
   /**
    * Gets all blogs that are currently being managed and are
    * to be included in aggregated pages and feeds.
@@ -277,11 +264,11 @@ public class BlogManager {
   }
 
   public MultiBlog getMultiBlog() {
-    return new MultiBlog(this, PebbleContext.getInstance().getConfiguration().getDataDirectory());
+    return new MultiBlog(this, configuration.getDataDirectory());
   }
 
   private File getBlogsDirectory() {
-    return new File(PebbleContext.getInstance().getConfiguration().getDataDirectory(), "blogs");
+    return new File(configuration.getDataDirectory(), "blogs");
   }
 
 }

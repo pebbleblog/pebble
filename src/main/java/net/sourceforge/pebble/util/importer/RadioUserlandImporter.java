@@ -31,6 +31,7 @@
  */
 package net.sourceforge.pebble.util.importer;
 
+import net.sourceforge.pebble.Configuration;
 import net.sourceforge.pebble.ContentCache;
 import net.sourceforge.pebble.dao.DAOFactory;
 import net.sourceforge.pebble.dao.file.FileDAOFactory;
@@ -67,7 +68,7 @@ public class RadioUserlandImporter {
     DAOFactory daoFactory = new FileDAOFactory();
     ContentCache contentCache = new ContentCache();
     BlogService blogService = new BlogService(daoFactory.getBlogEntryDAO(), contentCache);
-    BlogManager blogManager = new BlogManager(blogService, daoFactory, contentCache);
+    BlogManager blogManager = new BlogManager(blogService, daoFactory, contentCache, new Configuration());
     Blog blog = new Blog(blogManager, daoFactory, blogService, args[1]);
     blog.setProperty(Blog.TIMEZONE_KEY, args[2]);
 

@@ -69,9 +69,9 @@ public class MovableTypeImporter {
     }
 
     File file = new File(args[0]);
-    if(null == PebbleContext.getInstance().getConfiguration()){
+    Configuration config = PebbleContext.getInstance().getConfiguration();
+    if(config == null){
       //to prevent NullPointerException upon UpdateNotificationPingsClient.sendUpdateNotificationPing()
-      Configuration config = new Configuration();
       config.setDataDirectory(args[1]);
       config.setUrl("http://www.yourdomain.com/blog/");
       PebbleContext.getInstance().setConfiguration(config);
@@ -80,7 +80,7 @@ public class MovableTypeImporter {
     DAOFactory daoFactory = new FileDAOFactory();
     ContentCache contentCache = new ContentCache();
     BlogService blogService = new BlogService(daoFactory.getBlogEntryDAO(), contentCache);
-    BlogManager blogManager = new BlogManager(blogService, daoFactory, contentCache);
+    BlogManager blogManager = new BlogManager(blogService, daoFactory, contentCache, config);
     Blog blog = new Blog(blogManager, daoFactory, blogService, args[1]);
     blog.setProperty(Blog.TIMEZONE_KEY, args[2]);
 

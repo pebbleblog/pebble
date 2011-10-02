@@ -64,6 +64,7 @@ public abstract class PebbleTestCase extends TestCase {
 
   protected StaticApplicationContext testApplicationContext;
   protected ServletContext servletContext;
+  protected Configuration configuration;
 
   protected void setUp() throws Exception {
     super.setUp();
@@ -82,10 +83,10 @@ public abstract class PebbleTestCase extends TestCase {
     servletContext = new MockServletContext();
     servletContext.setAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE, testApplicationContext);
 
-    Configuration config = new Configuration();
-    config.setUrl("http://www.yourdomain.com/blog/");
-    config.setDataDirectory(TEST_BLOG_LOCATION.getAbsolutePath());
-    PebbleContext.getInstance().setConfiguration(config);
+    configuration = new Configuration();
+    configuration.setUrl("http://www.yourdomain.com/blog/");
+    configuration.setDataDirectory(TEST_BLOG_LOCATION.getAbsolutePath());
+    PebbleContext.getInstance().setConfiguration(configuration);
     PebbleContext.getInstance().setApplicationContext(testApplicationContext);
   }
 

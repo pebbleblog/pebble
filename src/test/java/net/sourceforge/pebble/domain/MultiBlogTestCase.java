@@ -55,13 +55,14 @@ public abstract class MultiBlogTestCase extends PebbleTestCase {
   protected void setUp() throws Exception {
     super.setUp();
 
+    configuration.setMultiBlog(true);
+
     daoFactory = new MockDAOFactory();
     addComponents(daoFactory, daoFactory.getBlogEntryDAO(), daoFactory.getCategoryDAO(),
         daoFactory.getRefererFilterDAO(), daoFactory.getStaticPageDAO());
     contentCache = new ContentCache();
     blogService = new BlogService(daoFactory.getBlogEntryDAO(), contentCache);
-    blogManager = new BlogManager(blogService, daoFactory, contentCache);
-    blogManager.setMultiBlog(true);
+    blogManager = new BlogManager(blogService, daoFactory, contentCache, configuration);
     addComponent("blogManager", blogManager);
     addComponents(blogService, contentCache);
 

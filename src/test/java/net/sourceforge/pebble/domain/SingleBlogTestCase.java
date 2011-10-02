@@ -31,9 +31,7 @@
  */
 package net.sourceforge.pebble.domain;
 
-import net.sourceforge.pebble.Configuration;
 import net.sourceforge.pebble.ContentCache;
-import net.sourceforge.pebble.PebbleContext;
 import net.sourceforge.pebble.dao.DAOFactory;
 import net.sourceforge.pebble.dao.mock.MockDAOFactory;
 import net.sourceforge.pebble.security.MockSecurityRealm;
@@ -58,18 +56,14 @@ public abstract class SingleBlogTestCase extends PebbleTestCase {
   protected void setUp() throws Exception {
     super.setUp();
 
-    Configuration config = new Configuration();
-    config.setDataDirectory(TEST_BLOG_LOCATION.getAbsolutePath());
-    config.setUrl("http://www.yourdomain.com/blog/");
-    config.setSecurityRealm(new MockSecurityRealm());
-    PebbleContext.getInstance().setConfiguration(config);
+    configuration.setSecurityRealm(new MockSecurityRealm());
+    configuration.setMultiBlog(false);
 
     daoFactory = new MockDAOFactory();
 
     contentCache = new ContentCache();
     blogService = new BlogService(daoFactory.getBlogEntryDAO(), contentCache);
-    blogManager = new BlogManager(blogService, daoFactory, contentCache);
-    blogManager.setMultiBlog(false);
+    blogManager = new BlogManager(blogService, daoFactory, contentCache, configuration);
     addComponent("blogManager", blogManager);
     addComponents(daoFactory, daoFactory.getBlogEntryDAO(), daoFactory.getCategoryDAO(),
         daoFactory.getRefererFilterDAO(), daoFactory.getStaticPageDAO(), contentCache);

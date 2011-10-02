@@ -72,7 +72,6 @@ public class PebbleContextListener implements ServletContextListener {
     ctx.setWebApplicationRoot(event.getServletContext().getRealPath("/"));
     ctx.setApplicationContext(applicationContext);
 
-    blogManager.setMultiBlog(config.isMultiBlog());
     blogManager.startBlogs();
 
     // find those blogs with no entries and add a welcome note

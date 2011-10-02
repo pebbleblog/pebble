@@ -44,7 +44,6 @@ import net.sourceforge.pebble.event.response.IpAddressListener;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import javax.inject.Inject;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FilenameFilter;
@@ -347,7 +346,7 @@ public class Utilities {
     DAOFactory daoFactory = new FileDAOFactory();
     ContentCache contentCache = new ContentCache();
     BlogService blogService = new BlogService(daoFactory.getBlogEntryDAO(), contentCache);
-    BlogManager blogManager = new BlogManager(blogService, daoFactory, contentCache);
+    BlogManager blogManager = new BlogManager(blogService, daoFactory, contentCache, new Configuration());
     Blog blog = new Blog(blogManager, daoFactory, blogService, args[0]);
 
     String action = args[1];
