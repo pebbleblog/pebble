@@ -99,13 +99,4 @@ public class IndexedTag extends Tag {
   public int getNumberOfBlogEntries() {
     return blogEntries.size();
   }
-
-  /**
-   * Gets the rank for this tag.
-   *
-   * @return  an int between 1 and 10;
-   */
-  public int getRank() {
-    return this.rank;
-  }
 }
