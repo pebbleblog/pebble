@@ -65,15 +65,15 @@ public class PebbleContextListener implements ServletContextListener {
 
     ApplicationContext applicationContext = WebApplicationContextUtils.getRequiredWebApplicationContext(event.getServletContext());
     Configuration config = (Configuration)applicationContext.getBean("pebbleConfiguration");
-
-    DAOFactory.setConfiguredFactory(config.getDaoFactory());
+    DAOFactory daoFactory = (DAOFactory)applicationContext.getBean("daoFactory");
+    DAOFactory.setConfiguredFactory(daoFactory);
     PebbleContext ctx = PebbleContext.getInstance();
     ctx.setConfiguration(config);
     ctx.setWebApplicationRoot(event.getServletContext().getRealPath("/"));
     ctx.setApplicationContext(applicationContext);
 
     BlogManager.getInstance().setMultiBlog(config.isMultiBlog());
-    BlogManager.getInstance().startBlogs();
+    BlogManager.getInstance().startBlogs(daoFactory);
 
     // find those blogs with no entries and add a welcome note
     Collection<Blog> blogs = (Collection<Blog>)BlogManager.getInstance().getBlogs();

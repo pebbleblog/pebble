@@ -42,6 +42,7 @@ import net.sourceforge.pebble.service.StaticPageServiceException;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.impl.BlogPropertiesView;
 
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -54,6 +55,9 @@ import java.util.*;
  * @author    Simon Brown
  */
 public class ViewBlogPropertiesAction extends SecureAction {
+
+  @Inject
+  private StaticPageService staticPageService;
 
   /**
    * Peforms the processing associated with this action.
@@ -101,9 +105,8 @@ public class ViewBlogPropertiesAction extends SecureAction {
       throw new ServletException("Could not get list of users", sre);
     }
 
-    StaticPageService service = new StaticPageService();
     try {
-      List staticPages = service.getStaticPages(blog);
+      List staticPages = staticPageService.getStaticPages(blog);
       StaticPage defaultPage = new StaticPage(blog);
       defaultPage.setName("");
       defaultPage.setTitle("Default - recent blog entries");

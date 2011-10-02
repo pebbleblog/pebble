@@ -41,6 +41,7 @@ import net.sourceforge.pebble.web.security.RequireSecurityToken;
 import net.sourceforge.pebble.web.view.ForwardView;
 import net.sourceforge.pebble.web.view.View;
 
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -52,6 +53,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 @RequireSecurityToken
 public class RemoveCategoriesAction extends SecureAction {
+
+  @Inject
+  private CategoryDAO categoryDAO;
 
   /**
    * Peforms the processing associated with this action.
@@ -72,9 +76,7 @@ public class RemoveCategoriesAction extends SecureAction {
             blog.removeCategory(category);
             try {
               // remove it from the persistent store
-              DAOFactory factory = DAOFactory.getConfiguredFactory();
-              CategoryDAO dao = factory.getCategoryDAO();
-              dao.deleteCategory(category, blog);
+              categoryDAO.deleteCategory(category, blog);
             } catch (PersistenceException pe) {
               pe.printStackTrace();
             }

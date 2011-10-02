@@ -45,6 +45,7 @@ import net.sourceforge.pebble.web.view.impl.StaticPageFormView;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -56,6 +57,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 @RequireSecurityToken
 public class SaveStaticPageAction extends SecureAction {
+
+  @Inject
+  private StaticPageService staticPageService;
 
   /** the log used by this class */
   private static Log log = LogFactory.getLog(SaveStaticPageAction.class);
@@ -100,8 +104,7 @@ public class SaveStaticPageAction extends SecureAction {
 
   private View unlockPage(HttpServletRequest request) throws ServletException {
     StaticPage staticPage = getStaticPage(request);
-    StaticPageService service = new StaticPageService();
-    service.unlock(staticPage);
+    staticPageService.unlock(staticPage);
 
     if (staticPage.isPersistent()) {
       return new RedirectView(staticPage.getLocalPermalink());
@@ -143,8 +146,7 @@ public class SaveStaticPageAction extends SecureAction {
 
     if (persistent != null && persistent.equalsIgnoreCase("true")) {
       try {
-        StaticPageService service = new StaticPageService();
-        return service.getStaticPageById(blog, id);
+        return staticPageService.getStaticPageById(blog, id);
       } catch (StaticPageServiceException e) {
         throw new ServletException(e);
       }

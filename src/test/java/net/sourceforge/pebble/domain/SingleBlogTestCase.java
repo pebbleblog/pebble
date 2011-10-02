@@ -47,16 +47,18 @@ import java.io.File;
 public abstract class SingleBlogTestCase extends PebbleTestCase {
 
   protected Blog blog;
+  protected DAOFactory daoFactory;
 
   protected void setUp() throws Exception {
     super.setUp();
 
-    DAOFactory.setConfiguredFactory(new MockDAOFactory());
+    daoFactory = new MockDAOFactory();
+    DAOFactory.setConfiguredFactory(daoFactory);
     BlogManager.getInstance().setMultiBlog(false);
 
     File blogDirectory = new File(TEST_BLOG_LOCATION, "blogs/default");
     blogDirectory.mkdir();
-    blog = new Blog(blogDirectory.getAbsolutePath());
+    blog = new Blog(daoFactory, blogDirectory.getAbsolutePath());
     Theme theme = new Theme(blog, "user-default", TEST_BLOG_LOCATION.getAbsolutePath());
     blog.setEditableTheme(theme);
     // There is some code that does i18n and runs assertions assuming that the locale is English
@@ -65,7 +67,6 @@ public abstract class SingleBlogTestCase extends PebbleTestCase {
     Configuration config = new Configuration();
     config.setDataDirectory(TEST_BLOG_LOCATION.getAbsolutePath());
     config.setUrl("http://www.yourdomain.com/blog/");
-    config.afterPropertiesSet();
     PebbleContext.getInstance().setConfiguration(config);
 
     PebbleContext.getInstance().getConfiguration().setSecurityRealm(new MockSecurityRealm());

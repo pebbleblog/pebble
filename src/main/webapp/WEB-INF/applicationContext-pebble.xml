@@ -44,6 +44,15 @@
     <property name="storageType" value="${storageType}"/>
   </bean>
 
+  <bean id="daoFactory" class="net.sourceforge.pebble.dao.DAOFactoryFactory"/>
+
+  <bean id="blogEntryDAO" factory-bean="daoFactory" factory-method="getBlogEntryDAO"/>
+  <bean id="categoryDAO" factory-bean="daoFactory" factory-method="getCategoryDAO"/>
+  <bean id="refererFilterDAO" factory-bean="daoFactory" factory-method="getRefererFilterDAO"/>
+  <bean id="staticPageDAO" factory-bean="daoFactory" factory-method="getStaticPageDAO"/>
+
+  <bean id="staticPageService" class="net.sourceforge.pebble.service.StaticPageService"/>
+
   <bean id="lastModifiedService" class="net.sourceforge.pebble.service.DefaultLastModifiedService"/>
 
   <bean id="httpController" class="net.sourceforge.pebble.web.controller.DefaultHttpController">

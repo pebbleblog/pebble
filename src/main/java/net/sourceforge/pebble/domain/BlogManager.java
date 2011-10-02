@@ -32,6 +32,7 @@
 package net.sourceforge.pebble.domain;
 
 import net.sourceforge.pebble.PebbleContext;
+import net.sourceforge.pebble.dao.DAOFactory;
 import net.sourceforge.pebble.util.UpgradeUtilities;
 import net.sourceforge.pebble.comparator.BlogByLastModifiedDateComparator;
 import org.apache.commons.logging.Log;
@@ -101,7 +102,7 @@ public class BlogManager {
   /**
    * Configures this instance to manage the blog(s) in the specified directory.
    */
-  public void startBlogs() {
+  public void startBlogs(DAOFactory daoFactory) {
     File blogsDirectory = getBlogsDirectory();
     File defaultBlog = new File(blogsDirectory, DEFAULT_BLOG);
 
@@ -116,13 +117,13 @@ public class BlogManager {
       if (files != null) {
         for (File file : files) {
           if (file.isDirectory()) {
-            startBlog(file.getAbsolutePath(), file.getName());
+            startBlog(daoFactory, file.getAbsolutePath(), file.getName());
           }
         }
       }
     } else {
       // start the default blog only
-      startBlog(defaultBlog.getAbsolutePath(), DEFAULT_BLOG);      
+      startBlog(daoFactory, defaultBlog.getAbsolutePath(), DEFAULT_BLOG);
     }
   }
 
@@ -136,11 +137,11 @@ public class BlogManager {
     blog.stop();
   }
 
-  public void reloadBlog(Blog blog) {
+  public void reloadBlog(DAOFactory daoFactory, Blog blog) {
     stopBlog(blog);
 
     File f = new File(getBlogsDirectory(), blog.getId());
-    startBlog(f.getAbsolutePath(), blog.getId());
+    startBlog(daoFactory, f.getAbsolutePath(), blog.getId());
   }
 
   /**
@@ -149,8 +150,8 @@ public class BlogManager {
    * @param blogDir   the blog.dir for the blog
    * @param blogId    the ID for the blog
    */
-  private void startBlog(String blogDir, String blogId) {
-    Blog blog = new Blog(blogDir);
+  private void startBlog(DAOFactory daoFactory, String blogDir, String blogId) {
+    Blog blog = new Blog(daoFactory, blogDir);
     blog.setId(blogId);
 
     File pathToLiveThemes = new File(PebbleContext.getInstance().getWebApplicationRoot(), THEMES_PATH);
@@ -185,17 +186,17 @@ public class BlogManager {
         }
 
         // now that the upgrade is complete, reload the blog
-        reloadBlog(blog);
+        reloadBlog(daoFactory, blog);
       }
     } catch (Exception e) {
       log.error("Exception encountered", e);
     }
   }
 
-  public void addBlog(String blogId) {
+  public void addBlog(DAOFactory daoFactory, String blogId) {
     File file = new File(getBlogsDirectory(), blogId);
     file.mkdirs();
-    startBlog(file.getAbsolutePath(), blogId);
+    startBlog(daoFactory, file.getAbsolutePath(), blogId);
   }
 
   /**

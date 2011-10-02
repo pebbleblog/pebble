@@ -108,6 +108,11 @@ public abstract class DAOFactory {
     configuredFactory = factory;
   }
 
+  /**
+   *
+   * @deprecated Use injection instead
+   */
+  @Deprecated
   public static DAOFactory getConfiguredFactory() {
     return configuredFactory;
   }

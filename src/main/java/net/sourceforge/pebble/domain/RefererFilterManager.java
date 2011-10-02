@@ -47,11 +47,13 @@ import java.util.regex.Matcher;
  */
 public class RefererFilterManager {
 
+  /** the owning root blog */
+  private final Blog rootBlog;
+
+  private final RefererFilterDAO refererFilterDAO;
+
   /** the next filter id - used internally */
   private int nextId = 1;
-
-  /** the owning root blog */
-  private Blog rootBlog;
 
   /** the collection of all filters */
   private Collection filters;
@@ -59,8 +61,9 @@ public class RefererFilterManager {
   /**
    * Creates a new instance.
    */
-  RefererFilterManager(Blog rootBlog) {
+  RefererFilterManager(Blog rootBlog, RefererFilterDAO refererFilterDAO) {
     this.rootBlog = rootBlog;
+    this.refererFilterDAO = refererFilterDAO;
     init();
   }
 
@@ -69,9 +72,7 @@ public class RefererFilterManager {
    */
   private void init() {
     try {
-      DAOFactory factory = DAOFactory.getConfiguredFactory();
-      RefererFilterDAO dao = factory.getRefererFilterDAO();
-      filters = dao.getRefererFilters(rootBlog);
+      filters = refererFilterDAO.getRefererFilters(rootBlog);
 
       Iterator it = filters.iterator();
       RefererFilter filter;
@@ -92,11 +93,8 @@ public class RefererFilterManager {
    */
   public synchronized void addFilter(RefererFilter newFilter) {
     try {
-      DAOFactory factory = DAOFactory.getConfiguredFactory();
-      RefererFilterDAO dao = factory.getRefererFilterDAO();
-
       if (!filters.contains(newFilter)) {
-        dao.addRefererFilter(newFilter, rootBlog);
+        refererFilterDAO.addRefererFilter(newFilter, rootBlog);
         filters.add(newFilter);
         newFilter.setId(nextId);
         nextId++;
@@ -113,9 +111,6 @@ public class RefererFilterManager {
    */
   public synchronized boolean removeFilter(String expression) {
     try {
-      DAOFactory factory = DAOFactory.getConfiguredFactory();
-      RefererFilterDAO dao = factory.getRefererFilterDAO();
-
       Iterator it = filters.iterator();
       RefererFilter filter;
       while (it.hasNext()) {
@@ -123,7 +118,7 @@ public class RefererFilterManager {
 
         if (filter.getExpression().equals(expression)) {
           // remove it from the persistent store
-          dao.deleteRefererFilter(filter, rootBlog);
+          refererFilterDAO.deleteRefererFilter(filter, rootBlog);
 
           // and now remove the in-memory representation
           filters.remove(filter);

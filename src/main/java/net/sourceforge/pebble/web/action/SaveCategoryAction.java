@@ -33,7 +33,6 @@ package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.dao.CategoryDAO;
-import net.sourceforge.pebble.dao.DAOFactory;
 import net.sourceforge.pebble.dao.PersistenceException;
 import net.sourceforge.pebble.domain.Category;
 import net.sourceforge.pebble.domain.Blog;
@@ -41,6 +40,7 @@ import net.sourceforge.pebble.web.security.RequireSecurityToken;
 import net.sourceforge.pebble.web.view.ForwardView;
 import net.sourceforge.pebble.web.view.View;
 
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -52,6 +52,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 @RequireSecurityToken
 public class SaveCategoryAction extends SecureAction {
+
+  @Inject
+  private CategoryDAO categoryDAO;
 
   /**
    * Peforms the processing associated with this action.
@@ -77,9 +80,7 @@ public class SaveCategoryAction extends SecureAction {
         category.setTags(tags);
         try {
           // add it to the persistent store
-          DAOFactory factory = DAOFactory.getConfiguredFactory();
-          CategoryDAO dao = factory.getCategoryDAO();
-          dao.addCategory(category, blog);
+          categoryDAO.addCategory(category, blog);
         } catch (PersistenceException pe) {
           pe.printStackTrace();
         }
@@ -89,9 +90,7 @@ public class SaveCategoryAction extends SecureAction {
         category.setTags(tags);
         try {
           // add it to the persistent store
-          DAOFactory factory = DAOFactory.getConfiguredFactory();
-          CategoryDAO dao = factory.getCategoryDAO();
-          dao.updateCategory(category, blog);
+          categoryDAO.updateCategory(category, blog);
         } catch (PersistenceException pe) {
           pe.printStackTrace();
         }
@@ -105,7 +104,7 @@ public class SaveCategoryAction extends SecureAction {
    * Gets a list of all roles that are allowed to access this action.
    *
    * @return  an array of Strings representing role names
-   * @param request
+   * @param request The request
    */
   public String[] getRoles(HttpServletRequest request) {
     return new String[]{Constants.BLOG_CONTRIBUTOR_ROLE};

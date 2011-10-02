@@ -175,14 +175,15 @@ public class Blog extends AbstractBlog {
   /** the Cache that can be used by services to cache arbitrary config */
   private final ConcurrentMap<String, Supplier<?>> serviceCache = new ConcurrentHashMap<String, Supplier<?>>();
 
+  private final DAOFactory daoFactory;
   /**
    * Creates a new Blog instance, based at the specified location.
    *
    * @param root    an absolute path pointing to the root directory of the blog
    */
-  public Blog(String root) {
+  public Blog(DAOFactory daoFactory, String root) {
     super(root);
-
+    this.daoFactory = daoFactory;
     beanFactory = PebbleContext.getInstance().getApplicationContext().getAutowireCapableBeanFactory();
 
     // probably Blog should be made a final class if init is called from here - 
@@ -210,18 +211,17 @@ public class Blog extends AbstractBlog {
       setPermalinkProvider(new DefaultPermalinkProvider());
     }
 
-    DAOFactory.getConfiguredFactory().init(this);
+    daoFactory.init(this);
 
     // load categories
-    DAOFactory factory = DAOFactory.getConfiguredFactory();
     try {
-      CategoryDAO dao = factory.getCategoryDAO();
+      CategoryDAO dao = daoFactory.getCategoryDAO();
       rootCategory = dao.getCategories(this);
     } catch (PersistenceException pe) {
       pe.printStackTrace();
     }
 
-    refererFilterManager = new RefererFilterManager(this);
+    refererFilterManager = new RefererFilterManager(this, daoFactory.getRefererFilterDAO());
     pluginProperties = new PluginProperties(this);
     blogCompanion = new BlogCompanion(this);
     years = new ArrayList<Year>();
@@ -230,9 +230,9 @@ public class Blog extends AbstractBlog {
     searchIndex = new LuceneSearchIndex(this);
     blogEntryIndex = new FileBlogEntryIndex(this);
     responseIndex = new FileResponseIndex(this);
-    tagIndex = factory.createTagIndex(this);
+    tagIndex = daoFactory.createTagIndex(this);
     categoryIndex = new FileCategoryIndex(this);
-    authorIndex = factory.createAuthorIndex(this);
+    authorIndex = daoFactory.createAuthorIndex(this);
     staticPageIndex = new FileStaticPageIndex(this);
 
     decoratorChain = new ContentDecoratorChain(this);
@@ -1840,7 +1840,7 @@ public class Blog extends AbstractBlog {
 
     try {
       // to reindex all blog entries, we need to load them via the DAO
-      Collection<BlogEntry> blogEntries = DAOFactory.getConfiguredFactory().getBlogEntryDAO().loadBlogEntries(this);
+      Collection<BlogEntry> blogEntries = daoFactory.getBlogEntryDAO().loadBlogEntries(this);
       blogEntryIndex.index(blogEntries);
       responseIndex.index(blogEntries);
       tagIndex.index(blogEntries);
@@ -1857,7 +1857,7 @@ public class Blog extends AbstractBlog {
   public void reindexStaticPages() {
     try {
       // to reindex all static pages, we need to load them via the DAO
-      Collection<StaticPage> staticPages = DAOFactory.getConfiguredFactory().getStaticPageDAO().loadStaticPages(this);
+      Collection<StaticPage> staticPages = daoFactory.getStaticPageDAO().loadStaticPages(this);
       staticPageIndex.reindex(staticPages);
       searchIndex.indexStaticPages(staticPages);
       info("Static pages reindexed.");

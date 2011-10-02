@@ -40,6 +40,7 @@ import net.sourceforge.pebble.web.security.RequireSecurityToken;
 import net.sourceforge.pebble.web.view.RedirectView;
 import net.sourceforge.pebble.web.view.View;
 
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -52,6 +53,9 @@ import javax.servlet.http.HttpServletResponse;
 @RequireSecurityToken
 public class RemoveStaticPagesAction extends SecureAction {
 
+  @Inject
+  private StaticPageService staticPageService;
+
   /**
    * Peforms the processing associated with this action.
    *
@@ -62,22 +66,21 @@ public class RemoveStaticPagesAction extends SecureAction {
   public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
     String ids[] = request.getParameterValues("page");
-    StaticPageService service = new StaticPageService();
 
     if (ids != null) {
       for (String id : ids) {
         StaticPage staticPage = null;
         try {
-          staticPage = service.getStaticPageById(blog, id);
+          staticPage = staticPageService.getStaticPageById(blog, id);
         } catch (StaticPageServiceException e) {
           throw new ServletException(e);
         }
         if (staticPage != null) {
           try {
-            if (service.lock(staticPage)) {
-              service.removeStaticPage(staticPage);
+            if (staticPageService.lock(staticPage)) {
+              staticPageService.removeStaticPage(staticPage);
               blog.info("Static page \"" + staticPage.getTitle() + "\" removed.");
-              service.unlock(staticPage);
+              staticPageService.unlock(staticPage);
             }
           } catch (StaticPageServiceException e) {
             throw new ServletException(e);

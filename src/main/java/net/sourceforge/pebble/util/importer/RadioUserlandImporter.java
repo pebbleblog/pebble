@@ -62,8 +62,9 @@ public class RadioUserlandImporter {
   public static void main(String[] args) throws Exception {
     File root = new File(args[0]);
     File sources[] = root.listFiles();
-    DAOFactory.setConfiguredFactory(new FileDAOFactory());
-    Blog blog = new Blog(args[1]);
+    DAOFactory daoFactory = new FileDAOFactory();
+    DAOFactory.setConfiguredFactory(daoFactory);
+    Blog blog = new Blog(daoFactory, args[1]);
     blog.setProperty(Blog.TIMEZONE_KEY, args[2]);
 
     for (int i = 0; i < sources.length; i++) {

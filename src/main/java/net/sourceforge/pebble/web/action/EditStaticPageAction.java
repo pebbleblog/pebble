@@ -41,6 +41,7 @@ import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.impl.StaticPageFormView;
 import net.sourceforge.pebble.web.view.impl.StaticPageLockedView;
 
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -53,6 +54,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class EditStaticPageAction extends SecureAction {
 
+  @Inject
+  private StaticPageService staticPageService;
+
   /**
    * Peforms the processing associated with this action.
    *
@@ -62,10 +66,9 @@ public class EditStaticPageAction extends SecureAction {
    */
   public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
-    StaticPageService service = new StaticPageService();
     StaticPage staticPage = null;
     try {
-      staticPage = service.getStaticPageById(blog, request.getParameter("page"));
+      staticPage = staticPageService.getStaticPageById(blog, request.getParameter("page"));
     } catch (StaticPageServiceException e) {
       throw new ServletException(e);
     }
@@ -74,7 +77,7 @@ public class EditStaticPageAction extends SecureAction {
       return new NotFoundView();
     } else {
       getModel().put(Constants.STATIC_PAGE_KEY, staticPage);
-      if (service.lock(staticPage)) {
+      if (staticPageService.lock(staticPage)) {
         return new StaticPageFormView();
       } else {
         return new StaticPageLockedView();

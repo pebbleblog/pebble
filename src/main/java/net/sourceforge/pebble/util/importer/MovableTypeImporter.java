@@ -33,7 +33,6 @@ package net.sourceforge.pebble.util.importer;
 
 import net.sourceforge.pebble.Configuration;
 import net.sourceforge.pebble.PebbleContext;
-import net.sourceforge.pebble.dao.CategoryDAO;
 import net.sourceforge.pebble.dao.DAOFactory;
 import net.sourceforge.pebble.dao.file.FileDAOFactory;
 import net.sourceforge.pebble.domain.Blog;
@@ -80,15 +79,15 @@ public class MovableTypeImporter {
       Configuration config = new Configuration();
       config.setDataDirectory(args[1]);
       config.setUrl("http://www.yourdomain.com/blog/");
-      config.afterPropertiesSet();
       PebbleContext.getInstance().setConfiguration(config);
     }
 
-    DAOFactory.setConfiguredFactory(new FileDAOFactory());
-    Blog blog = new Blog(args[1]);
+    DAOFactory daoFactory = new FileDAOFactory();
+    DAOFactory.setConfiguredFactory(daoFactory);
+    Blog blog = new Blog(daoFactory, args[1]);
     blog.setProperty(Blog.TIMEZONE_KEY, args[2]);
 
-    importBlog(blog, file);
+    importBlog(blog, file, daoFactory);
   }
 
   /**
@@ -98,19 +97,19 @@ public class MovableTypeImporter {
    * @param file    the Movable Type export file
    * @throws Exception  if something goes wrong
    */
-  private static void importBlog(Blog blog, File file) throws Exception {
+  static void importBlog(Blog blog, File file, DAOFactory daoFactory) throws Exception {
     System.out.println("Importing " + file.getName());
 
     BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file),"UTF8"));
     BlogEntry blogEntry = null;
     do {
-      blogEntry = readBlogEntry(blog, reader);
+      blogEntry = readBlogEntry(blog, reader, daoFactory);
     } while (blogEntry != null);
 
     System.out.println(" " + blog.getNumberOfBlogEntries());
   }
 
-  private static BlogEntry readBlogEntry(Blog blog, BufferedReader reader) throws Exception {
+  private static BlogEntry readBlogEntry(Blog blog, BufferedReader reader, DAOFactory daoFactory) throws Exception {
     String line = reader.readLine();
     if (line == null) {
       return null;
@@ -227,9 +226,7 @@ public class MovableTypeImporter {
     for (String categoryStr : categories) {
       if(categoryStr != null && categoryStr.trim().length() > 0) {
         Category category = new Category(categoryStr.trim(), categoryStr.trim());
-        DAOFactory factory = DAOFactory.getConfiguredFactory();
-        CategoryDAO dao = factory.getCategoryDAO();
-        dao.addCategory(category, blog);
+        daoFactory.getCategoryDAO().addCategory(category, blog);
         blog.addCategory(category);
         entry.addCategory(category);
       }

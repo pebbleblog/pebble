@@ -50,6 +50,7 @@ public abstract class MultiBlogTestCase extends PebbleTestCase {
   protected void setUp() throws Exception {
     super.setUp();
 
+    DAOFactory daoFactory = new MockDAOFactory();
     DAOFactory.setConfiguredFactory(new MockDAOFactory());
 
     PebbleContext.getInstance().getConfiguration().setUrl("http://www.yourdomain.com/blog/");
@@ -60,7 +61,7 @@ public abstract class MultiBlogTestCase extends PebbleTestCase {
     // and set up some blogs
     File blogDirectory1 = new File(TEST_BLOG_LOCATION, "blogs/blog1");
     blogDirectory1.mkdir();
-    blog1 = new Blog(blogDirectory1.getAbsolutePath());
+    blog1 = new Blog(daoFactory, blogDirectory1.getAbsolutePath());
     blog1.setId("blog1");
     Theme theme = new Theme(blog1, "user-blog1", TEST_BLOG_LOCATION.getAbsolutePath());
     blog1.setEditableTheme(theme);
@@ -69,7 +70,7 @@ public abstract class MultiBlogTestCase extends PebbleTestCase {
 
     File blogDirectory2 = new File(TEST_BLOG_LOCATION, "blogs/blog2");
     blogDirectory2.mkdir();
-    blog2 = new Blog(blogDirectory2.getAbsolutePath());
+    blog2 = new Blog(daoFactory, blogDirectory2.getAbsolutePath());
     blog2.setId("blog2");
     theme = new Theme(blog2, "user-blog2", TEST_BLOG_LOCATION.getAbsolutePath());
     blog2.setEditableTheme(theme);

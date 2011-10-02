@@ -72,7 +72,6 @@ public abstract class PebbleTestCase extends TestCase {
     Configuration config = new Configuration();
     config.setUrl("http://www.yourdomain.com/blog/");
     config.setDataDirectory(TEST_BLOG_LOCATION.getAbsolutePath());
-    config.afterPropertiesSet();
     PebbleContext.getInstance().setConfiguration(config);
     PebbleContext.getInstance().setApplicationContext(testApplicationContext);
   }

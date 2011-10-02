@@ -40,6 +40,7 @@ import net.sourceforge.pebble.web.view.NotFoundView;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.impl.StaticPageView;
 
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -51,6 +52,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class ViewStaticPageAction extends Action {
 
+  @Inject
+  private StaticPageService staticPageService;
+
   /**
    * Peforms the processing associated with this action.
    *
@@ -59,13 +63,12 @@ public class ViewStaticPageAction extends Action {
    * @return the name of the next view
    */
   public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
-    StaticPageService service = new StaticPageService();
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
     String name = request.getParameter("name");
 
     StaticPage staticPage;
     try {
-      staticPage = service.getStaticPageByName(blog, name);
+      staticPage = staticPageService.getStaticPageByName(blog, name);
     } catch (StaticPageServiceException e) {
       throw new ServletException(e);
     }

@@ -48,7 +48,7 @@ public class RefererFilterManagerTest extends SingleBlogTestCase {
 
   protected void setUp() throws Exception {
     super.setUp();
-    refererFilterManager = new RefererFilterManager(blog);
+    refererFilterManager = new RefererFilterManager(blog, daoFactory.getRefererFilterDAO());
   }
 
   /**

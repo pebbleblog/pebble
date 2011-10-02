@@ -49,7 +49,7 @@ import java.util.Locale;
  *
  * @author Simon Brown
  */
-public class Configuration implements InitializingBean, DisposableBean {
+public class Configuration {
 
   /**
    * the log used by this class
@@ -66,24 +66,9 @@ public class Configuration implements InitializingBean, DisposableBean {
   private long fileUploadSize = 2048;
   private long fileUploadQuota = -1;
   private String storageType = FileDAOFactory.FILE_STORAGE_TYPE;
-  private DAOFactory daoFactory;
   private SecurityRealm securityRealm;
 
   public Configuration() {
-  }
-
-  public void afterPropertiesSet() throws Exception {
-    if (storageType.toLowerCase(Locale.ENGLISH).equals(FileDAOFactory.FILE_STORAGE_TYPE)) {
-      daoFactory = new FileDAOFactory();
-    } else if (storageType.toLowerCase(Locale.ENGLISH).equals(OrientDAOFactory.ORIENT_STORAGE_TYPE)) {
-      daoFactory = new OrientDAOFactory(new File(dataDirectory));
-    } else {
-      throw new IllegalArgumentException("Unknown storage type: " + storageType);
-    }
-  }
-
-  public void destroy() throws Exception {
-    daoFactory.shutdown();
   }
 
   public String getUrl() {
@@ -152,14 +137,6 @@ public class Configuration implements InitializingBean, DisposableBean {
 
   public void setFileUploadQuota(long fileUploadQuota) {
     this.fileUploadQuota = fileUploadQuota;
-  }
-
-  public DAOFactory getDaoFactory() {
-    return daoFactory;
-  }
-
-  public void setDaoFactory(DAOFactory daoFactory) {
-    this.daoFactory = daoFactory;
   }
 
   public String getDataDirectory() {

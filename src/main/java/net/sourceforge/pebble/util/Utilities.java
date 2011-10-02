@@ -43,6 +43,7 @@ import net.sourceforge.pebble.event.response.IpAddressListener;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import javax.inject.Inject;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FilenameFilter;
@@ -157,7 +158,7 @@ public class Utilities {
    *
    * @param blog    a Blog instance
    */
-  public static void convertCategories(Blog blog) {
+  public static void convertCategories(Blog blog, CategoryDAO categoryDAO) {
     Properties categories = new Properties();
     try {
       FileInputStream in = new FileInputStream(new File(blog.getRoot(), "blog.categories"));
@@ -177,9 +178,7 @@ public class Utilities {
         }
 
         blog.addCategory(category);
-        DAOFactory factory = DAOFactory.getConfiguredFactory();
-        CategoryDAO dao = factory.getCategoryDAO();
-        dao.addCategory(category, blog);
+        categoryDAO.addCategory(category, blog);
       }
     } catch (Exception e) {
       log.error("Exception encountered", e);
@@ -346,8 +345,9 @@ public class Utilities {
       return;
     }
 
-    DAOFactory.setConfiguredFactory(new FileDAOFactory());
-    Blog blog = new Blog(args[0]);
+    DAOFactory daoFactory = new FileDAOFactory();
+    DAOFactory.setConfiguredFactory(daoFactory);
+    Blog blog = new Blog(daoFactory, args[0]);
 
     String action = args[1];
     if (action == null) {
@@ -359,7 +359,7 @@ public class Utilities {
     } else if (action.equalsIgnoreCase("buildIndexes")) {
       buildIndexes(blog);
     } else if (action.equalsIgnoreCase("convertCategories")) {
-      convertCategories(blog);
+      convertCategories(blog, daoFactory.getCategoryDAO());
     }
 
   }

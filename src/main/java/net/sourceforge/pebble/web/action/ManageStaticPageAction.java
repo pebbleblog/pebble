@@ -45,6 +45,7 @@ import net.sourceforge.pebble.web.view.impl.StaticPageLockedView;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -60,6 +61,9 @@ public class ManageStaticPageAction extends SecureAction {
   /** the log used by this class */
   private static final Log log = LogFactory.getLog(ManageStaticPageAction.class);
 
+  @Inject
+  private StaticPageService staticPageService;
+
   /**
    * Peforms the processing associated with this action.
    *
@@ -73,10 +77,9 @@ public class ManageStaticPageAction extends SecureAction {
     String confirm = request.getParameter("confirm");
     String submit = request.getParameter("submit");
 
-    StaticPageService service = new StaticPageService();
     StaticPage staticPage = null;
     try {
-      staticPage = service.getStaticPageById(blog, id);
+      staticPage = staticPageService.getStaticPageById(blog, id);
     } catch (StaticPageServiceException e) {
       throw new ServletException(e);
     }
@@ -89,10 +92,10 @@ public class ManageStaticPageAction extends SecureAction {
       return new ForwardView("/editStaticPage.secureaction?page=" + id);
     } else if (submit.equalsIgnoreCase("Remove") && confirm != null && confirm.equals("true")) {
       try {
-        if (service.lock(staticPage)) {
-          service.removeStaticPage(staticPage);
+        if (staticPageService.lock(staticPage)) {
+          staticPageService.removeStaticPage(staticPage);
           blog.info("Static page \"" + staticPage.getTitle() + "\" removed.");
-          service.unlock(staticPage);
+          staticPageService.unlock(staticPage);
         } else {
           getModel().put(Constants.STATIC_PAGE_KEY, staticPage);
           return new StaticPageLockedView();
@@ -103,7 +106,7 @@ public class ManageStaticPageAction extends SecureAction {
         throw new ServletException(e);
       }
     } else if (submit.equalsIgnoreCase("Unlock") && confirm != null && confirm.equals("true")) {
-        service.unlock(staticPage);
+        staticPageService.unlock(staticPage);
         blog.info("Static page <a href=\"" + staticPage.getLocalPermalink() + "\">" + staticPage.getTitle() + "</a> unlocked.");
 
         return new RedirectView(blog.getUrl() + "viewStaticPages.secureaction");

@@ -32,6 +32,7 @@
 package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
+import net.sourceforge.pebble.dao.CategoryDAO;
 import net.sourceforge.pebble.domain.Category;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.util.Utilities;
@@ -41,6 +42,7 @@ import net.sourceforge.pebble.web.view.ForwardView;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.impl.UtilitiesView;
 
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -53,6 +55,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 @RequireSecurityToken(UtilitiesAction.UtilitiesCondition.class)
 public class UtilitiesAction extends SecureAction {
+
+  @Inject
+  private CategoryDAO categoryDAO;
 
   /**
    * Peforms the processing associated with this action.
@@ -76,7 +81,7 @@ public class UtilitiesAction extends SecureAction {
       Utilities.buildIndexes(blog);
       return new ForwardView("/reloadBlog.secureaction");
     } else if (action.equalsIgnoreCase("convertCategories")) {
-      Utilities.convertCategories(blog);
+      Utilities.convertCategories(blog, categoryDAO);
       return new ForwardView("/reloadBlog.secureaction");
     } else if (action.equalsIgnoreCase("restructureBlogToGMT")) {
       Utilities.restructureBlogToGMT(blog);

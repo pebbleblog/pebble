@@ -38,6 +38,7 @@ import net.sourceforge.pebble.service.StaticPageServiceException;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.impl.StaticPagesView;
 
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -50,6 +51,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class ViewStaticPagesAction extends SecureAction {
 
+  @Inject
+  private StaticPageService staticPageService;
+
   /**
    * Peforms the processing associated with this action.
    *
@@ -59,9 +63,8 @@ public class ViewStaticPagesAction extends SecureAction {
    */
   public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
-    StaticPageService service = new StaticPageService();
     try {
-      getModel().put("staticPages", service.getStaticPages(blog));
+      getModel().put("staticPages", staticPageService.getStaticPages(blog));
     } catch (StaticPageServiceException e) {
       throw new ServletException(e);
     }

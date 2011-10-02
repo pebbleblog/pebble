@@ -42,6 +42,7 @@ import net.sourceforge.pebble.web.view.View;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -55,6 +56,9 @@ public class UnlockStaticPageAction extends SecureAction {
 
   private static final Log log = LogFactory.getLog(UnlockStaticPageAction.class);
 
+  @Inject
+  private StaticPageService staticPageService;
+
   /**
    * Peforms the processing associated with this action.
    *
@@ -64,14 +68,13 @@ public class UnlockStaticPageAction extends SecureAction {
    */
   public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
-    StaticPageService service = new StaticPageService();
 
     String id = request.getParameter("page");
     if (id != null) {
       try {
-        StaticPage staticPage = service.getStaticPageById(blog, id);
+        StaticPage staticPage = staticPageService.getStaticPageById(blog, id);
         if (staticPage != null) {
-          service.unlock(staticPage);
+          staticPageService.unlock(staticPage);
           blog.info("Static page <a href=\"" + staticPage.getLocalPermalink() + "\">" + staticPage.getTitle() + "</a> unlocked.");
         }
       } catch (StaticPageServiceException e) {
