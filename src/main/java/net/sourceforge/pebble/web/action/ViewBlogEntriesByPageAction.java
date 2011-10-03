@@ -98,9 +98,9 @@ public class ViewBlogEntriesByPageAction extends Action {
 
       Pageable<String> pageable;
       if (publishedOnly) {
-        pageable = new Pageable<String>(blog.getBlogEntryIndex().getPublishedBlogEntries());
+        pageable = new Pageable<String>(blog.getBlogEntryIndex().getPublishedBlogEntries(blog));
       } else {
-        pageable = new Pageable<String>(blog.getBlogEntryIndex().getBlogEntries());
+        pageable = new Pageable<String>(blog.getBlogEntryIndex().getBlogEntries(blog));
       }
 
       pageable.setPageSize(blog.getRecentBlogEntriesOnHomePage());

@@ -50,7 +50,7 @@ public class BlogEntryIndexListener implements BlogEntryListener {
    */
   public void blogEntryAdded(BlogEntryEvent event) {
     BlogEntry blogEntry = event.getBlogEntry();
-    blogEntry.getBlog().getBlogEntryIndex().index(blogEntry);
+    blogEntry.getBlog().getBlogEntryIndex().index(blogEntry.getBlog(), blogEntry);
   }
 
   /**
@@ -60,7 +60,7 @@ public class BlogEntryIndexListener implements BlogEntryListener {
    */
   public void blogEntryRemoved(BlogEntryEvent event) {
     BlogEntry blogEntry = event.getBlogEntry();
-    blogEntry.getBlog().getBlogEntryIndex().unindex(blogEntry);
+    blogEntry.getBlog().getBlogEntryIndex().unindex(blogEntry.getBlog(), blogEntry);
   }
 
   /**
@@ -78,8 +78,8 @@ public class BlogEntryIndexListener implements BlogEntryListener {
    */
   public void blogEntryPublished(BlogEntryEvent event) {
     BlogEntry blogEntry = event.getBlogEntry();
-    blogEntry.getBlog().getBlogEntryIndex().unindex(blogEntry);
-    blogEntry.getBlog().getBlogEntryIndex().index(blogEntry);
+    blogEntry.getBlog().getBlogEntryIndex().unindex(blogEntry.getBlog(), blogEntry);
+    blogEntry.getBlog().getBlogEntryIndex().index(blogEntry.getBlog(), blogEntry);
   }
 
   /**
@@ -89,8 +89,8 @@ public class BlogEntryIndexListener implements BlogEntryListener {
    */
   public void blogEntryUnpublished(BlogEntryEvent event) {
     BlogEntry blogEntry = event.getBlogEntry();
-    blogEntry.getBlog().getBlogEntryIndex().unindex(blogEntry);
-    blogEntry.getBlog().getBlogEntryIndex().index(blogEntry);
+    blogEntry.getBlog().getBlogEntryIndex().unindex(blogEntry.getBlog(), blogEntry);
+    blogEntry.getBlog().getBlogEntryIndex().index(blogEntry.getBlog(), blogEntry);
   }
 
 }

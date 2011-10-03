@@ -34,8 +34,10 @@ package net.sourceforge.pebble.dao.file;
 import net.sourceforge.pebble.dao.*;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.index.AuthorIndex;
+import net.sourceforge.pebble.index.BlogEntryIndex;
 import net.sourceforge.pebble.index.TagIndex;
 import net.sourceforge.pebble.index.file.FileAuthorIndex;
+import net.sourceforge.pebble.index.file.FileBlogEntryIndex;
 import net.sourceforge.pebble.index.file.FileTagIndex;
 
 /**
@@ -52,6 +54,7 @@ public class FileDAOFactory implements DAOFactory {
   private StaticPageDAO staticPageDAO;
   private CategoryDAO categoryDAO;
   private RefererFilterDAO refererFilterDAO;
+  private BlogEntryIndex blogEntryIndex;
 
   /**
    * Default, no args constructor.
@@ -61,6 +64,7 @@ public class FileDAOFactory implements DAOFactory {
     this.staticPageDAO = new FileStaticPageDAO();
     this.categoryDAO = new FileCategoryDAO();
     this.refererFilterDAO = new FileRefererFilterDAO();
+    this.blogEntryIndex = new FileBlogEntryIndex();
   }
 
   /**
@@ -99,6 +103,10 @@ public class FileDAOFactory implements DAOFactory {
     return this.refererFilterDAO;
   }
 
+  public BlogEntryIndex getBlogEntryIndex() {
+    return blogEntryIndex;
+  }
+
   public TagIndex createTagIndex(Blog blog) {
     return new FileTagIndex(blog);
   }
@@ -108,6 +116,7 @@ public class FileDAOFactory implements DAOFactory {
   }
 
   public void init(Blog blog) {
+    blogEntryIndex.init(blog);
   }
 
   public void shutdown() {

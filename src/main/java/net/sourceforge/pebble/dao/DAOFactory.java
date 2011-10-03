@@ -33,43 +33,51 @@ package net.sourceforge.pebble.dao;
 
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.index.AuthorIndex;
+import net.sourceforge.pebble.index.BlogEntryIndex;
 import net.sourceforge.pebble.index.TagIndex;
 
 /**
  * Represents a strategy used to load and store blog entries
  * in the filing system.
  *
- * @author    Simon Brown
+ * @author Simon Brown
  */
 public interface DAOFactory {
 
   /**
    * Gets a DAO instance responsible for the dao of blog entries.
    *
-   * @return  a BlogEntryDAO instance
+   * @return a BlogEntryDAO instance
    */
   BlogEntryDAO getBlogEntryDAO();
 
   /**
    * Gets a DAO instance responsible for the dao of static pages.
    *
-   * @return  a StaticPageDAO instance
+   * @return a StaticPageDAO instance
    */
   StaticPageDAO getStaticPageDAO();
 
   /**
    * Gets a DAO instance responsible for the dao of categories.
    *
-   * @return  a CategoryDAO instance
+   * @return a CategoryDAO instance
    */
   CategoryDAO getCategoryDAO();
 
   /**
    * Gets a DAO instance responsible for the dao of referer filters.
    *
-   * @return  a RefererFilterDAO instance
+   * @return a RefererFilterDAO instance
    */
   RefererFilterDAO getRefererFilterDAO();
+
+  /**
+   * Gets a blog entry index
+   *
+   * @return The blog entry index
+   */
+  BlogEntryIndex getBlogEntryIndex();
 
   /**
    * Creates the tag index responsible for indexing tags, for the given blog

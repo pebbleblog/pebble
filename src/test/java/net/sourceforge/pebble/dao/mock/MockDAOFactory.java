@@ -34,8 +34,10 @@ package net.sourceforge.pebble.dao.mock;
 import net.sourceforge.pebble.dao.*;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.index.AuthorIndex;
+import net.sourceforge.pebble.index.BlogEntryIndex;
 import net.sourceforge.pebble.index.TagIndex;
 import net.sourceforge.pebble.index.file.FileAuthorIndex;
+import net.sourceforge.pebble.index.file.FileBlogEntryIndex;
 import net.sourceforge.pebble.index.file.FileTagIndex;
 
 /**
@@ -48,10 +50,13 @@ public class MockDAOFactory implements DAOFactory {
 
   private BlogEntryDAO blogEntryDAO = new MockBlogEntryDAO();
 
+  private BlogEntryIndex blogEntryIndex;
+
   /**
    * Default, no args constructor.
    */
   public MockDAOFactory() {
+    blogEntryIndex = new FileBlogEntryIndex();
   }
 
   /**
@@ -90,6 +95,10 @@ public class MockDAOFactory implements DAOFactory {
     return new MockRefererFilterDAO();
   }
 
+  public BlogEntryIndex getBlogEntryIndex() {
+    return blogEntryIndex;
+  }
+
   public TagIndex createTagIndex(Blog blog) {
     return new FileTagIndex(blog);
   }
@@ -99,6 +108,7 @@ public class MockDAOFactory implements DAOFactory {
   }
 
   public void init(Blog blog) {
+    blogEntryIndex.init(blog);
   }
 
   public void shutdown() {

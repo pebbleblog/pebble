@@ -45,7 +45,9 @@ import net.sourceforge.pebble.dao.file.FileStaticPageDAO;
 import net.sourceforge.pebble.dao.orient.model.OrientBlogEntry;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.index.AuthorIndex;
+import net.sourceforge.pebble.index.BlogEntryIndex;
 import net.sourceforge.pebble.index.TagIndex;
+import net.sourceforge.pebble.index.file.FileBlogEntryIndex;
 import net.sourceforge.pebble.index.orient.OrientAuthorIndex;
 import net.sourceforge.pebble.index.orient.OrientTagIndex;
 
@@ -65,6 +67,7 @@ public class OrientDAOFactory implements DAOFactory {
   private final StaticPageDAO staticPageDAO;
   private final CategoryDAO categoryDAO;
   private final RefererFilterDAO refererFilterDAO;
+  private final BlogEntryIndex blogEntryIndex;
   private final String databasePath;
 
 
@@ -74,6 +77,7 @@ public class OrientDAOFactory implements DAOFactory {
     this.staticPageDAO = new FileStaticPageDAO();
     this.categoryDAO = new FileCategoryDAO();
     this.refererFilterDAO = new FileRefererFilterDAO();
+    this.blogEntryIndex = new FileBlogEntryIndex();
   }
 
   public void init(Blog blog) {
@@ -88,6 +92,7 @@ public class OrientDAOFactory implements DAOFactory {
     } finally {
       db.close();
     }
+    blogEntryIndex.init(blog);
   }
 
   public void shutdown() {
@@ -166,6 +171,10 @@ public class OrientDAOFactory implements DAOFactory {
    */
   public RefererFilterDAO getRefererFilterDAO() {
     return this.refererFilterDAO;
+  }
+
+  public BlogEntryIndex getBlogEntryIndex() {
+    return blogEntryIndex;
   }
 
   public TagIndex createTagIndex(Blog blog) {

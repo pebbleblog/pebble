@@ -220,7 +220,24 @@ public class Blog extends AbstractBlog {
       e.printStackTrace();
     }
 
+    pluginProperties = new PluginProperties(this);
+    blogCompanion = new BlogCompanion(this);
+    years = new ArrayList<Year>();
+
+    // create the various indexes for this blog
+    searchIndex = new LuceneSearchIndex(this);
+    blogEntryIndex = daoFactory.getBlogEntryIndex();
+    responseIndex = new FileResponseIndex(this);
+    tagIndex = daoFactory.createTagIndex(this);
+    categoryIndex = new FileCategoryIndex(this);
+    authorIndex = daoFactory.createAuthorIndex(this);
+    staticPageIndex = new FileStaticPageIndex(this);
+
+    decoratorChain = new ContentDecoratorChain(this);
+
     daoFactory.init(this);
+
+    refererFilterManager = new RefererFilterManager(this, daoFactory.getRefererFilterDAO());
 
     // load categories
     try {
@@ -230,21 +247,6 @@ public class Blog extends AbstractBlog {
       pe.printStackTrace();
     }
 
-    refererFilterManager = new RefererFilterManager(this, daoFactory.getRefererFilterDAO());
-    pluginProperties = new PluginProperties(this);
-    blogCompanion = new BlogCompanion(this);
-    years = new ArrayList<Year>();
-
-    // create the various indexes for this blog
-    searchIndex = new LuceneSearchIndex(this);
-    blogEntryIndex = new FileBlogEntryIndex(this);
-    responseIndex = new FileResponseIndex(this);
-    tagIndex = daoFactory.createTagIndex(this);
-    categoryIndex = new FileCategoryIndex(this);
-    authorIndex = daoFactory.createAuthorIndex(this);
-    staticPageIndex = new FileStaticPageIndex(this);
-
-    decoratorChain = new ContentDecoratorChain(this);
 
     try {
       Class<?> c = Class.forName(getCommentConfirmationStrategyName());
@@ -858,7 +860,7 @@ public class Blog extends AbstractBlog {
       return getBlogForThisMonth();
     }
 
-    List<String> blogEntryIds = getBlogEntryIndex().getBlogEntries();
+    List<String> blogEntryIds = getBlogEntryIndex().getBlogEntries(this);
     if (blogEntryIds == null || blogEntryIds.isEmpty()) {
       return getBlogForThisMonth();
     }
@@ -962,7 +964,7 @@ public class Blog extends AbstractBlog {
   public List<BlogEntry> getUnpublishedBlogEntries() {
     List<BlogEntry> blogEntries = new ArrayList<BlogEntry>();
 
-    List<String> blogEntryIds = blogEntryIndex.getUnpublishedBlogEntries();
+    List<String> blogEntryIds = blogEntryIndex.getUnpublishedBlogEntries(this);
     for (String blogEntryId : blogEntryIds) {
       try {
         blogEntries.add(blogService.getBlogEntry(this, blogEntryId));
@@ -980,7 +982,7 @@ public class Blog extends AbstractBlog {
    * @return  an int
    */
   public int getNumberOfBlogEntries() {
-    return blogEntryIndex.getNumberOfBlogEntries();
+    return blogEntryIndex.getNumberOfBlogEntries(this);
   }
 
   /**
@@ -988,8 +990,9 @@ public class Blog extends AbstractBlog {
    *
    * @return  an int
    */
+  @Deprecated
   public int getNumberOfPublishedBlogEntries() {
-    return blogEntryIndex.getNumberOfPublishedBlogEntries();
+    return blogEntryIndex.getNumberOfPublishedBlogEntries(this);
   }
 
   /**
@@ -997,8 +1000,9 @@ public class Blog extends AbstractBlog {
    *
    * @return  an int
    */
+  @Deprecated
   public int getNumberOfUnpublishedBlogEntries() {
-    return blogEntryIndex.getNumberOfUnpublishedBlogEntries();
+    return blogEntryIndex.getNumberOfUnpublishedBlogEntries(this);
   }
 
   /**
@@ -1018,7 +1022,7 @@ public class Blog extends AbstractBlog {
    * @return a List containing the most recent blog entries
    */
   public List<BlogEntry> getRecentBlogEntries(int numberOfEntries) {
-    List<String> blogEntryIds = blogEntryIndex.getBlogEntries();
+    List<String> blogEntryIds = blogEntryIndex.getBlogEntries(this);
     List<BlogEntry> blogEntries = new ArrayList<BlogEntry>();
     for (String blogEntryId : blogEntryIds) {
       try {
@@ -1054,7 +1058,7 @@ public class Blog extends AbstractBlog {
    * @return a List containing the most recent blog entries
    */
   public List<BlogEntry> getRecentPublishedBlogEntries(int number) {
-    List<String> blogEntryIds = blogEntryIndex.getPublishedBlogEntries();
+    List<String> blogEntryIds = blogEntryIndex.getPublishedBlogEntries(this);
     List<BlogEntry> blogEntries = new ArrayList<BlogEntry>();
     for (String blogEntryId : blogEntryIds) {
       if (blogEntries.size() == number) {
@@ -1815,7 +1819,7 @@ public class Blog extends AbstractBlog {
   }
 
   public void reindexBlogEntries() {
-    blogEntryIndex.clear();
+    blogEntryIndex.clear(this);
     responseIndex.clear();
     tagIndex.clear();
     categoryIndex.clear();
@@ -1825,7 +1829,7 @@ public class Blog extends AbstractBlog {
     try {
       // to reindex all blog entries, we need to load them via the DAO
       Collection<BlogEntry> blogEntries = daoFactory.getBlogEntryDAO().loadBlogEntries(this);
-      blogEntryIndex.index(blogEntries);
+      blogEntryIndex.index(this, blogEntries);
       responseIndex.index(blogEntries);
       tagIndex.index(blogEntries);
       categoryIndex.index(blogEntries);
