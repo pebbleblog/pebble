@@ -50,13 +50,6 @@ public class DayTest extends SingleBlogTestCase {
   }
 
   /**
-   * Tests that the root blog is setup correctly.
-   */
-  public void testGetRootBlog() {
-    assertEquals(blog, day.getBlog());
-  }
-
-  /**
    * Tests the getter for the day property.
    */
   public void testGetDay() {
@@ -76,7 +69,7 @@ public class DayTest extends SingleBlogTestCase {
    */
   public void testGetDate() {
     day = blog.getBlogForDay(2003, 4, 7);
-    Date date = day.getDate();
+    Date date = day.getDate(blog.getCalendar());
     Calendar cal = blog.getCalendar();
     cal.setTime(date);
     assertEquals(2003, cal.get(Calendar.YEAR));
@@ -92,13 +85,13 @@ public class DayTest extends SingleBlogTestCase {
    * Tests the permalink.
    */
   public void testGetPermalink() {
-    String permalink = blog.getUrl() + "2003/04/01.html";
+    String permalink = "2003/04/01.html";
     day = blog.getBlogForDay(2003, 4, 1);
-    assertEquals(permalink, day.getPermalink());
+    assertEquals(permalink, blog.getPermalinkProvider().getPermalink(day));
 
-    permalink = blog.getUrl() + "2003/04/10.html";
+    permalink = "2003/04/10.html";
     day = blog.getBlogForDay(2003, 4, 10);
-    assertEquals(permalink, day.getPermalink());
+    assertEquals(permalink, blog.getPermalinkProvider().getPermalink(day));
   }
 
 //  /**

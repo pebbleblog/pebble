@@ -239,4 +239,22 @@
     <function-signature>java.lang.String createGravatar(java.lang.String)</function-signature>
   </function>
 
+  <function>
+    <name>monthPermalink</name>
+    <function-class>net.sourceforge.pebble.web.tagext.PermalinkFunctions</function-class>
+    <function-signature>java.lang.String monthPermalink(net.sourceforge.pebble.api.permalink.PermalinkProvider,net.sourceforge.pebble.domain.Month)</function-signature>
+  </function>
+
+  <function>
+    <name>dayPermalink</name>
+    <function-class>net.sourceforge.pebble.web.tagext.PermalinkFunctions</function-class>
+    <function-signature>java.lang.String dayPermalink(net.sourceforge.pebble.api.permalink.PermalinkProvider,net.sourceforge.pebble.domain.Day)</function-signature>
+  </function>
+
+  <function>
+    <name>blogEntryPermalink</name>
+    <function-class>net.sourceforge.pebble.web.tagext.PermalinkFunctions</function-class>
+    <function-signature>java.lang.String blogEntryPermalink(net.sourceforge.pebble.api.permalink.PermalinkProvider,net.sourceforge.pebble.domain.BlogEntry)</function-signature>
+  </function>
+
 </taglib>

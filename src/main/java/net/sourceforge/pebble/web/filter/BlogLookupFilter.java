@@ -31,6 +31,7 @@
  */
 package net.sourceforge.pebble.web.filter;
 
+import net.sourceforge.pebble.index.BlogEntryIndex;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -66,6 +67,7 @@ public class BlogLookupFilter implements Filter {
   private FilterConfig filterConfig;
 
   private BlogManager blogManager;
+  private BlogEntryIndex blogEntryIndex;
 
   /**
    * Initialises this instance.
@@ -76,6 +78,7 @@ public class BlogLookupFilter implements Filter {
     this.filterConfig = config;
     ApplicationContext applicationContext = WebApplicationContextUtils.getRequiredWebApplicationContext(config.getServletContext());
     blogManager = (BlogManager) applicationContext.getBean("blogManager");
+    blogEntryIndex = applicationContext.getBean(BlogEntryIndex.class);
   }
 
   /**
@@ -141,6 +144,8 @@ public class BlogLookupFilter implements Filter {
 
     if (blog instanceof Blog) {
       httpRequest.setAttribute(Constants.BLOG_TYPE, "singleblog");
+      httpRequest.setAttribute("permalinkProvider", ((Blog) blog).getPermalinkProvider());
+      httpRequest.setAttribute(Constants.YEARS_KEY, blogEntryIndex.getYears((Blog) blog));
     } else {
       httpRequest.setAttribute(Constants.BLOG_TYPE, "multiblog");
     }

@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 <%@ taglib uri="/WEB-INF/url.tld" prefix="url" %>
+<%@ taglib uri="http://pebble.sourceforge.net/pebble" prefix="pebble" %>
 
 <c:choose>
 
@@ -17,41 +18,41 @@
 
   <c:when test="${displayMode == 'month'}">
     <c:if test="${not empty previousMonth}">
-      <a href="${url:rewrite(previousMonth.permalink)}" title="${url:rewrite(previousMonth.permalink)}">&lt;&lt; <fmt:formatDate value="${previousMonth.date}" pattern="MMMM yyyy"/></a> |
+      <a href="${pebble:monthPermalink(permalinkProvider, previousMonth)}" title="${pebble:monthPermalink(permalinkProvider, previousMonth)}">&lt;&lt; <fmt:formatDate value="${previousMonth.date}" pattern="MMMM yyyy"/></a> |
     </c:if>
     <a href="${url:rewrite(blog.url)}" title="${url:rewrite(blog.url)}"><fmt:message key="common.home" /></a>
     <c:if test="${not empty nextMonth}">
-      | <a href="${url:rewrite(nextMonth.permalink)}" title="${url:rewrite(nextMonth.permalink)}"><fmt:formatDate value="${nextMonth.date}" pattern="MMMM yyyy"/> &gt;&gt;</a>
+      | <a href="${pebble:monthPermalink(permalinkProvider, nextMonth)}" title="${pebble:monthPermalink(permalinkProvider, nextMonth)}"><fmt:formatDate value="${nextMonth.date}" pattern="MMMM yyyy"/> &gt;&gt;</a>
     </c:if>
   </c:when>
 
   <c:when test="${displayMode == 'logSummaryForMonth'}">
     <c:if test="${not empty previousMonth}">
-      <a href="${logAction}.secureaction?year=${previousMonth.year.year}&amp;month=${previousMonth.month}" title="${logAction}.secureaction?year=${previousMonth.year.year}&amp;month=${previousMonth.month}">&lt;&lt; <fmt:formatDate value="${previousMonth.date}" pattern="MMMM yyyy"/></a> |
+      <a href="${logAction}.secureaction?year=${previousMonth.year}&amp;month=${previousMonth.month}" title="${logAction}.secureaction?year=${previousMonth.year}&amp;month=${previousMonth.month}">&lt;&lt; <fmt:formatDate value="${previousMonth.date}" pattern="MMMM yyyy"/></a> |
     </c:if>
     <a href="${url:rewrite(blog.url)}" title="${url:rewrite(blog.url)}"><fmt:message key="common.home" /></a>
     <c:if test="${not empty nextMonth}">
-      | <a href="${logAction}.secureaction?year=${nextMonth.year.year}&month=${nextMonth.month}" title="${logAction}.secureaction?year=${nextMonth.year.year}&amp;month=${nextMonth.month}"><fmt:formatDate value="${nextMonth.date}" pattern="MMMM yyyy"/> &gt;&gt;</a>
+      | <a href="${logAction}.secureaction?year=${nextMonth.year}&month=${nextMonth.month}" title="${logAction}.secureaction?year=${nextMonth.year}&amp;month=${nextMonth.month}"><fmt:formatDate value="${nextMonth.date}" pattern="MMMM yyyy"/> &gt;&gt;</a>
     </c:if>
   </c:when>
 
   <c:when test="${displayMode == 'logSummaryForDay'}">
     <c:if test="${not empty previousDay}">
-      <a href="${logAction}.secureaction?year=${previousDay.month.year.year}&amp;month=${previousDay.month.month}&amp;day=${previousDay.day}" title="${logAction}.secureaction?year=${previousDay.month.year.year}&amp;month=${previousDay.month.month}&amp;day=${previousDay.day}">&lt;&lt; <fmt:formatDate value="${previousDay.date}" type="date" dateStyle="long"/></a> |
+      <a href="${logAction}.secureaction?year=${previousDay.year}&amp;month=${previousDay.month}&amp;day=${previousDay.day}" title="${logAction}.secureaction?year=${previousDay.year}&amp;month=${previousDay.month}&amp;day=${previousDay.day}">&lt;&lt; <fmt:formatDate value="${previousDay.date}" type="date" dateStyle="long"/></a> |
     </c:if>
     <a href="${url:rewrite(blog.url)}" title="${url:rewrite(blog.url)}"><fmt:message key="common.home" /></a>
-    <c:if test="${not empty nextDay}">
-      | <a href="${logAction}.secureaction?year=${nextDay.month.year.year}&month=${nextDay.month.month}&day=${nextDay.day}" href="${logAction}.secureaction?year=${nextDay.month.year.year}&amp;month=${nextDay.month.month}&amp;day=${nextDay.day}"><fmt:formatDate value="${nextDay.date}" type="date" dateStyle="long"/> &gt;&gt;</a>
+    <c:if test="${not empty nextDFay}">
+      | <a href="${logAction}.secureaction?year=${nextDay.year}&month=${nextDay.month}&day=${nextDay.day}" href="${logAction}.secureaction?year=${nextDay.year}&amp;month=${nextDay.month}&amp;day=${nextDay.day}"><fmt:formatDate value="${nextDay.date}" type="date" dateStyle="long"/> &gt;&gt;</a>
     </c:if>
   </c:when>
 
   <c:when test="${displayMode == 'day'}">
     <c:if test="${not empty previousDay}">
-      <a href="${url:rewrite(previousDay.permalink)}" title="${url:rewrite(previousDay.permalink)}">&lt;&lt; <fmt:formatDate value="${previousDay.date}" type="date" dateStyle="long"/></a> |
+      <a href="${pebble:dayPermalink(permalinkProvider, previousDay)}" title="${pebble:dayPermalink(permalinkProvider, previousDay)}">&lt;&lt; <fmt:formatDate value="${previousDay.date}" type="date" dateStyle="long"/></a> |
     </c:if>
     <a href="${url:rewrite(blog.url)}" title="${url:rewrite(blog.url)}"><fmt:message key="common.home" /></a>
     <c:if test="${not empty nextDay}">
-      | <a href="${url:rewrite(nextDay.permalink)}" title="${url:rewrite(nextDay.permalink)}"><fmt:formatDate value="${nextDay.date}" type="date" dateStyle="long"/> &gt;&gt;</a>
+      | <a href="${pebble:dayPermalink(permalinkProvider, nextDay)}" title="${pebble:dayPermalink(permalinkProvider, nextDay)}"><fmt:formatDate value="${nextDay.date}" type="date" dateStyle="long"/> &gt;&gt;</a>
     </c:if>
   </c:when>
 

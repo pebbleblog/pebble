@@ -49,13 +49,6 @@ public class MonthTest extends SingleBlogTestCase {
   }
 
   /**
-   * Tests that the root blog is setup correctly.
-   */
-  public void testGetRootBlog() {
-    assertEquals(blog, month.getBlog());
-  }
-
-  /**
    * Tests the getter for the month property.
    */
   public void testGetMonth() {
@@ -67,36 +60,6 @@ public class MonthTest extends SingleBlogTestCase {
    */
   public void testGetYear() {
     assertEquals(blog.getBlogForThisYear().getYear(), month.getYear());
-  }
-
-  /**
-   * Tests that we can access the previous month.
-   */
-  public void testGetPreviousMonth() {
-    month = blog.getBlogForMonth(2003, 7);
-    Month previousMonth = month.getPreviousMonth();
-    assertEquals(2003, previousMonth.getYear());
-    assertEquals(6, previousMonth.getMonth());
-
-    month = blog.getBlogForMonth(2003, 1);
-    previousMonth = month.getPreviousMonth();
-    assertEquals(2002, previousMonth.getYear());
-    assertEquals(12, previousMonth.getMonth());
-  }
-
-  /**
-   * Tests that we can access the next month.
-   */
-  public void testGetNextMonth() {
-    month = blog.getBlogForMonth(2003, 7);
-    Month nextMonth = month.getNextMonth();
-    assertEquals(2003, nextMonth.getYear());
-    assertEquals(8, nextMonth.getMonth());
-
-    month = blog.getBlogForMonth(2002, 12);
-    nextMonth = month.getNextMonth();
-    assertEquals(2003, nextMonth.getYear());
-    assertEquals(1, nextMonth.getMonth());
   }
 
   /**
@@ -177,13 +140,13 @@ public class MonthTest extends SingleBlogTestCase {
    * Tests the permalink.
    */
   public void testGetPermalink() {
-    String permalink = blog.getUrl() + "2003/07.html";
+    String permalink = "2003/07.html";
     month = blog.getBlogForMonth(2003, 7);
-    assertEquals(permalink, month.getPermalink());
+    assertEquals(permalink, blog.getPermalinkProvider().getPermalink(month));
 
-    permalink = blog.getUrl() + "2003/12.html";
+    permalink = "2003/12.html";
     month = blog.getBlogForMonth(2003, 12);
-    assertEquals(permalink, month.getPermalink());
+    assertEquals(permalink, blog.getPermalinkProvider().getPermalink(month));
   }
 
 //  /**

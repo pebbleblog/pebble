@@ -41,31 +41,28 @@ import java.util.*;
  *
  * @author    Simon Brown
  */
-public class Month extends TimePeriod implements Permalinkable {
+public class Month implements Comparable<Month> {
 
-  /** the year this month is for */
+  private final Blog blog;
+  private final Date date;
   private int year;
-
-  /** an integer representing the month that this Month is for */
   private int month;
-
-  /** the collection of Day instances that this blog is managing */
   private List<Day> days;
-
-  /** the last day in this month */
   private int lastDayInMonth;
-
-  /** the first day this month has a blog for **/
   private int firstDay;
 
   private Month(Blog blog, Date date, int year, int month, int lastDayInMonth, List<Day> days, int firstDay) {
-    super(blog, date);
-
+    this.blog = blog;
+    this.date = date;
     this.year = year;
     this.month = month;
     this.lastDayInMonth = lastDayInMonth;
     this.days = days;
     this.firstDay = firstDay;
+  }
+
+  public Blog getBlog() {
+    return blog;
   }
 
   /**
@@ -84,20 +81,6 @@ public class Month extends TimePeriod implements Permalinkable {
    */
   public int getMonth() {
     return month;
-  }
-
-  /**
-   * Gets the permalink to display all entries for this Month.
-   *
-   * @return  an absolute URL
-   */
-  public String getPermalink() {
-    String s = getBlog().getPermalinkProvider().getPermalink(this);
-    if (s != null && s.length() > 0) {
-      return getBlog().getUrl() + s.substring(1);
-    } else {
-      return "";
-    }
   }
 
   /**
@@ -155,7 +138,7 @@ public class Month extends TimePeriod implements Permalinkable {
     // Calculate index
     int index = day - firstDay;
     if (index < 0 || index >= days.size()) {
-      return Day.emptyDay(getBlog(), year, month, day);
+      return Day.emptyDay(blog, year, month, day);
     }
 
     return days.get(index);
@@ -188,74 +171,54 @@ public class Month extends TimePeriod implements Permalinkable {
     return lastDayInMonth;
   }
 
-  /**
-   * Gets the Month instance for the previous month.
-   *
-   * @return    a Month instance
-   */
-  public Month getPreviousMonth() {
-    return getBlog().getBlogForYear(year).getBlogForPreviousMonth(this);
-  }
-
-  /**
-   * Gets the Month instance for the next month.
-   *
-   * @return    a Month instance
-   */
-  public Month getNextMonth() {
-    return getBlog().getBlogForYear(year).getBlogForNextMonth(this);
+  public int compareTo(Month other) {
+    if (year == other.year) {
+      return month - other.month;
+    } else {
+      return year - other.year;
+    }
   }
 
   /**
    * Determines if the this Month is before (in the calendar) the
    * specified Month.
    *
+   * @param month The month to compare to
    * @return  true if this instance represents an earlier month than the
    *          specified Month instance, false otherwise
    */
   public boolean before(Month month) {
-    return getDate().before(month.getDate());
+    return compareTo(month) < 0;
   }
 
   /**
    * Determines if the this Month is after (in the calendar) the
    * specified Month.
    *
+   * @param month The month to compare to
    * @return  true if this instance represents a later month than the
    *          specified Month instance, false otherwise
    */
   public boolean after(Month month) {
-    return getDate().after(month.getDate());
+    return compareTo(month) > 0;
   }
 
-  /**
-   * Given a Day, this method returns the Day instance for the
-   * previous day.
-   *
-   * @param day   a Day instance
-   * @return  a Day instance representing the previous day
-   */
-  Day getBlogForPreviousDay(Day day) {
-    if (day.getDay() > 1) {
-      return this.getBlogForDay(day.getDay() - 1);
-    } else {
-      return getBlog().getBlogForYear(year).getBlogForPreviousMonth(this).getBlogForLastDay();
-    }
+  public Date getDate() {
+    return date;
   }
 
-  /**
-   * Given a Day, this method returns the Day instance for the
-   * next day.
-   *
-   * @param day   a Day instance
-   * @return  a Day instance representing the next day
-   */
-  Day getBlogForNextDay(Day day) {
-    if (day.getDay() < lastDayInMonth) {
-      return this.getBlogForDay(day.getDay() + 1);
-    } else {
-      return getBlog().getBlogForYear(year).getBlogForNextMonth(this).getBlogForFirstDay();
-    }
+  public Date getDate(TimeZone timeZone, Locale locale) {
+    return getDate(Calendar.getInstance(timeZone, locale));
+  }
+
+  private Date getDate(Calendar calendar) {
+    calendar.setTimeInMillis(0);
+    calendar.set(Calendar.YEAR, year);
+    calendar.set(Calendar.MONTH, month - 1);
+    calendar.set(Calendar.DAY_OF_MONTH, 1);
+    calendar.set(Calendar.HOUR_OF_DAY, 0);
+    calendar.set(Calendar.MINUTE, 0);
+    return calendar.getTime();
   }
 
   /**
@@ -264,8 +227,9 @@ public class Month extends TimePeriod implements Permalinkable {
    * @return  a String
    */
   public String toString() {
-    SimpleDateFormat sdf = new SimpleDateFormat("MMMM");
-    return sdf.format(getDate());
+    SimpleDateFormat sdf = new SimpleDateFormat("MMMM", blog.getLocale());
+    sdf.setTimeZone(blog.getTimeZone());
+    return sdf.format(date);
   }
 
   @Override
@@ -330,7 +294,7 @@ public class Month extends TimePeriod implements Permalinkable {
     }
 
     private Builder(Month month) {
-      this.blog = month.getBlog();
+      this.blog = month.blog;
       this.year = month.year;
       this.month = month.month;
       this.days = new LinkedList<Day>(month.days);

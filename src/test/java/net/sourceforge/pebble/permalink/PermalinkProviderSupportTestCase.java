@@ -64,7 +64,7 @@ public abstract class PermalinkProviderSupportTestCase extends SingleBlogTestCas
    */
   public void testGetPermalinkForMonth() {
     Month month = blog.getBlogForMonth(2004, 01);
-    assertEquals("/2004/01.html", permalinkProvider.getPermalink(month));
+    assertEquals("2004/01.html", permalinkProvider.getPermalink(month));
   }
 
   /**
@@ -92,7 +92,7 @@ public abstract class PermalinkProviderSupportTestCase extends SingleBlogTestCas
    */
   public void testGetPermalinkForDay() {
     Day day = blog.getBlogForDay(2004, 07, 14);
-    assertEquals("/2004/07/14.html", permalinkProvider.getPermalink(day));
+    assertEquals("2004/07/14.html", permalinkProvider.getPermalink(day));
   }
 
   /**

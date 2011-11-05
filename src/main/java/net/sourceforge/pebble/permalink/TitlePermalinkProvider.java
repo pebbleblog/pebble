@@ -73,7 +73,7 @@ public class TitlePermalinkProvider extends PermalinkProviderSupport {
     } else {
 
       Day day = getBlog().getBlogForDay(blogEntry.getDate());
-      List<String> entries = getBlog().getBlogEntryIndex().getBlogEntriesForDay(day.getBlog(), day.getYear(), day.getMonth(), day.getDay());
+      List<String> entries = getBlog().getBlogEntryIndex().getBlogEntriesForDay(getBlog(), day.getYear(), day.getMonth(), day.getDay());
       int count = 0;
       for (int i = entries.size()-1; i > entries.indexOf(blogEntry.getId()); i--) {
         try {

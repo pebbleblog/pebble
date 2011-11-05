@@ -31,32 +31,36 @@
  */
 package net.sourceforge.pebble.domain;
 
-import java.util.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * Represents a blog at a daily level. This manages a collection of BlogEntry instances.
  *
  * @author    Simon Brown
  */
-public class Day extends TimePeriod implements Permalinkable {
+public class Day implements Comparable<Day> {
 
-  /** The year for this day **/
+  private final Blog blog;
+  private final Date date;
   private final int year;
-
-  /** The month for this day */
   private final int month;
-
-  /** an integer representing the day that this Day is for */
   private final int day;
-
   private final int numberOfBlogEntries;
 
   private Day(Blog blog, Date date, int year, int month, int day, int numberOfBlogEntries) {
-    super(blog, date);
+    this.blog = blog;
+    this.date = date;
     this.year = year;
     this.month = month;
     this.day = day;
     this.numberOfBlogEntries = numberOfBlogEntries;
+  }
+
+  public Blog getBlog() {
+    return blog;
   }
 
   public int getYear() {
@@ -82,20 +86,6 @@ public class Day extends TimePeriod implements Permalinkable {
   }
 
   /**
-   * Gets the permalink to display all entries for this Day.
-   *
-   * @return  an absolute URL
-   */
-  public String getPermalink() {
-    String s = getBlog().getPermalinkProvider().getPermalink(this);
-    if (s != null && s.length() > 0) {
-      return getBlog().getUrl() + s.substring(1);
-    } else {
-      return "";
-    }
-  }
-
-  /**
    * Determines whether this day has entries.
    *
    * @return    true if this blog contains entries, false otherwise
@@ -113,33 +103,58 @@ public class Day extends TimePeriod implements Permalinkable {
     return numberOfBlogEntries;
   }
 
-  /**
-   * Gets the Day instance for the previous day.
-   *
-   * @return    a Day instance
-   */
-  public Day getPreviousDay() {
-    return getBlog().getBlogForMonth(year, month).getBlogForPreviousDay(this);
-  }
-
-  /**
-   * Gets the Day instance for the next day.
-   *
-   * @return    a Day instance
-   */
-  public Day getNextDay() {
-    return getBlog().getBlogForMonth(year, month).getBlogForNextDay(this);
+  public int compareTo(Day other) {
+    if (year == other.year) {
+      if (month == other.month) {
+        return day - other.day;
+      } else {
+        return month - other.month;
+      }
+    } else {
+      return year - other.year;
+    }
   }
 
   /**
    * Determines if the this Day is before (in the calendar) the
    * specified Day.
    *
-   * @return  true if this instance represents an earlier month than the
+   * @param day The day to compare to
+   * @return  true if this instance represents an earlier day than the
    *          specified Day instance, false otherwise
    */
   public boolean before(Day day) {
-    return getDate().before(day.getDate());
+    return compareTo(day) < 0;
+  }
+
+  /**
+   * Determines if the this Day is after (in the calendar) the
+   * specified Day.
+   *
+   * @param day The day to compare to
+   * @return  true if this instance represents an later day than the
+   *          specified Day instance, false otherwise
+   */
+  public boolean after(Day day) {
+    return compareTo(day) > 0;
+  }
+
+  public Date getDate() {
+    return date;
+  }
+
+  public Date getDate(TimeZone timeZone, Locale locale) {
+    return getDate(Calendar.getInstance(timeZone, locale));
+  }
+
+  public Date getDate(Calendar calendar) {
+    calendar.setTimeInMillis(0);
+    calendar.set(Calendar.YEAR, year);
+    calendar.set(Calendar.MONTH, month - 1);
+    calendar.set(Calendar.DAY_OF_MONTH, day);
+    calendar.set(Calendar.HOUR_OF_DAY, 0);
+    calendar.set(Calendar.MINUTE, 0);
+    return calendar.getTime();
   }
 
   @Override
@@ -201,11 +216,11 @@ public class Day extends TimePeriod implements Permalinkable {
     }
 
     private Builder(Day day) {
-      this.blog = day.getBlog();
+      this.blog = day.blog;
       this.year = day.year;
       this.month = day.month;
       this.day = day.day;
-      this.date = day.getDate();
+      this.date = day.date;
       this.numberOfBlogEntries = day.numberOfBlogEntries;
     }
 

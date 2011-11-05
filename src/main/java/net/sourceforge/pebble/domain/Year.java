@@ -41,32 +41,23 @@ import java.util.*;
  *
  * @author Simon Brown
  */
-public class Year extends TimePeriod implements Comparable {
+public class Year implements Comparable<Year> {
 
-  /**
-   * the year that this blog is for
-   */
+  private final Blog blog;
+  private final Date date;
   private final int year;
-
-  /**
-   * The first month in the list.  If this year is the first year that contains blog entries, than this might be
-   * greater than 1, otherwise it will equal 1.
-   */
   private final int firstMonth;
-
-  /**
-   * a collection of the monthly blogs that this instance is managing
-   */
   private final List<Month> months;
 
   private Year(Blog blog, Date date, int year, int firstMonth, List<Month> months) {
-    super(blog, date);
     if (firstMonth < 1 && firstMonth > 13) {
       throw new IllegalArgumentException("First month must be from 1 to 13 (13 meaning no months in this year)");
     }
     if (months.size() > 13 - firstMonth) {
       throw new IllegalArgumentException("Too many months for year " + months.size() + " when first month is " + firstMonth);
     }
+    this.blog = blog;
+    this.date = date;
     this.year = year;
     this.firstMonth = firstMonth;
     this.months = months;
@@ -99,40 +90,10 @@ public class Year extends TimePeriod implements Comparable {
 
     // Check if we have this month or not
     if (index < 0 || index >= months.size()) {
-      return Month.emptyMonth(getBlog(), year, month);
+      return Month.emptyMonth(blog, year, month);
     }
 
     return months.get(index);
-  }
-
-  /**
-   * Given a Month, this method returns the Month instance for the
-   * previous month.
-   *
-   * @param month a Month instance
-   * @return a Month instance representing the previous month
-   */
-  Month getBlogForPreviousMonth(Month month) {
-    if (month.getMonth() > 1) {
-      return this.getBlogForMonth(month.getMonth() - 1);
-    } else {
-      return getBlog().getBlogForPreviousYear(this).getBlogForMonth(12);
-    }
-  }
-
-  /**
-   * Given a Month, this method returns the Month instance for the
-   * next month.
-   *
-   * @param month a Month instance
-   * @return a Month instance representing the next month
-   */
-  Month getBlogForNextMonth(Month month) {
-    if (month.getMonth() < 12) {
-      return this.getBlogForMonth(month.getMonth() + 1);
-    } else {
-      return getBlog().getBlogForNextYear(this).getBlogForMonth(1);
-    }
   }
 
   /**
@@ -153,19 +114,26 @@ public class Year extends TimePeriod implements Comparable {
     return Lists.reverse(months);
   }
 
-  /**
-   * Compares this object with the specified object for order.  Returns a
-   * negative integer, zero, or a positive integer as this object is less
-   * than, equal to, or greater than the specified object.<p>
-   *
-   * @param o the Object to be compared.
-   * @return a negative integer, zero, or a positive integer as this object
-   *         is less than, equal to, or greater than the specified object.
-   * @throws ClassCastException if the specified object's type prevents it
-   *                            from being compared to this Object.
-   */
-  public int compareTo(Object o) {
-    return this.getYear() - ((Year) o).getYear();
+  public Date getDate() {
+    return date;
+  }
+
+  public Date getDate(TimeZone timeZone, Locale locale) {
+    return getDate(Calendar.getInstance(timeZone, locale));
+  }
+
+  private Date getDate(Calendar calendar) {
+    calendar.setTimeInMillis(0);
+    calendar.set(Calendar.YEAR, year);
+    calendar.set(Calendar.MONTH, 0);
+    calendar.set(Calendar.DAY_OF_MONTH, 1);
+    calendar.set(Calendar.HOUR_OF_DAY, 0);
+    calendar.set(Calendar.MINUTE, 0);
+    return calendar.getTime();
+  }
+
+  public int compareTo(Year other) {
+    return this.getYear() - other.getYear();
   }
 
   /**
@@ -220,7 +188,7 @@ public class Year extends TimePeriod implements Comparable {
     }
 
     private Builder(Year year) {
-      this.blog = year.getBlog();
+      this.blog = year.blog;
       this.year = year.year;
       this.months = new LinkedList<Month>(year.months);
       this.firstMonth = year.firstMonth;

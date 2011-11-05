@@ -37,6 +37,7 @@ import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.api.permalink.PermalinkProvider;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 /**
  * Support class that can be used as a basis for PermalinkProvider
@@ -80,9 +81,11 @@ public abstract class PermalinkProviderSupport implements PermalinkProvider {
    * @return a URI as a String
    */
   public String getPermalink(Month month) {
-    SimpleDateFormat format = new SimpleDateFormat("'/'yyyy'/'MM'.html'");
-    format.setTimeZone(blog.getTimeZone());
-    return format.format(month.getDate());
+    SimpleDateFormat format = new SimpleDateFormat("yyyy'/'MM'.html'");
+    Calendar cal = Calendar.getInstance();
+    cal.set(Calendar.YEAR, month.getYear());
+    cal.set(Calendar.MONTH, month.getMonth() - 1);
+    return format.format(cal.getTime());
   }
 
   /**
@@ -120,9 +123,12 @@ public abstract class PermalinkProviderSupport implements PermalinkProvider {
    * @return a URI as a String
    */
   public String getPermalink(Day day) {
-    SimpleDateFormat format = new SimpleDateFormat("'/'yyyy'/'MM'/'dd'.html'");
-    format.setTimeZone(blog.getTimeZone());
-    return format.format(day.getDate());
+    SimpleDateFormat format = new SimpleDateFormat("yyyy'/'MM'/'dd'.html'");
+    Calendar cal = Calendar.getInstance();
+    cal.set(Calendar.YEAR, day.getYear());
+    cal.set(Calendar.MONTH, day.getMonth() - 1);
+    cal.set(Calendar.DAY_OF_MONTH, day.getDay());
+    return format.format(cal.getTime());
   }
 
   /**

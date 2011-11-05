@@ -46,13 +46,6 @@ public class YearTest extends SingleBlogTestCase {
   }
 
   /**
-   * Tests that the root blog is setup correctly.
-   */
-  public void testGetRootBlog() {
-    assertEquals(blog, year.getBlog());
-  }
-
-  /**
    * Tests the getter for the year property.
    */
   public void testGetYear() {

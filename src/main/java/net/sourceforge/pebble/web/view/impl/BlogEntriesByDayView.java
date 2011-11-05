@@ -54,7 +54,7 @@ public class BlogEntriesByDayView extends BlogEntriesView {
     Day daily = (Day)getModel().get(Constants.DAILY_BLOG);
     DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.LONG, blog.getLocale());
     dateFormat.setTimeZone(blog.getTimeZone());
-    return dateFormat.format(daily.getDate());
+    return dateFormat.format(daily.getDate(blog.getCalendar()));
 
   }
 

@@ -31,6 +31,8 @@
  */
 package net.sourceforge.pebble.domain;
 
+import net.sourceforge.pebble.util.BlogSummaryUtils;
+
 import java.beans.PropertyChangeEvent;
 import java.text.DecimalFormat;
 import java.util.*;
@@ -586,19 +588,20 @@ public class BlogEntryTest extends SingleBlogTestCase {
    */
   public void testGetNextBlogEntry() throws Exception {
     Day today = blog.getBlogForToday();
-    Day oneDayAgo = today.getPreviousDay();
-    Day twoDaysAgo = today.getPreviousDay().getPreviousDay();
+    List<Year> years = daoFactory.getBlogEntryIndex().getYears(blog);
+    Day oneDayAgo = BlogSummaryUtils.getPreviousDay(years, today);
+    Day twoDaysAgo = BlogSummaryUtils.getPreviousDay(years, oneDayAgo);
 
     BlogEntry b1 = new BlogEntry(blog);
-    b1.setDate(twoDaysAgo.getDate());
+    b1.setDate(twoDaysAgo.getDate(blog.getCalendar()));
     b1.setPublished(true);
 
     BlogEntry b2 = new BlogEntry(blog);
-    b2.setDate(oneDayAgo.getDate());
+    b2.setDate(oneDayAgo.getDate(blog.getCalendar()));
     b2.setPublished(true);
 
     BlogEntry b3 = new BlogEntry(blog);
-    b3.setDate(today.getDate());
+    b3.setDate(today.getDate(blog.getCalendar()));
     b3.setPublished(true);
 
     blogService.putBlogEntry(b1);
@@ -615,19 +618,20 @@ public class BlogEntryTest extends SingleBlogTestCase {
    */
   public void testGetPreviousBlogEntry() throws Exception {
     Day today = blog.getBlogForToday();
-    Day oneDayAgo = today.getPreviousDay();
-    Day twoDaysAgo = today.getPreviousDay().getPreviousDay();
+    List<Year> years = daoFactory.getBlogEntryIndex().getYears(blog);
+    Day oneDayAgo = BlogSummaryUtils.getPreviousDay(years, today);
+    Day twoDaysAgo = BlogSummaryUtils.getPreviousDay(years, oneDayAgo);
 
     BlogEntry b1 = new BlogEntry(blog);
-    b1.setDate(twoDaysAgo.getDate());
+    b1.setDate(twoDaysAgo.getDate(blog.getCalendar()));
     b1.setPublished(true);
 
     BlogEntry b2 = new BlogEntry(blog);
-    b2.setDate(oneDayAgo.getDate());
+    b2.setDate(oneDayAgo.getDate(blog.getCalendar()));
     b2.setPublished(true);
 
     BlogEntry b3 = new BlogEntry(blog);
-    b3.setDate(today.getDate());
+    b3.setDate(today.getDate(blog.getCalendar()));
     b3.setPublished(true);
 
     blogService.putBlogEntry(b1);

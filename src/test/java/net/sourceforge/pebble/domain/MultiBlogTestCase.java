@@ -35,8 +35,6 @@ import net.sourceforge.pebble.ContentCache;
 import net.sourceforge.pebble.dao.DAOFactory;
 import net.sourceforge.pebble.dao.mock.MockDAOFactory;
 import net.sourceforge.pebble.PebbleContext;
-import net.sourceforge.pebble.index.BlogEntryIndex;
-import net.sourceforge.pebble.index.file.FileBlogEntryIndex;
 import net.sourceforge.pebble.security.MockSecurityRealm;
 
 import java.io.File;

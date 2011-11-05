@@ -35,13 +35,18 @@ import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.domain.Month;
 import net.sourceforge.pebble.domain.Day;
+import net.sourceforge.pebble.domain.Year;
+import net.sourceforge.pebble.index.BlogEntryIndex;
 import net.sourceforge.pebble.logging.Log;
+import net.sourceforge.pebble.util.BlogSummaryUtils;
 
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * Superclass for all log related actions.
@@ -49,6 +54,9 @@ import java.util.Calendar;
  * @author    Simon Brown
  */
 public abstract class AbstractLogAction extends SecureAction {
+
+  @Inject
+  protected BlogEntryIndex blogEntryIndex;
 
   protected Log getLog(HttpServletRequest request, HttpServletResponse response) throws ServletException {
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
@@ -152,14 +160,14 @@ public abstract class AbstractLogAction extends SecureAction {
 
   private void registerObjectsForNavigation(Blog blog, Month month) {
     Month firstMonth = blog.getBlogForFirstMonth();
-    Month previousMonth = month.getPreviousMonth();
-    Month nextMonth = month.getNextMonth();
+    Month previousMonth = BlogSummaryUtils.getPreviousMonth(getYears(blog), month);
+    Month nextMonth = BlogSummaryUtils.getNextMonth(getYears(blog), month);
 
     if (!previousMonth.before(firstMonth)) {
       getModel().put("previousMonth", previousMonth);
     }
 
-    if (!nextMonth.getDate().after(blog.getCalendar().getTime()) || nextMonth.before(firstMonth)) {
+    if (!nextMonth.after(blog.getBlogForThisMonth()) || nextMonth.before(firstMonth)) {
       getModel().put("nextMonth", nextMonth);
     }
     getModel().put("displayMode", "logSummaryForMonth");
@@ -167,17 +175,21 @@ public abstract class AbstractLogAction extends SecureAction {
 
   private void registerObjectsForNavigation(Blog blog, Day day) {
     Day firstDay = blog.getBlogForFirstMonth().getBlogForFirstDay();
-    Day previousDay = day.getPreviousDay();
-    Day nextDay = day.getNextDay();
+    Day previousDay = BlogSummaryUtils.getPreviousDay(getYears(blog), day);
+    Day nextDay = BlogSummaryUtils.getNextDay(getYears(blog), day);
 
     if (!previousDay.before(firstDay)) {
       getModel().put("previousDay", previousDay);
     }
 
-    if (!nextDay.getDate().after(blog.getCalendar().getTime()) || nextDay.before(firstDay)) {
+    if (!nextDay.after(blog.getBlogForToday()) || nextDay.before(firstDay)) {
       getModel().put("nextDay", nextDay);
     }
     getModel().put("displayMode", "logSummaryForDay");
+  }
+
+  protected List<Year> getYears(Blog blog) {
+    return blogEntryIndex.getYears(blog);
   }
 
   /**

@@ -1,9 +1,6 @@
 package net.sourceforge.pebble.index;
 
-import net.sourceforge.pebble.domain.Blog;
-import net.sourceforge.pebble.domain.BlogEntry;
-import net.sourceforge.pebble.domain.Day;
-import net.sourceforge.pebble.domain.Year;
+import net.sourceforge.pebble.domain.*;
 
 import java.util.Collection;
 import java.util.List;
@@ -153,4 +150,22 @@ public interface BlogEntryIndex {
    * @return The entries for that day
    */
   List<String> getBlogEntriesForMonth(Blog blog, int year, int month);
+
+  /**
+   * Get the summary for the previous month
+   *
+   * @param blog The blog to get the summary for
+   * @param month The month
+   * @return The summary for the previous month
+   */
+  Month getBlogForPreviousMonth(Blog blog, int year, int month);
+
+  /**
+   * Get the summary for the next month
+   *
+   * @param blog The blog to get the summary for
+   * @param month The month
+   * @return The summary for the next month
+   */
+  Month getBlogForNextMonth(Blog blog, int year, int month);
 }

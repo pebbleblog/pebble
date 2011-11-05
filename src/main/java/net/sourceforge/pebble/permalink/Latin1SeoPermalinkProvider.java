@@ -38,10 +38,7 @@ import net.sourceforge.pebble.domain.*;
 
 import javax.inject.Inject;
 import java.text.SimpleDateFormat;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /**
  * Generates permalinks based upon the blog entry title. This implementation
@@ -183,9 +180,11 @@ public class Latin1SeoPermalinkProvider implements PermalinkProvider {
    * @return a URI as a String
    */
   public String getPermalink(Month month) {
-    SimpleDateFormat format = new SimpleDateFormat("'/'yyyy'/'MM");
-    format.setTimeZone(blog.getTimeZone());
-    return format.format(month.getDate());
+    SimpleDateFormat format = new SimpleDateFormat("yyyy'/'MM'.html'");
+    Calendar cal = Calendar.getInstance();
+    cal.set(Calendar.YEAR, month.getYear());
+    cal.set(Calendar.MONTH, month.getMonth() - 1);
+    return format.format(cal.getTime());
   }
 
   /**
@@ -223,9 +222,12 @@ public class Latin1SeoPermalinkProvider implements PermalinkProvider {
    * @return a URI as a String
    */
   public String getPermalink(Day day) {
-    SimpleDateFormat format = new SimpleDateFormat("'/'yyyy'/'MM'/'dd");
-    format.setTimeZone(blog.getTimeZone());
-    return format.format(day.getDate());
+    SimpleDateFormat format = new SimpleDateFormat("yyyy'/'MM'/'dd'.html'");
+    Calendar cal = Calendar.getInstance();
+    cal.set(Calendar.YEAR, day.getYear());
+    cal.set(Calendar.MONTH, day.getMonth() - 1);
+    cal.set(Calendar.DAY_OF_MONTH, day.getDay());
+    return format.format(cal.getTime());
   }
 
   /**

@@ -32,6 +32,8 @@
 package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
+import net.sourceforge.pebble.index.BlogEntryIndex;
+import net.sourceforge.pebble.util.BlogSummaryUtils;
 import net.sourceforge.pebble.util.SecurityUtils;
 import net.sourceforge.pebble.domain.*;
 import net.sourceforge.pebble.web.view.View;
@@ -55,6 +57,9 @@ public class ViewMonthAction extends Action {
 
   @Inject
   private BlogService blogService;
+
+  @Inject
+  private BlogEntryIndex blogEntryIndex;
 
   /**
    * Peforms the processing associated with this action.
@@ -87,15 +92,16 @@ public class ViewMonthAction extends Action {
     getModel().put(Constants.MONTHLY_BLOG, monthly);
 
     // put the previous and next months in the model for navigation purposes
+    List<Year> years = blogEntryIndex.getYears(blog);
     Month firstMonth = blog.getBlogForFirstMonth();
-    Month previousMonth = monthly.getPreviousMonth();
-    Month nextMonth = monthly.getNextMonth();
+    Month previousMonth = BlogSummaryUtils.getPreviousMonth(years, monthly);
+    Month nextMonth = BlogSummaryUtils.getNextMonth(years, monthly);
 
     if (!previousMonth.before(firstMonth)) {
       getModel().put("previousMonth", previousMonth);
     }
 
-    if (!nextMonth.getDate().after(blog.getCalendar().getTime()) || nextMonth.before(firstMonth)) {
+    if (!nextMonth.after(blog.getBlogForThisMonth()) || nextMonth.before(firstMonth)) {
       getModel().put("nextMonth", nextMonth);
     }
 

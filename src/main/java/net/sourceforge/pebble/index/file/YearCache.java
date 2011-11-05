@@ -98,7 +98,7 @@ public class YearCache implements Comparable<YearCache> {
       // First insert needed months
       while (firstMonth > month.getMonth().getMonth()) {
         firstMonth--;
-        months.addFirst(MonthCache.builder(Month.emptyMonth(year.getBlog(), year.getYear(), firstMonth)).build());
+        months.addFirst(MonthCache.builder(Month.emptyMonth(month.getMonth().getBlog(), year.getYear(), firstMonth)).build());
       }
       months.set(month.getMonth().getMonth() - firstMonth, month);
       return this;

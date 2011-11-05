@@ -37,6 +37,7 @@ import com.google.common.collect.Maps;
 import net.sourceforge.pebble.comparator.ReverseBlogEntryIdComparator;
 import net.sourceforge.pebble.domain.*;
 import net.sourceforge.pebble.index.BlogEntryIndex;
+import net.sourceforge.pebble.util.BlogSummaryUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -119,6 +120,22 @@ public class FileBlogEntryIndex implements BlogEntryIndex {
 
   public List<String> getBlogEntriesForMonth(Blog blog, int year, int month) {
     return cache.get(blog.getRoot()).getEntriesForMonth(year, month);
+  }
+
+  public Month getBlogForPreviousMonth(Blog blog, int year, int month) {
+    if (month <= 1) {
+      return cache.get(blog.getRoot()).getBlogForYear(year - 1).getBlogForMonth(12);
+    } else {
+      return cache.get(blog.getRoot()).getBlogForYear(year).getBlogForMonth(month - 1);
+    }
+  }
+
+  public Month getBlogForNextMonth(Blog blog, int year, int month) {
+    if (month >= 12) {
+      return cache.get(blog.getRoot()).getBlogForYear(year + 1).getBlogForMonth(1);
+    } else {
+      return cache.get(blog.getRoot()).getBlogForYear(year).getBlogForMonth(month + 1);
+    }
   }
 
   private class CachedIndex {
@@ -442,12 +459,7 @@ public class FileBlogEntryIndex implements BlogEntryIndex {
     }
 
     public Year getBlogForYear(int yearNo) {
-      for (Year year : readYears) {
-        if (yearNo == year.getYear()) {
-          return year;
-        }
-      }
-      return Year.emptyYear(blog, yearNo);
+      return BlogSummaryUtils.getYear(blog, readYears, yearNo);
     }
 
     public List<Year> getYears() {
@@ -480,14 +492,7 @@ public class FileBlogEntryIndex implements BlogEntryIndex {
 
     private Year getYear(Calendar cal) {
       int year = cal.get(Calendar.YEAR);
-
-      for (Year yearObj : years) {
-        if (yearObj.getYear() == year) {
-          return yearObj;
-        }
-      }
-
-      return Year.emptyYear(blog, year);
+      return BlogSummaryUtils.getYear(blog, years, year);
     }
 
     private YearCache getYearCache(Year year) {

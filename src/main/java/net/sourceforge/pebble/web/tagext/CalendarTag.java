@@ -47,11 +47,13 @@ import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.TagSupport;
 
 import net.sourceforge.pebble.Constants;
+import net.sourceforge.pebble.api.permalink.PermalinkProvider;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.domain.Day;
 import net.sourceforge.pebble.domain.Month;
+import net.sourceforge.pebble.domain.Year;
+import net.sourceforge.pebble.util.BlogSummaryUtils;
 import net.sourceforge.pebble.util.I18n;
-import net.sourceforge.pebble.util.UrlRewriter;
 
 /**
  * A custom tag that outputs a calendar control.
@@ -71,16 +73,20 @@ public class CalendarTag extends TagSupport {
 
     HttpServletRequest request = (HttpServletRequest)pageContext.getRequest();
     Blog blog = (Blog)request.getAttribute(Constants.BLOG_KEY);
+    List<Year> years = (List<Year>) request.getAttribute(Constants.YEARS_KEY);
     Month month = (Month)request.getAttribute(Constants.MONTHLY_BLOG);
     Day today = blog.getBlogForToday();
     Calendar now = blog.getCalendar();
+    PermalinkProvider permalinkProvider = blog.getPermalinkProvider();
 
     if (month == null) {
       month = blog.getBlogForMonth(today.getYear(), today.getMonth());
     }
 
     Calendar firstDayOfMonth = blog.getCalendar();
-    firstDayOfMonth.setTime(month.getBlogForDay(1).getDate());
+    firstDayOfMonth.set(Calendar.YEAR, month.getYear());
+    firstDayOfMonth.set(Calendar.MONTH, month.getMonth() - 1);
+    firstDayOfMonth.set(Calendar.DAY_OF_MONTH, 1);
 
     SimpleDateFormat monthAndYearFormatter = new SimpleDateFormat("MMMM yyyy", blog.getLocale());
     monthAndYearFormatter.setTimeZone(blog.getTimeZone());
@@ -103,7 +109,7 @@ public class CalendarTag extends TagSupport {
         out.write("</b>");
       } else {
         out.write("<b><a href=\"");
-        out.write(UrlRewriter.doRewrite(month.getPermalink()));
+        out.write(permalinkProvider.getPermalink(month));
         out.write("\">");
         out.write(monthAndYearFormatter.format(month.getDate()));
         out.write("</a></b>");
@@ -150,14 +156,14 @@ public class CalendarTag extends TagSupport {
           now.get(Calendar.DAY_OF_MONTH) == cal.get(Calendar.DAY_OF_MONTH)) {
           out.write("<td class=\"calendarToday\">");
           if (daily.hasBlogEntries()) {
-            out.write("&nbsp;<a href=\"" + UrlRewriter.doRewrite(daily.getPermalink()) + "\">" + formattedNumber + "</a>&nbsp;");
+            out.write("&nbsp;<a href=\"" + permalinkProvider.getPermalink(daily) + "\">" + formattedNumber + "</a>&nbsp;");
           } else {
             out.write("&nbsp;" + formattedNumber + "&nbsp;");
           }
         } else {
           if (daily.hasBlogEntries()) {
             out.write("<td class=\"calendarDayWithEntries\">");
-            out.write("&nbsp;<a href=\"" + UrlRewriter.doRewrite(daily.getPermalink()) + "\">" + formattedNumber + "</a>&nbsp;");
+            out.write("&nbsp;<a href=\"" + permalinkProvider.getPermalink(daily) + "\">" + formattedNumber + "</a>&nbsp;");
           } else {
             out.write("<td class=\"calendarDay\">");
             out.write("&nbsp;" + formattedNumber + "&nbsp;");
@@ -173,8 +179,8 @@ public class CalendarTag extends TagSupport {
       }
 
       // write out the footer of the calendar
-      Month previous = month.getPreviousMonth();
-      Month next = month.getNextMonth();
+      Month previous = BlogSummaryUtils.getPreviousMonth(years, month);
+      Month next = BlogSummaryUtils.getNextMonth(years, month);
 
       out.write("<tr>");
       out.write("<td colspan=\"7\" align=\"center\">");
@@ -183,19 +189,19 @@ public class CalendarTag extends TagSupport {
       if (previous.before(firstMonth)) {
         out.write(monthFormatter.format(previous.getDate()));
       } else {
-        out.write("<a href=\"" + UrlRewriter.doRewrite(previous.getPermalink()) + "\">" + monthFormatter.format(previous.getDate()) + "</a>");
+        out.write("<a href=\"" + permalinkProvider.getPermalink(month) + "\">" + monthFormatter.format(previous.getDate()) + "</a>");
       }
 
       String todayText = I18n.getMessage(blog, "common.today");
       out.write("&nbsp; | &nbsp;");
-      out.write("<a href=\"" + UrlRewriter.doRewrite(today.getPermalink()) + "\">" + todayText + "</a>");
+      out.write("<a href=\"" + permalinkProvider.getPermalink(today) + "\">" + todayText + "</a>");
       out.write("&nbsp; | &nbsp;");
 
       // only display the next month date if it's not in the future
-      if (next.getDate().after(now.getTime()) || next.before(firstMonth)) {
+      if (next.after(blog.getBlogForThisMonth()) || next.before(firstMonth)) {
         out.write(monthFormatter.format(next.getDate()));
       } else {
-        out.write("<a href=\"" + UrlRewriter.doRewrite(next.getPermalink()) + "\">" + monthFormatter.format(next.getDate()) + "</a>");
+        out.write("<a href=\"" + permalinkProvider.getPermalink(month) + "\">" + monthFormatter.format(next.getDate()) + "</a>");
       }
       out.write("</td>");
       out.write("</tr>");
@@ -225,9 +231,9 @@ public class CalendarTag extends TagSupport {
   private List getDatesForCompleteWeeks(Blog blog, Month month) {
     List dates = new ArrayList();
     Calendar start = blog.getCalendar();
-    start.setTime(month.getBlogForDay(1).getDate());
+    start.setTime(month.getBlogForDay(1).getDate(blog.getCalendar()));
     Calendar end = blog.getCalendar();
-    end.setTime(month.getBlogForDay(month.getLastDayInMonth()).getDate());
+    end.setTime(month.getBlogForDay(month.getLastDayInMonth()).getDate(blog.getCalendar()));
     Calendar cal;
 
     // put all days in month into a list
