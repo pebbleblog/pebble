@@ -88,7 +88,7 @@ public abstract class AbstractLogAction extends SecureAction {
       log = blog.getLogger().getLog(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH)+1);
       SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM yyyy", blog.getLocale());
       dateFormat.setTimeZone(blog.getTimeZone());
-      registerObjectsForNavigation(blog, archive, archive.getYear(year).getBlogForMonth(month));
+      registerObjectsForNavigation(blog, archive, archive.getYear(year).getMonth(month));
       logPeriod = dateFormat.format(cal.getTime());
     } else {
       // get the log for today
@@ -139,7 +139,7 @@ public abstract class AbstractLogAction extends SecureAction {
       log = blog.getLogger().getLogFile(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH)+1);
       SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM yyyy", blog.getLocale());
       dateFormat.setTimeZone(blog.getTimeZone());
-      registerObjectsForNavigation(blog, archive, archive.getYear(year).getBlogForMonth(month));
+      registerObjectsForNavigation(blog, archive, archive.getYear(year).getMonth(month));
       logPeriod = dateFormat.format(cal.getTime());
     } else {
       // get the log for today

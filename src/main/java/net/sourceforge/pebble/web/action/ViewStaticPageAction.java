@@ -81,10 +81,8 @@ public class ViewStaticPageAction extends Action {
       // requesting URL was wrong
       return new NotFoundView();
     } else {
-      SimpleDate now = blog.getToday();
       getModel().put(Constants.STATIC_PAGE_KEY, staticPage);
-      getModel().put(Constants.MONTHLY_BLOG, blogEntryIndex.getBlogForYear(blog, now.getYear())
-          .getBlogForMonth(now.getMonth()));
+      getModel().put(Constants.MONTHLY_BLOG, blogEntryIndex.getArchive(blog).getThisMonth());
       getModel().put("displayMode", "detail");
 
       return new StaticPageView();

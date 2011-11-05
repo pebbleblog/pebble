@@ -62,9 +62,9 @@ public class Archive {
    */
   public Month getPreviousMonth(Month month) {
     if (month.getMonth() <= 1) {
-      return getYear(month.getYear() - 1).getBlogForMonth(12);
+      return getYear(month.getYear() - 1).getMonth(12);
     } else {
-      return getYear(month.getYear()).getBlogForMonth(month.getMonth() - 1);
+      return getYear(month.getYear()).getMonth(month.getMonth() - 1);
     }
   }
 
@@ -78,7 +78,7 @@ public class Archive {
     if (month.getMonth() >= 12) {
       return getYear(month.getYear() + 1).getBlogForFirstMonth();
     } else {
-      return getYear(month.getYear()).getBlogForMonth(month.getMonth() + 1);
+      return getYear(month.getYear()).getMonth(month.getMonth() + 1);
     }
   }
 
@@ -89,11 +89,11 @@ public class Archive {
    * @return The day before that
    */
   public Day getPreviousDay(Day day) {
-    Month month = getYear(day.getYear()).getBlogForMonth(day.getMonth());
+    Month month = getYear(day.getYear()).getMonth(day.getMonth());
     if (day.getDay() <= 1) {
       return getPreviousMonth(month).getBlogForLastDay();
     } else {
-      return month.getBlogForDay(day.getDay() - 1);
+      return month.getDay(day.getDay() - 1);
     }
   }
 
@@ -104,11 +104,11 @@ public class Archive {
    * @return The day after that
    */
   public Day getNextDay(Day day) {
-    Month month = getYear(day.getYear()).getBlogForMonth(day.getMonth());
+    Month month = getYear(day.getYear()).getMonth(day.getMonth());
     if (day.getDay() >= month.getLastDayInMonth()) {
       return getNextMonth(month).getBlogForFirstDay();
     } else {
-      return month.getBlogForDay(day.getDay() + 1);
+      return month.getDay(day.getDay() + 1);
     }
   }
 
@@ -119,7 +119,7 @@ public class Archive {
    * @return The day for that date
    */
   public Day getDay(SimpleDate date) {
-    return getYear(date.getYear()).getBlogForMonth(date.getMonth()).getBlogForDay(date.getDay());
+    return getYear(date.getYear()).getMonth(date.getMonth()).getDay(date.getDay());
   }
 
   /**
@@ -131,7 +131,7 @@ public class Archive {
    * @return The day for that date
    */
   public Day getDay(int year, int month, int day) {
-    return getYear(year).getBlogForMonth(month).getBlogForDay(day);
+    return getYear(year).getMonth(month).getDay(day);
   }
 
   /**
@@ -150,7 +150,7 @@ public class Archive {
    */
   public Month getThisMonth() {
     SimpleDate now = blog.getToday();
-    return getYear(now.getYear()).getBlogForMonth(now.getMonth());
+    return getYear(now.getYear()).getMonth(now.getMonth());
   }
 
   /**

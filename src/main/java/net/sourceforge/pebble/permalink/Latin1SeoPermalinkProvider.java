@@ -214,7 +214,7 @@ public class Latin1SeoPermalinkProvider implements PermalinkProvider {
     String year = uri.substring(1, 5);
     String month = uri.substring(6, 8);
 
-    return blogEntryIndex.getBlogForYear(getBlog(), Integer.parseInt(year)).getBlogForMonth(Integer.parseInt(month));
+    return blogEntryIndex.getBlogForYear(getBlog(), Integer.parseInt(year)).getMonth(Integer.parseInt(month));
   }
 
   /**
@@ -259,8 +259,8 @@ public class Latin1SeoPermalinkProvider implements PermalinkProvider {
     String day = uri.substring(9, 11);
 
     return blogEntryIndex.getBlogForYear(blog, Integer.parseInt(year))
-        .getBlogForMonth(Integer.parseInt(month))
-        .getBlogForDay(Integer.parseInt(day));
+        .getMonth(Integer.parseInt(month))
+        .getDay(Integer.parseInt(day));
   }
 
 

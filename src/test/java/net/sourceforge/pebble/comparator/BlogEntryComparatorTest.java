@@ -46,7 +46,7 @@ public class BlogEntryComparatorTest extends SingleBlogTestCase {
 
   public void testCompare() {
     BlogEntryComparator comp = new BlogEntryComparator();
-    Day day = daoFactory.getBlogEntryIndex().getBlogForYear(blog, 2003).getBlogForMonth(4).getBlogForDay(1);
+    Day day = daoFactory.getBlogEntryIndex().getBlogForYear(blog, 2003).getMonth(4).getDay(1);
 
     Calendar cal1 = blog.getCalendar();
     cal1.set(Calendar.HOUR_OF_DAY, 9);

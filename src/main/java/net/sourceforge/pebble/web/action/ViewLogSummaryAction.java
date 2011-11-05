@@ -45,7 +45,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Locale;
 
 /**
@@ -71,7 +70,6 @@ public class ViewLogSummaryAction extends SecureAction {
     String yearAsStriing = request.getParameter("year");
     String monthAsString = request.getParameter("month");
 
-    SimpleDate now = blog.getToday();
     Calendar cal = blog.getCalendar();
     LogSummary logSummary;
     View view;
@@ -84,7 +82,7 @@ public class ViewLogSummaryAction extends SecureAction {
       cal.set(Calendar.MONTH, month);
       logSummary = blog.getLogger().getLogSummary(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH)+1);
       view = new LogSummaryByMonthView();
-      registerObjectsForNavigation(blog, blogEntryIndex.getBlogForYear(blog, year).getBlogForMonth(month + 1));
+      registerObjectsForNavigation(blog, blogEntryIndex.getBlogForYear(blog, year).getMonth(month + 1));
     } else if (yearAsStriing != null && yearAsStriing.length() > 0) {
       cal.set(Calendar.YEAR, Integer.parseInt(yearAsStriing));
       logSummary = blog.getLogger().getLogSummary(cal.get(Calendar.YEAR));
@@ -93,8 +91,7 @@ public class ViewLogSummaryAction extends SecureAction {
       // get the log for this monthAsString
       logSummary = blog.getLogger().getLogSummary(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH)+1);
       view = new LogSummaryByMonthView();
-      registerObjectsForNavigation(blog, blogEntryIndex.getBlogForYear(blog, now.getYear())
-          .getBlogForMonth(now.getMonth()));
+      registerObjectsForNavigation(blog, blogEntryIndex.getArchive(blog).getThisMonth());
     }
 
     SimpleDateFormat yearFormatter = new SimpleDateFormat("yyyy", Locale.ENGLISH);

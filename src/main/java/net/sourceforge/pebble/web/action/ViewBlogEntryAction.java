@@ -89,7 +89,7 @@ public class ViewBlogEntryAction extends AbstractCommentAction {
       getModel().put(Constants.BLOG_ENTRY_KEY, blogEntry);
       SimpleDate date = new SimpleDate(blog.getTimeZone(), blog.getLocale(), blogEntry.getDate());
       getModel().put(Constants.MONTHLY_BLOG, blogEntryIndex.getBlogForYear(blog, date.getYear())
-          .getBlogForMonth(date.getMonth()));
+          .getMonth(date.getMonth()));
       getModel().put("displayMode", "detail");
 
 

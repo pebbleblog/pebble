@@ -58,7 +58,7 @@ public class ViewMonthActionTest extends SingleBlogActionTestCase {
     View view = action.process(request, response);
 
     Model model = action.getModel();
-    assertEquals(daoFactory.getBlogEntryIndex().getBlogForYear(blog, 2006).getBlogForMonth(5),
+    assertEquals(daoFactory.getBlogEntryIndex().getBlogForYear(blog, 2006).getMonth(5),
         model.get(Constants.MONTHLY_BLOG));
     assertNotNull(model.get(Constants.BLOG_ENTRIES));
     assertTrue(view instanceof BlogEntriesByMonthView);

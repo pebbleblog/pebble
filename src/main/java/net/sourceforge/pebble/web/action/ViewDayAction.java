@@ -42,7 +42,6 @@ import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -89,8 +88,8 @@ public class ViewDayAction extends Action {
       throw new ServletException(e);
     }
 
-    Month monthly = blogEntryIndex.getBlogForYear(blog, simpleDate.getYear()).getBlogForMonth(simpleDate.getMonth());
-    Day daily = monthly.getBlogForDay(simpleDate.getDay());
+    Month monthly = blogEntryIndex.getBlogForYear(blog, simpleDate.getYear()).getMonth(simpleDate.getMonth());
+    Day daily = monthly.getDay(simpleDate.getDay());
 
     getModel().put(Constants.MONTHLY_BLOG, monthly);
     getModel().put(Constants.DAILY_BLOG, daily);

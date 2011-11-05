@@ -171,8 +171,8 @@ public class FileBlogEntryIndex implements BlogEntryIndex {
     public void performOperation(Date date, IndexOperation operation) {
       Calendar cal = getCalendar(date);
       Year year = getYear(cal);
-      Month month = year.getBlogForMonth(cal.get(Calendar.MONTH) + 1);
-      Day day = month.getBlogForDay(cal.get(Calendar.DAY_OF_MONTH));
+      Month month = year.getMonth(cal.get(Calendar.MONTH) + 1);
+      Day day = month.getDay(cal.get(Calendar.DAY_OF_MONTH));
       YearCache yearCache = getYearCache(year);
       MonthCache monthCache = getMonthCache(yearCache, month);
       DayCache dayCache = getDayCache(monthCache, day);

@@ -56,8 +56,7 @@ public class ViewHomePageActionTest extends SingleBlogActionTestCase {
     View view = action.process(request, response);
 
     Model model = action.getModel();
-    SimpleDate now = blog.getToday();
-    assertEquals(daoFactory.getBlogEntryIndex().getBlogForYear(blog, now.getYear()).getBlogForMonth(now.getMonth()),
+    assertEquals(daoFactory.getBlogEntryIndex().getArchive(blog).getThisMonth(),
         model.get(Constants.MONTHLY_BLOG));
     assertEquals(blog.getRecentBlogEntries(), model.get(Constants.BLOG_ENTRIES));
     assertTrue(view instanceof BlogEntriesView);

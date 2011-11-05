@@ -92,18 +92,18 @@ public class MonthTest extends SingleBlogTestCase {
    * Tests that we can get the day for a specific day.
    */
   public void testGetBlogForDay() {
-    Day day = month.getBlogForDay(1);
+    Day day = month.getDay(1);
     assertNotNull(day);
     assertEquals(1, day.getDay());
 
     try {
-      month.getBlogForDay(-1);
+      month.getDay(-1);
       fail();
     } catch (IllegalArgumentException iae) {
     }
 
     try {
-      month.getBlogForDay(0);
+      month.getDay(0);
       fail();
     } catch (IllegalArgumentException iae) {
     }
@@ -111,10 +111,10 @@ public class MonthTest extends SingleBlogTestCase {
     Calendar cal = blog.getCalendar();
     cal.setTime(month.getDate());
     int maxDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-    month.getBlogForDay(maxDay - 1);
-    month.getBlogForDay(maxDay);
+    month.getDay(maxDay - 1);
+    month.getDay(maxDay);
     try {
-      month.getBlogForDay(maxDay + 1);
+      month.getDay(maxDay + 1);
       fail();
     } catch (IllegalArgumentException iae) {
     }
@@ -125,7 +125,7 @@ public class MonthTest extends SingleBlogTestCase {
    * Tests the getter for the date property.
    */
   public void testGetDate() {
-    month = daoFactory.getBlogEntryIndex().getBlogForYear(blog, 2003).getBlogForMonth(4);
+    month = daoFactory.getBlogEntryIndex().getBlogForYear(blog, 2003).getMonth(4);
     Date date = month.getDate();
     Calendar cal = blog.getCalendar();
     cal.setTime(date);
@@ -143,11 +143,11 @@ public class MonthTest extends SingleBlogTestCase {
    */
   public void testGetPermalink() {
     String permalink = "2003/07.html";
-    month = daoFactory.getBlogEntryIndex().getBlogForYear(blog, 2003).getBlogForMonth(7);
+    month = daoFactory.getBlogEntryIndex().getBlogForYear(blog, 2003).getMonth(7);
     assertEquals(permalink, blog.getPermalinkProvider().getPermalink(month));
 
     permalink = "2003/12.html";
-    month = daoFactory.getBlogEntryIndex().getBlogForYear(blog, 2003).getBlogForMonth(12);
+    month = daoFactory.getBlogEntryIndex().getBlogForYear(blog, 2003).getMonth(12);
     assertEquals(permalink, blog.getPermalinkProvider().getPermalink(month));
   }
 

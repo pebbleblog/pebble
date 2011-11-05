@@ -72,12 +72,11 @@ public class ViewMonthAction extends Action {
     String month = request.getParameter("month");
 
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
-    SimpleDate now = blog.getToday();
     Archive archive = blogEntryIndex.getArchive(blog);
     Month monthly;
     if (year != null && year.length() > 0 &&
         month != null && month.length() > 0) {
-      monthly = archive.getYear(Integer.parseInt(year)).getBlogForMonth(Integer.parseInt(month));
+      monthly = archive.getYear(Integer.parseInt(year)).getMonth(Integer.parseInt(month));
     } else {
       return new NotFoundView();
     }
@@ -101,7 +100,7 @@ public class ViewMonthAction extends Action {
       getModel().put("previousMonth", previousMonth);
     }
 
-    if (!nextMonth.after(blogEntryIndex.getBlogForYear(blog, now.getYear()).getBlogForMonth(now.getMonth()))
+    if (!nextMonth.after(archive.getThisMonth())
         || nextMonth.before(firstMonth)) {
       getModel().put("nextMonth", nextMonth);
     }

@@ -37,7 +37,6 @@ import javax.inject.Inject;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -74,7 +73,7 @@ public class TitlePermalinkProvider extends PermalinkProviderSupport {
 
       SimpleDate date = new SimpleDate(getBlog().getTimeZone(), getBlog().getLocale(), blogEntry.getDate());
       Day day = blogEntryIndex.getBlogForYear(getBlog(), date.getYear())
-          .getBlogForMonth(date.getMonth()).getBlogForDay(date.getDay());
+          .getMonth(date.getMonth()).getDay(date.getDay());
       List<String> entries = getBlog().getBlogEntryIndex().getBlogEntriesForDay(getBlog(), day.getYear(), day.getMonth(), day.getDay());
       int count = 0;
       for (int i = entries.size()-1; i > entries.indexOf(blogEntry.getId()); i--) {

@@ -129,7 +129,7 @@ public class Month implements Comparable<Month> {
    * @param day   the day as an int (i.e. 1 to 31)
    * @return  the corresponding Day instance
    */
-  public Day getBlogForDay(int day) {
+  public Day getDay(int day) {
     // some bounds checking
     if (day < 1 || day > lastDayInMonth) {
       throw new IllegalArgumentException("Invalid day of " + day + " specified, should be between 1 and " + lastDayInMonth);
@@ -150,7 +150,7 @@ public class Month implements Comparable<Month> {
    * @return  the Day instance representing the first day in the month
    */
   public Day getBlogForFirstDay() {
-    return getBlogForDay(1);
+    return getDay(1);
   }
 
   /**
@@ -159,7 +159,7 @@ public class Month implements Comparable<Month> {
    * @return  the Day instance representing the last day in the month
    */
   public Day getBlogForLastDay() {
-    return getBlogForDay(lastDayInMonth);
+    return getDay(lastDayInMonth);
   }
 
   /**

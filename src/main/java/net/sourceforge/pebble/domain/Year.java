@@ -79,7 +79,7 @@ public class Year implements Comparable<Year> {
    * @param month the month as an int
    * @return a Month instance
    */
-  public Month getBlogForMonth(int month) {
+  public Month getMonth(int month) {
     // some bounds checking
     if (month < 1 || month > 12) {
       throw new IllegalArgumentException("Invalid month of " + month + " specified, should be between 1 and 12");
@@ -102,7 +102,7 @@ public class Year implements Comparable<Year> {
    * @return a Month instance
    */
   public Month getBlogForFirstMonth() {
-    return getBlogForMonth(1);
+    return getMonth(1);
   }
 
   /**

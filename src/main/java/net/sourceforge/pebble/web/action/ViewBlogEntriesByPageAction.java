@@ -95,8 +95,7 @@ public class ViewBlogEntriesByPageAction extends Action {
         publishedOnly = false;
       }
 
-      SimpleDate now = blog.getToday();
-      getModel().put(Constants.MONTHLY_BLOG, blogEntryIndex.getBlogForYear(blog, now.getYear()).getBlogForMonth(now.getMonth()));
+      getModel().put(Constants.MONTHLY_BLOG, blogEntryIndex.getArchive(blog).getThisMonth());
       getModel().put("displayMode", "page");
       getModel().put("page", page);
 

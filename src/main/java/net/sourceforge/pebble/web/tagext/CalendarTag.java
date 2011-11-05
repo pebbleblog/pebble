@@ -72,8 +72,8 @@ public class CalendarTag extends TagSupport {
     Month month = (Month)request.getAttribute(Constants.MONTHLY_BLOG);
     SimpleDate now = blog.getToday();
     Year thisYear = archive.getThisYear();
-    Month thisMonth = thisYear.getBlogForMonth(now.getMonth());
-    Day today = thisMonth.getBlogForDay(now.getDay());
+    Month thisMonth = thisYear.getMonth(now.getMonth());
+    Day today = thisMonth.getDay(now.getDay());
     PermalinkProvider permalinkProvider = blog.getPermalinkProvider();
 
     if (month == null) {
@@ -189,7 +189,7 @@ public class CalendarTag extends TagSupport {
       out.write("&nbsp; | &nbsp;");
 
       // only display the next month date if it's not in the future
-      if (next.after(thisYear.getBlogForMonth(now.getMonth())) || next.before(firstMonth)) {
+      if (next.after(thisYear.getMonth(now.getMonth())) || next.before(firstMonth)) {
         out.write(monthFormatter.format(next.getDate()));
       } else {
         out.write("<a href=\"" + permalinkProvider.getPermalink(next) + "\">" + monthFormatter.format(next.getDate()) + "</a>");
@@ -222,9 +222,9 @@ public class CalendarTag extends TagSupport {
   private List<SimpleDate> getDatesForCompleteWeeks(Blog blog, Month month) {
     List<SimpleDate> dates = new ArrayList<SimpleDate>();
     Calendar start = blog.getCalendar();
-    start.setTime(month.getBlogForDay(1).getDate(blog.getCalendar()));
+    start.setTime(month.getDay(1).getDate(blog.getCalendar()));
     Calendar end = blog.getCalendar();
-    end.setTime(month.getBlogForDay(month.getLastDayInMonth()).getDate(blog.getCalendar()));
+    end.setTime(month.getDay(month.getLastDayInMonth()).getDate(blog.getCalendar()));
     Calendar cal;
 
     // put all days in month into a list

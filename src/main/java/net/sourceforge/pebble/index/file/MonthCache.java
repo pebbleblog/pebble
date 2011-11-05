@@ -34,7 +34,7 @@ public class MonthCache {
     // Calculate index
     int index = day - firstDay;
     if (index < 0 || index >= days.size()) {
-      return DayCache.builder(month.getBlogForDay(day)).build();
+      return DayCache.builder(month.getDay(day)).build();
     }
 
     return days.get(index);

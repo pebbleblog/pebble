@@ -35,7 +35,7 @@ public class YearCache implements Comparable<YearCache> {
 
     // Check if we have this month or not
     if (index < 0 || index >= months.size()) {
-      return MonthCache.builder(year.getBlogForMonth(month)).build();
+      return MonthCache.builder(year.getMonth(month)).build();
     }
 
     return months.get(index);
