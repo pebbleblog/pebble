@@ -36,6 +36,8 @@ import net.sourceforge.pebble.dao.DAOFactory;
 import net.sourceforge.pebble.dao.mock.MockDAOFactory;
 import net.sourceforge.pebble.PebbleContext;
 import net.sourceforge.pebble.security.MockSecurityRealm;
+import net.sourceforge.pebble.service.MultiBlogService;
+import net.sourceforge.pebble.service.MultiBlogServiceImpl;
 
 import java.io.File;
 
@@ -51,6 +53,7 @@ public abstract class MultiBlogTestCase extends PebbleTestCase {
   protected BlogService blogService;
   protected BlogManager blogManager;
   protected ContentCache contentCache;
+  protected MultiBlogService multiBlogService;
 
   protected void setUp() throws Exception {
     super.setUp();
@@ -65,6 +68,9 @@ public abstract class MultiBlogTestCase extends PebbleTestCase {
     blogManager = new BlogManager(blogService, daoFactory, contentCache, configuration);
     addComponent("blogManager", blogManager);
     addComponents(blogService, contentCache);
+
+    multiBlogService = autowire(MultiBlogServiceImpl.class);
+    addComponents(multiBlogService);
 
     PebbleContext.getInstance().getConfiguration().setUrl("http://www.yourdomain.com/blog/");
 

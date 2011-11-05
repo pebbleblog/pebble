@@ -72,6 +72,14 @@ public class ViewBlogEntryAction extends AbstractCommentAction {
     if (entryId != null) {
       try {
         blogEntry = blogService.getBlogEntry(blog, entryId);
+        String previousId = blogEntryIndex.getPreviousBlogEntry(blog, entryId);
+        if (previousId != null) {
+          getModel().put("previousBlogEntry", blogService.getBlogEntry(blog, previousId));
+        }
+        String nextId = blogEntryIndex.getNextBlogEntry(blog, entryId);
+        if (nextId != null) {
+          getModel().put("nextBlogEntry", blogService.getBlogEntry(blog, nextId));
+        }
       } catch (BlogServiceException e) {
         throw new ServletException(e);
       }
@@ -88,8 +96,7 @@ public class ViewBlogEntryAction extends AbstractCommentAction {
     } else {
       getModel().put(Constants.BLOG_ENTRY_KEY, blogEntry);
       SimpleDate date = new SimpleDate(blog.getTimeZone(), blog.getLocale(), blogEntry.getDate());
-      getModel().put(Constants.MONTHLY_BLOG, blogEntryIndex.getBlogForYear(blog, date.getYear())
-          .getMonth(date.getMonth()));
+      getModel().put(Constants.MONTHLY_BLOG, blogEntryIndex.getArchive(blog).getYear(date.getYear()).getMonth(date.getMonth()));
       getModel().put("displayMode", "detail");
 
 

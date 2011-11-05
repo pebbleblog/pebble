@@ -152,7 +152,7 @@ public class BloggerAPIHandler extends AbstractAPIHandler {
     authenticate(blog, username, password);
 
     Vector posts = new Vector();
-    Collection coll = blog.getRecentBlogEntries(numberOfPosts);
+    Collection<BlogEntry> coll = blogService.getRecentBlogEntries(blog, numberOfPosts);
 
     Iterator it = coll.iterator();
     BlogEntry entry;

@@ -360,15 +360,6 @@ public class FileBlogEntryIndex implements BlogEntryIndex {
     }
 
     /**
-     * Gets the number of blog entries for this blog.
-     *
-     * @return an int
-     */
-    public int getNumberOfBlogEntries() {
-      return readIndexEntries.size();
-    }
-
-    /**
      * Gets the full list of blog entries.
      *
      * @return a List of blog entry IDs

@@ -1,4 +1,4 @@
-<%--@elvariable id="archive" type="net.sourceforge.pebble.domain.Archive"--%>
+<%--@elvariable id="archives" type="net.sourceforge.pebble.domain.Archive"--%>
 <%--
   Displays the administration links that are available after logging in.
 --%>
@@ -45,8 +45,8 @@
 
     <span id="admin-content">
       <pebble:isBlogContributor>
-      <a href="addBlogEntry.secureaction#form" title="<fmt:message key="admin.tooltip.addNewEntry"/>"><fmt:message key="admin.newBlogEntry"/></a> (<fmt:formatNumber value="${archive.numberOfBlogEntries}"/>) |
-      <a href="viewUnpublishedBlogEntries.secureaction" title="<fmt:message key="admin.tooltip.viewUnpublishedBlogEntries"/>"><fmt:message key="admin.unpublishedBlogEntries"/></a> (<fmt:formatNumber value="${archive.numberOfUnpublishedBlogEntries}"/>) |
+      <a href="addBlogEntry.secureaction#form" title="<fmt:message key="admin.tooltip.addNewEntry"/>"><fmt:message key="admin.newBlogEntry"/></a> (<fmt:formatNumber value="${archives.numberOfBlogEntries}"/>) |
+      <a href="viewUnpublishedBlogEntries.secureaction" title="<fmt:message key="admin.tooltip.viewUnpublishedBlogEntries"/>"><fmt:message key="admin.unpublishedBlogEntries"/></a> (<fmt:formatNumber value="${archives.numberOfUnpublishedBlogEntries}"/>) |
       <a href="addStaticPage.secureaction#form" title="<fmt:message key="admin.tooltip.addNewStaticPage"/>"><fmt:message key="admin.newStaticPage"/></a> |
       <a href="viewStaticPages.secureaction" title="<fmt:message key="admin.tooltip.manageStaticPages"/>"><fmt:message key="admin.staticPages"/></a> |
       <a href="viewCategories.secureaction" title="<fmt:message key="admin.tooltip.editCategories"/>"><fmt:message key="admin.categories"/></a> |

@@ -63,7 +63,7 @@ public class PublishBlogEntryActionTest extends SecureActionTestCase {
     request.setParameter("submit", "Publish");
     View view = action.process(request, response);
 
-    blogEntry = blog.getRecentBlogEntries(1).get(0);
+    blogEntry = blogService.getRecentBlogEntries(blog, 1).get(0);
     assertTrue(blogEntry.isPublished());
     assertEquals(new Date().getTime(), blogEntry.getDate().getTime(), 1000);
     assertTrue(view instanceof RedirectView);
@@ -117,7 +117,7 @@ public class PublishBlogEntryActionTest extends SecureActionTestCase {
     request.setParameter("submit", "Publish");
     action.process(request, response);
 
-    blogEntry = blog.getRecentBlogEntries(1).get(0);
+    blogEntry = blogService.getRecentBlogEntries(blog, 1).get(0);
     assertTrue(blogEntry.isPublished());
     assertEquals(new Date().getTime(), blogEntry.getDate().getTime(), 1000);
 

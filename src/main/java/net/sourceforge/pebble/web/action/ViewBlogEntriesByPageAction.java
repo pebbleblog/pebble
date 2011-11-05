@@ -34,6 +34,7 @@ package net.sourceforge.pebble.web.action;
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.domain.*;
 import net.sourceforge.pebble.index.BlogEntryIndex;
+import net.sourceforge.pebble.service.MultiBlogService;
 import net.sourceforge.pebble.util.SecurityUtils;
 import net.sourceforge.pebble.util.Pageable;
 import net.sourceforge.pebble.web.view.RedirectView;
@@ -58,6 +59,8 @@ public class ViewBlogEntriesByPageAction extends Action {
   private BlogManager blogManager;
   @Inject
   private BlogEntryIndex blogEntryIndex;
+  @Inject
+  private MultiBlogService multiBlogService;
 
   /**
    * Peforms the processing associated with this action.
@@ -78,7 +81,7 @@ public class ViewBlogEntriesByPageAction extends Action {
         Blog blog = (Blog)publicBlogs.get(0);
         return new RedirectView(blog.getUrl());
       } else {
-        getModel().put(Constants.BLOG_ENTRIES, abstractBlog.getRecentBlogEntries());
+        getModel().put(Constants.BLOG_ENTRIES, multiBlogService.getRecentPublishedBlogEntries());
 
         return new BlogEntriesView();
       }

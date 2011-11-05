@@ -69,8 +69,11 @@ public class PebbleAPIHandler extends AbstractAPIHandler {
   /** the log used by this class */
   private static Log log = LogFactory.getLog(PebbleAPIHandler.class);
 
-  public PebbleAPIHandler(AuthenticationManager authenticationManager, BlogManager blogManager) {
+  private final BlogService blogService;
+
+  public PebbleAPIHandler(AuthenticationManager authenticationManager, BlogManager blogManager, BlogService blogService) {
     super(authenticationManager, blogManager);
+    this.blogService = blogService;
   }
 
   /**
@@ -93,7 +96,7 @@ public class PebbleAPIHandler extends AbstractAPIHandler {
     authenticate(blog, username, password);
 
     Vector posts = new Vector();
-    Collection coll = blog.getRecentPublishedBlogEntries(numberOfPosts);
+    Collection<BlogEntry> coll = blogService.getRecentPublishedBlogEntries(blog, numberOfPosts);
     Iterator it = coll.iterator();
     BlogEntry entry;
     while (it.hasNext()) {

@@ -743,24 +743,6 @@ public class BlogEntry extends PageBasedContent {
     }
   }
 
-  /**
-   * Returns the blog entry that was posted before this one.
-   *
-   * @return  a BlogEntry instance, or null if this is the first entry
-   */
-  public BlogEntry getPreviousBlogEntry() {
-    return getBlog().getPreviousBlogEntry(this);
-  }
-
-  /**
-   * Returns the blog entry that was posted after this one.
-   *
-   * @return  a BlogEntry instance, or null is this is the last entry
-   */
-  public BlogEntry getNextBlogEntry() {
-    return getBlog().getNextBlogEntry(this);
-  }
-
   public void validate(ValidationContext context) {
   }
 

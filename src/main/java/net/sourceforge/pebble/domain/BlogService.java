@@ -82,4 +82,39 @@ public interface BlogService {
    * @throws BlogServiceException If an error occurred
    */
   Response getResponse(Blog blog, String responseId) throws BlogServiceException;
+
+  /**
+   * Get up to max recent blog entries
+   *
+   * @param blog The blog to get the entries for
+   * @param max The maximum blog entries to get
+   * @return The recent blog entries
+   */
+  List<BlogEntry> getRecentBlogEntries(Blog blog, int max);
+
+  /**
+   * Get the recent blog entries
+   *
+   * @param blog The blog to get the entries for
+   * @return The recent blog entries
+   */
+  List<BlogEntry> getRecentBlogEntries(Blog blog);
+
+  /**
+   * Get up to max recent published blog entries
+   *
+   * @param blog The blog to get the entries for
+   * @param max The maximum blog entries to get
+   * @return The recent published blog entries
+   */
+  List<BlogEntry> getRecentPublishedBlogEntries(Blog blog, int max);
+
+  /**
+   * Get the recent published blog entries
+   *
+   * @param blog The blog to get the entries for
+   * @return The recent published blog entries
+   */
+  List<BlogEntry> getRecentPublishedBlogEntries(Blog blog);
+
 }

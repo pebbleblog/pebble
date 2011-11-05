@@ -439,35 +439,6 @@ public abstract class AbstractBlog extends TimePeriod {
   }
 
   /**
-   * Gets the most recent blog entries, the number
-   * of which is specified.
-   *
-   * @param   numberOfEntries   the number of entries to get
-   * @return  a List containing the most recent blog entries
-   */
-  public abstract List<BlogEntry> getRecentBlogEntries(int numberOfEntries);
-
-  /**
-   * Gets the most recent blog entries, the number of which is taken from
-   * the recentBlogEntriesOnHomePage property.
-   *
-   * @return  a List containing the most recent blog entries
-   */
-  public List<BlogEntry> getRecentBlogEntries() {
-    return getRecentBlogEntries(getRecentBlogEntriesOnHomePage());
-  }
-
-  /**
-   * Setter method for the recentBlogEntries property - this is here so that
-   * the property complies with the JavaBeans standard.
-   * 
-   * @param entries
-   */
-  public void setRecentBlogEntries(List<BlogEntry> entries) {
-    // do nothing
-  }
-
-  /**
    * Gets the date that this blog was last updated.
    *
    * @return  a Date instance representing the time of the most recent entry

@@ -36,12 +36,17 @@ import net.sourceforge.pebble.domain.BlogEntry;
 import net.sourceforge.pebble.api.event.blogentry.BlogEntryEvent;
 import net.sourceforge.pebble.api.event.blogentry.BlogEntryListener;
 
+import javax.inject.Inject;
+
 /**
  * Listens to blog entry events and keeps the blog entry index up to date.
  *
  * @author    Simon Brown
  */
 public class BlogEntryIndexListener implements BlogEntryListener {
+
+  @Inject
+  private BlogEntryIndex blogEntryIndex;
 
   /**
    * Called when a blog entry has been added.
@@ -50,7 +55,7 @@ public class BlogEntryIndexListener implements BlogEntryListener {
    */
   public void blogEntryAdded(BlogEntryEvent event) {
     BlogEntry blogEntry = event.getBlogEntry();
-    blogEntry.getBlog().getBlogEntryIndex().index(blogEntry.getBlog(), blogEntry);
+    blogEntryIndex.index(blogEntry.getBlog(), blogEntry);
   }
 
   /**
@@ -60,7 +65,7 @@ public class BlogEntryIndexListener implements BlogEntryListener {
    */
   public void blogEntryRemoved(BlogEntryEvent event) {
     BlogEntry blogEntry = event.getBlogEntry();
-    blogEntry.getBlog().getBlogEntryIndex().unindex(blogEntry.getBlog(), blogEntry);
+    blogEntryIndex.unindex(blogEntry.getBlog(), blogEntry);
   }
 
   /**
@@ -78,8 +83,8 @@ public class BlogEntryIndexListener implements BlogEntryListener {
    */
   public void blogEntryPublished(BlogEntryEvent event) {
     BlogEntry blogEntry = event.getBlogEntry();
-    blogEntry.getBlog().getBlogEntryIndex().unindex(blogEntry.getBlog(), blogEntry);
-    blogEntry.getBlog().getBlogEntryIndex().index(blogEntry.getBlog(), blogEntry);
+    blogEntryIndex.unindex(blogEntry.getBlog(), blogEntry);
+    blogEntryIndex.index(blogEntry.getBlog(), blogEntry);
   }
 
   /**
@@ -89,8 +94,8 @@ public class BlogEntryIndexListener implements BlogEntryListener {
    */
   public void blogEntryUnpublished(BlogEntryEvent event) {
     BlogEntry blogEntry = event.getBlogEntry();
-    blogEntry.getBlog().getBlogEntryIndex().unindex(blogEntry.getBlog(), blogEntry);
-    blogEntry.getBlog().getBlogEntryIndex().index(blogEntry.getBlog(), blogEntry);
+    blogEntryIndex.unindex(blogEntry.getBlog(), blogEntry);
+    blogEntryIndex.index(blogEntry.getBlog(), blogEntry);
   }
 
 }

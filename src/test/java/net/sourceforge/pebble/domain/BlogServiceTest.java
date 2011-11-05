@@ -526,4 +526,37 @@ public class BlogServiceTest extends SingleBlogTestCase {
     assertEquals(trackBack2, trackBacks.get(1));
     assertEquals(trackBack3, trackBacks.get(2));
   }
+
+  public void testGetRecentBlogEntries() throws BlogServiceException {
+    BlogEntry entry1 = new BlogEntry(blog);
+    entry1.setTitle("title1");
+    entry1.setBody("body1");
+    blogService.putBlogEntry(entry1);
+
+    BlogEntry entry2 = new BlogEntry(blog);
+    entry2.setTitle("title2");
+    entry2.setBody("body2");
+    blogService.putBlogEntry(entry2);
+
+    BlogEntry entry3 = new BlogEntry(blog);
+    entry3.setTitle("title3");
+    entry3.setBody("body3");
+    blogService.putBlogEntry(entry3);
+
+    BlogEntry entry4 = new BlogEntry(blog);
+    entry4.setTitle("title4");
+    entry4.setBody("body4");
+    blogService.putBlogEntry(entry4);
+
+    List entries = blogService.getRecentBlogEntries(blog, 3);
+
+    assertEquals(3, entries.size());
+    assertEquals(entry4, entries.get(0));
+  }
+
+
+  public void testGetRecentBlogEntriesFromEmptyBlog() {
+    assertTrue(blogService.getRecentBlogEntries(blog, 3).isEmpty());
+  }
+
 }

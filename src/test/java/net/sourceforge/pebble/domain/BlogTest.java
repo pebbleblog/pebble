@@ -252,42 +252,11 @@ public class BlogTest extends SingleBlogTestCase {
   }
 
   public void testInvalidDayOfMonthAfterTimeZoneChanges() {
-    blog.getRecentBlogEntries();
+    blogService.getRecentBlogEntries(blog);
     blog.setProperty(Blog.TIMEZONE_KEY, "America/New_York");
 
     // this should not cause an exception to be thrown
-    blog.getRecentBlogEntries();
-  }
-
-  public void testGetRecentBlogEntriesFromEmptyBlog() {
-    assertTrue(blog.getRecentBlogEntries(3).isEmpty());
-  }
-
-  public void testGetRecentBlogEntries() throws BlogServiceException {
-    BlogEntry entry1 = new BlogEntry(blog);
-    entry1.setTitle("title1");
-    entry1.setBody("body1");
-    blogService.putBlogEntry(entry1);
-
-    BlogEntry entry2 = new BlogEntry(blog);
-    entry2.setTitle("title2");
-    entry2.setBody("body2");
-    blogService.putBlogEntry(entry2);
-
-    BlogEntry entry3 = new BlogEntry(blog);
-    entry3.setTitle("title3");
-    entry3.setBody("body3");
-    blogService.putBlogEntry(entry3);
-
-    BlogEntry entry4 = new BlogEntry(blog);
-    entry4.setTitle("title4");
-    entry4.setBody("body4");
-    blogService.putBlogEntry(entry4);
-
-    List entries = blog.getRecentBlogEntries(3);
-
-    assertEquals(3, entries.size());
-    assertEquals(entry4, entries.get(0));
+    blogService.getRecentBlogEntries(blog);
   }
 
   /**

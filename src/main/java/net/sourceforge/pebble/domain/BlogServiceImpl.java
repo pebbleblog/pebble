@@ -48,7 +48,7 @@ import java.util.*;
  * Service that encompasses all functionality related to getting, putting
  * and removing blog entries.
  *
- * @author    Simon Brown
+ * @author Simon Brown
  */
 public class BlogServiceImpl implements BlogService {
 
@@ -65,7 +65,7 @@ public class BlogServiceImpl implements BlogService {
   }
 
   public BlogEntry getBlogEntry(Blog blog, String blogEntryId) throws BlogServiceException {
-    BlogEntry blogEntry = null;
+    BlogEntry blogEntry;
 
     // is the blog entry already in the cache?                                                  
     blogEntry = contentCache.getBlogEntry(blog, blogEntryId);
@@ -88,12 +88,12 @@ public class BlogServiceImpl implements BlogService {
   }
 
   public List<BlogEntry> getBlogEntries(Blog blog, int year, int month, int day) throws BlogServiceException {
-    List<String> blogEntryIds = blog.getBlogEntryIndex().getBlogEntriesForDay(blog, year, month, day);
+    List<String> blogEntryIds = blogEntryIndex.getBlogEntriesForDay(blog, year, month, day);
     return getBlogEntries(blog, blogEntryIds);
   }
 
   public List<BlogEntry> getBlogEntries(Blog blog, int year, int month) throws BlogServiceException {
-    List<String> blogEntryIds = blog.getBlogEntryIndex().getBlogEntriesForMonth(blog, year, month);
+    List<String> blogEntryIds = blogEntryIndex.getBlogEntriesForMonth(blog, year, month);
     return getBlogEntries(blog, blogEntryIds);
   }
 
@@ -120,6 +120,22 @@ public class BlogServiceImpl implements BlogService {
 
     for (String blogEntryId : blogEntryIds) {
       BlogEntry blogEntry = getBlogEntry(blog, blogEntryId);
+      blogEntries.add(blogEntry);
+    }
+
+    return blogEntries;
+  }
+
+  private List<BlogEntry> tryGetBlogEntries(Blog blog, List<String> blogEntryIds) {
+    List<BlogEntry> blogEntries = new ArrayList<BlogEntry>();
+
+    for (String blogEntryId : blogEntryIds) {
+      BlogEntry blogEntry = null;
+      try {
+        blogEntry = getBlogEntry(blog, blogEntryId);
+      } catch (BlogServiceException e) {
+        // Ignore
+      }
       blogEntries.add(blogEntry);
     }
 
@@ -201,7 +217,7 @@ public class BlogServiceImpl implements BlogService {
   }
 
   public Response getResponse(Blog blog, String responseId) throws BlogServiceException {
-    String blogEntryId = responseId.substring(responseId.indexOf("/")+1, responseId.lastIndexOf("/"));
+    String blogEntryId = responseId.substring(responseId.indexOf("/") + 1, responseId.lastIndexOf("/"));
     BlogEntry blogEntry = getBlogEntry(blog, blogEntryId);
     if (blogEntry != null) {
       return blogEntry.getResponse(responseId);
@@ -212,10 +228,55 @@ public class BlogServiceImpl implements BlogService {
 
   private BlogEntry cloneBlogEntry(BlogEntry blogEntry) {
     if (blogEntry != null) {
-      blogEntry = (BlogEntry)blogEntry.clone();
+      blogEntry = (BlogEntry) blogEntry.clone();
       blogEntry.setEventsEnabled(true);
       blogEntry.setPersistent(true);
     }
     return blogEntry;
+  }
+
+  public List<BlogEntry> getRecentBlogEntries(Blog blog, int max) {
+    List<String> blogEntryIds = blogEntryIndex.getBlogEntries(blog);
+    List<BlogEntry> blogEntries = new ArrayList<BlogEntry>();
+    for (String blogEntryId : blogEntryIds) {
+      try {
+        BlogEntry blogEntry = getBlogEntry(blog, blogEntryId);
+        blogEntries.add(blogEntry);
+      } catch (BlogServiceException e) {
+        log.error("Exception encountered", e);
+      }
+
+      if (blogEntries.size() == max) {
+        break;
+      }
+    }
+    return blogEntries;
+  }
+
+  public List<BlogEntry> getRecentBlogEntries(Blog blog) {
+    return getRecentBlogEntries(blog, blog.getRecentBlogEntriesOnHomePage());
+  }
+
+  public List<BlogEntry> getRecentPublishedBlogEntries(Blog blog, int max) {
+    List<BlogEntry> blogEntries = new ArrayList<BlogEntry>();
+    List<String> blogEntryIds = blogEntryIndex.getPublishedBlogEntries((Blog) blog);
+    for (String blogEntryId : blogEntryIds) {
+      if (blogEntries.size() == max) {
+        break;
+      }
+      try {
+        BlogEntry blogEntry = getBlogEntry((Blog) blog, blogEntryId);
+        if (blogEntry != null) {
+          blogEntries.add(blogEntry);
+        }
+      } catch (BlogServiceException e) {
+        log.error("Exception encountered", e);
+      }
+    }
+    return blogEntries;
+  }
+
+  public List<BlogEntry> getRecentPublishedBlogEntries(Blog blog) {
+    return getRecentPublishedBlogEntries(blog, blog.getRecentBlogEntriesOnHomePage());
   }
 }

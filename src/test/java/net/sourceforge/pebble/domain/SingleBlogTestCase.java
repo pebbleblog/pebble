@@ -35,6 +35,8 @@ import net.sourceforge.pebble.ContentCache;
 import net.sourceforge.pebble.dao.DAOFactory;
 import net.sourceforge.pebble.dao.mock.MockDAOFactory;
 import net.sourceforge.pebble.security.MockSecurityRealm;
+import net.sourceforge.pebble.service.MultiBlogService;
+import net.sourceforge.pebble.service.MultiBlogServiceImpl;
 import net.sourceforge.pebble.service.StaticPageService;
 
 import java.io.File;
@@ -69,6 +71,7 @@ public abstract class SingleBlogTestCase extends PebbleTestCase {
         daoFactory.getRefererFilterDAO(), daoFactory.getStaticPageDAO(), daoFactory.getBlogEntryIndex(),
         contentCache);
     addComponents(blogService, autowire(StaticPageService.class));
+    addComponents(autowire(MultiBlogServiceImpl.class));
 
     File blogDirectory = new File(TEST_BLOG_LOCATION, "blogs/default");
     blogDirectory.mkdir();

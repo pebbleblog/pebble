@@ -7,12 +7,12 @@
 
   <%-- // todo only show nav links when detail is blog entry, not static page --%>
   <c:when test="${displayMode == 'detail'}">
-    <c:if test="${not empty blogEntry.previousBlogEntry}">
-      <a href="${url:rewrite(blogEntry.previousBlogEntry.localPermalink)}" title="${url:rewrite(blogEntry.previousBlogEntry.localPermalink)}">&lt;&lt; ${blogEntry.previousBlogEntry.title}</a> |
+    <c:if test="${not empty previousBlogEntry}">
+      <a href="${url:rewrite(previousBlogEntry.localPermalink)}" title="${url:rewrite(previousBlogEntry.localPermalink)}">&lt;&lt; ${previousBlogEntry.title}</a> |
     </c:if>
     <a href="${url:rewrite(blog.url)}" title="${url:rewrite(blog.url)}"><fmt:message key="common.home" /></a>
-    <c:if test="${not empty blogEntry.nextBlogEntry}">
-      | <a href="${url:rewrite(blogEntry.nextBlogEntry.localPermalink)}" title="${url:rewrite(blogEntry.nextBlogEntry.localPermalink)}">${blogEntry.nextBlogEntry.title} &gt;&gt;</a>
+    <c:if test="${not empty nextBlogEntry}">
+      | <a href="${url:rewrite(nextBlogEntry.localPermalink)}" title="${url:rewrite(nextBlogEntry.localPermalink)}">${nextBlogEntry.title} &gt;&gt;</a>
     </c:if>
   </c:when>
 

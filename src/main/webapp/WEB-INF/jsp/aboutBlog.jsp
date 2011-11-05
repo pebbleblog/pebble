@@ -1,4 +1,4 @@
-<jsp:useBean id="archive" scope="request" type="net.sourceforge.pebble.domain.Archive"/>
+<jsp:useBean id="archives" scope="request" type="net.sourceforge.pebble.domain.Archive"/>
 <div class="contentItem">
 
   <h1><fmt:message key="view.aboutThisBlog"/></h1>
@@ -13,13 +13,13 @@
       <td>
           <fmt:message key="view.aboutThisBlog.numberOfEntries">
 			<fmt:param>
-				<fmt:formatNumber value="${archive.numberOfBlogEntries}"/>
+				<fmt:formatNumber value="${archives.numberOfBlogEntries}"/>
 			</fmt:param>
 			<fmt:param>
-				<fmt:formatNumber value="${archive.numberOfPublishedBlogEntries}"/>
+				<fmt:formatNumber value="${archives.numberOfPublishedBlogEntries}"/>
 			</fmt:param>
 			<fmt:param>
-				<fmt:formatNumber value="${archive.numberOfUnpublishedBlogEntries}"/>
+				<fmt:formatNumber value="${archives.numberOfUnpublishedBlogEntries}"/>
 			</fmt:param>
           </fmt:message>
       </td>

@@ -200,12 +200,7 @@ public class MetaWeblogAPIHandler extends AbstractAPIHandler {
     authenticate(blog, username, password);
 
     Vector posts = new Vector();
-    Collection coll = blog.getRecentBlogEntries(numberOfPosts);
-
-    Iterator it = coll.iterator();
-    BlogEntry entry;
-    while (it.hasNext()) {
-      entry = (BlogEntry)it.next();
+    for (BlogEntry entry : blogService.getRecentBlogEntries(blog, numberOfPosts)) {
       posts.add(adaptBlogEntry(entry));
     }
 
@@ -370,7 +365,7 @@ public class MetaWeblogAPIHandler extends AbstractAPIHandler {
   /** 
    * help method to adapt a blog entry comments into an XML-RPC compatible struct.
    * 
-   * @param entry   the BlogEntry to adapt
+   * @param comment   the BlogEntry to adapt
    * @return  a Hashtable representing the major properties of the entry
    */
   private Hashtable adaptBlogEntryComment(Comment comment) {

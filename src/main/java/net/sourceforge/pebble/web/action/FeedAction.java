@@ -35,6 +35,7 @@ import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.comparator.BlogEntryComparator;
 import net.sourceforge.pebble.domain.*;
 import net.sourceforge.pebble.service.LastModifiedService;
+import net.sourceforge.pebble.service.MultiBlogService;
 import net.sourceforge.pebble.web.view.NotModifiedView;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.impl.AbstractRomeFeedView;
@@ -56,6 +57,10 @@ public class FeedAction extends Action {
 
   @Inject
   private LastModifiedService lastModifiedService;
+  @Inject
+  private BlogService blogService;
+  @Inject
+  private MultiBlogService multiBlogService;
 
   /**
    * Peforms the processing associated with this action.
@@ -91,10 +96,10 @@ public class FeedAction extends Action {
         blogEntries = ((Blog) blog).getRecentPublishedBlogEntries(author);
         getModel().put("author", author);
       } else {
-        blogEntries = ((Blog) blog).getRecentPublishedBlogEntries();
+        blogEntries = blogService.getRecentPublishedBlogEntries((Blog) blog);
       }
     } else {
-      blogEntries = blog.getRecentBlogEntries();
+      blogEntries = multiBlogService.getRecentPublishedBlogEntries();
     }
 
     List<BlogEntry> blogEntriesForFeed = new ArrayList<BlogEntry>();

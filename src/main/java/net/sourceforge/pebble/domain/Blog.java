@@ -349,7 +349,7 @@ public class Blog extends AbstractBlog {
     }
 
     // these are required to keep the various indexes up to date
-    eventListenerList.addBlogEntryListener(new BlogEntryIndexListener());
+    eventListenerList.addBlogEntryListener(instantiate(BlogEntryIndexListener.class));
     eventListenerList.addBlogEntryListener(new TagIndexListener());
     eventListenerList.addBlogEntryListener(new CategoryIndexListener());
     eventListenerList.addBlogEntryListener(new AuthorIndexListener());
@@ -793,71 +793,6 @@ public class Blog extends AbstractBlog {
   public int getNumberOfStaticPages() {
     return staticPageIndex.getNumberOfStaticPages();
   }
-
-  /**
-   * Gets the most recent blog entries, the number
-   * of which is specified.
-   *
-   * @param numberOfEntries the number of entries to get
-   * @return a List containing the most recent blog entries
-   */
-  public List<BlogEntry> getRecentBlogEntries(int numberOfEntries) {
-    List<String> blogEntryIds = blogEntryIndex.getBlogEntries(this);
-    List<BlogEntry> blogEntries = new ArrayList<BlogEntry>();
-    for (String blogEntryId : blogEntryIds) {
-      try {
-        BlogEntry blogEntry = blogService.getBlogEntry(this, blogEntryId);
-        blogEntries.add(blogEntry);
-      } catch (BlogServiceException e) {
-        log.error("Exception encountered", e);
-      }
-
-      if (blogEntries.size() == numberOfEntries) {
-        break;
-      }
-    }
-
-    return blogEntries;
-  }
-
-  /**
-   * Gets the most recent published blog entries, the number of which
-   * is taken from the recentBlogEntriesOnHomePage property.
-   *
-   * @return a List containing the most recent blog entries
-   */
-  public List<BlogEntry> getRecentPublishedBlogEntries() {
-    return getRecentPublishedBlogEntries(getRecentBlogEntriesOnHomePage());
-  }
-
-  /**
-   * Gets the most recent published blog entries, the number of which
-   * is specified
-   *
-   * @param number    the number of blog entries to get
-   * @return a List containing the most recent blog entries
-   */
-  public List<BlogEntry> getRecentPublishedBlogEntries(int number) {
-    List<String> blogEntryIds = blogEntryIndex.getPublishedBlogEntries(this);
-    List<BlogEntry> blogEntries = new ArrayList<BlogEntry>();
-    for (String blogEntryId : blogEntryIds) {
-      if (blogEntries.size() == number) {
-        break;
-      }
-
-      try {
-        BlogEntry blogEntry = blogService.getBlogEntry(this, blogEntryId);
-        if (blogEntry != null) {
-          blogEntries.add(blogEntry);
-        }
-      } catch (BlogServiceException e) {
-        log.error("Exception encountered", e);
-      }
-    }
-
-    return blogEntries;
-  }
-
   /**
    * Gets blog entries for a given list of IDs.
    *
@@ -1061,9 +996,9 @@ public class Blog extends AbstractBlog {
    */
   public Date getLastModified() {
     Date date = new Date(0);
-    List blogEntries = getRecentPublishedBlogEntries(1);
+    List<BlogEntry> blogEntries = blogService.getRecentPublishedBlogEntries(this, 1);
     if (blogEntries.size() == 1) {
-      date = ((BlogEntry)blogEntries.get(0)).getDate();
+      date = blogEntries.get(0).getDate();
     }
 
     return date;
@@ -1081,30 +1016,6 @@ public class Blog extends AbstractBlog {
     } else {
       return new Date(0);
     }
-  }
-
-  public BlogEntry getPreviousBlogEntry(BlogEntry blogEntry) {
-    String blogEntryId = blogEntryIndex.getPreviousBlogEntry(this, blogEntry.getId());
-    if (blogEntryId != null) {
-      try {
-        return blogService.getBlogEntry(this, blogEntryId);
-      } catch (BlogServiceException e) {
-        // do nothing
-      }
-    }
-    return null;
-  }
-
-  public BlogEntry getNextBlogEntry(BlogEntry blogEntry) {
-    String blogEntryId = blogEntryIndex.getNextBlogEntry(this, blogEntry.getId());
-    if (blogEntryId != null) {
-      try {
-        return blogService.getBlogEntry(this, blogEntryId);
-      } catch (BlogServiceException e) {
-        // do nothing
-      }
-    }
-    return null;
   }
 
   /**
@@ -1201,19 +1112,10 @@ public class Blog extends AbstractBlog {
   /**
    * Gets the search index.
    *
-   * @return  a BlogEntryIndex instance
+   * @return  a SearchIndex instance
    */
   public SearchIndex getSearchIndex() {
     return this.searchIndex;
-  }
-
-  /**
-   * Gets the blog entry index.
-   *
-   * @return  a BlogEntryIndex instance
-   */
-  public BlogEntryIndex getBlogEntryIndex() {
-    return this.blogEntryIndex;
   }
 
   /**

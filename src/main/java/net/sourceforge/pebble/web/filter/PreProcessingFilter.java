@@ -70,6 +70,7 @@ public class PreProcessingFilter implements Filter {
   private static Log log = LogFactory.getLog(PreProcessingFilter.class);
 
   private BlogManager blogManager;
+  private BlogService blogService;
   private BlogEntryIndex blogEntryIndex;
 
   /**
@@ -79,7 +80,8 @@ public class PreProcessingFilter implements Filter {
    */
   public void init(FilterConfig config) {
     ApplicationContext applicationContext = WebApplicationContextUtils.getRequiredWebApplicationContext(config.getServletContext());
-    blogManager = (BlogManager) applicationContext.getBean("blogManager");
+    blogManager = applicationContext.getBean(BlogManager.class);
+    blogService = applicationContext.getBean(BlogService.class);
     blogEntryIndex = applicationContext.getBean(BlogEntryIndex.class);
   }
 
@@ -127,7 +129,7 @@ public class PreProcessingFilter implements Filter {
         context.setView(ContentDecoratorContext.SUMMARY_VIEW);
         context.setMedia(ContentDecoratorContext.HTML_PAGE);
 
-        List<BlogEntry> blogEntries = b.getRecentPublishedBlogEntries();
+        List<BlogEntry> blogEntries = blogService.getRecentPublishedBlogEntries(b);
         ContentDecoratorChain.decorate(context, blogEntries);
         Collections.sort(blogEntries, new BlogEntryComparator());
         httpRequest.setAttribute(Constants.RECENT_BLOG_ENTRIES, blogEntries);

@@ -135,29 +135,6 @@ public class MultiBlog extends AbstractBlog {
   }
 
   /**
-   * Gets the most recent blog entries, the number
-   * of which is specified.
-   *
-   * @param numberOfEntries the number of entries to get
-   * @return a List containing the most recent blog entries
-   */
-  public List<BlogEntry> getRecentBlogEntries(int numberOfEntries) {
-    List<BlogEntry> blogEntries = new ArrayList<BlogEntry>();
-
-    for (Blog blog : blogManager.getPublicBlogs()) {
-      blogEntries.addAll(blog.getRecentPublishedBlogEntries());
-    }
-
-    Collections.sort(blogEntries, new BlogEntryComparator());
-
-    if (blogEntries.size() >= numberOfEntries) {
-      return new ArrayList<BlogEntry>(blogEntries).subList(0, numberOfEntries);
-    } else {
-      return new ArrayList<BlogEntry>(blogEntries);
-    }
-  }
-
-  /**
    * Logs this request for blog.
    *
    * @param request   the HttpServletRequest instance for this request
