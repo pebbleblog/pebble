@@ -49,9 +49,7 @@ public class TitlePermalinkProviderTest extends PermalinkProviderSupportTestCase
    * @return a PermalinkProvider instance
    */
   protected PermalinkProvider getPermalinkProvider() {
-    TitlePermalinkProvider provider = new TitlePermalinkProvider();
-    provider.setBlogService(blogService);
-    return provider;
+    return autowire(TitlePermalinkProvider.class);
   }
 
   /**
@@ -195,8 +193,6 @@ public class TitlePermalinkProviderTest extends PermalinkProviderSupportTestCase
    * Tests that a permalink is changed when the blog entry title changes.
    */
   public void testBlogEntryPermalinkChangesWithTitle() throws Exception {
-    blog.setPermalinkProvider(new TitlePermalinkProvider());
-
     BlogEntry blogEntry = new BlogEntry(blog);
     blogService.putBlogEntry(blogEntry);
 

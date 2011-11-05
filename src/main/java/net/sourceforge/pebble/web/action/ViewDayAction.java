@@ -73,13 +73,14 @@ public class ViewDayAction extends Action {
     String month = request.getParameter("month");
     String day = request.getParameter("day");
 
+    SimpleDate now = blog.getToday();
     SimpleDate simpleDate;
     if (year != null && year.length() > 0 &&
         month != null && month.length() > 0 &&
         day != null && day.length() > 0) {
       simpleDate = new SimpleDate(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day));
     } else {
-      simpleDate = new SimpleDate(blog.getTimeZone(), new Date());
+      simpleDate = now;
     }
 
     List<BlogEntry> blogEntries;
@@ -100,7 +101,7 @@ public class ViewDayAction extends Action {
     List<Year> years = blogEntryIndex.getYears(blog);
 
     // put the previous and next days in the model for navigation purposes
-    Day firstDay = blog.getBlogForFirstMonth().getBlogForFirstDay();
+    Day firstDay = BlogSummaryUtils.getFirstMonth(blog, years).getBlogForFirstDay();
     Day previousDay = BlogSummaryUtils.getPreviousDay(years, daily);
     Day nextDay = BlogSummaryUtils.getNextDay(years, daily);
 
@@ -108,7 +109,7 @@ public class ViewDayAction extends Action {
       getModel().put("previousDay", previousDay);
     }
 
-    if (!nextDay.after(blog.getBlogForToday()) || nextDay.before(firstDay)) {
+    if (!nextDay.after(BlogSummaryUtils.getBlogForDay(blog, years, now)) || nextDay.before(firstDay)) {
       getModel().put("nextDay", nextDay);
     }
 

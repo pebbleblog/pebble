@@ -51,9 +51,7 @@ public class DefaultPermalinkProviderTest extends PermalinkProviderSupportTestCa
    * @return a PermalinkProvider instance
    */
   protected PermalinkProvider getPermalinkProvider() {
-    DefaultPermalinkProvider provider = new DefaultPermalinkProvider();
-    provider.setBlogService(blogService);
-    return provider;
+    return autowire(DefaultPermalinkProvider.class);
   }
 
   /**

@@ -71,7 +71,6 @@ public class FileBlogEntryDAOTest extends SingleBlogTestCase {
     destination.mkdirs();
     FileUtils.copyFile(source, new File(destination, "1081203335000.xml"));
 
-    Day day = blog.getBlogForDay(2004, 04, 05);
     Category category1 = new Category("/category1", "Category 1");
     blog.addCategory(category1);
     Category category2 = new Category("/category2", "Category 2");

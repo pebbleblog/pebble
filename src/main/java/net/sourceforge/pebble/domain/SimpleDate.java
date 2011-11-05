@@ -1,7 +1,10 @@
 package net.sourceforge.pebble.domain;
 
+import com.maxmind.geoip.timeZone;
+
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.TimeZone;
 
 /**
@@ -12,8 +15,14 @@ public class SimpleDate {
   private final int month;
   private final int day;
 
-  public SimpleDate(TimeZone timeZone, Date date) {
-    Calendar cal = Calendar.getInstance(timeZone);
+  public SimpleDate(Calendar cal) {
+    this.year = cal.get(Calendar.YEAR);
+    this.month = cal.get(Calendar.MONTH) + 1;
+    this.day = cal.get(Calendar.DAY_OF_MONTH);
+  }
+
+  public SimpleDate(TimeZone timeZone, Locale locale, Date date) {
+    Calendar cal = Calendar.getInstance(timeZone, locale);
     cal.setTime(date);
     this.year = cal.get(Calendar.YEAR);
     this.month = cal.get(Calendar.MONTH) + 1;

@@ -34,6 +34,7 @@ package net.sourceforge.pebble.web.action;
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.domain.Month;
+import net.sourceforge.pebble.domain.SimpleDate;
 import net.sourceforge.pebble.domain.Year;
 import net.sourceforge.pebble.index.BlogEntryIndex;
 import net.sourceforge.pebble.logging.LogSummary;
@@ -74,6 +75,7 @@ public class ViewLogSummaryAction extends SecureAction {
     String yearAsStriing = request.getParameter("year");
     String monthAsString = request.getParameter("month");
 
+    SimpleDate now = blog.getToday();
     Calendar cal = blog.getCalendar();
     LogSummary logSummary;
     View view;
@@ -86,7 +88,7 @@ public class ViewLogSummaryAction extends SecureAction {
       cal.set(Calendar.MONTH, month);
       logSummary = blog.getLogger().getLogSummary(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH)+1);
       view = new LogSummaryByMonthView();
-      registerObjectsForNavigation(blog, blog.getBlogForMonth(year, month+1));
+      registerObjectsForNavigation(blog, blogEntryIndex.getBlogForYear(blog, year).getBlogForMonth(month + 1));
     } else if (yearAsStriing != null && yearAsStriing.length() > 0) {
       cal.set(Calendar.YEAR, Integer.parseInt(yearAsStriing));
       logSummary = blog.getLogger().getLogSummary(cal.get(Calendar.YEAR));
@@ -95,7 +97,8 @@ public class ViewLogSummaryAction extends SecureAction {
       // get the log for this monthAsString
       logSummary = blog.getLogger().getLogSummary(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH)+1);
       view = new LogSummaryByMonthView();
-      registerObjectsForNavigation(blog, blog.getBlogForThisMonth());
+      registerObjectsForNavigation(blog, blogEntryIndex.getBlogForYear(blog, now.getYear())
+          .getBlogForMonth(now.getMonth()));
     }
 
     SimpleDateFormat yearFormatter = new SimpleDateFormat("yyyy", Locale.ENGLISH);
@@ -114,9 +117,10 @@ public class ViewLogSummaryAction extends SecureAction {
   }
 
   private void registerObjectsForNavigation(Blog blog, Month month) {
+    SimpleDate now = blog.getToday();
     List<Year> years = blogEntryIndex.getYears(blog);
 
-    Month firstMonth = blog.getBlogForFirstMonth();
+    Month firstMonth = BlogSummaryUtils.getFirstMonth(blog, years);
     Month previousMonth = BlogSummaryUtils.getPreviousMonth(years, month);
     Month nextMonth = BlogSummaryUtils.getNextMonth(years, month);
 
@@ -124,7 +128,8 @@ public class ViewLogSummaryAction extends SecureAction {
       getModel().put("previousMonth", previousMonth);
     }
 
-    if (!nextMonth.after(blog.getBlogForThisMonth()) || nextMonth.before(firstMonth)) {
+    if (!nextMonth.after(BlogSummaryUtils.getYear(blog, years, now.getYear()).getBlogForMonth(now.getMonth()))
+        || nextMonth.before(firstMonth)) {
       getModel().put("nextMonth", nextMonth);
     }
     getModel().put("displayMode", "logSummaryForMonth");

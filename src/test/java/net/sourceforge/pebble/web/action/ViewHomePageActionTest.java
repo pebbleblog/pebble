@@ -32,6 +32,7 @@
 package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
+import net.sourceforge.pebble.domain.SimpleDate;
 import net.sourceforge.pebble.web.model.Model;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.impl.BlogEntriesView;
@@ -55,7 +56,9 @@ public class ViewHomePageActionTest extends SingleBlogActionTestCase {
     View view = action.process(request, response);
 
     Model model = action.getModel();
-    assertEquals(blog.getBlogForThisMonth(), model.get(Constants.MONTHLY_BLOG));
+    SimpleDate now = blog.getToday();
+    assertEquals(daoFactory.getBlogEntryIndex().getBlogForYear(blog, now.getYear()).getBlogForMonth(now.getMonth()),
+        model.get(Constants.MONTHLY_BLOG));
     assertEquals(blog.getRecentBlogEntries(), model.get(Constants.BLOG_ENTRIES));
     assertTrue(view instanceof BlogEntriesView);
   }

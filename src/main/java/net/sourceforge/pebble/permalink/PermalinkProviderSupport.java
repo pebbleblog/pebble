@@ -35,7 +35,9 @@ import net.sourceforge.pebble.domain.Day;
 import net.sourceforge.pebble.domain.Month;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.api.permalink.PermalinkProvider;
+import net.sourceforge.pebble.index.BlogEntryIndex;
 
+import javax.inject.Inject;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -55,6 +57,9 @@ public abstract class PermalinkProviderSupport implements PermalinkProvider {
 
   /** the Blog associated with this provider instance */
   private Blog blog;
+
+  @Inject
+  protected BlogEntryIndex blogEntryIndex;
 
   /**
    * Gets the blog associated with this provider instance.
@@ -113,7 +118,7 @@ public abstract class PermalinkProviderSupport implements PermalinkProvider {
     String year = uri.substring(1, 5);
     String month = uri.substring(6, 8);
 
-    return getBlog().getBlogForMonth(Integer.parseInt(year), Integer.parseInt(month));
+    return blogEntryIndex.getBlogForYear(blog, Integer.parseInt(year)).getBlogForMonth(Integer.parseInt(month));
   }
 
   /**
@@ -157,8 +162,9 @@ public abstract class PermalinkProviderSupport implements PermalinkProvider {
     String month = uri.substring(6, 8);
     String day = uri.substring(9, 11);
 
-    return getBlog().getBlogForDay(Integer.parseInt(year),
-       Integer.parseInt(month), Integer.parseInt(day));
+    return blogEntryIndex.getBlogForYear(blog, Integer.parseInt(year))
+        .getBlogForMonth(Integer.parseInt(month))
+        .getBlogForDay(Integer.parseInt(day));
   }
 
 }

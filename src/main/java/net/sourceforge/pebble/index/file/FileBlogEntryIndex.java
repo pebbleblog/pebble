@@ -452,7 +452,7 @@ public class FileBlogEntryIndex implements BlogEntryIndex {
       // Get a reference to the list first so we are atomic
       List<String> entries = readPublishedIndexEntries;
       int position = Collections.binarySearch(entries, entry, ReverseBlogEntryIdComparator.INSTANCE);
-      if (position + 1 < entries.size()) {
+      if (position >= 0 && position + 1 < entries.size()) {
         return entries.get(position + 1);
       }
       return null;

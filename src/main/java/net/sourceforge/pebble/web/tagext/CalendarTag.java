@@ -37,7 +37,6 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -48,10 +47,7 @@ import javax.servlet.jsp.tagext.TagSupport;
 
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.api.permalink.PermalinkProvider;
-import net.sourceforge.pebble.domain.Blog;
-import net.sourceforge.pebble.domain.Day;
-import net.sourceforge.pebble.domain.Month;
-import net.sourceforge.pebble.domain.Year;
+import net.sourceforge.pebble.domain.*;
 import net.sourceforge.pebble.util.BlogSummaryUtils;
 import net.sourceforge.pebble.util.I18n;
 
@@ -75,18 +71,17 @@ public class CalendarTag extends TagSupport {
     Blog blog = (Blog)request.getAttribute(Constants.BLOG_KEY);
     List<Year> years = (List<Year>) request.getAttribute(Constants.YEARS_KEY);
     Month month = (Month)request.getAttribute(Constants.MONTHLY_BLOG);
-    Day today = blog.getBlogForToday();
-    Calendar now = blog.getCalendar();
+    SimpleDate now = blog.getToday();
+    Year thisYear = BlogSummaryUtils.getYear(blog, years, now.getYear());
+    Month thisMonth = thisYear.getBlogForMonth(now.getMonth());
+    Day today = thisMonth.getBlogForDay(now.getDay());
     PermalinkProvider permalinkProvider = blog.getPermalinkProvider();
 
     if (month == null) {
-      month = blog.getBlogForMonth(today.getYear(), today.getMonth());
+      month = thisMonth;
     }
 
-    Calendar firstDayOfMonth = blog.getCalendar();
-    firstDayOfMonth.set(Calendar.YEAR, month.getYear());
-    firstDayOfMonth.set(Calendar.MONTH, month.getMonth() - 1);
-    firstDayOfMonth.set(Calendar.DAY_OF_MONTH, 1);
+    SimpleDate firstDayOfMonth = new SimpleDate(month.getYear(), month.getMonth(), 1);
 
     SimpleDateFormat monthAndYearFormatter = new SimpleDateFormat("MMMM yyyy", blog.getLocale());
     monthAndYearFormatter.setTimeZone(blog.getTimeZone());
@@ -94,7 +89,7 @@ public class CalendarTag extends TagSupport {
     monthFormatter.setTimeZone(blog.getTimeZone());
     NumberFormat numberFormatter = NumberFormat.getIntegerInstance(blog.getLocale());
 
-    Month firstMonth = blog.getBlogForFirstMonth();
+    Month firstMonth = BlogSummaryUtils.getFirstMonth(blog, years);
 
     try {
       JspWriter out = pageContext.getOut();
@@ -117,7 +112,7 @@ public class CalendarTag extends TagSupport {
       out.write("</td>");
       out.write("</tr>");
 
-      int firstDayOfWeek = now.getFirstDayOfWeek();
+      int firstDayOfWeek = blog.getCalendar().getFirstDayOfWeek();
 
       // write out the calendar header
       DateFormatSymbols symbols = new DateFormatSymbols(blog.getLocale());
@@ -132,14 +127,11 @@ public class CalendarTag extends TagSupport {
       out.write("</tr>");
 
       // write out the body of the calendar
-      Iterator it = getDatesForCompleteWeeks(blog, month).iterator();
-      Calendar cal;
       int count = 0;
-      while (it.hasNext()) {
-        cal = (Calendar)it.next();
-        Day daily = blog.getBlogForDay(cal.getTime());
+      for (SimpleDate date : getDatesForCompleteWeeks(blog, month)) {
+        Day daily = BlogSummaryUtils.getBlogForDay(blog, years, date);
 
-        String formattedNumber = numberFormatter.format(cal.get(Calendar.DAY_OF_MONTH));
+        String formattedNumber = numberFormatter.format(date.getDay());
         if (formattedNumber.length() == 1) {
           formattedNumber = "&nbsp;" + formattedNumber;
         }
@@ -149,11 +141,11 @@ public class CalendarTag extends TagSupport {
         }
 
         // output padding if the date to display isn't in the month
-        if (cal.get(Calendar.MONTH) != firstDayOfMonth.get(Calendar.MONTH)) {
+        if (date.getMonth() != firstDayOfMonth.getMonth()) {
           out.write("<td class=\"calendarDay\">&nbsp;");
-        } else if (now.get(Calendar.YEAR) == cal.get(Calendar.YEAR) &&
-          now.get(Calendar.MONTH) == cal.get(Calendar.MONTH) &&
-          now.get(Calendar.DAY_OF_MONTH) == cal.get(Calendar.DAY_OF_MONTH)) {
+        } else if (now.getYear() == date.getYear() &&
+          now.getMonth() == date.getMonth() &&
+          now.getDay() == date.getDay()) {
           out.write("<td class=\"calendarToday\">");
           if (daily.hasBlogEntries()) {
             out.write("&nbsp;<a href=\"" + permalinkProvider.getPermalink(daily) + "\">" + formattedNumber + "</a>&nbsp;");
@@ -189,7 +181,7 @@ public class CalendarTag extends TagSupport {
       if (previous.before(firstMonth)) {
         out.write(monthFormatter.format(previous.getDate()));
       } else {
-        out.write("<a href=\"" + permalinkProvider.getPermalink(month) + "\">" + monthFormatter.format(previous.getDate()) + "</a>");
+        out.write("<a href=\"" + permalinkProvider.getPermalink(previous) + "\">" + monthFormatter.format(previous.getDate()) + "</a>");
       }
 
       String todayText = I18n.getMessage(blog, "common.today");
@@ -198,10 +190,10 @@ public class CalendarTag extends TagSupport {
       out.write("&nbsp; | &nbsp;");
 
       // only display the next month date if it's not in the future
-      if (next.after(blog.getBlogForThisMonth()) || next.before(firstMonth)) {
+      if (next.after(thisYear.getBlogForMonth(now.getMonth())) || next.before(firstMonth)) {
         out.write(monthFormatter.format(next.getDate()));
       } else {
-        out.write("<a href=\"" + permalinkProvider.getPermalink(month) + "\">" + monthFormatter.format(next.getDate()) + "</a>");
+        out.write("<a href=\"" + permalinkProvider.getPermalink(next) + "\">" + monthFormatter.format(next.getDate()) + "</a>");
       }
       out.write("</td>");
       out.write("</tr>");
@@ -228,8 +220,8 @@ public class CalendarTag extends TagSupport {
    * @param month   the month
    * @return  a List of Calendar instances
    */
-  private List getDatesForCompleteWeeks(Blog blog, Month month) {
-    List dates = new ArrayList();
+  private List<SimpleDate> getDatesForCompleteWeeks(Blog blog, Month month) {
+    List<SimpleDate> dates = new ArrayList<SimpleDate>();
     Calendar start = blog.getCalendar();
     start.setTime(month.getBlogForDay(1).getDate(blog.getCalendar()));
     Calendar end = blog.getCalendar();
@@ -240,21 +232,21 @@ public class CalendarTag extends TagSupport {
     for (int i = 1; i <= month.getLastDayInMonth(); i++) {
       cal = (Calendar)start.clone();
       cal.set(Calendar.DAY_OF_MONTH, i);
-      dates.add(cal);
+      dates.add(new SimpleDate(cal));
     }
 
     // pad out before the start of the month, until the first day of the week
     cal = (Calendar)start.clone();
     while (cal.get(Calendar.DAY_OF_WEEK) != cal.getFirstDayOfWeek()) {
       cal.add(Calendar.DATE, -1);
-      dates.add(0, cal.clone());
+      dates.add(0, new SimpleDate(cal));
     }
 
     // pad out after month, until the last day of the week
     cal = (Calendar)end.clone();
     cal.add(Calendar.DATE, 1);
     while (cal.get(Calendar.DAY_OF_WEEK) != cal.getFirstDayOfWeek()) {
-      dates.add(cal.clone());
+      dates.add(new SimpleDate(cal));
       cal.add(Calendar.DATE, 1);
     }
 

@@ -73,10 +73,13 @@ public class ViewMonthAction extends Action {
     String month = request.getParameter("month");
 
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
+    SimpleDate now = blog.getToday();
+    List<Year> years = blogEntryIndex.getYears(blog);
     Month monthly;
     if (year != null && year.length() > 0 &&
         month != null && month.length() > 0) {
-      monthly = blog.getBlogForMonth(Integer.parseInt(year), Integer.parseInt(month));
+      monthly = BlogSummaryUtils.getYear(blog, years, Integer.parseInt(year))
+          .getBlogForMonth(Integer.parseInt(month));
     } else {
       return new NotFoundView();
     }
@@ -92,8 +95,7 @@ public class ViewMonthAction extends Action {
     getModel().put(Constants.MONTHLY_BLOG, monthly);
 
     // put the previous and next months in the model for navigation purposes
-    List<Year> years = blogEntryIndex.getYears(blog);
-    Month firstMonth = blog.getBlogForFirstMonth();
+    Month firstMonth = BlogSummaryUtils.getFirstMonth(blog, years);
     Month previousMonth = BlogSummaryUtils.getPreviousMonth(years, monthly);
     Month nextMonth = BlogSummaryUtils.getNextMonth(years, monthly);
 
@@ -101,7 +103,8 @@ public class ViewMonthAction extends Action {
       getModel().put("previousMonth", previousMonth);
     }
 
-    if (!nextMonth.after(blog.getBlogForThisMonth()) || nextMonth.before(firstMonth)) {
+    if (!nextMonth.after(blogEntryIndex.getBlogForYear(blog, now.getYear()).getBlogForMonth(now.getMonth()))
+        || nextMonth.before(firstMonth)) {
       getModel().put("nextMonth", nextMonth);
     }
 

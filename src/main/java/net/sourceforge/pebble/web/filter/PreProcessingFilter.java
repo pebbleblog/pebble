@@ -31,9 +31,11 @@
  */
 package net.sourceforge.pebble.web.filter;
 
+import com.google.common.collect.Lists;
 import net.sourceforge.pebble.Configuration;
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.PebbleContext;
+import net.sourceforge.pebble.index.BlogEntryIndex;
 import net.sourceforge.pebble.security.PebbleUserDetails;
 import net.sourceforge.pebble.util.HttpsURLRewriter;
 import net.sourceforge.pebble.util.SecurityUtils;
@@ -68,6 +70,7 @@ public class PreProcessingFilter implements Filter {
   private static Log log = LogFactory.getLog(PreProcessingFilter.class);
 
   private BlogManager blogManager;
+  private BlogEntryIndex blogEntryIndex;
 
   /**
    * Initialises this instance.
@@ -77,6 +80,7 @@ public class PreProcessingFilter implements Filter {
   public void init(FilterConfig config) {
     ApplicationContext applicationContext = WebApplicationContextUtils.getRequiredWebApplicationContext(config.getServletContext());
     blogManager = (BlogManager) applicationContext.getBean("blogManager");
+    blogEntryIndex = applicationContext.getBean(BlogEntryIndex.class);
   }
 
   /**
@@ -141,7 +145,9 @@ public class PreProcessingFilter implements Filter {
         httpRequest.setAttribute(Constants.CATEGORIES, b.getCategories());
         httpRequest.setAttribute(Constants.TAGS, b.getTags());
         httpRequest.setAttribute(Constants.PLUGIN_PROPERTIES, b.getPluginProperties());
-        httpRequest.setAttribute(Constants.ARCHIVES, b.getArchives());
+        httpRequest.setAttribute(Constants.ARCHIVES, Lists.reverse(blogEntryIndex.getYears(b)));
+        httpRequest.setAttribute("permalinkProvider", ((Blog) blog).getPermalinkProvider());
+        httpRequest.setAttribute(Constants.YEARS_KEY, blogEntryIndex.getYears((Blog) blog));
         httpRequest.setAttribute(Constants.BLOG_TYPE, "singleblog");
       } else {
         httpRequest.setAttribute(Constants.BLOG_TYPE, "multiblog");

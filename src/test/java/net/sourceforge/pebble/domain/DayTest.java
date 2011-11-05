@@ -46,7 +46,9 @@ public class DayTest extends SingleBlogTestCase {
 
   protected void setUp() throws Exception {
     super.setUp();
-    day = blog.getBlogForToday();
+    SimpleDate now = blog.getToday();
+    day = daoFactory.getBlogEntryIndex().getBlogForYear(blog, now.getYear()).getBlogForMonth(now.getMonth())
+        .getBlogForDay(now.getDay());
   }
 
   /**
@@ -61,14 +63,16 @@ public class DayTest extends SingleBlogTestCase {
    * Tests the getter for the monthly blog.
    */
   public void testGetMonth() {
-    assertEquals(blog.getBlogForThisMonth().getMonth(), day.getMonth());
+    SimpleDate now = blog.getToday();
+    assertEquals(daoFactory.getBlogEntryIndex().getBlogForYear(blog, now.getYear())
+        .getBlogForMonth(now.getMonth()).getMonth(), day.getMonth());
   }
 
   /**
    * Tests the getter for the date property.
    */
   public void testGetDate() {
-    day = blog.getBlogForDay(2003, 4, 7);
+    day = daoFactory.getBlogEntryIndex().getBlogForYear(blog, 2003).getBlogForMonth(4).getBlogForDay(7);
     Date date = day.getDate(blog.getCalendar());
     Calendar cal = blog.getCalendar();
     cal.setTime(date);
@@ -86,11 +90,11 @@ public class DayTest extends SingleBlogTestCase {
    */
   public void testGetPermalink() {
     String permalink = "2003/04/01.html";
-    day = blog.getBlogForDay(2003, 4, 1);
+    day = daoFactory.getBlogEntryIndex().getBlogForYear(blog, 2003).getBlogForMonth(4).getBlogForDay(1);
     assertEquals(permalink, blog.getPermalinkProvider().getPermalink(day));
 
     permalink = "2003/04/10.html";
-    day = blog.getBlogForDay(2003, 4, 10);
+    day = daoFactory.getBlogEntryIndex().getBlogForYear(blog, 2003).getBlogForMonth(4).getBlogForDay(10);
     assertEquals(permalink, blog.getPermalinkProvider().getPermalink(day));
   }
 

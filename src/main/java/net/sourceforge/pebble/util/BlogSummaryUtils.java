@@ -1,9 +1,7 @@
 package net.sourceforge.pebble.util;
 
-import net.sourceforge.pebble.domain.Blog;
-import net.sourceforge.pebble.domain.Day;
-import net.sourceforge.pebble.domain.Month;
-import net.sourceforge.pebble.domain.Year;
+import com.google.common.collect.Lists;
+import net.sourceforge.pebble.domain.*;
 
 /**
  * Utilities for working with the blog summaries (ie, months, years days etc)
@@ -56,4 +54,27 @@ public class BlogSummaryUtils {
     return Year.emptyYear(blog, yearNo);
   }
 
+  /**
+   * Gets the Month instance representing the first month that
+   * contains blog entries.
+   *
+   * @param blog A blog
+   * @param years The available years
+   * @return  a Month instance
+   */
+  public static Month getFirstMonth(Blog blog, Iterable<Year> years) {
+    for (Year year : years) {
+      for (Month month : Lists.reverse(year.getArchives())) {
+        if (month.hasBlogEntries()) {
+          return month;
+        }
+      }
+    }
+    SimpleDate now = blog.getToday();
+    return Month.emptyMonth(blog, now.getYear(), now.getMonth());
+  }
+
+  public static Day getBlogForDay(Blog blog, Iterable<Year> years, SimpleDate date) {
+    return getYear(blog, years, date.getYear()).getBlogForMonth(date.getMonth()).getBlogForDay(date.getDay());
+  }
 }

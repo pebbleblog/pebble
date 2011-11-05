@@ -63,7 +63,7 @@ public abstract class PermalinkProviderSupportTestCase extends SingleBlogTestCas
    * Tests that a monthly blog permalink can be generated.
    */
   public void testGetPermalinkForMonth() {
-    Month month = blog.getBlogForMonth(2004, 01);
+    Month month = daoFactory.getBlogEntryIndex().getBlogForYear(blog, 2004).getBlogForMonth(1);
     assertEquals("2004/01.html", permalinkProvider.getPermalink(month));
   }
 
@@ -91,7 +91,7 @@ public abstract class PermalinkProviderSupportTestCase extends SingleBlogTestCas
    * Tests that a day permalink can be generated.
    */
   public void testGetPermalinkForDay() {
-    Day day = blog.getBlogForDay(2004, 07, 14);
+    Day day = daoFactory.getBlogEntryIndex().getBlogForYear(blog, 2004).getBlogForMonth(07).getBlogForDay(14);
     assertEquals("2004/07/14.html", permalinkProvider.getPermalink(day));
   }
 

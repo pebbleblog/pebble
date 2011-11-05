@@ -72,7 +72,9 @@ public class TitlePermalinkProvider extends PermalinkProviderSupport {
       return buildPermalink(blogEntry) + ".html";
     } else {
 
-      Day day = getBlog().getBlogForDay(blogEntry.getDate());
+      SimpleDate date = new SimpleDate(getBlog().getTimeZone(), getBlog().getLocale(), blogEntry.getDate());
+      Day day = blogEntryIndex.getBlogForYear(getBlog(), date.getYear())
+          .getBlogForMonth(date.getMonth()).getBlogForDay(date.getDay());
       List<String> entries = getBlog().getBlogEntryIndex().getBlogEntriesForDay(getBlog(), day.getYear(), day.getMonth(), day.getDay());
       int count = 0;
       for (int i = entries.size()-1; i > entries.indexOf(blogEntry.getId()); i--) {

@@ -331,6 +331,15 @@ public abstract class AbstractBlog extends TimePeriod {
   }
 
   /**
+   * Gets today, according to the timezone and locale af this blog
+   *
+   * @return    a simple date
+   */
+  public SimpleDate getToday() {
+    return new SimpleDate(getTimeZone(), getLocale(), new Date());
+  }
+
+  /**
    * Gets the number of recent blog entries that are displayed on the home page.
    *
    * @return  an int (3 by default)

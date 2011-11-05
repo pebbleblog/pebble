@@ -33,7 +33,9 @@ package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.domain.SimpleDate;
 import net.sourceforge.pebble.domain.StaticPage;
+import net.sourceforge.pebble.index.BlogEntryIndex;
 import net.sourceforge.pebble.service.StaticPageService;
 import net.sourceforge.pebble.service.StaticPageServiceException;
 import net.sourceforge.pebble.web.view.NotFoundView;
@@ -54,6 +56,8 @@ public class ViewStaticPageAction extends Action {
 
   @Inject
   private StaticPageService staticPageService;
+  @Inject
+  private BlogEntryIndex blogEntryIndex;
 
   /**
    * Peforms the processing associated with this action.
@@ -77,8 +81,10 @@ public class ViewStaticPageAction extends Action {
       // requesting URL was wrong
       return new NotFoundView();
     } else {
+      SimpleDate now = blog.getToday();
       getModel().put(Constants.STATIC_PAGE_KEY, staticPage);
-      getModel().put(Constants.MONTHLY_BLOG, blog.getBlogForThisMonth());
+      getModel().put(Constants.MONTHLY_BLOG, blogEntryIndex.getBlogForYear(blog, now.getYear())
+          .getBlogForMonth(now.getMonth()));
       getModel().put("displayMode", "detail");
 
       return new StaticPageView();

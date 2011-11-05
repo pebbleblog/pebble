@@ -33,6 +33,7 @@ package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.domain.*;
+import net.sourceforge.pebble.index.BlogEntryIndex;
 import net.sourceforge.pebble.util.SecurityUtils;
 import net.sourceforge.pebble.util.Pageable;
 import net.sourceforge.pebble.web.view.RedirectView;
@@ -55,6 +56,8 @@ public class ViewBlogEntriesByPageAction extends Action {
 
   @Inject
   private BlogManager blogManager;
+  @Inject
+  private BlogEntryIndex blogEntryIndex;
 
   /**
    * Peforms the processing associated with this action.
@@ -92,15 +95,16 @@ public class ViewBlogEntriesByPageAction extends Action {
         publishedOnly = false;
       }
 
-      getModel().put(Constants.MONTHLY_BLOG, blog.getBlogForThisMonth());
+      SimpleDate now = blog.getToday();
+      getModel().put(Constants.MONTHLY_BLOG, blogEntryIndex.getBlogForYear(blog, now.getYear()).getBlogForMonth(now.getMonth()));
       getModel().put("displayMode", "page");
       getModel().put("page", page);
 
       Pageable<String> pageable;
       if (publishedOnly) {
-        pageable = new Pageable<String>(blog.getBlogEntryIndex().getPublishedBlogEntries(blog));
+        pageable = new Pageable<String>(blogEntryIndex.getPublishedBlogEntries(blog));
       } else {
-        pageable = new Pageable<String>(blog.getBlogEntryIndex().getBlogEntries(blog));
+        pageable = new Pageable<String>(blogEntryIndex.getBlogEntries(blog));
       }
 
       pageable.setPageSize(blog.getRecentBlogEntriesOnHomePage());

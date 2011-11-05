@@ -33,8 +33,8 @@
 package net.sourceforge.pebble.permalink;
 
 import net.sourceforge.pebble.api.permalink.PermalinkProvider;
-import net.sourceforge.pebble.dao.DAOFactory;
 import net.sourceforge.pebble.domain.*;
+import net.sourceforge.pebble.index.BlogEntryIndex;
 
 import javax.inject.Inject;
 import java.text.SimpleDateFormat;
@@ -57,6 +57,8 @@ public class Latin1SeoPermalinkProvider implements PermalinkProvider {
 
   @Inject
   private BlogService blogService;
+  @Inject
+  private BlogEntryIndex blogEntryIndex;
 
   /**
    * the regex used to check for a day request
@@ -212,7 +214,7 @@ public class Latin1SeoPermalinkProvider implements PermalinkProvider {
     String year = uri.substring(1, 5);
     String month = uri.substring(6, 8);
 
-    return getBlog().getBlogForMonth(Integer.parseInt(year), Integer.parseInt(month));
+    return blogEntryIndex.getBlogForYear(getBlog(), Integer.parseInt(year)).getBlogForMonth(Integer.parseInt(month));
   }
 
   /**
@@ -256,8 +258,9 @@ public class Latin1SeoPermalinkProvider implements PermalinkProvider {
     String month = uri.substring(6, 8);
     String day = uri.substring(9, 11);
 
-    return getBlog().getBlogForDay(Integer.parseInt(year),
-            Integer.parseInt(month), Integer.parseInt(day));
+    return blogEntryIndex.getBlogForYear(blog, Integer.parseInt(year))
+        .getBlogForMonth(Integer.parseInt(month))
+        .getBlogForDay(Integer.parseInt(day));
   }
 
 

@@ -587,8 +587,8 @@ public class BlogEntryTest extends SingleBlogTestCase {
    * Tests that the next blog entry can be accessed.
    */
   public void testGetNextBlogEntry() throws Exception {
-    Day today = blog.getBlogForToday();
     List<Year> years = daoFactory.getBlogEntryIndex().getYears(blog);
+    Day today = BlogSummaryUtils.getBlogForDay(blog, years, blog.getToday());
     Day oneDayAgo = BlogSummaryUtils.getPreviousDay(years, today);
     Day twoDaysAgo = BlogSummaryUtils.getPreviousDay(years, oneDayAgo);
 
@@ -617,8 +617,8 @@ public class BlogEntryTest extends SingleBlogTestCase {
    * Tests that the previous blog entry can be accessed.
    */
   public void testGetPreviousBlogEntry() throws Exception {
-    Day today = blog.getBlogForToday();
     List<Year> years = daoFactory.getBlogEntryIndex().getYears(blog);
+    Day today = BlogSummaryUtils.getBlogForDay(blog, years, blog.getToday());
     Day oneDayAgo = BlogSummaryUtils.getPreviousDay(years, today);
     Day twoDaysAgo = BlogSummaryUtils.getPreviousDay(years, oneDayAgo);
 
