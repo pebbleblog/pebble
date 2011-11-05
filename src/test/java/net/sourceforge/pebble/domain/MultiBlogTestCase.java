@@ -61,7 +61,7 @@ public abstract class MultiBlogTestCase extends PebbleTestCase {
     addComponents(daoFactory, daoFactory.getBlogEntryDAO(), daoFactory.getCategoryDAO(),
         daoFactory.getRefererFilterDAO(), daoFactory.getStaticPageDAO(), daoFactory.getBlogEntryIndex());
     contentCache = new ContentCache();
-    blogService = new BlogService(daoFactory.getBlogEntryDAO(), contentCache);
+    blogService = new BlogServiceImpl(daoFactory.getBlogEntryDAO(), contentCache, daoFactory.getBlogEntryIndex());
     blogManager = new BlogManager(blogService, daoFactory, contentCache, configuration);
     addComponent("blogManager", blogManager);
     addComponents(blogService, contentCache);

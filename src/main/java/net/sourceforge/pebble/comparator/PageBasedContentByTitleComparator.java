@@ -32,6 +32,7 @@
 package net.sourceforge.pebble.comparator;
 
 import net.sourceforge.pebble.domain.PageBasedContent;
+import sun.jvm.hotspot.oops.Instance;
 
 import java.util.Comparator;
 
@@ -41,20 +42,13 @@ import java.util.Comparator;
  *
  * @author    Simon Brown
  */
-public class PageBasedContentByTitleComparator implements Comparator {
+public class PageBasedContentByTitleComparator implements Comparator<PageBasedContent> {
+  public static final PageBasedContentByTitleComparator INSTANCE = new PageBasedContentByTitleComparator();
 
-  /**
-   * Compares two objects.
-   *
-   * @param o1  object 1
-   * @param o2  object 2
-   * @return  -n, 0 or +n if the title of the first blog entry is less than,
-   *          the same as or greater than the second, respectively
-   */
-  public int compare(Object o1, Object o2) {
-    PageBasedContent c1 = (PageBasedContent)o1;
-    PageBasedContent c2 = (PageBasedContent)o2;
+  private PageBasedContentByTitleComparator() {
+  }
 
+  public int compare(PageBasedContent c1, PageBasedContent c2) {
     return c1.getTitle().compareToIgnoreCase(c2.getTitle());
   }
 

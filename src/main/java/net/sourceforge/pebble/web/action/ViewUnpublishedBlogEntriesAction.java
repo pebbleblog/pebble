@@ -34,12 +34,18 @@ package net.sourceforge.pebble.web.action;
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.comparator.PageBasedContentByTitleComparator;
 import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.domain.BlogEntry;
+import net.sourceforge.pebble.domain.BlogService;
+import net.sourceforge.pebble.domain.BlogServiceException;
+import net.sourceforge.pebble.index.BlogEntryIndex;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.impl.UnpublishedBlogEntriesView;
 
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -51,6 +57,11 @@ import java.util.List;
  */
 public class ViewUnpublishedBlogEntriesAction extends SecureAction {
 
+  @Inject
+  private BlogService blogService;
+  @Inject
+  private BlogEntryIndex blogEntryIndex;
+
   /**
    * Peforms the processing associated with this action.
    *
@@ -60,9 +71,14 @@ public class ViewUnpublishedBlogEntriesAction extends SecureAction {
    */
   public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
-    List blogEntries = blog.getUnpublishedBlogEntries();
-    Collections.sort(blogEntries, new PageBasedContentByTitleComparator());
-    getModel().put("unpublishedBlogEntries", blogEntries);
+
+    try {
+      List<BlogEntry> blogEntries = blogService.getUnpublishedBlogEntries(blog);
+      Collections.sort(blogEntries, PageBasedContentByTitleComparator.INSTANCE);
+      getModel().put("unpublishedBlogEntries", blogEntries);
+    } catch (BlogServiceException e) {
+      throw new ServletException(e);
+    }
 
     return new UnpublishedBlogEntriesView();
   }

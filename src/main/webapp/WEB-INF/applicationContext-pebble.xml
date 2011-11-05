@@ -55,7 +55,7 @@
   <bean id="staticPageDAO" factory-bean="daoFactory" factory-method="getStaticPageDAO"/>
 
   <bean id="staticPageService" class="net.sourceforge.pebble.service.StaticPageService"/>
-  <bean id="blogService" class="net.sourceforge.pebble.domain.BlogService" autowire="constructor"/>
+  <bean id="blogService" class="net.sourceforge.pebble.domain.BlogServiceImpl" autowire="constructor"/>
 
   <bean id="blogEntryIndex" factory-bean="daoFactory" factory-method="getBlogEntryIndex"/>
 

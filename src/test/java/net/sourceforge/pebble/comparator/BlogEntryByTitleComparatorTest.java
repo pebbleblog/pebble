@@ -42,7 +42,7 @@ import net.sourceforge.pebble.domain.SingleBlogTestCase;
 public class BlogEntryByTitleComparatorTest extends SingleBlogTestCase {
 
   public void testCompare() {
-    PageBasedContentByTitleComparator comp = new PageBasedContentByTitleComparator();
+    PageBasedContentByTitleComparator comp = PageBasedContentByTitleComparator.INSTANCE;
 
     BlogEntry b1 = new BlogEntry(blog);
     b1.setTitle("A title");
@@ -56,7 +56,7 @@ public class BlogEntryByTitleComparatorTest extends SingleBlogTestCase {
   }
 
   public void testCompareIgnoreCase() {
-    PageBasedContentByTitleComparator comp = new PageBasedContentByTitleComparator();
+    PageBasedContentByTitleComparator comp = PageBasedContentByTitleComparator.INSTANCE;
 
     BlogEntry b1 = new BlogEntry(blog);
     b1.setTitle("a title");

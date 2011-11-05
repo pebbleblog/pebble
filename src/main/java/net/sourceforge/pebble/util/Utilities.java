@@ -41,8 +41,6 @@ import net.sourceforge.pebble.domain.*;
 import net.sourceforge.pebble.api.event.comment.CommentEvent;
 import net.sourceforge.pebble.api.event.trackback.TrackBackEvent;
 import net.sourceforge.pebble.event.response.IpAddressListener;
-import net.sourceforge.pebble.index.BlogEntryIndex;
-import net.sourceforge.pebble.index.file.FileBlogEntryIndex;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -347,7 +345,7 @@ public class Utilities {
 
     DAOFactory daoFactory = new FileDAOFactory();
     ContentCache contentCache = new ContentCache();
-    BlogService blogService = new BlogService(daoFactory.getBlogEntryDAO(), contentCache);
+    BlogService blogService = new BlogServiceImpl(daoFactory.getBlogEntryDAO(), contentCache, daoFactory.getBlogEntryIndex());
     BlogManager blogManager = new BlogManager(blogService, daoFactory, contentCache, new Configuration());
     Blog blog = new Blog(blogManager, daoFactory, blogService, args[0]);
 

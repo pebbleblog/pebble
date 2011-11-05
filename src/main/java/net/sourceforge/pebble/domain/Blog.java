@@ -786,26 +786,6 @@ public class Blog extends AbstractBlog {
   }
 
   /**
-   * Gets all unpublished blog entries for this blog.
-   *
-   * @return  a List of BlogEntry objects
-   */
-  public List<BlogEntry> getUnpublishedBlogEntries() {
-    List<BlogEntry> blogEntries = new ArrayList<BlogEntry>();
-
-    List<String> blogEntryIds = blogEntryIndex.getUnpublishedBlogEntries(this);
-    for (String blogEntryId : blogEntryIds) {
-      try {
-        blogEntries.add(blogService.getBlogEntry(this, blogEntryId));
-      } catch (BlogServiceException e) {
-        log.error("Exception encountered", e);
-      }
-    }
-
-    return blogEntries;
-  }
-
-  /**
    * Gets the number of blog entries for this blog.
    *
    * @return  an int

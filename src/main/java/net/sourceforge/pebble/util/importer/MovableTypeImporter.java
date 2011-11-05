@@ -37,8 +37,6 @@ import net.sourceforge.pebble.PebbleContext;
 import net.sourceforge.pebble.dao.DAOFactory;
 import net.sourceforge.pebble.dao.file.FileDAOFactory;
 import net.sourceforge.pebble.domain.*;
-import net.sourceforge.pebble.index.BlogEntryIndex;
-import net.sourceforge.pebble.index.file.FileBlogEntryIndex;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -81,7 +79,7 @@ public class MovableTypeImporter {
 
     DAOFactory daoFactory = new FileDAOFactory();
     ContentCache contentCache = new ContentCache();
-    BlogService blogService = new BlogService(daoFactory.getBlogEntryDAO(), contentCache);
+    BlogService blogService = new BlogServiceImpl(daoFactory.getBlogEntryDAO(), contentCache, daoFactory.getBlogEntryIndex());
     BlogManager blogManager = new BlogManager(blogService, daoFactory, contentCache, config);
     Blog blog = new Blog(blogManager, daoFactory, blogService, args[1]);
     blog.setProperty(Blog.TIMEZONE_KEY, args[2]);
