@@ -786,35 +786,6 @@ public class Blog extends AbstractBlog {
   }
 
   /**
-   * Gets the number of blog entries for this blog.
-   *
-   * @return  an int
-   */
-  public int getNumberOfBlogEntries() {
-    return blogEntryIndex.getNumberOfBlogEntries(this);
-  }
-
-  /**
-   * Gets the number of published blog entries for this blog.
-   *
-   * @return  an int
-   */
-  @Deprecated
-  public int getNumberOfPublishedBlogEntries() {
-    return blogEntryIndex.getNumberOfPublishedBlogEntries(this);
-  }
-
-  /**
-   * Gets the number of unpublished blog entries for this blog.
-   *
-   * @return  an int
-   */
-  @Deprecated
-  public int getNumberOfUnpublishedBlogEntries() {
-    return blogEntryIndex.getNumberOfUnpublishedBlogEntries(this);
-  }
-
-  /**
    * Gets the number of static pages for this blog.
    *
    * @return  an int

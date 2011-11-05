@@ -8,7 +8,7 @@
    - tags                   java.util.List<net.sourceforge.pebble.domain.Tag>
    - recentBlogEntries      java.util.List<net.sourceforge.pebble.domain.BlogEntry>
    - recentResponses        java.util.List<net.sourceforge.pebble.domain.Response>
-   - archives               java.util.List<net.sourceforge.pebble.domain.Year>
+   - archives               net.sourceforge.pebble.domain.Archive
    - pluginProperties       net.sourceforge.pebble.PluginProperties
    - authenticatedUser      net.sourceforge.pebble.security.PebbleUserDetails
 --%>

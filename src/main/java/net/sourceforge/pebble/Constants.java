@@ -39,7 +39,6 @@ package net.sourceforge.pebble;
 public class Constants {
 
   public static final String BLOG_KEY = "blog";
-  public static final String YEARS_KEY = "years";
   public static final String MULTI_BLOG_KEY = "multiBlog";
   public static final String BLOG_URL = "blogUrl";
   public static final String MULTI_BLOG_URL = "multiBlogUrl";

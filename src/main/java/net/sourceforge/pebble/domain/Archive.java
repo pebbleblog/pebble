@@ -12,10 +12,16 @@ import java.util.List;
 public class Archive {
   private final Blog blog;
   private final List<Year> years;
+  private final int numberOfBlogEntries;
+  private final int numberOfPublishedBlogEntries;
+  private final int numberOfUnpublishedBlogEntries;
 
-  private Archive(Blog blog, List<Year> years) {
+  private Archive(Blog blog, List<Year> years, int numberOfBlogEntries, int numberOfPublishedBlogEntries, int numberOfUnpublishedBlogEntries) {
     this.blog = blog;
     this.years = years;
+    this.numberOfBlogEntries = numberOfBlogEntries;
+    this.numberOfPublishedBlogEntries = numberOfPublishedBlogEntries;
+    this.numberOfUnpublishedBlogEntries = numberOfUnpublishedBlogEntries;
   }
 
   /**
@@ -30,10 +36,37 @@ public class Archive {
   /**
    * Get the years for this archive
    *
-   * @return The years for this archive
+   * @return The years for this archive, in reverse order
    */
   public List<Year> getYears() {
-    return years;
+    return Lists.reverse(years);
+  }
+
+  /**
+   * Get the total number of blog entries in the blog
+   *
+   * @return The total number of blog entries
+   */
+  public int getNumberOfBlogEntries() {
+    return numberOfBlogEntries;
+  }
+
+  /**
+   * Get the number of unpublished blog entries in the blog
+   *
+   * @return The number of unpublished blog entries
+   */
+  public int getNumberOfUnpublishedBlogEntries() {
+    return numberOfUnpublishedBlogEntries;
+  }
+
+  /**
+   * Get the number of published blog entries in the blog
+   *
+   * @return The number of published blog entries
+   */
+  public int getNumberOfPublishedBlogEntries() {
+    return numberOfPublishedBlogEntries;
   }
 
   /**
@@ -190,6 +223,9 @@ public class Archive {
   public static class Builder {
     private final Blog blog;
     private List<Year> years = Collections.emptyList();
+    private int numberOfBlogEntries;
+    private int numberOfPublishedBlogEntries;
+    private int numberOfUnpublishedBlogEntries;
 
     private Builder(Blog blog) {
       this.blog = blog;
@@ -198,14 +234,32 @@ public class Archive {
     private Builder(Archive like) {
       this.blog = like.blog;
       this.years = like.years;
+      this.numberOfBlogEntries = like.numberOfBlogEntries;
+      this.numberOfPublishedBlogEntries = like.numberOfPublishedBlogEntries;
+      this.numberOfUnpublishedBlogEntries = like.numberOfUnpublishedBlogEntries;
     }
 
     public Archive build() {
-      return new Archive(blog, ImmutableList.copyOf(years));
+      return new Archive(blog, ImmutableList.copyOf(years), numberOfBlogEntries, numberOfPublishedBlogEntries, numberOfUnpublishedBlogEntries);
     }
 
     public Builder setYears(List<Year> years) {
       this.years = years;
+      return this;
+    }
+
+    public Builder setNumberOfBlogEntries(int numberOfBlogEntries) {
+      this.numberOfBlogEntries = numberOfBlogEntries;
+      return this;
+    }
+
+    public Builder setNumberOfUnpublishedBlogEntries(int numberOfUnpublishedBlogEntries) {
+      this.numberOfUnpublishedBlogEntries = numberOfUnpublishedBlogEntries;
+      return this;
+    }
+
+    public Builder setNumberOfPublishedBlogEntries(int numberOfPublishedBlogEntries) {
+      this.numberOfPublishedBlogEntries = numberOfPublishedBlogEntries;
       return this;
     }
   }

@@ -73,18 +73,6 @@ public class FileBlogEntryIndex implements BlogEntryIndex {
     cache.get(blog.getRoot()).unindex(blogEntry);
   }
 
-  public int getNumberOfBlogEntries(Blog blog) {
-    return cache.get(blog.getRoot()).getNumberOfBlogEntries();
-  }
-
-  public int getNumberOfPublishedBlogEntries(Blog blog) {
-    return cache.get(blog.getRoot()).getNumberOfPublishedBlogEntries();
-  }
-
-  public int getNumberOfUnpublishedBlogEntries(Blog blog) {
-    return cache.get(blog.getRoot()).getNumberOfUnpublishedBlogEntries();
-  }
-
   public List<String> getBlogEntries(Blog blog) {
     return cache.get(blog.getRoot()).getBlogEntries();
   }
@@ -278,7 +266,11 @@ public class FileBlogEntryIndex implements BlogEntryIndex {
       readPublishedIndexEntries = ImmutableList.copyOf(publishedIndexEntries);
       readUnpublishedIndexEntries = ImmutableList.copyOf(unpublishedIndexEntries);
       readYearCaches = ImmutableList.copyOf(yearCaches);
-      archive = Archive.builder(blog).setYears(years).build();
+      archive = Archive.builder(blog).setYears(years)
+          .setNumberOfBlogEntries(readIndexEntries.size())
+          .setNumberOfPublishedBlogEntries(readPublishedIndexEntries.size())
+          .setNumberOfUnpublishedBlogEntries(readUnpublishedIndexEntries.size())
+          .build();
     }
 
     /**
@@ -374,24 +366,6 @@ public class FileBlogEntryIndex implements BlogEntryIndex {
      */
     public int getNumberOfBlogEntries() {
       return readIndexEntries.size();
-    }
-
-    /**
-     * Gets the number of published blog entries for this blog.
-     *
-     * @return an int
-     */
-    public int getNumberOfPublishedBlogEntries() {
-      return readPublishedIndexEntries.size();
-    }
-
-    /**
-     * Gets the number of unpublished blog entries for this blog.
-     *
-     * @return an int
-     */
-    public int getNumberOfUnpublishedBlogEntries() {
-      return readUnpublishedIndexEntries.size();
     }
 
     /**

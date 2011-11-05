@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 <%@ taglib uri="http://pebble.sourceforge.net/pebble" prefix="pebble" %>
 <%@ taglib uri="/WEB-INF/url.tld" prefix="url" %>
-<%--@elvariable id="archives" type="java.util.Collection<net.sourceforge.pebble.domain.Year"--%>
+<%--@elvariable id="archives" type="net.sourceforge.pebble.domain.Archive"--%>
 
 <%--
   Displays month-by-month archive links.
@@ -12,7 +12,7 @@
   <div class="sidebarItemTitle"><span><fmt:message key="sidebar.archives"/></span></div>
   <div class="sidebarItemBody">
     <table width="99%" cellpadding="0" cellspacing="0">
-      <c:forEach var="year" items="${archives}" varStatus="status">
+      <c:forEach var="year" items="${archives.years}" varStatus="status">
         <c:if test="${status.count % 2 == 1}">
         <tr>
         </c:if>

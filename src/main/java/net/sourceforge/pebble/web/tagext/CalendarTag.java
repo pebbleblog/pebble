@@ -68,7 +68,7 @@ public class CalendarTag extends TagSupport {
 
     HttpServletRequest request = (HttpServletRequest)pageContext.getRequest();
     Blog blog = (Blog)request.getAttribute(Constants.BLOG_KEY);
-    Archive archive = (Archive) request.getAttribute(Constants.YEARS_KEY);
+    Archive archive = (Archive) request.getAttribute(Constants.ARCHIVES);
     Month month = (Month)request.getAttribute(Constants.MONTHLY_BLOG);
     SimpleDate now = blog.getToday();
     Year thisYear = archive.getThisYear();

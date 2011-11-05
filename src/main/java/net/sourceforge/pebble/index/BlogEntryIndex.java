@@ -48,30 +48,6 @@ public interface BlogEntryIndex {
   void unindex(Blog blog, BlogEntry blogEntry);
 
   /**
-   * Gets the number of blog entries for this blog.
-   *
-   * @param blog The blog to get it for
-   * @return an int
-   */
-  int getNumberOfBlogEntries(Blog blog);
-
-  /**
-   * Gets the number of published blog entries for this blog.
-   *
-   * @param blog The blog to get it for
-   * @return an int
-   */
-  int getNumberOfPublishedBlogEntries(Blog blog);
-
-  /**
-   * Gets the number of unpublished blog entries for this blog.
-   *
-   * @param blog The blog to get it for
-   * @return an int
-   */
-  int getNumberOfUnpublishedBlogEntries(Blog blog);
-
-  /**
    * Gets the full list of blog entries.
    *
    * @param blog The blog to get it for

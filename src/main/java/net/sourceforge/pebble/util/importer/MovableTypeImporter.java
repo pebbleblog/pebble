@@ -103,7 +103,7 @@ public class MovableTypeImporter {
       blogEntry = readBlogEntry(blog, reader, daoFactory, blogService);
     } while (blogEntry != null);
 
-    System.out.println(" " + blog.getNumberOfBlogEntries());
+    System.out.println(" " + daoFactory.getBlogEntryIndex().getArchive(blog).getNumberOfBlogEntries());
   }
 
   private static BlogEntry readBlogEntry(Blog blog, BufferedReader reader, DAOFactory daoFactory, BlogService blogService) throws Exception {

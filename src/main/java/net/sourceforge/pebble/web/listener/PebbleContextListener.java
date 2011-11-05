@@ -33,8 +33,8 @@ package net.sourceforge.pebble.web.listener;
 
 import net.sourceforge.pebble.Configuration;
 import net.sourceforge.pebble.PebbleContext;
-import net.sourceforge.pebble.dao.DAOFactory;
 import net.sourceforge.pebble.domain.*;
+import net.sourceforge.pebble.index.BlogEntryIndex;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.context.ApplicationContext;
@@ -64,9 +64,10 @@ public class PebbleContextListener implements ServletContextListener {
     log.info("Starting Pebble");
 
     ApplicationContext applicationContext = WebApplicationContextUtils.getRequiredWebApplicationContext(event.getServletContext());
-    BlogManager blogManager = (BlogManager) applicationContext.getBean("blogManager");
-    Configuration config = (Configuration)applicationContext.getBean("pebbleConfiguration");
-    BlogService blogService = (BlogService)applicationContext.getBean("blogService");
+    BlogManager blogManager = applicationContext.getBean(BlogManager.class);
+    Configuration config = applicationContext.getBean(Configuration.class);
+    BlogService blogService = applicationContext.getBean(BlogService.class);
+    BlogEntryIndex blogEntryIndex = applicationContext.getBean(BlogEntryIndex.class);
     PebbleContext ctx = PebbleContext.getInstance();
     ctx.setConfiguration(config);
     ctx.setWebApplicationRoot(event.getServletContext().getRealPath("/"));
@@ -79,7 +80,7 @@ public class PebbleContextListener implements ServletContextListener {
     for (Blog blog : blogs) {
       try {
         // and add a default entry, if one doesn't exist
-        if (blog.getNumberOfBlogEntries() == 0) {
+        if (blogEntryIndex.getArchive(blog).getNumberOfBlogEntries() == 0) {
           log.info("Creating 'welcome note' blog entry for " + blog.getId());
           BlogEntry blogEntry = new BlogEntry(blog);
           blogEntry.setTitle("Welcome");
