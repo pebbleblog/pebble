@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 <%@ taglib uri="http://pebble.sourceforge.net/pebble" prefix="pebble" %>
 <%@ taglib uri="/WEB-INF/url.tld" prefix="url" %>
+<%--@elvariable id="archives" type="java.util.Collection<net.sourceforge.pebble.domain.Year"--%>
 
 <%--
   Displays month-by-month archive links.

@@ -33,6 +33,7 @@ package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.api.decorator.ContentDecoratorContext;
+import net.sourceforge.pebble.index.BlogEntryIndex;
 import net.sourceforge.pebble.util.SecurityUtils;
 import net.sourceforge.pebble.util.CookieUtils;
 import net.sourceforge.pebble.domain.*;
@@ -52,6 +53,9 @@ import javax.servlet.http.Cookie;
  * @author    Simon Brown
  */
 public class ViewBlogEntryAction extends AbstractCommentAction {
+
+  @Inject
+  private BlogEntryIndex blogEntryIndex;
 
   /**
    * Peforms the processing associated with this action.
@@ -83,7 +87,9 @@ public class ViewBlogEntryAction extends AbstractCommentAction {
       return new NotFoundView();
     } else {
       getModel().put(Constants.BLOG_ENTRY_KEY, blogEntry);
-      getModel().put(Constants.MONTHLY_BLOG, blog.getBlogForDay(blogEntry.getDate()).getMonth());
+      SimpleDate date = new SimpleDate(blog.getTimeZone(), blogEntry.getDate());
+      getModel().put(Constants.MONTHLY_BLOG, blogEntryIndex.getBlogForYear(blog, date.getYear())
+          .getBlogForMonth(date.getMonth()));
       getModel().put("displayMode", "detail");
 
 

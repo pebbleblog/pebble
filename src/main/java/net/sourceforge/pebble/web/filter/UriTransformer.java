@@ -303,15 +303,15 @@ public class UriTransformer {
       Day day = permalinkProvider.getDay(uri);
       if (day != null) {
         result = "/viewDay.action";
-        result += "?year=" + day.getMonth().getYear().getYear();
-        result += "&month=" + day.getMonth().getMonth();
+        result += "?year=" + day.getYear();
+        result += "&month=" + day.getMonth();
         result += "&day=" + day.getDay();
       }
     } else if (permalinkProvider.isMonthPermalink(uri)) {
       Month month = permalinkProvider.getMonth(uri);
       if (month != null) {
         result = "/viewMonth.action";
-        result += "?year=" + month.getYear().getYear();
+        result += "?year=" + month.getYear();
         result += "&month=" + month.getMonth();
       }
     }

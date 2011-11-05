@@ -39,6 +39,8 @@ import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.domain.BlogEntry;
 import net.sourceforge.pebble.domain.BlogManager;
 import net.sourceforge.pebble.domain.BlogService;
+import net.sourceforge.pebble.index.BlogEntryIndex;
+import net.sourceforge.pebble.index.file.FileBlogEntryIndex;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;

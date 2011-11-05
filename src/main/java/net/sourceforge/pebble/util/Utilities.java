@@ -41,6 +41,8 @@ import net.sourceforge.pebble.domain.*;
 import net.sourceforge.pebble.api.event.comment.CommentEvent;
 import net.sourceforge.pebble.api.event.trackback.TrackBackEvent;
 import net.sourceforge.pebble.event.response.IpAddressListener;
+import net.sourceforge.pebble.index.BlogEntryIndex;
+import net.sourceforge.pebble.index.file.FileBlogEntryIndex;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 

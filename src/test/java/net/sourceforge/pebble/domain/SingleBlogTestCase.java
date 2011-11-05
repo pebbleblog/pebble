@@ -34,6 +34,8 @@ package net.sourceforge.pebble.domain;
 import net.sourceforge.pebble.ContentCache;
 import net.sourceforge.pebble.dao.DAOFactory;
 import net.sourceforge.pebble.dao.mock.MockDAOFactory;
+import net.sourceforge.pebble.index.BlogEntryIndex;
+import net.sourceforge.pebble.index.file.FileBlogEntryIndex;
 import net.sourceforge.pebble.security.MockSecurityRealm;
 import net.sourceforge.pebble.service.StaticPageService;
 
@@ -66,7 +68,8 @@ public abstract class SingleBlogTestCase extends PebbleTestCase {
     blogManager = new BlogManager(blogService, daoFactory, contentCache, configuration);
     addComponent("blogManager", blogManager);
     addComponents(daoFactory, daoFactory.getBlogEntryDAO(), daoFactory.getCategoryDAO(),
-        daoFactory.getRefererFilterDAO(), daoFactory.getStaticPageDAO(), contentCache);
+        daoFactory.getRefererFilterDAO(), daoFactory.getStaticPageDAO(), daoFactory.getBlogEntryIndex(),
+        contentCache);
     addComponents(blogService, autowire(StaticPageService.class));
 
     File blogDirectory = new File(TEST_BLOG_LOCATION, "blogs/default");

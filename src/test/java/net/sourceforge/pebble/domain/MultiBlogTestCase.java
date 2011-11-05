@@ -35,6 +35,8 @@ import net.sourceforge.pebble.ContentCache;
 import net.sourceforge.pebble.dao.DAOFactory;
 import net.sourceforge.pebble.dao.mock.MockDAOFactory;
 import net.sourceforge.pebble.PebbleContext;
+import net.sourceforge.pebble.index.BlogEntryIndex;
+import net.sourceforge.pebble.index.file.FileBlogEntryIndex;
 import net.sourceforge.pebble.security.MockSecurityRealm;
 
 import java.io.File;
@@ -59,7 +61,7 @@ public abstract class MultiBlogTestCase extends PebbleTestCase {
 
     daoFactory = new MockDAOFactory();
     addComponents(daoFactory, daoFactory.getBlogEntryDAO(), daoFactory.getCategoryDAO(),
-        daoFactory.getRefererFilterDAO(), daoFactory.getStaticPageDAO());
+        daoFactory.getRefererFilterDAO(), daoFactory.getStaticPageDAO(), daoFactory.getBlogEntryIndex());
     contentCache = new ContentCache();
     blogService = new BlogService(daoFactory.getBlogEntryDAO(), contentCache);
     blogManager = new BlogManager(blogService, daoFactory, contentCache, configuration);

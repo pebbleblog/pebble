@@ -84,7 +84,7 @@ public abstract class AbstractBlog extends TimePeriod {
    * @param root    an absolute path pointing to the root directory of the blog
    */
   public AbstractBlog(String root) {
-    super(null);
+    super(null, null);
     this.root = root;
 // see javadoc comment about why init cannot be called here.
 //    init();

@@ -31,66 +31,51 @@
  */
 package net.sourceforge.pebble.domain;
 
-import java.util.Calendar;
-import java.util.List;
-import java.util.LinkedList;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
+
+import java.util.*;
 
 /**
  * Represents a blog at a yearly level. This manages a collection of Month instances.
  *
- * @author    Simon Brown
+ * @author Simon Brown
  */
 public class Year extends TimePeriod implements Comparable {
 
-  /** the year that this blog is for */
-  private int year;
-
-  /** a collection of the monthly blogs that this instance is managing */
-  private Month[] months;
+  /**
+   * the year that this blog is for
+   */
+  private final int year;
 
   /**
-   * Creates a new Year instance for the specified year.
-   *
-   * @param blog    the Blog on which this Year is based
-   * @param year    the year that this Year is for
+   * The first month in the list.  If this year is the first year that contains blog entries, than this might be
+   * greater than 1, otherwise it will equal 1.
    */
-  public Year(Blog blog, int year) {
-    super(blog);
-
-    this.year = year;
-    init();
-  }
+  private final int firstMonth;
 
   /**
-   * Initialises internal data, such as the collection of Month instances.
+   * a collection of the monthly blogs that this instance is managing
    */
-  private void init() {
-    setDate(getCalendar().getTime());
-    this.months = new Month[12];
+  private final List<Month> months;
 
-    for (int i = 1; i <= 12; i++) {
-      months[i-1] = new Month(this, i);
+  private Year(Blog blog, Date date, int year, int firstMonth, List<Month> months) {
+    super(blog, date);
+    if (firstMonth < 1 && firstMonth > 13) {
+      throw new IllegalArgumentException("First month must be from 1 to 13 (13 meaning no months in this year)");
     }
-  }
-
-  private Calendar getCalendar() {
-    // set the date corresponding to the 1st of January of the specified year
-    Calendar cal = getBlog().getCalendar();
-    cal.set(Calendar.YEAR, year);
-    cal.set(Calendar.MONTH, 0);
-    cal.set(Calendar.DAY_OF_MONTH, 2);
-    cal.set(Calendar.HOUR_OF_DAY, 0);
-    cal.set(Calendar.MINUTE, 0);
-    cal.set(Calendar.SECOND, 0);
-    cal.set(Calendar.MILLISECOND, 0);
-
-    return cal;
+    if (months.size() > 13 - firstMonth) {
+      throw new IllegalArgumentException("Too many months for year " + months.size() + " when first month is " + firstMonth);
+    }
+    this.year = year;
+    this.firstMonth = firstMonth;
+    this.months = months;
   }
 
   /**
    * Gets an integer representing the year that this yearly blog is for.
    *
-   * @return  an int representing the year (e.g. 2003)
+   * @return an int representing the year (e.g. 2003)
    */
   public int getYear() {
     return year;
@@ -100,25 +85,32 @@ public class Year extends TimePeriod implements Comparable {
    * Gets the Month for the specified month. Months are lazy
    * loaded as needed.
    *
-   * @param month   the month as an int
-   * @return  a Month instance
+   * @param month the month as an int
+   * @return a Month instance
    */
-  public synchronized Month getBlogForMonth(int month) {
-
+  public Month getBlogForMonth(int month) {
     // some bounds checking
     if (month < 1 || month > 12) {
       throw new IllegalArgumentException("Invalid month of " + month + " specified, should be between 1 and 12");
     }
 
-    return months[month-1];
+    // Offset month by first month to get the index in the array
+    int index = month - firstMonth;
+
+    // Check if we have this month or not
+    if (index < 0 || index >= months.size()) {
+      return Month.emptyMonth(getBlog(), year, month);
+    }
+
+    return months.get(index);
   }
 
   /**
    * Given a Month, this method returns the Month instance for the
    * previous month.
    *
-   * @param month   a Month instance
-   * @return  a Month instance representing the previous month
+   * @param month a Month instance
+   * @return a Month instance representing the previous month
    */
   Month getBlogForPreviousMonth(Month month) {
     if (month.getMonth() > 1) {
@@ -132,8 +124,8 @@ public class Year extends TimePeriod implements Comparable {
    * Given a Month, this method returns the Month instance for the
    * next month.
    *
-   * @param month   a Month instance
-   * @return  a Month instance representing the next month
+   * @param month a Month instance
+   * @return a Month instance representing the next month
    */
   Month getBlogForNextMonth(Month month) {
     if (month.getMonth() < 12) {
@@ -146,43 +138,19 @@ public class Year extends TimePeriod implements Comparable {
   /**
    * Gets the first Month that actually contains blog entries.
    *
-   * @return  a Month instance
+   * @return a Month instance
    */
   public Month getBlogForFirstMonth() {
     return getBlogForMonth(1);
   }
 
   /**
-   * Gets a collection of all Months managed by this blog.
-   *
-   * @return  a Collection of Month instances
-   */
-  public Month[] getMonths() {
-    Month[] months = new Month[12];
-    for (int i = 1; i <= 12; i++) {
-      months[i-1] = getBlogForMonth(i);
-    }
-
-    return months;
-  }
-
-  /**
    * Gets a collection of all Months, to date and in reverse order.
    *
-   * @return  a Collection of Month instances
+   * @return a Collection of Month instances
    */
   public List<Month> getArchives() {
-    List<Month> list = new LinkedList<Month>();
-    Month thisMonth = getBlog().getBlogForThisMonth();
-    Month firstMonth = getBlog().getBlogForFirstMonth();
-    for (int i = 12; i >=1; i--) {
-      Month month = getBlogForMonth(i);
-      if (!month.after(thisMonth) && !month.before(firstMonth)) {
-        list.add(month);
-      }
-    }
-
-    return list;
+    return Lists.reverse(months);
   }
 
   /**
@@ -197,16 +165,94 @@ public class Year extends TimePeriod implements Comparable {
    *                            from being compared to this Object.
    */
   public int compareTo(Object o) {
-    return this.getYear() - ((Year)o).getYear();
+    return this.getYear() - ((Year) o).getYear();
   }
 
   /**
    * Gets a string representation of this object.
    *
-   * @return  a String
+   * @return a String
    */
   public String toString() {
     return "" + this.year;
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    Year year1 = (Year) o;
+
+    if (year != year1.year) return false;
+
+    return true;
+  }
+
+  @Override
+  public int hashCode() {
+    return year;
+  }
+
+  public static Builder builder(Blog blog, int year) {
+    return new Builder(blog, year);
+  }
+
+  public static Builder builder(Year like) {
+    return new Builder(like);
+  }
+
+  public static Year emptyYear(Blog blog, int year) {
+    return new Builder(blog, year).build();
+  }
+
+  public static class Builder {
+    private final Blog blog;
+    private final int year;
+    private final LinkedList<Month> months;
+    private int firstMonth;
+
+    private Builder(Blog blog, int year) {
+      this.blog = blog;
+      this.year = year;
+      months = new LinkedList<Month>();
+      firstMonth = 13;
+    }
+
+    private Builder(Year year) {
+      this.blog = year.getBlog();
+      this.year = year.year;
+      this.months = new LinkedList<Month>(year.months);
+      this.firstMonth = year.firstMonth;
+    }
+
+    public Year build() {
+      Calendar cal = blog.getCalendar();
+      cal.set(Calendar.YEAR, year);
+      cal.set(Calendar.MONTH, 0);
+      cal.set(Calendar.DAY_OF_MONTH, 2);
+      cal.set(Calendar.HOUR_OF_DAY, 0);
+      cal.set(Calendar.MINUTE, 0);
+      cal.set(Calendar.SECOND, 0);
+      cal.set(Calendar.MILLISECOND, 0);
+      Date date = cal.getTime();
+      return new Year(blog, date, year, firstMonth, ImmutableList.copyOf(months));
+    }
+
+    public Builder putMonth(Month month) {
+      if (month.getYear() != year) {
+        throw new IllegalArgumentException("Cannot add month from year " + month.getYear() + " to year " + year);
+      }
+      if (month.getMonth() < 1 || month.getMonth() > 12) {
+        throw new IllegalArgumentException("Month must be between 1 and 12");
+      }
+      // First insert needed months
+      while (firstMonth > month.getMonth()) {
+        firstMonth--;
+        months.addFirst(Month.emptyMonth(blog, year, firstMonth));
+      }
+      months.set(month.getMonth() - firstMonth, month);
+      return this;
+    }
+  }
 }

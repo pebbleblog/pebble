@@ -32,11 +32,10 @@
 
 package net.sourceforge.pebble.index.file;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Maps;
 import net.sourceforge.pebble.comparator.ReverseBlogEntryIdComparator;
-import net.sourceforge.pebble.domain.Blog;
-import net.sourceforge.pebble.domain.BlogEntry;
-import net.sourceforge.pebble.domain.Day;
+import net.sourceforge.pebble.domain.*;
 import net.sourceforge.pebble.index.BlogEntryIndex;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -98,13 +97,49 @@ public class FileBlogEntryIndex implements BlogEntryIndex {
     return cache.get(blog.getRoot()).getUnpublishedBlogEntries();
   }
 
+  public Year getBlogForYear(Blog blog, int year) {
+    return cache.get(blog.getRoot()).getBlogForYear(year);
+  }
+
+  public List<Year> getYears(Blog blog) {
+    return cache.get(blog.getRoot()).getYears();
+  }
+
+  public String getPreviousBlogEntry(Blog blog, String blogEntryId) {
+    return cache.get(blog.getRoot()).getPreviousBlogEntry(blogEntryId);
+  }
+
+  public String getNextBlogEntry(Blog blog, String blogEntryId) {
+    return cache.get(blog.getRoot()).getNextBlogEntry(blogEntryId);
+  }
+
+  public List<String> getBlogEntriesForDay(Blog blog, int year, int month, int day) {
+    return cache.get(blog.getRoot()).getEntriesForDay(year, month, day);
+  }
+
+  public List<String> getBlogEntriesForMonth(Blog blog, int year, int month) {
+    return cache.get(blog.getRoot()).getEntriesForMonth(year, month);
+  }
+
   private class CachedIndex {
 
-    private Blog blog;
+    private final Blog blog;
 
-    private List<String> indexEntries = new ArrayList<String>();
-    private List<String> publishedIndexEntries = new ArrayList<String>();
-    private List<String> unpublishedIndexEntries = new ArrayList<String>();
+    // These are mutable lists and all access to them must be synchronised on this class. They should only
+    // be used by operations that require write access
+    private final List<String> indexEntries = new ArrayList<String>();
+    private final List<String> publishedIndexEntries = new ArrayList<String>();
+    private final List<String> unpublishedIndexEntries = new ArrayList<String>();
+    private final List<Year> years = new ArrayList<Year>();
+    private final List<YearCache> yearCaches = new ArrayList<YearCache>();
+
+    // These are immutable lists and should be only used by read only operations. When a write operation is
+    // done, these should be updated accordingly
+    private volatile List<String> readIndexEntries = Collections.emptyList();
+    private volatile List<String> readPublishedIndexEntries = Collections.emptyList();
+    private volatile List<String> readUnpublishedIndexEntries = Collections.emptyList();
+    private volatile List<Year> readYears = Collections.emptyList();
+    private volatile List<YearCache> readYearCaches = Collections.emptyList();
 
     public CachedIndex(Blog blog) {
       this.blog = blog;
@@ -116,12 +151,63 @@ public class FileBlogEntryIndex implements BlogEntryIndex {
     /**
      * Clears the index.
      */
-    public void clear() {
-      indexEntries = new ArrayList<String>();
-      publishedIndexEntries = new ArrayList<String>();
-      unpublishedIndexEntries = new ArrayList<String>();
+    public synchronized void clear() {
+      indexEntries.clear();
+      publishedIndexEntries.clear();
+      unpublishedIndexEntries.clear();
+      years.clear();
+      yearCaches.clear();
+      updateReadVersions();
       writeIndex(true);
       writeIndex(false);
+    }
+
+    /**
+     * Perform the given operation on all the blog entries
+     *
+     * @param date The date of the blog entry
+     * @param operation The operation to perform
+     */
+    public void performOperation(Date date, IndexOperation operation) {
+      Calendar cal = getCalendar(date);
+      Year year = getYear(cal);
+      Month month = year.getBlogForMonth(cal.get(Calendar.MONTH) + 1);
+      Day day = month.getBlogForDay(cal.get(Calendar.DAY_OF_MONTH));
+      YearCache yearCache = getYearCache(year);
+      MonthCache monthCache = getMonthCache(yearCache, month);
+      DayCache dayCache = getDayCache(monthCache, day);
+
+      DayCache.Builder builder = DayCache.builder(dayCache);
+
+      operation.performOperation(builder);
+
+      dayCache = builder.build();
+      if (dayCache.getNumberPublishedBlogEntries() != day.getNumberOfBlogEntries()) {
+        year = Year.builder(year).putMonth(Month.builder(month).putDay(
+            Day.builder(day).setNumberOfBlogEntries(dayCache.getNumberPublishedBlogEntries()).build()
+        ).build()).build();
+        boolean found = false;
+        for (int i = 0; i < years.size(); i++) {
+          if (years.get(i).getYear() == year.getYear()) {
+            years.set(i, year);
+            found = true;
+          }
+        }
+        if (!found) {
+          years.add(year);
+        }
+      }
+      yearCache = YearCache.builder(yearCache).putMonth(MonthCache.builder(monthCache).putDay(dayCache).build()).build();
+      boolean found = false;
+      for (int i = 0; i < yearCaches.size(); i++) {
+        if (yearCaches.get(i).getYear().getYear() == yearCache.getYear().getYear()) {
+          yearCaches.set(i, yearCache);
+          found = true;
+        }
+      }
+      if (!found) {
+        yearCaches.add(yearCache);
+      }
     }
 
     /**
@@ -130,21 +216,28 @@ public class FileBlogEntryIndex implements BlogEntryIndex {
      * @param blogEntries a List of BlogEntry instances
      */
     public synchronized void index(Collection<BlogEntry> blogEntries) {
-      for (BlogEntry blogEntry : blogEntries) {
-        Day day = blog.getBlogForDay(blogEntry.getDate());
-        if (blogEntry.isPublished()) {
-          publishedIndexEntries.add(blogEntry.getId());
-          day.addPublishedBlogEntry(blogEntry.getId());
-        } else {
-          unpublishedIndexEntries.add(blogEntry.getId());
-          day.addUnpublishedBlogEntry(blogEntry.getId());
-        }
-        indexEntries.add(blogEntry.getId());
+      for (final BlogEntry blogEntry : blogEntries) {
+        performOperation(blogEntry.getDate(), new IndexOperation() {
+          public void performOperation(DayCache.Builder dayCache) {
+            if (blogEntry.isPublished()) {
+              publishedIndexEntries.add(blogEntry.getId());
+              dayCache.addPublishedBlogEntry(blogEntry.getId());
+            } else {
+              unpublishedIndexEntries.add(blogEntry.getId());
+              dayCache.addUnpublishedBlogEntry(blogEntry.getId());
+            }
+            indexEntries.add(blogEntry.getId());
+          }
+        });
       }
 
       Collections.sort(indexEntries, new ReverseBlogEntryIdComparator());
       Collections.sort(publishedIndexEntries, new ReverseBlogEntryIdComparator());
       Collections.sort(unpublishedIndexEntries, new ReverseBlogEntryIdComparator());
+      Collections.sort(yearCaches);
+      Collections.sort(years);
+
+      updateReadVersions();
 
       writeIndex(true);
       writeIndex(false);
@@ -156,21 +249,7 @@ public class FileBlogEntryIndex implements BlogEntryIndex {
      * @param blogEntry a BlogEntry instance
      */
     public synchronized void index(BlogEntry blogEntry) {
-      Day day = blog.getBlogForDay(blogEntry.getDate());
-      if (blogEntry.isPublished()) {
-        publishedIndexEntries.add(blogEntry.getId());
-        day.addPublishedBlogEntry(blogEntry.getId());
-        writeIndex(true);
-      } else {
-        unpublishedIndexEntries.add(blogEntry.getId());
-        day.addUnpublishedBlogEntry(blogEntry.getId());
-        writeIndex(false);
-      }
-      indexEntries.add(blogEntry.getId());
-
-      Collections.sort(indexEntries, new ReverseBlogEntryIdComparator());
-      Collections.sort(publishedIndexEntries, new ReverseBlogEntryIdComparator());
-      Collections.sort(unpublishedIndexEntries, new ReverseBlogEntryIdComparator());
+      index(Arrays.asList(blogEntry));
     }
 
     /**
@@ -178,22 +257,36 @@ public class FileBlogEntryIndex implements BlogEntryIndex {
      *
      * @param blogEntry a BlogEntry instance
      */
-    public synchronized void unindex(BlogEntry blogEntry) {
-      Day day = blog.getBlogForDay(blogEntry.getDate());
-      day.removeBlogEntry(blogEntry);
-
-      indexEntries.remove(blogEntry.getId());
-      publishedIndexEntries.remove(blogEntry.getId());
-      unpublishedIndexEntries.remove(blogEntry.getId());
+    public synchronized void unindex(final BlogEntry blogEntry) {
+      performOperation(blogEntry.getDate(), new IndexOperation() {
+        public void performOperation(DayCache.Builder dayCache) {
+          dayCache.removeBlogEntry(blogEntry);
+          indexEntries.remove(blogEntry.getId());
+          publishedIndexEntries.remove(blogEntry.getId());
+          unpublishedIndexEntries.remove(blogEntry.getId());
+        }
+      });
+      updateReadVersions();
 
       writeIndex(true);
       writeIndex(false);
+
+    }
+
+    private void updateReadVersions() {
+      readIndexEntries = ImmutableList.copyOf(indexEntries);
+      readPublishedIndexEntries = ImmutableList.copyOf(publishedIndexEntries);
+      readUnpublishedIndexEntries = ImmutableList.copyOf(unpublishedIndexEntries);
+      readYearCaches = ImmutableList.copyOf(yearCaches);
+      readYears = ImmutableList.copyOf(years);
     }
 
     /**
      * Helper method to load the index.
+     *
+     * @param published Whether the published or unpublished index should be read
      */
-    private void readIndex(boolean published) {
+    private void readIndex(final boolean published) {
       File indexFile;
       if (published) {
         indexFile = new File(blog.getIndexesDirectory(), "blogentries-published.index");
@@ -207,19 +300,21 @@ public class FileBlogEntryIndex implements BlogEntryIndex {
           String indexEntry = reader.readLine();
           while (indexEntry != null) {
             indexEntries.add(indexEntry);
+            final String entry = indexEntry;
 
             // and add it to the internal memory structures
             Date date = new Date(Long.parseLong(indexEntry));
-            Day day = blog.getBlogForDay(date);
-
-            if (published) {
-              publishedIndexEntries.add(indexEntry);
-              day.addPublishedBlogEntry(indexEntry);
-            } else {
-              unpublishedIndexEntries.add(indexEntry);
-              day.addUnpublishedBlogEntry(indexEntry);
-            }
-
+            performOperation(date, new IndexOperation() {
+              public void performOperation(DayCache.Builder dayCache) {
+                if (published) {
+                  publishedIndexEntries.add(entry);
+                  dayCache.addPublishedBlogEntry(entry);
+                } else {
+                  unpublishedIndexEntries.add(entry);
+                  dayCache.addUnpublishedBlogEntry(entry);
+                }
+              }
+            });
             indexEntry = reader.readLine();
           }
 
@@ -232,10 +327,16 @@ public class FileBlogEntryIndex implements BlogEntryIndex {
       Collections.sort(indexEntries, new ReverseBlogEntryIdComparator());
       Collections.sort(publishedIndexEntries, new ReverseBlogEntryIdComparator());
       Collections.sort(unpublishedIndexEntries, new ReverseBlogEntryIdComparator());
+      Collections.sort(yearCaches);
+      Collections.sort(years);
+
+      updateReadVersions();
     }
 
     /**
      * Helper method to write out the index to disk.
+     *
+     * @param published Whether the published or unpublished index should be written
      */
     private void writeIndex(boolean published) {
       try {
@@ -272,7 +373,7 @@ public class FileBlogEntryIndex implements BlogEntryIndex {
      * @return an int
      */
     public int getNumberOfBlogEntries() {
-      return indexEntries.size();
+      return readIndexEntries.size();
     }
 
     /**
@@ -281,7 +382,7 @@ public class FileBlogEntryIndex implements BlogEntryIndex {
      * @return an int
      */
     public int getNumberOfPublishedBlogEntries() {
-      return publishedIndexEntries.size();
+      return readPublishedIndexEntries.size();
     }
 
     /**
@@ -290,7 +391,7 @@ public class FileBlogEntryIndex implements BlogEntryIndex {
      * @return an int
      */
     public int getNumberOfUnpublishedBlogEntries() {
-      return unpublishedIndexEntries.size();
+      return readUnpublishedIndexEntries.size();
     }
 
     /**
@@ -299,7 +400,7 @@ public class FileBlogEntryIndex implements BlogEntryIndex {
      * @return a List of blog entry IDs
      */
     public List<String> getBlogEntries() {
-      return new ArrayList<String>(indexEntries);
+      return readIndexEntries;
     }
 
     /**
@@ -308,7 +409,7 @@ public class FileBlogEntryIndex implements BlogEntryIndex {
      * @return a List of blog entry IDs
      */
     public List<String> getPublishedBlogEntries() {
-      return new ArrayList<String>(publishedIndexEntries);
+      return readPublishedIndexEntries;
     }
 
     /**
@@ -317,7 +418,110 @@ public class FileBlogEntryIndex implements BlogEntryIndex {
      * @return a List of blog entry IDs
      */
     public List<String> getUnpublishedBlogEntries() {
-      return new ArrayList<String>(unpublishedIndexEntries);
+      return readUnpublishedIndexEntries;
     }
+
+    public String getNextBlogEntry(String entry) {
+      // Get a reference to the list first so we are atomic
+      List<String> entries = readPublishedIndexEntries;
+      int position = Collections.binarySearch(entries, entry, ReverseBlogEntryIdComparator.INSTANCE);
+      if (position - 1 >= 0) {
+        return entries.get(position - 1);
+      }
+      return null;
+    }
+
+    public String getPreviousBlogEntry(String entry) {
+      // Get a reference to the list first so we are atomic
+      List<String> entries = readPublishedIndexEntries;
+      int position = Collections.binarySearch(entries, entry, ReverseBlogEntryIdComparator.INSTANCE);
+      if (position + 1 < entries.size()) {
+        return entries.get(position + 1);
+      }
+      return null;
+    }
+
+    public Year getBlogForYear(int yearNo) {
+      for (Year year : readYears) {
+        if (yearNo == year.getYear()) {
+          return year;
+        }
+      }
+      return Year.emptyYear(blog, yearNo);
+    }
+
+    public List<Year> getYears() {
+      return readYears;
+    }
+
+    public List<String> getEntriesForDay(int year, int month, int day) {
+      for (YearCache yearCache : readYearCaches) {
+        if (yearCache.getYear().getYear() == year) {
+          return yearCache.getMonthCache(month).getDayCache(day).getBlogEntries();
+        }
+      }
+      return Collections.emptyList();
+    }
+
+    public List<String> getEntriesForMonth(int year, int month) {
+      for (YearCache yearCache : yearCaches) {
+        if (yearCache.getYear().getYear() == year) {
+          return yearCache.getMonthCache(month).getBlogEntries();
+        }
+      }
+      return Collections.emptyList();
+    }
+
+    private Calendar getCalendar(Date date) {
+      Calendar cal = blog.getCalendar();
+      cal.setTime(date);
+      return cal;
+    }
+
+    private Year getYear(Calendar cal) {
+      int year = cal.get(Calendar.YEAR);
+
+      for (Year yearObj : years) {
+        if (yearObj.getYear() == year) {
+          return yearObj;
+        }
+      }
+
+      return Year.emptyYear(blog, year);
+    }
+
+    private YearCache getYearCache(Year year) {
+      for (YearCache yearCache : yearCaches) {
+        if (yearCache.getYear().equals(year)) {
+          return yearCache;
+        }
+      }
+
+      return YearCache.builder(year).build();
+    }
+
+    private MonthCache getMonthCache(YearCache yearCache, Month month) {
+      MonthCache monthCache = yearCache.getMonthCache(month.getMonth());
+      if (monthCache != null) {
+        return monthCache;
+      } else {
+        return MonthCache.builder(month).build();
+      }
+    }
+
+    private DayCache getDayCache(MonthCache monthCache, Day day) {
+      DayCache dayCache = monthCache.getDayCache(day.getDay());
+      if (dayCache != null) {
+        return dayCache;
+      } else {
+        return DayCache.builder(day).build();
+      }
+    }
+
   }
+
+  private interface IndexOperation {
+    void performOperation(DayCache.Builder dayCache);
+  }
+
 }

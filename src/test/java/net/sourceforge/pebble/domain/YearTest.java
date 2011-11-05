@@ -42,7 +42,7 @@ public class YearTest extends SingleBlogTestCase {
 
   protected void setUp() throws Exception {
     super.setUp();
-    year = new Year(blog, 2003);
+    year = Year.emptyYear(blog, 2003);
   }
 
   /**
@@ -71,15 +71,15 @@ public class YearTest extends SingleBlogTestCase {
    */
   public void testGetMonth() {
     Month month = year.getBlogForMonth(1);
-    assertEquals(year, month.getYear());
+    assertEquals(year.getYear(), month.getYear());
     assertEquals(1, month.getMonth());
 
     month = year.getBlogForMonth(12);
-    assertEquals(year, month.getYear());
+    assertEquals(year.getYear(), month.getYear());
     assertEquals(12, month.getMonth());
 
     try {
-      month = year.getBlogForMonth(-1);
+      year.getBlogForMonth(-1);
       fail();
     } catch (IllegalArgumentException iae) {
     }
@@ -108,8 +108,8 @@ public class YearTest extends SingleBlogTestCase {
    * Tests the compareTo method.
    */
   public void testCompareTo() {
-    Year y1 = new Year(blog, 2004);
-    Year y2 = new Year(blog, 2005);
+    Year y1 = Year.emptyYear(blog, 2004);
+    Year y2 = Year.emptyYear(blog, 2005);
     assertTrue(y1.compareTo(y1) == 0);
     assertTrue(y1.compareTo(y2) < 0);
     assertTrue(y1.compareTo(y2) < 0);

@@ -34,6 +34,7 @@ package net.sourceforge.pebble.domain;
 
 import com.google.common.base.Supplier;
 import com.google.common.base.Suppliers;
+import com.google.common.collect.Lists;
 import net.sourceforge.pebble.*;
 import net.sourceforge.pebble.aggregator.NewsFeedCache;
 import net.sourceforge.pebble.aggregator.NewsFeedEntry;
@@ -118,9 +119,6 @@ public class Blog extends AbstractBlog {
 
   /** the ID of this blog */
   private String id = "default";
-
-  /** the collection of Year instance that this root blog is managing */
-  private List<Year> years;
 
   /** the root category associated with this blog */
   private Category rootCategory;
@@ -222,7 +220,6 @@ public class Blog extends AbstractBlog {
 
     pluginProperties = new PluginProperties(this);
     blogCompanion = new BlogCompanion(this);
-    years = new ArrayList<Year>();
 
     // create the various indexes for this blog
     searchIndex = new LuceneSearchIndex(this);
@@ -795,20 +792,7 @@ public class Blog extends AbstractBlog {
    * @return    a Year instance
    */
   public Year getBlogForYear(int year) {
-    Iterator it = years.iterator();
-    Year y;
-    while (it.hasNext()) {
-      y = (Year)it.next();
-      if (y.getYear() == year) {
-        return y;
-      }
-    }
-
-    y = new Year(this, year);
-    years.add(y);
-    Collections.sort(years);
-
-    return y;
+    return blogEntryIndex.getBlogForYear(this, year);
   }
 
   /**
@@ -822,31 +806,12 @@ public class Blog extends AbstractBlog {
   }
 
   /**
-   * Gets all Years managed by this root blog.
-   *
-   * @return  a Collection of Year instances
-   */
-  public List<Year> getYears() {
-    return years;
-  }
-
-  /**
    * Gets all Years managed by this root blog, in reverse order.
    *
    * @return  a Collection of Year instances
    */
   public List<Year> getArchives() {
-    List<Year> list = new LinkedList<Year>();
-    int firstYear = getBlogForFirstMonth().getYear().getYear();
-    int thisYear = getBlogForThisYear().getYear();
-    // only add years that are in range
-    for (Year year : years) {
-      if (year.getYear() >= firstYear && year.getYear() <= thisYear) {
-        list.add(year);
-      }
-    }
-    Collections.reverse(list);
-    return list;
+    return Lists.reverse(blogEntryIndex.getYears(this));
   }
 
   /**
@@ -856,10 +821,6 @@ public class Blog extends AbstractBlog {
    * @return  a Month instance
    */
   public Month getBlogForFirstMonth() {
-    if (getBlogEntryIndex() == null) {
-      return getBlogForThisMonth();
-    }
-
     List<String> blogEntryIds = getBlogEntryIndex().getBlogEntries(this);
     if (blogEntryIds == null || blogEntryIds.isEmpty()) {
       return getBlogForThisMonth();
@@ -872,7 +833,9 @@ public class Blog extends AbstractBlog {
 
     long dateInMillis = Long.parseLong(firstBlogEntryId);
     Date date = new Date(dateInMillis);
-    return getBlogForDay(date).getMonth();
+    Calendar cal = getCalendar();
+    cal.setTime(date);
+    return getBlogForMonth(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH));
   }
 
   /**
@@ -1304,15 +1267,7 @@ public class Blog extends AbstractBlog {
   }
 
   public BlogEntry getPreviousBlogEntry(BlogEntry blogEntry) {
-    Day firstDay = getBlogForFirstMonth().getBlogForFirstDay();
-    Day day = getBlogForDay(blogEntry.getDate());
-
-    String blogEntryId = day.getPreviousBlogEntry(blogEntry.getId());
-    while (day != firstDay && blogEntryId == null) {
-      day = day.getPreviousDay();
-      blogEntryId = day.getLastBlogEntry();
-    }
-
+    String blogEntryId = blogEntryIndex.getPreviousBlogEntry(this, blogEntry.getId());
     if (blogEntryId != null) {
       try {
         return blogService.getBlogEntry(this, blogEntryId);
@@ -1320,20 +1275,11 @@ public class Blog extends AbstractBlog {
         // do nothing
       }
     }
-
     return null;
   }
 
   public BlogEntry getNextBlogEntry(BlogEntry blogEntry) {
-    Day lastDay = getBlogForToday();
-    Day day = getBlogForDay(blogEntry.getDate());
-
-    String blogEntryId = day.getNextBlogEntry(blogEntry.getId());
-    while (day != lastDay && blogEntryId == null) {
-      day = day.getNextDay();
-      blogEntryId = day.getFirstBlogEntry();
-    }
-
+    String blogEntryId = blogEntryIndex.getNextBlogEntry(this, blogEntry.getId());
     if (blogEntryId != null) {
       try {
         return blogService.getBlogEntry(this, blogEntryId);
@@ -1341,7 +1287,6 @@ public class Blog extends AbstractBlog {
         // do nothing
       }
     }
-
     return null;
   }
 

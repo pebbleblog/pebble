@@ -32,6 +32,7 @@
 package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
+import net.sourceforge.pebble.index.BlogEntryIndex;
 import net.sourceforge.pebble.util.SecurityUtils;
 import net.sourceforge.pebble.domain.*;
 import net.sourceforge.pebble.web.view.View;
@@ -41,6 +42,7 @@ import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -53,6 +55,9 @@ public class ViewDayAction extends Action {
 
   @Inject
   private BlogService blogService;
+
+  @Inject
+  private BlogEntryIndex blogEntryIndex;
 
   /**
    * Peforms the processing associated with this action.
@@ -67,13 +72,13 @@ public class ViewDayAction extends Action {
     String month = request.getParameter("month");
     String day = request.getParameter("day");
 
-    Day daily;
+    SimpleDate simpleDate;
     if (year != null && year.length() > 0 &&
         month != null && month.length() > 0 &&
         day != null && day.length() > 0) {
-      daily = blog.getBlogForDay(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day));
+      simpleDate = new SimpleDate(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day));
     } else {
-      daily = blog.getBlogForToday();
+      simpleDate = new SimpleDate(blog.getTimeZone(), new Date());
     }
 
     List<BlogEntry> blogEntries;
@@ -83,7 +88,10 @@ public class ViewDayAction extends Action {
       throw new ServletException(e);
     }
 
-    getModel().put(Constants.MONTHLY_BLOG, daily.getMonth());
+    Month monthly = blogEntryIndex.getBlogForYear(blog, simpleDate.getYear()).getBlogForMonth(simpleDate.getMonth());
+    Day daily = monthly.getBlogForDay(simpleDate.getDay());
+
+    getModel().put(Constants.MONTHLY_BLOG, monthly);
     getModel().put(Constants.DAILY_BLOG, daily);
     getModel().put(Constants.BLOG_ENTRIES, filter(blog, blogEntries));
     getModel().put("displayMode", "day");

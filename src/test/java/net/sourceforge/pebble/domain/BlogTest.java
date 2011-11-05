@@ -187,7 +187,7 @@ public class BlogTest extends SingleBlogTestCase {
   public void testGetBlogForMonth() {
     Month month = blog.getBlogForMonth(2003, 4);
     assertNotNull(month);
-    assertEquals(2003, month.getYear().getYear());
+    assertEquals(2003, month.getYear());
     assertEquals(4, month.getMonth());
   }
 
@@ -198,7 +198,7 @@ public class BlogTest extends SingleBlogTestCase {
     Calendar cal = blog.getCalendar();
     Month month = blog.getBlogForThisMonth();
     assertNotNull(month);
-    assertEquals(cal.get(Calendar.YEAR), month.getYear().getYear());
+    assertEquals(cal.get(Calendar.YEAR), month.getYear());
     assertEquals(cal.get(Calendar.MONTH) + 1, month.getMonth());
   }
 
@@ -208,8 +208,8 @@ public class BlogTest extends SingleBlogTestCase {
   public void testGetBlogForDay() {
     Day day = blog.getBlogForDay(2003, 7, 14);
     assertNotNull(day);
-    assertEquals(2003, day.getMonth().getYear().getYear());
-    assertEquals(7, day.getMonth().getMonth());
+    assertEquals(2003, day.getYear());
+    assertEquals(7, day.getMonth());
     assertEquals(14, day.getDay());
   }
 
@@ -223,8 +223,8 @@ public class BlogTest extends SingleBlogTestCase {
     cal.set(Calendar.DAY_OF_MONTH, 14);
     Day day = blog.getBlogForDay(cal.getTime());
     assertNotNull(day);
-    assertEquals(2003, day.getMonth().getYear().getYear());
-    assertEquals(7, day.getMonth().getMonth());
+    assertEquals(2003, day.getYear());
+    assertEquals(7, day.getMonth());
     assertEquals(14, day.getDay());
   }
 
@@ -235,8 +235,8 @@ public class BlogTest extends SingleBlogTestCase {
     Calendar cal = blog.getCalendar();
     Day day = blog.getBlogForToday();
     assertNotNull(day);
-    assertEquals(cal.get(Calendar.YEAR), day.getMonth().getYear().getYear());
-    assertEquals(cal.get(Calendar.MONTH) + 1, day.getMonth().getMonth());
+    assertEquals(cal.get(Calendar.YEAR), day.getYear());
+    assertEquals(cal.get(Calendar.MONTH) + 1, day.getMonth());
     assertEquals(cal.get(Calendar.DAY_OF_MONTH), day.getDay());
   }
 

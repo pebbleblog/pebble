@@ -37,6 +37,8 @@ import net.sourceforge.pebble.PebbleContext;
 import net.sourceforge.pebble.dao.DAOFactory;
 import net.sourceforge.pebble.dao.file.FileDAOFactory;
 import net.sourceforge.pebble.domain.*;
+import net.sourceforge.pebble.index.BlogEntryIndex;
+import net.sourceforge.pebble.index.file.FileBlogEntryIndex;
 
 import java.io.BufferedReader;
 import java.io.File;

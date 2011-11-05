@@ -2,6 +2,8 @@ package net.sourceforge.pebble.index;
 
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.domain.BlogEntry;
+import net.sourceforge.pebble.domain.Day;
+import net.sourceforge.pebble.domain.Year;
 
 import java.util.Collection;
 import java.util.List;
@@ -95,4 +97,60 @@ public interface BlogEntryIndex {
    * @return a List of blog entry IDs
    */
   List<String> getUnpublishedBlogEntries(Blog blog);
+
+  /**
+   * Get the blog for the given year
+   *
+   * @param blog The blog to get it for
+   * @param year The year to get
+   * @return The blog for the given year
+   */
+  Year getBlogForYear(Blog blog, int year);
+
+  /**
+   * Get the blogs for every year
+   *
+   * @param blog The blog to get the years for
+   * @return the years
+   */
+  List<Year> getYears(Blog blog);
+
+  /**
+   * Get the previous blog entry
+   *
+   * @param blog The blog
+   * @param blogEntryId The entry to get the previous from
+   * @return The previous entry, or null if none found
+   */
+  String getPreviousBlogEntry(Blog blog, String blogEntryId);
+
+  /**
+   * Get the next blog entry
+   *
+   * @param blog The blog
+   * @param blogEntryId The blog entry to get the next from
+   * @return The next entry, or null if none found
+   */
+  String getNextBlogEntry(Blog blog, String blogEntryId);
+
+  /**
+   * Get the blog entries for a particular day
+   *
+   * @param blog The blog
+   * @param year The year
+   * @param month The month
+   * @param day The day
+   * @return The entries for that day
+   */
+  List<String> getBlogEntriesForDay(Blog blog, int year, int month, int day);
+
+  /**
+   * Get the blog entries for a particular month
+   *
+   * @param blog The blog
+   * @param year The year
+   * @param month The month
+   * @return The entries for that day
+   */
+  List<String> getBlogEntriesForMonth(Blog blog, int year, int month);
 }

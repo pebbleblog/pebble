@@ -41,18 +41,19 @@ import java.util.Date;
 public abstract class TimePeriod {
 
   /** a reference to the top level, owning blog */
-  private Blog blog;
+  private final Blog blog;
 
   /** a Date representation of the day that this blog is for */
-  private Date date;
+  private final Date date;
 
   /**
    * Specifies the top-level, owning blog.
    *
    * @param blog    the top-level owning Blog instance
    */
-  public TimePeriod(Blog blog) {
+  public TimePeriod(Blog blog, Date date) {
     this.blog = blog;
+    this.date = date;
   }
 
   /**
@@ -72,14 +73,4 @@ public abstract class TimePeriod {
   public Date getDate() {
     return this.date;
   }
-
-  /**
-   * Sets the date that this blog is for.
-   *
-   * @param d   a Date instance
-   */
-  public void setDate(Date d) {
-    this.date = d;
-  }
-
 }

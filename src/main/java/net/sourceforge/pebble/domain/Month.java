@@ -31,6 +31,8 @@
  */
 package net.sourceforge.pebble.domain;
 
+import com.google.common.collect.ImmutableList;
+
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -41,56 +43,29 @@ import java.util.*;
  */
 public class Month extends TimePeriod implements Permalinkable {
 
-  /** the parent, Year instance */
-  private Year year;
+  /** the year this month is for */
+  private int year;
 
   /** an integer representing the month that this Month is for */
   private int month;
 
   /** the collection of Day instances that this blog is managing */
-  private Day[] dailyBlogs;
+  private List<Day> days;
 
   /** the last day in this month */
   private int lastDayInMonth;
 
-  /**
-   * Creates a new Month based upon the specified Year and month.
-   *
-   * @param year    the owning Year instance
-   * @param month         the month as an int
-   */
-  Month(Year year, int month) {
-    super(year.getBlog());
+  /** the first day this month has a blog for **/
+  private int firstDay;
+
+  private Month(Blog blog, Date date, int year, int month, int lastDayInMonth, List<Day> days, int firstDay) {
+    super(blog, date);
 
     this.year = year;
     this.month = month;
-    setDate(getCalendar().getTime());
-
-    Calendar cal = getBlog().getCalendar();
-    cal.setTime(getDate());
-    this.lastDayInMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-
-    // and create all days
-    dailyBlogs = new Day[lastDayInMonth];
-    for (int day = 1; day <= lastDayInMonth; day++) {
-      dailyBlogs[day-1] = new Day(this, day);
-    }
-  }
-
-  private Calendar getCalendar() {
-    // set the date corresponding to the 1st of the month
-    // (this is used in determining whether another Month is
-    // before or after this one)
-    Calendar cal = getBlog().getCalendar();
-    cal.set(Calendar.YEAR, year.getYear());
-    cal.set(Calendar.MONTH, month - 1);
-    cal.set(Calendar.DAY_OF_MONTH, 1);
-    cal.set(Calendar.HOUR_OF_DAY, 0);
-    cal.set(Calendar.MINUTE, 0);
-    cal.set(Calendar.SECOND, 0);
-    cal.set(Calendar.MILLISECOND, 0);
-
-    return cal;
+    this.lastDayInMonth = lastDayInMonth;
+    this.days = days;
+    this.firstDay = firstDay;
   }
 
   /**
@@ -98,7 +73,7 @@ public class Month extends TimePeriod implements Permalinkable {
    *
    * @return  a Year instance
    */
-  public Year getYear() {
+  public int getYear() {
     return year;
   }
 
@@ -131,27 +106,13 @@ public class Month extends TimePeriod implements Permalinkable {
    * @return    true if this blog contains entries, false otherwise
    */
   public boolean hasBlogEntries() {
-    for (int i = 1; i <= lastDayInMonth; i++) {
-      if (getBlogForDay(i).hasBlogEntries()) {
+    for (Day day : days) {
+      if (day.hasBlogEntries()) {
         return true;
       }
     }
 
     return false;
-  }
-
-  /**
-   * Gets all blog entries for this month.
-   *
-   * @return  a List of BlogEntry instances, reverse ordered by date
-   */
-  public List<String> getBlogEntries() {
-    Day days[] = getAllDays();
-    List blogEntries = new ArrayList();
-    for (Day day : days) {
-      blogEntries.addAll(day.getBlogEntries());
-    }
-    return blogEntries;
   }
 
   /**
@@ -161,7 +122,6 @@ public class Month extends TimePeriod implements Permalinkable {
    */
   public int getNumberOfBlogEntries() {
     int count = 0;
-    Day days[] = getAllDays();
     for (Day day : days) {
       count += day.getNumberOfBlogEntries();
     }
@@ -175,13 +135,8 @@ public class Month extends TimePeriod implements Permalinkable {
    * @return  a Collection of Day instances for all those days
    *          that have entries (this can return an empty collection)
    */
-  public Day[] getAllDays() {
-    Day blogs[] = new Day[dailyBlogs.length];
-    for (int day = 0; day < dailyBlogs.length; day++) {
-      blogs[day] = getBlogForDay(day + 1);
-    }
-
-    return blogs;
+  public List<Day> getAllDays() {
+    return days;
   }
 
   /**
@@ -191,13 +146,19 @@ public class Month extends TimePeriod implements Permalinkable {
    * @param day   the day as an int (i.e. 1 to 31)
    * @return  the corresponding Day instance
    */
-  public synchronized Day getBlogForDay(int day) {
+  public Day getBlogForDay(int day) {
     // some bounds checking
     if (day < 1 || day > lastDayInMonth) {
       throw new IllegalArgumentException("Invalid day of " + day + " specified, should be between 1 and " + lastDayInMonth);
     }
 
-    return dailyBlogs[day-1];
+    // Calculate index
+    int index = day - firstDay;
+    if (index < 0 || index >= days.size()) {
+      return Day.emptyDay(getBlog(), year, month, day);
+    }
+
+    return days.get(index);
   }
 
   /**
@@ -233,7 +194,7 @@ public class Month extends TimePeriod implements Permalinkable {
    * @return    a Month instance
    */
   public Month getPreviousMonth() {
-    return year.getBlogForPreviousMonth(this);
+    return getBlog().getBlogForYear(year).getBlogForPreviousMonth(this);
   }
 
   /**
@@ -242,7 +203,7 @@ public class Month extends TimePeriod implements Permalinkable {
    * @return    a Month instance
    */
   public Month getNextMonth() {
-    return year.getBlogForNextMonth(this);
+    return getBlog().getBlogForYear(year).getBlogForNextMonth(this);
   }
 
   /**
@@ -278,7 +239,7 @@ public class Month extends TimePeriod implements Permalinkable {
     if (day.getDay() > 1) {
       return this.getBlogForDay(day.getDay() - 1);
     } else {
-      return year.getBlogForPreviousMonth(this).getBlogForLastDay();
+      return getBlog().getBlogForYear(year).getBlogForPreviousMonth(this).getBlogForLastDay();
     }
   }
 
@@ -293,7 +254,7 @@ public class Month extends TimePeriod implements Permalinkable {
     if (day.getDay() < lastDayInMonth) {
       return this.getBlogForDay(day.getDay() + 1);
     } else {
-      return year.getBlogForNextMonth(this).getBlogForFirstDay();
+      return getBlog().getBlogForYear(year).getBlogForNextMonth(this).getBlogForFirstDay();
     }
   }
 
@@ -305,6 +266,99 @@ public class Month extends TimePeriod implements Permalinkable {
   public String toString() {
     SimpleDateFormat sdf = new SimpleDateFormat("MMMM");
     return sdf.format(getDate());
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    Month month1 = (Month) o;
+
+    if (month != month1.month) return false;
+    if (year != month1.year) return false;
+
+    return true;
+  }
+
+  @Override
+  public int hashCode() {
+    int result = year;
+    result = 31 * result + month;
+    return result;
+  }
+
+  public static Builder builder(Blog blog, int year, int month) {
+    return new Builder(blog, year, month);
+  }
+
+  public static Builder builder(Month like) {
+    return new Builder(like);
+  }
+
+  public static Month emptyMonth(Blog blog, int year, int month) {
+    return builder(blog, year, month).build();
+  }
+
+  public static class Builder {
+    private final Blog blog;
+    private final int year;
+    private final int month;
+    private final LinkedList<Day> days;
+    private final Date date;
+    private final int lastDayInMonth;
+    private int firstDay;
+
+    private Builder(Blog blog, int year, int month) {
+      this.blog = blog;
+      this.year = year;
+      this.month = month;
+      this.days = new LinkedList<Day>();
+
+      Calendar cal = blog.getCalendar();
+      cal.set(Calendar.YEAR, year);
+      cal.set(Calendar.MONTH, month - 1);
+      cal.set(Calendar.DAY_OF_MONTH, 1);
+      cal.set(Calendar.HOUR_OF_DAY, 0);
+      cal.set(Calendar.MINUTE, 0);
+      cal.set(Calendar.SECOND, 0);
+      cal.set(Calendar.MILLISECOND, 0);
+      this.date = cal.getTime();
+      this.lastDayInMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+
+      this.firstDay = lastDayInMonth + 1;
+    }
+
+    private Builder(Month month) {
+      this.blog = month.getBlog();
+      this.year = month.year;
+      this.month = month.month;
+      this.days = new LinkedList<Day>(month.days);
+      this.date = month.getDate();
+      this.lastDayInMonth = month.lastDayInMonth;
+      this.firstDay = month.firstDay;
+    }
+
+    public Month build() {
+      return new Month(blog, date, year, month, lastDayInMonth, ImmutableList.copyOf(days), firstDay);
+    }
+
+    public Builder putDay(Day day) {
+      if (day.getMonth() != month || day.getYear() != year) {
+        throw new IllegalArgumentException("Cannot add day from year " + day.getYear()  + " and month " + day.getMonth() + " to month " + month + "in year " + year);
+      }
+      if (day.getDay() < 1 || day.getDay() > lastDayInMonth) {
+        throw new IllegalArgumentException("Day must be between 1 and " + lastDayInMonth);
+      }
+      // First insert needed days
+      while (firstDay > day.getDay()) {
+        firstDay--;
+        days.addFirst(Day.emptyDay(blog, year, month, firstDay));
+      }
+      days.set(day.getDay() - firstDay, day);
+      return this;
+    }
+
   }
 
 }

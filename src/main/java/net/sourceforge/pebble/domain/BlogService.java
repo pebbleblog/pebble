@@ -91,14 +91,12 @@ public class BlogService {
   }
 
   public List<BlogEntry> getBlogEntries(Blog blog, int year, int month, int day) throws BlogServiceException {
-    Day d = blog.getBlogForDay(year, month, day);
-    List<String> blogEntryIds = d.getBlogEntries();
+    List<String> blogEntryIds = blog.getBlogEntryIndex().getBlogEntriesForDay(blog, year, month, day);
     return getBlogEntries(blog, blogEntryIds);
   }
 
   public List<BlogEntry> getBlogEntries(Blog blog, int year, int month) throws BlogServiceException {
-    Month m = blog.getBlogForMonth(year, month);
-    List<String> blogEntryIds = m.getBlogEntries();
+    List<String> blogEntryIds = blog.getBlogEntryIndex().getBlogEntriesForMonth(blog, year, month);
     return getBlogEntries(blog, blogEntryIds);
   }
 

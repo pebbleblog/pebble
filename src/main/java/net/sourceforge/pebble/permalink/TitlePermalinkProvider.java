@@ -71,12 +71,13 @@ public class TitlePermalinkProvider extends PermalinkProviderSupport {
     if (blogEntry.getTitle() == null || blogEntry.getTitle().length() == 0) {
       return buildPermalink(blogEntry) + ".html";
     } else {
+
       Day day = getBlog().getBlogForDay(blogEntry.getDate());
-      List entries = day.getBlogEntries();
+      List<String> entries = getBlog().getBlogEntryIndex().getBlogEntriesForDay(day.getBlog(), day.getYear(), day.getMonth(), day.getDay());
       int count = 0;
       for (int i = entries.size()-1; i > entries.indexOf(blogEntry.getId()); i--) {
         try {
-          BlogEntry entry = blogService.getBlogEntry(getBlog(), (String)entries.get(i));
+          BlogEntry entry = blogService.getBlogEntry(getBlog(), entries.get(i));
           if (entry.getTitle().equals(blogEntry.getTitle())) {
             count++;
           }
@@ -157,18 +158,17 @@ public class TitlePermalinkProvider extends PermalinkProviderSupport {
   public BlogEntry getBlogEntry(String uri) {
     Day day = getDay(uri);
 
-    Iterator it = day.getBlogEntries().iterator();
-    while (it.hasNext()) {
-      try {
-        BlogEntry blogEntry = blogService.getBlogEntry(getBlog(), (String)it.next());
-        // use the local permalink, just in case the entry has been aggregated
-        // and an original permalink assigned
-        if (blogEntry.getLocalPermalink().endsWith(uri)) {
-          return blogEntry;
-        }
-      } catch (BlogServiceException e) {
-        // do nothing
+    try {
+      List<BlogEntry> blogEntries = blogService.getBlogEntries(getBlog(), day.getYear(), day.getMonth(), day.getDay());
+      for (BlogEntry blogEntry : blogEntries) {
+          // use the local permalink, just in case the entry has been aggregated
+          // and an original permalink assigned
+          if (blogEntry.getLocalPermalink().endsWith(uri)) {
+            return blogEntry;
+          }
       }
+    } catch (BlogServiceException e) {
+      // do nothing
     }
 
     return null;

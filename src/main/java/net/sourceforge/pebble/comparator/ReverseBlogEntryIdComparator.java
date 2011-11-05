@@ -39,23 +39,16 @@ import java.util.Comparator;
  *
  * @author    Simon Brown
  */
-public class ReverseBlogEntryIdComparator implements Comparator {
+public class ReverseBlogEntryIdComparator implements Comparator<String> {
 
-  /**
-   * Compares two objects.
-   *
-   * @param o1  object 1
-   * @param o2  object 2
-   * @return  -n, 0 or +n if the date represented by the second blog entry is less than,
-   *          the same as or greater than the first, respectively
-   */
-  public int compare(Object o1, Object o2) {
-    String blogEntryId1 = (String)o1;
-    String blogEntryId2 = (String)o2;
-    Long l1 = Long.parseLong(blogEntryId1);
-    Long l2 = Long.parseLong(blogEntryId2);
+  public static final ReverseBlogEntryIdComparator INSTANCE = new ReverseBlogEntryIdComparator();
 
-    return l2.compareTo(l1);
+  public int compare(String blogEntryId1, String blogEntryId2) {
+    int cmp = blogEntryId2.length() - blogEntryId1.length();
+    if (cmp == 0) {
+      cmp = blogEntryId2.compareTo(blogEntryId1);
+    }
+    return cmp;
   }
 
 }

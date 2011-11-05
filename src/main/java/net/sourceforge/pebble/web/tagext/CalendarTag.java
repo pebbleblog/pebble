@@ -76,7 +76,7 @@ public class CalendarTag extends TagSupport {
     Calendar now = blog.getCalendar();
 
     if (month == null) {
-      month = today.getMonth();
+      month = blog.getBlogForMonth(today.getYear(), today.getMonth());
     }
 
     Calendar firstDayOfMonth = blog.getCalendar();

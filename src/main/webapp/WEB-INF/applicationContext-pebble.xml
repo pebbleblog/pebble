@@ -57,6 +57,8 @@
   <bean id="staticPageService" class="net.sourceforge.pebble.service.StaticPageService"/>
   <bean id="blogService" class="net.sourceforge.pebble.domain.BlogService" autowire="constructor"/>
 
+  <bean id="blogEntryIndex" factory-bean="daoFactory" factory-method="getBlogEntryIndex"/>
+
   <bean id="lastModifiedService" class="net.sourceforge.pebble.service.DefaultLastModifiedService"/>
 
   <bean id="httpController" class="net.sourceforge.pebble.web.controller.DefaultHttpController">

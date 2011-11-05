@@ -31,8 +31,6 @@
  */
 package net.sourceforge.pebble.domain;
 
-import net.sourceforge.pebble.comparator.ReverseBlogEntryIdComparator;
-
 import java.util.*;
 
 /**
@@ -42,106 +40,35 @@ import java.util.*;
  */
 public class Day extends TimePeriod implements Permalinkable {
 
-  /** the parent, Month instance */
-  private Month month;
+  /** The year for this day **/
+  private final int year;
+
+  /** The month for this day */
+  private final int month;
 
   /** an integer representing the day that this Day is for */
-  private int day;
+  private final int day;
 
-  /** the collection of blog entry keys */
-  private List<String> blogEntries = new ArrayList<String>();
-  private List<String> publishedBlogEntries = new ArrayList<String>();
-  private List<String> unpublishedBlogEntries = new ArrayList<String>();
+  private final int numberOfBlogEntries;
 
-  /**
-   * Creates a new Day for the specified month and day.
-   *
-   * @param month   a Month instance representing the month
-   * @param day     an int representing the day
-   */
-  Day(Month month, int day) {
-    super(month.getBlog());
-
+  private Day(Blog blog, Date date, int year, int month, int day, int numberOfBlogEntries) {
+    super(blog, date);
+    this.year = year;
     this.month = month;
     this.day = day;
-    setDate(getCalendar().getTime());
+    this.numberOfBlogEntries = numberOfBlogEntries;
+  }
 
-//    if (getBlog() instanceof Blog) {
-//      try {
-//        Blog blog = getBlog();
-//
-//        DAOFactory factory = DAOFactory.getConfiguredFactory();
-//        BlogEntryDAO dao = factory.getBlogEntryDAO();
-//        entries = dao.getBlogEntries(this);
-//        Collections.sort(entries, new BlogEntryComparator());
-//
-//        Iterator it = entries.iterator();
-//        while (it.hasNext()) {
-//          BlogEntry blogEntry = (BlogEntry)it.next();
-//
-//          if (blogEntry.isApproved()) {
-//            Iterator categories = blogEntry.getCategories().iterator();
-//            while (categories.hasNext()) {
-//              Category category = (Category)categories.next();
-//              category.addBlogEntry(blogEntry);
-//            }
-//            blog.getRootCategory().addBlogEntry(blogEntry);
-//
-//            // and the blog entry specific tags
-//            Iterator tags = blogEntry.getTagsAsList().iterator();
-//            while (tags.hasNext()) {
-//              Tag tag = (Tag)tags.next();
-//              tag.addBlogEntry(blogEntry);
-//            }
-//          }
-//
-//          // tell the owning blog that we might have some more recent
-//          // comments and TrackBacks
-//          Iterator comments = blogEntry.getComments().iterator();
-//          while (comments.hasNext()) {
-//            blog.getResponseManager().addRecentComment((Comment)comments.next());
-//          }
-//          Iterator trackBacks = blogEntry.getTrackBacks().iterator();
-//          while (trackBacks.hasNext()) {
-//            blog.getResponseManager().addRecentTrackBack((TrackBack)trackBacks.next());
-//          }
-//
-//          // now that the entries have been loaded, enable events
-//          // so that listeners get notified when they change
-//          blogEntry.setEventsEnabled(true);
-//        }
-//      } catch (PersistenceException e) {
-//        e.printStackTrace();
-//      }
-//    }
+  public int getYear() {
+    return year;
   }
 
   /**
-   * Gets a Calendar object representing today.
+   * Gets the month this day is in
    *
-   * @return    a Calendar instance
+   * @return  the month
    */
-  private Calendar getCalendar() {
-
-    // and set the actual date for this day
-    Calendar cal = getBlog().getCalendar();
-    cal.set(Calendar.YEAR, getMonth().getYear().getYear());
-    cal.set(Calendar.MONTH, getMonth().getMonth() - 1);
-    cal.set(Calendar.DAY_OF_MONTH, getDay());
-    cal.set(Calendar.HOUR_OF_DAY, 12);
-    cal.set(Calendar.MINUTE, 0);
-    cal.set(Calendar.SECOND, 0);
-    cal.set(Calendar.MILLISECOND, 0);
-
-    return cal;
-  }
-
-  /**
-   * Gets a reference to the parent Month instance.
-   *
-   * @return  a Month instance
-   */
-  public Month getMonth() {
+  public int getMonth() {
     return month;
   }
 
@@ -169,167 +96,21 @@ public class Day extends TimePeriod implements Permalinkable {
   }
 
   /**
-   * Gets a Collection containing all the blog entries for this day.
-   *
-   * @return    an ordered List of BlogEntry instances
-   */
-  public List<String> getBlogEntries() {
-    return new ArrayList<String>(blogEntries);
-  }
-
-  public int getNumberOfBlogEntries() {
-    return publishedBlogEntries.size();
-  }
-
-  public synchronized void addPublishedBlogEntry(String blogEntryId) {
-    if (!publishedBlogEntries.contains(blogEntryId)) {
-      publishedBlogEntries.add(blogEntryId);
-      Collections.sort(publishedBlogEntries, new ReverseBlogEntryIdComparator());
-    }
-    unpublishedBlogEntries.remove(blogEntryId);
-
-    if (!blogEntries.contains(blogEntryId)) {
-      // and add to the aggregated view
-      blogEntries.add(blogEntryId);
-      Collections.sort(blogEntries, new ReverseBlogEntryIdComparator());
-    }
-  }
-
-  public synchronized void addUnpublishedBlogEntry(String blogEntryId) {
-    if (!unpublishedBlogEntries.contains(blogEntryId)) {
-      unpublishedBlogEntries.add(blogEntryId);
-      Collections.sort(unpublishedBlogEntries, new ReverseBlogEntryIdComparator());
-    }
-    publishedBlogEntries.remove(blogEntryId);
-
-    if (!blogEntries.contains(blogEntryId)) {
-      // and add to the aggregated view
-      blogEntries.add(blogEntryId);
-      Collections.sort(blogEntries, new ReverseBlogEntryIdComparator());
-    }
-  }
-
-  public synchronized void removeBlogEntry(BlogEntry blogEntry) {
-    publishedBlogEntries.remove(blogEntry.getId());
-    unpublishedBlogEntries.remove(blogEntry.getId());
-    blogEntries.remove(blogEntry.getId());
-  }
-
-//  /**
-//   * Gets a Collection containing all the blog entries for this day and the
-//   * specified category.
-//   *
-//   * @param   category    a Category instance, or null
-//   * @return    an ordered List of BlogEntry instances
-//   */
-//  public List getEntries(Category category) {
-//    if (category == null) {
-//      return this.getEntries();
-//    } else {
-//      List blogEntries = new ArrayList();
-//      Iterator it = getEntries().iterator();
-//      while (it.hasNext()) {
-//        BlogEntry blogEntry = (BlogEntry)it.next();
-//        if (blogEntry.inCategory(category)) {
-//          blogEntries.add(blogEntry);
-//        }
-//      }
-//      return blogEntries;
-//    }
-//  }
-
-//  /**
-//   * Gets a Collection containing all the blog entries for this day and the
-//   * specified tag.
-//   *
-//   * @param     tag    a Strng
-//   * @return    an ordered List of BlogEntry instances
-//   */
-//  public List getEntries(String tag) {
-//    if (tag == null) {
-//      return this.getEntries();
-//    } else {
-//      List blogEntries = new ArrayList();
-//      Iterator it = getEntries().iterator();
-//      while (it.hasNext()) {
-//        BlogEntry blogEntry = (BlogEntry)it.next();
-//        if (blogEntry.hasTag(tag)) {
-//          blogEntries.add(blogEntry);
-//        }
-//      }
-//      return blogEntries;
-//    }
-//  }
-
-//  /**
-//   * Gets a specific blog entry.
-//   *
-//   * @param entryId   the blog entry id
-//   * @return  the corresponding BlogEntry instance, or null if a BlogEntry
-//   *          with the specified id doesn't exist
-//   */
-//  public BlogEntry getEntry(String entryId) {
-//    Iterator it = entries.iterator();
-//    BlogEntry blogEntry;
-//    while (it.hasNext()) {
-//      blogEntry = (BlogEntry)it.next();
-//      if (blogEntry.getId().equals(entryId)) {
-//        return blogEntry;
-//      }
-//    }
-//    return null;
-//  }
-
-//  /**
-//   * Adds a given blog entry.
-//   *
-//   * @param entry   the BlogEntry instance to add
-//   */
-//  public synchronized void addEntry(BlogEntry entry) {
-//    if (entry == null) {
-//      return;
-//    }
-//
-//    BlogEntry existing = getEntry(entry.getId());
-//    if (existing != null && existing != entry) {
-//      // there is already an entry with the same ID, so increment and try again
-//      entry.setDate(new Date(entry.getDate().getTime() + 1));
-//      addEntry(entry);
-//    } else if (!entries.contains(entry)) {
-//      entries.add(entry);
-//      Collections.sort(entries, new BlogEntryComparator());
-//      entry.setDay(this);
-//      entry.setType(BlogEntry.PUBLISHED);
-//
-//      // now that the entries have been loaded, enable events
-//      // so that listeners get notified when they change
-//      entry.setEventsEnabled(true);
-//
-//      // and notify listeners
-//      ((Blog)getBlog()).getEventDispatcher().fireBlogEntryEvent(new BlogEntryEvent(entry, BlogEntryEvent.BLOG_ENTRY_ADDED));
-//    }
-//  }
-
-//  /**
-//   * Removes a given blog entry.
-//   *
-//   * @param entry   the BlogEntry instance to remove
-//   */
-//  public synchronized void removeEntry(BlogEntry entry) {
-//    if (entry != null) {
-//      getBlog().getEventDispatcher().fireBlogEntryEvent(new BlogEntryEvent(entry, BlogEntryEvent.BLOG_ENTRY_REMOVED));
-//      entries.remove(entry);
-//      entry.setDay(null);
-//    }
-//  }
-
-  /**
    * Determines whether this day has entries.
    *
    * @return    true if this blog contains entries, false otherwise
    */
   public boolean hasBlogEntries() {
-    return !publishedBlogEntries.isEmpty();
+    return numberOfBlogEntries > 0;
+  }
+
+  /**
+   * Get the number of blog entries for this day
+   *
+   * @return The number of blog entries
+   */
+  public int getNumberOfBlogEntries() {
+    return numberOfBlogEntries;
   }
 
   /**
@@ -338,7 +119,7 @@ public class Day extends TimePeriod implements Permalinkable {
    * @return    a Day instance
    */
   public Day getPreviousDay() {
-    return month.getBlogForPreviousDay(this);
+    return getBlog().getBlogForMonth(year, month).getBlogForPreviousDay(this);
   }
 
   /**
@@ -347,83 +128,7 @@ public class Day extends TimePeriod implements Permalinkable {
    * @return    a Day instance
    */
   public Day getNextDay() {
-    return month.getBlogForNextDay(this);
-  }
-
-  /**
-   * Gets the blog entry posted previous (before) to the one specified.
-   *
-   * @param   blogEntry   a BlogEntry
-   * @return  the previous BlogEntry, or null if one doesn't exist
-   */
-  public String getPreviousBlogEntry(String blogEntry) {
-    int index = publishedBlogEntries.indexOf(blogEntry);
-    if (index >= 0 && index < (publishedBlogEntries.size()-1)) {
-      return publishedBlogEntries.get(index+1);
-    } else {
-      return null;
-    }
-  }
-
-  /**
-   * Gets the first entry that was posted on this day.
-   *
-   * @return    a BlogEntry instance, or null is no entries have been posted
-   */
-  public String getFirstBlogEntry() {
-    if (!publishedBlogEntries.isEmpty()) {
-      return publishedBlogEntries.get(publishedBlogEntries.size()-1);
-    } else {
-      return null;
-    }
-  }
-
-  /**
-   * Gets the last entry that was posted on this day.
-   *
-   * @return    a BlogEntry instance, or null is no entries have been posted
-   */
-  public String getLastBlogEntry() {
-    if (!publishedBlogEntries.isEmpty()) {
-      return publishedBlogEntries.get(0);
-    } else {
-      return null;
-    }
-  }
-
-  /**
-   * Gets the blog entry posted next (afterwards) to the one specified.
-   *
-   * @param blogEntry   a BlogEntry
-   * @return  the next BlogEntry, or null if one doesn't exist
-   */
-  public String getNextBlogEntry(String blogEntry) {
-    int index = publishedBlogEntries.lastIndexOf(blogEntry);
-    if (index > 0 && index <= publishedBlogEntries.size()) {
-      return publishedBlogEntries.get(index-1);
-    } else {
-      return null;
-    }
-  }
-
-  public Date getStartOfDay() {
-    Calendar cal = getCalendar();
-    cal.set(Calendar.HOUR_OF_DAY, 0);
-    cal.set(Calendar.MINUTE, 0);
-    cal.set(Calendar.SECOND, 0);
-    cal.set(Calendar.MILLISECOND, 1);
-
-    return cal.getTime();
-  }
-
-  public Date getEndOfDay() {
-    Calendar cal = getCalendar();
-    cal.set(Calendar.HOUR_OF_DAY, 23);
-    cal.set(Calendar.MINUTE, 59);
-    cal.set(Calendar.SECOND, 59);
-    cal.set(Calendar.MILLISECOND, 999);
-
-    return cal.getTime();
+    return getBlog().getBlogForMonth(year, month).getBlogForNextDay(this);
   }
 
   /**
@@ -435,6 +140,83 @@ public class Day extends TimePeriod implements Permalinkable {
    */
   public boolean before(Day day) {
     return getDate().before(day.getDate());
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    Day day1 = (Day) o;
+
+    if (day != day1.day) return false;
+    if (month != day1.month) return false;
+    if (year != day1.year) return false;
+
+    return true;
+  }
+
+  @Override
+  public int hashCode() {
+    int result = year;
+    result = 31 * result + month;
+    result = 31 * result + day;
+    return result;
+  }
+
+  public static Builder builder(Blog blog, int year, int month, int day) {
+    return new Builder(blog, year, month, day);
+  }
+
+  public static Builder builder(Day like) {
+    return new Builder(like);
+  }
+
+  public static Day emptyDay(Blog blog, int year, int month, int day) {
+    return builder(blog, year, month, day).build();
+  }
+
+  public static class Builder {
+    private final Blog blog;
+    private final int year;
+    private final int month;
+    private final int day;
+    private final Date date;
+    private int numberOfBlogEntries;
+
+    private Builder(Blog blog, int year, int month, int day) {
+      this.blog = blog;
+      this.year = year;
+      this.month = month;
+      this.day = day;
+      Calendar cal = blog.getCalendar();
+      cal.set(Calendar.YEAR, year);
+      cal.set(Calendar.MONTH, month - 1);
+      cal.set(Calendar.DAY_OF_MONTH, day);
+      cal.set(Calendar.HOUR_OF_DAY, 12);
+      cal.set(Calendar.MINUTE, 0);
+      cal.set(Calendar.SECOND, 0);
+      cal.set(Calendar.MILLISECOND, 0);
+      this.date = cal.getTime();
+    }
+
+    private Builder(Day day) {
+      this.blog = day.getBlog();
+      this.year = day.year;
+      this.month = day.month;
+      this.day = day.day;
+      this.date = day.getDate();
+      this.numberOfBlogEntries = day.numberOfBlogEntries;
+    }
+
+    public Day build() {
+      return new Day(blog, date, year, month, day, numberOfBlogEntries);
+    }
+
+    public Builder setNumberOfBlogEntries(int numberOfBlogEntries) {
+      this.numberOfBlogEntries = numberOfBlogEntries;
+      return this;
+    }
   }
 
 }
