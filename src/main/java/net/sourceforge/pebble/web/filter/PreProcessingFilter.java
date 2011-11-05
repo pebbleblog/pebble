@@ -145,9 +145,9 @@ public class PreProcessingFilter implements Filter {
         httpRequest.setAttribute(Constants.CATEGORIES, b.getCategories());
         httpRequest.setAttribute(Constants.TAGS, b.getTags());
         httpRequest.setAttribute(Constants.PLUGIN_PROPERTIES, b.getPluginProperties());
-        httpRequest.setAttribute(Constants.ARCHIVES, Lists.reverse(blogEntryIndex.getYears(b)));
+        httpRequest.setAttribute(Constants.ARCHIVES, Lists.reverse(blogEntryIndex.getArchive(b).getYears()));
         httpRequest.setAttribute("permalinkProvider", ((Blog) blog).getPermalinkProvider());
-        httpRequest.setAttribute(Constants.YEARS_KEY, blogEntryIndex.getYears((Blog) blog));
+        httpRequest.setAttribute(Constants.YEARS_KEY, blogEntryIndex.getArchive((Blog) blog));
         httpRequest.setAttribute(Constants.BLOG_TYPE, "singleblog");
       } else {
         httpRequest.setAttribute(Constants.BLOG_TYPE, "multiblog");

@@ -35,7 +35,6 @@ import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.domain.*;
 import net.sourceforge.pebble.index.BlogEntryIndex;
 import net.sourceforge.pebble.logging.Log;
-import net.sourceforge.pebble.util.BlogSummaryUtils;
 
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -43,7 +42,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.List;
 
 /**
  * Superclass for all log related actions.
@@ -58,6 +56,7 @@ public abstract class AbstractLogAction extends SecureAction {
   protected Log getLog(HttpServletRequest request, HttpServletResponse response) throws ServletException {
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
 
+    Archive archive = blogEntryIndex.getArchive(blog);
     String yearAsString = request.getParameter("year");
     String monthAsString = request.getParameter("month");
     String dayAsString = request.getParameter("day");
@@ -78,7 +77,7 @@ public abstract class AbstractLogAction extends SecureAction {
       log = blog.getLogger().getLog(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH)+1, cal.get(Calendar.DAY_OF_MONTH));
       SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy", blog.getLocale());
       dateFormat.setTimeZone(blog.getTimeZone());
-      registerObjectsForNavigation(blog, getBlogForDay(blog, year, month, day));
+      registerObjectsForNavigation(blog, archive, archive.getDay(year, month, day));
       logPeriod = dateFormat.format(cal.getTime());
     } else if (yearAsString != null && yearAsString.length() > 0 &&
           monthAsString != null && monthAsString.length() > 0) {
@@ -89,14 +88,14 @@ public abstract class AbstractLogAction extends SecureAction {
       log = blog.getLogger().getLog(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH)+1);
       SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM yyyy", blog.getLocale());
       dateFormat.setTimeZone(blog.getTimeZone());
-      registerObjectsForNavigation(blog, getBlogForMonth(blog, year, month));
+      registerObjectsForNavigation(blog, archive, archive.getYear(year).getBlogForMonth(month));
       logPeriod = dateFormat.format(cal.getTime());
     } else {
       // get the log for today
       log = blog.getLogger().getLog();
       SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy", blog.getLocale());
       dateFormat.setTimeZone(blog.getTimeZone());
-      registerObjectsForNavigation(blog, BlogSummaryUtils.getBlogForDay(blog, getYears(blog), blog.getToday()));
+      registerObjectsForNavigation(blog, archive, archive.getToday());
       logPeriod = dateFormat.format(cal.getTime());
     }
 
@@ -108,6 +107,7 @@ public abstract class AbstractLogAction extends SecureAction {
   protected String getLogFile(HttpServletRequest request, HttpServletResponse response) throws ServletException {
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
 
+    Archive archive = blogEntryIndex.getArchive(blog);
     String yearAsString = request.getParameter("year");
     String monthAsString = request.getParameter("month");
     String dayAsString = request.getParameter("day");
@@ -128,7 +128,7 @@ public abstract class AbstractLogAction extends SecureAction {
       log = blog.getLogger().getLogFile(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH)+1, cal.get(Calendar.DAY_OF_MONTH));
       SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy", blog.getLocale());
       dateFormat.setTimeZone(blog.getTimeZone());
-      registerObjectsForNavigation(blog, getBlogForDay(blog, year, month, day));
+      registerObjectsForNavigation(blog, archive, archive.getDay(year, month, day));
       logPeriod = dateFormat.format(cal.getTime());
     } else if (yearAsString != null && yearAsString.length() > 0 &&
           monthAsString != null && monthAsString.length() > 0) {
@@ -139,14 +139,14 @@ public abstract class AbstractLogAction extends SecureAction {
       log = blog.getLogger().getLogFile(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH)+1);
       SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM yyyy", blog.getLocale());
       dateFormat.setTimeZone(blog.getTimeZone());
-      registerObjectsForNavigation(blog, getBlogForMonth(blog, year, month));
+      registerObjectsForNavigation(blog, archive, archive.getYear(year).getBlogForMonth(month));
       logPeriod = dateFormat.format(cal.getTime());
     } else {
       // get the log for today
       log = blog.getLogger().getLogFile();
       SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy", blog.getLocale());
       dateFormat.setTimeZone(blog.getTimeZone());
-      registerObjectsForNavigation(blog, BlogSummaryUtils.getBlogForDay(blog, getYears(blog), blog.getToday()));
+      registerObjectsForNavigation(blog, archive, archive.getToday());
       logPeriod = dateFormat.format(cal.getTime());
     }
 
@@ -155,56 +155,34 @@ public abstract class AbstractLogAction extends SecureAction {
     return log;
   }
 
-  private void registerObjectsForNavigation(Blog blog, Month month) {
-    SimpleDate now = blog.getToday();
-    List<Year> years = getYears(blog);
-    Year thisYear = BlogSummaryUtils.getYear(blog, years, now.getYear());
-    Month firstMonth = BlogSummaryUtils.getFirstMonth(blog, years);
-    Month previousMonth = BlogSummaryUtils.getPreviousMonth(years, month);
-    Month nextMonth = BlogSummaryUtils.getNextMonth(years, month);
+  private void registerObjectsForNavigation(Blog blog, Archive archive, Month month) {
+    Month firstMonth = archive.getFirstMonth();
+    Month previousMonth = archive.getPreviousMonth(month);
+    Month nextMonth = archive.getNextMonth(month);
 
     if (!previousMonth.before(firstMonth)) {
       getModel().put("previousMonth", previousMonth);
     }
 
-    if (!nextMonth.after(thisYear.getBlogForMonth(now.getMonth())) || nextMonth.before(firstMonth)) {
+    if (!nextMonth.after(archive.getThisMonth()) || nextMonth.before(firstMonth)) {
       getModel().put("nextMonth", nextMonth);
     }
     getModel().put("displayMode", "logSummaryForMonth");
   }
 
-  private void registerObjectsForNavigation(Blog blog, Day day) {
-    SimpleDate now = blog.getToday();
-    List<Year> years = getYears(blog);
-    Year thisYear = BlogSummaryUtils.getYear(blog, years, now.getYear());
-    Day firstDay = BlogSummaryUtils.getFirstMonth(blog, years).getBlogForFirstDay();
-    Day previousDay = BlogSummaryUtils.getPreviousDay(years, day);
-    Day nextDay = BlogSummaryUtils.getNextDay(years, day);
+  private void registerObjectsForNavigation(Blog blog, Archive archive, Day day) {
+    Day firstDay = archive.getFirstMonth().getBlogForFirstDay();
+    Day previousDay = archive.getPreviousDay(day);
+    Day nextDay = archive.getNextDay(day);
 
     if (!previousDay.before(firstDay)) {
       getModel().put("previousDay", previousDay);
     }
 
-    if (!nextDay.after(thisYear.getBlogForMonth(now.getMonth()).getBlogForDay(now.getDay())) || nextDay.before(firstDay)) {
+    if (!nextDay.after(archive.getToday()) || nextDay.before(firstDay)) {
       getModel().put("nextDay", nextDay);
     }
     getModel().put("displayMode", "logSummaryForDay");
-  }
-
-  protected Day getBlogForDay(Blog blog, int year, int month, int day) {
-    return getBlogForMonth(blog, year, month).getBlogForDay(day);
-  }
-
-  protected Month getBlogForMonth(Blog blog, int year, int month) {
-    return getBlogForYear(blog, year).getBlogForMonth(month);
-  }
-
-  protected Year getBlogForYear(Blog blog, int year) {
-    return BlogSummaryUtils.getYear(blog, getYears(blog), year);
-  }
-
-  protected List<Year> getYears(Blog blog) {
-    return blogEntryIndex.getYears(blog);
   }
 
   /**

@@ -33,7 +33,6 @@ package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.index.BlogEntryIndex;
-import net.sourceforge.pebble.util.BlogSummaryUtils;
 import net.sourceforge.pebble.util.SecurityUtils;
 import net.sourceforge.pebble.domain.*;
 import net.sourceforge.pebble.web.view.View;
@@ -98,18 +97,18 @@ public class ViewDayAction extends Action {
     getModel().put(Constants.BLOG_ENTRIES, filter(blog, blogEntries));
     getModel().put("displayMode", "day");
 
-    List<Year> years = blogEntryIndex.getYears(blog);
+    Archive archive = blogEntryIndex.getArchive(blog);
 
     // put the previous and next days in the model for navigation purposes
-    Day firstDay = BlogSummaryUtils.getFirstMonth(blog, years).getBlogForFirstDay();
-    Day previousDay = BlogSummaryUtils.getPreviousDay(years, daily);
-    Day nextDay = BlogSummaryUtils.getNextDay(years, daily);
+    Day firstDay = archive.getFirstMonth().getBlogForFirstDay();
+    Day previousDay = archive.getPreviousDay(daily);
+    Day nextDay = archive.getNextDay(daily);
 
     if (!previousDay.before(firstDay)) {
       getModel().put("previousDay", previousDay);
     }
 
-    if (!nextDay.after(BlogSummaryUtils.getBlogForDay(blog, years, now)) || nextDay.before(firstDay)) {
+    if (!nextDay.after(archive.getToday()) || nextDay.before(firstDay)) {
       getModel().put("nextDay", nextDay);
     }
 

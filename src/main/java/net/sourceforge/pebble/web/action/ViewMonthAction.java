@@ -33,7 +33,6 @@ package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.index.BlogEntryIndex;
-import net.sourceforge.pebble.util.BlogSummaryUtils;
 import net.sourceforge.pebble.util.SecurityUtils;
 import net.sourceforge.pebble.domain.*;
 import net.sourceforge.pebble.web.view.View;
@@ -74,12 +73,11 @@ public class ViewMonthAction extends Action {
 
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
     SimpleDate now = blog.getToday();
-    List<Year> years = blogEntryIndex.getYears(blog);
+    Archive archive = blogEntryIndex.getArchive(blog);
     Month monthly;
     if (year != null && year.length() > 0 &&
         month != null && month.length() > 0) {
-      monthly = BlogSummaryUtils.getYear(blog, years, Integer.parseInt(year))
-          .getBlogForMonth(Integer.parseInt(month));
+      monthly = archive.getYear(Integer.parseInt(year)).getBlogForMonth(Integer.parseInt(month));
     } else {
       return new NotFoundView();
     }
@@ -95,9 +93,9 @@ public class ViewMonthAction extends Action {
     getModel().put(Constants.MONTHLY_BLOG, monthly);
 
     // put the previous and next months in the model for navigation purposes
-    Month firstMonth = BlogSummaryUtils.getFirstMonth(blog, years);
-    Month previousMonth = BlogSummaryUtils.getPreviousMonth(years, monthly);
-    Month nextMonth = BlogSummaryUtils.getNextMonth(years, monthly);
+    Month firstMonth = archive.getFirstMonth();
+    Month previousMonth = archive.getPreviousMonth(monthly);
+    Month nextMonth = archive.getNextMonth(monthly);
 
     if (!previousMonth.before(firstMonth)) {
       getModel().put("previousMonth", previousMonth);

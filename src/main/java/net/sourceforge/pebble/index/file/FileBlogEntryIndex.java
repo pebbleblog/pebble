@@ -37,7 +37,6 @@ import com.google.common.collect.Maps;
 import net.sourceforge.pebble.comparator.ReverseBlogEntryIdComparator;
 import net.sourceforge.pebble.domain.*;
 import net.sourceforge.pebble.index.BlogEntryIndex;
-import net.sourceforge.pebble.util.BlogSummaryUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -99,11 +98,11 @@ public class FileBlogEntryIndex implements BlogEntryIndex {
   }
 
   public Year getBlogForYear(Blog blog, int year) {
-    return cache.get(blog.getRoot()).getBlogForYear(year);
+    return cache.get(blog.getRoot()).getArchive().getYear(year);
   }
 
-  public List<Year> getYears(Blog blog) {
-    return cache.get(blog.getRoot()).getYears();
+  public Archive getArchive(Blog blog) {
+    return cache.get(blog.getRoot()).getArchive();
   }
 
   public String getPreviousBlogEntry(Blog blog, String blogEntryId) {
@@ -120,22 +119,6 @@ public class FileBlogEntryIndex implements BlogEntryIndex {
 
   public List<String> getBlogEntriesForMonth(Blog blog, int year, int month) {
     return cache.get(blog.getRoot()).getEntriesForMonth(year, month);
-  }
-
-  public Month getBlogForPreviousMonth(Blog blog, int year, int month) {
-    if (month <= 1) {
-      return cache.get(blog.getRoot()).getBlogForYear(year - 1).getBlogForMonth(12);
-    } else {
-      return cache.get(blog.getRoot()).getBlogForYear(year).getBlogForMonth(month - 1);
-    }
-  }
-
-  public Month getBlogForNextMonth(Blog blog, int year, int month) {
-    if (month >= 12) {
-      return cache.get(blog.getRoot()).getBlogForYear(year + 1).getBlogForMonth(1);
-    } else {
-      return cache.get(blog.getRoot()).getBlogForYear(year).getBlogForMonth(month + 1);
-    }
   }
 
   private class CachedIndex {
@@ -155,7 +138,7 @@ public class FileBlogEntryIndex implements BlogEntryIndex {
     private volatile List<String> readIndexEntries = Collections.emptyList();
     private volatile List<String> readPublishedIndexEntries = Collections.emptyList();
     private volatile List<String> readUnpublishedIndexEntries = Collections.emptyList();
-    private volatile List<Year> readYears = Collections.emptyList();
+    private volatile Archive archive;
     private volatile List<YearCache> readYearCaches = Collections.emptyList();
 
     public CachedIndex(Blog blog) {
@@ -295,7 +278,7 @@ public class FileBlogEntryIndex implements BlogEntryIndex {
       readPublishedIndexEntries = ImmutableList.copyOf(publishedIndexEntries);
       readUnpublishedIndexEntries = ImmutableList.copyOf(unpublishedIndexEntries);
       readYearCaches = ImmutableList.copyOf(yearCaches);
-      readYears = ImmutableList.copyOf(years);
+      archive = Archive.builder(blog).setYears(years).build();
     }
 
     /**
@@ -458,12 +441,8 @@ public class FileBlogEntryIndex implements BlogEntryIndex {
       return null;
     }
 
-    public Year getBlogForYear(int yearNo) {
-      return BlogSummaryUtils.getYear(blog, readYears, yearNo);
-    }
-
-    public List<Year> getYears() {
-      return readYears;
+    public Archive getArchive() {
+      return archive;
     }
 
     public List<String> getEntriesForDay(int year, int month, int day) {
@@ -491,8 +470,13 @@ public class FileBlogEntryIndex implements BlogEntryIndex {
     }
 
     private Year getYear(Calendar cal) {
-      int year = cal.get(Calendar.YEAR);
-      return BlogSummaryUtils.getYear(blog, years, year);
+      int yearNo = cal.get(Calendar.YEAR);
+      for (Year year : years) {
+        if (year.getYear() == yearNo) {
+          return year;
+        }
+      }
+      return Year.emptyYear(blog, yearNo);
     }
 
     private YearCache getYearCache(Year year) {

@@ -48,7 +48,6 @@ import javax.servlet.jsp.tagext.TagSupport;
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.api.permalink.PermalinkProvider;
 import net.sourceforge.pebble.domain.*;
-import net.sourceforge.pebble.util.BlogSummaryUtils;
 import net.sourceforge.pebble.util.I18n;
 
 /**
@@ -69,10 +68,10 @@ public class CalendarTag extends TagSupport {
 
     HttpServletRequest request = (HttpServletRequest)pageContext.getRequest();
     Blog blog = (Blog)request.getAttribute(Constants.BLOG_KEY);
-    List<Year> years = (List<Year>) request.getAttribute(Constants.YEARS_KEY);
+    Archive archive = (Archive) request.getAttribute(Constants.YEARS_KEY);
     Month month = (Month)request.getAttribute(Constants.MONTHLY_BLOG);
     SimpleDate now = blog.getToday();
-    Year thisYear = BlogSummaryUtils.getYear(blog, years, now.getYear());
+    Year thisYear = archive.getThisYear();
     Month thisMonth = thisYear.getBlogForMonth(now.getMonth());
     Day today = thisMonth.getBlogForDay(now.getDay());
     PermalinkProvider permalinkProvider = blog.getPermalinkProvider();
@@ -89,7 +88,7 @@ public class CalendarTag extends TagSupport {
     monthFormatter.setTimeZone(blog.getTimeZone());
     NumberFormat numberFormatter = NumberFormat.getIntegerInstance(blog.getLocale());
 
-    Month firstMonth = BlogSummaryUtils.getFirstMonth(blog, years);
+    Month firstMonth = archive.getFirstMonth();
 
     try {
       JspWriter out = pageContext.getOut();
@@ -129,7 +128,7 @@ public class CalendarTag extends TagSupport {
       // write out the body of the calendar
       int count = 0;
       for (SimpleDate date : getDatesForCompleteWeeks(blog, month)) {
-        Day daily = BlogSummaryUtils.getBlogForDay(blog, years, date);
+        Day daily = archive.getDay(date);
 
         String formattedNumber = numberFormatter.format(date.getDay());
         if (formattedNumber.length() == 1) {
@@ -171,8 +170,8 @@ public class CalendarTag extends TagSupport {
       }
 
       // write out the footer of the calendar
-      Month previous = BlogSummaryUtils.getPreviousMonth(years, month);
-      Month next = BlogSummaryUtils.getNextMonth(years, month);
+      Month previous = archive.getPreviousMonth(month);
+      Month next = archive.getNextMonth(month);
 
       out.write("<tr>");
       out.write("<td colspan=\"7\" align=\"center\">");

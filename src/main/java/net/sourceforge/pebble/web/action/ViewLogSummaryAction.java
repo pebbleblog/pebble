@@ -32,13 +32,9 @@
 package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
-import net.sourceforge.pebble.domain.Blog;
-import net.sourceforge.pebble.domain.Month;
-import net.sourceforge.pebble.domain.SimpleDate;
-import net.sourceforge.pebble.domain.Year;
+import net.sourceforge.pebble.domain.*;
 import net.sourceforge.pebble.index.BlogEntryIndex;
 import net.sourceforge.pebble.logging.LogSummary;
-import net.sourceforge.pebble.util.BlogSummaryUtils;
 import net.sourceforge.pebble.web.view.View;
 import net.sourceforge.pebble.web.view.impl.LogSummaryByMonthView;
 import net.sourceforge.pebble.web.view.impl.LogSummaryByYearView;
@@ -117,18 +113,17 @@ public class ViewLogSummaryAction extends SecureAction {
   }
 
   private void registerObjectsForNavigation(Blog blog, Month month) {
-    SimpleDate now = blog.getToday();
-    List<Year> years = blogEntryIndex.getYears(blog);
+    Archive archive = blogEntryIndex.getArchive(blog);
 
-    Month firstMonth = BlogSummaryUtils.getFirstMonth(blog, years);
-    Month previousMonth = BlogSummaryUtils.getPreviousMonth(years, month);
-    Month nextMonth = BlogSummaryUtils.getNextMonth(years, month);
+    Month firstMonth = archive.getFirstMonth();
+    Month previousMonth = archive.getPreviousMonth(month);
+    Month nextMonth = archive.getNextMonth(month);
 
     if (!previousMonth.before(firstMonth)) {
       getModel().put("previousMonth", previousMonth);
     }
 
-    if (!nextMonth.after(BlogSummaryUtils.getYear(blog, years, now.getYear()).getBlogForMonth(now.getMonth()))
+    if (!nextMonth.after(archive.getThisMonth())
         || nextMonth.before(firstMonth)) {
       getModel().put("nextMonth", nextMonth);
     }

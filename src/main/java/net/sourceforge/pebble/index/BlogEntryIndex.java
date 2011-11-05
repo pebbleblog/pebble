@@ -105,12 +105,12 @@ public interface BlogEntryIndex {
   Year getBlogForYear(Blog blog, int year);
 
   /**
-   * Get the blogs for every year
+   * Get the blog archive
    *
-   * @param blog The blog to get the years for
-   * @return the years
+   * @param blog The blog to get the archive for
+   * @return the archive
    */
-  List<Year> getYears(Blog blog);
+  Archive getArchive(Blog blog);
 
   /**
    * Get the previous blog entry
@@ -150,22 +150,4 @@ public interface BlogEntryIndex {
    * @return The entries for that day
    */
   List<String> getBlogEntriesForMonth(Blog blog, int year, int month);
-
-  /**
-   * Get the summary for the previous month
-   *
-   * @param blog The blog to get the summary for
-   * @param month The month
-   * @return The summary for the previous month
-   */
-  Month getBlogForPreviousMonth(Blog blog, int year, int month);
-
-  /**
-   * Get the summary for the next month
-   *
-   * @param blog The blog to get the summary for
-   * @param month The month
-   * @return The summary for the next month
-   */
-  Month getBlogForNextMonth(Blog blog, int year, int month);
 }

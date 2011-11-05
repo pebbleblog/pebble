@@ -31,8 +31,6 @@
  */
 package net.sourceforge.pebble.domain;
 
-import net.sourceforge.pebble.util.BlogSummaryUtils;
-
 import java.beans.PropertyChangeEvent;
 import java.text.DecimalFormat;
 import java.util.*;
@@ -587,10 +585,10 @@ public class BlogEntryTest extends SingleBlogTestCase {
    * Tests that the next blog entry can be accessed.
    */
   public void testGetNextBlogEntry() throws Exception {
-    List<Year> years = daoFactory.getBlogEntryIndex().getYears(blog);
-    Day today = BlogSummaryUtils.getBlogForDay(blog, years, blog.getToday());
-    Day oneDayAgo = BlogSummaryUtils.getPreviousDay(years, today);
-    Day twoDaysAgo = BlogSummaryUtils.getPreviousDay(years, oneDayAgo);
+    Archive archive = daoFactory.getBlogEntryIndex().getArchive(blog);
+    Day today = archive.getToday();
+    Day oneDayAgo = archive.getPreviousDay(today);
+    Day twoDaysAgo = archive.getPreviousDay(oneDayAgo);
 
     BlogEntry b1 = new BlogEntry(blog);
     b1.setDate(twoDaysAgo.getDate(blog.getCalendar()));
@@ -617,10 +615,10 @@ public class BlogEntryTest extends SingleBlogTestCase {
    * Tests that the previous blog entry can be accessed.
    */
   public void testGetPreviousBlogEntry() throws Exception {
-    List<Year> years = daoFactory.getBlogEntryIndex().getYears(blog);
-    Day today = BlogSummaryUtils.getBlogForDay(blog, years, blog.getToday());
-    Day oneDayAgo = BlogSummaryUtils.getPreviousDay(years, today);
-    Day twoDaysAgo = BlogSummaryUtils.getPreviousDay(years, oneDayAgo);
+    Archive archive =  daoFactory.getBlogEntryIndex().getArchive(blog);
+    Day today = archive.getToday();
+    Day oneDayAgo = archive.getPreviousDay(today);
+    Day twoDaysAgo = archive.getPreviousDay(oneDayAgo);
 
     BlogEntry b1 = new BlogEntry(blog);
     b1.setDate(twoDaysAgo.getDate(blog.getCalendar()));
