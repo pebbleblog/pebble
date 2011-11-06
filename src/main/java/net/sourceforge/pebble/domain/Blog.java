@@ -157,7 +157,6 @@ public class Blog extends AbstractBlog {
   private BlogCompanion blogCompanion;
 
   private SearchIndex searchIndex;
-  private BlogEntryIndex blogEntryIndex;
   private ResponseIndex responseIndex;
   private TagIndex tagIndex;
   private CategoryIndex categoryIndex;
@@ -223,7 +222,6 @@ public class Blog extends AbstractBlog {
 
     // create the various indexes for this blog
     searchIndex = new LuceneSearchIndex(this);
-    blogEntryIndex = daoFactory.getBlogEntryIndex();
     responseIndex = new FileResponseIndex(this);
     tagIndex = daoFactory.createTagIndex(this);
     categoryIndex = new FileCategoryIndex(this);
@@ -1262,7 +1260,7 @@ public class Blog extends AbstractBlog {
     File indexes = new File(getIndexesDirectory());
     if (!indexes.exists()) {
       indexes.mkdir();
-      reindex();
+      daoFactory.reindex(this);
     }
 
     File imagesDirectory = new File(getImagesDirectory());
@@ -1475,15 +1473,14 @@ public class Blog extends AbstractBlog {
     return feedDecorators;
   }
 
-  public void reindex() {
+  public void reindex(Collection<BlogEntry> blogEntries) {
     log.info("Reindexing blog with ID " + getId());
 
-    reindexBlogEntries();
+    reindexBlogEntries(blogEntries);
     reindexStaticPages();
   }
 
-  public void reindexBlogEntries() {
-    blogEntryIndex.clear(this);
+  public void reindexBlogEntries(Collection<BlogEntry> blogEntries) {
     responseIndex.clear();
     tagIndex.clear();
     categoryIndex.clear();
@@ -1491,9 +1488,6 @@ public class Blog extends AbstractBlog {
     searchIndex.clear();
 
     try {
-      // to reindex all blog entries, we need to load them via the DAO
-      Collection<BlogEntry> blogEntries = daoFactory.getBlogEntryDAO().loadBlogEntries(this);
-      blogEntryIndex.index(this, blogEntries);
       responseIndex.index(blogEntries);
       tagIndex.index(blogEntries);
       categoryIndex.index(blogEntries);

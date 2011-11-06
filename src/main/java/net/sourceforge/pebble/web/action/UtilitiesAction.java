@@ -33,6 +33,7 @@ package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.dao.CategoryDAO;
+import net.sourceforge.pebble.dao.DAOFactory;
 import net.sourceforge.pebble.domain.BlogService;
 import net.sourceforge.pebble.domain.BlogServiceException;
 import net.sourceforge.pebble.domain.Category;
@@ -64,6 +65,9 @@ public class UtilitiesAction extends SecureAction {
   @Inject
   private BlogService blogService;
 
+  @Inject
+  private DAOFactory daoFactory;
+
   /**
    * Peforms the processing associated with this action.
    *
@@ -84,14 +88,14 @@ public class UtilitiesAction extends SecureAction {
         Utilities.fixHtmlInResponses(blogService, blog);
         return new ForwardView("/reloadBlog.secureaction");
       } else if (action.equalsIgnoreCase("buildIndexes")) {
-        Utilities.buildIndexes(blog);
+        daoFactory.reindex(blog);
         return new ForwardView("/reloadBlog.secureaction");
       } else if (action.equalsIgnoreCase("convertCategories")) {
         Utilities.convertCategories(blog, categoryDAO);
         return new ForwardView("/reloadBlog.secureaction");
       } else if (action.equalsIgnoreCase("restructureBlogToGMT")) {
         Utilities.restructureBlogToGMT(blog);
-        Utilities.buildIndexes(blog);
+        daoFactory.reindex(blog);
         return new ForwardView("/reloadBlog.secureaction");
       } else if (action.equalsIgnoreCase("moveBlogEntriesFromCategory")) {
         Category from = blog.getCategory(request.getParameter("from"));

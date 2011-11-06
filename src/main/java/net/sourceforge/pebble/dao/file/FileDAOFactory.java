@@ -33,12 +33,17 @@ package net.sourceforge.pebble.dao.file;
 
 import net.sourceforge.pebble.dao.*;
 import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.domain.BlogEntry;
 import net.sourceforge.pebble.index.AuthorIndex;
 import net.sourceforge.pebble.index.BlogEntryIndex;
 import net.sourceforge.pebble.index.TagIndex;
 import net.sourceforge.pebble.index.file.FileAuthorIndex;
 import net.sourceforge.pebble.index.file.FileBlogEntryIndex;
 import net.sourceforge.pebble.index.file.FileTagIndex;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import java.util.Collection;
 
 /**
  * Represents a strategy used to load and store blog entries
@@ -47,7 +52,7 @@ import net.sourceforge.pebble.index.file.FileTagIndex;
  * @author    Simon Brown
  */
 public class FileDAOFactory implements DAOFactory {
-
+  private static final Log log = LogFactory.getLog(FileDAOFactory.class);
   public static final String FILE_STORAGE_TYPE = "file";
 
   private BlogEntryDAO blogEntryDAO;
@@ -117,6 +122,18 @@ public class FileDAOFactory implements DAOFactory {
 
   public void init(Blog blog) {
     blogEntryIndex.init(blog);
+  }
+
+  public void reindex(Blog blog) {
+    blogEntryIndex.clear(blog);
+    try {
+      Collection<BlogEntry> blogEntries = getBlogEntryDAO().loadBlogEntries(blog);
+      blog.reindex(blogEntries);
+      blogEntryIndex.index(blog, blogEntries);
+    } catch (PersistenceException e) {
+      blog.error("Error loading all blog entries " + e);
+      log.error("Error loading all blog entries", e);
+    }
   }
 
   public void shutdown() {

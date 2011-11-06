@@ -62,16 +62,6 @@ public class Utilities {
   private static final Log log = LogFactory.getLog(Utilities.class);
 
   /**
-   * Builds the indexes for the given blog.
-   *
-   * @param blog    a Blog instance
-   */
-  public static void buildIndexes(Blog blog) {
-    log.info("Reindexing blog");
-    blog.reindex();
-  }
-
-  /**
    * Builds the blacklist and whitelist of IP addresses from all responses
    * for the given blog.
    *
@@ -357,7 +347,7 @@ public class Utilities {
     } else if (action.equalsIgnoreCase("fixHtmlInResponses")) {
       fixHtmlInResponses(blogService, blog);
     } else if (action.equalsIgnoreCase("buildIndexes")) {
-      buildIndexes(blog);
+      daoFactory.reindex(blog);
     } else if (action.equalsIgnoreCase("convertCategories")) {
       convertCategories(blog, daoFactory.getCategoryDAO());
     }

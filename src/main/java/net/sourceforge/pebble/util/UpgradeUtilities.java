@@ -32,6 +32,7 @@
 
 package net.sourceforge.pebble.util;
 
+import net.sourceforge.pebble.dao.DAOFactory;
 import net.sourceforge.pebble.domain.Blog;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -46,7 +47,7 @@ public class UpgradeUtilities {
   /** the logger used by this action */
   private static final Log log = LogFactory.getLog(UpgradeUtilities.class);
 
-  public static void upgradeBlog(Blog blog, String fromVersion, String toVersion) throws Exception {
+  public static void upgradeBlog(DAOFactory daoFactory, Blog blog, String fromVersion, String toVersion) throws Exception {
     log.info("Upgrading blog from " + fromVersion + " to " + toVersion);
     if (fromVersion == null 
         || fromVersion.startsWith("2.3") 
@@ -56,7 +57,7 @@ public class UpgradeUtilities {
       log.info("restructuring static pages");
       Utilities.restructureStaticPages(blog);
       log.info("building indizes");
-      Utilities.buildIndexes(blog);
+      daoFactory.reindex(blog);
       log.info("upgrade done");
     } else {
       log.info("No upgrade required");

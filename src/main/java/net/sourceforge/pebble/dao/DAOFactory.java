@@ -103,6 +103,13 @@ public interface DAOFactory {
   void init(Blog blog);
 
   /**
+   * Reindexes the given blog
+   *
+   * @param blog The blog to reindex
+   */
+  void reindex(Blog blog);
+
+  /**
    * Shuts down the DAO
    */
   void shutdown();

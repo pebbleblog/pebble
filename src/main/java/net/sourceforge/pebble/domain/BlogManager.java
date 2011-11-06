@@ -183,7 +183,7 @@ public class BlogManager {
 
     try {
       if (blogVersion == null || !blogVersion.equals(currentVersion)) {
-        UpgradeUtilities.upgradeBlog(blog, blogVersion, currentVersion);
+        UpgradeUtilities.upgradeBlog(daoFactory, blog, blogVersion, currentVersion);
 
         if (currentVersion != null) {
           BufferedWriter writer = new BufferedWriter(new FileWriter(versionFile));

@@ -44,14 +44,18 @@ import net.sourceforge.pebble.dao.file.FileRefererFilterDAO;
 import net.sourceforge.pebble.dao.file.FileStaticPageDAO;
 import net.sourceforge.pebble.dao.orient.model.OrientBlogEntry;
 import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.domain.BlogEntry;
 import net.sourceforge.pebble.index.AuthorIndex;
 import net.sourceforge.pebble.index.BlogEntryIndex;
 import net.sourceforge.pebble.index.TagIndex;
 import net.sourceforge.pebble.index.file.FileBlogEntryIndex;
 import net.sourceforge.pebble.index.orient.OrientAuthorIndex;
 import net.sourceforge.pebble.index.orient.OrientTagIndex;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import java.io.File;
+import java.util.Collection;
 
 /**
  * Represents a strategy used to load and store blog entries
@@ -60,7 +64,7 @@ import java.io.File;
  * @author James Roper
  */
 public class OrientDAOFactory implements DAOFactory {
-
+  private static final Log log = LogFactory.getLog(OrientDAOFactory.class);
   public static final String ORIENT_STORAGE_TYPE = "orient";
 
   private final BlogEntryDAO blogEntryDAO;
@@ -183,5 +187,17 @@ public class OrientDAOFactory implements DAOFactory {
 
   public AuthorIndex createAuthorIndex(Blog blog) {
     return new OrientAuthorIndex(this, blog);
+  }
+
+  public void reindex(Blog blog) {
+    blogEntryIndex.clear(blog);
+    try {
+      Collection<BlogEntry> blogEntries = getBlogEntryDAO().loadBlogEntries(blog);
+      blog.reindex(blogEntries);
+      blogEntryIndex.index(blog, blogEntries);
+    } catch (PersistenceException e) {
+      blog.error("Error loading all blog entries " + e);
+      log.error("Error loading all blog entries", e);
+    }
   }
 }

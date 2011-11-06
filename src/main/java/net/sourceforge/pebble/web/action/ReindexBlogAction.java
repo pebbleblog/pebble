@@ -33,12 +33,14 @@
 package net.sourceforge.pebble.web.action;
 
 import net.sourceforge.pebble.Constants;
+import net.sourceforge.pebble.dao.DAOFactory;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.util.Utilities;
 import net.sourceforge.pebble.web.security.RequireSecurityToken;
 import net.sourceforge.pebble.web.view.ForwardView;
 import net.sourceforge.pebble.web.view.View;
 
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -51,6 +53,9 @@ import javax.servlet.http.HttpServletResponse;
 @RequireSecurityToken
 public class ReindexBlogAction extends SecureAction {
 
+  @Inject
+  private DAOFactory daoFactory;
+
   /**
    * Peforms the processing associated with this action.
    *
@@ -60,7 +65,7 @@ public class ReindexBlogAction extends SecureAction {
    */
   public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException {
     Blog blog = (Blog)getModel().get(Constants.BLOG_KEY);
-    Utilities.buildIndexes(blog);
+    daoFactory.reindex(blog);
 
     return new ForwardView("/reloadBlog.secureaction");
   }
