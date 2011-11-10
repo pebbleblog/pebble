@@ -140,6 +140,17 @@
       Slashdot, Digg, Reddit, Delicious and StumbleUpon
     </description>
   </content-decorator>
+
+  <content-decorator name="Fixed Text Decorator" class="net.sourceforge.pebble.decorator.SuffixDecorator">
+    <description>
+      Adds a fixed to every blog entry. The suffix may contain the tags ${blogEntry.title}, ${blogEntry.subtitle},
+      ${blogEntry.author}, ${blogEntry.id}, ${blogEntry.excerpt}, ${blogEntry.tags} or ${blogEntry.permalink}
+      to include that property of the blog, and the property may be suffixed with ".encoded" to encode the value
+      for use in a URL, eg ${blogEntry.permalink.encoded}.
+    </description>
+    <config key="SuffixDecorator.suffix" type="textarea" name="Suffix"/>
+  </content-decorator>
+
   <content-decorator name="Static Page Tags Decorator"
                      class="net.sourceforge.pebble.decorator.StaticPageTagsDecorator"/>
   <content-decorator name="Technorati Tags Decorator" class="net.sourceforge.pebble.decorator.TechnoratiTagsDecorator">
