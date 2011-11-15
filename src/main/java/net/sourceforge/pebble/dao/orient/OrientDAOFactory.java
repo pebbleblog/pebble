@@ -34,7 +34,6 @@ package net.sourceforge.pebble.dao.orient;
 import com.orientechnologies.orient.core.Orient;
 import com.orientechnologies.orient.core.db.object.ODatabaseObjectTx;
 import com.orientechnologies.orient.core.metadata.schema.OClass;
-import com.orientechnologies.orient.core.metadata.schema.OProperty;
 import com.orientechnologies.orient.core.metadata.schema.OSchema;
 import com.orientechnologies.orient.core.metadata.schema.OType;
 import com.orientechnologies.orient.core.sql.OCommandSQL;
@@ -90,9 +89,9 @@ public class OrientDAOFactory implements DAOFactory {
       if (!db.exists()) {
         db.create();
       }
-      createIndex(db, OrientBlogEntry.class, "id", OType.STRING, null, OProperty.INDEX_TYPE.UNIQUE);
-      createIndex(db, OrientBlogEntry.class, "author", OType.STRING, null, OProperty.INDEX_TYPE.NOTUNIQUE);
-      createIndex(db, OrientBlogEntry.class, "tags", OType.EMBEDDEDLIST, OType.STRING, OProperty.INDEX_TYPE.NOTUNIQUE);
+      createIndex(db, OrientBlogEntry.class, "id", OType.STRING, null, OClass.INDEX_TYPE.UNIQUE);
+      createIndex(db, OrientBlogEntry.class, "author", OType.STRING, null, OClass.INDEX_TYPE.NOTUNIQUE);
+      createIndex(db, OrientBlogEntry.class, "tags", OType.EMBEDDEDLIST, OType.STRING, OClass.INDEX_TYPE.NOTUNIQUE);
     } finally {
       db.close();
     }
@@ -103,7 +102,7 @@ public class OrientDAOFactory implements DAOFactory {
     Orient.instance().shutdown();
   }
 
-  private void createIndex(ODatabaseObjectTx db, Class clazz, String property, OType type, OType linkedType, OProperty.INDEX_TYPE indexType) {
+  private void createIndex(ODatabaseObjectTx db, Class clazz, String property, OType type, OType linkedType, OClass.INDEX_TYPE indexType) {
     OSchema schema = db.getMetadata().getSchema();
     OClass oclass;
     if (!schema.existsClass(clazz.getSimpleName())) {
@@ -111,22 +110,19 @@ public class OrientDAOFactory implements DAOFactory {
     } else {
       oclass = schema.getClass(clazz);
     }
-    OProperty oproperty;
     if (!oclass.existsProperty(property)) {
       if (linkedType == null) {
-        oproperty = oclass.createProperty(property, type);
+        oclass.createProperty(property, type);
       } else {
-        oproperty = oclass.createProperty(property, type, linkedType);
+        oclass.createProperty(property, type, linkedType);
       }
-    } else {
-      oproperty = oclass.getProperty(property);
     }
-    if (!oproperty.isIndexed()) {
-      oproperty.createIndex(indexType);
+    if (!oclass.areIndexed(property)) {
+      oclass.createIndex(oclass.getName() + "." + property, indexType, property);
     }
   }
 
-  private void createIndex(ODatabaseObjectTx db, String indexName, OType type, OProperty.INDEX_TYPE indexType) {
+  private void createIndex(ODatabaseObjectTx db, String indexName, OType type, OClass.INDEX_TYPE indexType) {
     if (db.getMetadata().getIndexManager().getIndex(indexName) == null) {
       db.command(new OCommandSQL("create index " + indexName + " " + indexType.name() + " " + type.name())).execute();
     }

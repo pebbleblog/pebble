@@ -12,7 +12,7 @@
 
     <properties>
         <spring.version>3.0.3.RELEASE</spring.version>
-        <orient.version>1.0rc6-SNAPSHOT</orient.version>
+        <orient.version>1.0rc6</orient.version>
     </properties>
 
     <pluginRepositories>

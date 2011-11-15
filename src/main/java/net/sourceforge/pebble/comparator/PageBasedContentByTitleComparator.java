@@ -32,7 +32,6 @@
 package net.sourceforge.pebble.comparator;
 
 import net.sourceforge.pebble.domain.PageBasedContent;
-import sun.jvm.hotspot.oops.Instance;
 
 import java.util.Comparator;
 
