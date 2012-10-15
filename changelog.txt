@@ -1,8 +1,9 @@
-Version 2.6.3 - TBA
+Version 2.6.3 - 15.10.2012
 -----------------
 Added SuffixDecorator (Mike Bremford)
 PEBBLE-60 Ensure Pebble redirects to the right places after login
 PEBBLE-67 Added classes to titles and subtitles
+Fixed bug in XML marshalling that added invalid characters to XML output
 
 Version 2.6.1 - 03.05.2011
 -----------------

@@ -213,47 +213,47 @@ public class FileBlogEntryDAO implements BlogEntryDAO {
 
       if (blogEntry.isAggregated()) {
         Element permalinkNode = doc.createElement("originalPermalink");
-        permalinkNode.appendChild(doc.createTextNode(blogEntry.getOriginalPermalink()));
+        permalinkNode.appendChild(createTextNode(doc, blogEntry.getOriginalPermalink()));
         root.appendChild(permalinkNode);
       }
 
-      titleNode.appendChild(doc.createTextNode(blogEntry.getTitle()));
-      subtitleNode.appendChild(doc.createTextNode(blogEntry.getSubtitle()));
-      bodyNode.appendChild(doc.createCDATASection(blogEntry.getBody()));
+      titleNode.appendChild(createTextNode(doc, blogEntry.getTitle()));
+      subtitleNode.appendChild(createTextNode(doc, blogEntry.getSubtitle()));
+      bodyNode.appendChild(createCDATASection(doc, blogEntry.getBody()));
 
       if (blogEntry.getExcerpt() != null) {
-        excerptNode.appendChild(doc.createCDATASection(blogEntry.getExcerpt()));
+        excerptNode.appendChild(createCDATASection(doc, blogEntry.getExcerpt()));
       }
 
       root.appendChild(commentsEnabledNode);
-      commentsEnabledNode.appendChild(doc.createTextNode("" + blogEntry.isCommentsEnabled()));
+      commentsEnabledNode.appendChild(createTextNode(doc, "" + blogEntry.isCommentsEnabled()));
 
       root.appendChild(trackBacksEnabledNode);
-      trackBacksEnabledNode.appendChild(doc.createTextNode("" + blogEntry.isTrackBacksEnabled()));
+      trackBacksEnabledNode.appendChild(createTextNode(doc, "" + blogEntry.isTrackBacksEnabled()));
 
       Iterator it = blogEntry.getCategories().iterator();
       Category category;
       while (it.hasNext()) {
         category = (Category) it.next();
         categoryNode = doc.createElement("category");
-        categoryNode.appendChild(doc.createTextNode(category.getId()));
+        categoryNode.appendChild(createTextNode(doc, category.getId()));
         root.appendChild(categoryNode);
       }
 
       if (blogEntry.getTags() != null) {
         root.appendChild(tagsNode);
-        tagsNode.appendChild(doc.createTextNode(blogEntry.getTags()));
+        tagsNode.appendChild(createTextNode(doc, blogEntry.getTags()));
       }
 
       if (blogEntry.getAuthor() != null) {
-        authorNode.appendChild(doc.createTextNode(blogEntry.getAuthor()));
+        authorNode.appendChild(createTextNode(doc, blogEntry.getAuthor()));
       }
 
       SimpleDateFormat sdf = new SimpleDateFormat(NEW_PERSISTENT_DATETIME_FORMAT, Locale.ENGLISH);
       sdf.setTimeZone(GMT);
-      dateNode.appendChild(doc.createTextNode(sdf.format(blogEntry.getDate())));
+      dateNode.appendChild(createTextNode(doc, sdf.format(blogEntry.getDate())));
 
-      timeZoneNode.appendChild(doc.createTextNode(blogEntry.getTimeZoneId()));
+      timeZoneNode.appendChild(createTextNode(doc, blogEntry.getTimeZoneId()));
 
       stateNode.appendChild(createTextNode(doc, blogEntry.getState().getName()));
 
@@ -306,7 +306,7 @@ public class FileBlogEntryDAO implements BlogEntryDAO {
 
       log.debug("Saving to " + destination.getAbsolutePath());
       BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(destination), "UTF-8"));
-      bw.write(sw.getBuffer().toString());
+      bw.write(sw.toString());
       bw.flush();
       bw.close();
     } catch (Exception e) {
@@ -372,7 +372,7 @@ public class FileBlogEntryDAO implements BlogEntryDAO {
 
   private Node createCDATASection(Document doc, String text) {
     if (text != null) {
-      return doc.createCDATASection(text);
+      return doc.createCDATASection(XmlStringFilter.filter(text));
     } else {
       return doc.createCDATASection("");
     }
@@ -380,7 +380,7 @@ public class FileBlogEntryDAO implements BlogEntryDAO {
 
   private Node createTextNode(Document doc, String text) {
     if (text != null) {
-      return doc.createTextNode(text);
+      return doc.createTextNode(XmlStringFilter.filter(text));
     } else {
       return doc.createTextNode("");
     }
@@ -421,7 +421,7 @@ public class FileBlogEntryDAO implements BlogEntryDAO {
     ipAddressNode.appendChild(createTextNode(doc, trackBack.getIpAddress()));
     SimpleDateFormat sdf = new SimpleDateFormat(NEW_PERSISTENT_DATETIME_FORMAT, Locale.ENGLISH);
     sdf.setTimeZone(GMT);
-    dateNode.appendChild(doc.createTextNode(sdf.format(trackBack.getDate())));
+    dateNode.appendChild(createTextNode(doc, sdf.format(trackBack.getDate())));
     stateNode.appendChild(createTextNode(doc, trackBack.getState().getName()));
   }
 
