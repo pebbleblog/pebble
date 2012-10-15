@@ -37,6 +37,7 @@ import net.sourceforge.pebble.util.FileUtils;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -102,9 +103,9 @@ public class FileBlogEntryDAOTest extends SingleBlogTestCase {
     assertEquals("application/pdf", attachment.getType());
 
     // now test the comments were loaded okay
-    List comments = blogEntry.getComments();
+    List<Comment> comments = blogEntry.getComments();
     assertEquals(2, comments.size());
-    Comment comment1 = (Comment)comments.get(0);
+    Comment comment1 = comments.get(0);
     assertEquals("Comment title 1", comment1.getTitle());
     assertEquals("<p>Comment 1.</p>", comment1.getBody());
     assertEquals("Comment author 1", comment1.getAuthor());
@@ -115,7 +116,7 @@ public class FileBlogEntryDAOTest extends SingleBlogTestCase {
     assertEquals(sdf.parse("05 Apr 2004 23:27:30:0 +0100"), comment1.getDate());
     assertFalse(comment1.isAuthenticated());
 
-    Comment comment2 = (Comment)comments.get(1);
+    Comment comment2 = comments.get(1);
     assertEquals("Re: " + blogEntry.getTitle(), comment2.getTitle());
     assertEquals("<p>Comment 2.</p>", comment2.getBody());
     assertEquals("Comment author 2", comment2.getAuthor());
@@ -146,6 +147,23 @@ public class FileBlogEntryDAOTest extends SingleBlogTestCase {
     assertEquals("192.168.0.1", trackBack2.getIpAddress());
     assertTrue(trackBack2.isPending());
     assertEquals(sdf.parse("06 Apr 2004 07:09:24:0 +0100"), trackBack2.getDate());
+  }
+
+  public void testInvalidCharacters() throws Exception {
+    BlogEntry blogEntry = new BlogEntry(blog);
+    blogEntry.setTitle("A title\u0000");
+    blogEntry.setBody("Some body");
+    blogEntry.setDate(new Date());
+    Comment comment = blogEntry.createComment("A title\u0000", "Some comment", "Some author", "some@example.com", "", "", "");
+    blogEntry.addComment(comment);
+
+    FileBlogEntryDAO dao = new FileBlogEntryDAO();
+    dao.storeBlogEntry(blogEntry);
+
+    BlogEntry loaded = dao.loadBlogEntry(blog, blogEntry.getId());
+    // Assert the invalid characters have been stripped
+    assertEquals("A title", loaded.getTitle());
+    assertEquals("A title", loaded.getComments().get(0).getTitle());
   }
 
 }
