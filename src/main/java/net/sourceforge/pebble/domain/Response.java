@@ -269,4 +269,9 @@ public abstract class Response extends Content {
     return getState().equals(State.PENDING);
   }
 
+  /**
+   * Whether this response has an email field
+   */
+  public abstract boolean isHasEmail();
+
 }

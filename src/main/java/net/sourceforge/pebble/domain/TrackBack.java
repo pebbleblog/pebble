@@ -214,4 +214,8 @@ public class TrackBack extends Response {
     }
   }
 
+  @Override
+  public boolean isHasEmail() {
+    return false;
+  }
 }
