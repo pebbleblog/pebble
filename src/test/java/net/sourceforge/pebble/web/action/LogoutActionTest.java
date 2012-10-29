@@ -49,7 +49,7 @@ public class LogoutActionTest extends SingleBlogActionTestCase {
   public void testUserLoggedOutAndRedirectedToBlogHomePage() throws Exception {
     request.setParameter("redirectUrl", blog.getUrl());
     RedirectView view = (RedirectView)action.process(request, response);
-    assertEquals(blog.getUrl(), view.getUri());
+    assertEquals("/blog/", view.getUri());
 
     MockHttpSession session = (MockHttpSession)request.getSession();
     assertNull(session.getAttribute(Constants.AUTHENTICATED_USER));
