@@ -45,8 +45,10 @@ import java.net.URI;
  */
 public class PebbleRedirectStrategy implements RedirectStrategy {
   public void sendRedirect(HttpServletRequest request, HttpServletResponse response, String url) throws IOException {
-    String sanitisedUrl;
+    response.sendRedirect(response.encodeRedirectURL(sanitiseUrl(request.getContextPath(), url)));
+  }
 
+  public static String sanitiseUrl(String contextPath, String url) {
     // Need to make sure there is no authority section
     URI uri = URI.create(url);
     if (uri.getRawAuthority() != null) {
@@ -58,12 +60,10 @@ public class PebbleRedirectStrategy implements RedirectStrategy {
       if (uri.getRawQuery() != null) {
         sb.append("?").append(uri.getRawQuery());
       }
-      sanitisedUrl = sb.toString();
+      return sb.toString();
 
     } else {
-      sanitisedUrl = request.getContextPath() + url;
+      return contextPath + url;
     }
-
-    response.sendRedirect(response.encodeRedirectURL(sanitisedUrl));
   }
 }
