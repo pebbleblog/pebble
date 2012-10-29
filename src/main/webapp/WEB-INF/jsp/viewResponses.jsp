@@ -62,9 +62,9 @@
             <c:out value="${response.sourceName}" escapeXml="true"/>
           </c:if>
           <br />
-          <c:if test="${response.class.name == 'pebble.blog.Comment'}">
-          <c:out value="${response.email}" escapeXml="true" default="-" />
-          <br />
+          <c:if test="${response.hasEmail}">
+            <c:out value="${response.email}" escapeXml="true" default="-" />
+            <br />
           </c:if>
           <c:out value="${response.ipAddress}" default="-" />
         </td>

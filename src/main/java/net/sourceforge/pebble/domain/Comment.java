@@ -394,4 +394,8 @@ public class Comment extends Response {
     this.authenticated = authenticated;
   }
 
+  @Override
+  public boolean isHasEmail() {
+    return true;
+  }
 }

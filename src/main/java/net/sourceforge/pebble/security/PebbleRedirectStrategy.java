@@ -32,38 +32,38 @@
 
 package net.sourceforge.pebble.security;
 
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.net.URI;
 
 /**
- * @author James Roper
+ * Redirect strategy that prevents redirection to URLs outside of Pebble.  It does this by removing the URI authority
+ * section if it exists.
  */
-public class OpenIdAuthenticationFailureHandler implements AuthenticationFailureHandler {
+public class PebbleRedirectStrategy implements RedirectStrategy {
+  public void sendRedirect(HttpServletRequest request, HttpServletResponse response, String url) throws IOException {
+    String sanitisedUrl;
 
-  private RedirectStrategy redirectStrategy;
+    // Need to make sure there is no authority section
+    URI uri = URI.create(url);
+    if (uri.getRawAuthority() != null) {
 
-  public void onAuthenticationFailure(HttpServletRequest request,
-                                      HttpServletResponse response,
-                                      AuthenticationException exception) throws IOException, ServletException {
-    String errorMessage;
-    if (exception instanceof UsernameNotFoundException) {
-      errorMessage = "openid.not.mapped";
+      StringBuilder sb = new StringBuilder();
+      if (uri.getRawPath() != null) {
+        sb.append(uri.getRawPath());
+      }
+      if (uri.getRawQuery() != null) {
+        sb.append("?").append(uri.getRawQuery());
+      }
+      sanitisedUrl = sb.toString();
+
     } else {
-      errorMessage = "openid.error";
+      sanitisedUrl = request.getContextPath() + url;
     }
-    redirectStrategy.sendRedirect(request, response, "/loginPage.action?error=" + errorMessage);
-  }
 
-  public void setRedirectStrategy(RedirectStrategy redirectStrategy) {
-    this.redirectStrategy = redirectStrategy;
+    response.sendRedirect(response.encodeRedirectURL(sanitisedUrl));
   }
-
 }

@@ -29,41 +29,60 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+package net.sourceforge.pebble.web.filter;
 
-package net.sourceforge.pebble.security;
-
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.web.DefaultRedirectStrategy;
-import org.springframework.security.web.RedirectStrategy;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.*;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletResponseWrapper;
 import java.io.IOException;
 
 /**
+ * Filter that protects against HTTP response splitting
+ *
  * @author James Roper
  */
-public class OpenIdAuthenticationFailureHandler implements AuthenticationFailureHandler {
+public class ResponseSplittingPreventer implements Filter {
+  public void init(FilterConfig filterConfig) throws ServletException {
+  }
 
-  private RedirectStrategy redirectStrategy;
-
-  public void onAuthenticationFailure(HttpServletRequest request,
-                                      HttpServletResponse response,
-                                      AuthenticationException exception) throws IOException, ServletException {
-    String errorMessage;
-    if (exception instanceof UsernameNotFoundException) {
-      errorMessage = "openid.not.mapped";
-    } else {
-      errorMessage = "openid.error";
+  public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+    if (servletResponse instanceof HttpServletResponse) {
+      servletResponse = new ResponseSplittingPreventingResponse((HttpServletResponse) servletResponse);
     }
-    redirectStrategy.sendRedirect(request, response, "/loginPage.action?error=" + errorMessage);
+    filterChain.doFilter(servletRequest, servletResponse);
   }
 
-  public void setRedirectStrategy(RedirectStrategy redirectStrategy) {
-    this.redirectStrategy = redirectStrategy;
+  public void destroy() {
   }
 
+  private static class ResponseSplittingPreventingResponse extends HttpServletResponseWrapper {
+    private ResponseSplittingPreventingResponse(HttpServletResponse response) {
+      super(response);
+    }
+
+    @Override
+    public void setHeader(String name, String value) {
+      super.setHeader(name, check(value));
+    }
+
+    @Override
+    public void addHeader(String name, String value) {
+      super.addHeader(name, check(value));
+    }
+
+    @Override
+    public void sendRedirect(String location) throws IOException {
+      super.sendRedirect(check(location));
+    }
+
+    private String check(String value) {
+      for (int i = 0; i < value.length(); i++) {
+        char c = value.charAt(i);
+        if (c == '\n' || c == '\r') {
+          throw new IllegalArgumentException("Carriage return and line feed characters are not allowed in HTTP headers");
+        }
+      }
+      return value;
+    }
+  }
 }
