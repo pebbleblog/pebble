@@ -31,6 +31,7 @@
  */
 package net.sourceforge.pebble.web.action;
 
+import net.sourceforge.pebble.security.PebbleRedirectStrategy;
 import net.sourceforge.pebble.web.view.RedirectView;
 import net.sourceforge.pebble.web.view.View;
 import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
@@ -62,7 +63,7 @@ public class LogoutAction extends Action {
     terminate.setMaxAge(-1);
     response.addCookie(terminate);
     
-    return new RedirectView(redirectUrl);
+    return new RedirectView(PebbleRedirectStrategy.sanitiseUrl(request.getContextPath(), redirectUrl));
   }
 
 }
