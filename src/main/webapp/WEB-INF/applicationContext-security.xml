@@ -118,11 +118,15 @@
   <bean id="authenticationSuccessHandler"
         class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
     <property name="targetUrlParameter" value="redirectUrl"/>
+    <property name="redirectStrategy" ref="redirectStrategy"/>
   </bean>
+
+  <bean id="redirectStrategy" class="net.sourceforge.pebble.security.PebbleRedirectStrategy"/>
 
   <bean id="authenticationFailureHandler"
         class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
     <property name="defaultFailureUrl" value="/loginPage.action?error=login.incorrect"/>
+    <property name="redirectStrategy" ref="redirectStrategy"/>
   </bean>
 
   <bean id="authenticationEntryPoint"
@@ -179,7 +183,9 @@
     <property name="securityRealm" ref="pebbleSecurityRealm"/>
   </bean>
 
-  <bean id="openIdAuthenticationFailureHandler" class="net.sourceforge.pebble.security.OpenIdAuthenticationFailureHandler"/>
+  <bean id="openIdAuthenticationFailureHandler" class="net.sourceforge.pebble.security.OpenIdAuthenticationFailureHandler">
+    <property name="redirectStrategy" ref="redirectStrategy"/>
+  </bean>
 
   <!-- Note the order that entries are placed against the objectDefinitionSource is critical.
   The FilterSecurityInterceptor will work from the top of the list down to the FIRST pattern that matches the request URL.
