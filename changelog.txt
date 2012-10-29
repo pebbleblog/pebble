@@ -1,6 +1,8 @@
-Version 2.6.4 - 21.10.2012
+Version 2.6.4 - 29.10.2012
 -----------------
 PEBBLE-70 Fixed Tomcat 7 compatibility issue
+Fixed open redirects
+Fixed request splitting vulnerability
 
 Version 2.6.3 - 15.10.2012
 -----------------
