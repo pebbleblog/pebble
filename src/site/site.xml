@@ -17,8 +17,8 @@
     <menu name="Download">
         <item alt="Current stable release" name="Pebble 2.6.4"
             href="http://prdownloads.sourceforge.net/pebble/pebble-2.6.4.zip?download"/>
-        <item alt="Latest code" name="/trunk on open.jira.com"
-            href="https://open.jira.com/svn/PEBBLE/trunk"/>
+        <item alt="Latest code" name="on GitHub"
+            href="https://github.com/pebbleblog/blog"/>
     </menu>
     <menu name="Documentation" alt="The documentation here is focussed
         around getting Pebble installed, configured and running.  User

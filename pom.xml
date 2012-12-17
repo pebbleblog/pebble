@@ -466,9 +466,9 @@
     </distributionManagement>
 
     <scm>
-        <connection>scm:svn:https://open.jira.com/svn/PEBBLE/branches/2.6-stable</connection>
-        <developerConnection>scm:svn:https://open.jira.com/svn/PEBBLE/branches/2.6-stable</developerConnection>
-        <url>http://open.jira.com/source/browse/PEBBLE/branches/2.6-stable</url>
+        <connection>scm:git:git@github.com:pebbleblog/pebble.git</connection>
+        <url>scm:git:git@github.com:pebbleblog/pebble.git</url>
+        <developerConnection>scm:git:git@github.com:pebbleblog/pebble.git</developerConnection>
     </scm>
 
     <issueManagement>
