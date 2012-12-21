@@ -3,15 +3,30 @@
 <%--
   renders a single comment
 --%>
+
+<c:set var="nestedLevel" scope="page">
+	<c:choose>
+	  <c:when test="${comment.numberOfParents < 10}">
+	    ${comment.numberOfParents}
+	  </c:when>
+	  <c:otherwise>
+	    10
+	  </c:otherwise>
+	</c:choose>
+</c:set>
+
+
+
+
 <c:choose>
   <c:when test="${comment.pending}">
-<div id="${param.commentIdentifier}" class="response pending" style="padding-left: ${(comment.numberOfParents*16)+30}px;">
+<div id="${param.commentIdentifier}" class="response pending responseLevel${nestedLevel}">
   </c:when>
   <c:when test="${comment.rejected}">
-<div id="${param.commentIdentifier}" class="response rejected" style="padding-left: ${(comment.numberOfParents*16)+30}px;">
+<div id="${param.commentIdentifier}" class="response rejected responseLevel${nestedLevel}">
   </c:when>
   <c:otherwise>
-<div id="${param.commentIdentifier}" class="response approved" style="padding-left: ${(comment.numberOfParents*16)+30}px;">
+<div id="${param.commentIdentifier}" class="response approved responseLevel${nestedLevel}">
   </c:otherwise>
 </c:choose>
 

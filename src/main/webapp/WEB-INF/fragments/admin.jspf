@@ -31,7 +31,7 @@
     <span id="admin-user-group" class="adminGroup" onmouseover="showMenu('admin-user'); hideMenu('admin-content'); hideMenu('admin-responses'); hideMenu('admin-blog'); hideMenu('admin-logs'); hideMenu('admin-admin')""><fmt:message key="admin.user"/></span> |
     </c:if>
 
-    <span><a href="${pebbleContext.configuration.secureUrl}logout.action?redirectUrl=${blogUrl}" onmouseover="hideMenu('admin-admin'); hideMenu('admin-user'); hideMenu('admin-content'); hideMenu('admin-responses'); hideMenu('admin-blog'); hideMenu('admin-logs')"><fmt:message key="admin.logout"/></a></span>
+    <span><a href="${url:rewrite(blogUrl)}logout.action?redirectUrl=${blogUrl}" onmouseover="hideMenu('admin-admin'); hideMenu('admin-user'); hideMenu('admin-content'); hideMenu('admin-responses'); hideMenu('admin-blog'); hideMenu('admin-logs')"><fmt:message key="admin.logout"/></a></span>
     </td>
     <td align="right">
     <span><a href="./help/index.html" title="<fmt:message key="common.help"/>" onmouseover="hideMenu('admin-admin'); hideMenu('admin-user'); hideMenu('admin-content'); hideMenu('admin-responses'); hideMenu('admin-blog'); hideMenu('admin-logs')"><fmt:message key="common.help"/></a></span>

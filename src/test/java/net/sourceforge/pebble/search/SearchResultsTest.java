@@ -72,14 +72,14 @@ public class SearchResultsTest extends TestCase {
     assertTrue(results.getHits().isEmpty());
 
     // and add a hit
-    SearchHit hit1 = new SearchHit(null, "id", "alink", "A Title", "An excerpt", new Date(), 0.123f);
+    SearchHit hit1 = new SearchHit(null, "id", "alink", "A Title", "A Subtitle", "An excerpt", new Date(), 0.123f);
     results.add(hit1);
     assertEquals(1, results.getNumberOfHits());
     assertFalse(results.getHits().isEmpty());
     assertEquals(hit1, results.getHits().get(0));
 
     // and add another hit
-    SearchHit hit2 = new SearchHit(null, "id2", "alink2", "A Title2", "An excerpt2", new Date(), 0.456f);
+    SearchHit hit2 = new SearchHit(null, "id2", "alink2", "A Title2", "A Subitle2", "An excerpt2", new Date(), 0.456f);
     results.add(hit2);
     assertEquals(2, results.getNumberOfHits());
     assertFalse(results.getHits().isEmpty());
@@ -88,11 +88,11 @@ public class SearchResultsTest extends TestCase {
   }
 
   public void testSortByScore() {
-    SearchHit hit1 = new SearchHit(null, "id1", "alink1", "A Title1", "An excerpt1", new Date(), 0.123f);
+    SearchHit hit1 = new SearchHit(null, "id1", "alink1", "A Title1", "A Title1", "An excerpt1", new Date(), 0.123f);
     results.add(hit1);
-    SearchHit hit2 = new SearchHit(null, "id2", "alink2", "A Title2", "An excerpt2", new Date(), 0.456f);
+    SearchHit hit2 = new SearchHit(null, "id2", "alink2", "A Title2", "A Subtitle2", "An excerpt2", new Date(), 0.456f);
     results.add(hit2);
-    SearchHit hit3 = new SearchHit(null, "id3", "alink3", "A Title2", "An excerpt2", new Date(), 0.789f);
+    SearchHit hit3 = new SearchHit(null, "id3", "alink3", "A Title2", "A Subtitle2", "An excerpt2", new Date(), 0.789f);
     results.add(hit3);
 
     results.sortByScoreDescending();
@@ -102,11 +102,11 @@ public class SearchResultsTest extends TestCase {
   }
 
   public void testSortByDate() {
-    SearchHit hit1 = new SearchHit(null, "id1", "alink1", "A Title1", "An excerpt1", new Date(123), 0.123f);
+    SearchHit hit1 = new SearchHit(null, "id1", "alink1", "A Title1", "A Subtitle1", "An excerpt1", new Date(123), 0.123f);
     results.add(hit1);
-    SearchHit hit2 = new SearchHit(null, "id2", "alink2", "A Title2", "An excerpt2", new Date(456), 0.456f);
+    SearchHit hit2 = new SearchHit(null, "id2", "alink2", "A Title2", "A Subtitle2", "An excerpt2", new Date(456), 0.456f);
     results.add(hit2);
-    SearchHit hit3 = new SearchHit(null, "id3", "alink3", "A Title2", "An excerpt2", new Date(789), 0.789f);
+    SearchHit hit3 = new SearchHit(null, "id3", "alink3", "A Title2", "A Subtitle2", "An excerpt2", new Date(789), 0.789f);
     results.add(hit3);
 
     results.sortByDateDescending();

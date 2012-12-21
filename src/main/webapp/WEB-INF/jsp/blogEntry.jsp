@@ -75,14 +75,12 @@
     </c:if>
     </pebble:isBlogContributor>
 
-    <br /><br />
     <a name="responses"></a>
     <jsp:include page="/WEB-INF/jsp/comments.jsp"/>
     <jsp:include page="/WEB-INF/jsp/trackbacks.jsp"/>
 
     <pebble:isBlogContributor>
     <c:if test="${blogEntry.numberOfResponses > 0}">
-    <br />
     <table width="99%" cellspacing="0" cellpadding="0">
       <tr>
         <td align="left">
@@ -100,8 +98,7 @@
     </c:if>
     </pebble:isBlogContributor>
 
-    <div align="center">
-      <br />
+    <div align="center" class="commentsAndTrackbacks">
       <c:if test="${blogEntry.commentsEnabled}">
         <a href="javascript: showCommentForm();"><fmt:message key="comment.addComment"/></a>
       </c:if>

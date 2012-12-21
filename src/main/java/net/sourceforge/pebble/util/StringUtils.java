@@ -580,4 +580,16 @@ public final class StringUtils {
     return "http://" + url;
   }
 
+  /**
+   * An implementation of indexOf that returns the string's length instead of -1 in case the pattern is not found.
+   * @param orig String to look into
+   * @param pattern pattern to look for
+   * @param from index of the beginning of the search
+   * @return orig.indexOf(pattern,from). If -1, returns orig.length()
+   */
+  public static int indexOfOrLength(String orig, String pattern, int from) {
+    int res = orig.indexOf(pattern,from);
+    if (res == -1) res = orig.length();
+    return res;
+  }
 }

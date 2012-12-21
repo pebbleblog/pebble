@@ -52,7 +52,9 @@ public class Configuration {
   private String url;
   private String secureUrl;
   private boolean multiBlog = false;
+  private boolean multiBlogHttps = false;
   private boolean virtualHostingEnabled = false;
+  private boolean virtualHostingSubdomain = true;
   private boolean userThemesEnabled = true;
   private String smtpHost = "java:comp/env/mail/Session";
   private long fileUploadSize = 2048;
@@ -210,5 +212,21 @@ public class Configuration {
    */
   public void setUserThemesEnabled(boolean userThemesEnabled) {
     this.userThemesEnabled = userThemesEnabled;
+  }
+
+  public void setVirtualHostingSubdomain(boolean virtualHostingSubdomain) {
+    this.virtualHostingSubdomain = virtualHostingSubdomain;
+  }
+
+  public boolean isVirtualHostingSubdomain() {
+    return virtualHostingSubdomain;
+  }
+
+  public void setMultiBlogHttps(boolean multiBlogHttps) {
+    this.multiBlogHttps = multiBlogHttps;
+  }
+
+  public boolean isMultiBlogHttps() {
+    return multiBlogHttps;
   }
 }

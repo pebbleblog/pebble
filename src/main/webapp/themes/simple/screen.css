@@ -418,4 +418,35 @@ th, th a:link, th a:visited {
   margin-right: 10px;
 }
 
+div#comments div.responseLevel1 {
+  margin-left:30px;
+}
+div#comments div.responseLevel2 {
+  margin-left:46px;
+}
+div#comments div.responseLevel3 {
+  margin-left:62px;
+}
+div#comments div.responseLevel4 {
+  margin-left:78px;
+}
+div#comments div.responseLevel5 {
+  margin-left:94px;
+}
+div#comments div.responseLevel6 {
+  margin-left:110px;
+}
+div#comments div.responseLevel7 {
+  margin-left:126px;
+}
+div#comments div.responseLevel8 {
+  margin-left:142px;
+}
+div#comments div.responseLevel9 {
+  margin-left:158px;
+}
+div#comments div.responseLevel10 {
+  margin-left:174px;
+}
+
 

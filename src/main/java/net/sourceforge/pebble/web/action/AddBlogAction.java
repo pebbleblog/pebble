@@ -31,16 +31,18 @@
  */
 package net.sourceforge.pebble.web.action;
 
-import net.sourceforge.pebble.Constants;
-import net.sourceforge.pebble.domain.BlogManager;
-import net.sourceforge.pebble.domain.AbstractBlog;
-import net.sourceforge.pebble.web.security.RequireSecurityToken;
-import net.sourceforge.pebble.web.view.View;
-import net.sourceforge.pebble.web.view.RedirectView;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import net.sourceforge.pebble.Configuration;
+import net.sourceforge.pebble.Constants;
+import net.sourceforge.pebble.PebbleContext;
+import net.sourceforge.pebble.domain.AbstractBlog;
+import net.sourceforge.pebble.domain.BlogManager;
+import net.sourceforge.pebble.web.security.RequireSecurityToken;
+import net.sourceforge.pebble.web.view.RedirectView;
+import net.sourceforge.pebble.web.view.View;
 
 /**
  * Allows a new blog to be added to a multi-user install.
@@ -62,7 +64,10 @@ public class AddBlogAction extends SecureAction {
     BlogManager blogManager = BlogManager.getInstance();
     String blogId = request.getParameter("id");
 
-    if (blogId != null && blogId.length() > 0 && blogId.matches("[\\w-~]*") && blogManager.getBlog(blogId) == null) {
+    Configuration config = PebbleContext.getInstance().getConfiguration();
+    String regex = (config.isVirtualHostingEnabled() && !config.isVirtualHostingSubdomain()) ? "[\\.\\w-~]*" : "[\\w-~]*";
+    
+    if (blogId != null && blogId.length() > 0 && blogId.matches(regex) && blogManager.getBlog(blogId) == null) {
       blogManager.addBlog(blogId);
     }
 

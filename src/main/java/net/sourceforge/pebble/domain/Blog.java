@@ -35,16 +35,28 @@ package net.sourceforge.pebble.domain;
 import java.io.File;
 import java.lang.reflect.Constructor;
 import java.security.SecureRandom;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Properties;
+import java.util.StringTokenizer;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.google.common.base.Supplier;
-import com.google.common.base.Suppliers;
-import net.sourceforge.pebble.*;
+import net.sourceforge.pebble.BlogCompanion;
+import net.sourceforge.pebble.Configuration;
+import net.sourceforge.pebble.Constants;
+import net.sourceforge.pebble.PebbleContext;
+import net.sourceforge.pebble.PluginProperties;
 import net.sourceforge.pebble.aggregator.NewsFeedCache;
 import net.sourceforge.pebble.aggregator.NewsFeedEntry;
 import net.sourceforge.pebble.api.confirmation.CommentConfirmationStrategy;
@@ -93,6 +105,9 @@ import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
+
+import com.google.common.base.Supplier;
+import com.google.common.base.Suppliers;
 
 /**
  * Represents a blog.
@@ -538,6 +553,26 @@ public class Blog extends AbstractBlog {
   }
 
   /**
+   * Gets the secure URL where this blog is deployed.
+   *
+   * @return  a URL as a String
+   */
+  public String getSecureUrl() {
+    Configuration config = PebbleContext.getInstance().getConfiguration();
+    if (BlogManager.getInstance().isMultiBlog()) {
+      String url = getUrl();
+      if (config.isMultiBlogHttps()) {
+        if (url.indexOf("http://") == 0) {
+          url = "https://"+url.substring(8);
+        } 
+      }
+      return url;
+    } else {
+      return config.getSecureUrl();
+    }
+    
+  }
+  /**
    * Gets the URL where this blog is deployed.
    *
    * @return  a URL as a String
@@ -550,7 +585,22 @@ public class Blog extends AbstractBlog {
       return "";
     } else if (BlogManager.getInstance().isMultiBlog()) {
       if (config.isVirtualHostingEnabled()) {
-        return url.substring(0, url.indexOf("://")+3) + getId() + "." + url.substring(url.indexOf("://")+3);
+        int startOfServer = url.indexOf("://")+3;
+        if (config.isVirtualHostingSubdomain()) {
+          return url.substring(0, startOfServer) + getId() + "." + url.substring(startOfServer);
+        } else {
+          String tu = url.substring(0, startOfServer) + getId();
+          int index = url.indexOf(":", startOfServer);
+          int index2 = url.indexOf("/", startOfServer);
+          if (index==-1 || (index2==-1 && index2<index))
+              index = index2;
+          
+          if (url.indexOf("/",startOfServer) > 0) {
+            return tu + url.substring(index);
+          } else {
+            return tu + url.substring(index) + "/";
+          }
+        }
       } else {
         return url + getId() + "/";
       }
@@ -565,7 +615,7 @@ public class Blog extends AbstractBlog {
    * @return  a URL as a String
    */
   public String getRelativeUrl() {
-    if (BlogManager.getInstance().isMultiBlog()) {
+    if (BlogManager.getInstance().isMultiBlog() && !PebbleContext.getInstance().getConfiguration().isVirtualHostingEnabled()) {
       return "/" + getId() + "/";
     } else {
       return "/";

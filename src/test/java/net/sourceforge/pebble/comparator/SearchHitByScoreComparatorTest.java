@@ -47,8 +47,8 @@ public class SearchHitByScoreComparatorTest extends SingleBlogTestCase {
   public void testCompare() {
     Comparator comp = new SearchHitByScoreComparator();
 
-    SearchHit h1 = new SearchHit(null, "", "", "", "", new Date(123), 0.5F);
-    SearchHit h2 = new SearchHit(null, "", "", "", "", new Date(321), 0.3F);
+    SearchHit h1 = new SearchHit(null, "", "", "", "", "", new Date(123), 0.5F);
+    SearchHit h2 = new SearchHit(null, "", "", "", "", "", new Date(321), 0.3F);
 
     assertTrue(comp.compare(h1, h1) == 0);
     assertTrue(comp.compare(h1, h2) != 0);

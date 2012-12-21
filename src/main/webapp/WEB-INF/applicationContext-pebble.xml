@@ -20,6 +20,15 @@
     <!-- the location where your Pebble data is stored, default is ${user.home}/pebble -->
     <property name="dataDirectory" value="${dataDirectory}"/>
 
+    <!-- Allows Pebble to run in virtual hosting mode (multi blog feature) -->
+    <property name="virtualHostingEnabled" value="${virtualHostingEnabled}"/>
+
+    <!-- When pebble runs in virtual hosting mode, will determine is the blog name is just to be prepended to the host name or if the blog name is the host name. -->
+    <property name="virtualHostingSubdomain" value="${virtualHostingSubdomain}"/>
+
+    <!-- When pebble runs in virtual hosting mode, determine if https should be used for secure URLs. -->
+    <property name="multiBlogHttps" value="${multiBlogHttps}"/>
+
     <!-- the base URL (can start http:// or https://) where your blog is hosted, default is auto-discover at runtime -->
     <property name="url" value="${url}"/>
 
