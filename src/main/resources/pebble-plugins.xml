@@ -96,6 +96,11 @@
       Filters the HTML inside comments and TrackBacks to use only a limited, safe subset of HTML.
     </description>
   </content-decorator>
+  <content-decorator name="Enclose Entry In Div Decorator" class="net.sourceforge.pebble.decorator.EncloseEntryInDivDecorator">
+    <description>
+      Will enclose the content entry and all above plugins in a global DIV making it easier to differentiate them from the metainformation below in your CSS styling. The DIV id is [blogContentDecorated] for blog entries and [pageContentDecorated] for static pages.
+    </description>
+  </content-decorator>
   <content-decorator name="No Follow Decorator" class="net.sourceforge.pebble.decorator.NoFollowDecorator">
     <description>
       Adds links from your blog entry back to your categories, for those categories associated with the blog entry.

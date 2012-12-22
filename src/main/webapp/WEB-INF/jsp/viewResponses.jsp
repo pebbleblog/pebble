@@ -85,7 +85,6 @@
 
     <br />
 
-***
     <table width="99%" cellspacing="0" cellpadding="0">
       <tr>
         <td align="right">

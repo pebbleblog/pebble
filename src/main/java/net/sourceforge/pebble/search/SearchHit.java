@@ -54,6 +54,9 @@ public class SearchHit {
   /** the title of the blog entry that matched the search query */
   private String title;
 
+  /** the subtitle of the blog entry that matched the search query */
+  private String subtitle;
+
   /** the excerpt of the blog entry that matched the search query */
   private String excerpt;
 
@@ -69,11 +72,12 @@ public class SearchHit {
   /**
    * Creates a new instance with the specified message.
    */
-  public SearchHit(Blog blog, String id, String permalink, String title, String excerpt, Date date, float score) {
+  public SearchHit(Blog blog, String id, String permalink, String title, String subtitle, String excerpt, Date date, float score) {
     this.blog = blog;
     this.id = id;
     this.permalink = permalink;
     this.title = title;
+    this.subtitle = subtitle;
     this.excerpt = excerpt;
     this.date = date;
     this.score = score;
@@ -158,6 +162,15 @@ public class SearchHit {
    */
   public void setNumber(int n) {
     this.number = n;
+  }
+
+  /**
+   * Gets the subtitle for the matching blog entry.
+   *
+   * @return  a title as a String
+   */
+  public String getSubtitle() {
+    return subtitle;
   }
 
 }

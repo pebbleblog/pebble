@@ -13,7 +13,7 @@
         </jsp:include>
         <br />
 
-        <table width="99%" cellspacing="0" cellpadding="4">
+        <table class="searchResults" width="99%" cellspacing="0" cellpadding="4">
           <thead>
             <tr>
               <th></th>
@@ -31,18 +31,18 @@
                   <tr class="odd small">
               </c:otherwise>
             </c:choose>
-            <td width="2%" valign="top">
+            <td class="searchResultNumber" width="2%" valign="top">
               <fmt:formatNumber value="${hit.number}"/>
               <br />
             </td>
             <td valign="top">
-              <a href="${url:rewrite(hit.permalink)}" title="${hit.score}">${hit.title}</a>
-              <br />
-              ${hit.excerpt}
+              <div class="searchResultTitle"><a href="${url:rewrite(hit.permalink)}" title="${hit.score}">${hit.title}</a></div>
+              <c:if test="${not empty hit.subtitle}"><div class="searchResultSubTitle"><a href="${url:rewrite(hit.permalink)}" title="${hit.score}">${hit.subtitle}</a></div></c:if>
+              <div class="searchResultExcerpt">${hit.excerpt}</div>
             </td>
-            <td align="right" valign="top" width="15%">
-              <fmt:formatDate value="${hit.date}" type="date" dateStyle="medium" /><br />
-              <fmt:formatDate value="${hit.date}" type="time" dateStyle="medium" />
+            <td class="searchResultDatetime" align="right" valign="top" width="15%">
+              <div><fmt:formatDate value="${hit.date}" type="date" dateStyle="medium" /></div>
+              <div><fmt:formatDate value="${hit.date}" type="time" dateStyle="medium" /></div>
             </td>
           </tr>
           </c:forEach>
@@ -57,7 +57,7 @@
 
       </c:when>
       <c:otherwise>
-          <fmt:message key="search.noResults" />
+          <div class="noResults"><fmt:message key="search.noResults" /></div>
       </c:otherwise>
     </c:choose>
   </div>

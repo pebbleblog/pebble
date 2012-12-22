@@ -89,7 +89,7 @@
 
       <div id="loginOptionOpenIdArea" class="loginOptionArea">
         <form id="openIdLoginForm" name="openIdloginForm" method="post"
-              action="${pebbleContext.configuration.secureUrl}addOpenId.secureaction">
+              action="${url:rewrite(blogUrl)}addOpenId.secureaction">
           <input type="hidden" name="redirectUrl" value="${blog.relativeUrl}"/>
           <div class="field">
             <label for="openIdIdentifier">OpenId</label>

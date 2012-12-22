@@ -10,7 +10,7 @@
 
   <div id="loginOptionPasswordArea" class="loginOptionArea">
     <form id="passwordLoginForm" name="passwordLoginForm" method="post"
-          action="${pebbleContext.configuration.secureUrl}j_spring_security_check">
+          action="${url:rewrite(blogUrl)}j_spring_security_check">
       <div class="field">
         <label for="username"><fmt:message key="login.username"/></label>
         <input id="username" type="text" name="j_username" />
@@ -29,7 +29,7 @@
 
   <div id="loginOptionOpenIdArea" class="loginOptionArea">
     <form id="openIdLoginForm" name="openIdloginForm" method="post" 
-          action="${pebbleContext.configuration.secureUrl}j_spring_openid_security_check">
+          action="${url:rewrite(blogUrl)}j_spring_openid_security_check">
       <div class="field">
         <label for="openIdIdentifier">OpenId</label>
         <input id="openIdIdentifier" type="text" name="openid_identifier" />

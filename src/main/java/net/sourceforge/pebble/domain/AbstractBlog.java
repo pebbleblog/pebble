@@ -261,6 +261,13 @@ public abstract class AbstractBlog extends TimePeriod {
   public abstract String getUrl();
 
   /**
+   * Gets the secure URL for this blog.
+   *
+   * @return  a URL as a String
+   */
+  public abstract String getSecureUrl();
+
+  /**
    * Gets the relative URL where this blog is deployed.
    *
    * @return  a URL as a String

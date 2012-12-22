@@ -22,7 +22,7 @@
   <div class="sidebarItemBody">
     <ul>
     <c:forEach var="recentBlogEntry" items="${recentBlogEntries}" >
-      <li><a href="${url:rewrite(recentBlogEntry.permalink)}" title="${recentBlogEntry.title} - ${recentBlogEntry.permalink}">${recentBlogEntry.title}</a>
+      <li><a href="${url:rewrite(recentBlogEntry.permalink)}" title="${recentBlogEntry.title} - ${recentBlogEntry.permalink}">${recentBlogEntry.title}<c:if test="${not empty recentBlogEntry.subtitle}"> - ${recentBlogEntry.subtitle}</c:if></a>
         <c:if test="${showBody eq 'true'}">
         <br />${recentBlogEntry.truncatedContent}
         </c:if>

@@ -67,10 +67,16 @@
     <form name="addBlog" action="addBlog.secureaction" method="POST">
       <pebble:token/>
       <c:choose>
-        <c:when test="${pebbleContext.configuration.virtualHostingEnabled == true}">
+        <c:when test="${pebbleContext.configuration.virtualHostingEnabled == true && pebbleContext.configuration.virtualHostingSubdomain == true}">
           ${blog.protocol}
           <input name="id" type="text" value="" />
           .${blog.domainName}
+          <input type="submit" value="Add Blog" />
+        </c:when>
+        <c:when test="${pebbleContext.configuration.virtualHostingEnabled == true && pebbleContext.configuration.virtualHostingSubdomain == false}">
+          ${blog.protocol}
+          <input name="id" type="text" value="" />
+          /
           <input type="submit" value="Add Blog" />
         </c:when>
         <c:otherwise>

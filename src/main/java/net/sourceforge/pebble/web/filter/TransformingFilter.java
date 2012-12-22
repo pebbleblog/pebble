@@ -32,6 +32,7 @@
 package net.sourceforge.pebble.web.filter;
 
 import net.sourceforge.pebble.Constants;
+import net.sourceforge.pebble.PebbleContext;
 import net.sourceforge.pebble.domain.AbstractBlog;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.domain.BlogManager;
@@ -82,11 +83,13 @@ public class TransformingFilter implements Filter {
     AbstractBlog blog = (AbstractBlog)request.getAttribute(Constants.BLOG_KEY);
 
     String originalUri = httpRequest.getRequestURI();
+
     // get URI and strip off the context (e.g. /blog)
     String uri = originalUri.substring(httpRequest.getContextPath().length(), originalUri.length());
 
+
     // now we're left with a URI
-    if (BlogManager.getInstance().isMultiBlog()) {
+    if (BlogManager.getInstance().isMultiBlog() && !PebbleContext.getInstance().getConfiguration().isVirtualHostingEnabled()) {
       if (uri.length() == 0) {
         uri = "/";
       }
@@ -104,6 +107,7 @@ public class TransformingFilter implements Filter {
     if (uri == null || uri.trim().equals("")) {
       uri = "/";
     }
+
     log.trace("uri : " + uri);
 
     // Only add the query string to external URI, otherwise each parameter in the query string will end up being put in
@@ -113,7 +117,7 @@ public class TransformingFilter implements Filter {
       externalUri += "?" + httpRequest.getQueryString();
       originalUri += "?" + httpRequest.getQueryString();
     }
-    httpRequest.setAttribute(Constants.ORIGINAL_URI, originalUri);
+    httpRequest.setAttribute(Constants.ORIGINAL_URI, uri);
     httpRequest.setAttribute(Constants.EXTERNAL_URI, externalUri);
 
     UriTransformer transformer = new UriTransformer();

@@ -43,6 +43,7 @@ import java.util.List;
 import java.util.Collections;
 import java.util.Locale;
 
+import net.sourceforge.pebble.Configuration;
 import net.sourceforge.pebble.PebbleContext;
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.comparator.BlogEntryComparator;
@@ -111,9 +112,16 @@ public class BlogLookupFilter implements Filter {
       }
 
       String blogName = null;
-      if (pebbleContext.getConfiguration().isVirtualHostingEnabled()) {
+      Configuration config = pebbleContext.getConfiguration();
+      if (config.isVirtualHostingEnabled()) {
         String serverName = httpRequest.getServerName();
-        blogName = serverName.substring(0, serverName.indexOf("."));
+        if (config.isVirtualHostingSubdomain()) {
+          int index2 = serverName.indexOf(".");
+          if (index2 < 0) index2 = serverName.length();
+          blogName = serverName.substring(0, index2);
+        } else {
+          blogName = serverName;
+        }
       } else {
         blogName = uri.substring(1, index);
       }

@@ -5,7 +5,7 @@
   ${blogEntry} : the current BlogEntry instance
 --%>
 <a name="comments"></a>
-
+<div id="comments">
 <c:forEach var="comment" items="${blogEntry.comments}" varStatus="status">
   <c:set var="comment" scope="request" value="${comment}"/>
   <c:choose>
@@ -19,3 +19,4 @@
       <jsp:include page="comment.jsp"><jsp:param name="commentIdentifier" value="comment${comment.id}"/></jsp:include>
       </div>
 </c:forEach>
+</div>

@@ -36,6 +36,7 @@ import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.api.decorator.FeedDecorator;
 import net.sourceforge.pebble.domain.*;
 import net.sourceforge.pebble.security.PebbleUserDetails;
+import net.sourceforge.pebble.util.StringUtils;
 
 import java.util.*;
 
@@ -112,11 +113,7 @@ public class FeedView extends AbstractRomeFeedView {
 
     SyndContent content = new SyndContentImpl();
     content.setType("text/html");
-    if (entry.getExcerpt() == null || entry.getExcerpt().length() == 0) {
-      content.setValue(entry.getBody());
-    } else {
-      content.setValue(entry.getExcerpt());
-    }
+    content.setValue(getSyndicatedBody(entry));
     feedEntry.setContents(Collections.singletonList(content));
 
     if (entry.getAttachment() != null) {
@@ -127,6 +124,20 @@ public class FeedView extends AbstractRomeFeedView {
       feedEntry.setEnclosures(Collections.singletonList(enclosure));
     }
     return feedEntry;
+  }
+  
+  private String getSyndicatedBody(BlogEntry entry) {
+    String prefix = "";
+    
+    if (entry.getSubtitle() != null && entry.getSubtitle().length() > 0) {
+      prefix = "<h2>" + entry.getSubtitle() + "</h2>";
+    }
+    
+    if (entry.getExcerpt() == null || entry.getExcerpt().length() == 0) {
+      return prefix + entry.getBody();
+    } else {
+      return prefix + entry.getExcerpt();
+    }
   }
 
   private void populateFeedInfo(AbstractBlog blog, SyndFeed syndFeed) {

@@ -60,7 +60,7 @@ public class ReadMoreDecorator extends ContentDecoratorSupport {
       StringBuffer buf = new StringBuffer();
       buf.append(blogEntry.getExcerpt());
 
-      buf.append("<p><a href=\"");
+      buf.append("<p class=\"readMore\"><a href=\"");
       buf.append(blogEntry.getPermalink());
       buf.append("\">");
       buf.append(I18n.getMessage(blog, "common.readMore"));
@@ -71,7 +71,7 @@ public class ReadMoreDecorator extends ContentDecoratorSupport {
       StringBuffer buf = new StringBuffer();
       buf.append(blogEntry.getBody());
 
-      buf.append("<p><a href=\"");
+      buf.append("<p class=\"readMore\"><a href=\"");
       buf.append(blogEntry.getPermalink());
       buf.append("\">");
       buf.append(I18n.getMessage(blog, "common.readMore"));

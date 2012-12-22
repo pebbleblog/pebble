@@ -98,6 +98,14 @@ public class MultiBlog extends AbstractBlog {
    *
    * @return a URL as a String
    */
+  public String getSecureUrl() {
+    return PebbleContext.getInstance().getConfiguration().getSecureUrl();
+  }
+  /**
+   * Gets the URL where this blog is deployed.
+   *
+   * @return a URL as a String
+   */
   public String getUrl() {
     return PebbleContext.getInstance().getConfiguration().getUrl();
   }

@@ -249,6 +249,11 @@ public class SearchIndex {
       } else {
         document.add(Field.Text("title", ""));
       }
+      if (blogEntry.getSubtitle() != null) {
+        document.add(Field.Text("subtitle", blogEntry.getSubtitle()));
+      } else {
+        document.add(Field.Text("subtitle", ""));
+      }
       document.add(Field.Keyword("permalink", blogEntry.getPermalink()));
       document.add(Field.UnIndexed("date", DateField.dateToString(blogEntry.getDate())));
       if (blogEntry.getBody() != null) {
@@ -378,6 +383,7 @@ public class SearchIndex {
               doc.get("id"),
               doc.get("permalink"),
               doc.get("title"),
+              doc.get("subtitle"),
               doc.get("truncatedBody"),
               DateField.stringToDate(doc.get("date")),
               hits.score(i));

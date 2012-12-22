@@ -53,6 +53,7 @@ public class SearchHitTest extends SingleBlogTestCase {
         "123456789",
         "http://www.simongbrown.com/blog/2003/05/01.html#a123456789",
         "A blog entry title",
+        "A blog entry subtitle",
         "Some excerpt...",
         date,
         0.789f);
