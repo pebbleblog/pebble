@@ -288,11 +288,9 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-           <groupId>net.tanesha.recaptcha</groupId>
+           <groupId>net.tanesha.recaptcha4j</groupId>
            <artifactId>recaptcha4j</artifactId>
            <version>0.0.7</version>
-           <scope>system</scope>
-           <systemPath>${basedir}/src/main/webapp/WEB-INF/lib/recaptcha4j-0.0.7.jar</systemPath>
         </dependency>
     </dependencies>
 
