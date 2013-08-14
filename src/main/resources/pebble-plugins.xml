@@ -395,6 +395,15 @@
       multiplication of two numbers between 1 and 10.
     </description>
   </comment-confirmation-strategy>
+  
+  <comment-confirmation-strategy name="reCAPTCHA"
+                                   class="net.sourceforge.pebble.confirmation.ReCaptchaConfirmationStrategy">
+    <description>
+      Asks the reader to confirm their action by entering the text they see in a distorted image. Makes use of reCAPTCHA technology.
+    </description>
+    <config key="reCAPTCHA.public.key" name="reCAPTCHA Public API Key" required="true"/>
+    <config key="reCAPTCHA.private.key" name="reCAPTCHA Private API Key" required="true"/>
+  </comment-confirmation-strategy>
 
   <!-- OpenID comment author providers -->
   <open-id-comment-author-provider name="Facebook OpenID Comment Author Provider"
@@ -517,6 +526,7 @@
       Asks the reader to confirm their action by entering the text they see in a distorted image.
     </description>
   </trackback-confirmation-strategy>
+
   <trackback-confirmation-strategy name="No Op" class="net.sourceforge.pebble.confirmation.NoOpConfirmationStrategy">
     <description>
       A strategy that doesn't require comments/TrackBacks to be confirmed. Use this if you want to leave
