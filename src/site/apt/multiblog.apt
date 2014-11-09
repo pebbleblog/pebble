@@ -10,7 +10,7 @@ Single-blog vs multi-blog
 * Single-blog (multiBlog=false)
 
     By default, a single Pebble web application instance hosts a single blog, which is specified by setting the
-    <<<multiBlog>>> property in the <<</WEB-INF/applicationContext-pebble.xml>>> file to false. In this mode, the home
+    <<<multiBlog>>> property in the <<</WEB-INF/pebble.properties>>> file to false. In this mode, the home
     page of the Pebble web application represents the home page of the blog and all URLs are relative to this. For
     example, assuming Pebble is deployed at <<<http://localhost:8080/blog/>>>:
 
@@ -20,9 +20,9 @@ Single-blog vs multi-blog
     
     * http://localhost:8080/blog/<<2006/01.html>> : the permalink to content for January 2006 for the blog
 
-* Multi-blog (multiBlog=true)
+* Multi-blog (multiBlog=true, virtualHostingEnabled=false)
 
-    By changing the <<<multiBlog>>> property in the <<</WEB-INF/applicationContext-pebble.xml>>> file to true, a single
+    By changing the <<<multiBlog>>> property in the <<</WEB-INF/pebble.properties>>> file to true, a single
     Pebble web application can host multiple blogs. In this case, the home page of the Pebble web application represents
     an aggregated view over the blogs managed by the Pebble instance, and each blog has a slightly different home page
     URL. Assuming Pebble is deployed at <<<http://localhost:8080/blogs/>>> and manages 3 blogs (blog1, blog2 and blog3):
@@ -41,17 +41,78 @@ Single-blog vs multi-blog
     
     * http://localhost:8080/blogs/blog1/<<2006/01.html>> : the permalink to content for January 2006 for blog1
 
+* Multi-blog with subdomain virtual hosting (multiBlog=true, virtualHostingEnabled=true, virtualHostingSubdomain=true)
+
+    By changing the <<<virtualHostingEnabled>>> property in the <<</WEB-INF/pebble.properties>>> file to true, a single
+    Pebble web application can host multiple blogs identified as being subdomains of the main domain, defined in the <<<url>>> property.
+    In this case, the home page of the Pebble web application represents
+    an aggregated view over the blogs managed by the Pebble instance, and each blog has a home page url that differ only by the 
+    subdomain. Assuming Pebble is deployed at <<<http://mydomain.com/blogs/>>> and manages 3 blogs (blog1, blog2 and blog3):
+
+    * http://mydomain.com/blog/ : shows an aggregated view, showing the N most recent blog entries across all blogs
+
+    * http://mydomain.com/blog/<<rss.xml>> : the aggregated RSS feed, containing the N most recent blog entries across all blogs
+
+    * http://<<blog1.>>mydomain.com/blog/ : the home page of blog1
+
+    * http://<<blog2.>>mydomain.com/blog/ : the home page of blog2
+
+    * http://<<blog3.>>mydomain.com/blog/ : the home page of blog3
+    
+    * http://<<blog1.>>mydomain.com/blog/<<rss.xml>> : the main RSS feed for blog1
+    
+    * http://<<blog1.>>mydomain.com/blog/<<2006/01.html>> : the permalink to content for January 2006 for blog1
+
+    Note that you will need to create DNS entries so that all domain names point to the same Pebble server. Your
+    application server (Tomcat Jetty, ...) may also need some configuration change to make sure all these
+    domain names are forwarded to the host hosting Pebble.
+
+* Multi-blog with plain virtual hosting (multiBlog=true, virtualHostingEnabled=true, virtualHostingSubdomain=false)
+
+    By changing the <<<virtualHostingSubdomain>>> property in the <<</WEB-INF/pebble.properties>>> file to false, a single
+    Pebble web application can host multiple blogs identified by their full domain name.
+    In this case as well, the home page of the Pebble web application represents
+    an aggregated view over the blogs managed by the Pebble instance, and each blog has a home page url that differ only by the 
+    full domain of the URL. Switching to this mode usually requires that all blogs deployed change their name as dots are not
+    allowed in blog names in the other modes. Also, when switching back from this mode, blogs usually need to be renamed as well.
+    Assuming Pebble is deployed at <<<http://mydomain.com/blogs/>>> (which is the value of the <<<url>>> property) and manages 
+    3 blogs (blog1.com, blog2.net and mygreatblog.co.uk):
+
+    * http://mydomain.com/blog/ : shows an aggregated view, showing the N most recent blog entries across all blogs
+
+    * http://mydomain.com/blog/<<rss.xml>> : the aggregated RSS feed, containing the N most recent blog entries across all blogs
+
+    * http://<<blog1.com>>/blog/ : the home page of blog1
+
+    * http://<<blog2.net>>/blog/ : the home page of blog2
+
+    * http://<<mygreatblog.co.uk>>/blog/ : the home page of blog3
+    
+    * http://<<blog1.com>>/blog/<<rss.xml>> : the main RSS feed for blog1
+    
+    * http://<<blog1.com>>/blog/<<2006/01.html>> : the permalink to content for January 2006 for blog1
+
+    Note that you will need to create DNS entries so that all domain names point to the same Pebble server. Your
+    application server (Tomcat Jetty, ...) may also need some configuration change to make sure all these
+    domain names are forwarded to the virtual host hosting Pebble.
+    
 ** Switching modes
 
-    The rationale for providing two different modes of operation is to keep the URLs as short as possible when only
-    running a single blog. Behind the scenes, the data for all blogs (regardless of whether Pebble is hosting one or
+    The rationale for providing different modes of operation is to keep the URLs as short as possible when only
+    running a single blog, and as customizable as possible when running in multi-blog mode. 
+    Behind the scenes, the data for all blogs (regardless of whether Pebble is hosting one or
     more than one blog) is stored in exactly the same way. For this reason, you can start with Pebble running in
     single-blog mode and switch to multi-blog in the future. If you do this, your blog URL will change as follows:
 
-    * Before (single-blog mode) : http://localhost:8080/blog/
+    * Before (single-blog mode) : http://myblogdomain.com/blog/
     
-    * After (multi-blog mode) : http://localhost:8080/blog/default/
+    * After (multi-blog mode) : http://myblogdomain.com/blog/default/
 
+    * After (multi-blog mode with virtual hosting and subdomains) : http://default.myblogdomain.com/blog/ 
+
+    * After (multi-blog mode with virtual hosting) : http://myblogdomain.com/blog/ (You will have to rename your default blog to <<<myblogdomain.com>>>)
+
+    
     After switching to multi-blog mode, you can create additional blogs by logging into Pebble as a blog admin and use
     the administration features. This process is detailed in the online help, which can be accessed after logging in.
 
