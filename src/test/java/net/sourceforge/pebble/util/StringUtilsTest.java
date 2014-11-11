@@ -103,6 +103,11 @@ public class StringUtilsTest extends TestCase {
     assertEquals("Here is a link.", StringUtils.filterHTML("Here is <a href=\"http://www.google.com\">a link</a>."));
     assertEquals("Here is a link.", StringUtils.filterHTML("Here is <a \nhref=\"http://www.google.com\">a link</a>."));
     assertEquals("Here is some text", StringUtils.filterHTML("Here is &lt;some&gt; text"));
+    assertEquals("Here is some &mdash; text", StringUtils.filterHTML("Here is &lt;some&gt; &mdash; text"));
+    assertEquals("Here is some script 1", StringUtils.filterHTML("<script> var i=2; </script>Here is some script 1"));
+    assertEquals("Here is some script 2", StringUtils.filterHTML("<script> var i=2; </Script>Here is some script 2"));
+    assertEquals("Here is some style 1", StringUtils.filterHTML("<style>body { color: red;}</style>Here is some style 1"));
+    assertEquals("Here is some style 2", StringUtils.filterHTML("<STYLE>body { color: red;}</stYle>Here is some style 2"));
   }
 
   public void testStripScriptTags() {

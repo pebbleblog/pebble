@@ -504,16 +504,26 @@ public final class StringUtils {
     s = s.replaceAll("&lt;", "");
     s = s.replaceAll("&gt;", "");
     s = s.replaceAll("&nbsp;", "");
+    s = s.replaceAll("(?s)<[Ss][Cc][Rr][Ii][Pp][Tt].*?>.*?</[Ss][Cc][Rr][Ii][Pp][Tt]>", "");
+    s = s.replaceAll("(?s)<[Ss][Tt][Yy][Ll][Ee].*?>.*?</[Ss][Tt][Yy][Ll][Ee]>", "");
     s = s.replaceAll("(?s)<!--.*?-->", "");
-    return s.replaceAll("(?s)<.*?>", "");
+    s = s.replaceAll("(?s)<.*?>", "");
+    return s;
   }
 
   public static String truncate(String s) {
     return truncate(s, MAX_CONTENT_LENGTH);
   }
 
+  
+  /**
+   * Removes all HTML tags and then truncate the string.
+   * @param s the string to truncate
+   * @param maxLength the maximum length of the returned string
+   * @return the processed string
+   */
   public static String truncate(String s, int maxLength) {
-    String content = StringUtils.filterHTML(s);
+    String content = filterHTML(s);
 
     // then truncate, if necessary
     if (content == null) {
