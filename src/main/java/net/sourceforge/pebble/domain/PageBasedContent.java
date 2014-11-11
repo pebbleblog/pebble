@@ -191,6 +191,17 @@ public abstract class PageBasedContent extends Content {
   }
 
   /**
+   * Gets the thumbnail of this content.
+   *
+   * @return a String
+   */
+  public String getThumbnailURL() {
+    return StringUtils.findThumbnailUrl(getContent());
+  }
+
+  
+  
+  /**
    * Sets the body of this blog entry.
    *
    * @param newBody the body as a String
