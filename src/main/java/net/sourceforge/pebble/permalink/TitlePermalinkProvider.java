@@ -31,13 +31,17 @@
  */
 package net.sourceforge.pebble.permalink;
 
-import net.sourceforge.pebble.domain.*;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+
+import net.sourceforge.pebble.domain.Blog;
+import net.sourceforge.pebble.domain.BlogEntry;
+import net.sourceforge.pebble.domain.BlogService;
+import net.sourceforge.pebble.domain.BlogServiceException;
+import net.sourceforge.pebble.domain.Day;
 
 /**
  * Generates permalinks based upon the blog entry title. This implementation
@@ -91,22 +95,7 @@ public class TitlePermalinkProvider extends PermalinkProviderSupport {
   }
 
   private String buildPermalink(BlogEntry blogEntry) {
-    String title = blogEntry.getTitle();
-    if (title == null || title.length() == 0) {
-      title = "" + blogEntry.getId();
-    } else {
-      title = title.toLowerCase();
-      title = title.replaceAll("[\\. ,;/\\\\-]", "_");
-      title = title.replaceAll("[^a-z0-9_]", "");
-      title = title.replaceAll("_+", "_");
-      title = title.replaceAll("^_*", "");
-      title = title.replaceAll("_*$", "");
-    }
-
-    // if the title has been blanked out, use the blog entry instead
-    if (title == null || title.length() == 0) {
-      title = "" + blogEntry.getId();
-    }
+    String title = getCuratedPermalinkTitle(blogEntry, "_");
 
     Blog blog = blogEntry.getBlog();
     Date date = blogEntry.getDate();
