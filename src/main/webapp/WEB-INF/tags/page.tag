@@ -13,10 +13,10 @@
   <head>
 
     <c:set var="pageTitle">
-      <c:choose><c:when test="${empty title}">${blog.name}</c:when><c:otherwise>${title} - ${blog.name}</c:otherwise></c:choose>
+      <c:choose><c:when test="${empty title}"><c:out value="${blog.name}" escapeXml="true"/></c:when><c:otherwise><c:out value="${title} - ${blog.name}" escapeXml="true"/></c:otherwise></c:choose>
     </c:set>
     <c:set var="pageTitleAlone">
-      <c:choose><c:when test="${empty title}">${blog.name}</c:when><c:otherwise>${title}</c:otherwise></c:choose>
+      <c:choose><c:when test="${empty title}"><c:out value="${blog.name}" escapeXml="true"/></c:when><c:otherwise><c:out value="${title}" escapeXml="true"/></c:otherwise></c:choose>
     </c:set>
     <c:if test="${displayMode == 'detail'}">
       <c:choose>
@@ -31,8 +31,8 @@
     <c:set var="truncatedContent">
       <c:if test="${displayMode == 'detail'}">
         <c:choose>
-          <c:when test="${not empty blogEntry}">${blogEntry.truncatedContent}</c:when>
-          <c:when test="${not empty staticPage}">${staticPage.truncatedContent}</c:when>
+          <c:when test="${not empty blogEntry}"><c:out value="${blogEntry.truncatedContent}" escapeXml="true"/></c:when>
+          <c:when test="${not empty staticPage}"><c:out value="${staticPage.truncatedContent}" escapeXml="true"/></c:when>
         </c:choose>
       </c:if>
     </c:set>
@@ -77,16 +77,16 @@
     <meta property="og:type" content="<c:choose><c:when test="${displayMode == 'detail'}">article</c:when><c:otherwise>website</c:otherwise></c:choose>"/>
     <meta property="og:description" content="${truncatedContent}"/>
     <meta property="og:image" content="${blogEntry.thumbnailURL}"/>
-    <meta property="og:site_name" content="${blog.name}"/>
+    <meta property="og:site_name" content="<c:out value="${blog.name}" escapeXml="true"/>"/>
     <c:if test="${displayMode == 'detail'}"><c:choose><c:when test="${not empty blogEntry}"><meta property="og:url" content="${url:rewrite(blogEntry.permalink)}" /></c:when><c:when test="${not empty staticPage}"><meta property="og:url" content="${url:rewrite(staticPage.permalink)}" /></c:when></c:choose></c:if>
     <c:if test="${displayMode == 'detail'}"><c:forEach var="token" items="${tags}">
-    <meta property="article:tag" content="${token}" /></c:forEach> </c:if>
-    <c:if test="${not empty cat}"><meta property="article:section" content="${cat}"></c:if>
+    <meta property="article:tag" content="<c:out value="${token}" escapeXml="true"/>" /></c:forEach> </c:if>
+    <c:if test="${not empty cat}"><meta property="article:section" content="<c:out value="${cat}" escapeXml="true"/>"></c:if>
     <c:if test="${displayMode == 'detail'}"><c:choose><c:when test="${not empty blogEntry}"><meta property="article:published_time" content="<fmt:formatDate pattern="yyyy-MM-dd'T'HH:mm:ssz" value="${blogEntry.date}" />"/></c:when><c:when test="${not empty staticPage}"><meta property="article:published_time" content="<fmt:formatDate pattern="yyyy-MM-dd'T'HH:mm:ssz" value="${staticPage.date}" />"/></c:when></c:choose></c:if>
     <c:if test="${displayMode == 'detail'}"><c:choose><c:when test="${not empty blogEntry}"><meta property="article:modified_time" content="<fmt:formatDate pattern="yyyy-MM-dd'T'HH:mm:ssz" value="${blogEntry.lastModified}" />"/></c:when><c:when test="${not empty staticPage}"><meta property="article:modified_time" content="<fmt:formatDate pattern="yyyy-MM-dd'T'HH:mm:ssz" value="${staticPage.lastModified}" />"/></c:when></c:choose></c:if>
 
 
-    <meta name="twitter:site" content="${blog.name}" />
+    <meta name="twitter:site" content="<c:out value="${blog.name}" escapeXml="true"/>" />
     <meta name="twitter:title" content="${pageTitleAlone}"/>
     <meta name="twitter:card" content="summary"/>
     <meta name="twitter:description" content="${truncatedContent}" />
