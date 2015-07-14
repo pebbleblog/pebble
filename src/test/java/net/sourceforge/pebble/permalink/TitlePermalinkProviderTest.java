@@ -109,6 +109,9 @@ public class TitlePermalinkProviderTest extends PermalinkProviderSupportTestCase
     blogEntry.setTitle("Here is. a title");
     assertEquals(prefix + "here_is_a_title" + suffix, permalinkProvider.getPermalink(blogEntry));
 
+    blogEntry.setTitle("Here is. \u00e0 title"); // Just to make sure diacritics are handled
+    assertEquals(prefix + "here_is_a_title" + suffix, permalinkProvider.getPermalink(blogEntry));
+
     blogEntry.setTitle(null);
     assertEquals(prefix + blogEntry.getId() + suffix, permalinkProvider.getPermalink(blogEntry));
 

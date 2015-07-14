@@ -103,7 +103,23 @@ public class StringUtilsTest extends TestCase {
     assertEquals("Here is a link.", StringUtils.filterHTML("Here is <a href=\"http://www.google.com\">a link</a>."));
     assertEquals("Here is a link.", StringUtils.filterHTML("Here is <a \nhref=\"http://www.google.com\">a link</a>."));
     assertEquals("Here is some text", StringUtils.filterHTML("Here is &lt;some&gt; text"));
+    assertEquals("Here is some &mdash; text", StringUtils.filterHTML("Here is &lt;some&gt; &mdash; text"));
+    assertEquals("Here is some script 1", StringUtils.filterHTML("<script> var i=2; </script>Here is some script 1"));
+    assertEquals("Here is some script 2", StringUtils.filterHTML("<script> var i=2; </Script>Here is some script 2"));
+    assertEquals("Here is some style 1", StringUtils.filterHTML("<style>body { color: red;}</style>Here is some style 1"));
+    assertEquals("Here is some style 2", StringUtils.filterHTML("<STYLE>body { color: red;}</stYle>Here is some style 2"));
   }
+  
+  public void testFindThumbnailUrl() {
+    assertEquals(null, StringUtils.findThumbnailUrl("<img src=\"booba.jpg\">"));
+    assertEquals("http://google.fr/booba.jpg", StringUtils.findThumbnailUrl("<img src=\"http://google.fr/booba.jpg\">"));
+    assertEquals(null, StringUtils.findThumbnailUrl("<img> src=\"http://google.fr/booba.jpg\">"));
+    assertEquals("http://google.fr/booba.jpg", StringUtils.findThumbnailUrl("this is some text <img class=\"foo\" src='http://google.fr/booba.jpg'> this is some text"));
+    // Select thumnail first
+    assertEquals("http://google.fr/booba.jpg", StringUtils.findThumbnailUrl("this is some <img class=\"icon\" src='http://google.fr/incrediblySmallIcon.jpg'> text <img itemprop=\"thumbnailURL\" src='http://google.fr/booba.jpg' class=\"thumbnail class2\" > this is some text"));
+    assertEquals("http://google.fr/booba.jpg", StringUtils.findThumbnailUrl("this is some <img class=\"icon\" src='http://google.fr/incrediblySmallIcon.jpg'> text <img itemprop='thumbnailURL' src='http://google.fr/booba.jpg' class=\"thumbnail class2\" > this is some text"));
+    assertEquals("http://google.fr/booba.jpg", StringUtils.findThumbnailUrl("this is some <img class=\"icon\" src='http://google.fr/incrediblySmallIcon.jpg'> text <img src='http://google.fr/booba.jpg' itemprop=\"thumbnailURL\" class=\"thumbnail class2\" > this is some text"));
+}
 
   public void testStripScriptTags() {
     assertEquals("some text", StringUtils.stripScriptTags("some <script>alert(1)</script>text"));

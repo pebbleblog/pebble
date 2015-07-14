@@ -31,12 +31,14 @@
  */
 package net.sourceforge.pebble.permalink;
 
+import net.sourceforge.pebble.domain.BlogEntry;
 import net.sourceforge.pebble.domain.Day;
 import net.sourceforge.pebble.domain.Month;
 import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.api.permalink.PermalinkProvider;
 
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 
 /**
  * Support class that can be used as a basis for PermalinkProvider
@@ -155,4 +157,120 @@ public abstract class PermalinkProviderSupport implements PermalinkProvider {
        Integer.parseInt(month), Integer.parseInt(day));
   }
 
+  
+  /**
+   * Curate the title of a blog entry for use in a URL. In particular, 
+   * remove diacritics. If no title is available, or if the curation 
+   * removes everything, the entry id is used in its stead.
+   *
+   * @param blogEntry   the entry for which we want the title curated.
+   * @param separator   the characters user to separate the words.
+   * @return  The curated title
+   */
+  String getCuratedPermalinkTitle(BlogEntry blogEntry, String separator) {
+    String title = blogEntry.getTitle();
+    if (title == null || title.length() == 0) {
+      title = "" + blogEntry.getId();
+    } else {
+      title = title.toLowerCase();
+      title = title.replaceAll("[\\. ,;/\\\\_-]", separator); // Change whitespace and punctuation marks to dashes
+      for (String search : characterSubstitutions.keySet()) {
+        title = title.replaceAll(search, characterSubstitutions.get(search));
+      }
+      title = title.replaceAll("[^a-z0-9"+separator+"]", "");
+      title = title.replaceAll(separator+"+", separator);
+      title = title.replaceAll("^"+separator+"*", "");
+      title = title.replaceAll(separator+"*$", "");
+    }
+
+    // if the title has been blanked out, use the blog entry instead
+    if (title == null || title.length() == 0) {
+      title = "" + blogEntry.getId();
+    }
+    
+    return title;
+  }
+
+
+
+  /**
+   * the List of characters that will be substituted
+   */
+  private static final HashMap<String, String> characterSubstitutions;
+
+  static {
+
+    characterSubstitutions = new HashMap<String, String>();
+
+    characterSubstitutions.put("\u00B2", "2");
+    characterSubstitutions.put("\u00B3", "3");
+
+    characterSubstitutions.put("\u00C0", "A");
+    characterSubstitutions.put("\u00C1", "A");
+    characterSubstitutions.put("\u00C2", "A");
+    characterSubstitutions.put("\u00C3", "A");
+    characterSubstitutions.put("\u00C4", "A");
+    characterSubstitutions.put("\u00C5", "A");
+    characterSubstitutions.put("\u00C6", "AE");
+    characterSubstitutions.put("\u00C7", "C");
+    characterSubstitutions.put("\u00C8", "E");
+    characterSubstitutions.put("\u00C9", "E");
+    characterSubstitutions.put("\u00CA", "E");
+    characterSubstitutions.put("\u00CB", "E");
+    characterSubstitutions.put("\u00CC", "I");
+    characterSubstitutions.put("\u00CD", "I");
+    characterSubstitutions.put("\u00CE", "I");
+    characterSubstitutions.put("\u00CF", "I");
+
+    characterSubstitutions.put("\u00D0", "D");
+    characterSubstitutions.put("\u00D1", "N");
+    characterSubstitutions.put("\u00D2", "O");
+    characterSubstitutions.put("\u00D3", "O");
+    characterSubstitutions.put("\u00D4", "O");
+    characterSubstitutions.put("\u00D5", "O");
+    characterSubstitutions.put("\u00D6", "O");
+    characterSubstitutions.put("\u00D7", "x");
+    characterSubstitutions.put("\u00D8", "O");
+    characterSubstitutions.put("\u00D9", "U");
+    characterSubstitutions.put("\u00DA", "U");
+    characterSubstitutions.put("\u00DB", "U");
+    characterSubstitutions.put("\u00DC", "U");
+    characterSubstitutions.put("\u00DD", "Y");
+    characterSubstitutions.put("\u00DE", "P");
+    characterSubstitutions.put("\u00DF", "ss");
+
+    characterSubstitutions.put("\u00E0", "a");
+    characterSubstitutions.put("\u00E1", "a");
+    characterSubstitutions.put("\u00E2", "a");
+    characterSubstitutions.put("\u00E3", "a");
+    characterSubstitutions.put("\u00E4", "a");
+    characterSubstitutions.put("\u00E5", "a");
+    characterSubstitutions.put("\u00E6", "ae");
+    characterSubstitutions.put("\u00E7", "c");
+    characterSubstitutions.put("\u00E8", "e");
+    characterSubstitutions.put("\u00E9", "e");
+    characterSubstitutions.put("\u00EA", "e");
+    characterSubstitutions.put("\u00EB", "e");
+    characterSubstitutions.put("\u00EC", "i");
+    characterSubstitutions.put("\u00ED", "i");
+    characterSubstitutions.put("\u00EE", "i");
+    characterSubstitutions.put("\u00EF", "i");
+
+    characterSubstitutions.put("\u00F0", "d");
+    characterSubstitutions.put("\u00F1", "n");
+    characterSubstitutions.put("\u00F2", "o");
+    characterSubstitutions.put("\u00F3", "o");
+    characterSubstitutions.put("\u00F4", "o");
+    characterSubstitutions.put("\u00F5", "o");
+    characterSubstitutions.put("\u00F6", "o");
+    //"\u00F7", // division sign (ignore)
+    characterSubstitutions.put("\u00F8", "o");
+    characterSubstitutions.put("\u00F9", "u");
+    characterSubstitutions.put("\u00FA", "u");
+    characterSubstitutions.put("\u00FB", "u");
+    characterSubstitutions.put("\u00FC", "u");
+    characterSubstitutions.put("\u00FD", "y");
+    characterSubstitutions.put("\u00FE", "p");
+    characterSubstitutions.put("\u00FF", "y");
+  }
 }

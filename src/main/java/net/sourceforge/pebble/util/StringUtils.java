@@ -31,7 +31,12 @@
  */
 package net.sourceforge.pebble.util;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -504,16 +509,44 @@ public final class StringUtils {
     s = s.replaceAll("&lt;", "");
     s = s.replaceAll("&gt;", "");
     s = s.replaceAll("&nbsp;", "");
+    s = s.replaceAll("(?s)<[Ss][Cc][Rr][Ii][Pp][Tt].*?>.*?</[Ss][Cc][Rr][Ii][Pp][Tt]>", "");
+    s = s.replaceAll("(?s)<[Ss][Tt][Yy][Ll][Ee].*?>.*?</[Ss][Tt][Yy][Ll][Ee]>", "");
     s = s.replaceAll("(?s)<!--.*?-->", "");
-    return s.replaceAll("(?s)<.*?>", "");
+    s = s.replaceAll("(?s)<.*?>", "");
+    return s;
   }
 
+  private static String extractFromRegexp(Pattern pattern, String content) {
+    Matcher m = pattern.matcher(content);
+    if (m.find()) {
+      return m.group(1);
+    }
+    return null;
+  }
+  
+  public static String findThumbnailUrl(String articleBody) {
+    //thumbnail
+    for (Pattern p : imagesPatterns) {
+      String url = extractFromRegexp(p, articleBody);
+      if (url != null && (url.indexOf("http://")==0 || url.indexOf("https://")==0)) 
+          return url;
+    }
+    return null;
+  }
+  
   public static String truncate(String s) {
     return truncate(s, MAX_CONTENT_LENGTH);
   }
 
+  
+  /**
+   * Removes all HTML tags and then truncate the string.
+   * @param s the string to truncate
+   * @param maxLength the maximum length of the returned string
+   * @return the processed string
+   */
   public static String truncate(String s, int maxLength) {
-    String content = StringUtils.filterHTML(s);
+    String content = filterHTML(s);
 
     // then truncate, if necessary
     if (content == null) {
@@ -591,5 +624,13 @@ public final class StringUtils {
     int res = orig.indexOf(pattern,from);
     if (res == -1) res = orig.length();
     return res;
+  }
+  
+  private static List<Pattern> imagesPatterns = new ArrayList<Pattern>();
+  
+  static {
+    imagesPatterns.add(Pattern.compile("<[iI][mM][gG][^>]*? [sS][rR][cC]=[\"']([^\"']*?)[\"'][^>]*? [iI][tT][eE][mM][pP][rR][oO][pP]=[\"']thumbnailURL[\"'][^>]*?>"));
+    imagesPatterns.add(Pattern.compile("<[iI][mM][gG][^>]*? [iI][tT][eE][mM][pP][rR][oO][pP]=[\"']thumbnailURL[\"'][^>]*? [sS][rR][cC]=[\"']([^\"'>]*?)[\"'][^>]*?>"));
+    imagesPatterns.add(Pattern.compile("<[iI][mM][gG][^>]*? [sS][rR][cC]=[\"']([^\"']*?)[\"'][^>]*?>"));
   }
 }

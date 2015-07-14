@@ -9,12 +9,38 @@
 <fmt:setBundle basename="resources" scope="request" />
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml" xmlns:og="http://ogp.me/ns#">
   <head>
 
     <c:set var="pageTitle">
-      <c:choose><c:when test="${empty title}">${blog.name}</c:when><c:otherwise>${title} - ${blog.name}</c:otherwise></c:choose>
+      <c:choose><c:when test="${empty title}"><c:out value="${blog.name}" escapeXml="true"/></c:when><c:otherwise><c:out value="${title} - ${blog.name}" escapeXml="true"/></c:otherwise></c:choose>
     </c:set>
+    <c:set var="pageTitleAlone">
+      <c:choose><c:when test="${empty title}"><c:out value="${blog.name}" escapeXml="true"/></c:when><c:otherwise><c:out value="${title}" escapeXml="true"/></c:otherwise></c:choose>
+    </c:set>
+    <c:if test="${displayMode == 'detail'}">
+      <c:choose>
+        <c:when test="${not empty blogEntry}">
+          <c:set var="tags" value="${blogEntry.allTags}"/>
+        </c:when>
+        <c:when test="${not empty staticPage}">
+          <c:set var="tags" value="${staticPage.allTags}"/>
+        </c:when>
+      </c:choose>
+    </c:if>
+    <c:set var="truncatedContent">
+      <c:if test="${displayMode == 'detail'}">
+        <c:choose>
+          <c:when test="${not empty blogEntry}"><c:out value="${blogEntry.truncatedContent}" escapeXml="true"/></c:when>
+          <c:when test="${not empty staticPage}"><c:out value="${staticPage.truncatedContent}" escapeXml="true"/></c:when>
+        </c:choose>
+      </c:if>
+    </c:set>
+    <c:if test="${not empty blogEntry}">
+      <c:forEach var="category" items="${blogEntry.categories}">
+        <c:set var="cat" value="${category}"/>
+      </c:forEach>
+    </c:if>
 
     <base href="${url:rewrite(blogUrl)}" />
     <meta http-equiv="Content-Type" content="text/html; charset=${blog.characterEncoding}"/>
@@ -45,6 +71,27 @@
 
     <pebble:pluginrenderer plugin="head"/>
     <c:if test="${not empty themeHeadUri}"><jsp:include page="${themeHeadUri}"/></c:if>
+
+    <meta property="og:locale" content="${blog.locale}"/>
+    <meta property="og:title" content="${pageTitleAlone}"/>
+    <meta property="og:type" content="<c:choose><c:when test="${displayMode == 'detail'}">article</c:when><c:otherwise>website</c:otherwise></c:choose>"/>
+    <meta property="og:description" content="${truncatedContent}"/>
+    <meta property="og:image" content="${blogEntry.thumbnailURL}"/>
+    <meta property="og:site_name" content="<c:out value="${blog.name}" escapeXml="true"/>"/>
+    <c:if test="${displayMode == 'detail'}"><c:choose><c:when test="${not empty blogEntry}"><meta property="og:url" content="${url:rewrite(blogEntry.permalink)}" /></c:when><c:when test="${not empty staticPage}"><meta property="og:url" content="${url:rewrite(staticPage.permalink)}" /></c:when></c:choose></c:if>
+    <c:if test="${displayMode == 'detail'}"><c:forEach var="token" items="${tags}">
+    <meta property="article:tag" content="<c:out value="${token}" escapeXml="true"/>" /></c:forEach> </c:if>
+    <c:if test="${not empty cat}"><meta property="article:section" content="<c:out value="${cat}" escapeXml="true"/>"></c:if>
+    <c:if test="${displayMode == 'detail'}"><c:choose><c:when test="${not empty blogEntry}"><meta property="article:published_time" content="<fmt:formatDate pattern="yyyy-MM-dd'T'HH:mm:ssz" value="${blogEntry.date}" />"/></c:when><c:when test="${not empty staticPage}"><meta property="article:published_time" content="<fmt:formatDate pattern="yyyy-MM-dd'T'HH:mm:ssz" value="${staticPage.date}" />"/></c:when></c:choose></c:if>
+    <c:if test="${displayMode == 'detail'}"><c:choose><c:when test="${not empty blogEntry}"><meta property="article:modified_time" content="<fmt:formatDate pattern="yyyy-MM-dd'T'HH:mm:ssz" value="${blogEntry.lastModified}" />"/></c:when><c:when test="${not empty staticPage}"><meta property="article:modified_time" content="<fmt:formatDate pattern="yyyy-MM-dd'T'HH:mm:ssz" value="${staticPage.lastModified}" />"/></c:when></c:choose></c:if>
+
+
+    <meta name="twitter:site" content="<c:out value="${blog.name}" escapeXml="true"/>" />
+    <meta name="twitter:title" content="${pageTitleAlone}"/>
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:description" content="${truncatedContent}" />
+    <meta name="twitter:image" content="${blogEntry.thumbnailURL}" />
+    <c:if test="${displayMode == 'detail'}"><c:choose><c:when test="${not empty blogEntry}"><meta name="twitter:url" content="${url:rewrite(blogEntry.permalink)}" /></c:when><c:when test="${not empty staticPage}"><meta name="twitter:url" content="${url:rewrite(staticPage.permalink)}" /></c:when></c:choose></c:if>
   </head>
 
   <body>
