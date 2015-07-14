@@ -38,7 +38,7 @@
         <td valign="top" class="small">
           <input type="checkbox" name="user" value="${user.username}" />
         </td>
-        <td><a href="viewUser.secureaction?user=${user.username}"><c:out value="${user.username}" escapeXml="true"/></a></td>
+        <td><a href="viewUser.secureaction?user=<c:out value="${user.username}" escapeXml="true"/>"><c:out value="${user.username}" escapeXml="true"/></a></td>
         <td><c:out value="${user.name}" escapeXml="true"/></td>
         <td align="center"><c:if test="${user.blogAdmin}">X</c:if></td>
         <td align="center"><c:if test="${user.blogOwner}">X</c:if></td>
