@@ -31,17 +31,18 @@
  */
 package net.sourceforge.pebble.webservice;
 
-import com.sun.syndication.propono.atom.server.AtomHandlerFactory;
-import com.sun.syndication.propono.atom.server.AtomHandler;
+import com.rometools.propono.atom.server.AtomHandlerFactory;
+import com.rometools.propono.atom.server.AtomHandler;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Simon Brown
  */
 public class PebbleAtomHandlerFactory extends AtomHandlerFactory {
 
-  public AtomHandler newAtomHandler(HttpServletRequest httpServletRequest) {
+  public AtomHandler newAtomHandler(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
     return new PebbleAtomHandler();
   }
 

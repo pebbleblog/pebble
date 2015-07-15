@@ -31,9 +31,9 @@
  */
 package net.sourceforge.pebble.web.view.impl;
 
-import com.sun.syndication.feed.synd.*;
-import com.sun.syndication.io.FeedException;
-import com.sun.syndication.io.SyndFeedOutput;
+import com.rometools.rome.feed.synd.*;
+import com.rometools.rome.io.FeedException;
+import com.rometools.rome.io.SyndFeedOutput;
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.api.decorator.ContentDecoratorContext;
 import net.sourceforge.pebble.decorator.ContentDecoratorChain;

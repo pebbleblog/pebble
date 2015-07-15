@@ -31,11 +31,14 @@
  */
 package net.sourceforge.pebble.web.view.impl;
 
-import com.sun.syndication.feed.synd.*;
+import com.rometools.rome.feed.synd.*;
+import com.rometools.modules.content.ContentModule;
+import com.rometools.modules.content.ContentModuleImpl;
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.api.decorator.FeedDecorator;
 import net.sourceforge.pebble.domain.*;
 import net.sourceforge.pebble.security.PebbleUserDetails;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.*;
 
@@ -67,11 +70,11 @@ public class ResponseFeedView extends AbstractRomeFeedView {
       populateFeedInfo(blogEntry, syndFeed);
     }
 
-    if (blog.getImage() != null) {
+    if (StringUtils.isNotBlank(blog.getImage())) {
       SyndImage syndImage = new SyndImageImpl();
       syndImage.setUrl(blog.getImage());
       syndImage.setTitle(blog.getName());
-      syndImage.setUrl(blog.getUrl());
+      syndImage.setLink(blog.getUrl());
       syndFeed.setImage(syndImage);
       // Unfortunately, ROME doesn't support the logo attribute for Atom in a feed agnostic way
     }
@@ -108,10 +111,11 @@ public class ResponseFeedView extends AbstractRomeFeedView {
     feedEntry.setUpdatedDate(response.getDate());
     feedEntry.setPublishedDate(response.getDate());
 
-    SyndContent content = new SyndContentImpl();
-    content.setType("text/html");
-    content.setValue(response.getContent());
-    feedEntry.setContents(Collections.singletonList(content));
+    ContentModule content = new ContentModuleImpl();
+    List<String> contents = new ArrayList<String>();
+    contents.add(response.getContent());
+    content.setEncodeds(contents);
+    feedEntry.getModules().add(content);
 
     return feedEntry;
   }
