@@ -57,6 +57,7 @@ public class Configuration {
   private boolean virtualHostingSubdomain = true;
   private boolean userThemesEnabled = true;
   private String smtpHost = "java:comp/env/mail/Session";
+  private String smtpPort = "25";
   private long fileUploadSize = 2048;
   private long fileUploadQuota = -1;
   private DAOFactory daoFactory = new FileDAOFactory();
@@ -115,6 +116,14 @@ public class Configuration {
 
   public void setSmtpHost(String smtpHost) {
     this.smtpHost = smtpHost;
+  }
+
+  public String getSmtpPort() {
+    return smtpPort;
+  }
+
+  public void setSmtpPort(String smtpPort) {
+    this.smtpPort = smtpPort;
   }
 
   public long getFileUploadSize() {
