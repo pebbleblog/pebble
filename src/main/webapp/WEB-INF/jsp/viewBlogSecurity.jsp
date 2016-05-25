@@ -40,7 +40,7 @@
             <br />
             Do you want this blog included in the multi-blog home page and news feeds?
             <br />
-            Yes&nbsp;<input type="radio" name="private" value="false"
+            Yes<input type="radio" name="private" value="false"
               <c:if test="${blog.public}">
                 checked="checked"
               </c:if>
