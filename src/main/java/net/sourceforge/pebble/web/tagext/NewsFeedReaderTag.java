@@ -37,7 +37,6 @@ import net.sourceforge.pebble.domain.Blog;
 import net.sourceforge.pebble.Constants;
 
 import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.JspContext;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 import java.io.IOException;

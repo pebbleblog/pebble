@@ -31,11 +31,14 @@
  */
 package net.sourceforge.pebble.webservice;
 
-import com.sun.syndication.propono.atom.server.AtomHandler;
-import com.sun.syndication.propono.atom.server.AtomException;
-import com.sun.syndication.propono.atom.common.AtomService;
-import com.sun.syndication.feed.atom.Feed;
-import com.sun.syndication.feed.atom.Entry;
+import com.rometools.propono.atom.common.Categories;
+import com.rometools.propono.atom.server.AtomHandler;
+import com.rometools.propono.atom.server.AtomException;
+import com.rometools.propono.atom.common.AtomService;
+import com.rometools.propono.atom.server.AtomMediaResource;
+import com.rometools.propono.atom.server.AtomRequest;
+import com.rometools.rome.feed.atom.Feed;
+import com.rometools.rome.feed.atom.Entry;
 
 import java.io.InputStream;
 
@@ -50,52 +53,62 @@ public class PebbleAtomHandler implements AtomHandler {
     return null;  //To change body of implemented methods use File | Settings | File Templates.
   }
 
-  public AtomService getIntrospection() throws AtomException {
+  public AtomService getAtomService(AtomRequest atomRequest) throws AtomException {
     return null;  //To change body of implemented methods use File | Settings | File Templates.
   }
 
-  public Feed getCollection(String[] strings) throws AtomException {
+  public Categories getCategories(AtomRequest atomRequest) throws AtomException {
+    return null;
+  }
+
+  public Feed getCollection(AtomRequest atomRequest) throws AtomException {
     return null;  //To change body of implemented methods use File | Settings | File Templates.
   }
 
-  public Entry postEntry(String[] strings, Entry entry) throws AtomException {
+  public AtomMediaResource getMediaResource(AtomRequest atomRequest) throws AtomException {
+    return null;
+  }
+
+  public Entry postEntry(AtomRequest atomRequest, Entry entry) throws AtomException {
     return null;  //To change body of implemented methods use File | Settings | File Templates.
   }
 
-  public Entry getEntry(String[] strings) throws AtomException {
+  public Entry getEntry(AtomRequest atomRequest) throws AtomException {
     return null;  //To change body of implemented methods use File | Settings | File Templates.
   }
 
-  public Entry putEntry(String[] strings, Entry entry) throws AtomException {
-    return null;  //To change body of implemented methods use File | Settings | File Templates.
+  public void putEntry(AtomRequest atomRequest, Entry entry) throws AtomException {
+     //To change body of implemented methods use File | Settings | File Templates.
   }
 
-  public void deleteEntry(String[] strings) throws AtomException {
+  public void deleteEntry(AtomRequest atomRequest) throws AtomException {
+  }
+
+  public Entry postMedia(AtomRequest atomRequest, Entry entry) throws AtomException {
+    return null;
+  }
+
+  public void putMedia(AtomRequest atomRequest) throws AtomException {
     //To change body of implemented methods use File | Settings | File Templates.
   }
 
-  public Entry postMedia(String[] strings, String string, String string1, String string2, InputStream inputStream) throws AtomException {
-    return null;  //To change body of implemented methods use File | Settings | File Templates.
-  }
-
-  public Entry putMedia(String[] strings, String string, InputStream inputStream) throws AtomException {
-    return null;  //To change body of implemented methods use File | Settings | File Templates.
-  }
-
-  public boolean isIntrospectionURI(String[] strings) {
+  public boolean isCollectionURI(AtomRequest atomRequest) {
     return false;  //To change body of implemented methods use File | Settings | File Templates.
   }
 
-  public boolean isCollectionURI(String[] strings) {
+  public boolean isCategoriesURI(AtomRequest atomRequest) {
+    return false;
+  }
+
+  public boolean isAtomServiceURI(AtomRequest atomRequest) {
+    return false;
+  }
+
+  public boolean isEntryURI(AtomRequest atomRequest) {
     return false;  //To change body of implemented methods use File | Settings | File Templates.
   }
 
-  public boolean isEntryURI(String[] strings) {
+  public boolean isMediaEditURI(AtomRequest atomRequest) {
     return false;  //To change body of implemented methods use File | Settings | File Templates.
   }
-
-  public boolean isMediaEditURI(String[] strings) {
-    return false;  //To change body of implemented methods use File | Settings | File Templates.
-  }
-
 }
