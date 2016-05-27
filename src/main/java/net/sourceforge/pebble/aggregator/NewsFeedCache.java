@@ -32,15 +32,15 @@
 
 package net.sourceforge.pebble.aggregator;
 
-import com.sun.syndication.feed.WireFeed;
-import com.sun.syndication.feed.atom.Content;
-import com.sun.syndication.feed.atom.Entry;
-import com.sun.syndication.feed.atom.Link;
-import com.sun.syndication.feed.rss.Channel;
-import com.sun.syndication.feed.rss.Item;
-import com.sun.syndication.io.FeedException;
-import com.sun.syndication.io.WireFeedInput;
-import com.sun.syndication.io.XmlReader;
+import com.rometools.rome.feed.WireFeed;
+import com.rometools.rome.feed.atom.Content;
+import com.rometools.rome.feed.atom.Entry;
+import com.rometools.rome.feed.atom.Link;
+import com.rometools.rome.feed.rss.Channel;
+import com.rometools.rome.feed.rss.Item;
+import com.rometools.rome.io.FeedException;
+import com.rometools.rome.io.WireFeedInput;
+import com.rometools.rome.io.XmlReader;
 import net.sourceforge.pebble.domain.Blog;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -145,11 +145,12 @@ public class NewsFeedCache {
 //          log.info(fe);
 //        }
 
-      WireFeedInput input = new WireFeedInput(true);
+      WireFeedInput input = new WireFeedInput(true, Locale.US);
       WireFeed wf = input.build(new XmlReader(new URL(url)));
 
       if (wf.getFeedType() != null && wf.getFeedType().startsWith("rss")) {
         Channel rssFeed = (Channel)wf;
+
         feed.setTitle(rssFeed.getTitle());
         feed.setLink(rssFeed.getLink());
 
@@ -164,7 +165,7 @@ public class NewsFeedCache {
           feed.add(fe);
         }
       } else if (wf.getFeedType() != null && wf.getFeedType().startsWith("atom")) {
-        com.sun.syndication.feed.atom.Feed atomFeed = (com.sun.syndication.feed.atom.Feed)wf;
+        com.rometools.rome.feed.atom.Feed atomFeed = (com.rometools.rome.feed.atom.Feed)wf;
         feed.setTitle(atomFeed.getTitle());
         for (Link link : (List<Link>)atomFeed.getAlternateLinks()) {
           if ("text/html".equals(link.getType()))

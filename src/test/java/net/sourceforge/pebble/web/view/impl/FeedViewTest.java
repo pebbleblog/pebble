@@ -32,10 +32,11 @@
 
 package net.sourceforge.pebble.web.view.impl;
 
-import com.sun.syndication.feed.synd.SyndCategory;
-import com.sun.syndication.feed.synd.SyndContent;
-import com.sun.syndication.feed.synd.SyndEntry;
-import com.sun.syndication.feed.synd.SyndFeed;
+import com.rometools.modules.content.ContentModuleImpl;
+import com.rometools.rome.feed.synd.SyndCategory;
+import com.rometools.rome.feed.synd.SyndContent;
+import com.rometools.rome.feed.synd.SyndEntry;
+import com.rometools.rome.feed.synd.SyndFeed;
 import net.sourceforge.pebble.Constants;
 import net.sourceforge.pebble.domain.BlogEntry;
 import net.sourceforge.pebble.domain.Category;
@@ -43,6 +44,8 @@ import net.sourceforge.pebble.domain.SingleBlogTestCase;
 import net.sourceforge.pebble.mock.MockHttpServletRequest;
 import net.sourceforge.pebble.mock.MockHttpServletResponse;
 import net.sourceforge.pebble.web.model.Model;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.functors.InstanceofPredicate;
 
 import java.io.PrintWriter;
 import java.util.Collections;
@@ -81,7 +84,7 @@ public class FeedViewTest extends SingleBlogTestCase {
     SyndEntry feedEntry = (SyndEntry) feed.getEntries().get(0);
     assertEquals("tag:www.yourdomain.com,1970-01-01:default/1000", feedEntry.getUri());
     assertEquals(new Date(1000), feedEntry.getPublishedDate());
-    assertEquals("body", ((SyndContent)feedEntry.getContents().get(0)).getValue());
+    assertEquals("body", ((ContentModuleImpl)CollectionUtils.select(feedEntry.getModules(), new InstanceofPredicate(ContentModuleImpl.class)).iterator().next()).getEncodeds().get(0));
     assertEquals("My Title", feedEntry.getTitle());
     assertEquals(entry.getPermalink(), feedEntry.getLink());
     assertEquals(1, feedEntry.getCategories().size());

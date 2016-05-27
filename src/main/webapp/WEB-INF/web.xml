@@ -273,7 +273,9 @@
   <resource-ref>
     <description>
       Resource reference to a factory for javax.mail.Session
-      instances that may be used for sending e-mail notifications.
+      instances that may be used for sending electronic mail
+      messages, preconfigured to connect to the appropriate
+      SMTP server.
     </description>
     <res-ref-name>mail/Session</res-ref-name>
     <res-type>javax.mail.Session</res-type>
