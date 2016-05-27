@@ -41,11 +41,13 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.*;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Checks requests for a security token
@@ -243,9 +245,12 @@ public class SecurityTokenValidatorImpl implements SecurityTokenValidator {
       for (String value : param.getValue()) {
         url.append(sep);
         sep = "&amp;";
-        url.append(URLEncoder.encode(param.getKey()));
-        url.append("=");
-        url.append(URLEncoder.encode(value));
+        try {
+          url.append(URLEncoder.encode(param.getKey(), StandardCharsets.UTF_8.toString()));
+          url.append("=");
+          url.append(URLEncoder.encode(value, StandardCharsets.UTF_8.toString()));
+        } catch (UnsupportedEncodingException e) {
+        }
       }
     }
     url.append(sep).append(PEBBLE_SECURITY_SIGNATURE_PARAMETER).append("=").append(URLEncoder.encode(hash));
