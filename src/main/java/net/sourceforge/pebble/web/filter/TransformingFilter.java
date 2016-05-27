@@ -117,7 +117,7 @@ public class TransformingFilter implements Filter {
       externalUri += "?" + httpRequest.getQueryString();
       originalUri += "?" + httpRequest.getQueryString();
     }
-    httpRequest.setAttribute(Constants.ORIGINAL_URI, uri);
+    httpRequest.setAttribute(Constants.ORIGINAL_URI, originalUri);
     httpRequest.setAttribute(Constants.EXTERNAL_URI, externalUri);
 
     UriTransformer transformer = new UriTransformer();
