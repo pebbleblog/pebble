@@ -288,15 +288,17 @@ public class MailUtils {
    * @throws Exception    if something goes wrong creating a session
    */
   public static Session createSession() throws Exception {
-    String ref = PebbleContext.getInstance().getConfiguration().getSmtpHost();
-    if (ref.startsWith("java:comp/env")) {
+    String host = PebbleContext.getInstance().getConfiguration().getSmtpHost();
+    if (host.startsWith("java:comp/env")) {
       // this is a JNDI based mail session
       Context ctx = new InitialContext();
-      return (Session)ctx.lookup(ref);
+      return (Session)ctx.lookup(host);
     } else {
+      String port = PebbleContext.getInstance().getConfiguration().getSmtpPort();
       // this is a simple SMTP hostname based session
       Properties props = new Properties();
-      props.put("mail.smtp.host", ref);
+      props.put("mail.smtp.host", host);
+      props.put("mail.smtp.port", port);
       return Session.getDefaultInstance(props, null);
     }
   }

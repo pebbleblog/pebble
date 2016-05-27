@@ -41,6 +41,9 @@
     <!-- the name/IP address of the server through which e-mail is sent, or a JNDI name starting java:/comp/env pointing to a preconfigured javax.mail.Session instance -->
     <property name="smtpHost" value="${smtpHost}"/>
 
+    <!-- the port on which the smtp server specified above is running -->
+    <property name="smtpPort" value="${smtpPort}"/>
+
     <!-- the SecurityRealm implementation being used -->
     <property name="securityRealm" ref="pebbleSecurityRealm"/>
 
