@@ -2,10 +2,10 @@
 
 The prerequisites are as follows.
 
- * Java 5.0
- * A JSP 2.0/Servlet 2.5 compatible server such as Apache Tomcat 6.0.x 
+ * Java 6.0
+ * A JSP 2.2/Servlet 3.0 compatible server such as Apache Tomcat 7.0.x
 
-# Quickstart with Apache Tomcat 6.0.x
+# Quickstart with Apache Tomcat 7.0.x
 
 If you're in a hurry, you can get Pebble and up running in a couple of minutes by following these steps.
 
