@@ -97,8 +97,30 @@ public class PebbleContextListener implements ServletContextListener {
               "<li>Remove the default user and create your own user on the <a href=\"viewUsers.secureaction\">users page</a>.</li>\n" +
               "<li>Take a look at the <a href=\"./help/index.html\">online help</a>.</li>\n" +
               "<li>Delete this blog entry when you're finished with it.</li>\n" +
+              "<li>Try out the code highlighting (example below).</li>\n" +
               "</ul>\n" +
               "\n" +
+              "<pre><code class=\"apache\">" +
+              "# rewrite`s rules for wordpress pretty url\n" +
+              "LoadModule rewrite_module  modules/mod_rewrite.so\n" +
+              "RewriteCond %{REQUEST_FILENAME} !-f\n" +
+              "RewriteCond %{REQUEST_FILENAME} !-d\n" +
+              "RewriteRule . index.php [NC,L]\n" +
+              "\n" +
+              "ExpiresActive On\n" +
+              "ExpiresByType application/x-javascript  \"access plus 1 days\"\n" +
+              "\n" +
+              "Order Deny,Allow\n" +
+              "Allow from All\n" +
+              "\n" +
+              "&lt;Location /maps/&gt;\n" +
+              "RewriteMap map txt:map.txt\n" +
+              "RewriteMap lower int:tolower\n" +
+              "RewriteCond %{REQUEST_URI} ^/([^/.]+)\\.html$ [NC]\n" +
+              "RewriteCond ${map:${lower:%1}|NOT_FOUND} !NOT_FOUND\n" +
+              "RewriteRule .? /index.php?q=${map:${lower:%1}} [NC,L]\n" +
+              "&lt;/Location&gt;" +
+              "</code></pre>" +
               "<p>\n" +
               "Have fun!\n" +
               "</p>");

@@ -154,6 +154,6 @@
         href="viewPlugins.secureaction#contentDecorators">Plugins</a> page. Your blog is using the
       following blog listeners.
     </p>
-    <pre class="codeSample"><c:forEach var="decorator" items="${blog.contentDecoratorChain.contentDecorators}">${decorator.class.name}<br /></c:forEach></pre>
+    <pre class="codeSample"><c:forEach var="decorator" items="${blog.contentDecoratorChain.contentDecorators}">${decorator['class'].name}<br /></c:forEach></pre>
   </div>
 </div>

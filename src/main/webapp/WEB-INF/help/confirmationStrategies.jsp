@@ -79,13 +79,13 @@
       To configure the comment confirmation strategy used by your blog, simply modify the entry on the <a href="viewPlugins.secureaction#commentConfirmationStrategy">Plugins</a> page. Your blog is using the
       following strategy.
     </p>
-    <pre class="codeSample">${blog.commentConfirmationStrategy.class.name}</pre>
+    <pre class="codeSample">${blog.commentConfirmationStrategy['class'].name}</pre>
 
     <h3>Configuring the TrackBack confirmation strategy</h3>
     <p>
       To configure the TrackBack confirmation strategy used by your blog, simply modify the entry on the <a href="viewPlugins.secureaction#trackBackConfirmationStrategy">Plugins</a> page. Your blog is using the
       following strategy.
     </p>
-    <pre class="codeSample">${blog.trackBackConfirmationStrategy.class.name}</pre>
+    <pre class="codeSample">${blog.trackBackConfirmationStrategy['class'].name}</pre>
   </div>
 </div>

@@ -38,7 +38,6 @@ import net.sourceforge.pebble.domain.BlogService;
 import net.sourceforge.pebble.domain.Day;
 import net.sourceforge.pebble.domain.Month;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
@@ -154,7 +153,7 @@ public class Latin1SeoPermalinkProviderTest extends PermalinkProviderSupportTest
     blogEntry.setTitle("");
     assertEquals(prefix + blogEntry.getId() + suffix, permalinkProvider.getPermalink(blogEntry));
 
-    blogEntry.setTitle("./:!@£$%^&*()");
+    blogEntry.setTitle("./:!@ï¿½$%^&*()");
     assertEquals(prefix + blogEntry.getId() + suffix, permalinkProvider.getPermalink(blogEntry));
 
     blogEntry.setTitle("Here is a title with chars from the latin1 supplemental charset: \u00a0 \u00a1 \u00a2 \u00a3 \u00a4 \u00a5 \u00a6 \u00a7 \u00a8 \u00a9 \u00aa \u00ab \u00ac \u00ad \u00ae \u00af");
@@ -241,7 +240,7 @@ public class Latin1SeoPermalinkProviderTest extends PermalinkProviderSupportTest
     service.putBlogEntry(blogEntry3);
 
     BlogEntry blogEntry4 = new BlogEntry(blog);
-    blogEntry4.setTitle("åäöÅÄÖ");
+    blogEntry4.setTitle("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
     service.putBlogEntry(blogEntry4);
 
     String uri = permalinkProvider.getPermalink(blogEntry1);

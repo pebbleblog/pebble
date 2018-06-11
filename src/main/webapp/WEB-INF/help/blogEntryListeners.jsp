@@ -44,6 +44,6 @@
       To configure the blog entry listeners used by your blog, modify the list on the <a href="viewPlugins.secureaction#blogEntryListeners">Plugins</a> page. Your blog is using the
       following blog entry listeners.
     </p>
-    <pre class="codeSample"><c:forEach var="listener" items="${blog.eventListenerList.blogEntryListeners}">${listener.class.name}<br /></c:forEach></pre>
+    <pre class="codeSample"><c:forEach var="listener" items="${blog.eventListenerList.blogEntryListeners}">${listener['class'].name}<br /></c:forEach></pre>
   </div>
 </div>

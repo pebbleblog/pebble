@@ -87,6 +87,6 @@
       To configure the comment listeners used by your blog, simply modify the list on the <a href="viewPlugins.secureaction#commentListeners">Plugins</a> page. Your blog is using the
       following comment listeners.
     </p>
-    <pre class="codeSample"><c:forEach var="listener" items="${blog.eventListenerList.commentListeners}">${listener.class.name}<br /></c:forEach></pre>
+    <pre class="codeSample"><c:forEach var="listener" items="${blog.eventListenerList.commentListeners}">${listener['class'].name}<br /></c:forEach></pre>
   </div>
 </div>

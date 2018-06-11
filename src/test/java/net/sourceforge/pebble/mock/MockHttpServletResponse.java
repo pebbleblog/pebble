@@ -39,6 +39,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Properties;
@@ -196,5 +197,15 @@ public class MockHttpServletResponse implements HttpServletResponse {
   public void setCharacterEncoding(String s) {
     //To change body of implemented methods use File | Settings | File Templates.
   }
+
+    @Override
+    public Collection<String> getHeaders(String string) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Collection<String> getHeaderNames() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
 }

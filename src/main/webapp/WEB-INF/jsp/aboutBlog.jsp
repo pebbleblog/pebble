@@ -110,7 +110,7 @@
       <tr class="even">
         <td colspan="2">
           <b>Permalink Provider</b><br />
-            ${blog.permalinkProvider.class.name}
+            ${blog.permalinkProvider['class'].name}
         </td>
       </tr>
 
@@ -118,7 +118,7 @@
         <td colspan="2">
           <b>Content Decorators</b><br />
           <c:forEach var="decorator" items="${blog.contentDecoratorChain.contentDecorators}">
-            ${decorator.class.name}<br />
+            ${decorator['class'].name}<br />
           </c:forEach>
         </td>
       </tr>
@@ -127,7 +127,7 @@
         <td colspan="2">
           <b>Blog Listeners</b><br />
           <c:forEach var="listener" items="${blog.eventListenerList.blogListeners}">
-            ${listener.class.name}
+            ${listener['class'].name}
           </c:forEach>
         </td>
       </tr>
@@ -136,7 +136,7 @@
         <td colspan="2">
           <b>Blog Entry Listeners</b><br />
           <c:forEach var="listener" items="${blog.eventListenerList.blogEntryListeners}">
-            ${listener.class.name}<br />
+            ${listener['class'].name}<br />
           </c:forEach>
         </td>
       </tr>
@@ -145,7 +145,7 @@
         <td colspan="2">
           <b>Comment Listeners</b><br />
           <c:forEach var="listener" items="${blog.eventListenerList.commentListeners}">
-            ${listener.class.name}<br />
+            ${listener['class'].name}<br />
           </c:forEach>
         </td>
       </tr>
@@ -153,7 +153,7 @@
       <tr class="odd">
         <td colspan="2">
           <b>Comment Confirmation Strategy</b><br />
-          ${blog.commentConfirmationStrategy.class.name}
+          ${blog.commentConfirmationStrategy['class'].name}
         </td>
       </tr>
 
@@ -161,7 +161,7 @@
         <td colspan="2">
           <b>TrackBack Listeners</b><br />
           <c:forEach var="listener" items="${blog.eventListenerList.trackBackListeners}">
-            ${listener.class.name}<br />
+            ${listener['class'].name}<br />
           </c:forEach>
         </td>
       </tr>
@@ -169,7 +169,7 @@
     <tr class="odd">
       <td colspan="2">
         <b>TrackBack Confirmation Strategy</b><br />
-          ${blog.trackBackConfirmationStrategy.class.name}
+          ${blog.trackBackConfirmationStrategy['class'].name}
       </td>
     </tr>
 
@@ -183,7 +183,7 @@
     <tr class="odd">
       <td colspan="2">
         <b>Logger</b><br />
-        ${blog.logger.class.name}
+        ${blog.logger['class'].name}
       </td>
     </tr>
     </table>

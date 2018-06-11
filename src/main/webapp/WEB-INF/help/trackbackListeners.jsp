@@ -88,6 +88,6 @@
       To configure the TrackBack listeners used by your blog, simply modify the list on the <a href="viewPlugins.secureaction#trackbackListeners">Plugins</a> page. Your blog is using the
       following TrackBack listeners.
     </p>
-    <pre class="codeSample"><c:forEach var="listener" items="${blog.eventListenerList.trackBackListeners}">${listener.class.name}<br /></c:forEach></pre>
+    <pre class="codeSample"><c:forEach var="listener" items="${blog.eventListenerList.trackBackListeners}">${listener['class'].name}<br /></c:forEach></pre>
   </div>
 </div>

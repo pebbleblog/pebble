@@ -4,7 +4,7 @@
     <groupId>org.sourceforge.pebble</groupId>
     <artifactId>pebble</artifactId>
     <packaging>war</packaging>
-    <version>2.6.6-SNAPSHOT</version>
+    <version>2.6.7-SNAPSHOT</version>
 
     <name>Pebble</name>
     <description>A lightweight, open source, Java EE blogging tool</description>
@@ -48,23 +48,21 @@
             <version>2.1</version>
         </dependency>
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>2.5</version>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-servlet-api</artifactId>
+            <version>7.0.88</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>jsp-api</artifactId>
-            <version>2.0</version>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-jsp-api</artifactId>
+            <version>7.0.88</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.maxmind</groupId>
-            <artifactId>geolite-java</artifactId>
-            <version>1.2.1</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/src/main/webapp/WEB-INF/lib/geolite-java-1.2.1.jar</systemPath>
+            <groupId>com.maxmind.geoip</groupId>
+            <artifactId>geoip-api</artifactId>
+            <version>1.2.10</version>
         </dependency>
         <dependency>
             <groupId>net.sf.ehcache</groupId>
@@ -167,11 +165,6 @@
             <groupId>commons-fileupload</groupId>
             <artifactId>commons-fileupload</artifactId>
             <version>1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>jstl</artifactId>
-            <version>1.1.2</version>
         </dependency>
         <dependency>
             <groupId>xmlrpc</groupId>
@@ -313,15 +306,17 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.5.1</version>
                 <configuration>
                     <encoding>UTF-8</encoding>
-                    <source>1.5</source>
-                    <target>1.5</target>
+                    <source>1.6</source>
+                    <target>1.6</target>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
+                <version>3.0.1</version>
                 <executions>
                     <execution>
                         <goals>
@@ -333,6 +328,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
+                <version>3.2.1</version>
                 <configuration>
                     <archiveClasses>true</archiveClasses>
                     <attachClasses>true</attachClasses>
