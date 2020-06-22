@@ -1,11 +1,15 @@
 # Pebble
 
+Pebble was once an open source weblog application. It is no longer maintained. If you are looking for weblog software to host a new blog, Pebble is not for you.
+
+## Prerequisites
+
 The prerequisites are as follows.
 
  * Java 6.0
  * A JSP 2.2/Servlet 3.0 compatible server such as Apache Tomcat 7.0.x
 
-# Quickstart with Apache Tomcat 7.0.x
+## Quickstart with Apache Tomcat 7.0.x
 
 If you're in a hurry, you can get Pebble and up running in a couple of minutes by following these steps.
 
@@ -15,6 +19,6 @@ If you're in a hurry, you can get Pebble and up running in a couple of minutes b
 
 For further installation details, please see docs/installation.html in the distribution.
 
-# Further questions
+## Further questions
 
 Help and support is available via the pebble-users[at]lists.sourceforge.net mailing list. Details on subscribing to this list can be found at http://lists.sourceforge.net/mailman/listinfo/pebble-user.
